@@ -38,7 +38,7 @@ get when you log in via ssh or the console.
 
 ## Shell Configuration
 
-* [installHome](installHome) installation script
+* [installDotfiles](installDotfiles) installation script
   * installs everything into $HOME
   * run `./installDotfiles --help` to see options
   * script backups existing configuration files with .old extension
