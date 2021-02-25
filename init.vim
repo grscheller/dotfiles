@@ -144,30 +144,25 @@ packadd! matchit   " Add additional matching functionality to %
 "
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Using vim-airline to configure the statusline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Extend * and # functionality while in visual mode
-Plug 'nelstrom/vim-visual-star-search'
-
 " Surrond text objects with matching (). {}. '', etc
+"
+"   ds delete surronding - ds"
+"   cs change surronding - cs[{
+"   ys surrond text object or motion - ysiw)
+"
+" Works on various markup tags
+" Works in visual line mode
 Plug 'tpope/vim-surround'
-
-" Extend <C-a> and <C-x> to work
-" with dates and not just numbers.
-Plug 'tpope/vim-speeddating'
 
 " Enable repeating supported plugin maps with "."
 Plug 'tpope/vim-repeat'
 
-" Indent text objects; defines 2 new text objects
-" based on indentation levels, i and I
-Plug 'michaeljsmith/vim-indent-object'
-
 " Shows what is in registers
 " extends " and @ in normal mode and <C-r> in insert mode
 Plug 'junegunn/vim-peekaboo'
+
+" Use vim-airline to configure the statusline
+Plug 'vim-airline/vim-airline'
 
 " Provide syntax checking with Syntastic
 Plug 'vim-syntastic/syntastic'
