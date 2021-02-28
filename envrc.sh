@@ -26,6 +26,7 @@ if ~/.local/bin/digpath.sh -q nvim
 then
     export EDITOR=nvim
     export VISUAL=nvim
+    export MANPAGER="nvim -c 'set ft=man' -"
 elif ~/.local/bin/digpath.sh -q vim 
 then
     export EDITOR=vim
