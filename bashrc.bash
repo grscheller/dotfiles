@@ -88,7 +88,7 @@ esac
 
 # Terminal window title prompt string
 case $TERM in
-  xterm*|rxvt*|urxvt*|kterm*|gnome*)
+  xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
     TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007'
     ;;
   screen)
@@ -327,8 +327,10 @@ fm () {
 tm () {
    if [[ $HOST == @(Cygwin|MinGW|MSYS2)* ]]; then
       ( mintty & )
+   elif [[ -x /usr/bin/alacritty ]]; then
+       ( /usr/bin/alacritty & )
    elif [[ -x /usr/bin/gnome-terminal ]]; then
-       ( /usr/bin/gnome-terminal >&- )
+       ( /usr/bin/gnome-terminal >&- 2>&- )
    elif [[ -x /usr/bin/urxvt ]]; then
        ( /usr/bin/urxvt >/dev/null 2>&1 & )
    elif [[ -x /usr/bin/xterm ]]; then

@@ -5,7 +5,7 @@
 # as well as other config files, into the $HOME directory.
 #
 # Usage:
-#    1. Run from cloned scheller-linux-archive/dotfiles directory
+#    1. Run from cloned dotfiles directory
 #    2. The file names used in the repo help neovim plugin Syntastic
 #       use ShellCheck correctly when editing.  The files get
 #       installed with their proper names.
@@ -15,21 +15,23 @@
 #    6. Run ./installDotfiles --help for options
 #
 
+### Setup
+
 DOT_FILES='
    bashrc.bash
    envrc.sh
    inputrc
-   kshrc.ksh
    profile.sh
    shrc.sh
-   Xresources
 '
 
 RM_FILES='
    .bash_profile
-   .dashrc
-   .ashrc
-   .local/bin/bootstrapPlug
+'
+
+CONFIG_FILES='
+   nvim/init.vim
+   alacritty/alacritty.yml
 '
 
 BIN_SCRIPTS='
@@ -44,7 +46,7 @@ BIN_SCRIPTS='
    viewJarManifest
 '
 
-## Backs up and optionally removes files
+## Function to back up and optionally removes files
 backup_file () {
 
    buFile="$1"
@@ -64,138 +66,54 @@ backup_file () {
        }
 
    [ -z "$Remove" ] ||
-       [ ! -f "$buFile" ] ||
-       rm "$buFile" 2>&- || {
-          printf '\n'
-          printf "Error: Failed to remove file '%s'\\n" "$buFile" >&2
-          return 1
-       }
+      [ ! -f "$buFile" ] ||
+         rm "$buFile" 2>&- || {
+            printf '\n'
+            printf "Error: Failed to remove file '%s'\\n" "$buFile" >&2
+            return 1
+         }
 
    return 0
 }
 
-## Installs neovim and/or vim config files
-install_vi_config () {
+## Function to installs config files
+install_config_files () {
 
-   vi_name="$1"
-   vi_dir="$2"
-   vi_file_name=$3
-   vi_conf_src="$vi_file_name"
-   vi_conf="$vi_dir/$vi_file_name"
+   conf_dir="$1"
+   file_path="$2"
+   src="./config/$file_path"
+   trgt="$conf_dir/$file_path"
+   trgt_dir="${trgt%/*}"
 
-   [ -d "$vi_dir" ] || mkdir -p "$vi_dir" || {
+   [ -d "$trgt_dir" ] || mkdir -p "$trgt_dir" || {
       printf '\n'
-      printf "Error: Failed to create '%s' directory,\\n" "$vi_conf" >&2
-      printf "punting on installing '%s' config files\\n" "$vi_name" >&2
+      printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir" >&2
+      printf "punting on installing '%s' config file\\n" "$trgt" >&2
       return 1
    }
 
    # Backup previous version
-   backup_file "$vi_conf" || return 1
+   backup_file "$trgt" || return 1
 
    # Install file
-   if cp "$vi_conf_src" "$vi_dir"
+   if cp "$src" "$trgt"
    then
-      chmod u=rw,g=r,o= "$vi_conf" || {
+      chmod u=rw,g=r,o= "$trgt" || {
           printf '\n'
-          printf "Warning: Failed to set permissions on '%s' to 640\\n" "$vi_conf" >&2
+          printf "Warning: Failed to set permissions on '%s' to 640\\n" "$trgt" >&2
       }
    else
-      printf "Warning: Failed to install '%s'\\n" "$vi_conf" >&2
+      printf "Error: Failed to install '%s'\\n" "$trgt" >&2
+      return 1
    fi
-
-   # Set aside ~/.vimrc if configuring vim
-   [ "$vi_name" != vim ] || backup_file ~/.vimrc Remove || {
-       printf '\n'
-       printf "Warning: Failed to move aside '~/.vimrc'\\n" >&2
-       printf "         This file will supercede '%s'!\\n" "$vi_conf" >&2
-   }
 
    return 0
 }
 
 
-## Process args - determine if user wishes Vim and/or Neovim configured
-vim_flag=
-nvim_flag=
-xreload_flag=
+### Install files
 
-while [ $# -gt 0 ]
-do
-  case "$1" in
-    -v|--vim)
-        vim_flag=1
-        ;;
-    -n|--nvim)
-        nvim_flag=1
-        ;;
-    -x|--xresources)
-        xreload_flag=1
-        ;;
-    -a|--all)
-        vim_flag=1
-        nvim_flag=1
-        xreload_flag=1
-        ;;
-    -h|-help|--help)
-        printf '\nPurpose: Installs shell configuration files into\n' >&2
-        printf "         user's \$HOME direrectory with the correct names.\\n\\n" >&2
-        printf '         Also, install .inputrc and .Xresources files.\n' >&2
-        printf '         Optionally install the vim and nvim\n' >&2
-        printf '         configuration files.  Optionally reload\n' >&2
-        printf '         the ~/.Xresources file.\n' >&2
-        printf '\nUsage: ./installHome [--vim] [--nvim] [--xreload] [--all]\n' >&2
-        printf '       ./installHome [-v] [-n] [-x] [-a]\n' >&2
-        printf '\nwhere\n' >&2
-        printf '   -v or --vim      install  vim config file to ~/.vim/vimrc\n' >&2
-        printf '   -n or --nvim     install nvim config file to %s\n' "\$XDG_CONFIG_HOME/nvim/nvim.vim" >&2
-        printf '   -x or --xreload  reload ~/.xresources\n' >&2
-        printf '   -a or --all      install everything and relaod ~/.Xresources\n' >&2
-        printf '   -h or --help     print this message\n' >&2
-        # shellcheck disable=SC2088
-        printf '\ndefault value for %s = %s\n' "\$XDG_CONFIG_HOME" '~/.config' >&2
-        exit 2
-        ;;
-    *)  printf '\n' >&2
-        printf "Error: Invalid option '%s'\\n" "$1" >&2
-        printf "       Run './installHome -h' for help\\n" >&2
-        exit 2
-        ;;
-  esac
-  shift
-done
-
-
-## Create $HOME directory structure if needed
-
-# Create ~/.local/bin directory if necessary
-[ -d ~/.local/bin ] || mkdir -p ~/.local/bin || {
-   printf '\n'
-   printf 'Error: Failed to create ~/.local/bin\n' >&2
-   exit 1
-}
-chmod u=rwx,g=rx,o= ~/.local/bin || {
-   printf '\n'
-   printf "Warning: Failed to set permissions on '~/.local/bin' to 750\n" >&2
-}
-
-# Create ~/catch for the toSystem () family of shell functions
-[ -d ~/catch ] || mkdir ~/catch || {
-   printf '\n'
-   printf "Warning: Failed to create '~/catch', do so manually\\n" >&2
-}
-
-
-## Backup then remove certain files
-for File in $RM_FILES
-do
-    backup_file  ~/"$File" Remove || exit 1
-done
-
-
-## Install files
-
-# Install home directory dot-files - backup existing files
+## Install home directory dot-files - backup existing files
 for File in $DOT_FILES
 do
     backup_file  ~/".${File%.*}" || exit 1
@@ -212,7 +130,20 @@ do
     }
 done
 
-# Install ~/.local/bin scripts
+## Install ~/.local/bin scripts
+
+# Create ~/.local/bin directory if necessary
+[ -d ~/.local/bin ] || mkdir -p ~/.local/bin || {
+   printf '\n'
+   printf 'Error: Failed to create ~/.local/bin\n' >&2
+   exit 1
+}
+chmod u=rwx,g=rx,o= ~/.local/bin || {
+   printf '\n'
+   printf "Warning: Failed to set permissions on '~/.local/bin' to 750\\n" >&2
+}
+
+# Install ~/.local/bin scripts files
 for File in $BIN_SCRIPTS
 do
     cp bin/"$File" ~/.local/bin/ ||
@@ -223,19 +154,28 @@ do
     }
 done
 
-
-## Optionally install vim and/or nvim configuration file
+## Install configuration files
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-[ -n "$vim_flag"  ] && install_vi_config vim ~/.vim vimrc
-[ -n "$nvim_flag" ] && install_vi_config nvim "$XDG_CONFIG_HOME/nvim" init.vim
+
+for conf_file in $CONFIG_FILES
+do
+    install_config_files "$XDG_CONFIG_HOME" "$conf_file" ||
+        printf 'Warning: Failed to install %s\n' "$XDG_CONFIG_HOME/$conf_file"
+done
 
 
-## Optionally rerun xrdb if ~/.Xresources changed & X running
+### Some final clean up
 
-[ -z "$xreload_flag" ] ||
-    [ ! -x /usr/bin/xset ] || [ ! -x /usr/bin/xrdb ] ||
-    diff ~/.Xresources ~/.Xresources.old >/dev/null 2>&1 ||
-    ! xset q >/dev/null 2>&1 || xrdb -merge ~/.Xresources ||
-    printf "Warning: 'xrdb ~/.Xresources' command failed\\n"
+## Create ~/catch for the toSystem () family of shell functions
+[ -d ~/catch ] || mkdir ~/catch || {
+   printf '\n'
+   printf "Warning: Failed to create '~/catch', do so manually\\n" >&2
+}
+
+## Backup then remove certain files
+for File in $RM_FILES
+do
+    backup_file  ~/"$File" Remove || exit 1
+done
 

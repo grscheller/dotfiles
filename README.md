@@ -44,13 +44,11 @@ get when you log in via ssh or the console.
   * script backups existing configuration files with .old extension
   * installs config files with correct names
     * `profile.sh` -> `~/.profile`
-    * `kshrc.ksh` -> `~/.kshrc`
     * `bashrc.bash` -> `~/.bashrc`
 * All shells share the same POSIX compliant .profile
-* Optional Vim & Neovim configurations installed
-  * Syntastic plug-in and shellcheck helpful in maintaining these files
-  * installs into `$XDG_CONFIG_HOME/nvim` for neovim
-  * installs into `~/.vim` for vim
+* Installs varous `$XDG_CONFIG_HOME` configurations
+  * installs `$XDG_CONFIG_HOME/nvim\init.vim` for neovim
+  * installs `$XDG_CONFIG_HOME/alacritty/alacritty.yml` for alacritty
 * Readline library configuration
   * `~/.inputrc`
   * vi editing mode
