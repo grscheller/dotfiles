@@ -83,20 +83,26 @@ inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
 
-" Navigate between windows in normal mode using CTRL-hjkl
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Lost <C-l> to clear & redraw screen in normal mode
-nnoremap <Leader>l :mode<CR>
+" Repurpose arrow keys to navigate between windows
+nnoremap <Left> <C-w>h
+nnoremap <Down> <C-w>j
+nnoremap <Up> <C-w>k
+nnoremap <Right> <C-w>l
 
 " Resize windows in normal mode using ALT-hjkl
 nnoremap <M-h> 2<C-w><
 nnoremap <M-j> 2<C-w>-
 nnoremap <M-k> 2<C-w>+
 nnoremap <M-l> 2<C-w>>
+
+" Move windows around using CTRL-hjkl
+nnoremap <C-h> <C-w>H
+nnoremap <C-j> <C-w>J
+nnoremap <C-k> <C-w>K
+nnoremap <C-l> <C-w>L
+
+" Lost <C-l> to clear & redraw screen in normal mode
+nnoremap <Leader>l :mode<CR>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber
@@ -115,7 +121,7 @@ function! MyLineNumberToggle()
     endif
 endfunction
 
-nnoremap <Leader>n :call MyLineNumberToggle()<CR>
+nnoremap <Leader>n :call MyLineNumberToggle()<CR>:<C-c>
 
 """ Setup plugins
 
