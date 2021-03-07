@@ -14,6 +14,9 @@
 #    5. Installs utility scripts, some used by dotfiles, into ~/.local/bin
 #    6. Run ./installDotfiles --help for options
 #
+# Written by Geoffrey Scheller
+# See: https://github.com/grscheller/dotfiles
+#
 
 ### Setup
 

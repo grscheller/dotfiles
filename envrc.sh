@@ -15,7 +15,7 @@
 #  We can no longer assume that .profile ever gets sourced.
 #
 #   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/scheller-linux-archive/env
+#   See: https://github.com/grscheller/dotfiles
 #
 
 ## Sentinel value to mark completion ofan initial environment configuration
@@ -27,6 +27,7 @@ then
     export EDITOR=nvim
     export VISUAL=nvim
     export MANPAGER="nvim -c 'set ft=man' -"
+    export DIFFPROG='nvim -d'
 elif ~/.local/bin/digpath.sh -q vim 
 then
     export EDITOR=vim

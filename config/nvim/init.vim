@@ -2,6 +2,8 @@
 "
 " ~/.config/nvim/init.vim
 "
+" Written by Geoffrey Scheller
+" See https://github.com/grscheller/dotfiles
 
 """ Preliminaries
 
@@ -83,11 +85,11 @@ inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
 
-" Repurpose arrow keys to navigate between windows
-nnoremap <Left> <C-w>h
-nnoremap <Down> <C-w>j
-nnoremap <Up> <C-w>k
-nnoremap <Right> <C-w>l
+" Use arrow keys to navigate between windows
+nnoremap <C-Left> <C-w>h
+nnoremap <C-Down> <C-w>j
+nnoremap <C-Up> <C-w>k
+nnoremap <C-Right> <C-w>l
 
 " Resize windows in normal mode using ALT-hjkl
 nnoremap <M-h> 2<C-w><
