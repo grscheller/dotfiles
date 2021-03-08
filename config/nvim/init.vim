@@ -58,7 +58,7 @@ set incsearch       " Highlight / search matches as you type
 set ignorecase      " Case insensitive search,
 set smartcase       " ... unless query has caps
 set showcmd         " Show partial normal mode commands in lower right corner
-set nrformats=bin,hex,octal " bases used for <C-a> & <C-x>,
+set nrformats=bin,hex,octal " bases used for <C-A> & <C-X>,
 set nrformats+=alpha        " ... also single letters too
 
 "" Setup key mappings
@@ -77,34 +77,36 @@ nnoremap <Leader>w :%s/\s\+$//<CR>
 nnoremap <Leader>sp :set invspell<CR>
 
 " Reduce keystrokes from :dig to entering digraph
-nnoremap <expr> <Leader>k ":dig<CR>a\<C-k>"
+nnoremap <expr> <Leader>k ":dig<CR>a\<C-K>"
+
+" Fix old vi normal mode inconsistancy between Y and D & C
+nnoremap Y y$
+
+" Use CTRL+arrow-keys to navigate between windows in normal mode
+nnoremap <C-Left> <C-W>h
+nnoremap <C-Down> <C-W>j
+nnoremap <C-Up> <C-W>k
+nnoremap <C-Right> <C-W>l
+
+" Move windows around using CTRL-hjkl in normal mode
+nnoremap <C-H> <C-W>H
+nnoremap <C-J> <C-W>J
+nnoremap <C-K> <C-W>K
+nnoremap <C-L> <C-W>L
+" Lost <C-L> to clear & redraw screen in normal mode
+nnoremap <Leader>l :mode<CR>
+
+" Resize windows using ALT-hjkl in normal mode
+nnoremap <M-h> 2<C-W><
+nnoremap <M-j> 2<C-W>-
+nnoremap <M-k> 2<C-W>+
+nnoremap <M-l> 2<C-W>>
 
 " Navigating in insert mode using ALT-hjkl
 inoremap <M-h> <Left>
 inoremap <M-j> <Down>
 inoremap <M-k> <Up>
 inoremap <M-l> <Right>
-
-" Use arrow keys to navigate between windows
-nnoremap <C-Left> <C-w>h
-nnoremap <C-Down> <C-w>j
-nnoremap <C-Up> <C-w>k
-nnoremap <C-Right> <C-w>l
-
-" Resize windows in normal mode using ALT-hjkl
-nnoremap <M-h> 2<C-w><
-nnoremap <M-j> 2<C-w>-
-nnoremap <M-k> 2<C-w>+
-nnoremap <M-l> 2<C-w>>
-
-" Move windows around using CTRL-hjkl
-nnoremap <C-h> <C-w>H
-nnoremap <C-j> <C-w>J
-nnoremap <C-k> <C-w>K
-nnoremap <C-l> <C-w>L
-
-" Lost <C-l> to clear & redraw screen in normal mode
-nnoremap <Leader>l :mode<CR>
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber
@@ -123,7 +125,7 @@ function! MyLineNumberToggle()
     endif
 endfunction
 
-nnoremap <Leader>n :call MyLineNumberToggle()<CR>:<C-c>
+nnoremap <Leader>n :call MyLineNumberToggle()<CR>:<C-C>
 
 """ Setup plugins
 
@@ -156,7 +158,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 "
 "   ds delete surronding - ds"
 "   cs change surronding - cs[{
-"   ys surrond text object or motion - ysiw)
+"   ys surround text object or motion - ysiw)
 "
 " Works on various markup tags
 " Works in visual line mode
@@ -166,7 +168,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
 " Shows what is in registers
-" extends " and @ in normal mode and <C-r> in insert mode
+" extends " and @ in normal mode and <C-R> in insert mode
 Plug 'junegunn/vim-peekaboo'
 
 " Use vim-airline to configure the statusline
