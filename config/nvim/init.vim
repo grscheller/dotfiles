@@ -77,7 +77,7 @@ nnoremap <Leader>w :%s/\s\+$//<CR>
 nnoremap <Leader>sp :set invspell<CR>
 
 " Reduce keystrokes from :dig to entering digraph
-nnoremap <expr> <Leader>k ":dig<CR>a\<C-K>"
+nnoremap <expr> <Leader>k ':dig<CR>a<C-K>'
 
 " Fix old vi normal mode inconsistancy between Y and D & C
 nnoremap Y y$
