@@ -33,8 +33,10 @@ RM_FILES='
 '
 
 CONFIG_FILES='
-   nvim/init.vim
    alacritty/alacritty.yml
+   fish/functions/fish_prompt.fish
+   fish/functions/ud.fish
+   nvim/init.vim
 '
 
 BIN_SCRIPTS='
@@ -80,7 +82,7 @@ backup_file () {
 }
 
 ## Function to installs config files
-install_config_files () {
+install_config_file () {
 
    conf_dir="$1"
    file_path="$2"
@@ -94,9 +96,6 @@ install_config_files () {
       printf "punting on installing '%s' config file\\n" "$trgt" >&2
       return 1
    }
-
-   # Backup previous version
-   backup_file "$trgt" || return 1
 
    # Install file
    if cp "$src" "$trgt"
@@ -146,7 +145,7 @@ chmod u=rwx,g=rx,o= ~/.local/bin || {
    printf "Warning: Failed to set permissions on '~/.local/bin' to 750\\n" >&2
 }
 
-# Install ~/.local/bin scripts files
+# Install scripts
 for File in $BIN_SCRIPTS
 do
     cp bin/"$File" ~/.local/bin/ ||
@@ -163,7 +162,7 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 
 for conf_file in $CONFIG_FILES
 do
-    install_config_files "$XDG_CONFIG_HOME" "$conf_file" ||
+    install_config_file "$XDG_CONFIG_HOME" "$conf_file" ||
         printf 'Warning: Failed to install %s\n' "$XDG_CONFIG_HOME/$conf_file"
 done
 
