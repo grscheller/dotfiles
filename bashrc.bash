@@ -400,7 +400,7 @@ unalias egrep 2>&-
 unalias fgrep 2>&-
 
 # ls alias family
-alias lc='ls --color=auto'
+alias ls='ls --color=auto'
 alias l1='ls -1'
 alias la='ls -a'
 alias ll='ls -ltr'
