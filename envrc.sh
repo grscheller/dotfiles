@@ -22,13 +22,13 @@
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ENV_INIT_LVL=$(( ENV_INIT_LVL + 1 ))
 
-if ~/.local/bin/digpath.sh -q nvim 
+if ~/.local/bin/digpath.sh -q nvim
 then
     export EDITOR=nvim
     export VISUAL=nvim
     export MANPAGER="nvim -c 'set ft=man' -"
-    export DIFFPROG='nvim -d'
-elif ~/.local/bin/digpath.sh -q vim 
+    export PAGER='nvim -R'
+elif ~/.local/bin/digpath.sh -q vim
 then
     export EDITOR=vim
     export VISUAL=vim
@@ -48,7 +48,7 @@ export PIP_REQUIRE_VIRTUALENV=true
 #
 #  Non-existent path and duplicate path elements
 #  will be dealt with near end of script via ~/bin/pathtrim
-#  
+#
 
 # Save original PATH
 [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
@@ -66,7 +66,7 @@ PATH="$PATH":$HOME/bin
 # Put a relative bin directory at end of PATH, this is for
 # projects where the user takes up residence in the project's
 # root directory.
-PATH="$PATH":bin 
+PATH="$PATH":bin
 
 # Rudy tool chain
 #   mostly for Markdown linter ~/.gem/ruby/2.7.0/bin/mdl

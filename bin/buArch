@@ -15,17 +15,29 @@ BackupLocation='/run/media/grs/60844d50-85ac-42fd-b848-2591be3c7fd0/grs/Backup'
 
 ExcludeDirs=(
     devel
+    node_modules
     Videos
     OneDrive
     .cache
+    .cargo
     .config/chromium
     .config/discord/blob_storage
     .config/evolution
     .config/google-chrome
+    .config/skypeforlinux/Cache
+    .g8
+    .gem
+    .gradle/caches
+    .gradle/wrapper
+    .ivy2
     .local/share/evolution
     .local/share/gvfs-metadata
     .local/share/lbry/lbrynet/blobfiles
+    .local/share/nvim/plugged
+    .npm
+    .rustup/toolchains
     .sane
+    .stack
 )
 
 ExcludeFiles=(
