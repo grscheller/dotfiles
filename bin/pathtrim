@@ -16,6 +16,10 @@
 # and effectively linked directories like /bin and
 # /usr/bin in MSYS2.
 #
+# On Mac (Darwin) need to install Gnu Core Utilities via
+#
+#   $ brew install coreutils
+#
 # Usages: pathtrim /first/path/component:/second/path/coponent:.
 #         PATH="$(pathtrim)"
 #
@@ -47,6 +51,10 @@ sedScript="s!/+!/!g
            s!^:!!"
 Paths=$(printf %s "$Paths" | sed -E -e "$sedScript")
 
+## Make sure we have a proper readlink shell utility
+READLINK=readlink
+which -s greadlink && READLINK=greadlink
+
 ## Simulate arrays to store actual and relative paths,
 #  drop non-existant absolute paths and duplicates.
 cnt=0
@@ -59,7 +67,7 @@ do
     case "$Path" in
         /*) if [ -d "$Path" ]
             then
-                NewPath="$(readlink -e "$Path")"
+                NewPath="$("$READLINK" -e "$Path")"
             else
                 AddPath=no
             fi
@@ -91,7 +99,7 @@ Paths= ; nn=0
 while [ $nn -lt $cnt ]
 do
     nn=$((nn + 1))
-    eval Paths=\$Paths\$Path_$nn:
+    eval Paths=\$Paths\$Path_$nn\:
 done
 printf '%s\n' "${Paths%:}"
 

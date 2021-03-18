@@ -400,7 +400,12 @@ unalias egrep 2>&-
 unalias fgrep 2>&-
 
 # ls alias family
-alias ls='ls --color=auto'
+if [[ $(uname) == Darwin ]]
+then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
 alias l1='ls -1'
 alias la='ls -a'
 alias ll='ls -ltr'
