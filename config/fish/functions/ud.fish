@@ -1,4 +1,5 @@
-function ud --description "Jump up multiple directories, default is 1"
+function ud
+    # Jump up multiple directories, default is 1
     set -l upDir ..
     set -l nDirs $argv[1]
     if string match -qr '[1-9]\d*' $nDirs

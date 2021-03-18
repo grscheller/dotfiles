@@ -5,14 +5,12 @@
 # as well as other config files, into the $HOME directory.
 #
 # Usage:
-#    1. Run from cloned dotfiles directory
+#    1. Run from the cloned dotfiles directory
 #    2. The file names used in the repo help neovim plugin Syntastic
 #       use ShellCheck correctly when editing.  The files get
 #       installed with their proper names.
-#    3. Optionally install neovim and vim configuration files
-#    4. Install ~/.XResources and activate if X server is running
-#    5. Installs utility scripts, some used by dotfiles, into ~/.local/bin
-#    6. Run ./installDotfiles --help for options
+#    3. Install neovim configuration files
+#    4. Installs utility scripts, some used by dotfiles, into ~/.local/bin
 #
 # Written by Geoffrey Scheller
 # See: https://github.com/grscheller/dotfiles
@@ -20,7 +18,7 @@
 
 ### Setup
 
-DOT_FILES='
+HOME_FILES='
    bashrc.bash
    envrc.sh
    inputrc
@@ -34,6 +32,8 @@ RM_FILES='
 
 CONFIG_FILES='
    alacritty/alacritty.yml
+   fish/config.fish
+   fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
    fish/functions/ud.fish
    nvim/init.vim
@@ -116,7 +116,7 @@ install_config_file () {
 ### Install files
 
 ## Install home directory dot-files - backup existing files
-for File in $DOT_FILES
+for File in $HOME_FILES
 do
     backup_file  ~/".${File%.*}" || exit 1
 
