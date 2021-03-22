@@ -64,24 +64,29 @@ scrolling:
   multiplier: 5
 
 # Font configuration
+# Defaults:
+#   - (Linux) monospace
+#   - (MacOS) Menlo
+#   - (Windows) Consolas
 font:
-  normal:
-    family: Menlo
-    style: Regular
+  # normal:
+  #   family: monospace
+  #   style: Regular
 
-  bold:
-    family: Menlo
-    style: Bold
+  # bold:
+  #   family: monospace
+  #   style: Bold
 
-  italic:
-    family: Menlo
-    style: Italic
+  # italic:
+  #   family: monospace
+  #   style: Italic
 
-  bold_italic:
-    family: Menlo
-    style: Bold Italic
+  # bold_italic:
+  #   family: monospace
+  #   style: Bold Italic
 
-  size: 13.0
+  # Point size
+  size: 12.0
 
 # Colors
 colors:
@@ -156,7 +161,8 @@ colors:
     red:     '#881111'
     green:   '#008224'
     yellow:  '#b0b011'
-    blue:    '#1111aa'
+    #    blue:    '#a111aa'
+    blue:    '#1111bb'
     magenta: '#991199'
     cyan:    '#119999'
     white:   '#aaaaaa'
