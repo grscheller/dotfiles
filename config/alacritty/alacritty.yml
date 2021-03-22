@@ -66,19 +66,19 @@ scrolling:
 # Font configuration
 font:
   normal:
-    family: monospace
+    family: Menlo
     style: Regular
 
   bold:
-    family: monospace
+    family: Menlo
     style: Bold
 
   italic:
-    family: monospace
+    family: Menlo
     style: Italic
 
   bold_italic:
-    family: monospace
+    family: Menlo
     style: Bold Italic
 
   size: 13.0
@@ -265,8 +265,9 @@ live_config_reload: true
 #       - --login
 #
 shell:
-  program: /bin/bash
-  args: []
+  program: /usr/local/bin/fish
+  args:
+      - --login
 
 # Startup working directoy
 #   None  (or unset) -> use working directory of parent process
