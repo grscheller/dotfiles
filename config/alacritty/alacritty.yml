@@ -81,16 +81,16 @@ font:
     family: monospace
     style: Bold Italic
 
-  size: 12.0
+  size: 13.0
 
 # Colors
 colors:
   # Default colors
   primary:
     background: '#000000'
-    foreground: '#c5c8c6'
-    dim_foreground: '#828482'
-    bright_foreground: '#eaeaea'
+    foreground: '#cccccc'
+    dim_foreground: '#aaaaaa'
+    bright_foreground: '#ffffff'
 
   # Cursor colors
   cursor:
@@ -106,7 +106,7 @@ colors:
   search:
     matches:
       foreground: '#000000'
-      background: '#ffffff'
+      background: '#202020'
 
     focused_match:
       foreground: CellBackground
@@ -130,36 +130,36 @@ colors:
 
   # Normal colors
   normal:
-    black:   '#000000'
-    red:     '#cc6666'
-    green:   '#b5bd68'
-    yellow:  '#f0c674'
-    blue:    '#81a2be'
-    magenta: '#b294bb'
-    cyan:    '#8abeb7'
-    white:   '#c5c8c6'
+    black:   '#202020'
+    red:     '#bb0000'
+    green:   '#00ae30'
+    yellow:  '#cccc00'
+    blue:    '#007ec7'
+    magenta: '#cc00cc'
+    cyan:    '#00cccc'
+    white:   '#cccccc'
 
   # Bright colors
   bright:
-    black:   '#666666'
-    red:     '#d54e53'
-    green:   '#b9ca4a'
-    yellow:  '#e7c547'
-    blue:    '#7aa6da'
-    magenta: '#c397d8'
-    cyan:    '#70c0b1'
-    white:   '#eaeaea'
+    black:   '#000000'
+    red:     '#ff0000'
+    green:   '#00da3c'
+    yellow:  '#ffff00'
+    blue:    '#0000ff'
+    magenta: '#ff00ff'
+    cyan:    '#00ffff'
+    white:   '#ffffff'
 
   # Dim colors
   dim:
-    black:   '#131415'
-    red:     '#864343'
-    green:   '#777c44'
-    yellow:  '#9e824c'
-    blue:    '#556a7d'
-    magenta: '#75617b'
-    cyan:    '#5b7d78'
-    white:   '#828482'
+    black:   '#333333'
+    red:     '#881111'
+    green:   '#008224'
+    yellow:  '#b0b011'
+    blue:    '#1111aa'
+    magenta: '#991199'
+    cyan:    '#119999'
+    white:   '#aaaaaa'
 
   # Indexed Colors
   #

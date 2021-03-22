@@ -185,6 +185,9 @@ Plug 'rust-lang/rust.vim'
 Plug 'ynkdir/vim-vimlparser'
 Plug 'syngan/vim-vimlint'
 
+" Colorize hexcodes and names like Blue
+Plug 'norcalli/nvim-colorizer.lua'
+
 call plug#end()
 
 "" Configure user settings for Syntastic
@@ -196,3 +199,7 @@ let g:syntastic_vim_checkers = ['vint', 'vimlint']
 
 " Toggle Synastic into and out of passive mode
 nnoremap <Leader>st :SyntasticToggleMode<CR>
+
+"" Nvim-colorizer setup (create autocmds for filetypes)
+set termguicolors
+lua require'colorizer'.setup()

@@ -14,6 +14,7 @@
 BackupLocation='/run/media/grs/60844d50-85ac-42fd-b848-2591be3c7fd0/grs/Backup'
 
 ExcludeDirs=(
+    build
     devel
     node_modules
     Videos
@@ -37,6 +38,8 @@ ExcludeDirs=(
     .npm
     .rustup/toolchains
     .sane
+    .scalac
+    .sbt
     .stack
 )
 
