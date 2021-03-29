@@ -8,10 +8,16 @@
 #   See: https://github.com/grscheller/dotfiles
 #
 
+## If not interactive, don't do anything.
+#
+#    We probably don't want to second guess the
+#    X-Windows or Wayland startup scripts,
+[[ $- != *i* ]] && return
+
 ## Configurature an initial interactive environment
 [ -r ~/.envrc ] && . ~/.envrc
 
-## If Bash, get functions and aliases
+## If Bash, get functions and aliases, fish should never see this.
 MyShell=${0#-}; MyShell=${MyShell##*/}
 case "$MyShell"X in
   bashX)

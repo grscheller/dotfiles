@@ -53,7 +53,7 @@ Paths=$(printf %s "$Paths" | sed -E -e "$sedScript")
 
 ## Make sure we have a proper readlink shell utility
 READLINK=readlink
-which -s greadlink && READLINK=greadlink
+which greadlink >/dev/null 2>&1 && READLINK=greadlink
 
 ## Simulate arrays to store actual and relative paths,
 #  drop non-existant absolute paths and duplicates.
@@ -99,7 +99,7 @@ Paths= ; nn=0
 while [ $nn -lt $cnt ]
 do
     nn=$((nn + 1))
-    eval Paths=\$Paths\$Path_$nn\:
+    eval Paths=\$Paths\$Path_$nn:
 done
 printf '%s\n' "${Paths%:}"
 

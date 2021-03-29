@@ -1,6 +1,4 @@
 function fish_prompt
-    set_color green
-    printf '\n%s' (pwd)
-    printf '\n$ '
-    set_color normal
+    set_color cyan
+    printf '\n%s\n$ ' (pwd)
 end
