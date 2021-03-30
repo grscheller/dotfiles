@@ -35,9 +35,6 @@ set fileformats=unix,mac,dos
 
 "" Configure features and behaviors
 
-" Setup color scheme
-colorscheme ron
-
 " Set default tabstops and replace tabs with spaces
 set tabstop=4
 set shiftwidth=4
@@ -185,6 +182,9 @@ Plug 'rust-lang/rust.vim'
 Plug 'ynkdir/vim-vimlparser'
 Plug 'syngan/vim-vimlint'
 
+" Iceberg colorscheme
+Plug 'cocopon/iceberg.vim'
+
 " Colorize hexcodes and names like Blue
 Plug 'norcalli/nvim-colorizer.lua'
 
@@ -200,6 +200,9 @@ let g:syntastic_vim_checkers = ['vint', 'vimlint']
 " Toggle Synastic into and out of passive mode
 nnoremap <Leader>st :SyntasticToggleMode<CR>
 
-"" Nvim-colorizer setup (create autocmds for filetypes)
+"" Setup color scheme
+colorscheme iceberg
+
+" Nvim-colorizer setup (create autocmds for filetypes)
 set termguicolors
 lua require'colorizer'.setup()
