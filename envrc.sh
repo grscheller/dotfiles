@@ -4,6 +4,10 @@
 #
 #    ~/.envrc
 #
+#  Used to configure all my POSIX compatible shells
+#  accross all the more or less POSIX compatible
+#  OS I use.  Not used for fish.
+#
 #  Configure initial values of $PATH and environment
 #  variables you wish child processes, perhaps other
 #  shells, to initially inherit.
@@ -14,6 +18,8 @@
 #  emulators are not decendant from login shells.
 #  We can no longer assume that .profile ever gets sourced.
 #
+#  Out of the blue, GNOME 3 on ARCH began sourcing .profile.
+#
 #   Written by Geoffrey Scheller
 #   See: https://github.com/grscheller/dotfiles
 #
@@ -22,13 +28,13 @@
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ENV_INIT_LVL=$(( ENV_INIT_LVL + 1 ))
 
-if ~/.local/bin/digpath.sh -q nvim
+if ~/.local/bin/digpath -q nvim
 then
     export EDITOR=nvim
     export VISUAL=nvim
     export MANPAGER="nvim -c 'set ft=man' -"
     export PAGER='nvim -R'
-elif ~/.local/bin/digpath.sh -q vim
+elif ~/.local/bin/digpath -q vim
 then
     export EDITOR=vim
     export VISUAL=vim
@@ -61,12 +67,12 @@ PATH="$PATH":/c/ProgramData/chocolatey/bin
 PATH="$PATH":/data/data/com.termux/files/usr/bin/applets
 
 # If there is a ~/bin directory, put near end
-PATH="$PATH":$HOME/bin
+PATH="$PATH":~/bin
 
-# Put a relative bin directory at end of PATH, this is for
+# Put relative directories at end of PATH, this is for
 # projects where the user takes up residence in the project's
 # root directory.
-PATH="$PATH":bin
+PATH="$PATH":bin:./bin
 
 # Rudy tool chain
 #   mostly for Markdown linter ~/.gem/ruby/2.7.0/bin/mdl

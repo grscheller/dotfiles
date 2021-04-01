@@ -12,7 +12,15 @@
 #
 #    We probably don't want to second guess the
 #    X-Windows or Wayland startup scripts,
-[[ $- != *i* ]] && return
+#
+case "$-" in
+  *i*)
+      return
+      ;;
+  *)
+      :
+      ;;
+esac
 
 ## Configurature an initial interactive environment
 [ -r ~/.envrc ] && . ~/.envrc

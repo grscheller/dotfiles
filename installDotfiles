@@ -28,11 +28,19 @@ HOME_FILES='
 
 RM_FILES='
    .bash_profile
+   .local/bin/bsPlug
+   .local/bin/buArch
+   .local/bin/digpath.bash
+   .local/bin/digpath.sh
+   .local/bin/monitor
+   .local/bin/rt
+   .local/bin/spin
+   .local/bin/viewJarManifest
 '
 
 CONFIG_FILES='
    alacritty/alacritty.yml
-   fish/completions/alacritty.fish    
+   fish/completions/alacritty.fish
    fish/config.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
@@ -40,13 +48,16 @@ CONFIG_FILES='
    nvim/init.vim
 '
 
+LOCAL_BIN_SCRIPTS='
+   digpath
+   pathtrim
+'
+
 BIN_SCRIPTS='
    bsPlug
    buArch
    digpath.bash
-   digpath.sh
    monitor
-   pathtrim
    rt
    spin
    viewJarManifest
@@ -133,7 +144,7 @@ do
     }
 done
 
-## Install ~/.local/bin scripts
+## Install local scripts
 
 # Create ~/.local/bin directory if necessary
 [ -d ~/.local/bin ] || mkdir -p ~/.local/bin || {
@@ -146,14 +157,36 @@ chmod u=rwx,g=rx,o= ~/.local/bin || {
    printf "Warning: Failed to set permissions on '~/.local/bin' to 750\\n" >&2
 }
 
-# Install scripts
-for File in $BIN_SCRIPTS
+# Create ~/bin directory if necessary
+[ -d ~/bin ] || mkdir ~/bin || {
+   printf '\n'
+   printf 'Error: Failed to create ~/bin\n' >&2
+   exit 1
+}
+chmod u=rwx,g=rx,o= ~/bin || {
+   printf '\n'
+   printf "Warning: Failed to set permissions on '~/bin' to 750\\n" >&2
+}
+
+# Install .local/bin scripts
+for File in $LOCAL_BIN_SCRIPTS
 do
     cp bin/"$File" ~/.local/bin/ ||
-       printf 'Warning: Failed to install ~/.local//bin/%s\n' "$File" >&2
+       printf 'Warning: Failed to install ~/.local/bin/%s\n' "$File" >&2
     chmod u=rwx,g=rx,o= ~/.local/bin/"${File}" || {
        printf 'Warning: Failed to set permissions' >&2
        printf ' on ~/.local/bin/%s to 750\n' "${File}" >&2
+    }
+done
+
+# Install  ~/bin  scripts
+for File in $BIN_SCRIPTS
+do
+    cp bin/"$File" ~/bin/ ||
+       printf 'Warning: Failed to install ~/bin/%s\n' "$File" >&2
+    chmod u=rwx,g=rx,o= ~/bin/"${File}" || {
+       printf 'Warning: Failed to set permissions' >&2
+       printf ' on ~/bin/%s to 750\n' "${File}" >&2
     }
 done
 

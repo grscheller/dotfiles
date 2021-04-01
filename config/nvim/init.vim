@@ -200,9 +200,13 @@ let g:syntastic_vim_checkers = ['vint', 'vimlint']
 " Toggle Synastic into and out of passive mode
 nnoremap <Leader>st :SyntasticToggleMode<CR>
 
-"" Setup color scheme
-colorscheme iceberg
+"" Setup colors
 
 " Nvim-colorizer setup (create autocmds for filetypes)
 set termguicolors
 lua require'colorizer'.setup()
+
+" Colorscheme
+colorscheme darkblue     " good for laptop monitor
+"colorscheme iceberg     " good for 4K monitors
+
