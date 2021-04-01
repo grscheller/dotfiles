@@ -14,24 +14,24 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: alacritty
+  TERM: xterm-256color
 
-#window:
+window:
   # Window dimensions (changes require restart)
   #
   # Number of lines/columns (not pixels) in the terminal. The number of columns
   # must be at least `2`, while using a value of `0` for columns and lines will
   # fall back to the window manager's recommended size.
-  #dimensions:
-  #  columns: 0
-  #  lines: 0
+  dimensions:
+    columns: 0
+    lines: 0
 
   # Window position (changes require restart)
   #
@@ -45,12 +45,12 @@
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  #padding:
-  #  x: 0
-  #  y: 0
+  padding:
+    x: 2
+    y: 2
 
   # Spread additional padding evenly around the terminal content.
-  #dynamic_padding: false
+  dynamic_padding: false
 
   # Window decorations
   #
@@ -61,7 +61,7 @@
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  #decorations: full
+  decorations: full
 
   # Startup Mode (changes require restart)
   #
@@ -72,7 +72,7 @@
   #
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
-  #startup_mode: Windowed
+  startup_mode: Windowed
 
   # Window title
   #title: Alacritty
@@ -101,6 +101,9 @@ scrolling:
   # Scrolling distance multiplier.
   #multiplier: 3
   multiplier: 5
+
+  # Don't scroll to bottom when text is written
+  auto_scrol: false
 
 # Font configuration
 font:
@@ -151,14 +154,14 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 12.0
+  size: 15.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
-  #offset:
-  #  x: 0
-  #  y: 0
+  offset:
+    x: 0
+    y: 0
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increasing `x` moves the glyph to the
@@ -171,11 +174,11 @@ font:
   #
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
-  #use_thin_strokes: true
+  use_thin_strokes: false
 
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
-draw_bold_text_with_bright_colors: true
+draw_bold_text_with_bright_colors: false
+#draw_bold_text_with_bright_colors: true
 
 # Colors (Tomorrow Night)
 colors:
@@ -322,7 +325,7 @@ bell:
   # Duration of the visual bell flash in milliseconds. A `duration` of `0` will
   # disable the visual bell animation.
   #duration: 0
-  duration: 300
+  duration: 200
 
   # Visual bell animation color.
   #color: '#ffffff'
@@ -407,10 +410,10 @@ selection:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-  #program: /usr/local/bin/fish
-  #args: []
-  ##  - --login
+shell:
+  program: /usr/local/bin/fish
+  args: 
+    - --login
 
 # Startup directory
 #
