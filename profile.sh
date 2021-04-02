@@ -14,12 +14,8 @@
 #    X-Windows or Wayland startup scripts,
 #
 case "$-" in
-  *i*)
-      return
-      ;;
-  *)
-      :
-      ;;
+    *i*) :      ;;
+     * ) return ;;
 esac
 
 ## Configurature an initial interactive environment

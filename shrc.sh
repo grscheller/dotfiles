@@ -10,8 +10,8 @@
 
 ## If not interactive, don't do anything.
 case $- in
-    *i* ) : ;;
-     *  ) return ;;
+    *i*) :      ;;
+     * ) return ;;
 esac
 
 ## Shell configuration
@@ -33,8 +33,7 @@ path () {
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-alias digpath='$HOME/.local/bin/digpath.bash'
-# alias digpath='$HOME/.local/bin/digpath.sh'
+alias digpath='~/.local/bin/digpath'
 
 ## Make sure other shells have their correct environments
 alias bash='ENV= bash'
