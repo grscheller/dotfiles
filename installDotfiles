@@ -42,8 +42,10 @@ CONFIG_FILES='
    alacritty/alacritty.yml
    fish/completions/alacritty.fish
    fish/config.fish
+   fish/functions/ff.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
+   fish/functions/tm.fish
    fish/functions/ud.fish
    nvim/init.vim
 '

@@ -17,7 +17,7 @@ set -x MANPAGER "nvim -c 'set ft=man' -"
 set -q VIRGINPATH
 or begin
     set -x VIRGINPATH $PATH
-    set UpdateEnv
+    set -x UpdateEnv
 end
 
 set -q UpdateEnv
