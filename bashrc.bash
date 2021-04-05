@@ -439,55 +439,6 @@ alias nv-on='sudo nvidia-smi -pm 1'
 # key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
 
-# Make sure git asks for passwords on the command line
-unset SSH_ASKPASS
-
-# SSH to another system
-sshToSystem () {
-   local system=$1
-   local port=$2
-   local user=$3
-
-   ssh -p "${port}" "${user}@${system}"
-}
-
-# Push files to another system
-toSystem () {
-   local system=$1
-   local port=$2
-   local user=$3
-   shift 3
-
-   scp -P "${port}" -r "$@" "${user}@${system}:catch"
-}
-
-# Pull files to another system
-fromSystem () {
-   local system=$1
-   local port=$2
-   local user=$3
-   shift 3
-
-   local each
-   for each in "$@"
-   do
-       scp -P "${port}" -r "${user}@${system}:${each}" .
-   done
-}
-
-# Aliases for above functions
-alias voltron='sshToSystem ${VOLTRON}'
-alias toVoltron='toSystem ${VOLTRON}'
-alias fromVoltron='fromSystem ${VOLTRON}'
-
-alias gauss17='sshToSystem ${GAUSS17}'
-alias toGauss17='toSystem ${GAUSS17}'
-alias fromGauss17='fromSystem ${GAUSS17}'
-
-alias euler7='sshToSystem ${EULER7}'
-alias toEuler7='toSystem ${EULER7}'
-alias fromEuler7='fromSystem ${EULER7}'
-
 ## Configure Haskell
 
 # Suppress pedantic warnings, and whatever else
@@ -507,8 +458,12 @@ then
     source ~/opt/anaconda3/etc/profile.d/conda.sh
 fi
 
-## Make sure other shells have their correct environments
-alias ksh='ENV=~/.kshrc ksh'
+## Make sure other POSIX shells have their correct environments
 alias sh='ENV=~/.shrc sh'
 alias ash='ENV=~/.shrc ash'
 alias dash='ENV=~/.shrc dash'
+if [ -r ~/.kshrc ]; then
+    alias ksh='ENV=~/.kshrc ksh'
+elif [ -r ~/.shrc ]; then
+    alias ksh='ENV=~/.shrc ksh'
+fi

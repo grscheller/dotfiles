@@ -2,7 +2,7 @@
 if [ -z "$fish_features" ]
     set -U fish_features stderr-nocaret qmark-noglob regex-easyesc
     set_color red
-    printf '\nWarning: fish_features was not universally set,'
+    printf '\nWarning: fish_features were not universally set,'
     printf '\n         restart fish for them to take effect.\n\n'
     set_color normal
 end

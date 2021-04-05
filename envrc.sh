@@ -18,7 +18,8 @@
 #  emulators are not decendant from login shells.
 #  We can no longer assume that .profile ever gets sourced.
 #
-#  Out of the blue, GNOME 3 on ARCH began sourcing .profile.
+#  Out of the blue, GNOME 3 gdm on ARCH began
+#  non-interactively sourcing .profile.
 #
 #   Written by Geoffrey Scheller
 #   See: https://github.com/grscheller/dotfiles
@@ -94,13 +95,6 @@ PATH=/c/Program\ Files\ \(x86\)/Common\ Files/Oracle/Java/javapath:"$PATH"
 # Clean up PATH - remove duplicate and non-existent path entries
 [ -x ~/.local/bin/pathtrim ] && PATH=$(~/.local/bin/pathtrim)
 
-## Information for ssh configuration
-#
-#                  Host-Name            port  login
-export    VOLTRON='rvsllschellerg2        22  schelleg'
-export    GAUSS17='192.168.1.22        31502  grs'
-export     EULER7='euler7                 22  grs'
-
 ## Setup ENV Evironment variable if NOT already set
 if [ -z "$ENV" ]
 then
@@ -112,6 +106,8 @@ then
     kshX)
         if [ -r ~/.kshrc ]; then
             export ENV=~/.kshrc
+        elif [ -r ~/.shrc ]; then
+            export ENV=~/.shrc
         fi
         ;;
     shX)

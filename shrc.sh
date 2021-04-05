@@ -33,25 +33,36 @@ path () {
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-alias digpath='~/.local/bin/digpath'
+## Make sure POSIX shells have their correct environments
+alias ash='ENV=~/.shrc ash'
+alias dash='ENV=~/.shrc dash'
+if [ -r ~/.kshrc ]; then
+    alias ksh='ENV=~/.kshrc ksh'
+elif [ -r ~/.shrc ]; then
+    alias ksh='ENV=~/.shrc ksh'
+fi
+alias sh='ENV=~/.shrc sh'
 
-## Make sure other shells have their correct environments
-alias bash='ENV= bash'
-alias ksh='ENV=~/.kshrc ksh'
-
+# Don't alias your shell in case you deliberately changed $ENV
 MyShell=${0#-}; MyShell=${MyShell##*/}
 case "$MyShell"X in
   shX)
-      alias dash='ENV=~/.shrc dash'
-      alias ash='ENV=~/.shrc ash'
+      unalias sh
       ;;
   ashX)
-      alias sh='ENV=~/.shrc sh'
-      alias dash='ENV=~/.shrc dash'
+      unalias ash
+      ;;
+  bashX)
+      :
       ;;
   dashX)
-      alias sh='ENV=~/.shrc sh'
-      alias ash='ENV=~/.shrc ash'
+      unalias dash
+      ;;
+  kshX)
+      unalias ksh
+      ;;
+  *)
+      printf '\nWarning: Unexpected shell "%s"\n\n' "$MyShell"
       ;;
 esac
 unset MyShell

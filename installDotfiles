@@ -50,6 +50,10 @@ CONFIG_FILES='
    nvim/init.vim
 '
 
+SSH_CONFIGS='
+   config
+'
+
 LOCAL_BIN_SCRIPTS='
    digpath
    pathtrim
@@ -100,23 +104,25 @@ install_config_file () {
 
    conf_dir="$1"
    file_path="$2"
-   src="./config/$file_path"
+   src_dir="$3"
+   src="$src_dir/$file_path"
    trgt="$conf_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
    [ -d "$trgt_dir" ] || mkdir -p "$trgt_dir" || {
       printf '\n'
       printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir" >&2
-      printf "punting on installing '%s' config file\\n" "$trgt" >&2
+      printf "       punting on installing '%s' config file\\n" "$trgt" >&2
       return 1
    }
 
    # Install file
    if cp "$src" "$trgt"
    then
-      chmod u=rw,g=r,o= "$trgt" || {
+      chmod u=rw,g=,o= "$trgt" || {
           printf '\n'
-          printf "Warning: Failed to set permissions on '%s' to 640\\n" "$trgt" >&2
+          printf "Error: Failed to set permissions on '%s' to 600\\n" "$trgt" >&2
+          return 1
       }
    else
       printf "Error: Failed to install '%s'\\n" "$trgt" >&2
@@ -194,12 +200,19 @@ done
 
 ## Install configuration files
 
+# Install ~/.config files
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 
 for conf_file in $CONFIG_FILES
 do
-    install_config_file "$XDG_CONFIG_HOME" "$conf_file" ||
-        printf 'Warning: Failed to install %s\n' "$XDG_CONFIG_HOME/$conf_file"
+    install_config_file "$XDG_CONFIG_HOME" "$conf_file" ./config
+done
+
+# Install SSH Configs
+
+for conf_file in $SSH_CONFIGS
+do
+    install_config_file ~/.ssh "$conf_file" ./ssh
 done
 
 
