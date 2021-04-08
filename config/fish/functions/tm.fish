@@ -1,9 +1,9 @@
-function tm
-    # Launch fish shell running in Alacritty terminal
+function tm --description 'Launch fish shell running in Alacritty terminal'
 
-    set -l cFlag 0   # -c cmd: execute following command (must be last option)
     set -l cmd
-    set -l kFlag 0   # -k:     keep current environment
+    set -l cFlag 0   # -c cmd  execute following command (must be last option)
+    set -l kFlag 0   # -k  keep current environment
+    set -l lFlag 0   # -l  use login shel
 
     set index 1; set cnt (count $argv)
     while [ $index -le $cnt ]
@@ -29,6 +29,6 @@ function tm
                 return 1
         end
     end
-      echo $index : $kFlag : $cFlag : $cmd : $argv
+
     alacritty -e fish &; disown
 end

@@ -1,4 +1,4 @@
-function ff
+function ff --description 'Launch Firefox web browser'
     if digpath -q firefox
         firefox $argv[1] &; disown
     else if [ -x /Applications/Firefox.app/Contents/MacOS/firefox ]

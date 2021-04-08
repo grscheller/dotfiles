@@ -4,7 +4,7 @@ Host lh
   User grs
 
 Host gauss17
-  Hostname 192.168.1.2
+  Hostname 10.80.131.151
   Port 31502
   User grs
 
@@ -12,3 +12,8 @@ Host voltron
   Hostname rvsllschellerg2
   Port 22
   User schelleg
+
+Host sc31
+  Hostname 10.21.23.128
+  Port 22
+  User geoffreyscheller
