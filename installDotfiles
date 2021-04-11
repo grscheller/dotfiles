@@ -43,6 +43,7 @@ CONFIG_FILES='
    fish/completions/alacritty.fish
    fish/config.fish
    fish/functions/ff.fish
+   fish/functions/fish_greeting.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
    fish/functions/tm.fish

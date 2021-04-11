@@ -44,10 +44,10 @@ and begin
     # Added two relative paths used in some software projects
     set -a PATH bin ../bin
 
-    # Clean up duplicate and non-existing pathe
+    # Clean up duplicate and non-existing paths
     set PATH (pathtrim "$PATH")
 
-    set -u UpdateEnv
+    set -e UpdateEnv
 end
 
 ## Enable vi keybindings - Alacritty not supported for fish <= 3.1.2
