@@ -17,10 +17,16 @@ set -x MANPAGER "nvim -c 'set ft=man' -"
 set -q VIRGINPATH
 or begin
     set -x VIRGINPATH $PATH
-    set -x UpdateEnv
+    set -x UPDATE_ENV
 end
 
-set -q UpdateEnv
+set -q REDO_ENV
+and begin
+    set -x PATH $VIRGINPATH
+    set -x UPDATE_ENV
+end
+
+set -q UPDATE_ENV
 and begin
     # Python configuration
     set -gx --path PYTHONPATH lib ../lib
@@ -47,7 +53,8 @@ and begin
     # Clean up duplicate and non-existing paths
     set PATH (pathtrim "$PATH")
 
-    set -e UpdateEnv
+    set -e UPDATE_ENV
+    set -e REDO_ENV
 end
 
 ## Enable vi keybindings - Alacritty not supported for fish <= 3.1.2
