@@ -14,6 +14,6 @@ Host voltron
   User schelleg
 
 Host sc31
-  Hostname 10.21.23.128
+  Hostname 10.100.51.89
   Port 22
   User geoffreyscheller
