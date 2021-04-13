@@ -11,7 +11,7 @@ end
 set -x EDITOR nvim
 set -x VISUAL nvim
 set -x PAGER nvim -R
-set -x MANPAGER nvim -c 'set ft=man' -
+set -x MANPAGER "nvim -c 'set ft=man' -"
 
 # PATH variable management
 set -q VIRGINPATH
