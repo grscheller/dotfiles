@@ -9,7 +9,7 @@
 # Usage: spin
 #
 # Written by Geoffrey Scheller
-# See: https://github.com/grscheller/scheller-linux-archive/env
+# See: https://github.com/grscheller/dotfiles
 #
 
 unset LINE SPINNER jj
@@ -17,9 +17,9 @@ unset LINE SPINNER jj
 SPINNER=($'\b-' $'\b\\' $'\b|' $'\b/')
 LINE=
 printf '-'
-((jj = 0)); while [[ $LINE == "" ]]
+((jj = 0)); while [[ "$LINE" == "" ]]
 do
     (( jj = (++jj % 4) ))
-    read -s -r -t 1 -N 1 LINE
+    read -s -r -t 1 -n 1 LINE
     printf '%s' "${SPINNER[$jj]}"
 done

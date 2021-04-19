@@ -9,7 +9,7 @@
 # Usage: digpath [-q] [-h] file1 file2 ...
 #        digpath [-q] [-h] shell_extended_glob_pattern
 #
-# Options: -q: quite
+# Options: -q: quiet
 #          -h: help
 #
 # Returns: 0 if a file was found on $PATH
@@ -17,7 +17,7 @@
 #          2 if help option or an invalid option given
 #
 #   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/scheller-linux-archive/env
+#   See: https://github.com/grscheller/dotfiles
 #
 
 usage () {

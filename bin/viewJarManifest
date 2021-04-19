@@ -3,7 +3,7 @@
 # Usage: viewJarManifest someJarFile.jar
 #
 # Written by Geoffrey Scheller
-# See: https://github.com/grscheller/scheller-linux-archive/env
+# See: https://github.com/grscheller/dotfiles
 #
 
 if [ $# -eq 1 ]
