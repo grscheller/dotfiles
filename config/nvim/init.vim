@@ -196,6 +196,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_vim_checkers = ['vint', 'vimlint']
+let g:syntastic_shell = "/bin/sh"
 
 " Toggle Synastic into and out of passive mode
 nnoremap <Leader>st :SyntasticToggleMode<CR>
