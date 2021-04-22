@@ -192,12 +192,20 @@ Plug 'syngan/vim-vimlint'
 " Iceberg colorscheme
 Plug 'cocopon/iceberg.vim'
 
+" Iceberg colorscheme
+Plug 'folke/tokyonight.nvim'
+
 " Colorize hexcodes and names like Blue
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
-"" Configure user settings for Syntastic
+"" Configure settings for Tokyo Night Colorscheme
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = [ "quickfix", "__vista__", "terminal" ]
+
+"" Configure settings for Syntastic
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -215,6 +223,7 @@ set termguicolors
 lua require'colorizer'.setup()
 
 " Colorscheme
-colorscheme iceberg     " good for 4K monitors
+colorscheme tokyonight
+"colorscheme iceberg    " good for 4K monitors
 "colorscheme darkblue   " good for my cheap laptop monitor
 
