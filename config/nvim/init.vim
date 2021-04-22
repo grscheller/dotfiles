@@ -10,6 +10,10 @@
 "" Remove Vim misfeatures and vulnerabilities
 set nomodeline
 
+"" Some plugins need a POSIX compatible shell
+"
+set shell=/bin/sh
+
 "" Improve Vi, not Clone Vi
 
 " More powerful backspacing in insert mode
@@ -78,6 +82,9 @@ nnoremap <expr> <Leader>k ':dig<CR>a<C-K>'
 
 " Fix old vi normal mode inconsistancy between Y and D & C
 nnoremap Y y$
+
+" Open a vertical terminal in fish shell
+nnoremap <expr> <Leader>f ':vsplit<CR>:term fish<CR>i'
 
 " Use CTRL+arrow-keys to navigate between windows in normal mode
 nnoremap <C-Left> <C-W>h
@@ -208,6 +215,6 @@ set termguicolors
 lua require'colorizer'.setup()
 
 " Colorscheme
-colorscheme darkblue     " good for laptop monitor
-"colorscheme iceberg     " good for 4K monitors
+colorscheme iceberg     " good for 4K monitors
+"colorscheme darkblue   " good for my cheap laptop monitor
 
