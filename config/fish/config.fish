@@ -32,6 +32,9 @@ and begin
     set -gx --path PYTHONPATH lib ../lib
     set -gx PIP_REQUIRE_VIRTUALENV true
 
+    # On iMac Brew installs symlinks here
+    set -p PATH /usr/local/sbin
+
     # Rudy tool chain
     #   Mostly for locally installed ruby gems,
     #     to install these:
@@ -43,9 +46,9 @@ and begin
     # Rust toolchain
     set -p PATH ~/.cargo/bin
 
-    # Personal utilits I want to overide everything
-    set -p PATH ~/.local/bin
-    # Rersonal utilities available if not found elsewhere
+    # Utilities I want to overide everything
+    set -p PATH ~/.local/bin ~/opt/bin
+    # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
     # Added two relative paths used in some software projects
     set -a PATH bin ../bin
