@@ -4,9 +4,8 @@
 #
 #    ~/.envrc
 #
-#  Used to configure all my POSIX compatible shells
-#  accross all the more or less POSIX compatible
-#  OS I use.  Not used for fish.
+#  Used to configure all my POSIX compatible shells.
+#  Not used for fish.
 #
 #  Configure initial values of $PATH and environment
 #  variables you wish child processes, perhaps other
@@ -29,13 +28,13 @@
 export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
 ENV_INIT_LVL=$(( ENV_INIT_LVL + 1 ))
 
-if ~/.local/bin/digpath -q nvim
+if ~/.local/bin/digpath.sh -q nvim
 then
     export EDITOR=nvim
     export VISUAL=nvim
     export MANPAGER="nvim -c 'set ft=man' -"
     export PAGER='nvim -R'
-elif ~/.local/bin/digpath -q vim
+elif ~/.local/bin/digpath.sh -q vim
 then
     export EDITOR=vim
     export VISUAL=vim
@@ -60,12 +59,8 @@ export PIP_REQUIRE_VIRTUALENV=true
 # Save original PATH
 [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
 
-## Chocolatey for Windows when in MSYS2 or CYGWIN
-PATH="$PATH":/cygdrive/c/ProgramData/chocolatey/bin
-PATH="$PATH":/c/ProgramData/chocolatey/bin
-
-# For Termux environment on my Android cell phone
-PATH="$PATH":/data/data/com.termux/files/usr/bin/applets
+# On iMac Brew installs symlinks here
+PATH=/usr/local/sbin:$PATH
 
 # If there is a ~/bin directory, put near end
 PATH="$PATH":~/bin
@@ -76,21 +71,15 @@ PATH="$PATH":~/bin
 PATH="$PATH":bin:./bin
 
 # Rudy tool chain
-#   mostly for Markdown linter ~/.gem/ruby/2.7.0/bin/mdl
-#   to install: $ gem install mdl
-PATH=~/.gem/ruby/2.7.0/bin:"$PATH"
-
-# For Haskell locally contained and administered via stack
-PATH=~/.local/bin:"$PATH"
+#   Mostly for the Ruby Markdown linter,
+#   to install linter: $ gem install mdl
+eval PATH=~/.local/share/gem/ruby/*/bin:"$PATH"
 
 # Location Rust Toolchain
 PATH=~/.cargo/bin:"$PATH"
 
-# Locally installed SBT (Scala Build Tool)
-PATH=~/opt/sbt/bin:"$PATH"
-PATH=/c/Program\ Files\ \(x86\)/sbt/bin:"$PATH"
-# Path to Java on Windows 10
-PATH=/c/Program\ Files\ \(x86\)/Common\ Files/Oracle/Java/javapath:"$PATH"
+# Utilities I want to overide everything
+PATH=~/.local/bin:~/opt/bin:"$PATH"
 
 # Clean up PATH - remove duplicate and non-existent path entries
 [ -x ~/.local/bin/pathtrim ] && PATH=$(~/.local/bin/pathtrim)

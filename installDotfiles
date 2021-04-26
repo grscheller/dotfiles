@@ -30,12 +30,14 @@ RM_FILES='
    .bash_profile
    .local/bin/bsPlug
    .local/bin/buArch
-   .local/bin/digpath.bash
-   .local/bin/digpath.sh
+   .local/bin/digpath
    .local/bin/monitor
    .local/bin/rt
    .local/bin/spin
    .local/bin/viewJarManifest
+   bin/digpath.bash
+   bin/digpath.sh
+   bin/digpath
 '
 
 CONFIG_FILES='
@@ -56,14 +58,14 @@ SSH_CONFIGS='
 '
 
 LOCAL_BIN_SCRIPTS='
-   digpath
+   digpath.bash
+   digpath.sh
    pathtrim
 '
 
 BIN_SCRIPTS='
    bsPlug
    buArch
-   digpath.bash
    monitor
    rt
    spin

@@ -54,7 +54,7 @@ and begin
     set -a PATH bin ../bin
 
     # Clean up duplicate and non-existing paths
-    set PATH (pathtrim "$PATH")
+    set PATH (~/.local/bin/pathtrim "$PATH")
 
     set -e UPDATE_ENV
     set -e REDO_ENV

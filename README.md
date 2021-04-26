@@ -120,3 +120,7 @@ get when you log in via ssh or the console.
 * POSIX shells source `$ENV` if it exists as a file
 
 This is what these shells do.  What you do with it, is up to you.
+
+I have recently noticed, as of April 2021, that for Gnome Shell 3.38.4
+and later, Gnome Display Manager (gdm) was __NON-INTERACTIVELY__
+sourcing ~/.profile with sh, even when my login shell was fish.

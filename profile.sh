@@ -10,8 +10,8 @@
 
 ## If not interactive, don't do anything.
 #
-#    We probably don't want to second guess the
-#    X-Windows or Wayland startup scripts,
+#    The Gnome display manager (gdm) will non-interactively
+#    source ~/.profile.
 #
 case "$-" in
     *i*) :      ;;
