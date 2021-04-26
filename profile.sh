@@ -4,38 +4,38 @@
 ##
 #   ~/.profile
 #
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/dotfiles
-#
 
-## If not interactive, don't do anything.
+#  The Gnome display manager (gdm) will non-interactively
+#  source ~/.profile with /bin/sh during Desktop setup.
 #
-#    The Gnome display manager (gdm) will non-interactively
-#    source ~/.profile.
+#  Technically, only POSIX login shells should source this file.
 #
 case "$-" in
-    *i*) :      ;;
-     * ) return ;;
-esac
-
-## Configurature an initial interactive environment
-[ -r ~/.envrc ] && . ~/.envrc
-
-## If Bash, get functions and aliases, fish should never see this.
-MyShell=${0#-}; MyShell=${MyShell##*/}
-case "$MyShell"X in
-  bashX)
-      if [ -r ~/.bashrc ]; then
-          . ~/.bashrc
-      fi
+  *i*)
+      # Initial interactive configurature for POSIX Shells
+      . ~/.envrc
+      
+      # If Bash, get functions and aliases
+      MyShell=${0#-}; MyShell=${MyShell##*/}
+      case "$MyShell"X in
+        bashX)
+            if [ -r ~/.bashrc ]; then
+                . ~/.bashrc
+            fi
+            ;;
+        shX|ashX|dashX|kshX)
+            :
+            ;;
+        *)
+            # Fish should never see this
+            printf 'Warning: Unexpected shell "%s\n"' "$0" >&2
+            ;;
+      esac
+      unset MyShell
       ;;
-  kshX|shX|ashX|dashX)
+
+  *)
+      # Non-interactive environment configuration for display managers
       :
       ;;
-  *)
-      printf 'Warning: Unexpected shell "%s\n"' "$0" >&2
-      ;;
 esac
-unset MyShell
-
-## Perform other tasks unique to actual login shells

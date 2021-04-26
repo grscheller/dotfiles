@@ -20,13 +20,10 @@
 #  Out of the blue, GNOME 3 gdm on ARCH began
 #  non-interactively sourcing .profile.
 #
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/dotfiles
-#
 
 ## Sentinel value to mark completion ofan initial environment configuration
-export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
-ENV_INIT_LVL=$(( ENV_INIT_LVL + 1 ))
+export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
+_ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
 
 if ~/.local/bin/digpath.sh -q nvim
 then

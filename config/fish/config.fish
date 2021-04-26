@@ -29,8 +29,8 @@ end
 set -q UPDATE_ENV
 and begin
     # Python configuration
-    set -gx --path PYTHONPATH lib ../lib
-    set -gx PIP_REQUIRE_VIRTUALENV true
+    set -x --path PYTHONPATH lib ../lib
+    set -x PIP_REQUIRE_VIRTUALENV true
 
     # On iMac Brew installs symlinks here
     set -p PATH /usr/local/sbin
@@ -55,6 +55,11 @@ and begin
 
     # Clean up duplicate and non-existing paths
     set PATH (~/.local/bin/pathtrim "$PATH")
+
+    # Let POSIX Shells know initial environment configured
+    set -q _ENV_INITIALIZED
+    or set -x _ENV_INITIALIZED 0
+    set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
 
     set -e UPDATE_ENV
     set -e REDO_ENV

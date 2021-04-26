@@ -4,9 +4,6 @@
 ##
 #  ~/.shrc
 #
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/dotfiles
-#
 
 ## If not interactive, don't do anything.
 case $- in
@@ -30,7 +27,7 @@ path () {
    fi
 
    # shellcheck disable=SC2086
-   ( IFS=':'; printf '%s\n' $PathWord )
+   ( IFS=:; printf '%s\n' $PathWord )
 }
 
 ## Make sure POSIX shells have their correct environments

@@ -7,9 +7,6 @@
 # Bash configuration across multiple, more or
 # or less, POSIX complient systems.
 #
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/dotfiles
-#
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
@@ -22,22 +19,6 @@
 #
 # Mechanism used on Redhat & Redhat derived systems
 [[ -f /etc/bashrc ]] && source /etc/bashrc
-
-# Note: Cygwin/MinGW/MYSYS2 environment startup scripts
-#       are broken, without this bash completion only works
-#       in a top level shell.
-if [[ $(type -t __parse_options) != function ]]
-then
-    if [[ -f /usr/share/bash-completion/bash_completion ]]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [[ -f /usr/share/bash-completion/bash_completion.sh ]]; then
-        . /usr/share/bash-completion/bash_completion.sh
-    elif [[ -f /etc/bash_completion ]]; then
-        . /etc/bash_completion
-    elif [[ -f /etc/bash_completion.sh ]]; then
-        . /etc/bash_completion.sh
-    fi
-fi
 
 ## Make BASH more Korn Shell like
 shopt -s extglob
@@ -54,36 +35,17 @@ HISTFILESIZE=5000
 #    Shells in terminal windows not necessarily
 #    descendant from login shells.
 #
-export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
-((ENV_INIT_LVL < 1)) && source ~/.envrc
+export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
+((_ENV_INITIALIZED < 1)) && source ~/.envrc
 
 ## Setup up prompt
 
-# Adjust Hostname
-#  Swap cattle names with pet names
-#
-#  On Windows:
-#   - indicate if Cygwin, MSYS2, MINGW64 or MINGW32 environment
-#   - use native NTFS symlinks (need to turn on developer mode)
+# Adjust Hostname - swap cattle names with pet names
 #
 HOST=$(hostname); HOST=${HOST%%.*}
 case $HOST in
   rvsllschellerg2) HOST=voltron ;;
-  *) if [[ $(uname) == MSYS* ]]; then
-         HOST=MSYS2
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == MINGW64* ]]; then
-         HOST=MINGW64
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == MINGW32* ]]; then
-         HOST=MINGW32
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == CYGWIN* ]]; then
-         HOST=CYGWIN
-         export CYGWIN=winsymlinks:nativestrict
-         set -o igncr  # for Anaconda3 Python conda.sh
-     fi
-     ;;
+  SpaceCAMP31) HOST=sc31 ;;
 esac
 
 # Terminal window title prompt string
@@ -314,13 +276,7 @@ archJDK () {
 fm () {
    local DiR="$1"
    [[ -n $DiR ]] || DiR="$PWD"
-   # if [[ $HOST =~ (Cygwin|MinGW|MSYS2) ]]
-   if [[ $HOST == @(Cygwin|MinGW|MSYS2)* ]]
-   then
-       explorer "$(cygpath -w "$DiR")"
-   else
-       xdg-open "$DiR"
-   fi
+   xdg-open "$DiR"
 }
 
 # Terminal which inherits environment of parent shell
@@ -452,18 +408,16 @@ then
     eval "$(stack --bash-completion-script stack)"
 fi
 
-## Configure Anaconda3 Python Distribution (MSYS2 & Cygwin)
-if [[ -d ~/opt/anaconda3 ]]
-then
-    source ~/opt/anaconda3/etc/profile.d/conda.sh
-fi
-
 ## Make sure other POSIX shells have their correct environments
-alias sh='ENV=~/.shrc sh'
-alias ash='ENV=~/.shrc ash'
-alias dash='ENV=~/.shrc dash'
-if [ -r ~/.kshrc ]; then
-    alias ksh='ENV=~/.kshrc ksh'
-elif [ -r ~/.shrc ]; then
-    alias ksh='ENV=~/.shrc ksh'
+if [[ -r ~/.shrc ]]
+then
+    alias sh='ENV=~/.shrc sh'
+    alias ash='ENV=~/.shrc ash'
+    alias dash='ENV=~/.shrc dash'
+    if [[ -r ~/.kshrc ]]
+    then
+        alias ksh='ENV=~/.kshrc ksh'
+    else
+        alias ksh='ENV=~/.shrc ksh'
+    fi
 fi
