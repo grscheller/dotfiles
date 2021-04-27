@@ -413,8 +413,9 @@ selection:
 #   - (Windows) powershell
 shell:
   program: /usr/local/bin/fish
-  args:
-    - --login
+  args: []
+  #args:
+  #  - --login
 
 # Startup directory
 #
