@@ -411,11 +411,14 @@ selection:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
+#
+# GRS:
+#   - for Arch symlink /usr/local/bin/fish -> /usr/bin/fish
+#   - login shell needed for iMac, doesn't matter for Arch
 shell:
   program: /usr/local/bin/fish
-  args: []
-  #args:
-  #  - --login
+  args:
+    - --login
 
 # Startup directory
 #
