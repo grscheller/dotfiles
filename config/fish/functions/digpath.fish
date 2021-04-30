@@ -1,4 +1,6 @@
-function digpath --description 'Drill down through $PATH to look for executable files'
+function digpath --description 'Look for files on $PATH'
+
+    # Parse cmdline options
     argparse q/quiet h/help -- $argv
     or begin
         printf '\n'
@@ -7,7 +9,7 @@ function digpath --description 'Drill down through $PATH to look for executable 
         return 3
     end
 
-
+    # Print help message and quit
     if set -q _flag_help
         printf '\n'
         printf 'Usage: digpath [-q|--quiet] file1 file2 ...\n' >&2
@@ -21,26 +23,37 @@ function digpath --description 'Drill down through $PATH to look for executable 
         return 2
     end
 
-    set -l found 1
-
-    # Translated from bash version, but with no globbing
+    # If argument null, not interested in existence of containing directory.
+    set -l File
+    set -l Files ()
     for File in $argv
-        test -z (string trim $File); and continue
-        for Dir in $PATH
-            if test -d $Dir
-                test -x $Dir/$File
-                and begin
-                    set found 0
-                    if not set -q _flag_quiet
-                        printf '%s\n' "$Dir/$File"
-                    end
-                end
-            else
-                continue
-            end
-        end
+        test -n (string trim $File)
+        and set -a Files $File
     end
 
-    return $found
+    # Ignore non-existent directories
+    set -l Dir
+    set -l Dirs ()
+    for Dir in $PATH
+        test -d $Dir
+        and set -a Dirs $Dir
+    end
+
+    # See which directories contain which files
+    set -l Found ()
+    for File in $Dirs/$Files
+        test -e $File
+        and set -a Found $File
+    end
+
+    # Report on anything found
+    if set -q Found[1]
+        if not set -q _flag_quiet
+           printf %s\n $Found
+        end
+        return 0
+    else
+        retun 1
+    end
 
 end
