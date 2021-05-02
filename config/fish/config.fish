@@ -54,7 +54,7 @@ and begin
     set -a PATH bin ../bin
 
     # Clean up duplicate and non-existing paths
-    set PATH (~/.local/bin/pathtrim "$PATH")
+    set PATH (pathtrim)
 
     # Let POSIX Shells know initial environment configured
     set -q _ENV_INITIALIZED

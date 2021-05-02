@@ -7,7 +7,7 @@
 #
 # This facilitates sharing the same dot configuration
 # scripts between diverse POSIX-like environments.
-# 
+#
 # Correctly handles directories with whitespace in their
 # names, including \n and \v charavters.
 #
@@ -36,7 +36,7 @@ fi
 ## Standarize the $PATH list:
 #  - remove redundant / and :
 #  - remove trailing /'s on directory names
-#  - replace /./ -> / 
+#  - replace /./ -> /
 #  - escape tabs, spaces, and parentheses
 #
 sedScript="s!/+!/!g

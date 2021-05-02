@@ -28,16 +28,8 @@ HOME_FILES='
 
 RM_FILES='
    .bash_profile
-   .local/bin/bsPlug
-   .local/bin/buArch
-   .local/bin/digpath
-   .local/bin/monitor
-   .local/bin/rt
-   .local/bin/spin
-   .local/bin/viewJarManifest
-   bin/digpath.bash
-   bin/digpath.sh
-   bin/digpath
+   .local/bin/digpath.bash
+   .local/bin/digpath.sh
 '
 
 CONFIG_FILES='
@@ -49,6 +41,7 @@ CONFIG_FILES='
    fish/functions/fish_greeting.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
+   fish/functions/pathtrim.fish
    fish/functions/tm.fish
    fish/functions/ud.fish
    nvim/init.vim
@@ -59,8 +52,7 @@ SSH_CONFIGS='
 '
 
 LOCAL_BIN_SCRIPTS='
-   digpath.bash
-   digpath.sh
+   digpath
    pathtrim
 '
 
