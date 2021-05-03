@@ -1,56 +1,68 @@
-#!/bin/bash
-# shellcheck shell=bash
+#!/bin/ksh
+# shellcheck shell=ksh
 # shellcheck source=/dev/null
 ##
-#  ~/.bashrc
+#  ~/.kshrc
 #
-# Bash configuration across multiple, more or
+# Korn Shell configuration across multiple, more or
 # or less, POSIX complient systems.
+#
+#   Written by Geoffrey Scheller
+#   See: https://github.com/grscheller/scheller-linux-archive/env
 #
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
-
-## System wide configurations
-
-# Debian and Arch Linux derived systems typically
-# compile bash with option -DSYS_BASHRC which causes
-# bash to source /etc/bash.bashrc before ~/.bashrc.
-#
-# Mechanism used on Redhat & Redhat derived systems
-[[ -f /etc/bashrc ]] && source /etc/bashrc
-
-## Make BASH more Korn Shell like
-shopt -s extglob
-shopt -s checkwinsize
-shopt -s checkhash
-shopt -s cmdhist
-shopt -s lithist
-shopt -s histappend
-PROMPT_COMMAND='history -a'
-HISTFILESIZE=5000
 
 ## Make sure an initial shell environment is well defined
 #
 #    Shells in terminal windows not necessarily
 #    descendant from login shells.
 #
-export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
-((_ENV_INITIALIZED < 1)) && source ~/.envrc
+export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
+((ENV_INIT_LVL < 1)) && source ~/.envrc
 
 ## Setup up prompt
 
-# Adjust Hostname - swap cattle names with pet names
+function relative_pwd
+{
+   if [[ ${PWD:0:${#HOME}} == "$HOME" ]]
+   then
+       printf '%s' "~${PWD:${#HOME}}"
+   else
+       printf '%s' "$PWD"
+   fi
+}
+
+# Adjust Hostname
+#  Swap cattle names with pet names
+#
+#  On Windows:
+#   - indicate if Cygwin, MSYS2, MINGW64 or MINGW32 environment
+#   - use native NTFS symlinks (need to turn on developer mode)
 #
 HOST=$(hostname); HOST=${HOST%%.*}
 case $HOST in
   rvsllschellerg2) HOST=voltron ;;
-  SpaceCAMP31) HOST=sc31 ;;
+  *) if [[ $(uname) == MSYS* ]]; then
+         HOST=MSYS2
+         export MSYS=winsymlinks:nativestrict
+     elif [[ $(uname) == MINGW64* ]]; then
+         HOST=MINGW64
+         export MSYS=winsymlinks:nativestrict
+     elif [[ $(uname) == MINGW32* ]]; then
+         HOST=MINGW32
+         export MSYS=winsymlinks:nativestrict
+     elif [[ $(uname) == CYGWIN* ]]; then
+         HOST=CYGWIN
+         export CYGWIN=winsymlinks:nativestrict
+     fi
+     ;;
 esac
 
 # Terminal window title prompt string
 case $TERM in
-  xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
+  xterm*|rxvt*|urxvt*|kterm*|gnome*)
     TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007'
     ;;
   screen)
@@ -61,14 +73,14 @@ case $TERM in
     ;;
 esac
 
-# Setup 3 line primary prompt and prompt command
-PS1='\n[\u@${HOST}: \w]\n$ '
+# Setup 3 line primary prompt
+PS1="${TERM_TITLE}"$'\n['"$(id -un)@${HOST}"$': $(relative_pwd)]\n% '
 PS2='> '
 PS3='#? '
 PS4='++ '
-PROMPT_COMMAND="$PROMPT_COMMAND;printf '%s' \"$TERM_TITLE\""
 
 ## Set default behaviors
+set -o vi        # vi editing mode
 set -o pipefail  # Return right most nonzero error, otherwise 0.
 HISTSIZE=5000
 HISTCONTROL="ignoredups"
@@ -76,7 +88,8 @@ HISTCONTROL="ignoredups"
 ## Command line utility functions
 
 # Jump up multiple directories
-ud () {
+function ud
+{
    local upDir=..
    local nDirs="$1"
    if [[ $nDirs == @([1-9])*([0-9]) ]]
@@ -89,8 +102,9 @@ ud () {
    cd $upDir || return
 }
 
-# Similar to the DOS path command
-path () {
+# Print out $PATH
+function path
+{
    if (( $# == 0 ))
    then
        PathWord="$PATH"
@@ -102,82 +116,10 @@ path () {
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-# Drill down through $PATH to look for files or directories.
-# Like the ksh builtin whence, except it does not stop
-# after finding the first instance.  Handles spaces in both
-# filenames and directories on $PATH.  Also, shell patterns
-# are supported.
-#
-# Usage: digpath [-q] [-h] file1 file2 ...
-#        digpath [-q] [-h] shell_pattern
-#
-# Options: -q: quiet
-#          -h: help
-#
-# Returns: 0 if a file was found on $PATH
-#          1 if no file found on $PATH
-#          2 if help option or an invalid option given
-#
-digpath () (
-
-   usage_digpath () {
-       printf 'Usage: digpath [-q] file1 file2 ...\n' >&2
-       printf '       digpath [-q] shell_pattern\n'   >&2
-       printf '       digpath [-h]\n'                 >&2
-   }
-
-   local OPTIND opt
-   local quiet_flag=
-   while getopts :hq opt
-   do
-     case $opt in
-       q) quiet_flag=1
-          ;;
-       h) usage_digpath
-          return 2
-          ;;
-       ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
-          usage_digpath
-          return 2
-          ;;
-     esac
-   done
-
-   IFS=':'
-
-   local ii=0  # for array index
-   local File match
-   local FileList=()
-
-   for File in "$@"
-   do
-      [[ -z "$File" ]] && continue
-      for Dir in $PATH
-      do
-         [[ ! -d "$Dir" ]] && continue
-         if [[ -d "$Dir" ]]
-         then
-             for match in $Dir/$File
-             do
-                 [[ -f $match ]] && FileList[((ii++))]="$match"
-             done
-         fi
-      done
-   done
-
-   [[ -z $quiet_flag ]] && printf '%s\n' "${FileList[@]}"
-
-   if ((${#FileList[@]} > 0))
-   then
-       return 0
-   else
-       return 1
-   fi
-)
-
 # ax - archive extractor
 #   usage: ax <file>
-ax () {
+function ax
+{
    if [[ -f $1 ]]
    then
        case $1 in
@@ -232,7 +174,8 @@ b2o () { printf 'ibase=2\nobase=1000\n%s\n'  "$*" | /usr/bin/bc; }
 b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
 
 # Setup JDK on Arch
-archJDK () {
+function archJDK
+{
    local version="$1"
    local jdir
    local jver
@@ -270,82 +213,6 @@ archJDK () {
    fi
 }
 
-## Launch Desktop GUI Apps from command line
-
-# Open Desktop or Windows file manager
-fm () {
-   local DiR="$1"
-   [[ -n $DiR ]] || DiR="$PWD"
-   xdg-open "$DiR"
-}
-
-# Terminal which inherits environment of parent shell
-tm () {
-   if [[ $HOST == @(Cygwin|MinGW|MSYS2)* ]]; then
-      ( mintty & )
-   elif [[ -x /usr/bin/alacritty ]]; then
-       ( /usr/bin/alacritty & )
-   elif [[ -x /usr/bin/gnome-terminal ]]; then
-       ( /usr/bin/gnome-terminal >&- 2>&- )
-   elif [[ -x /usr/bin/urxvt ]]; then
-       ( /usr/bin/urxvt >/dev/null 2>&1 & )
-   elif [[ -x /usr/bin/xterm ]]; then
-       ( /usr/bin/xterm >/dev/null 2>&1 & )
-   else
-       printf "tm: error: terminal emulator not found\n" >&2
-   fi
-}
-
-# PDF Reader
-ev () ( /usr/bin/evince "$@" >/dev/null 2>&1 & )
-
-# LBRY AppImage
-lbry () {
-   local LBRY_Dir=~/opt/AppImages
-   # shellcheck disable=SC2206
-   local LBRY_App=(${LBRY_Dir}/LBRY_*.AppImage)
-
-   (( ${#LBRY_App[@]} > 1  )) && {
-       printf "  Error: Multiple LBRY apps found in :\n"
-       printf "\t%s\n" "${LBRY_App[@]}"
-       return 1
-   }
-
-   [[ ${LBRY_App[0]} == ${LBRY_Dir}/LBRY_/*.AppImage ]] && {
-       printf '  Error: LBRY app not found in %s\n' "$LBRY_Dir"
-       return 1
-   }
-
-   ( ${LBRY_App[0]} >/dev/null 2>&1 & )
-}
-
-# Firefox Browser
-ff () {
-   if digpath -q "$FIREFOX"
-   then
-       ( firefox "$@" >&- 2>&- & )
-   else
-       printf 'firefox not found\n' >&2
-   fi
-}
-
-# Google Browser
-gb () {
-   if digpath -q chrome; then
-       ( chrome "$@" >&- 2>&- & )
-   elif digpath -q chromium; then
-       ( chromium "$@" >&- 2>&- & )
-   else
-       printf 'Neither chrome nor chromium found\n' >&2
-   fi
-}
-
-# LibreOffice
-lo () ( /usr/bin/libreoffice & )
-
-# LibreOffice writer
-low () ( /usr/bin/libreoffice --writer "$@" & )
-
 ## Aliases
 
 # Remove any inherited misconfigurations
@@ -356,12 +223,7 @@ unalias egrep 2>&-
 unalias fgrep 2>&-
 
 # ls alias family
-if [[ $(uname) == Darwin ]]
-then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
-fi
+alias lc='ls --color=auto'
 alias l1='ls -1'
 alias la='ls -a'
 alias ll='ls -ltr'
@@ -373,39 +235,12 @@ alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias bc='bc -q'
 alias nv=nvim
 
-# Website scrapping
-#   Pull down a subset of a website
-alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
-#   Pull down more -- Not good for large websites
-alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
-
-# NVIDIA Daemon
-#   keeps card active when not running X-Windows
-alias nv-pd='sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode'
-#   Activate and Deactivate respectfully.
-#      Communicates with above daemon if running, otherwise
-#      directly with card in a deprecated manner.
-alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
-alias nv-on='sudo nvidia-smi -pm 1'
-
 ## SSH related functions, variables and aliases
-
 # Restart SSH key-agent and add your private
 # key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
-
-## Configure Haskell
-
-# Suppress pedantic warnings, and whatever else
-# may get in the way of quickly syntax-checking
-# and evaluating an expression.
-ghci() { command ghci -v0 -Wno-all "$@"; }
-
-if digpath -q stack
-then
-    # Bash completion for stack (Haskell)
-    eval "$(stack --bash-completion-script stack)"
-fi
+# Make sure git asks for passwords on the command line
+unset SSH_ASKPASS
 
 ## Make sure POSIX shells have their correct environments
 alias sh='ENV=~/.shrc sh'

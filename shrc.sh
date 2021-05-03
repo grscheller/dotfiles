@@ -31,35 +31,35 @@ path () {
 }
 
 ## Make sure POSIX shells have their correct environments
-alias ash='ENV=~/.shrc ash'
-alias dash='ENV=~/.shrc dash'
+alias sh='ENV=~/.shrc sh'
+
+if [ -r ~/.dashrc ]; then
+    alias dash='ENV=~/.dashrc dash'
+elif [ -r ~/.shrc ]; then
+    alias dash='ENV=~/.shrc dash'
+fi
+
 if [ -r ~/.kshrc ]; then
     alias ksh='ENV=~/.kshrc ksh'
 elif [ -r ~/.shrc ]; then
     alias ksh='ENV=~/.shrc ksh'
 fi
-alias sh='ENV=~/.shrc sh'
 
-# Don't alias your shell in case you deliberately changed $ENV
+if [ -r ~/.bashrc ]; then
+    alias bash='ENV= bash'
+elif [ -r ~/.shrc ]; then
+    alias bash='ENV=~/.shrc bash'
+fi
+
+# Don't alias your current shell in case you deliberately changed $ENV
 MyShell=${0#-}; MyShell=${MyShell##*/}
+
 case "$MyShell"X in
-  shX)
-      unalias sh
-      ;;
-  ashX)
-      unalias ash
-      ;;
-  bashX)
-      :
-      ;;
-  dashX)
-      unalias dash
-      ;;
-  kshX)
-      unalias ksh
-      ;;
-  *)
-      printf '\nWarning: Unexpected shell "%s"\n\n' "$MyShell"
-      ;;
+    shX) unalias sh ;;
+  dashX) unalias dash ;;
+   kshX) unalias ksh ;;
+  bashX) unalias bash ;;
+      *) printf '\nWarning: Unexpected shell %s\n' "$MyShell" ;;
 esac
-unset MyShell
+
+unset -v MyShell
