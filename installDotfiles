@@ -22,6 +22,7 @@ HOME_FILES='
    bashrc.bash
    dashrc.dash
    envrc.sh
+   funcrc.bash
    inputrc
    kshrc.ksh
    profile.sh
