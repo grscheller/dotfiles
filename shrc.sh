@@ -4,6 +4,9 @@
 ##
 #  ~/.shrc
 #
+# POSIX shell configuration across multiple,
+# more or or less, POSIX complient systems.
+#
 
 ## If not interactive, don't do anything.
 case $- in
@@ -11,11 +14,32 @@ case $- in
      * ) return ;;
 esac
 
-## Shell configuration
-HISTSIZE=5000
-set -o vi
+## Make sure an initial shell environment is well defined
+export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
+test $_ENV_INITIALIZED -lt 1 && . ~/.envrc
 
-PS1='$ '
+## Set behaviors
+set -o vi
+HISTSIZE=5000
+
+## Setup up prompt
+
+# Adjust Hostname - change cattle names to pet names
+HOST=$(hostname); HOST=${HOST%%.*}
+case $HOST in
+  rvsllschellerg2) HOST=voltron ;;
+      SpaceCAMP31) HOST=sc31    ;;
+esac
+
+# Determine shell
+MyShell=${0#-}; MyShell=${MyShell##*/}
+
+PS1="\n[${MyShell}]\n$ "
+PS2='> '
+PS3='#? '
+PS4='++ '
+
+## Command line utility functions
 
 # Similar to the DOS path command
 path () {
@@ -29,6 +53,11 @@ path () {
    # shellcheck disable=SC2086
    ( IFS=:; printf '%s\n' $PathWord )
 }
+
+# Suppress pedantic warnings, and whatever else
+# may get in the way of quickly syntax-checking
+# and evaluating an expression.
+ghci() { command ghci -v0 -Wno-all "$@"; }
 
 ## Make sure POSIX shells have their correct environments
 alias sh='ENV=~/.shrc sh'
@@ -45,20 +74,12 @@ elif [ -r ~/.shrc ]; then
     alias ksh='ENV=~/.shrc ksh'
 fi
 
-if [ -r ~/.bashrc ]; then
-    alias bash='ENV= bash'
-elif [ -r ~/.shrc ]; then
-    alias bash='ENV=~/.shrc bash'
-fi
-
 # Don't alias your current shell in case you deliberately changed $ENV
-MyShell=${0#-}; MyShell=${MyShell##*/}
-
 case "$MyShell"X in
     shX) unalias sh ;;
   dashX) unalias dash ;;
    kshX) unalias ksh ;;
-  bashX) unalias bash ;;
+  bashX) : ;;
       *) printf '\nWarning: Unexpected shell %s\n' "$MyShell" ;;
 esac
 

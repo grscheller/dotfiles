@@ -4,26 +4,42 @@
 ##
 #  ~/.kshrc
 #
-# Korn Shell configuration across multiple, more or
-# or less, POSIX complient systems.
-#
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/scheller-linux-archive/env
+# Korn shell configuration across multiple,
+# more or or less, POSIX complient systems.
 #
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
 ## Make sure an initial shell environment is well defined
-#
-#    Shells in terminal windows not necessarily
-#    descendant from login shells.
-#
-export ENV_INIT_LVL=${ENV_INIT_LVL:=0}
-((ENV_INIT_LVL < 1)) && source ~/.envrc
+export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
+((_ENV_INITIALIZED < 1)) && source ~/.envrc
+
+## Set behaviors
+set -o vi        # vi editing mode
+set -o pipefail  # Return right most nonzero error, otherwise 0
+HISTSIZE=5000
 
 ## Setup up prompt
 
+# Adjust Hostname - change cattle names to pet names
+HOST=$(hostname); HOST=${HOST%%.*}
+case $HOST in
+  rvsllschellerg2) HOST=voltron ;;
+      SpaceCAMP31) HOST=sc31    ;;
+esac
+
+# Terminal window title prompt string
+case $TERM in
+  xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
+      TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007' ;;
+  screen)
+      TERM_TITLE=$'\e_'"$(id -un)@\${HOST}"$'\e\\' ;;
+  *)
+      TERM_TITLE='' ;;
+esac
+
+# Setup 3 line primary prompt
 function relative_pwd
 {
    if [[ ${PWD:0:${#HOME}} == "$HOME" ]]
@@ -34,56 +50,14 @@ function relative_pwd
    fi
 }
 
-# Adjust Hostname
-#  Swap cattle names with pet names
-#
-#  On Windows:
-#   - indicate if Cygwin, MSYS2, MINGW64 or MINGW32 environment
-#   - use native NTFS symlinks (need to turn on developer mode)
-#
-HOST=$(hostname); HOST=${HOST%%.*}
-case $HOST in
-  rvsllschellerg2) HOST=voltron ;;
-  *) if [[ $(uname) == MSYS* ]]; then
-         HOST=MSYS2
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == MINGW64* ]]; then
-         HOST=MINGW64
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == MINGW32* ]]; then
-         HOST=MINGW32
-         export MSYS=winsymlinks:nativestrict
-     elif [[ $(uname) == CYGWIN* ]]; then
-         HOST=CYGWIN
-         export CYGWIN=winsymlinks:nativestrict
-     fi
-     ;;
-esac
+# Determine shell
+MyShell=${0#-}; MyShell=${MyShell##*/}
 
-# Terminal window title prompt string
-case $TERM in
-  xterm*|rxvt*|urxvt*|kterm*|gnome*)
-    TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007'
-    ;;
-  screen)
-    TERM_TITLE=$'\e_'"$(id -un)@\${HOST}"$'\e\\'
-    ;;
-  *)
-    TERM_TITLE=''
-    ;;
-esac
-
-# Setup 3 line primary prompt
-PS1="${TERM_TITLE}"$'\n['"$(id -un)@${HOST}"$': $(relative_pwd)]\n% '
+# Setup 3 line prompt
+PS1=$'\n['"${MyShell}"$': $(relative_pwd)]\n$ '"${TERM_TITLE}"
 PS2='> '
 PS3='#? '
 PS4='++ '
-
-## Set default behaviors
-set -o vi        # vi editing mode
-set -o pipefail  # Return right most nonzero error, otherwise 0.
-HISTSIZE=5000
-HISTCONTROL="ignoredups"
 
 ## Command line utility functions
 
@@ -102,7 +76,7 @@ function ud
    cd $upDir || return
 }
 
-# Print out $PATH
+# Similar to the DOS path command
 function path
 {
    if (( $# == 0 ))
@@ -116,8 +90,7 @@ function path
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-# ax - archive extractor
-#   usage: ax <file>
+# Archive eXtractor: usage: ax <file>
 function ax
 {
    if [[ -f $1 ]]
@@ -223,7 +196,12 @@ unalias egrep 2>&-
 unalias fgrep 2>&-
 
 # ls alias family
-alias lc='ls --color=auto'
+if [[ $(uname) == Darwin ]]
+then
+    alias ls='ls -G'
+else
+    alias ls='ls --color=auto'
+fi
 alias l1='ls -1'
 alias la='ls -a'
 alias ll='ls -ltr'
@@ -235,12 +213,34 @@ alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
 alias bc='bc -q'
 alias nv=nvim
 
+# Website scrapping
+#   Pull down a subset of a website
+alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
+#   Pull down more -- Not good for large websites
+alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
+
+# NVIDIA Daemon
+#   keeps card active when not running X-Windows
+alias nv-pd='sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode'
+#   Activate and Deactivate respectfully.
+#      Communicates with above daemon if running, otherwise
+#      directly with card in a deprecated manner.
+alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
+alias nv-on='sudo nvidia-smi -pm 1'
+
 ## SSH related functions, variables and aliases
-# Restart SSH key-agent and add your private
-# key, which is located here: ~/.ssh/id_rsa
+#    Restart SSH key-agent and add your private
+#    key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
-# Make sure git asks for passwords on the command line
+#    Make sure git asks for passwords on the command line
 unset SSH_ASKPASS
+
+## Configure Haskell
+
+# Suppress pedantic warnings, and whatever else
+# may get in the way of quickly syntax-checking
+# and evaluating an expression.
+ghci() { command ghci -v0 -Wno-all "$@"; }
 
 ## Make sure POSIX shells have their correct environments
 alias sh='ENV=~/.shrc sh'
@@ -257,20 +257,12 @@ elif [ -r ~/.shrc ]; then
     alias ksh='ENV=~/.shrc ksh'
 fi
 
-if [ -r ~/.bashrc ]; then
-    alias bash='ENV= bash'
-elif [ -r ~/.shrc ]; then
-    alias bash='ENV=~/.shrc bash'
-fi
-
 # Don't alias your current shell in case you deliberately changed $ENV
-MyShell=${0#-}; MyShell=${MyShell##*/}
-
 case "$MyShell"X in
     shX) unalias sh ;;
   dashX) unalias dash ;;
    kshX) unalias ksh ;;
-  bashX) unalias bash ;;
+  bashX) : ;;
       *) printf '\nWarning: Unexpected shell %s\n' "$MyShell" ;;
 esac
 

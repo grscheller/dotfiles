@@ -25,32 +25,13 @@
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
 _ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
 
-if ~/.local/bin/digpath.sh -q nvim
-then
-    export EDITOR=nvim
-    export VISUAL=nvim
-    export MANPAGER="nvim -c 'set ft=man' -"
-    export PAGER='nvim -R'
-elif ~/.local/bin/digpath.sh -q vim
-then
-    export EDITOR=vim
-    export VISUAL=vim
-else
-    export EDITOR=vi
-    export VISUAL=vi
-fi
-
 # Set locale so commandline tools & other programs default to unicode
 export LANG=en_US.utf8
-
-## Python configuration
-export PYTHONPATH=lib:../lib
-export PIP_REQUIRE_VIRTUALENV=true
 
 ## Construct the shell's PATH for all my different computers
 #
 #  Non-existent path and duplicate path elements
-#  will be dealt with near end of script via ~/bin/pathtrim
+#  will be dealt with near end of script via ~/.local/bin/pathtrim
 #
 
 # Save original PATH
@@ -79,42 +60,23 @@ PATH=~/.cargo/bin:"$PATH"
 PATH=~/.local/bin:~/opt/bin:"$PATH"
 
 # Clean up PATH - remove duplicate and non-existent path entries
-[ -x ~/.local/bin/pathtrim ] && PATH=$(~/.local/bin/pathtrim)
+PATH=$(pathtrim)
 
-## Setup ENV Evironment variable if NOT already set
-if [ -z "$ENV" ]
+if digpath -q nvim
 then
-  MyShell=${0#-}; MyShell=${MyShell##*/}
-  case "$MyShell"X in
-    bashX)
-        :
-        ;;
-    kshX)
-        if [ -r ~/.kshrc ]; then
-            export ENV=~/.kshrc
-        elif [ -r ~/.shrc ]; then
-            export ENV=~/.shrc
-        fi
-        ;;
-    shX)
-        if [ -r ~/.shrc ]; then
-            export ENV=~/.shrc
-        fi
-        ;;
-    ashX)
-        if [ -r ~/.ashrc ]; then
-            export ENV=~/.ashrc
-        elif [ -r ~/.shrc ]; then
-            export ENV=~/.shrc
-        fi
-        ;;
-    dashX)
-        if [ -r ~/.dashrc ]; then
-            export ENV=~/.dashrc
-        elif [ -r ~/.shrc ]; then
-            export ENV=~/.shrc
-        fi
-        ;;
-    esac
+    export EDITOR=nvim
+    export VISUAL=nvim
+    export MANPAGER="nvim -c 'set ft=man' -"
+    export PAGER='nvim -R'
+elif ~/.local/bin/digpath -q vim
+then
+    export EDITOR=vim
+    export VISUAL=vim
+else
+    export EDITOR=vi
+    export VISUAL=vi
 fi
-unset MyShell
+
+## Python configuration
+export PYTHONPATH=lib:../lib
+export PIP_REQUIRE_VIRTUALENV=true

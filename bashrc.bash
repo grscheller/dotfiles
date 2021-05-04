@@ -4,23 +4,26 @@
 ##
 #  ~/.bashrc
 #
-# Bash configuration across multiple, more or
-# or less, POSIX complient systems.
+# Bash configuration across multiple,
+# more or or less, POSIX complient systems.
 #
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
 ## System wide configurations
-
-# Debian and Arch Linux derived systems typically
-# compile bash with option -DSYS_BASHRC which causes
-# bash to source /etc/bash.bashrc before ~/.bashrc.
-#
-# Mechanism used on Redhat & Redhat derived systems
+#      Mechanism used on Redhat & Redhat derived systems
 [[ -f /etc/bashrc ]] && source /etc/bashrc
+#      Debian and Arch Linux derived systems typically
+#      compile bash with option -DSYS_BASHRC which causes
+#      bash to source /etc/bash.bashrc before ~/.bashrc.
 
-## Make BASH more Korn Shell like
+## Make sure an initial shell environment is well defined
+export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
+((_ENV_INITIALIZED < 1)) && source ~/.envrc
+
+## Setup behaviors - make BASH more Korn Shell like
+set -o pipefail  # Return right most nonzero error, otherwise 0
 shopt -s extglob
 shopt -s checkwinsize
 shopt -s checkhash
@@ -28,55 +31,43 @@ shopt -s cmdhist
 shopt -s lithist
 shopt -s histappend
 PROMPT_COMMAND='history -a'
+HISTSIZE=5000
 HISTFILESIZE=5000
-
-## Make sure an initial shell environment is well defined
-#
-#    Shells in terminal windows not necessarily
-#    descendant from login shells.
-#
-export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
-((_ENV_INITIALIZED < 1)) && source ~/.envrc
+HISTCONTROL=ignoredups
 
 ## Setup up prompt
 
-# Adjust Hostname - swap cattle names with pet names
-#
+# Adjust Hostname - change cattle names to pet names
 HOST=$(hostname); HOST=${HOST%%.*}
 case $HOST in
   rvsllschellerg2) HOST=voltron ;;
-  SpaceCAMP31) HOST=sc31 ;;
+      SpaceCAMP31) HOST=sc31    ;;
 esac
 
 # Terminal window title prompt string
 case $TERM in
   xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
-    TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007'
-    ;;
+      TERM_TITLE=$'\e]0;'"$(id -un)@\${HOST}"$'\007' ;;
   screen)
-    TERM_TITLE=$'\e_'"$(id -un)@\${HOST}"$'\e\\'
-    ;;
+      TERM_TITLE=$'\e_'"$(id -un)@\${HOST}"$'\e\\' ;;
   *)
-    TERM_TITLE=''
-    ;;
+      TERM_TITLE='' ;;
 esac
 
-# Setup 3 line primary prompt and prompt command
-PS1='\n[\u@${HOST}: \w]\n$ '
+# Determine shell
+MyShell=${0#-}; MyShell=${MyShell##*/}
+
+# Setup 3 line prompt
+PS1=$'\n['"${MyShell}"': \w]\n$ '"${TERM_TITLE}"
 PS2='> '
 PS3='#? '
 PS4='++ '
-PROMPT_COMMAND="$PROMPT_COMMAND;printf '%s' \"$TERM_TITLE\""
-
-## Set default behaviors
-set -o pipefail  # Return right most nonzero error, otherwise 0.
-HISTSIZE=5000
-HISTCONTROL="ignoredups"
 
 ## Command line utility functions
 
 # Jump up multiple directories
-ud () {
+function ud
+{
    local upDir=..
    local nDirs="$1"
    if [[ $nDirs == @([1-9])*([0-9]) ]]
@@ -90,7 +81,8 @@ ud () {
 }
 
 # Similar to the DOS path command
-path () {
+function path
+{
    if (( $# == 0 ))
    then
        PathWord="$PATH"
@@ -118,9 +110,10 @@ path () {
 #          1 if no file found on $PATH
 #          2 if help option or an invalid option given
 #
-digpath () (
-
-   usage_digpath () {
+function digpath
+(
+   function usage_digpath
+   {
        printf 'Usage: digpath [-q] file1 file2 ...\n' >&2
        printf '       digpath [-q] shell_pattern\n'   >&2
        printf '       digpath [-h]\n'                 >&2
@@ -175,9 +168,9 @@ digpath () (
    fi
 )
 
-# ax - archive extractor
-#   usage: ax <file>
-ax () {
+# Archive eXtractor: usage: ax <file>
+function ax
+{
    if [[ -f $1 ]]
    then
        case $1 in
@@ -232,7 +225,8 @@ b2o () { printf 'ibase=2\nobase=1000\n%s\n'  "$*" | /usr/bin/bc; }
 b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
 
 # Setup JDK on Arch
-archJDK () {
+function archJDK
+{
    local version="$1"
    local jdir
    local jver
@@ -273,14 +267,16 @@ archJDK () {
 ## Launch Desktop GUI Apps from command line
 
 # Open Desktop or Windows file manager
-fm () {
+function fm
+{
    local DiR="$1"
    [[ -n $DiR ]] || DiR="$PWD"
    xdg-open "$DiR"
 }
 
 # Terminal which inherits environment of parent shell
-tm () {
+function tm
+{
    if [[ $HOST == @(Cygwin|MinGW|MSYS2)* ]]; then
       ( mintty & )
    elif [[ -x /usr/bin/alacritty ]]; then
@@ -300,7 +296,8 @@ tm () {
 ev () ( /usr/bin/evince "$@" >/dev/null 2>&1 & )
 
 # LBRY AppImage
-lbry () {
+function lbry
+{
    local LBRY_Dir=~/opt/AppImages
    # shellcheck disable=SC2206
    local LBRY_App=(${LBRY_Dir}/LBRY_*.AppImage)
@@ -320,8 +317,9 @@ lbry () {
 }
 
 # Firefox Browser
-ff () {
-   if digpath -q "$FIREFOX"
+function ff
+{
+   if digpath -q firefox
    then
        ( firefox "$@" >&- 2>&- & )
    else
@@ -330,7 +328,8 @@ ff () {
 }
 
 # Google Browser
-gb () {
+function gb
+{
    if digpath -q chrome; then
        ( chrome "$@" >&- 2>&- & )
    elif digpath -q chromium; then
@@ -389,10 +388,11 @@ alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
 alias nv-on='sudo nvidia-smi -pm 1'
 
 ## SSH related functions, variables and aliases
-
-# Restart SSH key-agent and add your private
-# key, which is located here: ~/.ssh/id_rsa
+#    Restart SSH key-agent and add your private
+#    key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
+#    Make sure git asks for passwords on the command line
+unset SSH_ASKPASS
 
 ## Configure Haskell
 
@@ -422,20 +422,12 @@ elif [ -r ~/.shrc ]; then
     alias ksh='ENV=~/.shrc ksh'
 fi
 
-if [ -r ~/.bashrc ]; then
-    alias bash='ENV= bash'
-elif [ -r ~/.shrc ]; then
-    alias bash='ENV=~/.shrc bash'
-fi
-
 # Don't alias your current shell in case you deliberately changed $ENV
-MyShell=${0#-}; MyShell=${MyShell##*/}
-
 case "$MyShell"X in
     shX) unalias sh ;;
   dashX) unalias dash ;;
    kshX) unalias ksh ;;
-  bashX) unalias bash ;;
+  bashX) : ;;
       *) printf '\nWarning: Unexpected shell %s\n' "$MyShell" ;;
 esac
 

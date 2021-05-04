@@ -1,0 +1,25 @@
+
+#!/bin/dash
+# shellcheck shell=dash
+# shellcheck source=/dev/null
+##
+#  ~/.dashrc
+#
+# POSIX shell configuration across multiple,
+# more or or less, POSIX complient systems.
+#
+
+## If not interactive, don't do anything.
+case $- in
+    *i*) :      ;;
+     * ) return ;;
+esac
+
+## Source ~/.shrc and fix what dash gests wrong
+. ~/.shrc
+
+## Dash is brain dead when it comes to $PS1.
+#  When it comes to print it out, it removes
+#  all the newlines.
+
+PS1="$ "

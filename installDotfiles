@@ -20,8 +20,10 @@
 
 HOME_FILES='
    bashrc.bash
+   dashrc.dash
    envrc.sh
    inputrc
+   kshrc.ksh
    profile.sh
    shrc.sh
 '

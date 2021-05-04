@@ -71,3 +71,20 @@ set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
+
+## Let the various POSIX shells know their configuration files
+if test -r ~/.shrc
+    abbr -a -g sh ENV=~/.shrc sh
+end
+
+if test -r ~/.dashrc
+    abbr -a -g dash ENV=~/.dashrc dash
+else if test -r ~/.shrc
+    abbr -a -g dash ENV=~/.shrc dash
+end
+
+if test -r ~/.kshrc
+    abbr -a -g ksh ENV=~/.kshrc ksh
+else if test -r ~/.shrc
+    abbr -a -g ksh ENV=~/.shrc ksh
+end
