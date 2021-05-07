@@ -34,8 +34,8 @@ function path
        PathWord="$1"
    fi
 
-   # shellcheck disable=SC2086
-   ( IFS=':'; printf '%s\n' $PathWord )
+   ( IFS=':'
+     printf '%s\n' $PathWord )
 }
 
 # Drill down through $PATH to look for files or directories.

@@ -10,20 +10,22 @@
 # shellcheck source=/dev/null
 
 case "$-" in
-    # Initial interactive configurature for POSIX Shells
-    *i*) . ~/.envrc
+    *i*) # Initial interactive configurature for POSIX Shells
+         . ~/.envrc
 
          # If Bash, get functions and aliases
          MyShell=${0#-}; MyShell=${MyShell##*/}
          case "$MyShell"X in
              bashX) test -r ~/.bashrc && . ~/.bashrc ;;
+              kshX) ENV=~/.kshrc                     ;;
+               shX) ENV=~/.shrc                      ;;
+             dashX) ENV=~/.dashrc                    ;;
                  *) :                                ;;
          esac
          unset MyShell
          ;;
 
-      # Non-interactive environment configuration for display managers
-      *)
+      *) # Non-interactive environment configuration for display managers
          :
          ;;
 esac

@@ -26,8 +26,8 @@ function pathtrim --description 'Canonicalize $PATH'
         printf 'Returns: 0 if "happy path" followed\n' >&2
         printf '         1 if -h or --help option given\n'   >&2
         printf '         2 for invalid option or argument number\n\n' >&2
-        printf 'Side Effects: Trims off duplicate and non-existant path' >&2
-        printf '              components and print to stdout.'           >&2
+        printf 'Side Effects: Trims off duplicate & non-existant path ' >&2
+        printf               'components and print to stdout.\n'        >&2
         printf '              Print help to stderr if -h given.\n'  >&2
         return 1
     end

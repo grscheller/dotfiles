@@ -13,7 +13,7 @@ Installs into `$HOME` from cloned repo.
 * Clone and install on the computers you use
 * Use as a starting point for your own version
 * Will work on most, more or less, POSIX compliant computers
-* Same POSIX `.profile` used by all POSIX shells
+* Same POSIX `.profile` used by all POSIX compliant shells
 * Fish is not POSIX compliant
 * Designed for maximum portability
 * Not designed for maximum security for a specific Shell or OS
@@ -31,22 +31,13 @@ initial shell environment was properly configured.  If not,
 they source a POSIX shell script `~/.envrc` to do an initial
 configuration.
 
-## Shell Configuration
+## Installation Script
 
 * [installDotfiles](installDotfiles) installation script
   * installs everything into $HOME
-  * run `./installDotfiles --help` to see options
+  * run `./installDotfiles
   * script backups existing configuration files with .old extension
-  * installs config files with correct names
-    * `profile.sh` -> `~/.profile`
-    * `bashrc.bash` -> `~/.bashrc`
-* All POSIX shells share the same POSIX compliant .profile
-* Installs varous configuration files
-  * installs `~/.inputrc`
-  * installs `~/.ssh/config`
-  * installs `$XDG_CONFIG_HOME/alacritty/alacritty.yml` for alacritty
-  * installs Fish config files into `$XDG_CONFIG_HOME/fish`
-  * installs `$XDG_CONFIG_HOME/nvim\init.vim` for neovim
+  * Installs other various configuration files
 
 ## Shell Scripts Installed in ~/.local/bin
 
@@ -55,7 +46,7 @@ configuration.
   * like the ksh whence builtin
   * does not stop after finding first one
   * required by various rc scripts
-  * POSIX complient version of above script
+  * POSIX complient script
 * [pathtrim](bin/pathtrim)
   * cleans up $PATH
   * removes non-existing directories
