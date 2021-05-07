@@ -15,7 +15,7 @@ HOME_FILES='
    .bashrc
    .dashrc
    .envrc
-   .funcrc
+   .bash_functions_rc
    .inputrc
    .kshrc
    .profile
@@ -143,6 +143,12 @@ do
        printf ' on ~/%s to 640\n' ".${File%.*}"  >&2
     }
 done
+
+## Old ksh versions don't alias local
+sed 's/ local / typeset /' ~/.bash_functions_rc > ~/.ksh_functions_rc ||
+    printf 'Warning: Failed to create ~/.ksh_functions_rc\n'
+chmod u=rw,g=r,o= ~/.ksh_functions_rc ||
+    printf 'Warning: Failed to set permissions on ~/.ksh_functions_rc\n'
 
 ## Install local scripts
 

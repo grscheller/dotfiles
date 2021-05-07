@@ -58,9 +58,8 @@ PS2='> '
 PS3='#? '
 PS4='++ '
 
-## Functions common to both ~/.bashrc and ~/.kshrc
-
-source ~/.funcrc
+## Shell functions (derived from ~/.bash_functions_rc)
+source ~/.ksh_functions_rc
 
 ## Aliases
 
