@@ -1,12 +1,11 @@
-#!/bin/ksh
-# shellcheck shell=ksh
-# shellcheck source=/dev/null
 ##
 #  ~/.kshrc
 #
-# Korn shell configuration across multiple,
-# more or or less, POSIX complient systems.
+#  Korn shell configuration across multiple,
+#  more or or less, POSIX complient systems.
 #
+# shellcheck shell=ksh
+# shellcheck source=/dev/null
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return

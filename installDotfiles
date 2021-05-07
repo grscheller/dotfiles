@@ -1,32 +1,25 @@
 #!/bin/sh
+#
+#  Installs various Shell environment .dotfiles,
+#  as well as other config files, into the $HOME directory.
+# 
+#  Usage: ./installDotfiles
+# 
+#         run from the cloned dotfiles directory
+#
 # shellcheck shell=sh
-#
-# Installs various Shell environment .dotfiles,
-# as well as other config files, into the $HOME directory.
-#
-# Usage:
-#    1. Run from the cloned dotfiles directory
-#    2. The file names used in the repo help neovim plugin Syntastic
-#       use ShellCheck correctly when editing.  The files get
-#       installed with their proper names.
-#    3. Install neovim configuration files
-#    4. Installs utility scripts, some used by dotfiles, into ~/.local/bin
-#
-# Written by Geoffrey Scheller
-# See: https://github.com/grscheller/dotfiles
-#
 
 ### Setup
 
 HOME_FILES='
-   bashrc.bash
-   dashrc.dash
-   envrc.sh
-   funcrc.bash
-   inputrc
-   kshrc.ksh
-   profile.sh
-   shrc.sh
+   .bashrc
+   .dashrc
+   .envrc
+   .funcrc
+   .inputrc
+   .kshrc
+   .profile
+   .shrc
 '
 
 RM_FILES='
@@ -137,15 +130,15 @@ install_config_file () {
 ## Install home directory dot-files - backup existing files
 for File in $HOME_FILES
 do
-    backup_file  ~/".${File%.*}" || exit 1
+    backup_file  ~/"${File}" || exit 1
 
     # Strip out syntastic info and install into $HOME
-    sed -n '4,$p' "${File}" > ~/".${File%.*}" || {
-       printf "Error: Failed while installing '~/%s'\\n" ".${File%.*}" >&2
+    cp "${File}" ~ || {
+       printf "Error: Failed while installing '~/%s'\\n" "${File}" >&2
        exit 1
     }
     # Set permissions
-    chmod u=rw,g=r,o= ~/".${File%.*}" || {
+    chmod u=rw,g=r,o= ~/"${File}" || {
        printf 'Warning: Failed to set permissions' >&2
        printf ' on ~/%s to 640\n' ".${File%.*}"  >&2
     }

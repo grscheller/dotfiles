@@ -1,12 +1,11 @@
-#!/bin/bash
-# shellcheck shell=bash
-# shellcheck source=/dev/null
 ##
 #  ~/.funcrc
 #
-# Function definitions used in both
-# ~/.bashrc and ~/.kshrc
+#  Function definitions used in both
+#  ~/.bashrc and ~/.kshrc
 #
+# shellcheck shell=bash
+# shellcheck source=/dev/null
 
 ## Command line utility functions
 
@@ -56,62 +55,61 @@ function path
 #          2 if help option or an invalid option given
 #
 function digpath
-(
-   function usage_digpath
-   {
-       printf 'Usage: digpath [-q] file1 file2 ...\n' >&2
-       printf '       digpath [-q] shell_pattern\n'   >&2
-       printf '       digpath [-h]\n'                 >&2
-   }
+{ ( function usage_digpath
+    {
+        printf 'Usage: digpath [-q] file1 file2 ...\n' >&2
+        printf '       digpath [-q] shell_pattern\n'   >&2
+        printf '       digpath [-h]\n'                 >&2
+    }
 
-   local OPTIND opt
-   local quiet_flag=
-   while getopts :hq opt
-   do
-     case $opt in
-       q) quiet_flag=1
-          ;;
-       h) usage_digpath
-          return 2
-          ;;
-       ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
-          usage_digpath
-          return 2
-          ;;
-     esac
-   done
+    local OPTIND opt
+    local quiet_flag=
+    while getopts :hq opt
+    do
+      case $opt in
+        q) quiet_flag=1
+           ;;
+        h) usage_digpath
+           return 2
+           ;;
+        ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
+           usage_digpath
+           return 2
+           ;;
+      esac
+    done
 
-   IFS=':'
+    IFS=':'
 
-   local ii=0  # for array index
-   local File match
-   local FileList=()
+    local ii=0  # for array index
+    local File match
+    local FileList=()
 
-   for File in "$@"
-   do
-      [[ -z "$File" ]] && continue
-      for Dir in $PATH
-      do
-         [[ ! -d "$Dir" ]] && continue
-         if [[ -d "$Dir" ]]
-         then
-             for match in $Dir/$File
-             do
-                 [[ -f $match ]] && FileList[((ii++))]="$match"
-             done
-         fi
-      done
-   done
+    for File in "$@"
+    do
+       [[ -z "$File" ]] && continue
+       for Dir in $PATH
+       do
+          [[ ! -d "$Dir" ]] && continue
+          if [[ -d "$Dir" ]]
+          then
+              for match in $Dir/$File
+              do
+                  [[ -f $match ]] && FileList[((ii++))]="$match"
+              done
+          fi
+       done
+    done
 
-   [[ -z $quiet_flag ]] && printf '%s\n' "${FileList[@]}"
+    [[ -z $quiet_flag ]] && printf '%s\n' "${FileList[@]}"
 
-   if ((${#FileList[@]} > 0))
-   then
-       return 0
-   else
-       return 1
-   fi
-)
+    if ((${#FileList[@]} > 0))
+    then
+        return 0
+    else
+        return 1
+    fi )
+}
 
 # Archive eXtractor: usage: ax <file>
 function ax

@@ -1,12 +1,11 @@
-#!/bin/bash
-# shellcheck shell=bash
-# shellcheck source=/dev/null
 ##
 #  ~/.bashrc
 #
 # Bash configuration across multiple,
 # more or or less, POSIX complient systems.
 #
+# shellcheck shell=bash
+# shellcheck source=/dev/null
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return

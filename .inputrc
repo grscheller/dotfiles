@@ -1,7 +1,3 @@
-#
-#     No syntastic plugin header needing to be stripped
-#
-
 # Include system inputrc
 $include /etc/inputrc
 

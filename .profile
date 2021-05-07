@@ -1,6 +1,3 @@
-#!/bin/sh
-# shellcheck shell=sh
-# shellcheck source=/dev/null
 ##
 #  ~/.profile
 #
@@ -9,6 +6,9 @@
 #
 #  Technically, only POSIX login shells should source this file.
 #
+# shellcheck shell=sh
+# shellcheck source=/dev/null
+
 case "$-" in
     # Initial interactive configurature for POSIX Shells
     *i*) . ~/.envrc
