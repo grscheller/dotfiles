@@ -1,5 +1,5 @@
 ##
-#    ~/.envrc
+#    ~/.environment_rc
 #
 #  Used to configure all my POSIX compatible shells.
 #  Not used for fish.
@@ -17,7 +17,6 @@
 #  non-interactively sourcing .profile.
 #
 # shellcheck shell=sh
-# shellcheck source=/dev/null
 
 ## Sentinel value to mark completion ofan initial environment configuration
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
@@ -78,6 +77,8 @@ else
     export VISUAL=vi
 fi
 
-## Python configuration
+## Software development initial configurations
+
+# Python configuration
 export PYTHONPATH=lib:../lib
 export PIP_REQUIRE_VIRTUALENV=true

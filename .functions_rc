@@ -1,11 +1,17 @@
 ##
-#  ~/.funcrc
+#  ~/.functions_rc
 #
 #  Function definitions used in both
 #  ~/.bashrc and ~/.kshrc
 #
 # shellcheck shell=bash
 # shellcheck source=/dev/null
+
+## Old versions of ksh & ksh clones use typeset for local
+if ! type local >&- 2>&-
+then
+    alias local=typeset
+fi
 
 ## Command line utility functions
 
@@ -21,7 +27,7 @@ function ud
            upDir=../$upDir
        done
    fi
-   cd $upDir || return
+   cd $upDir
 }
 
 # Similar to the DOS path command
@@ -167,49 +173,9 @@ b2d () { printf 'ibase=2\nobase=1010\n%s\n'  "$*" | /usr/bin/bc; }
 b2o () { printf 'ibase=2\nobase=1000\n%s\n'  "$*" | /usr/bin/bc; }
 b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
 
-# Setup JDK on Arch
-function archJDK
-{
-   local version="$1"
-   local jdir
-   local jver
-
-   if [[ -z $version ]]
-   then
-       printf "Available Java Versions: "
-       for jdir in /usr/lib/jvm/java-*-openjdk
-       do
-           jver=${jdir%-*}
-           jver=${jver#*-}
-           printf '%s ' "$jver"
-       done
-       printf '\n'
-       return
-   fi
-
-   if [[ ! $version == @([1-9])*([0-9]) ]]
-   then
-       printf "Malformed JDK version number: \"%s\"\n" "$version"
-       return
-   fi
-
-   if [[ -d /usr/lib/jvm/java-${version}-openjdk ]]
-   then
-       export JAVA_HOME=/usr/lib/jvm/java-${version}-openjdk
-       if [[ $PATH == /usr/lib/jvm/java-@([1-9])*([0-9])-openjdk/bin:* ]]
-       then
-           PATH=${PATH#[^:]*:}
-       fi
-       PATH=$JAVA_HOME/bin:$PATH
-   else
-       printf "No JDK found for Java \"%s\" in the\n" "$version"
-       printf "standard location for Arch: /usr/lib/jvm/\n"
-   fi
-}
-
 ## Launch Desktop GUI Apps from command line
 
-# Open Desktop or Windows file manager
+# Open Desktop file manager
 function fm
 {
    local DiR="$1"
@@ -232,6 +198,8 @@ function tm
        printf "tm: error: terminal emulator not found\n" >&2
    fi
 }
+
+## GUI-land apps
 
 # PDF Reader
 ev () ( /usr/bin/evince "$@" >/dev/null 2>&1 & )
@@ -273,3 +241,57 @@ lo () ( /usr/bin/libreoffice & )
 
 # LibreOffice writer
 low () ( /usr/bin/libreoffice --writer "$@" & )
+
+## Software development related functions
+
+# Setup JDK on Arch
+function archJDK
+{
+   local version="$1"
+   local jdir
+   local jver
+
+   if [[ -z $version ]]
+   then
+       printf "Available Java Versions: "
+       for jdir in /usr/lib/jvm/java-*-openjdk
+       do
+           jver=${jdir%-*}
+           jver=${jver#*-}
+           printf '%s ' "$jver"
+       done
+       printf '\n'
+       return
+   fi
+
+   if [[ ! $version == @([1-9])*([0-9]) ]]
+   then
+       printf "Malformed JDK version number: \"%s\"\n" "$version"
+       return
+   fi
+
+   if [[ -d /usr/lib/jvm/java-${version}-openjdk ]]
+   then
+       export JAVA_HOME=/usr/lib/jvm/java-${version}-openjdk
+       if [[ $PATH == /usr/lib/jvm/java-@([1-9])*([0-9])-openjdk/bin:* ]]
+       then
+           PATH=${PATH#[^:]*:}
+       fi
+       PATH=$JAVA_HOME/bin:$PATH
+   else
+       printf "No JDK found for Java \"%s\" in the\n" "$version"
+       printf "standard location for Arch: /usr/lib/jvm/\n"
+   fi
+}
+
+# Configure Haskell
+
+# Suppress pedantic warnings, and whatever else may get in the
+# way of quickly syntax-checking and evaluating an expression.
+ghci() { command ghci -v0 -Wno-all "$@"; }
+
+if digpath -q stack
+then
+    # Bash completion for stack (Haskell)
+    eval "$(stack --bash-completion-script stack)"
+fi

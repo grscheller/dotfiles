@@ -13,16 +13,19 @@ case "$-" in
     *i*) # Initial interactive configurature for POSIX Shells
          . ~/.envrc
 
-         # If Bash, get functions and aliases
+         # Set $ENV and $BASH_ENV
          MyShell=${0#-}; MyShell=${MyShell##*/}
+
+         export BASH_ENV=~/.bashrc
          case "$MyShell"X in
-             bashX) test -r ~/.bashrc && . ~/.bashrc ;;
-              kshX) ENV=~/.kshrc                     ;;
-               shX) ENV=~/.shrc                      ;;
-             dashX) ENV=~/.dashrc                    ;;
-                 *) :                                ;;
+               shX) export ENV=~/.shrc ;;
+             dashX) export ENV=~/.dashrc ;;
+              kshX) export ENV=~/.kshrc ;;
+             bashX) . ${BASH_ENV} ;;
+                 *) : ;;
          esac
-         unset MyShell
+
+         unset -v MyShell
          ;;
 
       *) # Non-interactive environment configuration for display managers

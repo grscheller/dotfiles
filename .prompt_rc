@@ -1,0 +1,38 @@
+##
+#  ~/.prompt_rc
+#
+#  Prompt construction for all my POSIX shells
+#
+# shellcheck shell=sh
+
+# Adjust Hostname - change cattle names to pet names
+HOST=$(hostname); HOST=${HOST%%.*}
+case $HOST in
+  rvsllschellerg2) HOST=voltron ;;
+      SpaceCAMP31) HOST=sc31    ;;
+esac
+
+# Terminal window title prompt string
+case $TERM in
+  xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
+      TERM_TITLE=$'\e]0;'"$(id -un)@${HOST}"$'\007' ;;
+  screen)
+      TERM_TITLE=$'\e_'"$(id -un)@${HOST}"$'\e\\' ;;
+  *)
+      TERM_TITLE='' ;;
+esac
+
+relative_pwd () {
+   if [[ ${PWD:0:${#HOME}} == "$HOME" ]]
+   then
+       printf '%s' "~${PWD:${#HOME}}"
+   else
+       printf '%s' "$PWD"
+   fi
+}
+
+# Three line primary prompt
+PS1=$'\n['"${0##*/}"$': $(relative_pwd)]\n$ '"${TERM_TITLE}"
+PS2='> '
+PS3='#? '
+PS4='++ '

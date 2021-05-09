@@ -12,13 +12,16 @@
 ### Setup
 
 HOME_FILES='
+   .alias_rc
    .bashrc
    .dashrc
-   .envrc
-   .bash_functions_rc
+   .environment_rc
+   .env_rc
+   .functions_rc
    .inputrc
    .kshrc
    .profile
+   .prompt_rc
    .shrc
 '
 
@@ -26,6 +29,12 @@ RM_FILES='
    .bash_profile
    .local/bin/digpath.bash
    .local/bin/digpath.sh
+   .funcrc
+   .bash_functions_rc
+   .ksh_functions_rc
+   .aliasrc
+   .promptrc
+   .envrc
 '
 
 CONFIG_FILES='
@@ -132,7 +141,7 @@ for File in $HOME_FILES
 do
     backup_file  ~/"${File}" || exit 1
 
-    # Strip out syntastic info and install into $HOME
+    # Install into $HOME
     cp "${File}" ~ || {
        printf "Error: Failed while installing '~/%s'\\n" "${File}" >&2
        exit 1
@@ -143,12 +152,6 @@ do
        printf ' on ~/%s to 640\n' ".${File%.*}"  >&2
     }
 done
-
-## Old ksh versions don't alias local
-sed 's/ local / typeset /' ~/.bash_functions_rc > ~/.ksh_functions_rc ||
-    printf 'Warning: Failed to create ~/.ksh_functions_rc\n'
-chmod u=rw,g=r,o= ~/.ksh_functions_rc ||
-    printf 'Warning: Failed to set permissions on ~/.ksh_functions_rc\n'
 
 ## Install local scripts
 
@@ -227,4 +230,3 @@ for File in $RM_FILES
 do
     backup_file  ~/"$File" Remove || exit 1
 done
-

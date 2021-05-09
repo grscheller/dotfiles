@@ -16,5 +16,5 @@ esac
 ## Source ~/.shrc and fix what dash gets wrong
 . ~/.shrc
 
-## Dash strips out all the newlines from a multiline $PS1
-PS1="$ "
+## Dash strips out all the newlines from multiline $PS1
+PS1='[dash]$ '
