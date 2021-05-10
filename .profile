@@ -11,7 +11,7 @@
 
 case "$-" in
     *i*) # Initial interactive configurature for POSIX Shells
-         . ~/.envrc
+         . ~/.environment_rc
 
          # Set $ENV and $BASH_ENV
          MyShell=${0#-}; MyShell=${MyShell##*/}
