@@ -5,7 +5,6 @@
 #  ~/.bashrc and ~/.kshrc
 #
 # shellcheck shell=bash
-# shellcheck source=/dev/null
 
 ## Old versions of ksh & ksh clones use typeset for local
 if ! type local >&- 2>&-

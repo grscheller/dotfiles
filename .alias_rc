@@ -50,4 +50,3 @@ alias nv-on='sudo nvidia-smi -pm 1'
 alias addkey='eval $(ssh-agent) && ssh-add'
 #    Make sure git asks for passwords on the command line
 unset SSH_ASKPASS
-

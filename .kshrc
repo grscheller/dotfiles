@@ -22,7 +22,7 @@ HISTSIZE=5000
 ## Setup up prompt
 source ~/.prompt_rc
 
-## Shell functions (derived from ~/.bash_functions_rc)
+## Shell functions (common to bash and ksh)
 source ~/.functions_rc
 
 ## Aliases
