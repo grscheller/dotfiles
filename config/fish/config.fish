@@ -82,9 +82,3 @@ if test -r ~/.dashrc
 else if test -r ~/.shrc
     abbr -a -g dash ENV=~/.shrc dash
 end
-
-if test -r ~/.kshrc
-    abbr -a -g ksh ENV=~/.kshrc ksh
-else if test -r ~/.shrc
-    abbr -a -g ksh ENV=~/.shrc ksh
-end
