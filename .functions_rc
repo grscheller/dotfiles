@@ -1,16 +1,10 @@
 ##
 #  ~/.functions_rc
 #
-#  Function definitions used in both
-#  ~/.bashrc and ~/.kshrc
+#  Function definitions used by
+#  ~/.bashrc
 #
 # shellcheck shell=bash
-
-## Old versions of ksh & ksh clones use typeset for local
-if ! type local >&- 2>&-
-then
-    alias local=typeset
-fi
 
 ## Command line utility functions
 

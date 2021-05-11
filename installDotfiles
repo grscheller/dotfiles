@@ -19,7 +19,6 @@ HOME_FILES='
    .env_rc
    .functions_rc
    .inputrc
-   .kshrc
    .profile
    .prompt_rc
    .shrc
@@ -35,6 +34,7 @@ RM_FILES='
    .aliasrc
    .promptrc
    .envrc
+   .kshrc
 '
 
 CONFIG_FILES='

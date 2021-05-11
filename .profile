@@ -20,7 +20,6 @@ case "$-" in
          case "$MyShell"X in
                shX) export ENV=~/.shrc ;;
              dashX) export ENV=~/.dashrc ;;
-              kshX) export ENV=~/.kshrc ;;
              bashX) . ${BASH_ENV} ;;
                  *) : ;;
          esac
