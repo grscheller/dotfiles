@@ -189,21 +189,14 @@ Plug 'rust-lang/rust.vim'
 Plug 'ynkdir/vim-vimlparser'
 Plug 'syngan/vim-vimlint'
 
-" Iceberg colorscheme
+" Install colorschemes
 Plug 'cocopon/iceberg.vim'
-
-" Iceberg colorscheme
 Plug 'folke/tokyonight.nvim'
 
 " Colorize hexcodes and names like Blue
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
-
-"" Configure settings for Tokyo Night Colorscheme
-let g:tokyonight_style = "night"
-let g:tokyonight_italic_functions = 1
-let g:tokyonight_sidebars = [ "quickfix", "__vista__", "terminal" ]
 
 "" Configure settings for Syntastic
 let g:syntastic_always_populate_loc_list = 1
@@ -222,8 +215,8 @@ nnoremap <Leader>st :SyntasticToggleMode<CR>
 set termguicolors
 lua require'colorizer'.setup()
 
-" Colorscheme
+" Configure Tokyo Night Colorscheme
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
+let g:tokyonight_sidebars = [ "quickfix", "__vista__", "terminal" ]
 colorscheme tokyonight
-"colorscheme iceberg    " good for 4K monitors
-"colorscheme darkblue   " good for my cheap laptop monitor
-
