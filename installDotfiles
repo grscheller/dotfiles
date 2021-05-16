@@ -46,6 +46,10 @@ CONFIG_FILES='
    fish/functions/fish_greeting.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
+   fish/functions/la.fish
+   fish/functions/ldot.fish
+   fish/functions/lh.fish
+   fish/functions/ll.fish
    fish/functions/pathtrim.fish
    fish/functions/tm.fish
    fish/functions/ud.fish
