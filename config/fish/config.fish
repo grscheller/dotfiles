@@ -72,6 +72,16 @@ set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
 
+## Set up abriviations
+
+# Neovim
+abbr -a -g nv nvim
+
+# NVIDIA Daemon
+abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
+abbr -a -g -- nv-off sudo /usr/bin/nvidia-smi -pm 0
+abbr -a -g -- nv-on sudo nvidia-smi -pm 1
+
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
     abbr -a -g sh ENV=~/.shrc sh

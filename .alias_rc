@@ -20,9 +20,9 @@ else
     alias ls='ls --color=auto'
 fi
 alias l1='ls -1'
-alias la='ls -a'
+alias la='ls -A'
 alias ll='ls -ltr'
-alias lh='ls -ltrh'
+alias lh='ls -lh'
 alias l.='ls -dA .*'
 
 alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
@@ -33,7 +33,7 @@ alias nv=nvim
 #   Pull down a subset of a website
 alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
 #   Pull down more -- Not good for large websites
-alias WgetMirror='/usr/bin/wget --mirror -p --convert-links -e robots=off'
+alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
 # NVIDIA Daemon
 #   keeps card active when not running X-Windows

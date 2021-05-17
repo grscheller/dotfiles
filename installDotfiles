@@ -53,6 +53,8 @@ CONFIG_FILES='
    fish/functions/pathtrim.fish
    fish/functions/tm.fish
    fish/functions/ud.fish
+   fish/functions/Wget.fish
+   fish/functions/WgetM.fish
    nvim/init.vim
 '
 
