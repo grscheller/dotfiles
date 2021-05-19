@@ -185,6 +185,9 @@ Plug 'vim-syntastic/syntastic'
 " formatting, Syntastic integration, and more
 Plug 'rust-lang/rust.vim'
 
+" Vim support for fish scripts
+Plug 'dag/vim-fish'
+
 " Provide VimL lint checking via vimlint (below) and vint (pacman)
 Plug 'ynkdir/vim-vimlparser'
 Plug 'syngan/vim-vimlint'

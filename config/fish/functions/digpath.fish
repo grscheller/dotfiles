@@ -50,7 +50,7 @@ function digpath --description 'Look for files on $PATH'
     # Report on anything found
     if set -q Found[1]
         if not set -q _flag_quiet
-           printf %s\n $Found
+            printf %s\n $Found
         end
         return 0
     else

@@ -6,17 +6,17 @@ function pathtrim --description 'Canonicalize $PATH'
     # Parse cmdline options
     argparse -n 'pathtrim' h/help -- $argv
     and begin
-            if [ (count $argv) -gt 0 ]
-                set Path $argv
-            else
-                set Path $PATH
-            end
-            true
+        if [ (count $argv) -gt 0 ]
+            set Path $argv
+        else
+            set Path $PATH
         end
+        true
+    end
     or begin
            printf '          For usage type: pathtrim -h\n'
            return 2
-       end
+    end
 
     # Print help message and quit
     if set -q _flag_help
@@ -33,7 +33,7 @@ function pathtrim --description 'Canonicalize $PATH'
     end
 
     # Make sure we have a proper readlink shell utility,
-    # on iMac shell utilities are old and crusty.
+    # iMac shell utilities are old and crusty.
     set -l READLINK readlink
     digpath -q greadlink && set READLINK greadlink
 
