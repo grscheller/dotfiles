@@ -130,6 +130,8 @@ function ax
          *.tar.xz)  xz -dc "$1" | tar -xvf -    ;;
          *.tar.7z)  7za x -so "$1" | tar -xvf - ;;
          *.7z)      7z x "$1"                   ;;
+         *.tar.zst) zstd -dc "$1" | tar -xvf -  ;;
+         *.zst)     zstd -d "$1"                ;;
          *.cpio)    cpio -idv < "$1"            ;;
          *) printf 'ax: error: "%s" unknown file type' "$1"  >&2 ;;
        esac

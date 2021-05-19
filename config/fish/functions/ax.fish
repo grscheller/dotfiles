@@ -35,6 +35,10 @@ function ax --description 'Archive eXtractor: usage: ax <file>'
             7za x -so $exFile[1] | tar -xvf -
         case '*.7z'
             7z x $exFile[1]
+        case '*.tar.zst'
+            zstd -dc $exFile[1] | tar -xvf -
+        case '*.zst'
+            zstd -d $exFile[1]
         case '*.cpio'
             cpio -idv < $exFile[1]
         case '*'
