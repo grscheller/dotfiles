@@ -1,8 +1,7 @@
 ##
 #  ~/.functions_rc
 #
-#  Function definitions used by
-#  ~/.bashrc
+#  Function definitions used by ~/.bashrc
 #
 # shellcheck shell=bash
 
@@ -248,21 +247,21 @@ function archJDK
 
    if [[ -z $version ]]
    then
-       printf "Available Java Versions: "
+       printf "\nAvailable Java Versions:"
        for jdir in /usr/lib/jvm/java-*-openjdk
        do
            jver=${jdir%-*}
            jver=${jver#*-}
-           printf '%s ' "$jver"
+           printf ' %s' "$jver"
        done
        printf '\n'
-       return
+       return 0
    fi
 
    if [[ ! $version == @([1-9])*([0-9]) ]]
    then
-       printf "Malformed JDK version number: \"%s\"\n" "$version"
-       return
+       printf "Malformed JDK version number: \"%s\"\n" "$version" >&2
+       return 1
    fi
 
    if [[ -d /usr/lib/jvm/java-${version}-openjdk ]]
@@ -273,9 +272,11 @@ function archJDK
            PATH=${PATH#[^:]*:}
        fi
        PATH=$JAVA_HOME/bin:$PATH
+       return 0
    else
-       printf "No JDK found for Java \"%s\" in the\n" "$version"
-       printf "standard location for Arch: /usr/lib/jvm/\n"
+       printf '\nNo JDK found for Java version %s in the\n" "$version' >&2
+       printf 'standard location on Arch Linux: /usr/lib/jvm/\n' >&2
+       return 1
    fi
 }
 

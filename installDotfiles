@@ -41,6 +41,7 @@ CONFIG_FILES='
    alacritty/alacritty.yml
    fish/completions/alacritty.fish
    fish/config.fish
+   fish/functions/archJDK.fish
    fish/functions/ax.fish
    fish/functions/digpath.fish
    fish/functions/ff.fish
