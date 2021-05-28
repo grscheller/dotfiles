@@ -46,6 +46,9 @@ and begin
     # Rust toolchain
     set -p PATH ~/.cargo/bin
 
+    # SBT on iMac installed with SDKMAN
+    set -p PATH ~/.sdkman/candidates/sbt/current/bin
+
     # Utilities I want to overide everything
     set -p PATH ~/.local/bin ~/opt/bin
     # Personal utilities available if not found elsewhere
@@ -75,7 +78,7 @@ set fish_cursor_visual underscore blink
 ## Set up abriviations
 
 # Neovim
-abbr -a -g nv nvim
+abbr -a -g n nvim
 
 # NVIDIA Daemon
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
