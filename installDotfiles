@@ -54,6 +54,7 @@ CONFIG_FILES='
    fish/functions/ll.fish
    fish/functions/path.fish
    fish/functions/pathtrim.fish
+   fish/functions/rc.fish
    fish/functions/tm.fish
    fish/functions/ud.fish
    fish/functions/Wget.fish
