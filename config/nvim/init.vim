@@ -178,8 +178,8 @@ Plug 'junegunn/vim-peekaboo'
 " Use vim-airline to configure the statusline
 Plug 'vim-airline/vim-airline'
 
-" Provide syntax checking with Syntastic
-Plug 'vim-syntastic/syntastic'
+" Provide syntax checking with Neomake
+Plug 'neomake/neomake'
 
 " Provide Rust file detection, syntax highlighting,
 " formatting, Syntastic integration, and more
@@ -201,16 +201,10 @@ Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
-"" Configure settings for Syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_vim_checkers = ['vint', 'vimlint']
-let g:syntastic_shell = '/bin/sh'
-
-" Toggle Synastic into and out of passive mode
-nnoremap <Leader>st :SyntasticToggleMode<CR>
+"" Neomake configuration
+" Full config: when writing or reading a buffer, and on changes
+" in insert and normal mode (after 500ms; no delay when writing).
+call neomake#configure#automake('nrwi', 500)
 
 "" Setup colors
 
