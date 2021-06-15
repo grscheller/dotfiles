@@ -56,6 +56,11 @@ and begin
     # Added two relative paths used in some software projects
     set -a PATH bin ../bin
 
+    # If on Arch, set up JDK for Java 11
+    if string match -qr 'arch' (uname -r)
+        archJDK 11
+    end
+
     # Clean up duplicate and non-existing paths
     set PATH (pathtrim)
 

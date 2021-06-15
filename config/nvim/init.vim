@@ -78,6 +78,9 @@ nnoremap <Leader>w :%s/\s\+$//<CR>
 nnoremap <Leader>sp :set invspell<CR>
 
 " Reduce keystrokes from :dig to entering digraph
+" - position cursor on char before you want to insert digraph
+" - use q to exit digraph table
+" - type digraph
 nnoremap <expr> <Leader>k ':dig<CR>a<C-K>'
 
 " Fix old vi normal mode inconsistancy between Y and D & C
@@ -96,8 +99,9 @@ nnoremap <C-Right> <C-W>l
 nnoremap <C-H> <C-W>H
 nnoremap <C-J> <C-W>J
 nnoremap <C-K> <C-W>K
+" Lost <C-K> to enter digraphs, use <Leader>k instead
 nnoremap <C-L> <C-W>L
-" Lost <C-L> to clear & redraw screen in normal mode
+" Lost <C-L> to clear & redraw screen, use <Leader>l instead
 nnoremap <Leader>l :mode<CR>
 
 " Resize windows using ALT-hjkl in normal mode
@@ -178,15 +182,13 @@ Plug 'junegunn/vim-peekaboo'
 " Use vim-airline to configure the statusline
 Plug 'vim-airline/vim-airline'
 
-" Provide syntax checking with Neomake
+" Use NeoMake to provide asynchronous execution of commands,
+" usually for syntax/style checking and building source code.
 Plug 'neomake/neomake'
 
 " Provide Rust file detection, syntax highlighting,
 " formatting, Syntastic integration, and more
 Plug 'rust-lang/rust.vim'
-
-" Vim support for fish scripts
-Plug 'dag/vim-fish'
 
 " Provide VimL lint checking via vimlint (below) and vint (pacman)
 Plug 'ynkdir/vim-vimlparser'
@@ -202,13 +204,18 @@ Plug 'norcalli/nvim-colorizer.lua'
 call plug#end()
 
 "" Neomake configuration
-" Full config: when writing or reading a buffer, and on changes
-" in insert and normal mode (after 500ms; no delay when writing).
+
+" NeoMake full interactive automation
+"   when writing or reading a buffer, and on changes in
+"   insert and normal mode (after 500ms; no delay when writing).
 call neomake#configure#automake('nrwi', 500)
+
+" Disable NeoMake scala makers, will use Metals for Scala.
+let g:neomake_scala_enabled_makers = []
 
 "" Setup colors
 
-" Nvim-colorizer setup (create autocmds for filetypes)
+" Nvim colorizer setup (create autocmds for filetypes)
 set termguicolors
 lua require'colorizer'.setup()
 
