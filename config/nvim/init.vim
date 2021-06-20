@@ -10,7 +10,7 @@
 "" Remove Vim misfeatures and vulnerabilities
 set nomodeline
 
-"" Some plugins need a POSIX compatible shell
+"" Some plugins need a POSIX compatible shell, like neomake
 "
 set shell=/bin/sh
 
@@ -193,6 +193,9 @@ Plug 'rust-lang/rust.vim'
 " Provide VimL lint checking via vimlint (below) and vint (pacman)
 Plug 'ynkdir/vim-vimlparser'
 Plug 'syngan/vim-vimlint'
+
+" Provide Fish syntax highlighting support
+Plug 'dag/vim-fish'
 
 " Install colorschemes
 Plug 'cocopon/iceberg.vim'
