@@ -182,9 +182,13 @@ Plug 'junegunn/vim-peekaboo'
 " Use vim-airline to configure the statusline
 Plug 'vim-airline/vim-airline'
 
+" Install plugins to manage Metals for Scala
+Plug 'scalameta/nvim-metals'
+Plug 'nvim-lua/completion-nvim'
+
 " Use NeoMake to provide asynchronous execution of commands,
 " usually for syntax/style checking and building source code.
-Plug 'neomake/neomake'
+"Plug 'neomake/neomake'
 
 " Provide Rust file detection, syntax highlighting,
 " formatting, Syntastic integration, and more
@@ -206,15 +210,74 @@ Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
+"" Metals configuration, modified
+"  from https://github.com/scalameta/nvim-metals/discussions/39
+
+set shortmess-=F
+set shortmess+=c
+
+" Nvim-LSP Mappings
+nnoremap <silent> gd        <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gds       <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gws       <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> mrn       <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> mf        <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> mca       <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> mws       <cmd>lua require'metals'.worksheet_hover()<CR>
+nnoremap <silent> ma        <cmd>lua require'metals'.open_all_diagnostics()<CR>
+nnoremap <silent> <Leader>d <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent> <Leader>[ <cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>
+nnoremap <silent> <Leader>] <cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>
+
+" Nvim-Metals setup with a few additions such as nvim-completions
+:lua << EOF
+  metals_config = require'metals'.bare_config
+  metals_config.settings = {
+     showImplicitArguments = true,
+     excludedPackages = {
+       "akka.actor.typed.javadsl",
+       "com.github.swagger.akka.javadsl"
+     }
+  }
+
+  metals_config.on_attach = function()
+    require'completion'.on_attach();
+  end
+
+  metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = {
+        prefix = '',
+      }
+    }
+  )
+EOF
+
+augroup lsp
+  au!
+  au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
+augroup end
+
+" completion-nvim settings
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
 "" Neomake configuration
 
 " NeoMake full interactive automation
 "   when writing or reading a buffer, and on changes in
 "   insert and normal mode (after 500ms; no delay when writing).
-call neomake#configure#automake('nrwi', 500)
+"call neomake#configure#automake('nrwi', 500)
 
 " Disable NeoMake scala makers, will use Metals for Scala.
-let g:neomake_scala_enabled_makers = []
+"let g:neomake_scala_enabled_makers = []
 
 "" Setup colors
 
