@@ -202,8 +202,7 @@ Plug 'syngan/vim-vimlint'
 Plug 'dag/vim-fish'
 
 " Install colorschemes
-Plug 'cocopon/iceberg.vim'
-Plug 'folke/tokyonight.nvim'
+Plug 'grscheller/tokyonight.nvim'
 
 " Colorize hexcodes and names like Blue
 Plug 'norcalli/nvim-colorizer.lua'
