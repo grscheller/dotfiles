@@ -66,7 +66,7 @@ set nrformats+=alpha        " ... also single letters too
 
 " Define <Leader> explicitly as a space
 nnoremap <Space> <Nop>
-let g:mapleader = "\<Space>"
+let g:mapleader = '\<Space>'
 
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
@@ -213,8 +213,9 @@ call plug#end()
 "" Metals configuration, modified
 "  from https://github.com/scalameta/nvim-metals/discussions/39
 
-set shortmess-=F
-set shortmess+=c
+" Comment out for latest stable server.  to use the latest bloody edge
+" version, see https://scalameta.org/metals/docs/editors/vim.html
+let g:metals_server_version = '0.10.4+90-3eb05ccf-SNAPSHOT'
 
 " Nvim-LSP Mappings
 nnoremap <silent> gd        <cmd>lua vim.lsp.buf.definition()<CR>
@@ -263,11 +264,14 @@ augroup end
 
 " completion-nvim settings
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <Tab>   pumvisible() ? '\<C-n>' : '\<Tab>'
+inoremap <expr> <S-Tab> pumvisible() ? '\<C-p>' : '\<S-Tab>'
 
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
+
+set shortmess-=F
+set shortmess+=c
 
 "" Neomake configuration
 
@@ -288,5 +292,5 @@ lua require'colorizer'.setup()
 " Configure Tokyo Night Colorscheme
 let g:tokyonight_style = 'night'
 let g:tokyonight_italic_functions = 1
-let g:tokyonight_sidebars = [ 'quickfix', '__vista__', 'terminal' ]
+let g:tokyonight_sidebars = [ 'qf', 'vista_kind', 'terminal', 'packer' ]
 colorscheme tokyonight
