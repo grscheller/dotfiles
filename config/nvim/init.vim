@@ -66,7 +66,7 @@ set nrformats+=alpha        " ... also single letters too
 
 " Define <Leader> explicitly as a space
 nnoremap <Space> <Nop>
-let g:mapleader = '\<Space>'
+let g:mapleader = "\<Space>"
 
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
@@ -214,7 +214,7 @@ call plug#end()
 
 " Comment out for latest stable server.  to use the latest bloody edge
 " version, see https://scalameta.org/metals/docs/editors/vim.html
-let g:metals_server_version = '0.10.4+90-3eb05ccf-SNAPSHOT'
+let g:metals_server_version = '0.10.4+98-82dd043c-SNAPSHOT'
 
 " Nvim-LSP Mappings
 nnoremap <silent> gd        <cmd>lua vim.lsp.buf.definition()<CR>
