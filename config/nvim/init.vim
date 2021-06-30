@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " Neovim configuration file
 "
 " ~/.config/nvim/init.vim
@@ -188,7 +190,7 @@ Plug 'nvim-lua/completion-nvim'
 
 " Use NeoMake to provide asynchronous execution of commands,
 " usually for syntax/style checking and building source code.
-"Plug 'neomake/neomake'
+Plug 'neomake/neomake'
 
 " Provide Rust file detection, syntax highlighting,
 " formatting, Syntastic integration, and more
@@ -212,8 +214,8 @@ call plug#end()
 "" Metals configuration, modified
 "  from https://github.com/scalameta/nvim-metals/discussions/39
 
-" Comment out for latest stable server.  to use the latest bloody edge
-" version, see https://scalameta.org/metals/docs/editors/vim.html
+" Comment out for latest stable server.  To use the latest bloody edge
+" version, see https://scalameta.org/metals/docs/editors/overview.html
 let g:metals_server_version = '0.10.4+98-82dd043c-SNAPSHOT'
 
 " Nvim-LSP Mappings
@@ -277,10 +279,10 @@ set shortmess+=c
 " NeoMake full interactive automation
 "   when writing or reading a buffer, and on changes in
 "   insert and normal mode (after 500ms; no delay when writing).
-"call neomake#configure#automake('nrwi', 500)
+call neomake#configure#automake('nrwi', 500)
 
 " Disable NeoMake scala makers, will use Metals for Scala.
-"let g:neomake_scala_enabled_makers = []
+let g:neomake_scala_enabled_makers = []
 
 "" Setup colors
 
