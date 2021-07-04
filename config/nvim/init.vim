@@ -1,5 +1,3 @@
-scriptencoding utf-8
-
 " Neovim configuration file
 "
 " ~/.config/nvim/init.vim
@@ -9,45 +7,33 @@ scriptencoding utf-8
 
 """ Preliminaries
 
+"" Set default encoding, localizations, and file formats
+set encoding=utf-8
+scriptencoding utf-8
+set fileencoding=utf-8
+set spelllang=en_us
+set fileformats=unix,mac,dos
+
 "" Remove Vim misfeatures and vulnerabilities
 set nomodeline
 
-"" Some plugins need a POSIX compatible shell, like neomake
-"
+"" Some plugins need a POSIX compatible shell
 set shell=/bin/sh
 
-"" Improve Vi, not Clone Vi
-
+"" Improve Vi and Vim, not Clone Vi or Vim
 " More powerful backspacing in insert mode
 set backspace=indent,eol,start
-
 " Make tab completion in command mode more useful
 set wildmenu
 set wildmode=longest:full,full
-
 " Allow gf and :find to use recursive sub-folders
 " and find files in the working directory
 set path+=.,**
 set hidden
 
-"" Set default encoding and localizations
-"  Warning: Linux/Unix/UTF-8 oriented
-set encoding=utf-8
-set fileencoding=utf-8
-set spelllang=en_us
-set fileformats=unix,mac,dos
-
 """ Personnal preferences
 
 "" Configure features and behaviors
-
-" Set default tabstops and replace tabs with spaces
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-
-" Other configurations
 set history=10000   " Number lines of command history to keep
 set mouse=a         " Enable mouse for all modes
 set scrolloff=2     " Keep cursor away from top/bottom of window
@@ -64,47 +50,47 @@ set showcmd         " Show partial normal mode commands in lower right corner
 set nrformats=bin,hex,octal " bases used for <C-A> & <C-X>,
 set nrformats+=alpha        " ... also single letters too
 
-"" Setup key mappings
+" Set default tabstops and replace tabs with spaces
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
+"" Setup key mappings
 " Define <Leader> explicitly as a space
 nnoremap <Space> <Nop>
 let g:mapleader = "\<Space>"
 
 " Clear search highlighting
 nnoremap <Leader><Space> :nohlsearch<CR>
-
-" Get rid of all trailing whitespace for entire buffer
+ 
+" Trim all trailing whitespace
 nnoremap <Leader>w :%s/\s\+$//<CR>
 
 " Toggle spell checking
 nnoremap <Leader>sp :set invspell<CR>
 
-" Reduce keystrokes from :dig to entering digraph
-" - position cursor on char before you want to insert digraph
-" - use q to exit digraph table
-" - type digraph
-nnoremap <expr> <Leader>k ':dig<CR>a<C-K>'
-
-" Fix old vi normal mode inconsistancy between Y and D & C
+" Fix an old vi inconsistancy between Y and D & C
 nnoremap Y y$
 
-" Open a vertical terminal in fish shell
+" Open a vertical terminal running fish shell
 nnoremap <expr> <Leader>f ':vsplit<CR>:term fish<CR>i'
 
-" Use CTRL+arrow-keys to navigate between windows in normal mode
-nnoremap <C-Left> <C-W>h
-nnoremap <C-Down> <C-W>j
-nnoremap <C-Up> <C-W>k
-nnoremap <C-Right> <C-W>l
+" Reduce keystrokes and memmory load from :dig to entering digraph
+"  - position cursor on char before you want to insert digraph
+"  - type <Leader>k
+"  - use q to exit digraph table
+"  - type digraph
+nnoremap <expr> <Leader>k ':dig<CR>a<C-K>'
+
+" Clear & redraw screen, lost <C-L> for this below
+nnoremap <Leader>l :mode<CR>
 
 " Move windows around using CTRL-hjkl in normal mode
 nnoremap <C-H> <C-W>H
 nnoremap <C-J> <C-W>J
 nnoremap <C-K> <C-W>K
-" Lost <C-K> to enter digraphs, use <Leader>k instead
 nnoremap <C-L> <C-W>L
-" Lost <C-L> to clear & redraw screen, use <Leader>l instead
-nnoremap <Leader>l :mode<CR>
 
 " Resize windows using ALT-hjkl in normal mode
 nnoremap <M-h> 2<C-W><
@@ -112,11 +98,11 @@ nnoremap <M-j> 2<C-W>-
 nnoremap <M-k> 2<C-W>+
 nnoremap <M-l> 2<C-W>>
 
-" Navigating in insert mode using ALT-hjkl
-inoremap <M-h> <Left>
-inoremap <M-j> <Down>
-inoremap <M-k> <Up>
-inoremap <M-l> <Right>
+" Navigate between windows using CTRL+arrow-keys in normal mode
+nnoremap <C-Left> <C-W>h
+nnoremap <C-Down> <C-W>j
+nnoremap <C-Up> <C-W>k
+nnoremap <C-Right> <C-W>l
 
 " Toggle between 3 line numbering states via <Leader>n
 set nonumber
@@ -138,9 +124,6 @@ endfunction
 nnoremap <Leader>n :call MyLineNumberToggle()<CR>:<C-C>
 
 """ Setup plugins
-
-"" Add optional plugins bundled with nvim
-packadd! matchit   " Add additional matching functionality to %
 
 "" Setup the Plug plugin manager
 "
@@ -174,7 +157,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Works in visual line mode
 Plug 'tpope/vim-surround'
 
-" Enable repeating supported plugin maps with "."
+" Enable repeating last action via "." for supported plugins
 Plug 'tpope/vim-repeat'
 
 " Shows what is in registers
@@ -216,7 +199,7 @@ call plug#end()
 
 " Comment out for latest stable server.  To use the latest bloody edge
 " version, see https://scalameta.org/metals/docs/editors/overview.html
-let g:metals_server_version = '0.10.4+98-82dd043c-SNAPSHOT'
+let g:metals_server_version = '0.10.4+118-c2380821-SNAPSHOT'
 
 " Nvim-LSP Mappings
 nnoremap <silent> gd        <cmd>lua vim.lsp.buf.definition()<CR>
