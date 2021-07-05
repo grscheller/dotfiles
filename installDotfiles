@@ -26,15 +26,7 @@ HOME_FILES='
 
 RM_FILES='
    .bash_profile
-   .local/bin/digpath.bash
-   .local/bin/digpath.sh
-   .funcrc
-   .bash_functions_rc
-   .ksh_functions_rc
-   .aliasrc
-   .promptrc
-   .envrc
-   .kshrc
+   .config/nvim/init.vim
 '
 
 CONFIG_FILES='
@@ -59,7 +51,7 @@ CONFIG_FILES='
    fish/functions/ud.fish
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
-   nvim/init.vim
+   nvim/init.lua
 '
 
 SSH_CONFIGS='
@@ -72,6 +64,7 @@ LOCAL_BIN_SCRIPTS='
 '
 
 BIN_SCRIPTS='
+   bsPaq
    bsPlug
    buArch
    monitor
