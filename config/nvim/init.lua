@@ -67,14 +67,14 @@ vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
 -- Open a vertical terminal running fish shell
-vim.api.nvim_set_keymap('n', '<Leader>f', ':vsplit<CR>:term fish<CR>i', { noremap = true, expr = true })
+vim.api.nvim_set_keymap('n', '<Leader>f', ':vsplit<CR>:term fish<CR>i', { noremap = true })
 
 -- Reduce keystrokes and memmory load from :dig to entering digraph
    -- position cursor on char before you want to insert digraph
    -- type <Leader>k
    -- use q to exit digraph table
    -- type digraph
-vim.api.nvim_set_keymap('n', '<Leader>k', ':dig<CR>a<C-K>', { noremap = true, expr = true })
+vim.api.nvim_set_keymap('n', '<Leader>k', ':dig<CR>a<C-K>', { noremap = true })
 
 -- Clear & redraw screen, lost <C-L> for this below
 vim.api.nvim_set_keymap('n', '<Leader>l', ':mode<CR>', { noremap = true, silent = true })
@@ -240,7 +240,7 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
--- completion-nvim settings - use <Tab> and <S-Tab> to navigate through popup menu
+-- completion-nvim settings - use <Tab> and <S-Tab> to navigate through popup menus
 vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
 vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
 
