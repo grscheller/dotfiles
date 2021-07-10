@@ -14,7 +14,7 @@ vim.o.spelllang = "en_us"
 vim.o.fileformats = "unix,mac,dos"
 
 vim.o.modeline = false -- Remove Vim vulnerability
-vim.o.shell = "/bin/sh"  -- Some plugins need a POSIX compatible shell
+vim.o.shell = "/bin/sh"  -- Some packages need a POSIX compatible shell
 
 vim.o.backspace = "indent,eol,start"  -- More powerful backspacing in insert mode
 
@@ -116,73 +116,54 @@ end
 
 vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', { noremap = true, silent = true })
 
---[[ Setup plugins ]]
+--[[ Paq package manager configuration
 
---[[ Setup the Paq plugin manager
+     To bootstrap, clone into an initial "right place":
 
-       Bootstrap manually by installing paq.nvim into the right place:
+       git clone https://github.com/savq/paq-nvim.git \
+           ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
 
-         git clone https://github.com/savq/paq-nvim.git \
-             ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+     and then from command mode run
 
-       and then from command mode run
+       :PaqInstall
 
-         :PaqInstall
+     Paq Commands:
+       :PaqInstall  <- Install all packages listed in configuration below
+       :PaqUpdate   <- Update packages already on system
+       :PaqClean    <- Remove packages not in configuration
+       :PaqSync     <- Execute all three operations above ]]
+require 'paq' {
+    'savq/paq-nvim';  -- Let Paq manage itself.
 
-       Paq Commands:
-        :PaqInstall  <- to install plugins
-        :PaqUpdate   <- to update plugins
-        :PaqClean    <- to remove unused plugins ]]
+    'tpope/vim-surround';  --[[ Surrond text objects with matching (). {}. '', etc.
 
-vim.cmd('packadd paq-nvim')
-local paq = require('paq-nvim').paq
+                                  ds delete surronding - ds"
+                                  cs change surronding - cs[{
+                                  ys surround text object or motion - ysiw)
 
--- paq-nvim manages itself
-paq {'savq/paq-nvim', opt = true}
+                                Works on various markup tags and in visual line mode. ]]
 
--- Surrond text objects with matching (). {}. '', etc
---
---   ds delete surronding - ds"
---   cs change surronding - cs[{
---   ys surround text object or motion - ysiw)
---
--- Works on various markup tags
--- Works in visual line mode
-paq {'tpope/vim-surround'}
+    'tpope/vim-repeat';  -- Repeat last action via "." for supported packages.
 
--- Enable repeating last action via "." for supported plugins
-paq {'tpope/vim-repeat'}
+    'junegunn/vim-peekaboo';  --[[ Shows what is in registers, extends " and @
+                                   in normal mode and <C-R> in insert mode. ]]
 
--- Shows what is in registers. extends " and @ in normal mode and <C-R> in insert mode
-paq {'junegunn/vim-peekaboo'}
+    'vim-airline/vim-airline';  -- Used to configure statusline.
 
--- Use vim-airline to configure the statusline
-paq {'vim-airline/vim-airline'}
+    'scalameta/nvim-metals';     -- Install packages to
+    'nvim-lua/completion-nvim';  -- manage Scala with Metals.
 
--- Install plugins to manage Metals for Scala
-paq {'scalameta/nvim-metals'}
-paq {'nvim-lua/completion-nvim'}
+    'rust-lang/rust.vim';  -- Provide Rust file detection, syntax highlighting, formatting.
 
--- Use NeoMake to provide asynchronous execution of commands,
--- for syntax/style checking and building source code.
-paq {'neomake/neomake'}
+    'ynkdir/vim-vimlparser';  -- Provide VimL lint checking via
+    'syngan/vim-vimlint';     -- vimlint (here) and vint (pacman).
 
--- Provide Rust file detection, syntax highlighting,
--- formatting, Syntastic integration, and more.
-paq {'rust-lang/rust.vim'}
+    'dag/vim-fish';  -- Provide Fish syntax highlighting support.
 
--- Provide VimL lint checking via vimlint (below) and vint (pacman)
-paq {'ynkdir/vim-vimlparser'}
-paq {'syngan/vim-vimlint'}
+    'grscheller/tokyonight.nvim';  -- Install my hacked version of Tokyo Night colorschemes.
 
--- Provide Fish syntax highlighting support
-paq {'dag/vim-fish'}
-
--- Install my hacked version of Tokyo Night colorschemes
-paq {'grscheller/tokyonight.nvim'}
-
--- Colorize hexcodes and names like Blue
-paq {'norcalli/nvim-colorizer.lua'}
+    'norcalli/nvim-colorizer.lua';  -- Colorize hexcodes and names like Blue.
+}
 
 --[[ Metals configuration
 
@@ -192,7 +173,7 @@ paq {'norcalli/nvim-colorizer.lua'}
      is ithe current bloody edge version. ]]
 
 -- Comment out for latest stable server
-vim.g.metals_server_version = '0.10.4+118-c2380821-SNAPSHOT'
+vim.g.metals_server_version = '0.10.4+145-14c56ef6-SNAPSHOT'
 
 -- Nvim-LSP Mappings
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
@@ -244,10 +225,8 @@ vim.api.nvim_exec([[
 vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
 vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noinsert,noselect"
+vim.o.completeopt = "menuone,noinsert,noselect"  -- For a better completion experience.
 
--- Exercise: Do this in Lua
 vim.cmd([[
   set shortmess-=F
   set shortmess+=c
@@ -255,13 +234,13 @@ vim.cmd([[
 
 --[[ Neomake configuration ]]
 
--- NeoMake full interactive automation
-vim.cmd([[
-  call neomake#configure#automake('nrwi', 500)
-]])
-
+---- NeoMake full interactive automation
+--vim.cmd([[
+--  call neomake#configure#automake('nrwi', 500)
+--]])
+--
 -- Disable NeoMake scala makers, will use Metals for Scala.
-vim.g.neomake_scala_enabled_makers = {}
+--vim.g.neomake_scala_enabled_makers = {}
 
 --[[ Setup colors ]]
 
