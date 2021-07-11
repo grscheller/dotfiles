@@ -90,6 +90,7 @@ abbr -a -g nv nvim
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
 abbr -a -g -- nv-off sudo /usr/bin/nvidia-smi -pm 0
 abbr -a -g -- nv-on sudo nvidia-smi -pm 1
+abbr -a -g -- dp digpath
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
