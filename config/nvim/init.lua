@@ -116,6 +116,18 @@ end
 
 vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', { noremap = true, silent = true })
 
+-- Use <Tab> and <S-Tab> to navigate through popup menus
+vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
+vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
+
+-- For a better completion experience.
+vim.o.completeopt = "menuone,noinsert,noselect"
+
+vim.cmd([[
+  set shortmess-=F
+  set shortmess+=c
+]])
+
 --[[ Paq package manager configuration
 
      To bootstrap, clone into an initial "right place":
@@ -132,8 +144,25 @@ vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', {
        :PaqUpdate   <- Update packages already on system
        :PaqClean    <- Remove packages not in configuration
        :PaqSync     <- Execute all three operations above ]]
-require 'paq' {
+
+local paq = require('paq')
+
+paq {
     'savq/paq-nvim';  -- Let Paq manage itself.
+
+    'neovim/nvim-lspconfig';  -- Collection of common configurations for built-in LSP client
+
+    'scalameta/nvim-metals';     -- Install packages to
+    'nvim-lua/completion-nvim';  -- manage Scala with Metals.
+
+    'simrat39/rust-tools.nvim';  -- configuration & extra tools for rust-analyzer
+
+    -- 'rust-lang/rust.vim';  -- Provide Rust file detection, syntax highlighting, formatting.
+
+    -- 'ynkdir/vim-vimlparser';  -- Provide VimL lint checking via
+    -- 'syngan/vim-vimlint';     -- vimlint (here) and vint (pacman).
+
+    'dag/vim-fish';  -- Provide Fish syntax highlighting support.
 
     'tpope/vim-surround';  --[[ Surrond text objects with matching (). {}. '', etc.
 
@@ -150,46 +179,60 @@ require 'paq' {
 
     'vim-airline/vim-airline';  -- Used to configure statusline.
 
-    'scalameta/nvim-metals';     -- Install packages to
-    'nvim-lua/completion-nvim';  -- manage Scala with Metals.
-
-    'rust-lang/rust.vim';  -- Provide Rust file detection, syntax highlighting, formatting.
-
-    'ynkdir/vim-vimlparser';  -- Provide VimL lint checking via
-    'syngan/vim-vimlint';     -- vimlint (here) and vint (pacman).
-
-    'dag/vim-fish';  -- Provide Fish syntax highlighting support.
-
     'grscheller/tokyonight.nvim';  -- Install my hacked version of Tokyo Night colorschemes.
 
     'norcalli/nvim-colorizer.lua';  -- Colorize hexcodes and names like Blue.
 }
+
+--[[ Nvim-lspconf Configurations ]]
+
+local lspconfig = require'lspconfig'
+
+-- Use pyright for Python
+lspconfig.pyright.setup{}
+
+--[[ Rust configuration 
+
+     Config from: https://github.com/simrat39/rust-tools.nvim ]]
+
+local rust_opts = {
+    tools = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        runnables = {
+            use_telescope = false
+        },
+        inlay_hints = {
+            show_parameter_hints = true,
+            parameter_hints_prefix = '<- ',
+            other_hints_prefix = '=> ',
+            max_len_align = false,
+            max_len_align_padding = 1,
+            right_align = false,
+            rigt_align_padding = 7
+        },
+        hover_actions = {
+            {"╭", "FloatBorder"}, {"─", "FloatBorder"},
+            {"╮", "FloatBorder"}, {"│", "FloatBorder"},
+            {"╯", "FloatBorder"}, {"─", "FloatBorder"},
+            {"╰", "FloatBorder"}, {"│", "FloatBorder"}
+        },
+        auto_focus = false
+    },
+    server = {} -- rust-analyzer options
+}
+
+require('rust-tools').setup(rust_opts)
 
 --[[ Metals configuration
 
      Modified from https://github.com/scalameta/nvim-metals/discussions/39
 
      See https://scalameta.org/metals/docs/editors/overview.html for what
-     is ithe current bloody edge version. ]]
+     is the current bloody edge version. ]]
 
 -- Comment out for latest stable server
 vim.g.metals_server_version = '0.10.4+145-14c56ef6-SNAPSHOT'
-
--- Nvim-LSP Mappings
-vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gds', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'gws', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'mrn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'mf', '<Cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'mca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'mws', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', 'ma', '<Cmd>lua require\'metals\'.open_all_diagnostics()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', { noremap = true, silent = true })
 
 -- Nvim-Metals setup with a few additions such as nvim-completions
 metals_config = require'metals'.bare_config
@@ -221,26 +264,22 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
--- completion-nvim settings - use <Tab> and <S-Tab> to navigate through popup menus
-vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
-vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
-
-vim.o.completeopt = "menuone,noinsert,noselect"  -- For a better completion experience.
-
-vim.cmd([[
-  set shortmess-=F
-  set shortmess+=c
-]])
-
---[[ Neomake configuration ]]
-
----- NeoMake full interactive automation
---vim.cmd([[
---  call neomake#configure#automake('nrwi', 500)
---]])
---
--- Disable NeoMake scala makers, will use Metals for Scala.
---vim.g.neomake_scala_enabled_makers = {}
+-- Nvim-LSP Mappings
+vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gds', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'gws', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>K', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'mca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'ma', '<Cmd>lua require\'metals\'.open_all_diagnostics()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', { noremap = true, silent = true })
 
 --[[ Setup colors ]]
 
