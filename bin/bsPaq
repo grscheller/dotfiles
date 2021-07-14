@@ -6,7 +6,7 @@
 #    :PaqUpdate   <- to update plugins
 #    :PaqClean    <- to remove unused plugins
 
-PaqLocation="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/opt/paq-nvim
+PaqLocation="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
 PaqGIT=https://github.com/savq/paq-nvim.git
 
 git clone ${PaqGIT} "${PaqLocation}"

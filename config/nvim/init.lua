@@ -148,40 +148,33 @@ vim.cmd([[
 local paq = require('paq')
 
 paq {
-    'savq/paq-nvim';  -- Let Paq manage itself.
+    "savq/paq-nvim";          -- Let Paq manage itself.
 
-    'neovim/nvim-lspconfig';  -- Collection of common configurations for built-in LSP client
+    "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
 
-    'scalameta/nvim-metals';     -- Install packages to
-    'nvim-lua/completion-nvim';  -- manage Scala with Metals.
+    "scalameta/nvim-metals";     -- Install packages to
+    "nvim-lua/completion-nvim";  -- manage Scala with Metals.
 
-    'simrat39/rust-tools.nvim';  -- configuration & extra tools for rust-analyzer
+    "simrat39/rust-tools.nvim";  -- configuration & extra tools for rust-analyzer
 
-    -- 'rust-lang/rust.vim';  -- Provide Rust file detection, syntax highlighting, formatting.
+    "dag/vim-fish";        -- Provide Fish syntax highlighting support.
 
-    -- 'ynkdir/vim-vimlparser';  -- Provide VimL lint checking via
-    -- 'syngan/vim-vimlint';     -- vimlint (here) and vint (pacman).
+    "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
+                           --     ds delete surronding - ds"
+                           --     cs change surronding - cs[{
+                           --     ys surround text object or motion - ysiw)
+                           --   Works on various markup tags and in visual line mode.
 
-    'dag/vim-fish';  -- Provide Fish syntax highlighting support.
+    "tpope/vim-repeat";        -- Repeat last action via "." for supported packages.
 
-    'tpope/vim-surround';  --[[ Surrond text objects with matching (). {}. '', etc.
+    "junegunn/vim-peekaboo";   -- Shows what is in registers, extends " and @
+                               -- in normal mode and <C-R> in insert mode.
 
-                                  ds delete surronding - ds"
-                                  cs change surronding - cs[{
-                                  ys surround text object or motion - ysiw)
+    "vim-airline/vim-airline";      -- Used to configure statusline.
 
-                                Works on various markup tags and in visual line mode. ]]
+    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
 
-    'tpope/vim-repeat';  -- Repeat last action via "." for supported packages.
-
-    'junegunn/vim-peekaboo';  --[[ Shows what is in registers, extends " and @
-                                   in normal mode and <C-R> in insert mode. ]]
-
-    'vim-airline/vim-airline';  -- Used to configure statusline.
-
-    'grscheller/tokyonight.nvim';  -- Install my hacked version of Tokyo Night colorschemes.
-
-    'norcalli/nvim-colorizer.lua';  -- Colorize hexcodes and names like Blue.
+    "grscheller/tokyonight.nvim";   -- Install my hacked version of Tokyo Night colorschemes.
 }
 
 --[[ Nvim-lspconf Configurations ]]
