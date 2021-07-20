@@ -56,6 +56,12 @@ fi
 # Location Rust Toolchain
 PATH=~/.cargo/bin:"$PATH"
 
+# SBT on iMac installed with SDKMAN
+PATH=~/.sdkman/canidates/sbt/current/bin:"$PATH"
+
+# On iMac node 12 is "Keg onlt"
+PATH=/usr/local/opt/node@12/bin:"$PATH"
+
 # Utilities I want to overide everything
 PATH=~/.local/bin:~/opt/bin:"$PATH"
 

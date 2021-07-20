@@ -184,10 +184,10 @@ vim.api.nvim_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_locli
 vim.api.nvim_set_keymap('n', '<Leader>[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', lsp_opts)
 vim.api.nvim_set_keymap('n', '<Leader>]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', lsp_opts)
 
-local lspconfig = require'lspconfig'
+local lspconf = require'lspconfig'
 
-lspconfig.pyright.setup{}   -- pyright for Python (pacman or npm)
-lspconfig.bashls.setup{}    -- bash-language-server (pacman or npm)
+lspconf.bashls.setup{}    -- bash-language-server (npm i -g bash-language-server)
+lspconf.pyright.setup{}   -- pyright for Python (pacman or npm)
 
 -- Rust configuration, from: https://github.com/simrat39/rust-tools.nvim
 

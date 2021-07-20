@@ -49,6 +49,9 @@ and begin
     # SBT on iMac installed with SDKMAN
     set -p PATH ~/.sdkman/candidates/sbt/current/bin
 
+    # On iMac, node 12 is "keg only"
+    set -p PATH /usr/local/opt/node@12/bin
+
     # Utilities I want to overide everything
     set -p PATH ~/.local/bin ~/opt/bin
     # Personal utilities available if not found elsewhere
