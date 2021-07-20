@@ -8,11 +8,11 @@
 [[ -d ~/monitor ]] || mkdir ~/monitor || {
     printf 'monitor: Error - Failed to create ~/monitor dirctory\n'
     exit 1
-} 
+}
 cd ~/monitor || {
     printf 'monitor: Error - Failied to cd to ~/monitor dirctory\n'
     exit 1
-} 
+}
 true > hold1 || {
     printf 'monitor: Error - Failed to create or empty hold1\n'
     exit 1

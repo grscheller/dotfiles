@@ -2,9 +2,9 @@
 #
 #  Installs various Shell environment .dotfiles,
 #  as well as other config files, into the $HOME directory.
-# 
+#
 #  Usage: ./installDotfiles
-# 
+#
 #         run from the cloned dotfiles directory
 #
 # shellcheck shell=sh

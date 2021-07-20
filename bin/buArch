@@ -62,7 +62,7 @@ if [[ ! -x $EvolutionBackupUtil ]]; then
     printf 'WARNING: Evolution backup utility, %s,\n' $EvolutionBackupUtil >&2
     printf '         either not found or not executable.\n' >&2
 elif [[ ! -d ${EvolutionBackupFile%/*} ]]; then
-    if mkdir -p "${EvolutionBackupFile%/*}" 
+    if mkdir -p "${EvolutionBackupFile%/*}"
     then
         $EvolutionBackupUtil --backup "$EvolutionBackupFile" ||
             printf 'WARNING: Evolution backup failed\n' >&2
