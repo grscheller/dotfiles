@@ -2,7 +2,6 @@
 
        ~/.config/nvim/init.lua
 
-     Written by Geoffrey Scheller
      See https://github.com/grscheller/dotfiles ]]
 
 -- Set default encoding, localizations, and file formats
@@ -29,7 +28,7 @@ vim.o.completeopt = "menuone,noinsert,noselect"
 -- Message settings most compatible with builtin LSP client
 vim.o.shortmess = "atToOc"
 --
--- Personnal preferences
+-- Some personnal preferences
 vim.o.history = 10000    -- Number lines of command history to keep
 vim.o.mouse = "a"        -- Enable mouse for all modes
 vim.o.scrolloff = 2      -- Keep cursor away from top/bottom of window
@@ -39,17 +38,32 @@ vim.o.sidescrolloff = 5  -- Keep cursor away from side of window
 vim.o.splitbelow = true  -- Horizontally split below
 vim.o.splitright = true  -- Vertically split to right
 vim.o.showcmd = true     -- Show partial normal mode commands in lower right corner
-vim.o.hlsearch = true       -- Highlight / search results after <CR>
-vim.o.incsearch = true      -- Highlight / search matches as you type
-vim.o.ignorecase = true     -- Case insensitive search,
-vim.o.smartcase = true      -- unless query has caps
+vim.o.hlsearch = true       -- Highlight search results
+vim.o.incsearch = true      -- Highlight search matches as you type
 vim.o.nrformats = "bin,hex,octal,alpha"  -- bases and single letters used for <C-A> & <C-X>
 
 -- Set default tabstops and replace tabs with spaces
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.softtabstop = 4
-vim.o.expandtab = true
+vim.o.tabstop = 4       -- tab size 4 spaces
+vim.o.shiftwidth = 4    -- number of spaces used for auto-indent
+vim.o.softtabstop = 4   -- number spaces in tab when editing
+vim.o.expandtab = true  -- expand tabs to spaces when inserting tabs
+
+-- Set additional matching pairs of characters and highlight matching brackets
+vim.o.matchpairs = vim.o.matchpairs .. ",<:>,「:」"
+
+-- Set up smartcase, don't use in command mode
+vim.o.ignorecase = true     -- Case insensitive search,
+vim.o.smartcase = true      -- unless query has caps.
+
+vim.api.nvim_exec([[
+  augroup dynamic_smartcase
+    au!
+    au CmdLineEnter : set nosmartcase
+    au CmdLineEnter : set noignorecase
+    au CmdLineLeave : set smartcase
+    au CmdLineLeave : set noignorecase
+  augroup end
+]], false)
 
 -- Setup key mappings, define <Leader> explicitly as a space
 vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })
@@ -67,6 +81,10 @@ vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true
 -- Fix an old vi inconsistancy between Y and D & C
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
+-- Reselect visual area when visual shifting
+vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
+vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
+
 -- Open a vertical terminal running fish shell
 vim.api.nvim_set_keymap('n', '<Leader>ft', ':vsplit<CR>:term fish<CR>i', { noremap = true })
 
@@ -77,7 +95,7 @@ vim.api.nvim_set_keymap('n', '<Leader>ft', ':vsplit<CR>:term fish<CR>i', { norem
    -- type digraph
 vim.api.nvim_set_keymap('n', '<Leader>k', ':dig<CR>a<C-K>', { noremap = true })
 
--- Clear & redraw screen, lost <C-L> for this below
+-- Clear & redraw screen, lost <C-L> to do that below
 vim.api.nvim_set_keymap('n', '<Leader>l', ':mode<CR>', { noremap = true, silent = true })
 
 -- Move windows around using CTRL-hjkl in normal mode
@@ -86,17 +104,17 @@ vim.api.nvim_set_keymap('n', '<C-J>', '<C-W>J', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-K>', '<C-W>K', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-L>', '<C-W>L', { noremap = true })
 
--- Resize windows using ALT-hjkl in normal mode
-vim.api.nvim_set_keymap('n', '<M-h>', '2<C-W><', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-j>', '2<C-W>-', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-k>', '2<C-W>+', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-l>', '2<C-W>>', { noremap = true })
-
 -- Navigate between windows using CTRL+arrow-keys in normal mode
 vim.api.nvim_set_keymap('n', '<C-Left>',  '<C-W>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-Down>',  '<C-W>j', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-Up>',    '<C-W>k', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-Right>', '<C-W>l', { noremap = true })
+
+-- Resize windows using ALT-hjkl in normal mode
+vim.api.nvim_set_keymap('n', '<M-h>', '2<C-W><', { noremap = true })
+vim.api.nvim_set_keymap('n', '<M-j>', '2<C-W>-', { noremap = true })
+vim.api.nvim_set_keymap('n', '<M-k>', '2<C-W>+', { noremap = true })
+vim.api.nvim_set_keymap('n', '<M-l>', '2<C-W>>', { noremap = true })
 
 -- Toggle between 3 line numbering states via <Leader>n
 vim.o.number = false
@@ -251,7 +269,6 @@ metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
--- No Lua interface for autogroups yet
 vim.api.nvim_exec([[
   augroup lsp
     au!
