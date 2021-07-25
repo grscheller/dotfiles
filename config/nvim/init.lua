@@ -81,7 +81,7 @@ vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true
 -- Fix an old vi inconsistancy between Y and D & C
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
 
--- Reselect visual area when visual shifting
+-- Automatically reselect visual area when visual shifting
 vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
 vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
 
@@ -180,32 +180,54 @@ paq {
 
 --[[ LSP Configurations ]]
 
-local lsp_opts = { noremap = true, silent = true }
+local lsp_on_attach = function(client, bufnum)
+    local function set_buffer_keymap(...)
+        vim.api.nvim_buf_set_keymap(bufnum, ...)
+    end
 
--- Key mapings, see `:help vim.lsp.*.*` for documentation on these functions
-vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'H', '<Cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>sh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'gds', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'gws', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>K', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'mca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', 'ma', '<Cmd>lua require\'metals\'.open_all_diagnostics()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', lsp_opts)
-vim.api.nvim_set_keymap('n', '<Leader>]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', lsp_opts)
+    local function set_buffer_option(...)
+        vim.api.nvim_buf_set_option(bufnum, ...)
+    end
+
+    -- Enable completion via <C-x><C-o>
+    set_buffer_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    local lsp_opts = { noremap = true, silent = true }
+    
+    -- Key mapings, see `:help vim.lsp.*.*` for documentation on these functions
+    set_buffer_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'H', '<Cmd>lua vim.lsp.buf.hover()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>sh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'gds', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'gws', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>K', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'mca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', lsp_opts)
+    set_buffer_keymap('n', 'ma', '<Cmd>lua require\'metals\'.open_all_diagnostics()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', lsp_opts)
+    set_buffer_keymap('n', '<Leader>]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', lsp_opts)
+
+end
 
 local lspconf = require'lspconfig'
 
-lspconf.bashls.setup{}    -- bash-language-server (npm i -g bash-language-server)
-lspconf.pyright.setup{}   -- pyright for Python (pacman or npm)
+local lsp_servers = {
+    bashls,         -- bash-language-server (npm i -g bash-language-server)
+    pyright         -- pyright for Python (pacman or npm)
+}
+
+for _, server in ipairs(lsp_servers) do
+    lspconf[server].setup {
+        on_attach = lsp_on_attach
+    }
+end
 
 -- Rust configuration, from: https://github.com/simrat39/rust-tools.nvim
 
@@ -223,7 +245,7 @@ local rust_opts = {
             max_len_align = false,
             max_len_align_padding = 1,
             right_align = false,
-            rigt_align_padding = 7
+            right_align_padding = 7
         },
         hover_actions = {
             {"╭", "FloatBorder"}, {"─", "FloatBorder"},
@@ -233,7 +255,11 @@ local rust_opts = {
         },
         auto_focus = false
     },
-    server = {} -- rust-analyzer options
+
+    -- options to be sent to nvim-lspconfig
+    server = {
+        on_attach = lsp_on_attach
+    }
 }
 
 require('rust-tools').setup(rust_opts)
