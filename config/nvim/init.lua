@@ -156,36 +156,27 @@ vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Ta
        :PaqClean    <- Remove packages not in configuration
        :PaqSync     <- Execute all three operations above ]]
 
-local paq = require('paq')
-
-paq {
+require'paq' {
     "savq/paq-nvim";  -- Let Paq manage itself
-
     "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
-    "hrsh7th/nvim-compe";  -- Autocompletion framework for built-in LSP client
-    "hrsh7th/vim-vsnip";  -- Snippet engine to handle LSP snippets
-
-    "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
-    "nvim-lua/plenary.nvim";  -- optional, required by telescope.nvim
-    "nvim-lua/popup.nvim";    -- optional, required by telescope.nvim
+    "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
+    "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
+    "simrat39/rust-tools.nvim";       -- extra functionality over rust analyzer
+    "nvim-lua/plenary.nvim";          -- optional, required by telescope.nvim
+    "nvim-lua/popup.nvim";            -- optional, required by telescope.nvim
     "nvim-telescope/telescope.nvim";  --optional, recommended by sharksforarms/vim-rust
-
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
-
     "dag/vim-fish";  -- Provide Fish syntax highlighting support.
-
     "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
                            --     ds delete surronding - ds"
                            --     cs change surronding - cs[{
                            --     ys surround text object or motion - ysiw)
                            --   Works on various markup tags and in visual line mode.
-    "tpope/vim-repeat";        -- Repeat last action via "." for supported packages.
-    "junegunn/vim-peekaboo";   -- Shows what is in registers, extends " and @
-                               -- in normal mode and <C-R> in insert mode.
-
-    "vim-airline/vim-airline";      -- Used to configure statusline.
+    "tpope/vim-repeat";  -- Repeat last action via "." for supported packages.
+    "junegunn/vim-peekaboo";   -- Shows register contents, extends " and @ in normal mode, <C-R> in insert mode
+    "vim-airline/vim-airline";  -- Used to configure statusline.
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
-    "grscheller/tokyonight.nvim";   -- Install my hacked version of Tokyo Night colorschemes.
+    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
 }
 
 --[[ LSP Configurations ]]
@@ -193,14 +184,13 @@ paq {
 local nvim_lsp = require'lspconfig'
 
 local lsp_servers = {
-    bashls,         -- bash-language-server (npm i -g bash-language-server)
-    pyright         -- pyright for Python (pacman or npm)
+    "bashls",         -- bash-language-server (npm i -g bash-language-server)
+    "pyright",        -- pyright for Python (pacman or npm)
+    "clangd"           
 }
 
-for _, server in ipairs(lsp_servers) do
-    nvim_lsp[server].setup {
-        on_attach = lsp_on_attach
-    }
+for _, lsp_server in ipairs(lsp_servers) do
+    nvim_lsp[lsp_server].setup {}
 end
 
 -- Rust configuration, rust-tools.nvim will call lspconfig itself
@@ -232,7 +222,8 @@ require('rust-tools').setup(rust_opts)
      See https://scalameta.org/metals/docs/editors/overview.html for what
      is the current stable and bloody edge versions. ]]
 
-vim.g.metals_server_version = '0.10.5'
+-- vim.g.metals_server_version = '0.10.5'
+vim.g.metals_server_version = '0.10.5+56-b3ce05e8-SNAPSHOT'
 
 -- Nvim-Metals setup with a few additions such as nvim-completions
 metals_config = require'metals'.bare_config
@@ -257,7 +248,7 @@ metals_config.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 vim.api.nvim_exec([[
-  augroup lsp
+  augroup metals_lsp
     au!
     au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
   augroup end
@@ -324,7 +315,10 @@ vim.o.signcolumn = "yes"  -- Fix column to reduce jitter
 vim.o.updatetime = 300    -- Set update time for CursorHold
 
 vim.api.nvim_exec([[
+  augroup compe_cursorhold
+    au!
     au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+  augroup end
 ]], false)
 
 --[[ Setup colors ]]
