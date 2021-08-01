@@ -25,6 +25,9 @@ vim.o.wildmode = "longest:full,full"
 -- For a better completion experience in insert mode
 vim.o.completeopt = "menuone,noinsert,noselect"
 
+-- Milliseconds to wait for key mapped sequence to complete
+vim.o.timeoutlen = 500
+
 -- Message settings most compatible with builtin LSP client
 vim.o.shortmess = "atToOc"
 --
@@ -157,14 +160,14 @@ vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Ta
        :PaqSync     <- Execute all three operations above ]]
 
 require'paq' {
-    "savq/paq-nvim";  -- Let Paq manage itself
+    "savq/paq-nvim";  -- Paq manages itself
+    "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
+    "nvim-lua/plenary.nvim";          -- required by telescope.nvim
+    "nvim-lua/popup.nvim";            -- required by telescope.nvim
     "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
     "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
     "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
-    "simrat39/rust-tools.nvim";       -- extra functionality over rust analyzer
-    "nvim-lua/plenary.nvim";          -- optional, required by telescope.nvim
-    "nvim-lua/popup.nvim";            -- optional, required by telescope.nvim
-    "nvim-telescope/telescope.nvim";  --optional, recommended by sharksforarms/vim-rust
+    "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
     "dag/vim-fish";  -- Provide Fish syntax highlighting support.
     "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
@@ -173,7 +176,6 @@ require'paq' {
                            --     ys surround text object or motion - ysiw)
                            --   Works on various markup tags and in visual line mode.
     "tpope/vim-repeat";  -- Repeat last action via "." for supported packages.
-    "junegunn/vim-peekaboo";   -- Shows register contents, extends " and @ in normal mode, <C-R> in insert mode
     "vim-airline/vim-airline";  -- Used to configure statusline.
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
     "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
@@ -186,7 +188,7 @@ local nvim_lsp = require'lspconfig'
 local lsp_servers = {
     "bashls",         -- bash-language-server (npm i -g bash-language-server)
     "pyright",        -- pyright for Python (pacman or npm)
-    "clangd"           
+    "clangd"
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -196,21 +198,7 @@ end
 -- Rust configuration, rust-tools.nvim will call lspconfig itself
 
 local rust_opts = {
-    tools = {
-        autoSetHints = true,
-        hover_with_actions = true,
-        runnables = {
-            use_telescope = true
-        },
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = '',
-            other_hints_prefix = '',
-        },
-    },
-
-    -- options to be sent to nvim-lspconfig
-    server = {}
+    server = {}  -- options to be sent to nvim-lspconfig
 }
 
 require('rust-tools').setup(rust_opts)

@@ -84,10 +84,9 @@ set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
 
 ## Set up abriviations
-
-# Neovim, need to type n<space> or nv<space> to choose
 abbr -a -g n nvim
 abbr -a -g nv nvim
+abbr -a -g g git
 
 # NVIDIA Daemon, need to type nv-<tab> to list choices
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
