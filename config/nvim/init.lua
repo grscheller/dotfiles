@@ -26,7 +26,7 @@ vim.o.wildmode = "longest:full,full"
 vim.o.completeopt = "menuone,noinsert,noselect"
 
 -- Milliseconds to wait for key mapped sequence to complete
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 800
 
 -- Message settings most compatible with builtin LSP client
 vim.o.shortmess = "atToOc"
@@ -164,6 +164,7 @@ require'paq' {
     "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
     "nvim-lua/plenary.nvim";          -- required by telescope.nvim
     "nvim-lua/popup.nvim";            -- required by telescope.nvim
+    "folke/which-key.nvim";  -- show possible keybinding in popup, manage your own
     "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
     "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
     "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
@@ -180,6 +181,10 @@ require'paq' {
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
     "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
 }
+
+-- Which-key
+local wk = require'which-key'
+wk.setup {}
 
 --[[ LSP Configurations ]]
 
