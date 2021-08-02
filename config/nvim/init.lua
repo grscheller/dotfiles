@@ -89,7 +89,7 @@ vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
 vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
 
 -- Open a vertical terminal running fish shell
-vim.api.nvim_set_keymap('n', '<Leader>ft', ':vsplit<CR>:term fish<CR>i', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>t', ':vsplit<CR>:term fish<CR>i', { noremap = true })
 
 -- Reduce keystrokes and memmory load from :dig to entering digraph
    -- position cursor on char before you want to insert digraph
@@ -182,9 +182,18 @@ require'paq' {
     "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
 }
 
--- Which-key
+--[[ Which-key ]]
+
 local wk = require'which-key'
 wk.setup {}
+
+-- example from folke/which-key.nvim
+wk.register({
+  ["<leader>f"] = { name = "+file" },
+  ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Find File" },
+  ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+  ["<leader>fn"] = { "<cmd>enew<cr>", "New File" }
+})
 
 --[[ LSP Configurations ]]
 
