@@ -1,8 +1,41 @@
---[[ Neovim configuration file
+-- Neovim configuration file ~/.config/nvim/init.lua
 
-       ~/.config/nvim/init.lua
+--[[ Bootstrap Paq by cloning into "right place"
 
-     See https://github.com/grscheller/dotfiles ]]
+       git clone https://github.com/savq/paq-nvim.git \
+           ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
+
+     then from command mode run
+
+       :PaqInstall
+
+     Paq Commands:
+       :PaqInstall  <- Install all packages listed in configuration below
+       :PaqUpdate   <- Update packages already on system
+       :PaqClean    <- Remove packages not in configuration
+       :PaqSync     <- Execute all three operations above ]]
+require'paq' {
+    "savq/paq-nvim";  -- Paq manages itself
+    "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
+    "nvim-lua/plenary.nvim";          -- required by telescope.nvim
+    "nvim-lua/popup.nvim";            -- required by telescope.nvim
+    "folke/which-key.nvim";  -- show possible keybinding in popup, also can define keybindings
+    "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
+    "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
+    "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
+    "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
+    "scalameta/nvim-metals";  -- Metals LSP server for Scala
+    "dag/vim-fish";  -- Provide Fish syntax highlighting support.
+    "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
+                           --     ds delete surronding - ds"
+                           --     cs change surronding - cs[{
+                           --     ys surround text object or motion - ysiw)
+                           --   Works on various markup tags and in visual line mode.
+    "tpope/vim-repeat";  -- Repeat last action via "." for supported packages.
+    "vim-airline/vim-airline";  -- Used to configure statusline.
+    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
+    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
+}
 
 -- Set default encoding, localizations, and file formats
 vim.o.encoding = "utf-8"
@@ -68,18 +101,95 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
+--[[ Setup folke/which-key.nvim ]]
+local wk = require'which-key'
+wk.setup {}
+
+-- example from folke/which-key.nvim
+wk.register({
+  ["<Leader>f"] = { name = "+file" },
+  ["<Leader>ff"] = { "<Cmd>Telescope find_files<CR>", "Find file" },
+  ["<Leader>fr"] = { "<Cmd>Telescope oldfiles<CR>", "Open recent file" },
+  ["<Leader>fn"] = { "<Cmd>enew<cr>", "New File" }
+})
+
+--[[ Compe for commpletion ]]
+require'compe'.setup {
+    enabled = true;
+    autocomplete = true;
+    debug = false;
+    min_length = 1;
+    preselect = 'enable';
+    throttle_time = 80;
+    source_timeout = 200;
+    incomplete_delay = 400;
+    max_abbr_width = 100;
+    max_kind_width = 100;
+    max_menu_width = 100;
+    source = {
+        path = true;
+        buffer = true;
+        calc = true;
+        vsnip = true;
+        nvim_lsp = true;
+        nvim_lua = true;
+        spell = true;
+        tags = true;
+        snippets_nvim = true
+    }
+}
+
+vim.api.nvim_set_keymap('i', '<C-Space>', "compe#complete()", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-e>', "compe#close('<C-e>')", { noremap = true, expr = true, silent = true })
+
+vim.o.signcolumn = "yes"  -- Fix column to reduce jitter
+vim.o.updatetime = 300    -- Set update time for CursorHold
+
+vim.api.nvim_exec([[
+  augroup compe_cursorhold
+    au!
+    au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+  augroup end
+]], false)
+
 -- Setup key mappings, define <Leader> explicitly as a space
 vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })
 vim.g.mapleader = ' '
 
+-- Toggle between 3 line numbering states via <Leader>n
+vim.o.number = false
+vim.o.relativenumber = false
+
+MyLineNumberToggle = function()
+    if vim.o.relativenumber == true then
+        vim.o.number = false
+        vim.o.relativenumber = false
+    elseif vim.o.number == true then
+        vim.o.number = false
+        vim.o.relativenumber = true
+    else
+        vim.o.number = true
+        vim.o.relativenumber = false
+    end
+end
+
+wk.register({
+  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle<CR>", "Line number toggle" },
+  ["<Leader><Space>"] = { "<Cmd>nohlsearch<CR>", "Clear hlsearch" },
+  ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle spelling" }
+})
+
+-- vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', { noremap = true, silent = true })
+
 -- Clear search highlighting
-vim.api.nvim_set_keymap('n', '<Leader><Space>', ':nohlsearch<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<Leader><Space>', ':nohlsearch<CR>', { noremap = true, silent = true })
 
 -- Trim all trailing whitespace
 vim.api.nvim_set_keymap('n', '<Leader>ws', ':%s/\\s\\+$//<CR>', { noremap = true })
 
 -- Toggle spell checking
-vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true, silent = true })
 
 -- Fix an old vi inconsistancy between Y and D & C
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
@@ -119,81 +229,9 @@ vim.api.nvim_set_keymap('n', '<M-j>', '2<C-W>-', { noremap = true })
 vim.api.nvim_set_keymap('n', '<M-k>', '2<C-W>+', { noremap = true })
 vim.api.nvim_set_keymap('n', '<M-l>', '2<C-W>>', { noremap = true })
 
--- Toggle between 3 line numbering states via <Leader>n
-vim.o.number = false
-vim.o.relativenumber = false
-
-MyLineNumberToggle = function()
-    if vim.o.relativenumber == true then
-        vim.o.number = false
-        vim.o.relativenumber = false
-    elseif vim.o.number == true then
-        vim.o.number = false
-        vim.o.relativenumber = true
-    else
-        vim.o.number = true
-        vim.o.relativenumber = false
-    end
-end
-
-vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', { noremap = true, silent = true })
-
 -- Use <Tab> and <S-Tab> to navigate through popup menus
 vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
 vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
-
---[[ Paq package manager configuration
-
-     To bootstrap, clone into an initial "right place":
-
-       git clone https://github.com/savq/paq-nvim.git \
-           ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
-
-     and then from command mode run
-
-       :PaqInstall
-
-     Paq Commands:
-       :PaqInstall  <- Install all packages listed in configuration below
-       :PaqUpdate   <- Update packages already on system
-       :PaqClean    <- Remove packages not in configuration
-       :PaqSync     <- Execute all three operations above ]]
-
-require'paq' {
-    "savq/paq-nvim";  -- Paq manages itself
-    "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
-    "nvim-lua/plenary.nvim";          -- required by telescope.nvim
-    "nvim-lua/popup.nvim";            -- required by telescope.nvim
-    "folke/which-key.nvim";  -- show possible keybinding in popup, manage your own
-    "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
-    "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
-    "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
-    "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
-    "scalameta/nvim-metals";  -- Metals LSP server for Scala
-    "dag/vim-fish";  -- Provide Fish syntax highlighting support.
-    "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
-                           --     ds delete surronding - ds"
-                           --     cs change surronding - cs[{
-                           --     ys surround text object or motion - ysiw)
-                           --   Works on various markup tags and in visual line mode.
-    "tpope/vim-repeat";  -- Repeat last action via "." for supported packages.
-    "vim-airline/vim-airline";  -- Used to configure statusline.
-    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
-    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
-}
-
---[[ Which-key ]]
-
-local wk = require'which-key'
-wk.setup {}
-
--- example from folke/which-key.nvim
-wk.register({
-  ["<leader>f"] = { name = "+file" },
-  ["<leader>ff"] = { "<cmd>Telescope find_files<cr>", "Find File" },
-  ["<leader>fr"] = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-  ["<leader>fn"] = { "<cmd>enew<cr>", "New File" }
-})
 
 --[[ LSP Configurations ]]
 
@@ -282,46 +320,6 @@ vim.api.nvim_set_keymap('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap
 
 -- Quick-fix
 vim.api.nvim_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-
--- Completion
-require'compe'.setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
-    source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        vsnip = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        spell = true;
-        tags = true;
-        snippets_nvim = true
-    }
-}
-
-vim.api.nvim_set_keymap('i', '<C-Space>', "compe#complete()", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-e>', "compe#close('<C-e>')", { noremap = true, expr = true, silent = true })
-
-vim.o.signcolumn = "yes"  -- Fix column to reduce jitter
-vim.o.updatetime = 300    -- Set update time for CursorHold
-
-vim.api.nvim_exec([[
-  augroup compe_cursorhold
-    au!
-    au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
-  augroup end
-]], false)
 
 --[[ Setup colors ]]
 
