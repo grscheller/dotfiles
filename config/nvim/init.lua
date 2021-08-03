@@ -102,6 +102,7 @@ vim.api.nvim_exec([[
 ]], false)
 
 --[[ Setup folke/which-key.nvim ]]
+vim.g.mapleader = ' '
 local wk = require'which-key'
 wk.setup {}
 
@@ -153,10 +154,6 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
--- Setup key mappings, define <Leader> explicitly as a space
-vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })
-vim.g.mapleader = ' '
-
 -- Toggle between 3 line numbering states via <Leader>n
 vim.o.number = false
 vim.o.relativenumber = false
@@ -175,21 +172,13 @@ MyLineNumberToggle = function()
 end
 
 wk.register({
-  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle<CR>", "Line number toggle" },
+  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle()<CR>", "Line number toggle" },
   ["<Leader><Space>"] = { "<Cmd>nohlsearch<CR>", "Clear hlsearch" },
   ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle spelling" }
 })
 
--- vim.api.nvim_set_keymap('n', '<Leader>n', '<Cmd>lua MyLineNumberToggle()<CR>', { noremap = true, silent = true })
-
--- Clear search highlighting
---vim.api.nvim_set_keymap('n', '<Leader><Space>', ':nohlsearch<CR>', { noremap = true, silent = true })
-
 -- Trim all trailing whitespace
 vim.api.nvim_set_keymap('n', '<Leader>ws', ':%s/\\s\\+$//<CR>', { noremap = true })
-
--- Toggle spell checking
--- vim.api.nvim_set_keymap('n', '<Leader>sp', ':set invspell<CR>', { noremap = true, silent = true })
 
 -- Fix an old vi inconsistancy between Y and D & C
 vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
@@ -300,7 +289,7 @@ local opts = { noremap = true, silent = true }
 
 -- Key mapings, see `:help vim.lsp.*.*` for documentation on these functions
 vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+vim.api.nvim_set_keymap('n', ' gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'H', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>sh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
