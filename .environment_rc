@@ -62,6 +62,9 @@ PATH=~/.sdkman/canidates/sbt/current/bin:"$PATH"
 # On iMac node 12 is "Keg onlt"
 PATH=/usr/local/opt/node@12/bin:"$PATH"
 
+# On iMac, put brew clang before system clang (for clangd language server)
+PATH=/usr/local/Cellar/llvm/12.0.1/bin:"$PATH"
+
 # Utilities I want to overide everything
 PATH=~/.local/bin:~/opt/bin:"$PATH"
 

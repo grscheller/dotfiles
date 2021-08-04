@@ -52,6 +52,9 @@ and begin
     # On iMac, node 12 is "keg only"
     set -p PATH /usr/local/opt/node@12/bin
 
+    # On iMac, put brew clang before system clang (for clangd language server)
+    set -p PATH /usr/local/Cellar/llvm/12.0.1/bin
+
     # Utilities I want to overide everything
     set -p PATH ~/.local/bin ~/opt/bin
     # Personal utilities available if not found elsewhere
