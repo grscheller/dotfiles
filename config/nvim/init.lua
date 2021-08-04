@@ -22,7 +22,7 @@ require'paq' {
     "folke/which-key.nvim";  -- show possible keybinding in popup, also can define keybindings
     "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
     "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
-    "hrsh7th/vim-vsnip";      -- Snippet engine to handle LSP snippets
+    "L3MON4D3/LuaSnip";      -- Snippet engine to handle LSP snippets
     "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
     "dag/vim-fish";  -- Provide Fish syntax highlighting support.
@@ -54,9 +54,6 @@ vim.o.hidden = true
 -- Make tab completion in command mode more useful
 vim.o.wildmenu = true
 vim.o.wildmode = "longest:full,full"
-
--- For a better completion experience in insert mode
-vim.o.completeopt = "menuone,noinsert,noselect"
 
 -- Milliseconds to wait for key mapped sequence to complete
 vim.o.timeoutlen = 800
@@ -115,34 +112,29 @@ wk.register({
 })
 
 --[[ Compe for commpletion ]]
+vim.o.completeopt = "menuone,noselect"
+
 require'compe'.setup {
     enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    max_abbr_width = 100;
-    max_kind_width = 100;
-    max_menu_width = 100;
     source = {
         path = true;
         buffer = true;
-        calc = true;
-        vsnip = true;
+        calc = false;
+        emoji = false;
+        luasnip = true;
         nvim_lsp = true;
         nvim_lua = true;
         spell = true;
         tags = true;
-        snippets_nvim = true
+        treesitter = false;
     }
 }
 
 vim.api.nvim_set_keymap('i', '<C-Space>', "compe#complete()", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", { noremap = true, expr = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-e>', "compe#close('<C-e>')", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-d>', "compe#scroll({ 'delta': +4 })", { noremap = true, expr = true, silent = true })
+vim.api.nvim_set_keymap('i', '<C-u>', "compe#scroll({ 'delta': -4 })", { noremap = true, expr = true, silent = true })
 
 vim.o.signcolumn = "yes"  -- Fix column to reduce jitter
 vim.o.updatetime = 300    -- Set update time for CursorHold
