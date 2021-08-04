@@ -26,12 +26,6 @@ require'paq' {
     "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
     "dag/vim-fish";  -- Provide Fish syntax highlighting support.
-    "tpope/vim-surround";  -- Surrond text objects with matching (). {}. '', etc.
-                           --     ds delete surronding - ds"
-                           --     cs change surronding - cs[{
-                           --     ys surround text object or motion - ysiw)
-                           --   Works on various markup tags and in visual line mode.
-    "tpope/vim-repeat";  -- Repeat last action via "." for supported packages.
     "vim-airline/vim-airline";  -- Used to configure statusline.
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
     "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
@@ -103,14 +97,6 @@ vim.g.mapleader = ' '
 local wk = require'which-key'
 wk.setup {}
 
--- example from folke/which-key.nvim
-wk.register({
-  ["<Leader>f"] = { name = "+file" },
-  ["<Leader>ff"] = { "<Cmd>Telescope find_files<CR>", "Find file" },
-  ["<Leader>fr"] = { "<Cmd>Telescope oldfiles<CR>", "Open recent file" },
-  ["<Leader>fn"] = { "<Cmd>enew<cr>", "New File" }
-})
-
 --[[ Compe for commpletion ]]
 vim.o.completeopt = "menuone,noselect"
 
@@ -130,13 +116,15 @@ require'compe'.setup {
     }
 }
 
-vim.api.nvim_set_keymap('i', '<C-Space>', "compe#complete()", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-e>', "compe#close('<C-e>')", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-d>', "compe#scroll({ 'delta': +4 })", { noremap = true, expr = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-u>', "compe#scroll({ 'delta': -4 })", { noremap = true, expr = true, silent = true })
+wk.register({
+  ["<C-Space>"] = { "compe#complete()", "Compe Complete" },
+  ["<CR>"] = { "compe#confirm('<CR>')", "Compe Confirm" },
+  ["<C-e>"] = { "compe#close('<C-e>')", "Compe Close" },
+  ["<C-u>"] = { "compe#scroll({ 'delta': -4 })", "Compe Scroll Up" },
+  ["<C-d>"] = { "compe#scroll({ 'delta': +4 })", "Compe Scroll Down" }
+}, { mode = "i", expr = true })
 
-vim.o.signcolumn = "yes"  -- Fix column to reduce jitter
+vim.o.signcolumn = "yes"  -- Fixed first column, reduces jitter
 vim.o.updatetime = 300    -- Set update time for CursorHold
 
 vim.api.nvim_exec([[
@@ -145,6 +133,14 @@ vim.api.nvim_exec([[
     au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
   augroup end
 ]], false)
+
+-- File related keybindings
+wk.register({
+  ["<Leader>f"] = { name = "+file" },
+  ["<Leader>ff"] = { "<Cmd>Telescope find_files<CR>", "Find File" },
+  ["<Leader>fr"] = { "<Cmd>Telescope oldfiles<CR>", "Open Recent File" },
+  ["<Leader>fn"] = { "<Cmd>enew<cr>", "New File" }
+})
 
 -- Toggle between 3 line numbering states via <Leader>n
 vim.o.number = false
@@ -163,34 +159,17 @@ MyLineNumberToggle = function()
     end
 end
 
+-- Define more keybindings
 wk.register({
-  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle()<CR>", "Line number toggle" },
+  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle()<CR>", "Line Number Toggle" },
   ["<Leader><Space>"] = { "<Cmd>nohlsearch<CR>", "Clear hlsearch" },
-  ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle spelling" }
+  ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle Spelling" },
+  ["<Leader>ws"] = { ":%s/\\s\\+$//<CR>", "Trim Trailing White Space" },
+  ["Y"] = { "y$", "Yank to End of Line" },  -- Fix old vi inconsistency between Y and D & C
+  ["<Leader>t"] = { ":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit" },
+  ["<Leader>k"] = { ":dig<CR>a<C-K>", "Pick & Enter Diagraph" },
+  ["<Leader>l"] = { ":mode<CR>", "Clear & Redraw Screen" }  -- Lost <C-L> below for this
 })
-
--- Trim all trailing whitespace
-vim.api.nvim_set_keymap('n', '<Leader>ws', ':%s/\\s\\+$//<CR>', { noremap = true })
-
--- Fix an old vi inconsistancy between Y and D & C
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
-
--- Automatically reselect visual area when visual shifting
-vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
-vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
-
--- Open a vertical terminal running fish shell
-vim.api.nvim_set_keymap('n', '<Leader>t', ':vsplit<CR>:term fish<CR>i', { noremap = true })
-
--- Reduce keystrokes and memmory load from :dig to entering digraph
-   -- position cursor on char before you want to insert digraph
-   -- type <Leader>k
-   -- use q to exit digraph table
-   -- type digraph
-vim.api.nvim_set_keymap('n', '<Leader>k', ':dig<CR>a<C-K>', { noremap = true })
-
--- Clear & redraw screen, lost <C-L> to do that below
-vim.api.nvim_set_keymap('n', '<Leader>l', ':mode<CR>', { noremap = true, silent = true })
 
 -- Move windows around using CTRL-hjkl in normal mode
 vim.api.nvim_set_keymap('n', '<C-H>', '<C-W>H', { noremap = true })
@@ -213,6 +192,10 @@ vim.api.nvim_set_keymap('n', '<M-l>', '2<C-W>>', { noremap = true })
 -- Use <Tab> and <S-Tab> to navigate through popup menus
 vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
 vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
+
+-- Automatically reselect visual area when visual shifting
+vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
+vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
 
 --[[ LSP Configurations ]]
 
