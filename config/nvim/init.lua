@@ -22,10 +22,10 @@ require'paq' {
     "L3MON4D3/LuaSnip";      -- Snippet engine to handle LSP snippets
     "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
-    "dag/vim-fish";  -- Provide Fish syntax highlighting support.
-    "vim-airline/vim-airline";  -- Used to configure statusline.
-    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue.
-    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes.
+    "dag/vim-fish";  -- Provide Fish syntax highlighting support
+    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue
+    "hoob3rt/lualine.nvim";  -- Used to configure statusline
+    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes
 }
 
 -- Set default encoding, localizations, and file formats
@@ -88,6 +88,11 @@ vim.api.nvim_exec([[
     au CmdLineLeave : set noignorecase
   augroup end
 ]], false)
+
+--[[ Setup Lualine ]]
+require'lualine'.setup {
+  options = { theme = "codedark" }
+}
 
 --[[ Setup folke/which-key.nvim ]]
 vim.g.mapleader = ' '
