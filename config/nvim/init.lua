@@ -5,15 +5,12 @@
        git clone https://github.com/savq/paq-nvim.git \
            ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
 
-     then from command mode run
-
-       :PaqInstall
-
      Paq Commands:
        :PaqInstall  <- Install all packages listed in configuration below
        :PaqUpdate   <- Update packages already on system
        :PaqClean    <- Remove packages not in configuration
-       :PaqSync     <- Execute all three operations above ]]
+       :PaqSync     <- Execute all three operations above
+--]]
 require'paq' {
     "savq/paq-nvim";  -- Paq manages itself
     "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
@@ -159,43 +156,47 @@ MyLineNumberToggle = function()
     end
 end
 
--- Define more keybindings
 wk.register({
   ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle()<CR>", "Line Number Toggle" },
+})
+
+-- Define more keybindings
+wk.register({
+  ["Y"] = { "y$", "Yank to End of Line" },  -- Fix old vi inconsistency between Y and D & C
   ["<Leader><Space>"] = { "<Cmd>nohlsearch<CR>", "Clear hlsearch" },
   ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle Spelling" },
   ["<Leader>ws"] = { ":%s/\\s\\+$//<CR>", "Trim Trailing White Space" },
-  ["Y"] = { "y$", "Yank to End of Line" },  -- Fix old vi inconsistency between Y and D & C
   ["<Leader>t"] = { ":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit" },
   ["<Leader>k"] = { ":dig<CR>a<C-K>", "Pick & Enter Diagraph" },
-  ["<Leader>l"] = { ":mode<CR>", "Clear & Redraw Screen" }  -- Lost <C-L> below for this
+  ["<Leader>l"] = { ":mode<CR>", "Clear & Redraw Screen" },  -- Lost <C-L> below for this
+  -- Move windows around using CTRL-hjkl in normal mode
+  ["<C-H>"] = { "<C-W>H", "Move Window LHS" },
+  ["<C-J>"] = { "<C-W>J", "Move Window BOT" },
+  ["<C-K>"] = { "<C-W>K", "Move Window TOP" },
+  ["<C-L>"] = { "<C-W>L", "Move Window RHS" },
+  -- Navigate between windows using CTRL+arrow-keys in normal mode
+  ["<C-Left>"]  = { "<C-W>h", "Goto Window Left"  },
+  ["<C-Down>"]  = { "<C-W>j", "Goto Window Down"  },
+  ["<C-Up>"]    = { "<C-W>k", "Goto Window Up"    },
+  ["<C-Right>"] = { "<C-W>l", "Goto Window Right" },
+  -- Resize windows using ALT-hjkl in normal mode
+  ["<M-h>"] = { "2<C-W><", "Make Window Narrower" },
+  ["<M-j>"] = { "2<C-W>-", "Make Window Shorter"  },
+  ["<M-k>"] = { "2<C-W>+", "Make Window Taller"   },
+  ["<M-l>"] = { "2<C-W>>", "Make Window Wider"    }
 })
 
--- Move windows around using CTRL-hjkl in normal mode
-vim.api.nvim_set_keymap('n', '<C-H>', '<C-W>H', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-J>', '<C-W>J', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-K>', '<C-W>K', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-L>', '<C-W>L', { noremap = true })
-
--- Navigate between windows using CTRL+arrow-keys in normal mode
-vim.api.nvim_set_keymap('n', '<C-Left>',  '<C-W>h', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-Down>',  '<C-W>j', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-Up>',    '<C-W>k', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-Right>', '<C-W>l', { noremap = true })
-
--- Resize windows using ALT-hjkl in normal mode
-vim.api.nvim_set_keymap('n', '<M-h>', '2<C-W><', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-j>', '2<C-W>-', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-k>', '2<C-W>+', { noremap = true })
-vim.api.nvim_set_keymap('n', '<M-l>', '2<C-W>>', { noremap = true })
-
 -- Use <Tab> and <S-Tab> to navigate through popup menus
-vim.api.nvim_set_keymap('i', '<Tab>', 'vim.fn.pumvisible() ? \'<C-n>\' : \'<Tab>\'', { noremap = true, expr = true })
-vim.api.nvim_set_keymap('i', '<S-Tab>', 'vim.fn.pumvisible() ? \'<C-p>\' : \'<Tab>\'', { noremap = true, expr = true })
+wk.register({
+  ["<Tab>"]   = { "vim.fn.pumvisible() ? '<C-n>' : '<Tab>'" },
+  ["<S-Tab>"] = { "vim.fn.pumvisible() ? '<C-p>' : '<Tab>'" }
+}, { mode = "i", expr = true })
 
 -- Automatically reselect visual area when visual shifting
-vim.api.nvim_set_keymap('x', '<', '<gv', { noremap = true })
-vim.api.nvim_set_keymap('x', '>', '>gv', { noremap = true })
+wk.register({
+  ["<"] = { "<gv", "Shift left and reselect"  },
+  [">"] = { ">gv", "Shift right and reselect" }
+}, { mode = "x", expr = true })
 
 --[[ LSP Configurations ]]
 
@@ -258,40 +259,38 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
+wk.register({
+  [",m"] = { "<Cmd>lua require'metals'.open_all_diagnostics()<CR>", "Metals Diagnostics" },
+})
+
 -- Setup LSP related keymaps
 
-local opts = { noremap = true, silent = true }
-
--- Key mapings, see `:help vim.lsp.*.*` for documentation on these functions
-vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-vim.api.nvim_set_keymap('n', ' gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'H', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>sh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gds', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gws', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>K', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>F', '<Cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'mca', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'ma', '<Cmd>lua require\'metals\'.open_all_diagnostics()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'g[', '<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>', opts)
-vim.api.nvim_set_keymap('n', 'g]', '<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>', opts)
-
--- Quick-fix
-vim.api.nvim_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+wk.register({
+  [","] = { name = "+lsp" },
+  [",g"] = { name = "+goto" },
+  [",s"] = { name = "+symbol" },
+  [",w"] = { name = "+workspace folder" },
+  [",F"]  = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
+  [",gd"] = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
+  [",gD"] = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto Declaration" },
+  [",gi"] = { "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
+  [",gr"] = { "<Cmd>lua vim.lsp.buf.references()<CR>", "Goto References" },
+  [",hs"] = { "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
+  [",H"]  = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
+  [",K"]  = { "<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>", "Worksheet Hover" },
+  [",rn"] = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+  [",sd"] = { "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", "Document Symbol" },
+  [",sw"] = { "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Workspace Symbol" },
+  [",wa"] = { "<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", "Add Workspace Folder" },
+  [",wr"] = { "<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "Remove Workspace Folder" },
+  [",l"]  = { "<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Diagnostic Set Loclist" },
+  [",["]  = { "<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>", "Diagnostic Goto Prev" },
+  [",]"]  = { "<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>", "Diagnostic Goto Next" },
+})
 
 --[[ Setup colors ]]
-
--- Nvim colorizer setup (create autocmds for filetypes)
 vim.o.termguicolors = true
 require'colorizer'.setup()
-
--- Configure Tokyo Night Colorscheme
 vim.g.tokyonight_style = 'night'
 vim.g.tokyonight_italic_functions = 1
 vim.g.tokyonight_sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' }
