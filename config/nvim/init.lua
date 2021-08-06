@@ -91,7 +91,7 @@ vim.api.nvim_exec([[
 
 --[[ Setup Lualine ]]
 require'lualine'.setup {
-  options = { theme = "codedark" }
+  options = { theme = "tokyonight" }
 }
 
 --[[ Setup folke/which-key.nvim ]]
