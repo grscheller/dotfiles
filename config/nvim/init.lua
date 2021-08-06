@@ -17,12 +17,12 @@ require'paq' {
     "nvim-lua/plenary.nvim";          -- required by telescope.nvim
     "nvim-lua/popup.nvim";            -- required by telescope.nvim
     "folke/which-key.nvim";  -- show possible keybinding in popup, also can define keybindings
+    "nvim-treesitter/nvim-treesitter";  -- Install language modules for treesitter
     "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
     "hrsh7th/nvim-compe";     -- Autocompletion framework for built-in LSP client
-    "L3MON4D3/LuaSnip";      -- Snippet engine to handle LSP snippets
+    "L3MON4D3/LuaSnip";       -- Snippet engine to handle LSP snippets
     "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
-    "dag/vim-fish";  -- Provide Fish syntax highlighting support
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue
     "hoob3rt/lualine.nvim";  -- Used to configure statusline
     "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes
@@ -91,7 +91,12 @@ vim.api.nvim_exec([[
 
 --[[ Setup Lualine ]]
 require'lualine'.setup {
-  options = { theme = "tokyonight" }
+    options = {theme = "tokyonight"}
+}
+
+--[[ Setup nvim-treesitter ]]
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = 'maintained', highlight = {enable = true}
 }
 
 --[[ Setup folke/which-key.nvim ]]
@@ -114,17 +119,17 @@ require'compe'.setup {
         nvim_lua = true;
         spell = true;
         tags = true;
-        treesitter = false;
+        treesitter = true
     }
 }
 
 wk.register({
-  ["<C-Space>"] = { "compe#complete()", "Compe Complete" },
-  ["<CR>"] = { "compe#confirm('<CR>')", "Compe Confirm" },
-  ["<C-e>"] = { "compe#close('<C-e>')", "Compe Close" },
-  ["<C-u>"] = { "compe#scroll({ 'delta': -4 })", "Compe Scroll Up" },
-  ["<C-d>"] = { "compe#scroll({ 'delta': +4 })", "Compe Scroll Down" }
-}, { mode = "i", expr = true })
+  ["<C-Space>"] = {"compe#complete()", "Compe Complete"},
+  ["<CR>"] = {"compe#confirm('<CR>')", "Compe Confirm"},
+  ["<C-E>"] = {"compe#close('<C-E>')", "Compe Close"},
+  ["<C-U>"] = {"compe#scroll({'delta': -4})", "Compe Scroll Up"},
+  ["<C-D>"] = {"compe#scroll({'delta': +4})", "Compe Scroll Down"}
+}, {mode = "i", expr = true})
 
 vim.o.signcolumn = "yes"  -- Fixed first column, reduces jitter
 vim.o.updatetime = 300    -- Set update time for CursorHold
@@ -138,10 +143,10 @@ vim.api.nvim_exec([[
 
 -- File related keybindings
 wk.register({
-  ["<Leader>f"] = { name = "+file" },
-  ["<Leader>ff"] = { "<Cmd>Telescope find_files<CR>", "Find File" },
-  ["<Leader>fr"] = { "<Cmd>Telescope oldfiles<CR>", "Open Recent File" },
-  ["<Leader>fn"] = { "<Cmd>enew<cr>", "New File" }
+  ["<Leader>f"] = {name = "+file"},
+  ["<Leader>ff"] = {"<Cmd>Telescope find_files<CR>", "Find File"},
+  ["<Leader>fr"] = {"<Cmd>Telescope oldfiles<CR>", "Open Recent File"},
+  ["<Leader>fn"] = {"<Cmd>enew<cr>", "New File"}
 })
 
 -- Toggle between 3 line numbering states via <Leader>n
@@ -162,46 +167,46 @@ MyLineNumberToggle = function()
 end
 
 wk.register({
-  ["<Leader>n"] = { "<Cmd>lua MyLineNumberToggle()<CR>", "Line Number Toggle" },
+  ["<Leader>n"] = {"<Cmd>lua MyLineNumberToggle()<CR>", "Line Number Toggle"},
 })
 
 -- Define more keybindings
 wk.register({
-  ["Y"] = { "y$", "Yank to End of Line" },  -- Fix old vi inconsistency between Y and D & C
-  ["<Leader><Space>"] = { "<Cmd>nohlsearch<CR>", "Clear hlsearch" },
-  ["<Leader>sp"] = { "<Cmd>set invspell<CR>", "Toggle Spelling" },
-  ["<Leader>ws"] = { ":%s/\\s\\+$//<CR>", "Trim Trailing White Space" },
-  ["<Leader>t"] = { ":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit" },
-  ["<Leader>k"] = { ":dig<CR>a<C-K>", "Pick & Enter Diagraph" },
-  ["<Leader>l"] = { ":mode<CR>", "Clear & Redraw Screen" },  -- Lost <C-L> below for this
+  ["Y"] = {"y$", "Yank to End of Line"},  -- Fix old vi inconsistency between Y and D & C
+  ["<Leader><Space>"] = {"<Cmd>nohlsearch<CR>", "Clear hlsearch"},
+  ["<Leader>sp"] = {"<Cmd>set invspell<CR>", "Toggle Spelling"},
+  ["<Leader>ws"] = {":%s/\\s\\+$//<CR>", "Trim Trailing White Space"},
+  ["<Leader>t"] = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
+  ["<Leader>k"] = {":dig<CR>a<C-K>", "Pick & Enter Diagraph"},
+  ["<Leader>l"] = {":mode<CR>", "Clear & Redraw Screen"},  -- Lost <C-L> below for this
   -- Move windows around using CTRL-hjkl in normal mode
-  ["<C-H>"] = { "<C-W>H", "Move Window LHS" },
-  ["<C-J>"] = { "<C-W>J", "Move Window BOT" },
-  ["<C-K>"] = { "<C-W>K", "Move Window TOP" },
-  ["<C-L>"] = { "<C-W>L", "Move Window RHS" },
+  ["<C-H>"] = {"<C-W>H", "Move Window LHS"},
+  ["<C-J>"] = {"<C-W>J", "Move Window BOT"},
+  ["<C-K>"] = {"<C-W>K", "Move Window TOP"},
+  ["<C-L>"] = {"<C-W>L", "Move Window RHS"},
   -- Navigate between windows using CTRL+arrow-keys in normal mode
-  ["<C-Left>"]  = { "<C-W>h", "Goto Window Left"  },
-  ["<C-Down>"]  = { "<C-W>j", "Goto Window Down"  },
-  ["<C-Up>"]    = { "<C-W>k", "Goto Window Up"    },
-  ["<C-Right>"] = { "<C-W>l", "Goto Window Right" },
+  ["<C-Left>"]  = {"<C-W>h", "Goto Window Left" },
+  ["<C-Down>"]  = {"<C-W>j", "Goto Window Down" },
+  ["<C-Up>"]    = {"<C-W>k", "Goto Window Up"   },
+  ["<C-Right>"] = {"<C-W>l", "Goto Window Right"},
   -- Resize windows using ALT-hjkl in normal mode
-  ["<M-h>"] = { "2<C-W><", "Make Window Narrower" },
-  ["<M-j>"] = { "2<C-W>-", "Make Window Shorter"  },
-  ["<M-k>"] = { "2<C-W>+", "Make Window Taller"   },
-  ["<M-l>"] = { "2<C-W>>", "Make Window Wider"    }
+  ["<M-h>"] = {"2<C-W><", "Make Window Narrower"},
+  ["<M-j>"] = {"2<C-W>-", "Make Window Shorter" },
+  ["<M-k>"] = {"2<C-W>+", "Make Window Taller"  },
+  ["<M-l>"] = {"2<C-W>>", "Make Window Wider"   }
 })
 
 -- Use <Tab> and <S-Tab> to navigate through popup menus
 wk.register({
-  ["<Tab>"]   = { "vim.fn.pumvisible() ? '<C-n>' : '<Tab>'" },
-  ["<S-Tab>"] = { "vim.fn.pumvisible() ? '<C-p>' : '<Tab>'" }
-}, { mode = "i", expr = true })
+  ["<Tab>"]   = {"vim.fn.pumvisible() ? '<C-N>' : '<Tab>'"},
+  ["<S-Tab>"] = {"vim.fn.pumvisible() ? '<C-P>' : '<Tab>'"}
+}, {mode = "i", expr = true})
 
 -- Automatically reselect visual area when visual shifting
 wk.register({
-  ["<"] = { "<gv", "Shift left and reselect"  },
-  [">"] = { ">gv", "Shift right and reselect" }
-}, { mode = "x", expr = true })
+  ["<"] = {"<gv", "Shift left and reselect" },
+  [">"] = {">gv", "Shift right and reselect"}
+}, {mode = "x", expr = true})
 
 --[[ LSP Configurations ]]
 
@@ -232,8 +237,7 @@ require('rust-tools').setup(rust_opts)
      See https://scalameta.org/metals/docs/editors/overview.html for what
      is the current stable and bloody edge versions. ]]
 
--- vim.g.metals_server_version = '0.10.5'
-vim.g.metals_server_version = '0.10.5+56-b3ce05e8-SNAPSHOT'
+vim.g.metals_server_version = '0.10.6-M1'
 
 -- Nvim-Metals setup with a few additions such as nvim-completions
 metals_config = require'metals'.bare_config
@@ -265,32 +269,32 @@ vim.api.nvim_exec([[
 ]], false)
 
 wk.register({
-  [",m"] = { "<Cmd>lua require'metals'.open_all_diagnostics()<CR>", "Metals Diagnostics" },
+  [",m"] = {"<Cmd>lua require'metals'.open_all_diagnostics()<CR>", "Metals Diagnostics"},
 })
 
 -- Setup LSP related keymaps
 
 wk.register({
-  [","] = { name = "+lsp" },
-  [",g"] = { name = "+goto" },
-  [",s"] = { name = "+symbol" },
-  [",w"] = { name = "+workspace folder" },
-  [",F"]  = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting" },
-  [",gd"] = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition" },
-  [",gD"] = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto Declaration" },
-  [",gi"] = { "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation" },
-  [",gr"] = { "<Cmd>lua vim.lsp.buf.references()<CR>", "Goto References" },
-  [",hs"] = { "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-  [",H"]  = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover" },
-  [",K"]  = { "<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>", "Worksheet Hover" },
-  [",rn"] = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-  [",sd"] = { "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", "Document Symbol" },
-  [",sw"] = { "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Workspace Symbol" },
-  [",wa"] = { "<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", "Add Workspace Folder" },
-  [",wr"] = { "<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "Remove Workspace Folder" },
-  [",l"]  = { "<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Diagnostic Set Loclist" },
-  [",["]  = { "<Cmd>lua vim.lsp.diagnostic.goto_prev { wrap = false }<CR>", "Diagnostic Goto Prev" },
-  [",]"]  = { "<Cmd>lua vim.lsp.diagnostic.goto_next { wrap = false }<CR>", "Diagnostic Goto Next" },
+  [","]   = {name = "+lsp"},
+  [",g"]  = {name = "+goto"},
+  [",s"]  = {name = "+symbol"},
+  [",w"]  = {name = "+workspace folder"},
+  [",F"]  = {"<Cmd>lua vim.lsp.buf.formatting()<CR>", "Formatting"},
+  [",gd"] = {"<Cmd>lua vim.lsp.buf.definition()<CR>", "Goto Definition"},
+  [",gD"] = {"<Cmd>lua vim.lsp.buf.declaration()<CR>", "Goto Declaration"},
+  [",gi"] = {"<Cmd>lua vim.lsp.buf.implementation()<CR>", "Goto Implementation"},
+  [",gr"] = {"<Cmd>lua vim.lsp.buf.references()<CR>", "Goto References"},
+  [",hs"] = {"<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help"},
+  [",H"]  = {"<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover"},
+  [",K"]  = {"<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>", "Worksheet Hover"},
+  [",rn"] = {"<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename"},
+  [",sd"] = {"<Cmd>lua vim.lsp.buf.document_symbol()<CR>", "Document Symbol"},
+  [",sw"] = {"<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", "Workspace Symbol"},
+  [",wa"] = {"<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", "Add Workspace Folder"},
+  [",wr"] = {"<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "Remove Workspace Folder"},
+  [",l"]  = {"<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Diagnostic Set Loclist"},
+  [",["]  = {"<Cmd>lua vim.lsp.diagnostic.goto_prev {wrap = false}<CR>", "Diagnostic Goto Prev"},
+  [",]"]  = {"<Cmd>lua vim.lsp.diagnostic.goto_next {wrap = false}<CR>", "Diagnostic Goto Next"},
 })
 
 --[[ Setup colors ]]
@@ -298,5 +302,5 @@ vim.o.termguicolors = true
 require'colorizer'.setup()
 vim.g.tokyonight_style = 'night'
 vim.g.tokyonight_italic_functions = 1
-vim.g.tokyonight_sidebars = { 'qf', 'vista_kind', 'terminal', 'packer' }
+vim.g.tokyonight_sidebars = {'qf', 'vista_kind', 'terminal', 'packer'}
 vim.cmd('colorscheme tokyonight')
