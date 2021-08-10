@@ -24,8 +24,8 @@ require'paq' {
     "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Metals LSP server for Scala
     "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue
-    "hoob3rt/lualine.nvim";  -- Used to configure statusline
-    "grscheller/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes
+    "shadmansaleh/lualine.nvim";  -- Used to configure statusline - fork of hoob3rt/lualine.nvim
+    "folke/tokyonight.nvim"  -- Install my hacked version of Tokyo Night colorschemes
 }
 
 -- Set default encoding, localizations, and file formats
@@ -89,14 +89,10 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
---[[ Setup Lualine ]]
-require'lualine'.setup {
-    options = {theme = "tokyonight"}
-}
-
 --[[ Setup nvim-treesitter ]]
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = 'maintained', highlight = {enable = true}
+    ensure_installed = 'maintained',
+    highlight = {enable = true}
 }
 
 --[[ Setup folke/which-key.nvim ]]
@@ -300,7 +296,14 @@ wk.register({
 --[[ Setup colors ]]
 vim.o.termguicolors = true
 require'colorizer'.setup()
-vim.g.tokyonight_style = 'night'
+
+vim.g.tokyonight_style = "night"
 vim.g.tokyonight_italic_functions = 1
-vim.g.tokyonight_sidebars = {'qf', 'vista_kind', 'terminal', 'packer'}
-vim.cmd('colorscheme tokyonight')
+vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
+vim.g.tokyonight_colors = {bg = "#000000"}
+vim.cmd("colorscheme tokyonight")
+
+--[[ Setup Lualine ]]
+require'lualine'.setup {
+    options = {theme = "tokyonight"}
+}
