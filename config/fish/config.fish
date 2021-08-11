@@ -46,8 +46,13 @@ and begin
     # Rust toolchain
     set -p PATH ~/.cargo/bin
 
-    # SBT on iMac installed with SDKMAN
+    # Tools on iMac installed with SDKMAN
+    set -p PATH ~/.sdkman/candidates/java/current/bin
     set -p PATH ~/.sdkman/candidates/sbt/current/bin
+    set -p PATH ~/.sdkman/candidates/maven/current/bin
+    set -p PATH ~/.sdkman/candidates/gradle/current/bin
+    set -p PATH ~/.sdkman/candidates/leiningen/current/bin
+    set -p PATH ~/.sdkman/candidates/kotlin/current/bin
 
     # On iMac, node 12 is "keg only"
     set -p PATH /usr/local/opt/node@12/bin
