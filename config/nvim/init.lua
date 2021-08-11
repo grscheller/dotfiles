@@ -1,6 +1,6 @@
 -- Neovim configuration file ~/.config/nvim/init.lua
 
---[[ Bootstrap Paq by cloning into "right place"
+--[[ Bootstrap Paq by cloning it into the "right place"
 
        git clone https://github.com/savq/paq-nvim.git \
            ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
@@ -12,7 +12,6 @@
        :PaqSync     <- Execute all three operations above
 
      Location Paq stores repos: ~/.local/share/nvim/site/pack/paqs/start/ ]]
-
 require'paq' {
     "savq/paq-nvim";  -- Paq manages itself
     "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
@@ -55,7 +54,7 @@ vim.o.timeoutlen = 800  -- Milliseconds to wait for key mapped sequence to compl
 vim.o.updatetime = 300  -- Set update time for CursorHold event
 vim.o.signcolumn = "yes"  -- Fixes first column, reduces jitter
 vim.o.shortmess = "atToOc"
---
+
 --[[ Some personnal preferences ]]
 vim.o.history = 10000    -- Number lines of command history to keep
 vim.o.mouse = "a"        -- Enable mouse for all modes
@@ -122,9 +121,10 @@ wk.register {
   ["<Leader>fn"] = {"<Cmd>enew<cr>", "New File"}
 }
 
--- Othernormal mode keybindings
+-- Other normal mode keybindings
 wk.register {
-  ["Y"] = {"y$", "Yank to End of Line"},  -- Fix old vi inconsistency between Y and D & C
+  -- Fix old vi inconsistency between Y and D & C
+  ["Y"] = {"y$", "Yank to End of Line"},
   -- Move windows around using CTRL-hjkl in normal mode
   ["<C-H>"] = {"<C-W>H", "Move Window LHS"},
   ["<C-J>"] = {"<C-W>J", "Move Window BOT"},
@@ -226,7 +226,7 @@ vim.api.nvim_exec([[
   augroup end
 ]], false)
 
---[[ Setup LSP related keybindings ]]
+-- Setup LSP related keybindings
 wk.register({
   [","]   = {name = "+lsp"},
   [",g"]  = {name = "+goto"},
@@ -248,7 +248,7 @@ wk.register({
   [",wr"] = {"<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", "Remove Workspace Folder"},
   [",l"]  = {"<Cmd>lua vim.lsp.diagnostic.set_loclist()<CR>", "Diagnostic Set Loclist"},
   [",["]  = {"<Cmd>lua vim.lsp.diagnostic.goto_prev {wrap = false}<CR>", "Diagnostic Goto Prev"},
-  [",]"]  = {"<Cmd>lua vim.lsp.diagnostic.goto_next {wrap = false}<CR>", "Diagnostic Goto Next"},
+  [",]"]  = {"<Cmd>lua vim.lsp.diagnostic.goto_next {wrap = false}<CR>", "Diagnostic Goto Next"}
 })
 
 --[[ Setup colorsscemes and statusline ]]
