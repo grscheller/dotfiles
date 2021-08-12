@@ -79,7 +79,7 @@ vim.api.nvim_exec([[
     au CmdLineEnter : set nosmartcase
     au CmdLineEnter : set noignorecase
     au CmdLineLeave : set smartcase
-    au CmdLineLeave : set noignorecase
+    au CmdLineLeave : set ignorecase
   augroup end
 ]], false)
 
