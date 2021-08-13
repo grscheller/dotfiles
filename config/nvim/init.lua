@@ -1,4 +1,4 @@
--- Neovim configuration file ~/.config/nvim/init.lua
+-- Neovim configuration ~/.config/nvim/init.lua
 
 --[[ Bootstrap Paq by cloning it into the "right place"
 
@@ -13,20 +13,20 @@
 
      Location Paq stores repos: ~/.local/share/nvim/site/pack/paqs/start/ ]]
 require'paq' {
-    "savq/paq-nvim";  -- Paq manages itself
-    "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
-    "nvim-lua/plenary.nvim";          -- required by telescope.nvim
-    "nvim-lua/popup.nvim";            -- required by telescope.nvim
-    "folke/which-key.nvim";  -- show possible keybinding in popup, also define keybindings
-    "nvim-treesitter/nvim-treesitter";  -- Install language modules for built-in treesitter
-    "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
-    "hrsh7th/nvim-compe";  -- Autocompletion framework, can use built-in LSP as a source
-    "L3MON4D3/LuaSnip";  -- Snippet engine, used to handle LSP snippets
-    "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
-    "scalameta/nvim-metals";  -- Configure built-in LSP client for Metals Scala language server
-    "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue or Green
-    "folke/tokyonight.nvim";  -- Tokyo Night colorschemes
-    "shadmansaleh/lualine.nvim"  -- Used to configure statusline - fork of hoob3rt/lualine.nvim
+  "savq/paq-nvim";  -- Paq manages itself
+  "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
+  "nvim-lua/plenary.nvim";          -- required by telescope.nvim
+  "nvim-lua/popup.nvim";            -- required by telescope.nvim
+  "folke/which-key.nvim";  -- show possible keybinding in popup, also define keybindings
+  "nvim-treesitter/nvim-treesitter";  -- Install language modules for built-in treesitter
+  "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
+  "hrsh7th/nvim-compe";  -- Autocompletion framework, can use built-in LSP as a source
+  "L3MON4D3/LuaSnip";  -- Snippet engine, used to handle LSP snippets
+  "simrat39/rust-tools.nvim";  -- extra functionality over rust analyzer
+  "scalameta/nvim-metals";  -- Configure built-in LSP client for Metals Scala language server
+  "norcalli/nvim-colorizer.lua";  -- Colorize hexcodes and names like Blue or Green
+  "folke/tokyonight.nvim";  -- Tokyo Night colorschemes
+  "shadmansaleh/lualine.nvim"  -- Used to configure statusline - fork of hoob3rt/lualine.nvim
 }
 
 --[[ Set some default behaviors ]]
@@ -44,10 +44,10 @@ vim.o.spelllang = "en_us"
 vim.o.fileformats = "unix,mac,dos"
 
 --[[ Set default tabstops and replace tabs with spaces ]]
-vim.o.tabstop = 4       -- tab size 4 spaces
-vim.o.shiftwidth = 4    -- number of spaces used for auto-indent
-vim.o.softtabstop = 4   -- number spaces in tab when editing
-vim.o.expandtab = true  -- expand tabs to spaces when inserting tabs
+vim.o.tabstop = 4       -- Tab size 4 spaces
+vim.o.shiftwidth = 4    -- Number of spaces used for auto-indent
+vim.o.softtabstop = 4   -- Number spaces in tab when editing
+vim.o.expandtab = true  -- Expand tabs to spaces when inserting tabs
 
 --[[ Settings for LSP client ]]
 vim.o.timeoutlen = 800  -- Milliseconds to wait for key mapped sequence to complete
@@ -88,16 +88,16 @@ vim.o.number = false
 vim.o.relativenumber = false
 
 MyLineNumberToggle = function()
-    if vim.o.relativenumber == true then
-        vim.o.number = false
-        vim.o.relativenumber = false
-    elseif vim.o.number == true then
-        vim.o.number = false
-        vim.o.relativenumber = true
-    else
-        vim.o.number = true
-        vim.o.relativenumber = false
-    end
+  if vim.o.relativenumber == true then
+    vim.o.number = false
+    vim.o.relativenumber = false
+  elseif vim.o.number == true then
+    vim.o.number = false
+    vim.o.relativenumber = true
+  else
+    vim.o.number = true
+    vim.o.relativenumber = false
+  end
 end
 
 --[[ Setup folke/which-key.nvim ]]
@@ -113,7 +113,7 @@ wk.register {
   ["<Leader>ws"] = {":%s/\\s\\+$//<CR>", "Trim Trailing White Space"},
   ["<Leader>t"] = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
   ["<Leader>k"] = {":dig<CR>a<C-K>", "Pick & Enter Diagraph"},
-  ["<Leader>l"] = {":mode<CR>", "Clear & Redraw Screen"},  -- Lost <C-L> below for this
+  ["<Leader>l"] = {":mode<CR>", "Clear & Redraw Screen"},  -- Lost <C-L> for this below
   -- File related keybindings
   ["<Leader>f"] = {name = "+file"},
   ["<Leader>ff"] = {"<Cmd>Telescope find_files<CR>", "Find File"},
@@ -154,23 +154,23 @@ wk.register({
   [">"] = {">gv", "Shift right and reselect"}
 }, {mode = "x", expr = true})
 
---[[ Compe for commpletion ]]
+--[[ Compe for completion ]]
 vim.o.completeopt = "menuone,noselect"
 
 require'compe'.setup {
-    enabled = true;
-    source = {
-        path = true;
-        buffer = true;
-        calc = false;
-        emoji = false;
-        luasnip = true;
-        nvim_lsp = true;
-        nvim_lua = true;
-        spell = true;
-        tags = true;
-        treesitter = true
-    }
+  enabled = true;
+  source = {
+    path = true;
+    buffer = true;
+    calc = false;
+    emoji = false;
+    luasnip = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    spell = true;
+    tags = true;
+    treesitter = true
+  }
 }
 
 wk.register({
@@ -190,17 +190,17 @@ vim.api.nvim_exec([[
 
 --[[ Setup nvim-treesitter ]]
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = 'maintained',
-    highlight = {enable = true}
+  ensure_installed = 'maintained',
+  highlight = {enable = true}
 }
 
 --[[ LSP Configurations ]]
 local nvim_lsp = require'lspconfig'
 
 local lsp_servers = {
-    "bashls",         -- bash-language-server (npm i -g bash-language-server)
-    "pyright",        -- pyright for Python (pacman or npm)
-    "clangd"
+  "bashls",         -- Bash-language-server (npm i -g bash-language-server)
+  "pyright",        -- Pyright for Python (pacman or npm)
+  "clangd"
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -209,12 +209,12 @@ end
 
 -- Rust configuration, rust-tools.nvim will call lspconfig itself
 local rust_opts = {
-    server = {}  -- options to be sent to nvim-lspconfig
+  server = {}  -- Options to be sent to nvim-lspconfig
 }
 require('rust-tools').setup(rust_opts)
 
 -- Metals configuration
-vim.g.metals_server_version = '0.10.6-M1'  -- see https://scalameta.org/metals/docs/editors/overview.html
+vim.g.metals_server_version = '0.10.6-M1'  -- See https://scalameta.org/metals/docs/editors/overview.html
 metals_config = require'metals'.bare_config
 
 metals_config.settings = {showImplicitArguments = true}
@@ -261,7 +261,7 @@ vim.g.tokyonight_italic_functions = 1
 vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
 
 require'lualine'.setup {
-    options = {theme = "tokyonight"}
+  options = {theme = "tokyonight"}
 }
 
 vim.cmd[[colorscheme tokyonight]]
