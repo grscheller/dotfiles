@@ -44,9 +44,9 @@ vim.o.spelllang = "en_us"
 vim.o.fileformats = "unix,mac,dos"
 
 --[[ Set default tabstops and replace tabs with spaces ]]
-vim.o.tabstop = 4       -- Tab size 4 spaces
+vim.o.tabstop = 4       -- Display hard tab as 4 spaces
 vim.o.shiftwidth = 4    -- Number of spaces used for auto-indent
-vim.o.softtabstop = 4   -- Number spaces in tab when editing
+vim.o.softtabstop = 4   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
 vim.o.expandtab = true  -- Expand tabs to spaces when inserting tabs
 
 --[[ Settings for LSP client ]]

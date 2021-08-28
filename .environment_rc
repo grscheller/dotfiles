@@ -89,5 +89,4 @@ fi
 ## Software development initial configurations
 
 # Python configuration
-export PYTHONPATH=lib:../lib
 export PIP_REQUIRE_VIRTUALENV=true

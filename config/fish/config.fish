@@ -29,13 +29,12 @@ end
 set -q UPDATE_ENV
 and begin
     # Python configuration
-    set -x --path PYTHONPATH lib ../lib
     set -x PIP_REQUIRE_VIRTUALENV true
 
     # On iMac Brew installs symlinks here
     set -p PATH /usr/local/sbin
 
-    # Rudy tool chain
+    # Ruby tool chain
     #   Mostly for locally installed ruby gems,
     #     to install these:
     #       Markdown linter: $ gem install mdl
