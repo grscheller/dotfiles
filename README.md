@@ -3,11 +3,12 @@
 This project contains the infrastructure I use to
 maintain and install my Fish, Bash, and Shell based
 environments.  The same configuration files are
-designed to be shared across multiple more or
-less, POSIX based operating systems.  Also used to
+designed to be shared across multiple, more or
+less, POSIX like environments.  Also used to
 maintain Neovim and Alacritty configuration files.
 
-Installs into your `$HOME` directiors from cloned repo.
+Installs config files into your `$HOME` directiors from
+the cloned repo.
 
 ## Design Choices
 
@@ -18,16 +19,16 @@ Installs into your `$HOME` directiors from cloned repo.
 
 ### Initial Shell Configuration
 
-Some modern Linux desktop environments source neither
-`~/.profile` nor `~/.bash_profile`.
+Modern Linux desktop environments don't reliably source, or not source,
+`~/.profile` or `~/.bash_profile`.
 
 * CentOs 7 does not
-* Arch Linux running GNOME Shell via GDM does
+* Arch Linux running GNOME Shell via GDM does with sh
 
-The various POSIX `.*rc` files determine whether or not an
-initial shell environment was properly configured.  If not,
-they source a POSIX shell script `~/.environment_rc` to do
-an initial configuration.
+Therefore, my various POSIX `.*rc` files determine whether or
+not an initial shell environment was properly configured.
+If not, they source a POSIX shell script `~/.environment_rc`
+to do an initial configuration.
 
 ## Installation Script
 
@@ -82,9 +83,9 @@ an initial configuration.
   * usage: viewJarManifest someJarFile.jar
   * POSIX complient script
 
-## Shell Startup Behavior Facts
+## Shell Startup Behavior Facts for POSIX shells
 
-### For POSIX login shells
+### Login shells
 
 * Bash first sources `/etc/profile`
 * Bash then sources `~/.bash_profile`
@@ -94,9 +95,7 @@ an initial configuration.
 * Other POSIX shells then source `~/.profile`
 * Other POSIX shells source `$ENV` if it exists in the environment and as a file
 
-### For non-login interactive shells and non-interactive shells
+### Non-login interactive shells and non-interactive shells
 
 * Bash sources `$BASH_ENV` if it exists as a file, otherwise sources ~/.bashrc
-* Other POSIX shells source `$ENV` if it exists in the environment and as a file
-
-This is what these shells do.  What you do with it, is up to you.
+* Other POSIX shells source `$ENV` if it exists both in environment and as file
