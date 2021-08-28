@@ -1,17 +1,18 @@
-# LINUX/UNIX/POSIX dotfiles
+# Configuration files "my dotfiles"
 
 This project contains the infrastructure I use to
-maintain and install my Fish, Bash, and Sh based
+maintain and install my Fish, Bash, and Shell based
 environments.  The same configuration files are
 designed to be shared across multiple more or
-less, POSIX based operating systems.
+less, POSIX based operating systems.  Also used to
+maintain Neovim and Alacritty configuration files.
 
 Installs into your `$HOME` directiors from cloned repo.
 
 ## Design Choices
 
 * Same POSIX `.profile` used by all POSIX compliant shells
-* Fish is not POSIX compliant shell
+* Fish is not a POSIX compliant shell
 * Designed for maximum portability
 * Not designed for maximum security for a specific Shell or OS
 
