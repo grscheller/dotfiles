@@ -20,10 +20,10 @@ the cloned repo.
 ### Initial Shell Configuration
 
 Modern Linux desktop environments don't reliably source, or not source,
-`~/.profile` or `~/.bash_profile`.
+either `~/.profile` or `~/.bash_profile`.
 
-* CentOs 7 does not
-* Arch Linux running GNOME Shell via GDM does with sh
+* CentOS 7 does not
+* Arch Linux running GNOME Shell via GDM sources `./profile` with sh
 
 Therefore, my various POSIX `.*rc` files determine whether or
 not an initial shell environment was properly configured.
@@ -93,7 +93,7 @@ to do an initial configuration.
   * if not found, sources `~/.profile`
 * Other POSIX shells first source `/etc/profile`
 * Other POSIX shells then source `~/.profile`
-* Other POSIX shells source `$ENV` if it exists in the environment and as a file
+* Other POSIX shells source `$ENV` if it exists both in environment and as file
 
 ### Non-login interactive shells and non-interactive shells
 
