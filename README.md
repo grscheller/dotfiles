@@ -3,16 +3,13 @@
 This project contains the infrastructure I use to
 maintain and install my Fish, Bash, and Sh based
 environments.  The same configuration files are
-designed to be shared across multiple POSIX based
-operating systems.
+designed to be shared across multiple more or
+less, POSIX based operating systems.
 
-Installs into `$HOME` from cloned repo.
+Installs into your `$HOME` directiors from cloned repo.
 
-## Features and Design Choices
+## Design Choices
 
-* Clone and install on the computers you use
-* Use as a starting point for your own version
-* Will work on most, more or less, POSIX compliant computers
 * Same POSIX `.profile` used by all POSIX compliant shells
 * Fish is not POSIX compliant shell
 * Designed for maximum portability
@@ -21,20 +18,21 @@ Installs into `$HOME` from cloned repo.
 ### Initial Shell Configuration
 
 Some modern Linux desktop environments source neither
-`~/.profile` nor `~/.bash_profile`.  CentOs 7
-doesn't.  Arch Linux running GNOME Shell via GDM does.
+`~/.profile` nor `~/.bash_profile`.
+
+* CentOs 7 does not
+* Arch Linux running GNOME Shell via GDM does
 
 The various POSIX `.*rc` files determine whether or not an
 initial shell environment was properly configured.  If not,
 they source a POSIX shell script `~/.environment_rc` to do
-an initial configuration.  Also, .profile sources this file.
+an initial configuration.
 
 ## Installation Script
 
 * [installDotfiles](installDotfiles) installation script
-  * installs everything into $HOME
-  * run `./installDotfiles
-  * script backups existing configuration files with .old extension
+  * installs everything into `$HOME`
+  * run `./installDotfiles` from repo
   * Installs other various configuration files
 
 ## Shell Scripts Installed in ~/.local/bin
@@ -45,7 +43,7 @@ an initial configuration.  Also, .profile sources this file.
   * does not stop after finding first one
   * required by various rc scripts
   * POSIX complient script
-  * bash & fish have a similarly named functions
+  * fish & bash  have a similarly named functions
 * [pathtrim](bin/pathtrim)
   * cleans up $PATH
   * removes non-existing directories
@@ -54,16 +52,15 @@ an initial configuration.  Also, .profile sources this file.
     * correctly handles white space
     * correctly handles newlines in directory names
     * will have issues with colens in directory names
-  * required by .envrc
   * POSIX complient script
-  * bash & fish have a similarly named functions
+  * fish & bash  have a similarly named functions
 
 ## Shell Scripts Installed in ~/bin
 
-* [bsPlug](bin/bsPlug)
-  * bootstraps Plug infrastructure for Neovim
-  * installs Plug into correct location
-  * then from within nvim run `:PlugInstall`
+* [bsPaq](bin/bsPaq)
+  * bootstraps Paq infrastructure for Neovim
+  * then from within nvim run `:PaqSync`
+  * POSIX complient script
 * [buArch](bin/buArch)
   * backup script for my Arch Linux laptop home directory
   * basically a wrapped for rsync
@@ -86,7 +83,7 @@ an initial configuration.  Also, .profile sources this file.
 
 ## Shell Startup Behavior Facts
 
-### For login shells
+### For POSIX login shells
 
 * Bash first sources `/etc/profile`
 * Bash then sources `~/.bash_profile`
