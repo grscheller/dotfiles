@@ -14,9 +14,10 @@
      Location Paq stores repos: ~/.local/share/nvim/site/pack/paqs/start/ ]]
 require'paq' {
   "savq/paq-nvim";  -- Paq manages itself
-  "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
   "nvim-lua/plenary.nvim";          -- required by telescope.nvim
   "nvim-lua/popup.nvim";            -- required by telescope.nvim
+  "sharkdp/fd";                     -- optional for telescope.nvim
+  "nvim-telescope/telescope.nvim";  -- fuzzy finder over lists
   "folke/which-key.nvim";  -- show possible keybinding in popup, also define keybindings
   "nvim-treesitter/nvim-treesitter";  -- Install language modules for built-in treesitter
   "neovim/nvim-lspconfig";  -- Collection of common configurations for built-in LSP client
@@ -114,11 +115,14 @@ wk.register {
   ["<Leader>t"] = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
   ["<Leader>k"] = {":dig<CR>a<C-K>", "Pick & Enter Diagraph"},
   ["<Leader>l"] = {":mode<CR>", "Clear & Redraw Screen"},  -- Lost <C-L> for this below
+  ["<Leader>b"] = {"<Cmd>enew<cr>", "New Unnamed Buffer"},
   -- File related keybindings
-  ["<Leader>f"] = {name = "+file"},
+  ["<Leader>f"] = {name = "+Telescope"},
+  ["<Leader>fb"] = {"<Cmd>Telescope buffers<CR>", "Buffers"},
   ["<Leader>ff"] = {"<Cmd>Telescope find_files<CR>", "Find File"},
-  ["<Leader>fr"] = {"<Cmd>Telescope oldfiles<CR>", "Open Recent File"},
-  ["<Leader>fn"] = {"<Cmd>enew<cr>", "New File"}
+  ["<Leader>fg"] = {"<Cmd>Telescope live_grep<CR>", "Live Grep"},
+  ["<Leader>fh"] = {"<Cmd>Telescope help_tags<CR>", "Help Tags"},
+  ["<Leader>fr"] = {"<Cmd>Telescope oldfiles<CR>", "Open Recent File"}
 }
 
 -- Other normal mode keybindings
