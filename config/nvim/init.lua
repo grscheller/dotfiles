@@ -116,7 +116,7 @@ wk.register {
   ["<Leader>k"] = {":dig<CR>a<C-K>", "Pick & Enter Diagraph"},
   ["<Leader>l"] = {":mode<CR>", "Clear & Redraw Screen"},  -- Lost <C-L> for this below
   ["<Leader>b"] = {"<Cmd>enew<cr>", "New Unnamed Buffer"},
-  -- File related keybindings
+  -- Telescope related keybindings
   ["<Leader>f"] = {name = "+Telescope"},
   ["<Leader>fb"] = {"<Cmd>Telescope buffers<CR>", "Buffers"},
   ["<Leader>ff"] = {"<Cmd>Telescope find_files<CR>", "Find File"},
@@ -129,6 +129,8 @@ wk.register {
 wk.register {
   -- Fix old vi inconsistency between Y and D & C
   ["Y"] = {"y$", "Yank to End of Line"},
+  -- Reselect previously changed text
+  ["gp"] = {"`[v`]", "Reselect Previous Changed Text"},
   -- Move windows around using CTRL-hjkl in normal mode
   ["<C-H>"] = {"<C-W>H", "Move Window LHS"},
   ["<C-J>"] = {"<C-W>J", "Move Window BOT"},
@@ -151,12 +153,6 @@ wk.register({
   ["<Tab>"]   = {"vim.fn.pumvisible() ? '<C-N>' : '<Tab>'"},
   ["<S-Tab>"] = {"vim.fn.pumvisible() ? '<C-P>' : '<Tab>'"}
 }, {mode = "i", expr = true})
-
--- Automatically reselect visual area when visual shifting
-wk.register({
-  ["<"] = {"<gv", "Shift left and reselect" },
-  [">"] = {">gv", "Shift right and reselect"}
-}, {mode = "x", expr = true})
 
 --[[ Compe for completion ]]
 vim.o.completeopt = "menuone,noselect"

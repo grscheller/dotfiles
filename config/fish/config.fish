@@ -60,7 +60,7 @@ and begin
     set -p PATH /usr/local/Cellar/llvm/12.0.1/bin
 
     # Utilities I want to overide everything
-    set -p PATH ~/.local/bin ~/opt/bin
+    set -p PATH ~/.local/bin ~/opt/bin ~/localperl/bin ~/perl5/bin
     # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
     # Added two relative paths used in some software projects
