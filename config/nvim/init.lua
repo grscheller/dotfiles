@@ -26,9 +26,9 @@ require'paq' {
   "sharkdp/fd";
   -- Built-n LSP client configuration, completion and snippets support
   "neovim/nvim-lspconfig";
-    -- "hrsh7th/nvim-cmp";
-    -- "hrsh7th/cmp-nvim-lsp";
-    -- "hrsh7th/cmp-buffer";
+  "hrsh7th/nvim-cmp";
+  "hrsh7th/cmp-nvim-lsp";
+  "hrsh7th/cmp-buffer";
     -- "L3MON4D3/LuaSnip";
     -- "saadparwaiz1/cmp_luasnip";
   -- Extra functionality over rust analyzer
@@ -118,16 +118,16 @@ MyLineNumberToggle = function()
 end
 
 --[[ nvim-cmp for completions ]]
--- vim.o.completeopt = "menu,menuone,noselect"
--- 
--- local cmp = require'cmp'
--- 
--- cmp.setup {
---   snippet = {
---     expand = function(args)
---       require('luasnip').lsp_expand(args.body)
---     end
---   },
+vim.o.completeopt = "menu,menuone,noselect"
+
+local cmp = require'cmp'
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
+  },
 --   mapping = {
 --     ['<C-D>'] = cmp.mapping.scroll_docs(-4),
 --     ['<C-F>'] = cmp.mapping.scroll_docs(4),
@@ -138,12 +138,12 @@ end
 --         select = true
 --     })
 --   },
---   sources = {
---     { name = 'nvim_lsp' },
+  sources = {
+    { name = 'nvim_lsp' },
 --     { name = 'luasnip' },
---     { name = 'buffer' }
---   }
--- }
+    { name = 'buffer' }
+  }
+}
 
 --[[ Setup folke/which-key.nvim ]]
 local wk = require'which-key'
