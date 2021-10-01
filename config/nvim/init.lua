@@ -15,8 +15,7 @@
 require'paq' {
   -- Paq manages itself
   "savq/paq-nvim";
-  -- Used here to define keybindings
-  -- Used in nvim to shows possible keybinding in popup
+  -- define keybindings here, show possible keybinding in popup in nvim
   "folke/which-key.nvim";
   -- Install language modules for built-in treesitter
   "nvim-treesitter/nvim-treesitter";
@@ -27,11 +26,11 @@ require'paq' {
   "sharkdp/fd";
   -- Built-n LSP client configuration, completion and snippets support
   "neovim/nvim-lspconfig";
-  "hrsh7th/nvim-cmp";
-  "hrsh7th/cmp-nvim-lsp";
-  "hrsh7th/cmp-buffer";
-  "L3MON4D3/LuaSnip";
-  "saadparwaiz1/cmp_luasnip";
+    -- "hrsh7th/nvim-cmp";
+    -- "hrsh7th/cmp-nvim-lsp";
+    -- "hrsh7th/cmp-buffer";
+    -- "L3MON4D3/LuaSnip";
+    -- "saadparwaiz1/cmp_luasnip";
   -- Extra functionality over rust analyzer
   "simrat39/rust-tools.nvim";
   -- Configure built-in LSP client for Metals Scala language server
@@ -58,11 +57,14 @@ vim.o.fileencoding = "utf-8"
 vim.o.spelllang = "en_us"
 vim.o.fileformats = "unix,mac,dos"
 
+-- Sit do
 --[[ Set default tabstops and replace tabs with spaces ]]
 vim.o.tabstop = 4       -- Display hard tab as 4 spaces
 vim.o.shiftwidth = 4    -- Number of spaces used for auto-indent
 vim.o.softtabstop = 4   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
-vim.o.expandtab = true -- Expand tabs to spaces when inserting tabs
+vim.o.expandtab = true
+
+-- Expand tabs to spaces when inserting tabs
 
 --[[ Settings for LSP client ]]
 vim.o.timeoutlen = 800  -- Milliseconds to wait for key mapped sequence to complete
@@ -115,9 +117,44 @@ MyLineNumberToggle = function()
   end
 end
 
+--[[ nvim-cmp for completions ]]
+-- vim.o.completeopt = "menu,menuone,noselect"
+-- 
+-- local cmp = require'cmp'
+-- 
+-- cmp.setup {
+--   snippet = {
+--     expand = function(args)
+--       require('luasnip').lsp_expand(args.body)
+--     end
+--   },
+--   mapping = {
+--     ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-F>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-E>'] = cmp.mapping.close(),
+--     ['<CR>'] = cmp.mapping.confirm({
+--         behavior = cmp.ConfirmBehavior.Replace,
+--         select = true
+--     })
+--   },
+--   sources = {
+--     { name = 'nvim_lsp' },
+--     { name = 'luasnip' },
+--     { name = 'buffer' }
+--   }
+-- }
+
 --[[ Setup folke/which-key.nvim ]]
 local wk = require'which-key'
-wk.setup {}
+wk.setup {
+  plugins = {
+    spelling = {
+      enabled = true,
+      suggestions = 36
+    }
+  }
+}
 
 -- Normal mode <Leader> keybindings
 vim.g.mapleader = " "
@@ -168,34 +205,6 @@ wk.register({
   ["<S-Tab>"] = {"vim.fn.pumvisible() ? '<C-P>' : '<Tab>'"}
 }, {mode = "i", expr = true})
 
---[[ nvim-cmp for completions ]]
-vim.o.completeopt = "menu,menuone,noselect"
-
-local cmp = require'cmp'
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end
-  },
-  mapping = {
-    ['<C-D>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-F>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-E>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true
-    })
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'buffer' }
-  }
-}
-
 --[[ Setup nvim-treesitter ]]
 require'nvim-treesitter.configs'.setup {
   ensure_installed = 'maintained',
@@ -213,7 +222,7 @@ local lsp_servers = {
 
 for _, lsp_server in ipairs(lsp_servers) do
     nvim_lsp[lsp_server].setup {
-      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     }
 end
 
