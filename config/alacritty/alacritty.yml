@@ -695,7 +695,7 @@ mouse_bindings:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: Return, mods: Control|Shift,              action: SpawnNewInstance }
+  - { key: N, mods: Control|Shift,              action: SpawnNewInstance }
   - { key: N,      mods: Alt,                        command: { program: "alacritty", args: [] }}
   - { key: V,      mods: Alt,                        action: Paste }  # Use to cut and paste
   - { key: C,      mods: Alt,                        action: Copy  }  # from alactritty terminal.
