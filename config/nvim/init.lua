@@ -15,32 +15,41 @@
 require'paq' {
   -- Paq manages itself
   "savq/paq-nvim";
+
+  -- Colorize hexcodes and names like Blue or Green
+  "norcalli/nvim-colorizer.lua";
+
+  -- Tokyo Night colorscheme
+  "folke/tokyonight.nvim";
+
+  -- Configure statusline - fork of hoob3rt/lualine.nvim
+  "shadmansaleh/lualine.nvim";
+
   -- define keybindings here, show possible keybinding in popup in nvim
   "folke/which-key.nvim";
+
   -- Install language modules for built-in treesitter
   "nvim-treesitter/nvim-treesitter";
+
   -- Fuzzy finder over lists
   "nvim-telescope/telescope.nvim";
   "nvim-lua/plenary.nvim";
   "nvim-lua/popup.nvim";
   "sharkdp/fd";
+
   -- Built-n LSP client configuration, completion and snippets support
   "neovim/nvim-lspconfig";
   "hrsh7th/nvim-cmp";
   "hrsh7th/cmp-nvim-lsp";
   "hrsh7th/cmp-buffer";
-    -- "L3MON4D3/LuaSnip";
-    -- "saadparwaiz1/cmp_luasnip";
+  "L3MON4D3/LuaSnip";
+  "saadparwaiz1/cmp_luasnip";
+
   -- Extra functionality over rust analyzer
   "simrat39/rust-tools.nvim";
+
   -- Configure built-in LSP client for Metals Scala language server
-  "scalameta/nvim-metals";
-  -- Colorize hexcodes and names like Blue or Green
-  "norcalli/nvim-colorizer.lua";
-  -- Tokyo Night colorscheme
-  "folke/tokyonight.nvim";
-  -- Used to configure statusline - fork of hoob3rt/lualine.nvim
-  "shadmansaleh/lualine.nvim"
+  "scalameta/nvim-metals"
 }
 
 --[[ Set some default behaviors ]]
@@ -95,10 +104,36 @@ vim.api.nvim_exec([[
     au!
     au CmdLineEnter : set nosmartcase
     au CmdLineEnter : set noignorecase
-    au CmdLineLeave : set smartcase
     au CmdLineLeave : set ignorecase
+    au CmdLineLeave : set smartcase
   augroup end
 ]], false)
+
+--[[ Setup colorsscemes and statusline ]]
+vim.o.termguicolors = true
+require'colorizer'.setup()
+
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_colors = {bg = "#000000"}
+vim.g.tokyonight_italic_functions = 1
+vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
+
+require'lualine'.setup {
+  options = {theme = "tokyonight"}
+}
+
+vim.cmd[[colorscheme tokyonight]]
+
+--[[ Setup folke/which-key.nvim ]]
+local wk = require'which-key'
+wk.setup {
+  plugins = {
+    spelling = {
+      enabled = true,
+      suggestions = 36
+    }
+  }
+}
 
 --[[ Toggle between 3 line numbering states ]]
 vim.o.number = false
@@ -116,45 +151,6 @@ MyLineNumberToggle = function()
     vim.o.relativenumber = false
   end
 end
-
---[[ nvim-cmp for completions ]]
-vim.o.completeopt = "menu,menuone,noselect"
-
-local cmp = require'cmp'
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end
-  },
---   mapping = {
---     ['<C-D>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-F>'] = cmp.mapping.scroll_docs(4),
---     ['<C-Space>'] = cmp.mapping.complete(),
---     ['<C-E>'] = cmp.mapping.close(),
---     ['<CR>'] = cmp.mapping.confirm({
---         behavior = cmp.ConfirmBehavior.Replace,
---         select = true
---     })
---   },
-  sources = {
-    { name = 'nvim_lsp' },
---     { name = 'luasnip' },
-    { name = 'buffer' }
-  }
-}
-
---[[ Setup folke/which-key.nvim ]]
-local wk = require'which-key'
-wk.setup {
-  plugins = {
-    spelling = {
-      enabled = true,
-      suggestions = 36
-    }
-  }
-}
 
 -- Normal mode <Leader> keybindings
 vim.g.mapleader = " "
@@ -211,6 +207,34 @@ require'nvim-treesitter.configs'.setup {
   highlight = {enable = true}
 }
 
+--[[ nvim-cmp for completions ]]
+vim.o.completeopt = "menu,menuone,noselect"
+
+local cmp = require'cmp'
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end
+  },
+--   mapping = {
+--     ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+--     ['<C-F>'] = cmp.mapping.scroll_docs(4),
+--     ['<C-Space>'] = cmp.mapping.complete(),
+--     ['<C-E>'] = cmp.mapping.close(),
+--     ['<CR>'] = cmp.mapping.confirm({
+--         behavior = cmp.ConfirmBehavior.Replace,
+--         select = true
+--     })
+--   },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'buffer' }
+  }
+}
+
 --[[ LSP Configurations ]]
 local nvim_lsp = require'lspconfig'
 
@@ -222,7 +246,7 @@ local lsp_servers = {
 
 for _, lsp_server in ipairs(lsp_servers) do
     nvim_lsp[lsp_server].setup {
-      -- capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     }
 end
 
@@ -233,7 +257,7 @@ local rust_opts = {
 require('rust-tools').setup(rust_opts)
 
 -- Metals configuration
-vim.g.metals_server_version = '0.10.6-M1'  -- See https://scalameta.org/metals/docs/editors/overview.html
+vim.g.metals_server_version = '0.10.7'  -- See https://scalameta.org/metals/docs/editors/overview.html
 metals_config = require'metals'.bare_config
 
 metals_config.settings = {showImplicitArguments = true}
@@ -269,18 +293,3 @@ wk.register({
   [",["]  = {":lua vim.lsp.diagnostic.goto_prev {wrap = false}<CR>", "Diagnostic Goto Prev"},
   [",]"]  = {":lua vim.lsp.diagnostic.goto_next {wrap = false}<CR>", "Diagnostic Goto Next"}
 })
-
---[[ Setup colorsscemes and statusline ]]
-vim.o.termguicolors = true
-require'colorizer'.setup()
-
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_colors = {bg = "#000000"}
-vim.g.tokyonight_italic_functions = 1
-vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
-
-require'lualine'.setup {
-  options = {theme = "tokyonight"}
-}
-
-vim.cmd[[colorscheme tokyonight]]
