@@ -19,10 +19,11 @@ then
 else
     alias ls='ls --color=auto'
 fi
-alias l1='ls -1'
-alias la='ls -A'
-alias ll='ls -ltr'
+alias la='ls -a'
 alias lh='ls -lh'
+alias ll='ls -ltr'
+
+# For current directory, takes no arguments
 alias l.='ls -dA .*'
 
 alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"

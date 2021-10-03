@@ -75,7 +75,7 @@ if digpath -q nvim
 then
     export EDITOR=nvim
     export VISUAL=nvim
-    export MANPAGER="nvim -c 'set ft=man' -"
+    export MANPAGER='nvim +Man!'
     export PAGER='nvim -R'
 elif digpath -q vim
 then
