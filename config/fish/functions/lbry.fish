@@ -8,7 +8,7 @@ function lbry --description 'Launch LBRY App'
       printf "\t%s\n" $LBRY_App
       return 1
   else if test (count $LBRY_App) -eq 0
-      printf '\nError: LBRY app not found in $LBRY_Dir\n'
+      printf '\nError: LBRY app not found in %s\n' $LBRY_Dir
       return 1
   end
 
