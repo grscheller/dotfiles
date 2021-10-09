@@ -44,6 +44,7 @@ require'paq' {
   "hrsh7th/cmp-buffer";
   "L3MON4D3/LuaSnip";
   "saadparwaiz1/cmp_luasnip";
+  "rafamadriz/friendly-snippets";
 
   -- Extra functionality over rust analyzer
   "simrat39/rust-tools.nvim";
@@ -231,8 +232,10 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'nvim_lua' },
     { name = 'buffer' },
-    { name = 'path' }
+    { name = 'path' },
+    { name = 'treesitter' }
   }
 }
 
