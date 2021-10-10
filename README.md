@@ -1,43 +1,39 @@
-# Configuration files "my dotfiles"
+# Configuration Files "my dotfiles"
 
 This project contains the infrastructure I use to
-maintain and install my Fish, Bash, and Shell based
-environments.  The same configuration files are
-designed to be shared across multiple, more or
-less, POSIX like environments.  Also used to
-maintain Neovim and Alacritty configuration files.
+maintain and install my Fish, Neovim and Alacrittty
+configurations.  I also maintain minimal bash and
+POSIX shell configurations.
 
-Installs config files into your `$HOME` directiors from
-the cloned repo.
+The same configuration files are designed to be
+shared across multiple, more or less, POSIX like
+environments.  These config files get installed
+into the `$HOME` directiors from the cloned repo.
 
 ## Design Choices
+
+Modern Linux desktop environments don't reliably source, or not
+source, either `~/.profile` or `~/.bash_profile`.  Therefore,
+while in a terminal or at the console, I must take care to
+ensure that a sane initial shell environment gets set up.
 
 * Same POSIX `.profile` used by all POSIX compliant shells
 * Fish is not a POSIX compliant shell
 * Designed for maximum portability
 * Not designed for maximum security for a specific Shell or OS
 
-### Initial Shell Configuration
+## Shell Scripts
 
-Modern Linux desktop environments don't reliably source, or not source,
-either `~/.profile` or `~/.bash_profile`.
-
-* CentOS 7 does not
-* Arch Linux running GNOME Shell via GDM sources `./profile` with sh
-
-Therefore, my various POSIX `.*rc` files determine whether or
-not an initial shell environment was properly configured.
-If not, they source a POSIX shell script `~/.environment_rc`
-to do an initial configuration.
-
-## Installation Script
+### Installation Script
 
 * [installDotfiles](installDotfiles) installation script
   * installs everything into `$HOME`
   * run `./installDotfiles` from repo
   * Installs other various configuration files
 
-## Shell Scripts Installed in ~/.local/bin
+### Shell Scripts for POSIX Shell Configs
+
+These are installed into `~/.local/bin`.
 
 * [digpath](bin/digpath)
   * finds files on $PATH
@@ -45,7 +41,6 @@ to do an initial configuration.
   * does not stop after finding first one
   * required by various rc scripts
   * POSIX complient script
-  * fish & bash  have a similarly named functions
 * [pathtrim](bin/pathtrim)
   * cleans up $PATH
   * removes non-existing directories
@@ -55,13 +50,16 @@ to do an initial configuration.
     * correctly handles newlines in directory names
     * will have issues with colens in directory names
   * POSIX complient script
-  * fish & bash  have a similarly named functions
+  
+Fish & Bash  have a similarly named functions.
 
-## Shell Scripts Installed in ~/bin
+### Other Bash/POSIX Scripts
+
+These are installed into `~/bin`.
 
 * [bsPaq](bin/bsPaq)
   * bootstraps Paq infrastructure for Neovim
-  * then from within nvim run `:PaqSync`
+  * after bootstrap, run `:PaqSync` from within nvim 
   * POSIX complient script
 * [buArch](bin/buArch)
   * backup script for my Arch Linux laptop home directory
@@ -82,20 +80,3 @@ to do an initial configuration.
   * view the manifest list of a jar file
   * usage: viewJarManifest someJarFile.jar
   * POSIX complient script
-
-## Shell Startup Behavior Facts for POSIX shells
-
-### Login shells
-
-* Bash first sources `/etc/profile`
-* Bash then sources `~/.bash_profile`
-  * if not found, sources `~/.bash_login`
-  * if not found, sources `~/.profile`
-* Other POSIX shells first source `/etc/profile`
-* Other POSIX shells then source `~/.profile`
-* Other POSIX shells source `$ENV` if it exists both in environment and as file
-
-### Non-login interactive shells and non-interactive shells
-
-* Bash sources `$BASH_ENV` if it exists as a file, otherwise sources ~/.bashrc
-* Other POSIX shells source `$ENV` if it exists both in environment and as file

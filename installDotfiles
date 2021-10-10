@@ -39,6 +39,7 @@ CONFIG_FILES='
    fish/functions/digpath.fish
    fish/functions/ev.fish
    fish/functions/ff.fish
+   fish/functions/fields.fish
    fish/functions/fm.fish
    fish/functions/fish_greeting.fish
    fish/functions/fish_mode_prompt.fish

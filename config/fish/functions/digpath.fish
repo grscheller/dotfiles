@@ -1,24 +1,26 @@
 function digpath --description 'Look for files on $PATH'
 
     # Parse cmdline options
-    argparse -n 'digpath' q/quiet h/help -- $argv
+    argparse -n 'digpath' -N 1 q/quiet h/help -- $argv
     or begin
-        printf '         For usage type: digpath -h\n'
+        printf '         For usage, type: digpath -h\n' >&2
         return 3
     end
 
     # Print help message and quit
     if set -q _flag_help
+        printf 'Description: Look for files on $PATH, do not\n' >&2
+        printf '             stop after finding first one.\n\n' >&2
         printf 'Usage: digpath [-q|--quiet] file1 file2 ...\n'     >&2
         printf '       digpath \'glob1*.pat\' glob2\\\*.pat ...\n' >&2
         printf '       digpath [-h|--help]\n\n'                    >&2
-        printf 'Returns: 0 (true) if match found on $PATH\n'       >&2
-        printf '         1 (false) if no match found\n'            >&2
-        printf '         2 if -h or --help option given\n'         >&2
-        printf '         3 if an invalid option given\n\n'         >&2
-        printf 'Side Effects: prints matches to stdout,\n'         >&2
-        printf '              suppress output if -q given,\n'      >&2
-        printf '              print help to stderr if -h given\n'  >&2
+        printf 'Output: print matches on $PATH to stdout,\n'  >&2
+        printf '        suppresses output if -q given,\n'     >&2
+        printf '        print help to stderr if -h given\n\n' >&2
+        printf 'Exit Status: 0 (true) if match found on $PATH\n' >&2
+        printf '             1 (false) if no match found\n'      >&2
+        printf '             2 if -h or --help option given\n'   >&2
+        printf '             3 if an invalid option given\n'     >&2
         return 2
     end
 
