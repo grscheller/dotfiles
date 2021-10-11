@@ -63,8 +63,8 @@ and begin
     set -p PATH ~/.local/bin ~/opt/bin ~/localperl/bin ~/perl5/bin
     # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
-    # Added two relative paths used in some software projects
-    set -a PATH bin ../bin
+    # Added some relative paths, useful for some software projects
+    set -a PATH bin ../bin .
 
     # If on Arch, set up JDK for Java 11
     if string match -qr 'arch' (uname -r)
@@ -94,12 +94,12 @@ set fish_cursor_visual underscore blink
 abbr -a -g n nvim
 abbr -a -g nv nvim
 abbr -a -g g git
+abbr -a -g -- dp digpath
 
 # NVIDIA Daemon, need to type nv-<tab> to list choices
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
 abbr -a -g -- nv-off sudo /usr/bin/nvidia-smi -pm 0
 abbr -a -g -- nv-on sudo nvidia-smi -pm 1
-abbr -a -g -- dp digpath
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc

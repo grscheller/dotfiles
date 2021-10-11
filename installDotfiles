@@ -49,6 +49,7 @@ CONFIG_FILES='
    fish/functions/ldot.fish
    fish/functions/lh.fish
    fish/functions/ll.fish
+   fish/functions/nsort.fish
    fish/functions/path.fish
    fish/functions/pathtrim.fish
    fish/functions/rc.fish
