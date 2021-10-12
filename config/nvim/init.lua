@@ -16,7 +16,7 @@ require'paq' {
   -- Paq manages itself
   "savq/paq-nvim";
 
-  -- Colorize hexcodes and names like Blue or Green
+  -- Colorize hexcodes and names like Blue, Yellow or Green
   "norcalli/nvim-colorizer.lua";
 
   -- Tokyo Night colorscheme
@@ -56,7 +56,6 @@ require'paq' {
 --[[ Set some default behaviors ]]
 vim.o.hidden = true  -- Allow hidden buffers
 vim.o.shell = "/bin/sh"  -- Some packages need a POSIX compatible shell
-vim.o.backspace = "indent,eol,start"  -- More powerful backspacing in insert mode
 vim.o.path = vim.o.path .. ".,**"  -- Allow gf and :find to use recursive sub-folders
 vim.o.wildmenu = true                 -- Make tab completion in
 vim.o.wildmode = "longest:full,full"  -- command mode more useful.
@@ -179,21 +178,26 @@ wk.register {
   ["Y"] = {"y$", "Yank to End of Line"},
   -- Reselect previously changed text
   ["gp"] = {"`[v`]", "Reselect Previous Changed Text"},
-  -- Move windows around using CTRL-hjkl in normal mode
+  -- Move windows around using CTRL-hjkl
   ["<C-H>"] = {"<C-W>H", "Move Window LHS"},
   ["<C-J>"] = {"<C-W>J", "Move Window BOT"},
   ["<C-K>"] = {"<C-W>K", "Move Window TOP"},
   ["<C-L>"] = {"<C-W>L", "Move Window RHS"},
-  -- Navigate between windows using CTRL+arrow-keys in normal mode
+  -- Navigate between windows using CTRL+arrow-keys
   ["<C-Left>"]  = {"<C-W>h", "Goto Window Left" },
   ["<C-Down>"]  = {"<C-W>j", "Goto Window Down" },
   ["<C-Up>"]    = {"<C-W>k", "Goto Window Up"   },
   ["<C-Right>"] = {"<C-W>l", "Goto Window Right"},
-  -- Resize windows using ALT-hjkl in normal mode
+  -- Resize windows using ALT-hjkl for Linux
   ["<M-h>"] = {"2<C-W><", "Make Window Narrower"},
   ["<M-j>"] = {"2<C-W>-", "Make Window Shorter" },
   ["<M-k>"] = {"2<C-W>+", "Make Window Taller"  },
-  ["<M-l>"] = {"2<C-W>>", "Make Window Wider"   }
+  ["<M-l>"] = {"2<C-W>>", "Make Window Wider"   },
+  -- Resize windows using Command-hjkl for MacOS (untested)
+  ["<D-h>"] = {"2<C-W><", "Make Window Narrower"},
+  ["<D-j>"] = {"2<C-W>-", "Make Window Shorter" },
+  ["<D-k>"] = {"2<C-W>+", "Make Window Taller"  },
+  ["<D-l>"] = {"2<C-W>>", "Make Window Wider"   }
 }
 
 -- Use <Tab> and <S-Tab> to navigate through popup menus

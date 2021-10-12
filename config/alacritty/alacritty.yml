@@ -695,14 +695,16 @@ mouse_bindings:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: N, mods: Control|Shift,              action: SpawnNewInstance }
-  - { key: N,      mods: Alt,                        command: { program: "alacritty", args: [] }}
-  - { key: V,      mods: Alt,                        action: Paste }  # Use to cut and paste
-  - { key: C,      mods: Alt,                        action: Copy  }  # from alactritty terminal.
-  - { key: H,      mods: Alt,                        chars: "\x1bh" }  # On MacOS these 4 allow
-  - { key: J,      mods: Alt,                        chars: "\x1bj" }  # the <Option> key to function
-  - { key: K,      mods: Alt,                        chars: "\x1bk" }  # as the <Alt> key for some of
-  - { key: L,      mods: Alt,                        chars: "\x1bl" }  # my neovim keybindings.
+  - { key: N, mods: Control|Shift, action: SpawnNewInstance }
+  - { key: N,      mods: Alt,      command: { program: "alacritty", args: [] }}
+  - { key: V,      mods: Alt,      action: Paste }  # Use to cut and paste from
+  - { key: C,      mods: Alt,      action: Copy  }  # alactritty terminal on Linux.
+  - { key: V,      mods: Command,  action: Paste }  # Use to cut and paste from
+  - { key: C,      mods: Command,  action: Copy  }  # alactritty terminal on MacOS.
+    ##- { key: H,      mods: Alt,                        chars: "\x1bh" }  # On MacOS these 4 allow
+    ##- { key: J,      mods: Alt,                        chars: "\x1bj" }  # the <Option> key to function
+    ##- { key: K,      mods: Alt,                        chars: "\x1bk" }  # as the <Alt> key for some of
+    ##- { key: L,      mods: Alt,                        chars: "\x1bl" }  # my neovim keybindings.
   #- { key: Paste,                                       action: Paste          }
   #- { key: Copy,                                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
