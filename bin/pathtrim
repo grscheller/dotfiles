@@ -23,9 +23,6 @@
 # Usages: pathtrim /first/path/component:/second/path/coponent:.
 #         PATH="$(pathtrim)"
 #
-#   Written by Geoffrey Scheller
-#   See: https://github.com/grscheller/dotfiles
-#
 if [ $# -eq 0 ]
 then
     Paths="$PATH"

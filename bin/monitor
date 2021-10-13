@@ -2,9 +2,6 @@
 #
 #  Monitor who is on the system
 #
-#  Written by Geoffrey Scheller
-#  See: https://github.com/grscheller/dotfiles
-#
 [[ -d ~/monitor ]] || mkdir ~/monitor || {
     printf 'monitor: Error - Failed to create ~/monitor dirctory\n'
     exit 1

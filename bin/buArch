@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 #
-# Backup important files to my external HD
+# Back-up important files to my external HD
 #
 # Usage: buArch
 #
-# Written by Geoffrey Scheller
-# See: https://github.com/grscheller/dotfiles
-#
-# shellcheck shell=bash
 
 ## Backup configuration
 

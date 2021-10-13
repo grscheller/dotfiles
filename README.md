@@ -2,7 +2,7 @@
 
 This project contains the infrastructure I use to
 maintain and install my Fish, Neovim and Alacrittty
-configurations.  I also maintain minimal bash and
+configurations.  I also maintain minimal Bash and
 POSIX shell configurations.
 
 ## Design Choices
@@ -21,8 +21,8 @@ get set up.
 ### Installation Script
 
 * [installDotfiles](installDotfiles) installation script
-  * installs everything into `$HOME`
   * run `./installDotfiles` from repo
+  * installs everything into `$HOME`
 
 ### Shell Scripts for POSIX Shell Configs
 
@@ -34,7 +34,6 @@ to configurate my other POSIX shells.
   * finds files on $PATH
   * like the ksh whence builtin
   * does not stop after finding first one
-  * POSIX complient script
 * [pathtrim](bin/pathtrim)
   * cleans up $PATH
   * removes non-existing directories
@@ -43,7 +42,6 @@ to configurate my other POSIX shells.
     * correctly handles white space
     * correctly handles newlines in directory names
     * will have issues with colens in directory names
-  * POSIX complient script
   
 ### Other Bash/POSIX Scripts
 
@@ -56,10 +54,10 @@ These scripts are installed into `~/bin`.
 * [buArch](bin/buArch)
   * backup script for my Arch Linux laptop home directory
   * basically a wrapped for rsync
-  * bash script
+  * Bash script
 * [monitor](bin/monitor)
   * maintain a log of who is on the system
-  * bash script
+  * Bash script
 * [rt](bin/rt)
   * launch rtorrent Bit-Torrent peer-to-peer ncurses based CLI program
   * POSIX complient script
@@ -67,7 +65,7 @@ These scripts are installed into `~/bin`.
   * spin a curser around
   * handy to keep ssh connections alive
   * hit any key to terminate, except `<space>` or `<enter>`
-  * bash script
+  * Bash script
 * [viewJarManifest](bin/viewJarManifest)
   * view the manifest list of a jar file
   * usage: viewJarManifest someJarFile.jar

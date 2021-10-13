@@ -8,10 +8,6 @@
 #
 # Usage: spin
 #
-# Written by Geoffrey Scheller
-# See: https://github.com/grscheller/dotfiles
-#
-
 unset LINE SPINNER jj
 
 SPINNER=($'\b-' $'\b\\' $'\b|' $'\b/')
