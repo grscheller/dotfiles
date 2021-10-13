@@ -1,33 +1,28 @@
 # Configuration Files "dotfiles"
 
-This project contains the infrastructure I use to
-maintain and install my Fish, Neovim and Alacrittty
-configurations.  I also maintain minimal Bash and
+This repo contains the infrastructure I use to
+maintain and install my Fish, Neovim and Alacritty
+configurations.  Also contains more minimal Bash and
 POSIX shell configurations.
 
 ## Design Choices
 
-These configuration files are designed for maximum portability,
-not necessarily maximum security, across multiple, more or less,
-POSIX like environments.
-
-Modern Linux desktop environments don't consitantly source, nor not
-source, `~/.profile` or `~/.bash_profile`.  Therefore, I take care
-to ensure that sane initial shell environments get set up.
+The same configuration files are designed for use across multiple,
+more or less, POSIX like operating systems.  Care is taken to
+ensure that sane initial shell environments are set up.
 
 ## Shell Scripts
 
 ### Installation Script
 
 * [installDotfiles](installDotfiles) installation script
-  * run `./installDotfiles` from repo
+  * run `./installDotfiles` from cloned repo
   * installs everything into `$HOME`
 
-### Shell Scripts for POSIX Shell Configs
+### Scripts Used in POSIX Shell Configurations
 
-These are installed into `~/.local/bin`.  Both Fish and Bash
-have fuction equivalents to these.  These versions are used
-in the configurates my other POSIX shells.
+These POSIX shell scripts get installed into `~/.local/bin`.  Both
+Fish and Bash use function based versions of these.
 
 * [digpath](bin/digpath)
   * finds files on $PATH
@@ -40,32 +35,31 @@ in the configurates my other POSIX shells.
   * edge cases
     * correctly handles white space
     * correctly handles newlines in directory names
-    * will have issues with colens in directory names
+    * will have issues with colons in directory names
   
 ### Other Bash/POSIX Scripts
 
-These scripts are installed into `~/bin`.
+These scripts get installed into `~/bin`
 
 * [bsPaq](bin/bsPaq)
   * bootstraps Paq infrastructure for Neovim
   * after bootstrap, run `:PaqSync` from within nvim 
-  * POSIX complient script
+  * POSIX compliant script
 * [buArch](bin/buArch)
   * backup script for my Arch Linux laptop home directory
-  * basically a wrapped for rsync
+  * wrapper for rsync
   * Bash script
 * [monitor](bin/monitor)
-  * maintain a log of who is on the system
+  * maintain a log of who logs on the system
   * Bash script
 * [rt](bin/rt)
   * launch rtorrent Bit-Torrent peer-to-peer ncurses based CLI program
-  * POSIX complient script
+  * POSIX compliant script
 * [spin](bin/spin)
-  * spin a curser around
+  * spin the cursor around
   * handy to keep ssh connections alive
-  * hit any key to terminate, except `<space>` or `<enter>`
+  * hit any key to terminate, except `<space>` or `<return>`
   * Bash script
 * [viewJarManifest](bin/viewJarManifest)
   * view the manifest list of a jar file
-  * usage: viewJarManifest someJarFile.jar
-  * POSIX complient script
+  * POSIX compliant script
