@@ -11,10 +11,9 @@ These configuration files are designed for maximum portability,
 not necessarily maximum security, across multiple, more or less,
 POSIX like environments.
 
-Modern Linux desktop environments don't reliably source, nor not
-source, either `~/.profile` or `~/.bash_profile`.  Therefore, I
-must take care to ensure that a sane initial shell environments
-get set up.
+Modern Linux desktop environments don't consitantly source, nor not
+source, `~/.profile` or `~/.bash_profile`.  Therefore, I take care
+to ensure that sane initial shell environments get set up.
 
 ## Shell Scripts
 
@@ -28,7 +27,7 @@ get set up.
 
 These are installed into `~/.local/bin`.  Both Fish and Bash
 have fuction equivalents to these.  These versions are used
-to configurate my other POSIX shells.
+in the configurates my other POSIX shells.
 
 * [digpath](bin/digpath)
   * finds files on $PATH
