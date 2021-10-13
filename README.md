@@ -22,16 +22,16 @@ ensure that a sane initial shell environment gets set up.
 * Designed for maximum portability
 * Not designed for maximum security for a specific Shell or OS
 
-## Shell Scripts
+### Shell Scripts
 
-### Installation Script
+#### Installation Script
 
 * [installDotfiles](installDotfiles) installation script
   * installs everything into `$HOME`
   * run `./installDotfiles` from repo
   * Installs other various configuration files
 
-### Shell Scripts for POSIX Shell Configs
+#### Shell Scripts for POSIX Shell Configs
 
 These are installed into `~/.local/bin`.
 
@@ -53,7 +53,7 @@ These are installed into `~/.local/bin`.
   
 Fish & Bash  have a similarly named functions.
 
-### Other Bash/POSIX Scripts
+#### Other Bash/POSIX Scripts
 
 These are installed into `~/bin`.
 
