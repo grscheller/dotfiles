@@ -140,16 +140,16 @@ vim.o.number = false
 vim.o.relativenumber = false
 
 MyLineNumberToggle = function()
-  if vim.o.relativenumber == true then
-    vim.o.number = false
-    vim.o.relativenumber = false
-  elseif vim.o.number == true then
-    vim.o.number = false
-    vim.o.relativenumber = true
-  else
-    vim.o.number = true
-    vim.o.relativenumber = false
-  end
+    if vim.o.relativenumber == true then
+        vim.o.number = false
+        vim.o.relativenumber = false
+    elseif vim.o.number == true then
+        vim.o.number = false
+        vim.o.relativenumber = true
+    else
+        vim.o.number = true
+        vim.o.relativenumber = false
+    end
 end
 
 -- Normal mode <Leader> keybindings
@@ -196,10 +196,10 @@ wk.register {
 }
 
 -- Use <Tab> and <S-Tab> to navigate through popup menus
-wk.register({
-  ["<Tab>"]   = {"vim.fn.pumvisible() ? '<C-N>' : '<Tab>'"},
-  ["<S-Tab>"] = {"vim.fn.pumvisible() ? '<C-P>' : '<Tab>'"}
-}, {mode = "i", expr = true})
+-- wk.register({
+--   ["<Tab>"]   = {"vim.fn.pumvisible() ? '<C-N>' : '<Tab>'"},
+--   ["<S-Tab>"] = {"vim.fn.pumvisible() ? '<C-P>' : '<Tab>'"}
+-- }, {mode = "i", expr = true})
 
 --[[ Setup nvim-treesitter ]]
 require'nvim-treesitter.configs'.setup {
@@ -214,27 +214,34 @@ local cmp = require'cmp'
 
 cmp.setup {
   snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end
+      expand = function(args)
+          require('luasnip').lsp_expand(args.body)
+      end
   },
---   mapping = {
---     ['<C-D>'] = cmp.mapping.scroll_docs(-4),
---     ['<C-F>'] = cmp.mapping.scroll_docs(4),
---     ['<C-Space>'] = cmp.mapping.complete(),
---     ['<C-E>'] = cmp.mapping.close(),
---     ['<CR>'] = cmp.mapping.confirm({
---         behavior = cmp.ConfirmBehavior.Replace,
---         select = true
---     })
---   },
+  mapping = {
+      ['<Tab>'] = function(fallback)
+          if cmp.visible() then
+              cmp.select_next_item()
+          else
+              fallback()
+          end
+      end,
+      ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-F>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-E>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true
+      })
+  },
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'nvim_lua' },
-    { name = 'buffer' },
-    { name = 'path' },
-    { name = 'treesitter' }
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+      { name = 'nvim_lua' },
+      { name = 'buffer' },
+      { name = 'path' },
+      { name = 'treesitter' }
   }
 }
 
@@ -242,20 +249,20 @@ cmp.setup {
 local nvim_lsp = require'lspconfig'
 
 local lsp_servers = {
-  "bashls",         -- Bash-language-server (npm i -g bash-language-server)
-  "pyright",        -- Pyright for Python (pacman or npm)
-  "clangd"
+    "bashls",  -- Bash-language-server (npm i -g bash-language-server)
+    "pyright", -- Pyright for Python (pacman or npm)
+    "clangd"
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
     nvim_lsp[lsp_server].setup {
-      capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+        capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     }
 end
 
 -- Rust configuration, rust-tools.nvim will call lspconfig itself
 local rust_opts = {
-  server = {}  -- Options to be sent to nvim-lspconfig
+    server = {}  -- Options to be sent to nvim-lspconfig
 }
 require('rust-tools').setup(rust_opts)
 
