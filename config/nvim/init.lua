@@ -41,6 +41,7 @@ require'paq' {
     "neovim/nvim-lspconfig";
     "hrsh7th/nvim-cmp";
     "hrsh7th/cmp-nvim-lsp";
+    "hrsh7th/cmp-path";
     "hrsh7th/cmp-buffer";
     "L3MON4D3/LuaSnip";
     "saadparwaiz1/cmp_luasnip";
@@ -135,26 +136,8 @@ wk.setup {
     }
 }
 
---[[ Toggle between 3 line numbering states ]]
-vim.o.number = false
-vim.o.relativenumber = false
-
-MyLineNumberToggle = function()
-    if vim.o.relativenumber == true then
-        vim.o.number = false
-        vim.o.relativenumber = false
-    elseif vim.o.number == true then
-        vim.o.number = false
-        vim.o.relativenumber = true
-    else
-        vim.o.number = true
-        vim.o.relativenumber = false
-    end
-end
-
 -- Normal mode keybindings
 wk.register {
-    ["<Space>n"] = {":lua MyLineNumberToggle()<CR>", "Line Number Toggle"},
     ["<Space><Space>"] = {":nohlsearch<CR>", "Clear hlsearch"},
     ["Y"] = {"y$", "Yank to End of Line"}, -- Fix between Y, D & C inconsistency
     ["gp"] = {"`[v`]", "Reselect Previous Changed Text"},
@@ -188,6 +171,28 @@ wk.register {
     ["<M-l>"] = {"2<C-W>>", "Make Window Wider"   }
 }
 
+--[[ Toggle between 3 line numbering states ]]
+vim.o.number = false
+vim.o.relativenumber = false
+
+myLineNumberToggle = function()
+    if vim.o.relativenumber == true then
+        vim.o.number = false
+        vim.o.relativenumber = false
+    elseif vim.o.number == true then
+        vim.o.number = false
+        vim.o.relativenumber = true
+    else
+        vim.o.number = true
+        vim.o.relativenumber = false
+    end
+end
+
+-- Normal mode keybindings
+wk.register {
+    ["<Space>n"] = {":lua myLineNumberToggle()<CR>", "Line Number Toggle"}
+}
+
 --[[ Setup nvim-treesitter ]]
 require'nvim-treesitter.configs'.setup {
     ensure_installed = 'maintained',
@@ -195,46 +200,62 @@ require'nvim-treesitter.configs'.setup {
 }
 
 --[[ nvim-cmp for completions ]]
-vim.o.completeopt = "menu,menuone,noselect"
+vim.o.completeopt = "menuone,noinsert,noselect"
 
+local myHasWordsBefore = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local luasnip = require'luasnip'
 local cmp = require'cmp'
-
 cmp.setup {
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end
     },
     mapping = {
         ['<C-Space>'] = cmp.mapping.complete(),
+
         ['<C-E>'] = cmp.mapping.close(),
+
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true
         },
-        ['<Tab>'] = function(fallback)
+
+        ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
+            elseif myHasWordsBefore() then
+                cmp.complete()
             else
                 fallback()
             end
-        end,
-        ['<S-Tab>'] = function(fallback)
+        end, {"i", "s"}),
+
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
             else
                 fallback()
             end
-        end,
+        end, {"i", "s"}),
+
         ['<C-D>'] = cmp.mapping.scroll_docs(-4),
+
         ['<C-F>'] = cmp.mapping.scroll_docs(4)
     },
     sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'nvim_lua' },
+        {name = 'nvim_lsp'},
+        {name = 'luasnip'},
+        {name = 'nvim_lua'},
+        {name = 'path'},
         {
             name = 'buffer',
             opts = {
@@ -243,8 +264,7 @@ cmp.setup {
                 end
             }
         },
-        { name = 'path' },
-        { name = 'treesitter' }
+        {name = 'treesitter'}
     }
 }
 
@@ -252,9 +272,10 @@ cmp.setup {
 local nvim_lsp = require'lspconfig'
 
 local lsp_servers = {
-    "bashls",  -- Bash-language-server (npm i -g bash-language-server)
-    "pyright", -- Pyright for Python (pacman or npm)
-    "clangd"
+    "bashls", -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
+    "clangd", -- C and C++ - both clang and gcc
+    "html",   -- HTML (npm i -g vscode-langservers-extracted)
+    "pyright" -- Pyright for Python (pacman or npm)
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -263,15 +284,29 @@ for _, lsp_server in ipairs(lsp_servers) do
     }
 end
 
--- Rust configuration, rust-tools.nvim will call lspconfig itself
+--[[ Rust configuration, rust-tools.nvim will call lspconfig itself ]]
 local rust_opts = {
-    server = {}  -- Options to be sent to nvim-lspconfig
+    tools = {
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints ={
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = ""
+        },
+    },
+    -- Options to be sent to nvim-lspconfig
+    -- overriding defaults set by rust-tools.nvim
+    server = {
+        settings = {}
+    }
 }
+
 require('rust-tools').setup(rust_opts)
 
--- Metals configuration
+--[[ Metals configuration ]]
 vim.g.metals_server_version = '0.10.7'  -- See https://scalameta.org/metals/docs/editors/overview.html
-metals_config = require'metals'.bare_config
+metals_config = require'metals'.bare_config()
 
 metals_config.settings = {showImplicitArguments = true}
 
@@ -282,8 +317,8 @@ vim.api.nvim_exec([[
     augroup end
 ]], false)
 
--- Setup LSP related keybindings
-wk.register({
+--[[ LSP related keybindings ]]
+wk.register {
     [","]   = {name = "+lsp"},
     [",g"]  = {name = "+goto"},
     [",s"]  = {name = "+symbol"},
@@ -305,4 +340,4 @@ wk.register({
     [",l"]  = {":lua vim.lsp.diagnostic.set_loclist()<CR>", "Diagnostic Set Loclist"},
     [",["]  = {":lua vim.lsp.diagnostic.goto_prev {wrap = false}<CR>", "Diagnostic Goto Prev"},
     [",]"]  = {":lua vim.lsp.diagnostic.goto_next {wrap = false}<CR>", "Diagnostic Goto Next"}
-})
+}
