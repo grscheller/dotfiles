@@ -77,7 +77,7 @@ vim.o.expandtab = true
 -- Expand tabs to spaces when inserting tabs
 
 --[[ Settings for LSP client ]]
-vim.o.timeoutlen = 800  -- Milliseconds to wait for key mapped sequence to complete
+vim.o.timeoutlen = 1000  -- Milliseconds to wait for key mapped sequence to complete
 vim.o.updatetime = 300  -- Set update time for CursorHold event
 vim.o.signcolumn = "yes"  -- Fixes first column, reduces jitter
 vim.o.shortmess = "atToOc"
@@ -107,6 +107,14 @@ vim.api.nvim_exec([[
         au CmdLineEnter : set noignorecase
         au CmdLineLeave : set ignorecase
         au CmdLineLeave : set smartcase
+    augroup end
+]], false)
+
+--[[ Highlight what is yanked ]]
+vim.api.nvim_exec([[
+    augroup highlight_yank
+        au!
+        au TextYankPost * silent! lua vim.highlight.on_yank{timeout=800, on_visual=false}
     augroup end
 ]], false)
 
