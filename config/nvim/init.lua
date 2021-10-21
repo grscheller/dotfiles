@@ -114,7 +114,7 @@ vim.api.nvim_exec([[
 vim.api.nvim_exec([[
     augroup highlight_yank
         au!
-        au TextYankPost * silent! lua vim.highlight.on_yank{timeout=800, on_visual=false}
+        au TextYankPost * silent! lua vim.highlight.on_yank{timeout=600, on_visual=false}
     augroup end
 ]], false)
 
@@ -148,7 +148,7 @@ wk.setup {
 wk.register {
     ["<Space><Space>"] = {":nohlsearch<CR>", "Clear hlsearch"},
     ["Y"] = {"y$", "Yank to End of Line"}, -- Fix between Y, D & C inconsistency
-    ["gp"] = {"`[v`]", "Reselect Previous Changed Text"},
+    ["gp"] = {"`[v`]", "Reselect Previous Changed/Yanked Text"},
     ["<Space>sp"] = {":set invspell<CR>", "Toggle Spelling"},
     ["<Space>ws"] = {":%s/\\s\\+$//<CR>", "Trim Trailing White Space"},
     ["<Space>t"] = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
