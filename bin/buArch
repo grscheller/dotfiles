@@ -12,6 +12,7 @@ BackupLocation='/run/media/grs/60844d50-85ac-42fd-b848-2591be3c7fd0/grs/Backup'
 ExcludeDirs=(
     build
     devel
+    Downloads
     node_modules
     Videos
     OneDrive
@@ -21,6 +22,7 @@ ExcludeDirs=(
     .config/discord/blob_storage
     .config/evolution
     .config/google-chrome
+    .config/lbry/Cache
     .config/skypeforlinux/Cache
     .g8
     .gem
@@ -30,7 +32,8 @@ ExcludeDirs=(
     .local/share/evolution
     .local/share/gvfs-metadata
     .local/share/lbry/lbrynet/blobfiles
-    .local/share/nvim/plugged
+    .local/share/nvim/site/pack
+    .mozilla
     .npm
     .rustup/toolchains
     .sane
