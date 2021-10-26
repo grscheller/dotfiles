@@ -162,6 +162,8 @@ wk.register {
     ["<Space>fg"] = {":Telescope live_grep<CR>", "Live Grep"},
     ["<Space>fh"] = {":Telescope help_tags<CR>", "Help Tags"},
     ["<Space>fr"] = {":Telescope oldfiles<CR>", "Open Recent File"},
+    -- Treesitter related keybindings
+    ["<Space>h"] = {":TSBufToggle highlight<CR>", "Treesitter Highlight Toggle"},
     -- Move windows around using CTRL-hjkl
     ["<C-H>"] = {"<C-W>H", "Move Window LHS"},
     ["<C-J>"] = {"<C-W>J", "Move Window BOT"},
