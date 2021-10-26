@@ -23,7 +23,8 @@ require'paq' {
     "folke/tokyonight.nvim";
 
     -- Statusline - fork of hoob3rt/lualine.nvim
-    "shadmansaleh/lualine.nvim";
+    "nvim-lualine/lualine.nvim";
+    "kyazdani42/nvim-web-devicons";
 
     -- define keybindings; show keybindings in popup
     "folke/which-key.nvim";
@@ -127,11 +128,16 @@ vim.g.tokyonight_colors = {bg = "#000000"}
 vim.g.tokyonight_italic_functions = 1
 vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
 
-require'lualine'.setup {
-    options = {theme = "tokyonight"}
+-- vim.cmd[[colorscheme tokyonight]]
+vim.cmd[[colorscheme tokyonight]]
+
+require'nvim-web-devicons'.setup {
+    default = true
 }
 
-vim.cmd[[colorscheme tokyonight]]
+require'lualine'.setup {
+    options = {theme = "moonfly"}
+}
 
 --[[ Setup folke/which-key.nvim ]]
 local wk = require'which-key'
