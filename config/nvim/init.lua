@@ -15,29 +15,22 @@
 require'paq' {
     -- Paq manages itself
     "savq/paq-nvim";
-
     -- Colorize hexcodes and names like Blue, Yellow or Green
     "norcalli/nvim-colorizer.lua";
-
     -- Tokyo Night colorscheme
     "folke/tokyonight.nvim";
-
     -- Statusline - fork of hoob3rt/lualine.nvim
     "nvim-lualine/lualine.nvim";
     "kyazdani42/nvim-web-devicons";
-
     -- define keybindings; show keybindings in popup
     "folke/which-key.nvim";
-
     -- Install language modules for built-in treesitter
     "nvim-treesitter/nvim-treesitter";
-
     -- Fuzzy finder over lists
     "nvim-telescope/telescope.nvim";
     "nvim-lua/plenary.nvim";
     "nvim-lua/popup.nvim";
     "sharkdp/fd";
-
     -- Built-in LSP client config, completion and snippets support
     "neovim/nvim-lspconfig";
     "hrsh7th/nvim-cmp";
@@ -47,12 +40,10 @@ require'paq' {
     "L3MON4D3/LuaSnip";
     "saadparwaiz1/cmp_luasnip";
     "rafamadriz/friendly-snippets";
-
     -- Extra functionality over rust analyzer
     "simrat39/rust-tools.nvim";
-
     -- Config built-in LSP client for Metals Scala language server
-    "scalameta/nvim-metals"
+    "scalameta/nvim-metals";
 }
 
 --[[ Set some default behaviors ]]
@@ -107,7 +98,7 @@ vim.api.nvim_exec([[
     augroup end
 ]], false)
 
---[[ Highlight what is yanked ]]
+--[[ Give visual feedback for yanked text ]]
 vim.api.nvim_exec([[
     augroup highlight_yank
         au!
@@ -197,7 +188,7 @@ myLineNumberToggle = function()
     end
 end
 
--- Normal mode keybindings
+-- Normal mode keybinding for above Lua function
 wk.register {
     ["<Space>n"] = {":lua myLineNumberToggle()<CR>", "Line Number Toggle"}
 }
@@ -229,45 +220,43 @@ cmp.setup {
         ['<C-E>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
-            select = true
-        },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif myHasWordsBefore() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, {"i", "s"}),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, {"i", "s"}),
+            select = true },
+        ['<Tab>'] = cmp.mapping(
+            function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                elseif myHasWordsBefore() then
+                    cmp.complete()
+                else
+                    fallback()
+                end
+            end, {"i", "s"}),
+        ['<S-Tab>'] = cmp.mapping(
+            function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif luasnip.jumpable(-1) then
+                    luasnip.jump(-1)
+                else
+                    fallback()
+                end
+            end, {"i", "s"}),
         ['<C-D>'] = cmp.mapping.scroll_docs(-4),
         ['<C-F>'] = cmp.mapping.scroll_docs(4)
     },
     sources = {
-        {name = 'nvim_lsp'},
         {name = 'luasnip'},
+        {name = 'nvim_lsp'},
         {name = 'treesitter'},
         {name = 'nvim_lua'},
-        {name = 'path'},
-        {
-            name = 'buffer',
-            opts = {
-                get_bufnrs = function()
-                    return vim.api.nvim_list_bufs()
-                end
-            }
-        }
+        {name = 'buffer',
+         opts = {
+             get_bufnrs = function()
+                 return vim.api.nvim_list_bufs()
+             end}},
+        {name = 'path'}
     }
 }
 
@@ -303,9 +292,7 @@ local rust_opts = {
     -- Options to be sent to nvim-lspconfig
     -- overriding defaults set by rust-tools.nvim
     server = {
-        settings = {
-            capabilities = lsp_capabilities
-        }
+        settings = {capabilities = lsp_capabilities}
     }
 }
 
