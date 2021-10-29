@@ -33,10 +33,11 @@ require'paq' {
     "sharkdp/fd";
     -- Built-in LSP client config, completion and snippets support
     "neovim/nvim-lspconfig";
-    "hrsh7th/nvim-cmp";
     "hrsh7th/cmp-nvim-lsp";
-    "hrsh7th/cmp-path";
     "hrsh7th/cmp-buffer";
+    "hrsh7th/cmp-path";
+    "hrsh7th/cmp-cmdline";
+    "hrsh7th/nvim-cmp";
     "L3MON4D3/LuaSnip";
     "saadparwaiz1/cmp_luasnip";
     "rafamadriz/friendly-snippets";
@@ -87,6 +88,7 @@ vim.o.matchpairs = vim.o.matchpairs .. ",<:>,「:」"  -- Additional matching pa
 
 --[[ Case insensitive search, but not in command mode ]]
 vim.o.ignorecase = true
+
 vim.o.smartcase = true
 vim.api.nvim_exec([[
     augroup dynamic_smartcase
@@ -199,7 +201,7 @@ require'nvim-treesitter.configs'.setup {
     highlight = {enable = true}
 }
 
---[[ nvim-cmp for completions ]]
+--[[ Completions via hrsh7th/nvim-cmp ]]
 vim.o.completeopt = "menuone,noinsert,noselect"
 
 local myHasWordsBefore = function()
@@ -216,8 +218,11 @@ cmp.setup {
         end
     },
     mapping = {
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-E>'] = cmp.mapping.close(),
+        ['<C-Y>'] = cmp.config.disable,
+        ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+        ['<C-E>'] = cmp.mapping {
+            i = cmp.mapping.close(),
+            c = cmp.mapping.close() },
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true },
@@ -243,22 +248,15 @@ cmp.setup {
                     fallback()
                 end
             end, {"i", "s"}),
-        ['<C-D>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-F>'] = cmp.mapping.scroll_docs(4)
+        ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+        ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'})
     },
-    sources = {
-        {name = 'luasnip'},
-        {name = 'nvim_lsp'},
-        {name = 'treesitter'},
-        {name = 'nvim_lua'},
-        {name = 'buffer',
-         opts = {
-             get_bufnrs = function()
-                 return vim.api.nvim_list_bufs()
-             end}},
-        {name = 'path'}
-    }
+    sources = cmp.config.sources({{name = 'nvim_lsp'}, {name = 'luasnip'}}, {{name = 'buffer'}})
 }
+
+cmp.setup.cmdline('/', {sources = {{name = 'buffer'}}})
+
+cmp.setup.cmdline(':', {sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})})
 
 --[[ LSP Configurations ]]
 local nvim_lsp = require'lspconfig'
