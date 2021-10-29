@@ -31,16 +31,13 @@ and begin
     # Python configuration
     set -x PIP_REQUIRE_VIRTUALENV true
 
-    # On iMac Brew installs symlinks here
-    set -p PATH /usr/local/sbin
-
     # Ruby tool chain
     #   Mostly for locally installed ruby gems,
     #     to install these:
     #       Markdown linter: $ gem install mdl
     #       Neovim syntax:   $ gem install neovim
     set -p PATH ~/.local/share/gem/ruby/*/bin
-    set -p PATH /usr/local/Cellar/ruby/*/bin
+    set -p PATH /usr/local/opt/ruby/bin
 
     # Rust toolchain
     set -p PATH ~/.cargo/bin
@@ -56,11 +53,11 @@ and begin
     # On iMac, node 12 is "keg only"
     set -p PATH /usr/local/opt/node@12/bin
 
-    # On iMac, put brew clang before system clang (for clangd language server)
-    set -p PATH /usr/local/Cellar/llvm/12.0.1/bin
+    # On iMac, put brew clang before system clang - for clangd language server
+    set -p PATH /usr/local/opt/llvm@13/bin
 
     # Utilities I want to overide everything
-    set -p PATH ~/.local/bin ~/opt/bin ~/localperl/bin ~/perl5/bin
+    set -p PATH ~/.local/bin ~/opt/bin
     # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
     # Added some relative paths, useful for some software projects
