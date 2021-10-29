@@ -1,4 +1,4 @@
-##
+
 #  ~/.bashrc
 #
 #  Bash configuration across multiple,
@@ -56,3 +56,6 @@ then
 else
     unset SDKMAN_DIR
 fi
+# Now fix what SDKMAN broke
+PATH="$(pathtrim)"
+

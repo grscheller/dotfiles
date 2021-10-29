@@ -69,7 +69,7 @@ PATH=/usr/local/Cellar/llvm/12.0.1/bin:"$PATH"
 PATH=~/.local/bin:~/opt/bin:~/localperl/bin:~/perl5/bin:"$PATH"
 
 # Clean up PATH - remove duplicate and non-existent path entries
-PATH=$(pathtrim)
+PATH="$(pathtrim)"
 
 if digpath -q nvim
 then

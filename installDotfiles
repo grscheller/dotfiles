@@ -14,6 +14,7 @@
 HOME_FILES='
    .alias_rc
    .bashrc
+   .bash_sessions_disable
    .dashrc
    .environment_rc
    .env_rc

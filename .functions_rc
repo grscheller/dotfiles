@@ -181,7 +181,9 @@ function fm
 function tm
 {
    if [[ -x /usr/bin/alacritty ]]; then
-       ( /usr/bin/alacritty & )
+       ( /usr/bin/alacritty -e bash & )
+   elif [[ -x /usr/local/bin/alacritty ]]; then
+       ( /usr/local/bin/alacritty -e bash & )
    elif [[ -x /usr/bin/gnome-terminal ]]; then
        ( /usr/bin/gnome-terminal >&- 2>&- )
    elif [[ -x /usr/bin/urxvt ]]; then
