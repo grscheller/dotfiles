@@ -53,9 +53,8 @@ export SDKMAN_DIR=~/.sdkman
 if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]
 then
     source "$SDKMAN_DIR/bin/sdkman-init.sh"
+    PATH="$(pathtrim)"     # Clean up $PATH
 else
     unset SDKMAN_DIR
 fi
-# Now fix what SDKMAN broke
-PATH="$(pathtrim)"
 
