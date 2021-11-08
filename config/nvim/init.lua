@@ -166,7 +166,6 @@ wk.setup {                     -- except those for nvim-cmp
 wk.register {
     ["<Space><Space>"] = {":nohlsearch<CR>", "Clear hlsearch"},
     ["Y"] = {"y$", "Yank to End of Line"}, -- Fix between Y, D & C inconsistency
-    ["gp"] = {"`[v`]", "Reselect Previous Changed/Yanked Text"},
     ["<Space>sp"] = {":set invspell<CR>", "Toggle Spelling"},
     ["<Space>ws"] = {":%s/\\s\\+$//<CR>", "Trim Trailing White Space"},
     ["<Space>t"] = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
