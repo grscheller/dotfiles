@@ -1,11 +1,11 @@
-Host lh
-  Hostname localhost
+Host gauss17
+  Hostname 192.168.1.4
   Port 31502
   User grs
 
-Host gauss17
-  Hostname 10.80.131.151
-  Port 31502
+Host maxwell4
+  Hostname 192.168.1.10
+  Port 22042
   User grs
 
 Host voltron
@@ -17,3 +17,9 @@ Host sc31
   Hostname 10.100.51.89
   Port 22
   User geoffreyscheller
+
+Host gauss17w
+  Hostname 10.80.131.151
+  Port 31502
+  User grs
+
