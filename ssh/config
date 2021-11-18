@@ -3,8 +3,23 @@ Host gauss17
   Port 31502
   User grs
 
+Host gauss17w
+  Hostname 10.80.131.151
+  Port 31502
+  User grs
+
+Host gauss17st
+  Hostname 10.55.150.179
+  Port 31502
+  User grs
+
 Host maxwell4
   Hostname 192.168.1.10
+  Port 22042
+  User grs
+
+Host maxwell4st
+  Hostname 10.55.150.180
   Port 22042
   User grs
 
@@ -17,9 +32,4 @@ Host sc31
   Hostname 10.100.51.89
   Port 22
   User geoffreyscheller
-
-Host gauss17w
-  Hostname 10.80.131.151
-  Port 31502
-  User grs
 
