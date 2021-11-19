@@ -11,4 +11,4 @@
 #
 # Usage: hostnamectl whatever 
 #
-/usr/bin/hostname
+/bin/hostname
