@@ -73,6 +73,7 @@ LOCAL_BIN_SCRIPTS='
 BIN_SCRIPTS='
    bsPaq
    buArch
+   hostnamectl
    monitor
    rt
    spin

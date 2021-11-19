@@ -6,7 +6,9 @@
 # shellcheck shell=sh
 
 # Adjust Hostname - change cattle names to pet names
-HOST=$(hostname); HOST=${HOST%%.*}
+#   Note: On non-systemd systems, uses ~/bin/hostnamectl
+#         wrapper for the hostname command.
+HOST=$(hostnamectl hostname); HOST=${HOST%%.*}
 case $HOST in
   rvsllschellerg2) HOST=voltron ;;
       SpaceCAMP31) HOST=sc31    ;;

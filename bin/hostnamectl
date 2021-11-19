@@ -1,0 +1,14 @@
+#!/bin/sh
+# Wrapper for hostname
+#
+#   For use on non-systemd systems.  Script will ignore
+#   its arguments.
+#
+# Purpose: On systemd systems I do not wish to install
+#          the whole inetutils package (Arch) just to get hostname.
+#          Therefore, on systems which do not have the hostnamectl
+#          command, I need this wrapper.
+#
+# Usage: hostnamectl whatever 
+#
+/usr/bin/hostname
