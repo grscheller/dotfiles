@@ -13,6 +13,16 @@ Host gauss17w
   Port 31502
   User grs
 
+Host maxwell4w
+  Hostname 10.100.45.248
+  Port 22042
+  User grs
+
+Host sc31
+  Hostname 10.100.51.89
+  Port 22
+  User geoffreyscheller
+
 Host gauss17st
   Hostname 10.55.150.179
   Port 31502
@@ -27,9 +37,4 @@ Host voltron
   Hostname rvsllschellerg2
   Port 22
   User schelleg
-
-Host sc31
-  Hostname 10.100.51.89
-  Port 22
-  User geoffreyscheller
 
