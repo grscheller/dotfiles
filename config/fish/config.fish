@@ -88,10 +88,10 @@ set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
 
 ## Set up abriviations
-abbr -a -g n nvim
 abbr -a -g nv nvim
-abbr -a -g g git
-abbr -a -g -- dp digpath
+abbr -a -g dp digpath
+abbr -a -g update-env UPDATE_ENV= fish
+abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
 
 # NVIDIA Daemon, need to type nv-<tab> to list choices
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
