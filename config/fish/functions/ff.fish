@@ -1,9 +1,11 @@
 function ff --description 'Launch Firefox web browser'
     if digpath -q firefox
-        firefox $argv[1] &; disown
+        firefox $argv >/dev/null 2>&1 &
+        disown
     else if [ -x /Applications/Firefox.app/Contents/MacOS/firefox ]
         # Maybe we are on iMac
-        /Applications/Firefox.app/Contents/MacOS/firefox $argv[1] &; disown
+        /Applications/Firefox.app/Contents/MacOS/firefox $argv >/dev/null 2>&1&
+        disown
     else
         printf '\nCannot find firefox executable.\n'
         return 1

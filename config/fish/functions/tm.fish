@@ -1,15 +1,22 @@
+# Launch fish shell running in Alacritty terminal.
+#
+# Under Wayland and Gnome, Alacritty uses a non-native title bar
+# which is semi-functional, does not display title, and is bright
+# and annoying.  This can be avoided by running Alacritty
+# under XWayland.  That said, we still want the fish shell
+# running in Alacritty to be aware of the Wayland environment
+# and have any launched applications run under Wayland, not XWayland.
 function tm --description 'Launch fish shell running in Alacritty terminal'
 
-    set uFlag ()
-    set rFlag ()
     set -g _tm_do_it yes
+    set WD ()
+    set WD_ORIG $WAYLAND_DISPLAY
 
     # Define private functions
     function __tm_usage
-        printf '\nUsage: tm [-u|r] [-h]' >&2
+        printf '\nUsage: tm [-w] [-h]' >&2
         printf '\n  where' >&2
-        printf '\n    -u: update PATH and environment' >&2
-        printf '\n    -r: redo PATH and environment' >&2
+        printf '\n    -w: run alacrity under wayland' >&2
         printf '\n    -h: show help for tm' >&2
     end
 
@@ -24,8 +31,8 @@ function tm --description 'Launch fish shell running in Alacritty terminal'
     end
 
     function __tm_cleanup
-        set -e _tm_do_it
         functions -e __tm_usage __tm_punt __tm_cleanup
+        set -e _tm_do_it
     end
 
     # Process arguments
@@ -36,37 +43,19 @@ function tm --description 'Launch fish shell running in Alacritty terminal'
             case -h --help -help
                 __tm_punt
                 break
-            case -u --update
-                if [ -z $rFlag[1] ]
-                    set uFlag u
-                    set index (math "$index+1")
-                else
-                    __tm_punt 'Both -u and -r options cannot be simultaneously be set'
-                    break
-                end
-            case -r --redo
-                if [ -z $uFlag[1] ]
-                    set rFlag r
-                    set index (math "$index+1")
-                else
-                    __tm_punt 'Both -u and -r options cannot be simultaneously be set'
-                    break
-                end
+            case -w --wayland
+                set WD $WD_ORIG
+                set index (math "$index+1")
             case '*'
-                __tm_punt "Unexpect option or argument \"$argv[$index]\" given"
+                __tm_punt "Unexpected option or argument \"$argv[$index]\" given"
                 break
         end
     end
 
     # Launch alacritty, if not punting
     if [ $_tm_do_it[1] = yes ]
-        if test -n "$uFlag"
-            fish -c "set -x UPDATE_ENV; alacritty -e fish &; disown"
-        else if test -n "$rFlag"
-            fish -c "cd; set -x REDO_ENV; alacritty -e fish -l &; disown"
-        else
-            alacritty -e fish &; disown
-        end
+        WAYLAND_DISPLAY=$WD alacritty -e fish -C "set -x WAYLAND_DISPLAY $WD_ORIG" &
+        disown
     end
 
     # Clean up
