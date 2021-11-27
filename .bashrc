@@ -1,4 +1,4 @@
-
+##
 #  ~/.bashrc
 #
 #  Bash configuration across multiple,

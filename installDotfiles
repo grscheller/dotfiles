@@ -45,6 +45,7 @@ CONFIG_FILES='
    fish/functions/fish_greeting.fish
    fish/functions/fish_mode_prompt.fish
    fish/functions/fish_prompt.fish
+   fish/functions/fish_title.fish
    fish/functions/la.fish
    fish/functions/lbry.fish
    fish/functions/ldot.fish

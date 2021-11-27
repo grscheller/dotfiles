@@ -89,6 +89,7 @@ set fish_cursor_visual underscore blink
 
 ## Set up abriviations
 abbr -a -g nv nvim
+abbr -a -g snv sudo nvim
 abbr -a -g dp digpath
 abbr -a -g update-env UPDATE_ENV= fish
 abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
