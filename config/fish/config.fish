@@ -93,6 +93,7 @@ abbr -a -g snv sudo nvim
 abbr -a -g dp digpath
 abbr -a -g update-env UPDATE_ENV= fish
 abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
+abbr -a -g kick-network sudo systemctl restart systemd-networkd.service
 
 # NVIDIA Daemon, need to type nv-<tab> to list choices
 abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
