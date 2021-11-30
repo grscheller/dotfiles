@@ -4,7 +4,7 @@ Host gauss17
   User grs
 
 Host maxwell4
-  Hostname 192.168.1.6
+  Hostname 192.168.1.4
   Port 22042
   User grs
 
