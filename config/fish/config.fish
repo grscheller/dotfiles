@@ -36,8 +36,8 @@ and begin
     #     to install these:
     #       Markdown linter: $ gem install mdl
     #       Neovim syntax:   $ gem install neovim
-    set -p PATH ~/.local/share/gem/ruby/*/bin
     set -p PATH /usr/local/opt/ruby/bin
+    set -p PATH ~/.local/share/gem/ruby/*/bin
 
     # Rust toolchain
     set -p PATH ~/.cargo/bin
