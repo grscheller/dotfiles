@@ -296,14 +296,14 @@ cmp.setup {
     sources = {
         {name = 'nvim_lsp'},
         {name = 'luasnip'},
-        {   name = 'buffer',
-            options = {
-                get_bufnrs = function()
-                    return vim.api.nvim_list_bufs()
-                end
-            }},
+        {name = 'buffer',
+         options = {
+             get_bufnrs = function()
+                 return vim.api.nvim_list_bufs()
+             end
+         }},
         {name = 'path'},
-        {name = 'nvim_lsp'}
+        {name = 'nvim_lua'}
     }
 }
 
@@ -318,6 +318,8 @@ cmp.setup.cmdline(':', {
         {name = 'path'}
     }, {
         {name = 'cmdline'}
+    }, {
+        {name = 'nvim-lua'}      -- Not sure about this one?
     })
 })
 
@@ -329,9 +331,13 @@ local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
 lsp_capabilities = cmp_lsp.update_capabilities(lsp_capabilities)
 
 local lsp_servers = {
+    -- For list of language servers, follow first
+    -- link of https://github.com/neovim/nvim-lspconfig
     "bashls", -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
     "clangd", -- C and C++ - both clang and gcc
-    "html",   -- HTML (npm i -g vscode-langservers-extracted)
+    "cssls",  -- vscode-css-language-servers
+    "html",   -- vscode-html-language-servers
+    "jsonls", -- vscode-json-language-servers
     "pyright" -- Pyright for Python (pacman or npm)
 }
 

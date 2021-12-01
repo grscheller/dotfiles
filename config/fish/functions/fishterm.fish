@@ -6,12 +6,13 @@
 # under XWayland.  That said, we still want the fish shell
 # running in Alacritty to be aware of a Wayland environment
 # and have any launched applications run under Wayland, not XWayland.
-function tm --description 'Launch fish shell running in Alacritty terminal'
+function fishterm --description 'Launch fish shell running in Alacritty terminal'
 
     set -g _tm_do_it yes
     set wFlag ()
     set xFlag ()
     set WD $WAYLAND_DISPLAY
+    set -x _tm_wd_orig $WAYLAND_DISPLAY
 
     # Define private functions
     function __tm_usage
@@ -34,7 +35,7 @@ function tm --description 'Launch fish shell running in Alacritty terminal'
 
     function __tm_cleanup
         functions -e __tm_usage __tm_punt __tm_cleanup
-        set -e _tm_do_it
+        set -e _tm_do_it _tm_wd_orig
     end
 
     # Process arguments
@@ -70,9 +71,7 @@ function tm --description 'Launch fish shell running in Alacritty terminal'
 
     # Launch alacritty, if not punting
     if [ $_tm_do_it[1] = yes ]
-        WAYLAND_DISPLAY=$WD \
-        alacritty -e fish \
-          -C "set -x WAYLAND_DISPLAY $WAYLAND_DISPLAY" &
+        WAYLAND_DISPLAY=$WD alacritty -e fish -C "set -x WAYLAND_DISPLAY $_tm_wd_orig" &
         disown
     end
 
