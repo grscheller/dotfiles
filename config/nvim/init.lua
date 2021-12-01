@@ -368,7 +368,7 @@ local rust_opts = {
 require('rust-tools').setup(rust_opts)
 
 --[[ Metals configuration ]]
-vim.g.metals_server_version = '0.10.8'  -- See https://scalameta.org/metals/docs/editors/overview.html
+vim.g.metals_server_version = '0.10.9'  -- See https://scalameta.org/metals/docs/editors/overview.html
 metals_config = require'metals'.bare_config()
 
 metals_config.settings = {showImplicitArguments = true}
