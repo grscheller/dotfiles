@@ -13,9 +13,9 @@ Host gauss17w
   Port 31502
   User grs
 
-Host maxwell4w
+Host euler7w
   Hostname 10.100.45.248
-  Port 22042
+  Port 22
   User grs
 
 Host sc31
