@@ -91,7 +91,7 @@ set fish_cursor_visual underscore blink
 abbr -a -g nv nvim
 abbr -a -g snv sudo nvim
 abbr -a -g dp digpath
-abbr -a -g -- tm fishterm -x
+abbr -a -g -- tm fishterm
 abbr -a -g update-env UPDATE_ENV= fish
 abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
 abbr -a -g kick-network sudo systemctl restart systemd-networkd.service

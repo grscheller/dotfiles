@@ -8,74 +8,90 @@
 # and have any launched applications run under Wayland, not XWayland.
 function fishterm --description 'Launch fish shell running in Alacritty terminal'
 
-    set -g _tm_do_it yes
+    set -g _fishterm_do_it yes
     set wFlag ()
     set xFlag ()
     set WD $WAYLAND_DISPLAY
-    set -x _tm_wd_orig $WAYLAND_DISPLAY
+    set _fishterm_wd_orig $WAYLAND_DISPLAY
 
     # Define private functions
-    function __tm_usage
-        printf '\nUsage: tm [-w|-x] [-h]' >&2
+    function __fishterm_usage
+        printf '\nUsage: fishterm [-w|-x] [-h]' >&2
         printf '\n  where' >&2
-        printf '\n    -w: try running alacrity under Wayland' >&2
-        printf '\n    -x: try running alacrity under XWayland or Xorg' >&2
-        printf '\n    -h: show help for tm' >&2
+        printf '\n    -w: run alacritty under Wayland' >&2
+        printf '\n    -x: run alacritty under XWayland or Xorg' >&2
+        printf '\n    -h: show help for fishterm\n' >&2
     end
 
-    function __tm_punt
-        set _tm_do_it no
+    function __fishterm_punt
+        set _fishterm_do_it no
         if test (count $argv) -gt 0
-            printf '\nError: %s' "$argv" >&2
-            __tm_usage
-        else
-            __tm_usage
+            printf '%s\n' $argv >&2
+            printf '\nFor help: fishterm -h\n' >&2
         end
     end
 
-    function __tm_cleanup
-        functions -e __tm_usage __tm_punt __tm_cleanup
-        set -e _tm_do_it _tm_wd_orig
+    function __fishterm_cleanup
+        functions -e __fishterm_usage __fishterm_punt __fishterm_cleanup
+        set -e _fishterm_do_it _fishterm_wd_orig
+    end
+
+    # Sanity check
+    if [ -z "$WAYLAND_DISPLAY" -a -z "$DISPLAY" ]
+        printf 'Error: Neither $WAYLAND_DISPLAY nor $DISPLAY is set.\n' >&2
+        __fishterm_punt
     end
 
     # Process arguments
     set index 1
     set cnt (count $argv)
-    while [ $index -le $cnt ]
-      switch $argv[$index]
-        case -h --help -help
-            __tm_punt
-            break
-        case -w --wayland
-            if [ -z $xFlag[1] ]
-                set wFlag yes
-                set index (math "$index+1")
-            else
-                __tm_punt 'Options -w and -x both cannot be set'
-                break
-            end
-        case -x --xwayland --xorg
-            if [ -z $wFlag[1] ]
-                set xFlag yes
-                set WD ()
-                set index (math "$index+1")
-            else
-                __tm_punt 'Options -w and -x both cannot be set'
-                break
-            end
-        case '*'
-            __tm_punt "Unexpected option or argument \"$argv[$index]\" given"
-            break
-      end
+    test $_fishterm_do_it = yes
+    and while [ $index -le $cnt ]
+        switch $argv[$index]
+          case -h --help -help
+              __fishterm_usage
+              __fishterm_punt
+              break
+          case -w --wayland
+              if [ -z $xFlag[1] ]
+                  if [ -z "$WAYLAND_DISPLAY" ]
+                      __fishterm_punt 'Error: Wayland session requested,' \
+                                      '       but $WAYLAND_DISPLAY is not set.'
+                      break
+                  end 
+                  set wFlag yes
+                  set index (math "$index+1")
+              else
+                  __fishterm_punt 'Error: Options -x and -w both cannot be set.'
+                  break
+              end
+          case -x --xwayland --xorg
+              if [ -z $wFlag[1] ]
+                  if [ -z "$DISPLAY" ]
+                      __fishterm_punt 'Error: XOrg or XWayland session requested,' \
+                                      '       but $DISPLAY is not set.'
+                      break
+                  end 
+                  set xFlag yes
+                  set WD ()
+                  set index (math "$index+1")
+              else
+                  __fishterm_punt 'Error: Options -w and -x both cannot be set.'
+                  break
+              end
+          case '*'
+              __fishterm_punt "Error: Unexpected option or argument \"$argv[$index]\" given."
+              break
+        end
     end
 
     # Launch alacritty, if not punting
-    if [ $_tm_do_it[1] = yes ]
-        WAYLAND_DISPLAY=$WD alacritty -e fish -C "set -x WAYLAND_DISPLAY $_tm_wd_orig" &
+    if [ $_fishterm_do_it[1] = yes ]
+        WAYLAND_DISPLAY=$WD alacritty -e fish -C "set -x WAYLAND_DISPLAY $_fishterm_wd_orig" &
         disown
     end
 
     # Clean up
-    __tm_cleanup
+    __fishterm_cleanup
 
 end
