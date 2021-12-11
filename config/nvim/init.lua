@@ -1,17 +1,8 @@
 -- Neovim configuration ~/.config/nvim/init.lua
 
---[[ Bootstrap Paq by cloning it into the "right place"
-
+--[[ Bootstrap Paq by cloning it to standard Neovim package location
        git clone https://github.com/savq/paq-nvim.git \
-           ~/.local/share/nvim/site/pack/paqs/opt/paq-nvim
-
-     Paq Commands:
-       :PaqInstall  <- Install all packages listed in configuration below
-       :PaqUpdate   <- Update packages already on system
-       :PaqClean    <- Remove packages not in configuration
-       :PaqSync     <- Async execute all three operations above
-
-     Location Paq stores repos: ~/.local/share/nvim/site/pack/paqs/start/ ]]
+         ~/.local/share/nvim/site/pack/paqs/start/paq-nvim  ]]
 require'paq' {
     -- Paq manages itself
     "savq/paq-nvim";
@@ -48,14 +39,12 @@ require'paq' {
 }
 
 --[[ Set some default behaviors ]]
-vim.o.hidden = true  -- Allow hidden buffers
 vim.o.shell = "/bin/sh"  -- Some packages need a POSIX compatible shell
 vim.o.path = vim.o.path .. ".,**"  -- Allow gf and :find to use recursive sub-folders
 vim.o.wildmenu = true                 -- Make tab completion in
 vim.o.wildmode = "longest:full,full"  -- command mode more useful.
 
---[[ Set default encoding, localizations, and file formats ]]
-vim.o.encoding = "utf-8"
+--[[ Set default fileencoding, localizations, and file formats ]]
 vim.o.fileencoding = "utf-8"
 vim.o.spelllang = "en_us"
 vim.o.fileformats = "unix,mac,dos"
@@ -73,16 +62,14 @@ vim.o.signcolumn = "yes"  -- Fixes first column, reduces jitter
 vim.o.shortmess = "atToOc"
 
 --[[ Some personnal preferences ]]
-vim.o.history = 10000    -- Number lines of command history to keep
 vim.o.mouse = "a"        -- Enable mouse for all modes
+vim.o.joinspaces = true  -- Use 2 spaces when joinig sentances
 vim.o.scrolloff = 2      -- Keep cursor away from top/bottom of window
 vim.o.wrap = false       -- Don't wrap lines
 vim.o.sidescroll = 1     -- Horizontally scroll nicely
 vim.o.sidescrolloff = 5  -- Keep cursor away from side of window
 vim.o.splitbelow = true  -- Horizontally split below
 vim.o.splitright = true  -- Vertically split to right
-vim.o.hlsearch = true     -- Highlight search results
-vim.o.incsearch = true    -- Highlight search matches as you type
 vim.o.nrformats = "bin,hex,octal,alpha"  -- bases and single letters used for <C-A> & <C-X>
 vim.o.matchpairs = vim.o.matchpairs .. ",<:>,「:」"  -- Additional matching pairs of characters
 
