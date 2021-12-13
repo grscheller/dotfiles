@@ -7,7 +7,6 @@
 #
 #         run from the cloned dotfiles directory
 #
-# shellcheck shell=sh
 
 ### Setup
 
@@ -59,6 +58,7 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
+   sway/config
 '
 
 SSH_CONFIGS='

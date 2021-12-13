@@ -13,6 +13,9 @@ set -x VISUAL nvim
 set -x PAGER 'nvim -R'
 set -x MANPAGER 'nvim +Man!'
 
+# Tell Firefox to use Wayland
+set -x MOZ_ENABLE_WAYLAND 1
+
 # PATH variable management
 set -q VIRGINPATH
 or begin
