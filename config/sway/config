@@ -59,7 +59,14 @@ output * bg #000000 solid_color
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
+### Enable numlock at start
 input * xkb_numlock enable
+
+### Polkit Daemon
+#
+# Allows apps requiring permissions to ask "mother may I?".
+#
+exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 ### Key bindings
 #
