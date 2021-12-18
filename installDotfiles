@@ -59,6 +59,8 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    nvim/init.lua
    sway/config
+   waybar/config
+   waybar/style.css
 '
 
 SSH_CONFIGS='
