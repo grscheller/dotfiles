@@ -13,6 +13,9 @@ set -x VISUAL nvim
 set -x PAGER 'nvim -R'
 set -x MANPAGER 'nvim +Man!'
 
+# Hack for libappindicator-gtk3
+set -x XDG_CURRENT_DESKTOP 'sway:GNOME:Unity:'
+
 # Tell Firefox to use Wayland
 set -x MOZ_ENABLE_WAYLAND 1
 
