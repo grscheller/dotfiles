@@ -18,6 +18,16 @@ Host euler7w
   Port 22555
   User grs
 
+Host gauss17h
+  Hostname 192.168.1.24
+  Port 31502
+  User grs
+
+Host euler7h
+  Hostname 192.168.1.22
+  Port 22555
+  User grs
+
 Host sc31
   Hostname 10.100.51.89
   Port 22
