@@ -13,13 +13,17 @@ set -x VISUAL nvim
 set -x PAGER 'nvim -R'
 set -x MANPAGER 'nvim +Man!'
 
+## Possibly over commmiting to Sway/Wayland for Linux
 # Hack for libappindicator-gtk3
 set -x XDG_CURRENT_DESKTOP 'sway:GNOME:Unity:'
-
 # Tell Firefox to use Wayland
 set -x MOZ_ENABLE_WAYLAND 1
+# Get QT clients to play nice with Wayland
+set -x QT_QPA_PLATFORM wayland
+# Set Dark Mode for GTK apps
+set -x GTK_THEME 'Adwaita:dark'
 
-# PATH variable management
+## PATH variable management
 set -q VIRGINPATH
 or begin
     set -x VIRGINPATH $PATH
@@ -71,7 +75,7 @@ and begin
 
     # If on Arch, set up JDK for Java 11
     if string match -qr 'arch' (uname -r)
-        archJDK 11
+        archJDK 17
     end
 
     # Clean up duplicate and non-existing paths
@@ -86,7 +90,7 @@ and begin
     set -e REDO_ENV
 end
 
-## Enable vi keybindings - Alacritty not supported for fish <= 3.1.2
+## Enable vi keybindings
 fish_vi_key_bindings
 set fish_cursor_default block
 set fish_cursor_insert line
@@ -101,11 +105,6 @@ abbr -a -g -- tm fishterm
 abbr -a -g update-env UPDATE_ENV= fish
 abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
 abbr -a -g kick-network sudo systemctl restart systemd-networkd.service
-
-# NVIDIA Daemon, need to type nv-<tab> to list choices
-abbr -a -g -- nv-pd sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode
-abbr -a -g -- nv-off sudo /usr/bin/nvidia-smi -pm 0
-abbr -a -g -- nv-on sudo nvidia-smi -pm 1
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
