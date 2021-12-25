@@ -45,6 +45,11 @@ output * bg #000000 solid_color
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
+exec swayidle -w \
+    timeout 1800 'swaylock -f -F -e -c 333333' \
+    timeout 1810 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -F -e -c 333333'
+
 ### Input configuration
 #
 # Example configuration:
@@ -91,8 +96,12 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
+    # Lock the screen, use different background than swayidle
+    bindsym $mod+Escape exec swaylock -f -F -e -c 003333
+
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
+
 #
 # Moving around:
 #
