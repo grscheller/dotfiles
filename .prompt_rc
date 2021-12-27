@@ -3,7 +3,6 @@
 #
 #  Prompt construction for all my POSIX shells
 #
-# shellcheck shell=sh
 
 # Adjust Hostname - change cattle names to pet names
 #   Note: On non-systemd systems, uses ~/bin/hostnamectl

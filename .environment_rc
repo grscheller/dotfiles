@@ -16,7 +16,6 @@
 #  Out of the blue, GNOME 3 gdm on ARCH began
 #  non-interactively sourcing .profile.
 #
-# shellcheck shell=sh
 
 ## Sentinel value to mark completion ofan initial environment configuration
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}

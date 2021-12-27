@@ -3,7 +3,6 @@
 #
 #  Function definitions used by ~/.bashrc
 #
-# shellcheck shell=bash
 
 ## Command line utility functions
 

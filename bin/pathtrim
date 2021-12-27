@@ -96,7 +96,6 @@ Paths= ; nn=0
 while [ $nn -lt $cnt ]
 do
     nn=$((nn + 1))
-    # shellcheck disable=SC1001
     eval Paths=\$Paths\$Path_$nn\:
 done
 printf '%s\n' "${Paths%:}"

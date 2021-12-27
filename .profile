@@ -6,8 +6,6 @@
 #
 #  Technically, only POSIX login shells should source this file.
 #
-# shellcheck shell=sh
-# shellcheck source=/dev/null
 
 case "$-" in
     *i*) # Initial interactive configurature for POSIX Shells

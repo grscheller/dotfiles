@@ -3,7 +3,6 @@
 #
 #  Aliases shared between my POSIX shells
 #
-# shellcheck shell=sh
 
 # Remove any "helpful" aliases
 unalias rm 2>&-

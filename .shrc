@@ -4,8 +4,6 @@
 #  POSIX shell configuration across multiple,
 #  more or or less, POSIX complient systems.
 #
-# shellcheck shell=sh
-# shellcheck source=/dev/null
 
 ## If not interactive, don't do anything.
 case $- in
