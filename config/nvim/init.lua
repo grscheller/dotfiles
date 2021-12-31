@@ -25,17 +25,17 @@ require'paq' {
     "neovim/nvim-lspconfig";  -- Provided by core neovim team
     "simrat39/rust-tools.nvim";  -- Extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Config for Scala Metals
+    -- Completion support via nvim-cmp
+    "hrsh7th/cmp-nvim-lsp";
+    "hrsh7th/cmp-buffer";
+    "hrsh7th/cmp-path";
+    "hrsh7th/cmp-cmdline";
+    "hrsh7th/nvim-cmp";
+    "hrsh7th/cmp-nvim-lua";
     -- Snippets support
     "L3MON4D3/LuaSnip";
-    "rafamadriz/friendly-snippets";
-    -- Completion support via nvim-cmp
-    "hrsh7th/nvim-cmp";
-    "hrsh7th/cmp-buffer";
-    "hrsh7th/cmp-cmdline";
     "saadparwaiz1/cmp_luasnip";
-    "hrsh7th/cmp-nvim-lsp";
-    "hrsh7th/cmp-nvim-lua";
-    "hrsh7th/cmp-path";
+    "rafamadriz/friendly-snippets";
 }
 
 --[[ Set some default behaviors ]]
@@ -256,7 +256,7 @@ cmp.setup {
         ['<C-Y>'] = cmp.config.disable,
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
         ['<C-E>'] = cmp.mapping {
-            i = cmp.mapping.close(),
+            i = cmp.mapping.abort(),
             c = cmp.mapping.close() },
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
@@ -286,22 +286,7 @@ cmp.setup {
         ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
         ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'})
     },
---  From hrsh7th/nvim-cmp
---  I don't understand what is going on here, can't find documentation
---  on cmp.config.sources nor understand the plug-in's source code
---
---  sources = cmp.config.sources({
---      {name = 'nvim_lsp'},
---      {name = 'luasnip'}
---  }, {
---      {name = 'buffer',
---       opts = {
---           get_bufnrs = function()
---               return vim.api.nvim_list_bufs()
---           end}},
---      {name = 'path'}
---  })
---
+
 --  Based on n3wborn/nvim config files.
     sources = {
         {name = 'nvim_lsp'},
@@ -324,13 +309,11 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-        {name = 'path'}
-    }, {
-        {name = 'cmdline'}
-    }, {
+    sources = cmp.config.sources {
+        {name = 'path'},
+        {name = 'cmdline'},
         {name = 'nvim-lua'}      -- Not sure about this one?
-    })
+    }
 })
 
 --[[ LSP Configurations ]]
@@ -390,7 +373,7 @@ vim.api.nvim_exec([[
     augroup end
 ]], false)
 
---[[ LSP related keybindings ]]
+--[[ LSP related keybindings - not sure what half of them really do ]]
 wk.register {
     [","] = {
         name = "+lsp",
