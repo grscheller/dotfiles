@@ -1,7 +1,7 @@
 # Configuration Files "dotfiles"
 
 This repo contains the infrastructure I use to
-maintain and install my Fish, Neovim and Alacritty
+maintain and install my Fish, Neovim, and Alacritty
 configurations.  Also contains more minimal Bash and
 POSIX shell configurations.
 

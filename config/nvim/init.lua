@@ -23,8 +23,11 @@ require'paq' {
     "sharkdp/fd";
     -- Configs for Neovim's built-in LSP client
     "neovim/nvim-lspconfig";  -- Provided by core neovim team
+    "ziglang/zig.vim";  -- File detection and syntax highlighting for Zig
     "simrat39/rust-tools.nvim";  -- Extra functionality over rust analyzer
     "scalameta/nvim-metals";  -- Config for Scala Metals
+    -- Nvim LSP Installer
+    "williamboman/nvim-lsp-installer";  -- Good when Pacman not an option
     -- Completion support via nvim-cmp
     "hrsh7th/cmp-nvim-lsp";
     "hrsh7th/cmp-buffer";
@@ -287,7 +290,6 @@ cmp.setup {
         ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'})
     },
 
---  Based on n3wborn/nvim config files.
     sources = {
         {name = 'nvim_lsp'},
         {name = 'luasnip'},
@@ -326,12 +328,13 @@ lsp_capabilities = cmp_lsp.update_capabilities(lsp_capabilities)
 local lsp_servers = {
     -- For list of language servers, follow first
     -- link of https://github.com/neovim/nvim-lspconfig
-    "bashls", -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
-    "clangd", -- C and C++ - both clang and gcc
-    "cssls",  -- vscode-css-language-servers
-    "html",   -- vscode-html-language-servers
-    "jsonls", -- vscode-json-language-servers
-    "pyright" -- Pyright for Python (pacman or npm)
+    "bashls",  -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
+    "clangd",  -- C and C++ - both clang and gcc
+    "cssls",   -- vscode-css-language-servers
+    "gopls",   -- go language server
+    "html",    -- vscode-html-language-servers
+    "jsonls",  -- vscode-json-language-servers
+    "pyright"  -- Pyright for Python (pacman or npm)
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -340,7 +343,7 @@ for _, lsp_server in ipairs(lsp_servers) do
     }
 end
 
---[[ Rust configuration, rust-tools.nvim will call lspconfig itself ]]
+-- Rust configuration, rust-tools.nvim will call lspconfig itself
 local rust_opts = {
     tools = {
         autoSetHints = true,
@@ -360,7 +363,7 @@ local rust_opts = {
 
 require('rust-tools').setup(rust_opts)
 
---[[ Metals configuration ]]
+-- Metals configuration
 vim.g.metals_server_version = '0.10.9'  -- See https://scalameta.org/metals/docs/editors/overview.html
 metals_config = require'metals'.bare_config()
 
@@ -373,7 +376,20 @@ vim.api.nvim_exec([[
     augroup end
 ]], false)
 
---[[ LSP related keybindings - not sure what half of them really do ]]
+-- Zig Configurations
+vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
+
+--[[ Nvim LSP Installer ]]
+local lsp_installer = require'nvim-lsp-installer'
+
+lsp_installer.on_server_ready(function(server)
+    local opts = {
+        settings = {capabilities = lsp_capabilities}
+    }
+    server:setup(opts)
+end)
+
+--[[ LSP related keybindings - not sure yet what half of them really do ]]
 wk.register {
     [","] = {
         name = "+lsp",
