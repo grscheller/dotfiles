@@ -7,7 +7,7 @@
 
 ## Backup configuration
 
-BackupLocation='/run/media/grs/60844d50-85ac-42fd-b848-2591be3c7fd0/grs/Backup'
+BackupLocation='/buslink/grs/Backup'
 
 ExcludeDirs=(
     build
