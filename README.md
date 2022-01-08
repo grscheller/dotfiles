@@ -36,14 +36,14 @@ Fish and Bash use function based versions of these.
     * correctly handles white space
     * correctly handles newlines in directory names
     * will have issues with colons in directory names
-  
+
 ### Other Bash/POSIX Scripts
 
 These scripts get installed into `~/bin`
 
 * [bsPaq](bin/bsPaq)
   * bootstraps Paq infrastructure for Neovim
-  * after bootstrap, run `:PaqSync` from within nvim 
+  * after bootstrap, run `:PaqSync` from within nvim
   * POSIX compliant script
 * [buArch](bin/buArch)
   * backup script for my Arch Linux laptop home directory

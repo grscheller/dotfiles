@@ -46,6 +46,7 @@ and begin
     #     to install these:
     #       Markdown linter: $ gem install mdl
     #       Neovim syntax:   $ gem install neovim
+    set -p PATH /usr/local/lib/ruby/gems/*/bin
     set -p PATH /usr/local/opt/ruby/bin
     set -p PATH ~/.local/share/gem/ruby/*/bin
 
@@ -57,14 +58,18 @@ and begin
     set -p PATH ~/.sdkman/candidates/sbt/current/bin
     set -p PATH ~/.sdkman/candidates/maven/current/bin
     set -p PATH ~/.sdkman/candidates/gradle/current/bin
+    set -p PATH ~/.sdkman/candidates/groovy/current/bin
     set -p PATH ~/.sdkman/candidates/leiningen/current/bin
     set -p PATH ~/.sdkman/candidates/kotlin/current/bin
 
-    # On iMac, node 12 is "keg only"
-    set -p PATH /usr/local/opt/node@12/bin
+    # On iMac, node 16 is "keg only"
+    #   For compilers to find node@16 you may need to set:
+    #   set -gx LDFLAGS "-L/usr/local/opt/node@16/lib"
+    #   set -gx CPPFLAGS "-I/usr/local/opt/node@16/include"
+    set -p PATH /usr/local/opt/node@16/bin
 
     # On iMac, put brew clang before system clang - for clangd language server
-    set -p PATH /usr/local/opt/llvm@13/bin
+    set -p PATH /usr/local/opt/llvm/bin
 
     # Utilities I want to overide everything
     set -p PATH ~/.local/bin ~/opt/bin
@@ -101,9 +106,9 @@ set fish_cursor_visual underscore blink
 abbr -a -g nv nvim
 abbr -a -g snv sudo nvim
 abbr -a -g dp digpath
-abbr -a -g -- tm fishterm
-abbr -a -g update-env UPDATE_ENV= fish
-abbr -a -g -- redo-env REDO_ENV= fish -l -C cd
+abbr -a -g tm fishterm
+abbr -a -g ue UPDATE_ENV=yes fish
+abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kick-network sudo systemctl restart systemd-networkd.service
 
 ## Let the various POSIX shells know their configuration files
