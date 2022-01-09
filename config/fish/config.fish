@@ -121,8 +121,3 @@ if test -r ~/.dashrc
 else if test -r ~/.shrc
     abbr -a -g dash ENV=~/.shrc dash
 end
-
-# conda initialize if installed
-if test -d ~/opt/anaconda3
-    eval ~/opt/anaconda3/bin/conda "shell.fish" "hook" $argv | source
-end

@@ -55,9 +55,3 @@ then
 else
     unset SDKMAN_DIR
 fi
-
-# conda initialize if installed
-if test -d ~/opt/anaconda3
-then
-    eval "$(~/opt/anaconda3/bin/conda shell.bash hook)"
-fi
