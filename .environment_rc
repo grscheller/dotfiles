@@ -21,14 +21,11 @@
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
 _ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
 
-# Set locale so commandline tools & other programs default to unicode
+## Set locale so commandline tools & other programs default to unicode
 export LANG=en_US.utf8
 
-## Construct the shell's PATH for all my different computers
-#
-#  Non-existent path and duplicate path elements
-#  will be dealt with near end of script via ~/.local/bin/pathtrim
-#
+## Construct the shell's PATH for all my different computers,
+## non-existent and duplicate path elements dealt with at end.
 
 # Save original PATH
 [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
@@ -72,9 +69,20 @@ PATH=/usr/local/opt/llvm/bin:"$PATH"
 # Utilities I want to overide everything
 PATH=~/.local/bin:~/opt/bin:"$PATH"
 
-# Clean up PATH - remove duplicate and non-existent path entries
+# Python configuration
+export PIP_REQUIRE_VIRTUALENV=true
+
+# Configure Java for Sway/Wayland on ARCH
+if uname -r | grep -q arch
+then
+    PATH=/usr/lib/jvm/java-17-openjdk/bin:"$PATH"
+    export _JAVA_AWT_WM_NONREPARENTING=1
+fi
+
+## Clean up PATH
 PATH="$(pathtrim)"
 
+## Setup editors/pagers
 if digpath -q nvim
 then
     export EDITOR=nvim
@@ -89,8 +97,3 @@ else
     export EDITOR=vi
     export VISUAL=vi
 fi
-
-## Software development initial configurations
-
-# Python configuration
-#export PIP_REQUIRE_VIRTUALENV=true

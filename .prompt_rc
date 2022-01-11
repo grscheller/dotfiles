@@ -1,27 +1,29 @@
 ##
 #  ~/.prompt_rc
 #
-#  Prompt construction for all my POSIX shells
+#  Prompt & window title construction for all my POSIX shells
 #
 
 # Adjust Hostname - change cattle names to pet names
 #   Note: On non-systemd systems, uses ~/bin/hostnamectl
 #         wrapper for the hostname command.
-HOST=$(hostnamectl hostname); HOST=${HOST%%.*}
-case $HOST in
-  rvsllschellerg2) HOST=voltron ;;
-      SpaceCAMP31) HOST=sc31    ;;
+MyHostName=$(hostnamectl hostname); MyHostName=${MyHostName%%.*}
+case $MyHostName in
+  rvsllschellerg2) MyHostName=voltron ;;
+      SpaceCAMP31) MyHostName=sc31    ;;
 esac
 
 # Terminal window title prompt string
 case $TERM in
   xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
-      TERM_TITLE=$'\e]0;'"$(id -un)@${HOST}"$'\007' ;;
+      TERM_TITLE=$'\e]0;'"$(id -un)@${MyHostName}"$'\007' ;;
   screen)
-      TERM_TITLE=$'\e_'"$(id -un)@${HOST}"$'\e\\' ;;
+      TERM_TITLE=$'\e_'"$(id -un)@${MyHostName}"$'\e\\' ;;
   *)
       TERM_TITLE='' ;;
 esac
+
+unset MyHostName
 
 relative_pwd () {
    if [[ ${PWD:0:${#HOME}} == "$HOME" ]]
@@ -33,6 +35,8 @@ relative_pwd () {
 }
 
 # Three line primary prompt
+#   Aside: Native Bash way to do this
+#          PS1="\n[\s: \w]\n\$ ${TERM_TITLE}"
 PS1=$'\n['"${0##*/}"$': $(relative_pwd)]\n$ '"${TERM_TITLE}"
 PS2='> '
 PS3='#? '

@@ -1,6 +1,8 @@
 ##
 #  ~/.profile
 #
+#  For use by all my interactive POSIX login shells.
+#
 #  The Gnome display manager (gdm) will non-interactively
 #  source ~/.profile with /bin/sh during Desktop setup.
 #
@@ -8,11 +10,10 @@
 #
 
 case "$-" in
-    *i*) # Initial interactive configurature for POSIX Shells
-         . ~/.environment_rc
+    *i*) MyShell=${0#-}; MyShell=${MyShell##*/}
 
-         # Set $ENV and $BASH_ENV
-         MyShell=${0#-}; MyShell=${MyShell##*/}
+         # Force a reinitialization of the environment
+         export _ENV_INITIALIZED=0
 
          export BASH_ENV=~/.bashrc
          case "$MyShell"X in

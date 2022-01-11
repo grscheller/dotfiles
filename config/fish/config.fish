@@ -38,9 +38,6 @@ end
 
 set -q UPDATE_ENV
 and begin
-    # Python configuration
-    set -x PIP_REQUIRE_VIRTUALENV true
-
     # Ruby tool chain
     #   Mostly for locally installed ruby gems,
     #     to install these:
@@ -78,9 +75,13 @@ and begin
     # Added some relative paths, useful for some software projects
     set -a PATH bin ../bin .
 
-    # If on Arch, set up JDK for Java 11
+    # Python configuration
+    set -x PIP_REQUIRE_VIRTUALENV true
+
+    # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
         archJDK 17
+        set -x _JAVA_AWT_WM_NONREPARENTING 1
     end
 
     # Clean up duplicate and non-existing paths
@@ -110,7 +111,7 @@ abbr -a -g tm fishterm
 abbr -a -g ue UPDATE_ENV=yes fish
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
-abbr -a -g kw "iwctl device list>/dev/null;iwctl device list>/dev/null"
+abbr -a -g kw "iwctl device list;iwctl device list"
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc

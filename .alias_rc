@@ -35,15 +35,6 @@ alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
 #   Pull down more -- Not good for large websites
 alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
-# NVIDIA Daemon
-#   keeps card active when not running X-Windows
-alias nv-pd='sudo /usr/bin/nvidia-persistenced --user grs --persistence-mode'
-#   Activate and Deactivate respectfully.
-#      Communicates with above daemon if running, otherwise
-#      directly with card in a deprecated manner.
-alias nv-off='sudo /usr/bin/nvidia-smi -pm 0'
-alias nv-on='sudo nvidia-smi -pm 1'
-
 ## SSH related functions, variables and aliases
 #    Restart SSH key-agent and add your private
 #    key, which is located here: ~/.ssh/id_rsa

@@ -4,6 +4,8 @@
 #  Bash configuration across multiple,
 #  more or or less, POSIX complient systems.
 #
+#  No longer supporting MinGW/CygWin anymore.
+#
 
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
@@ -14,6 +16,12 @@
 #      Debian and Arch Linux derived systems typically
 #      compile bash with option -DSYS_BASHRC which causes
 #      bash to source /etc/bash.bashrc before ~/.bashrc.
+
+## Shell functions
+source ~/.functions_rc
+
+## Aliases
+source ~/.alias_rc
 
 ## Make sure an initial shell environment is well defined
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
@@ -34,24 +42,13 @@ HISTCONTROL=ignoredups
 
 ## Setup up 3 line prompt
 source ~/.prompt_rc
-# Native Bash way:
-# PS1="\n[\s: \w]\n\$ ${TERM_TITLE}"
-
-## Shell functions
-source ~/.functions_rc
-
-## Aliases
-source ~/.alias_rc
 
 ## Make sure POSIX shells all have their correct environments
 source ~/.env_rc
 
-## SDKMAN for MacOS
-export SDKMAN_DIR=~/.sdkman
-if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]
+## SDKMAN, for MacOS
+if [[ -s ~/.sdkman/bin/sdkman-init.sh ]]
 then
-    source "$SDKMAN_DIR/bin/sdkman-init.sh"
+    source ~/.sdkman/bin/sdkman-init.sh
     PATH="$(pathtrim)"     # Clean up $PATH
-else
-    unset SDKMAN_DIR
 fi
