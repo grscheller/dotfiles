@@ -105,13 +105,13 @@ set fish_cursor_visual underscore blink
 
 ## Set up abriviations
 abbr -a -g nv nvim
-abbr -a -g snv sudo nvim
 abbr -a -g dp digpath
 abbr -a -g tm fishterm
 abbr -a -g ue UPDATE_ENV=yes fish
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
-abbr -a -g kw "iwctl device list;iwctl device list"
+abbr -a -g kw 'iwctl device list;iwctl device list'
+abbr -a -g ssp 'string split $PATH'
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
