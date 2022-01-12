@@ -10,7 +10,7 @@
 MyHostName=$(hostnamectl hostname); MyHostName=${MyHostName%%.*}
 case $MyHostName in
   rvsllschellerg2) MyHostName=voltron ;;
-      SpaceCAMP31) MyHostName=sc31    ;;
+      SpaceCAMP31) MyHostName=SC31    ;;
 esac
 
 # Terminal window title prompt string
