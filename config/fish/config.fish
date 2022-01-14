@@ -112,6 +112,7 @@ abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
 abbr -a -g kw 'iwctl device list;iwctl device list'
 abbr -a -g ssp 'string split $PATH'
+abbr -a -g gq geeqie
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
