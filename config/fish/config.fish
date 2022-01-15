@@ -13,10 +13,7 @@ set -x VISUAL nvim
 set -x PAGER 'nvim -R'
 set -x MANPAGER 'nvim +Man!'
 
-## Possibly over commmiting to Sway/Wayland for Linux
-# Hack for libappindicator-gtk3
-set -x XDG_CURRENT_DESKTOP 'sway:GNOME:Unity:'
-# Tell Firefox to use Wayland
+# Tell Firefox to use Wayland if available
 set -x MOZ_ENABLE_WAYLAND 1
 # Get QT clients to play nice with Wayland
 set -x QT_QPA_PLATFORM wayland
@@ -111,7 +108,7 @@ abbr -a -g ue UPDATE_ENV=yes fish
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
 abbr -a -g kw 'iwctl device list;iwctl device list'
-abbr -a -g ssp 'string split $PATH'
+abbr -a -g sp 'string split "\n" $PATH'
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc

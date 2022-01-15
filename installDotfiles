@@ -60,6 +60,7 @@ CONFIG_FILES='
    sway/config
    waybar/config
    waybar/style.css
+   wofi/config
 '
 
 SSH_CONFIGS='
