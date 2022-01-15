@@ -109,7 +109,7 @@ abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
 abbr -a -g kw 'iwctl device list;iwctl device list'
 abbr -a -g sp 'string split "\n" $PATH'
-abbr -a -g gq geeqie
+abbr -a -g gq 'geeqie &; disown'
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
