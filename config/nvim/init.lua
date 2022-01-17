@@ -29,11 +29,11 @@ require'paq' {
     -- Nvim LSP Installer
     "williamboman/nvim-lsp-installer";  -- Good when Pacman not an option
     -- Completion support via nvim-cmp
+    "hrsh7th/nvim-cmp";
     "hrsh7th/cmp-nvim-lsp";
     "hrsh7th/cmp-buffer";
     "hrsh7th/cmp-path";
     "hrsh7th/cmp-cmdline";
-    "hrsh7th/nvim-cmp";
     "hrsh7th/cmp-nvim-lua";
     -- Snippets support
     "L3MON4D3/LuaSnip";
@@ -119,8 +119,8 @@ require'lualine'.setup {
     options = {
         icons_enabled = true,
         theme = 'moonfly',
-        component_separators = {left = '', right = ''},
-        section_separators = {left = '', right = ''},
+        component_separators = {left = ' ', right = ' '},
+        section_separators = {left = ' ', right = ' '},
         disabled_filetypes = {},
         always_divide_middle = true
     },
@@ -256,11 +256,12 @@ cmp.setup {
         end
     },
     mapping = {
-        ['<C-Y>'] = cmp.config.disable,
+        ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
+        ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
+        ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+        ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-        ['<C-E>'] = cmp.mapping {
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close() },
+        ['<C-E>'] = cmp.mapping(cmp.mapping.close(), {'i', 'c'}),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true },
@@ -285,20 +286,12 @@ cmp.setup {
                 else
                     fallback()
                 end
-            end, {"i", "s"}),
-        ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-        ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'})
+            end, {"i", "s"})
     },
-
     sources = {
         {name = 'nvim_lsp'},
         {name = 'luasnip'},
-        {name = 'buffer',
-         options = {
-             get_bufnrs = function()
-                 return vim.api.nvim_list_bufs()
-             end
-         }},
+        {name = 'buffer'},
         {name = 'path'},
         {name = 'nvim_lua'}
     }
@@ -311,11 +304,10 @@ cmp.setup.cmdline('/', {
 })
 
 cmp.setup.cmdline(':', {
-    sources = cmp.config.sources {
-        {name = 'path'},
-        {name = 'cmdline'},
-        {name = 'nvim-lua'}      -- Not sure about this one?
-    }
+    sources = cmp.config.sources(
+        {{name = 'path'}},
+        {{name = 'cmdline'}},
+        {{name = 'nvim-lua'}})
 })
 
 --[[ LSP Configurations ]]

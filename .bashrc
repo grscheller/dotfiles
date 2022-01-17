@@ -4,7 +4,7 @@
 #  Bash configuration across multiple,
 #  more or or less, POSIX complient systems.
 #
-#  No longer supporting MinGW/CygWin anymore.
+#  No longer supporting MinGW/CygWin.
 #
 
 ## If not interactive, don't do anything.
