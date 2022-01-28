@@ -8,22 +8,22 @@ if [ -z "$fish_features" ]
 end
 
 ## Setup environment variables
-set -x EDITOR nvim
-set -x VISUAL nvim
-set -x PAGER 'nvim -R'
-set -x MANPAGER 'nvim +Man!'
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+set -gx PAGER 'nvim -R'
+set -gx MANPAGER 'nvim +Man!'
 
 # Tell Firefox to use Wayland if available
-set -x MOZ_ENABLE_WAYLAND 1
+set -gx MOZ_ENABLE_WAYLAND 1
 # Get QT clients to play nice with Wayland
-set -x QT_QPA_PLATFORM wayland
+set -gx QT_QPA_PLATFORM wayland
 # Set Dark Mode for GTK apps
-set -x GTK_THEME 'Adwaita:dark'
+set -gx GTK_THEME 'Adwaita:dark'
 
 ## PATH variable management
 set -q VIRGINPATH
 or begin
-    set -x VIRGINPATH $PATH
+    set -gx VIRGINPATH $PATH
     set -x UPDATE_ENV
 end
 
@@ -65,7 +65,7 @@ and begin
     # On iMac, put brew clang before system clang - for clangd language server
     set -p PATH /usr/local/opt/llvm/bin
 
-    # Utilities I want to overide everything
+    # Utilities I want to overide most things
     set -p PATH ~/.local/bin ~/opt/bin
     # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
@@ -73,11 +73,13 @@ and begin
     set -a PATH bin ../bin .
 
     # Python configuration
-    set -x PIP_REQUIRE_VIRTUALENV true
+    set -gx PIP_REQUIRE_VIRTUALENV true
+    set -gx PYENV_ROOT ~/.pyenv
+    set -p PATH $PYENV_ROOT/shims
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
-        archJDK 17
+        archJDK 11
         set -x _JAVA_AWT_WM_NONREPARENTING 1
     end
 
@@ -86,12 +88,15 @@ and begin
 
     # Let POSIX Shells know initial environment configured
     set -q _ENV_INITIALIZED
-    or set -x _ENV_INITIALIZED 0
+    or set -gx _ENV_INITIALIZED 0
     set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
 
     set -e UPDATE_ENV
     set -e REDO_ENV
 end
+
+## Python Pyenv function configuration
+test -d $PYENV_ROOT; and pyenv init - | source
 
 ## Enable vi keybindings
 fish_vi_key_bindings

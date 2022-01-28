@@ -52,3 +52,6 @@ then
     source ~/.sdkman/bin/sdkman-init.sh
     PATH="$(pathtrim)"     # Clean up $PATH
 fi
+
+## Python Pyenv function configuration
+test -d "$PYENV_ROOT" && eval "$(pyenv init -)"

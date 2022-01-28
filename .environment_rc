@@ -63,7 +63,7 @@ PATH=~/.sdkman/canidates/sbt/current/bin:"$PATH"
 # On iMac node 16 is "Keg only"
 PATH=/usr/local/opt/node@16/bin:"$PATH"
 
-# On iMac, put brew clang before system clang (for clangd language server)
+# For iMac, put brew clang before system clang (for clangd language server)
 PATH=/usr/local/opt/llvm/bin:"$PATH"
 
 # Utilities I want to overide everything
@@ -71,11 +71,13 @@ PATH=~/.local/bin:~/opt/bin:"$PATH"
 
 # Python configuration
 export PIP_REQUIRE_VIRTUALENV=true
+export PYENV_ROOT=~/.pyenv
+PATH=$PYENV_ROOT/shims:"$PATH"
 
 # Configure Java for Sway/Wayland on ARCH
 if uname -r | grep -q arch
 then
-    PATH=/usr/lib/jvm/java-17-openjdk/bin:"$PATH"
+    archJDK 11
     export _JAVA_AWT_WM_NONREPARENTING=1
 fi
 
