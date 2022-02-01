@@ -23,4 +23,6 @@ function swap_resolv_conf --description 'toggle resolv.conf link with backup fil
         sudo ln -s /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
     end
 
+    ls -l /etc/resolv.conf
+
 end
