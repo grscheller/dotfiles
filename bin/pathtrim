@@ -20,6 +20,8 @@
 #
 #   $ brew install coreutils
 #
+# Also see Fish and BASH function versions of pathtrim.
+#
 # Usages: pathtrim /first/path/component:/second/path/coponent:.
 #         PATH="$(pathtrim)"
 #

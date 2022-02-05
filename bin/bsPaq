@@ -2,10 +2,8 @@
 #
 #  Bootstrap by installing paq-nvim into the right place,
 #  and then from within nvim run
-#    :PaqInstall  <- to install plugins
-#    :PaqUpdate   <- to update plugins
-#    :PaqClean    <- to remove unused plugins
-
+#    :PaqSync
+#
 PaqLocation="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/start/paq-nvim
 PaqGIT=https://github.com/savq/paq-nvim.git
 
