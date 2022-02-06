@@ -203,7 +203,11 @@ wk.register {
             name = "+Spelling",
             t = {":set invspell<CR>", "Toggle Spelling"}
         },
-        t = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
+        t = {
+            name = "+Fish Shell in Terminal",
+            s = {":split<CR>:term fish<CR>i", "Fish Shell in split"},
+            v = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
+        },
         w = {
             name = "+Whitespace",
             t = {":%s/\\s\\+$//<CR>", "Trim Trailing Whitespace"}
