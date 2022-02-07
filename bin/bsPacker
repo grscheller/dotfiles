@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+#  Bootstrap by installing packer.nvim into the right place.
+#
+#  Then from within nvim run
+#
+#      :PackerSync
+#
+#  This must also be done whenever changes are made
+#  to the plugin configuration in ~/.config/nvim/lua/plugins.lua
+#
+PackerLocation="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
+PackerGIT=https://github.com/wbthomason/packer.nvim
+
+git clone --depth 1 ${PackerGIT} "${PackerLocation}"

@@ -1,45 +1,9 @@
 -- Neovim configuration ~/.config/nvim/init.lua
 
---[[ Bootstrap Paq by cloning it to standard Neovim package location
-       git clone https://github.com/savq/paq-nvim.git \
-         ~/.local/share/nvim/site/pack/paqs/start/paq-nvim  ]]
-require'paq' {
-    -- Paq manages itself
-    "savq/paq-nvim";
-    -- Colorize hexcodes and names like Blue, Yellow or Green
-    "norcalli/nvim-colorizer.lua";
-    -- Tokyo Night colorscheme
-    "folke/tokyonight.nvim";
-    -- Statusline - fork of hoob3rt/lualine.nvim
-    "nvim-lualine/lualine.nvim";
-    -- define keybindings; show keybindings in popup
-    "folke/which-key.nvim";
-    -- Install language modules for built-in treesitter
-    "nvim-treesitter/nvim-treesitter";
-    -- Fuzzy finder over lists
-    "nvim-telescope/telescope.nvim";
-    "nvim-lua/plenary.nvim";
-    "nvim-lua/popup.nvim";
-    "sharkdp/fd";
-    -- Configs for Neovim's built-in LSP client
-    "neovim/nvim-lspconfig";  -- Provided by core neovim team
-    "ziglang/zig.vim";  -- File detection and syntax highlighting for Zig
-    "simrat39/rust-tools.nvim";  -- Extra functionality over rust analyzer
-    "scalameta/nvim-metals";  -- Config for Scala Metals
-    -- Nvim LSP Installer
-    "williamboman/nvim-lsp-installer";  -- Good when Pacman not an option
-    -- Completion support via nvim-cmp
-    "hrsh7th/nvim-cmp";
-    "hrsh7th/cmp-nvim-lsp";
-    "hrsh7th/cmp-buffer";
-    "hrsh7th/cmp-path";
-    "hrsh7th/cmp-cmdline";
-    "hrsh7th/cmp-nvim-lua";
-    -- Snippets support
-    "L3MON4D3/LuaSnip";
-    "saadparwaiz1/cmp_luasnip";
-    "rafamadriz/friendly-snippets";
-}
+--[[ Using Packer as my plugin manager
+       See ~/.config/nvim/lua/plugins.lua for how
+       to bootstrap Packer for the first time  ]]
+require'plugins'
 
 --[[ Set some default behaviors ]]
 vim.o.shell = "/bin/sh"  -- Some packages need a POSIX compatible shell
@@ -206,7 +170,7 @@ wk.register {
         t = {
             name = "+Fish Shell in Terminal",
             s = {":split<CR>:term fish<CR>i", "Fish Shell in split"},
-            v = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"},
+            v = {":vsplit<CR>:term fish<CR>i", "Fish Shell in vsplit"}
         },
         w = {
             name = "+Whitespace",

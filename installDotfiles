@@ -58,6 +58,7 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
+   nvim/lua/plugins.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -74,6 +75,7 @@ LOCAL_BIN_SCRIPTS='
 '
 
 BIN_SCRIPTS='
+   bsPacker
    bsPaq
    buArch
    hostnamectl
