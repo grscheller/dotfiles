@@ -123,18 +123,9 @@ myLineNumberToggle = function()
     end
 end
 
---[[ Setup folke/which-key.nvim ]]
-local wk = require'which-key'  -- used to define all keybindings
-wk.setup {                     -- except those for nvim-cmp
-    plugins = {
-        spelling = {
-            enabled = true,
-            suggestions = 36
-        }
-    }
-}
+--[[ Settingup keybindings with folke/which-key.nvim ]]
+local wk = require'which-key'
 
---[[ Normal mode keybindings ]]
 wk.register {
     -- Navigate between windows using CTRL+arrow-keys
     ["<C-h>"] = {"<C-W>h", "Goto Window Left" },
@@ -347,7 +338,7 @@ lsp_installer.on_server_ready(function(server)
     server:setup(opts)
 end)
 
---[[ LSP related keybindings - not sure yet what half of them really do ]]
+--[[ LSP related keybindings ]]
 wk.register {
     [","] = {
         name = "+lsp",

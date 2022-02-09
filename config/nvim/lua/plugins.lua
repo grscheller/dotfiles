@@ -24,19 +24,35 @@ return require'packer'.startup(function()
     use 'folke/tokyonight.nvim'
 
     -- Statusline - fork of hoob3rt/lualine.nvim
-    use 'nvim-lualine/lualine.nvim'
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
 
     -- define keybindings, show keybindings in popup
-    use 'folke/which-key.nvim'
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require'which-key'.setup {
+                plugins = {
+                    spelling = {
+                        enabled = true,
+                        suggestions = 36
+                    }
+	        }
+            }
+        end
+    }
+                
 
     -- Install language modules for built-in treesitter
     use 'nvim-treesitter/nvim-treesitter'
 
     -- Fuzzy finder over lists
-    use 'nvim-telescope/telescope.nvim'
-    use 'nvim-lua/plenary.nvim'
-    use 'nvim-lua/popup.nvim'
-    use 'sharkdp/fd'
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {'nvim-lua/plenary.nvim'}
+    }
 
     -- Configs for Neovim's built-in LSP client
     use 'neovim/nvim-lspconfig'  -- Provided by core neovim team
