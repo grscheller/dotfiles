@@ -1,8 +1,6 @@
 -- Neovim configuration ~/.config/nvim/init.lua
 
---[[ Using Packer as my plugin manager
-       See ~/.config/nvim/lua/plugins.lua for how
-       to bootstrap Packer for the first time  ]]
+--[[ Packer - see ~/.config/nvim/lua/plugins.lua for details ]]
 require'plugins'
 
 --[[ Set some default behaviors ]]
