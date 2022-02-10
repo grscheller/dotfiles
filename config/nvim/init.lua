@@ -40,6 +40,8 @@ vim.o.splitbelow = true  -- Horizontally split below
 vim.o.splitright = true  -- Vertically split to right
 vim.o.nrformats = "bin,hex,octal,alpha"  -- bases and single letters used for <C-A> & <C-X>
 vim.o.matchpairs = vim.o.matchpairs .. ",<:>,「:」"  -- Additional matching pairs of characters
+vim.o.showmode = false  -- Redundant with Lualine
+vim.o.showcmd = false   -- Partially redundant with Lualine
 
 --[[ Case insensitive search, but not in command mode ]]
 vim.o.ignorecase = true
@@ -62,49 +64,6 @@ vim.api.nvim_exec([[
         au TextYankPost * silent! lua vim.highlight.on_yank{timeout=600, on_visual=false}
     augroup end
 ]], false)
-
---[[ Setup colorssceme ]]
-vim.o.termguicolors = true
-require'colorizer'.setup()
-
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_colors = {bg = "#000000"}
-vim.g.tokyonight_italic_functions = 1
-vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
-
-vim.cmd[[colorscheme tokyonight]]
-
---[[ Setup statusline ]]
-vim.o.showcmd = false
-vim.o.showmode = false
-require'lualine'.setup {
-    options = {
-        icons_enabled = true,
-        theme = 'moonfly',
-        component_separators = {left = ' ', right = ' '},
-        section_separators = {left = ' ', right = ' '},
-        disabled_filetypes = {},
-        always_divide_middle = true
-    },
-    sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_diagnostic'}}},
-        lualine_c = {'filename'},
-        lualine_x = {'filetype', 'encoding'},
-        lualine_y = {'location'},
-        lualine_z = {'progress'}
-    },
-    inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = {'filename'},
-        lualine_x = {'location'},
-        lualine_y = {'progress'},
-        lualine_z = {}
-    },
-    tabline = {},
-    extensions = {}
-}
 
 --[[ Toggle between 3 line numbering states ]]
 vim.o.number = false
@@ -188,12 +147,6 @@ wk.register {
             t = {":lua require'telescope.builtin'.tags()<CR>", "Tags"}
         }
     }
-}
-
---[[ Setup nvim-treesitter ]]
-require'nvim-treesitter.configs'.setup {
-    ensure_installed = 'maintained',
-    highlight = {enable = true}
 }
 
 --[[ Completions via hrsh7th/nvim-cmp ]]

@@ -11,22 +11,66 @@
 
        ~/.local/share/nvim/site/pack/packer      ]]
 
--- Without doing anything fancy, I'll just load the
--- plugins in the same way I did with Paq (for now).
 return require'packer'.startup(function()
     -- Packer manages itself
     use 'wbthomason/packer.nvim'
 
     -- Colorize hexcodes and names like Blue, Yellow or Green
-    use 'norcalli/nvim-colorizer.lua'
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function()
+            vim.o.termguicolors = true
+            require'colorizer'.setup()
+        end
+    }
 
     -- Tokyo Night colorscheme
-    use 'folke/tokyonight.nvim'
+    use {
+        'folke/tokyonight.nvim',
+        config = function()
+            vim.g.tokyonight_style = "night"
+            vim.g.tokyonight_colors = {bg = "#000000"}
+            vim.g.tokyonight_italic_functions = 1
+            vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
+
+            vim.cmd[[colorscheme tokyonight]]
+        end
+    }
 
     -- Statusline - fork of hoob3rt/lualine.nvim
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        config = function()
+            require'lualine'.setup {
+                options = {
+                    icons_enabled = true,
+                    theme = 'moonfly',
+                    component_separators = {left = ' ', right = ' '},
+                    section_separators = {left = ' ', right = ' '},
+                    disabled_filetypes = {},
+                    always_divide_middle = true
+                },
+                sections = {
+                    lualine_a = {'mode'},
+                    lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_diagnostic'}}},
+                    lualine_c = {'filename'},
+                    lualine_x = {'filetype', 'encoding'},
+                    lualine_y = {'location'},
+                    lualine_z = {'progress'}
+                },
+                inactive_sections = {
+                    lualine_a = {},
+                    lualine_b = {},
+                    lualine_c = {'filename'},
+                    lualine_x = {'location'},
+                    lualine_y = {'progress'},
+                    lualine_z = {}
+                },
+                tabline = {},
+                extensions = {}
+            }
+        end
     }
 
     -- define keybindings, show keybindings in popup
@@ -39,14 +83,21 @@ return require'packer'.startup(function()
                         enabled = true,
                         suggestions = 36
                     }
-	        }
+	            }
             }
         end
     }
-                
 
     -- Install language modules for built-in treesitter
-    use 'nvim-treesitter/nvim-treesitter'
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                ensure_installed = 'maintained',
+                highlight = {enable = true}
+            }
+        end
+    }
 
     -- Fuzzy finder over lists
     use {
