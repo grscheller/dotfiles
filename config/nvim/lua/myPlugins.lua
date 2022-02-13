@@ -10,12 +10,13 @@
      Packer stores the packages it manages here
 
        ~/.local/share/nvim/site/pack/packer      ]]
-
 return require'packer'.startup(function()
     -- Packer manages itself
     use 'wbthomason/packer.nvim'
 
-    -- Colorize hexcodes and names like Blue, Yellow or Green
+    --[[ Setup colorscheme & statusline ]]
+
+    -- Colorize hexcodes & names like Blue, Yellow or Green
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
@@ -73,7 +74,7 @@ return require'packer'.startup(function()
         end
     }
 
-    -- define keybindings, show keybindings in popup
+    --[[ define keybindings, show keybindings in popup ]]
     use {
         'folke/which-key.nvim',
         config = function()
@@ -88,6 +89,13 @@ return require'packer'.startup(function()
         end
     }
 
+    --[[ Fuzzy find over lists ]]
+    -- Telescope: Other plugins will use if available
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {'nvim-lua/plenary.nvim'}
+    }
+
     -- Install language modules for built-in treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -99,12 +107,6 @@ return require'packer'.startup(function()
         end
     }
 
-    -- Fuzzy finder over lists
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {'nvim-lua/plenary.nvim'}
-    }
-
     -- Configs for Neovim's built-in LSP client
     use 'neovim/nvim-lspconfig'  -- Provided by core neovim team
     use 'ziglang/zig.vim'  -- File detection and syntax highlighting for Zig
@@ -114,17 +116,91 @@ return require'packer'.startup(function()
     -- Nvim LSP Installer
     use 'williamboman/nvim-lsp-installer'  -- Good when Pacman not an option
 
-    -- Completion support via nvim-cmp
-    use 'hrsh7th/nvim-cmp'
+    -- Snippets support
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
+    use 'rafamadriz/friendly-snippets'
+
+    -- Completion support via hrsh7th/nvim-cmp
+    use {
+        'hrsh7th/nvim-cmp',
+        config = function()
+            local cmp = require'cmp'
+            local luasnip = require'luasnip'
+
+            vim.o.completeopt = "menuone,noinsert,noselect"
+            local myHasWordsBefore = function()
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+            end
+
+            cmp.setup {
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end
+                },
+                mapping = {
+                    ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
+                    ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
+                    ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+                    ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+                    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+                    ['<C-E>'] = cmp.mapping(cmp.mapping.close(), {'i', 'c'}),
+                    ['<CR>'] = cmp.mapping.confirm {
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = true },
+                    ['<Tab>'] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_next_item()
+                            elseif luasnip.expand_or_jumpable() then
+                                luasnip.expand_or_jump()
+                            elseif myHasWordsBefore() then
+                                cmp.complete()
+                            else
+                                fallback()
+                            end
+                        end, {"i", "s"}),
+                    ['<S-Tab>'] = cmp.mapping(
+                        function(fallback)
+                            if cmp.visible() then
+                                cmp.select_prev_item()
+                            elseif luasnip.jumpable(-1) then
+                                luasnip.jump(-1)
+                            else
+                                fallback()
+                            end
+                        end, {"i", "s"})
+                },
+                sources = {
+                    {name = 'nvim_lsp'},
+                    {name = 'luasnip'},
+                    {name = 'buffer'},
+                    {name = 'path'},
+                    {name = 'nvim_lua'}
+                }
+            }
+
+            cmp.setup.cmdline('/', {
+                sources = {
+                    {name = 'buffer'}
+                }
+            })
+
+            cmp.setup.cmdline(':', {
+                sources = cmp.config.sources(
+                    {{name = 'path'}},
+                    {{name = 'cmdline'}},
+                    {{name = 'nvim-lua'}})
+            })
+
+        end
+    }
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-nvim-lua'
-
-    -- Snippets support
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'rafamadriz/friendly-snippets'
 
 end)
