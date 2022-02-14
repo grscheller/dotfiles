@@ -1,7 +1,8 @@
 #!/bin/sh
 #
-#  Installs various Shell environment .dotfiles,
-#  as well as other config files, into the $HOME directory.
+#  Installs my shell & GUI environment into
+#  the $HOME directory of my sufficiently
+#  POSIX like systems.
 #
 #  Usage: ./installDotfiles
 #
@@ -26,7 +27,7 @@ HOME_FILES='
 
 RM_FILES='
    .bash_profile
-   .config/fish/functions/path.fish
+   .config/nvim/lua/plugins.lua
 '
 
 CONFIG_FILES='
@@ -58,7 +59,10 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/plugins.lua
+   nvim/lua/myConfigurations.lua
+   nvim/lua/myKeybindings.lua
+   nvim/lua/myLSPsettings.lua
+   nvim/lua/myPlugins.lua
    sway/config
    waybar/config
    waybar/style.css
