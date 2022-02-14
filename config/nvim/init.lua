@@ -281,6 +281,9 @@ vim.api.nvim_exec([[
 -- Zig Configurations
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
 
+-- Python configuration using pyenv shims
+vim.g.python3_host_prog = "~/.pyenv/shims/python"
+
 --[[ Nvim LSP Installer ]]
 local lsp_installer = require'nvim-lsp-installer'
 

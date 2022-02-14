@@ -76,6 +76,7 @@ and begin
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.pyenv
     set -p PATH $PYENV_ROOT/shims
+    set -gx PYTHONPATH lib ../lib
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
