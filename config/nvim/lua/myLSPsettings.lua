@@ -32,7 +32,7 @@ require'nvim-lsp-installer'.on_server_ready(function(server)
 end)
 
 -- Python configuration
-vim.g.python3_host_prog = '~/.pyenv/shims/python'
+vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
 
 --[[ Rust configuration, rust-tools.nvim will call lspconfig itself ]]
 local rust_opts = {
