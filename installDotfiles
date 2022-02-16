@@ -28,6 +28,7 @@ HOME_FILES='
 RM_FILES='
    .bash_profile
    .config/nvim/lua/plugins.lua
+   .config/nvim/lua/myConfigurations.lua
 '
 
 CONFIG_FILES='
@@ -59,7 +60,7 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/myConfigurations.lua
+   nvim/lua/myOptions.lua
    nvim/lua/myKeybindings.lua
    nvim/lua/myLSPsettings.lua
    nvim/lua/myPlugins.lua
