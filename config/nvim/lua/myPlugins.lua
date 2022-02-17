@@ -10,7 +10,7 @@
      Packer stores the packages it manages here
 
        ~/.local/share/nvim/site/pack/packer      ]]
-return require'packer'.startup(function()
+return require'packer'.startup(function(use)
     -- Packer manages itself
     use 'wbthomason/packer.nvim'
 
@@ -22,6 +22,18 @@ return require'packer'.startup(function()
         config = function()
             vim.o.termguicolors = true
             require'colorizer'.setup()
+        end
+    }
+
+    -- Provide icons and colorizes theme
+    --   Needs a patched fort like Nerd Font like RobotoMono:
+    --   https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.1.0
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function()
+            require'nvim-web-devicons'.setup {
+                default = true;
+            }
         end
     }
 
@@ -41,7 +53,7 @@ return require'packer'.startup(function()
     -- Statusline - fork of hoob3rt/lualine.nvim
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+        requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
             require'lualine'.setup {
                 options = {

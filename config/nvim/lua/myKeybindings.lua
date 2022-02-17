@@ -53,7 +53,7 @@ wk.register {
             name = "+Whitespace",
             t = {":%s/\\s\\+$//<CR>", "Trim Trailing Whitespace"}
         }
-    },
+    }
 }
 
     -- Telescope related keybindings
