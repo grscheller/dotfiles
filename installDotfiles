@@ -28,6 +28,7 @@ RM_FILES='
    .config/nvim/lua/plugins.lua
    .config/nvim/lua/myConfigurations.lua
    .bash_sessions_disable
+   bin/hostnamectl
 '
 
 CONFIG_FILES='
@@ -82,7 +83,6 @@ BIN_SCRIPTS='
    bsPacker
    bsPaq
    buArch
-   hostnamectl
    monitor
    rt
    spin
@@ -90,31 +90,16 @@ BIN_SCRIPTS='
 '
 
 ## Function to back up and optionally removes files
-backup_file () {
+remove_file () {
 
-   buFile="$1"
-   Remove="$2"
+   rmFile="$1"
 
-   diff "$buFile" "${buFile}.old" >/dev/null 2>&1 ||
-       [ ! -f "$buFile" ] ||
-       cp "$buFile" "${buFile}.old" || {
-          printf '\n'
-          printf "Error: Failed to make backup copy of '%s'" "$buFile" >&2
-          if [ -z "$Remove" ]; then
-              printf '\n'
-          else
-              printf ',\n       which was slated for removal.\n' >&2
-          fi
-          return 1
-       }
-
-   [ -z "$Remove" ] ||
-      [ ! -f "$buFile" ] ||
-         rm "$buFile" 2>&- || {
-            printf '\n'
-            printf "Error: Failed to remove file '%s'\\n" "$buFile" >&2
-            return 1
-         }
+   test ! -f "$rmFile" ||
+      rm "$rmFile" 2>&- || {
+         printf '\n'
+         printf "Error: Failed to remove file '%s'\\n" "$rmFile" >&2
+         return 1
+      }
 
    return 0
 }
@@ -129,7 +114,7 @@ install_config_file () {
    trgt="$conf_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
-   [ -d "$trgt_dir" ] || mkdir -p "$trgt_dir" || {
+   test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
       printf '\n'
       printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir" >&2
       printf "       punting on installing '%s' config file\\n" "$trgt" >&2
@@ -158,8 +143,6 @@ install_config_file () {
 ## Install home directory dot-files - backup existing files
 for File in $HOME_FILES
 do
-    backup_file  ~/"${File}" || exit 1
-
     # Install into $HOME
     cp "${File}" ~ || {
        printf "Error: Failed while installing '~/%s'\\n" "${File}" >&2
@@ -175,7 +158,7 @@ done
 ## Install local scripts
 
 # Create ~/.local/bin directory if necessary
-[ -d ~/.local/bin ] || mkdir -p ~/.local/bin || {
+test -d ~/.local/bin || mkdir -p ~/.local/bin || {
    printf '\n'
    printf 'Error: Failed to create ~/.local/bin\n' >&2
    exit 1
@@ -186,7 +169,7 @@ chmod u=rwx,g=rx,o= ~/.local/bin || {
 }
 
 # Create ~/bin directory if necessary
-[ -d ~/bin ] || mkdir ~/bin || {
+test -d ~/bin || mkdir ~/bin || {
    printf '\n'
    printf 'Error: Failed to create ~/bin\n' >&2
    exit 1
@@ -239,13 +222,13 @@ done
 ### Some final clean up
 
 ## Create ~/catch for the toSystem () family of shell functions
-[ -d ~/catch ] || mkdir ~/catch || {
+test -d ~/catch || mkdir ~/catch || {
    printf '\n'
    printf "Warning: Failed to create '~/catch', do so manually\\n" >&2
 }
 
-## Backup then remove certain files
+## Remove certain files
 for File in $RM_FILES
 do
-    backup_file  ~/"$File" Remove || exit 1
+    remove_file ~/"$File" || exit 1
 done
