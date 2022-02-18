@@ -4,7 +4,7 @@ function fish_title --description 'Set terminal title'
         case 'rvsllschellerg2'
             set MyHostName voltron
         case 'SpaceCAMP31'
-            set MyHostName SC31
+            set MyHostName sc31
     end
     printf '%s@%s' (id -un) $MyHostName
 end
