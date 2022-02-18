@@ -401,23 +401,8 @@ selection:
 #live_config_reload: true
 
 # Shell
-#
-# You can set `shell.program` to the path of your favorite shell, e.g.
-# `/bin/fish`. Entries in `shell.args` are passed unmodified as arguments to the
-# shell.
-#
-# Default:
-#   - (macOS) /bin/bash --login
-#   - (Linux/BSD) user login shell
-#   - (Windows) powershell
-#
-# GRS:
-#   - for Arch symlink /usr/local/bin/fish -> /usr/bin/fish
-#   - login shell needed for iMac, doesn't matter for Arch
 shell:
-  program: /usr/local/bin/fish
-  args:
-    - --login
+  program: /usr/bin/fish
 
 # Startup directory
 #
