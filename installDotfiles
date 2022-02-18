@@ -14,7 +14,6 @@
 HOME_FILES='
    .alias_rc
    .bashrc
-   .bash_sessions_disable
    .dashrc
    .environment_rc
    .env_rc
@@ -26,9 +25,9 @@ HOME_FILES='
 '
 
 RM_FILES='
-   .bash_profile
    .config/nvim/lua/plugins.lua
    .config/nvim/lua/myConfigurations.lua
+   .bash_sessions_disable
 '
 
 CONFIG_FILES='
