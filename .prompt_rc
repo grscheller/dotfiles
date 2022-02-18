@@ -5,12 +5,10 @@
 #
 
 # Adjust Hostname - change cattle names to pet names
-#   Note: On non-systemd systems, uses ~/bin/hostnamectl
-#         wrapper for the hostname command.
 MyHostName=$(hostnamectl hostname); MyHostName=${MyHostName%%.*}
 case $MyHostName in
   rvsllschellerg2) MyHostName=voltron ;;
-      SpaceCAMP31) MyHostName=SC31    ;;
+      SpaceCAMP31) MyHostName=sc31    ;;
 esac
 
 # Terminal window title prompt string
