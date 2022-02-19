@@ -107,16 +107,16 @@ set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
 
 ## Set up abriviations
-abbr -a -g nv 'nvim'
-abbr -a -g dp 'digpath'
-abbr -a -g tm 'fishterm'
-abbr -a -g ue 'UPDATE_ENV=yes fish'
-abbr -a -g -- 're REDO_ENV=yes fish -l -C cd'
-abbr -a -g kn 'sudo systemctl restart systemd-networkd.service'
+abbr -a -g nv nvim
+abbr -a -g dp digpath
+abbr -a -g tm fishterm
+abbr -a -g ue UPDATE_ENV=yes fish
+abbr -a -g -- re REDO_ENV=yes fish -l -C cd
+abbr -a -g kn sudo systemctl restart systemd-networkd.service
 abbr -a -g kw 'iwctl device list;iwctl device list'
 abbr -a -g path 'string join \n $PATH'
 abbr -a -g gq 'geeqie &; disown'
-abbr -a -g sr 'swap_resolv_conf'
+abbr -a -g sr swap_resolv_conf
 
 ## Let the various POSIX shells know their configuration files
 if test -r ~/.shrc
