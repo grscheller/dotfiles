@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-#  Installs my shell & GUI environment into
-#  the $HOME directory of my sufficiently
-#  POSIX like systems.
+#  Installs my Fish & Sway environment into
+#  the $HOME directory of my Wayland/Systemd
+#  based Linux systems.
 #
 #  Usage: ./installDotfiles
 #
@@ -90,14 +90,14 @@ BIN_SCRIPTS='
 '
 
 ## Function to back up and optionally removes files
-remove_file () {
+remove_item () {
 
-   rmFile="$1"
+   rmItem="$1"
 
-   test ! -f "$rmFile" ||
-      rm "$rmFile" 2>&- || {
+   test ! -e "$rmItem" ||
+      rm -r "$rmItem" 2>&- || {
          printf '\n'
-         printf "Error: Failed to remove file '%s'\\n" "$rmFile" >&2
+         printf "Error: Failed to remove item '%s'\\n" "$rmItem" >&2
          return 1
       }
 
@@ -136,7 +136,6 @@ install_config_file () {
 
    return 0
 }
-
 
 ### Install files
 
@@ -230,5 +229,5 @@ test -d ~/catch || mkdir ~/catch || {
 ## Remove certain files
 for File in $RM_FILES
 do
-    remove_file ~/"$File" || exit 1
+    remove_item ~/"$File" || exit 1
 done
