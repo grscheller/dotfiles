@@ -2,11 +2,12 @@
 
      Personal opinionated choices shaping Neovim
      behaviors.  Generally not related to specific
-     plugins nor programming environments.         ]]
+     plugins nor programming environments.
+  ]]
 
 --[[ Set options ]]
 local options = {
-    shell = "/bin/sh",               -- Some packages need a POSIX compatible shell
+    shell = "/bin/bash",  -- Some packages need a POSIX compatible shell
     wildmenu = true,                 -- Make tab completion in
     wildmode = "longest:full,full",  -- command mode more useful.
     --

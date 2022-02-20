@@ -12,22 +12,22 @@
 ### Setup
 
 HOME_FILES='
-   .alias_rc
+   .bash_profile
    .bashrc
+   .bashrc_functions
+   .bash_sessions_disable
+   .inputrc
+'
+
+RM_FILES='
+   .alias_rc
    .dashrc
    .environment_rc
    .env_rc
    .functions_rc
-   .inputrc
    .profile
    .prompt_rc
    .shrc
-'
-
-RM_FILES='
-   .config/nvim/lua/plugins.lua
-   .config/nvim/lua/myConfigurations.lua
-   .bash_sessions_disable
    bin/hostnamectl
 '
 
