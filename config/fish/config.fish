@@ -96,7 +96,7 @@ and begin
     set -e REDO_ENV
 end
 
-# For non-Systemd systems, just use hostname
+## For non-Systemd systems - provide a phony hostnamectl command
 function hostnamectl
     hostname
 end
