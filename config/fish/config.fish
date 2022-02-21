@@ -87,13 +87,22 @@ and begin
     # Clean up duplicate and non-existing paths
     set PATH (pathtrim)
 
-    # Let POSIX Shells know initial environment configured
+    # Let Bash Shell know initial environment configured
     set -q _ENV_INITIALIZED
     or set -gx _ENV_INITIALIZED 0
     set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
 
     set -e UPDATE_ENV
     set -e REDO_ENV
+end
+
+# For non-Systemd systems, just use hostname
+function hostnamectl
+    hostname
+end
+
+if digpath -q hostnamectl
+    functions --erase hostnamectl
 end
 
 ## Python Pyenv function configuration

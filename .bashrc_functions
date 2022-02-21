@@ -221,10 +221,10 @@ lo () ( /usr/bin/libreoffice & )
 low () ( /usr/bin/libreoffice --writer "$@" & )
 
 ## For non-Systemd systems without the hostnamectl command
-if [[ ! digpath -q hostnamectl ]]
+if ! digpath -q hostnamectl
 then
-    hostnamectl () { hostname }
-end
+    function hostnamectl { hostname; }
+fi
 
 ## Software development related functions
 
