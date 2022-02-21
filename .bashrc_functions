@@ -220,6 +220,12 @@ lo () ( /usr/bin/libreoffice & )
 # LibreOffice writer
 low () ( /usr/bin/libreoffice --writer "$@" & )
 
+## For non-Systemd systems without the hostnamectl command
+if [[ ! digpath -q hostnamectl ]]
+then
+    hostnamectl () { hostname }
+end
+
 ## Software development related functions
 
 # Setup JDK on Arch
@@ -262,4 +268,3 @@ archJDK () {
       return 1
   fi
 }
-
