@@ -9,9 +9,9 @@
 function fishterm --description 'Launch fish shell running in Alacritty terminal'
 
     set -g _fishterm_do_it yes
-    set wFlag ()
-    set xFlag ()
-    set WD $WAYLAND_DISPLAY
+    set -l wFlag ()
+    set -l xFlag ()
+    set -l WD $WAYLAND_DISPLAY
     set _fishterm_wd_orig $WAYLAND_DISPLAY
 
     # Define private functions

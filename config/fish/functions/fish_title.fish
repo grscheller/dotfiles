@@ -1,5 +1,5 @@
 function fish_title --description 'Set terminal title'
-    set MyHostName (hostnamectl hostname)
+    set -l MyHostName (hostnamectl hostname)
     switch $MyHostName[1]
         case 'rvsllschellerg2'
             set MyHostName voltron

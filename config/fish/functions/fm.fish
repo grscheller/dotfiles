@@ -1,10 +1,10 @@
 function fm --description 'Launch desktop\'s file manager app'
     if digpath -q xdg-open
         # Probably on a Unix
-        set _my_open_cmd xdg-open
+        set -l open_cmd xdg-open
     else if digpath -q open
         # Maybe on a Mac
-        set _my_open_cmd open
+        set -l open_cmd open
     else
         printf 'Error: Cannot identify proper program launcher for DE'
         return 1
@@ -13,7 +13,7 @@ function fm --description 'Launch desktop\'s file manager app'
     set -l DiR $argv[1]
     test -z $DiR; and set DiR $PWD
     if test -d $DiR
-        $_my_open_cmd $DiR 2>/dev/null &
+        $open_cmd $DiR 2>/dev/null &
     else
         printf 'Error: "%s" is not a directory\n' $DiR
         return 1

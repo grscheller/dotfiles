@@ -27,7 +27,7 @@ function ud --description 'Jump up multiple directories, default is 1'
         end
     end
 
-    set target "$upDir/$findTarget"
+    set -l target "$upDir/$findTarget"
     if [ ! -e "$target" ]
         # let user know if target not found in any parent directory
         printf '"%s" not found in any parent directory\n' $findTarget >&2

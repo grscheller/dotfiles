@@ -1,6 +1,6 @@
 function ax --description 'Archive eXtractor: usage: ax <file>'
 
-    set exFile $argv[1]
+    set -l exFile $argv[1]
 
     if test -z (string trim $exFile)
         printf '\nError: no argument given\n'

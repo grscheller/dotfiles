@@ -1,9 +1,9 @@
 function archJDK --description 'Setup JDK on Arch Linux'
 
-    set jdkVersion (string trim $argv[1])
+    set -l jdkVersion (string trim $argv[1])
 
     # Make sure at least one Java JDK is installed in default location
-    set jvmDirs /usr/lib/jvm/java-*-openjdk
+    set -l jvmDirs /usr/lib/jvm/java-*-openjdk
     if test -z "$jvmDirs"
         printf '\nNo JDK environments installed\n'
         return 1
@@ -13,7 +13,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
     if test -z "$jdkVersion"
         printf '\nAvailable Java Versions:'
         for jdir in $jvmDirs
-            set jdirSplit (string split - $jdir)
+            set -l jdirSplit (string split - $jdir)
             printf ' %s' $jdirSplit[2]
         end
         printf '\n'
@@ -25,7 +25,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
         return 1
     end
 
-    set javaHome /usr/lib/jvm/java-$jdkVersion[1]-openjdk
+    set -l javaHome /usr/lib/jvm/java-$jdkVersion[1]-openjdk
     if test -d $javaHome
         set -gx JAVA_HOME $javaHome
         if string match -q '/usr/lib/jvm/java-*-openjdk/bin' $PATH[1]
