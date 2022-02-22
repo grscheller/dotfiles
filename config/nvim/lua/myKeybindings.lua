@@ -81,9 +81,9 @@ wk.register {
     }
 }
 
--- LSP related keybindings
+-- LSP related keybindings ( `\` to enter IDE World )
 wk.register {
-    [","] = {
+    ["\\"] = {
         name = "+lsp",
         F = {":lua vim.lsp.buf.formatting()<CR>", "Formatting"},
         g = {

@@ -29,6 +29,7 @@ RM_FILES='
    .prompt_rc
    .shrc
    bin/hostnamectl
+   .config/nvim/lua/myOptions.lua
 '
 
 CONFIG_FILES='
@@ -60,7 +61,7 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/myOptions.lua
+   nvim/lua/myBehaviors.lua
    nvim/lua/myKeybindings.lua
    nvim/lua/myLSPsettings.lua
    nvim/lua/myPlugins.lua

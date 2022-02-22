@@ -187,17 +187,17 @@ return require'packer'.startup(function(use)
                 },
                 sources = {
                     {name = 'nvim_lsp'},
+                    {name = 'nvim_lua'},
                     {name = 'luasnip'},
                     {name = 'buffer'},
-                    {name = 'path'},
-                    {name = 'nvim_lua'}
+                    {name = 'path'}
                 }
             }
 
             cmp.setup.cmdline('/', {
-                sources = {
-                    {name = 'buffer'}
-                }
+                sources = cmp.config.sources(
+                    {{name = 'buffer'}},
+                    {{name = 'cmdline'}})
             })
 
             cmp.setup.cmdline(':', {
