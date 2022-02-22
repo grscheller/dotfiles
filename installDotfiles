@@ -34,6 +34,7 @@ RM_FILES='
 
 CONFIG_FILES='
    alacritty/alacritty.yml
+   alacritty/alacritty_darwin.yml
    fish/completions/alacritty.fish
    fish/config.fish
    fish/functions/archJDK.fish
@@ -211,8 +212,15 @@ do
     install_config_file "$XDG_CONFIG_HOME" "$conf_file" ./config
 done
 
-# Install SSH Configs
+# Choose alternate config files to use based on OS
+if [[ $(uname) == Darwin ]]
+then
+    mv $XDG_CONFIG_HOME/alacritty/alacritty{_darwin,}.yml
+else
+    rm $XDG_CONFIG_HOME/alacritty/alacritty_darwin.yml
+fi
 
+# Install SSH Configs
 for conf_file in $SSH_CONFIGS
 do
     install_config_file ~/.ssh "$conf_file" ./ssh
