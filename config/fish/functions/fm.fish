@@ -1,10 +1,11 @@
 function fm --description 'Launch desktop\'s file manager app'
+    set -l open_cmd
     if digpath -q xdg-open
         # Probably on a Unix
-        set -l open_cmd xdg-open
+        set open_cmd xdg-open
     else if digpath -q open
         # Maybe on a Mac
-        set -l open_cmd open
+        set open_cmd open
     else
         printf 'Error: Cannot identify proper program launcher for DE'
         return 1
