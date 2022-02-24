@@ -11,8 +11,8 @@
 
        ~/.local/share/nvim/site/pack/packer      ]]
 return require'packer'.startup(function(use)
-    -- Packer manages itself
-    use 'wbthomason/packer.nvim'
+
+    use 'wbthomason/packer.nvim'  -- Packer manages itself
 
     --[[ Setup colorscheme & statusline ]]
 
@@ -30,7 +30,7 @@ return require'packer'.startup(function(use)
     --   https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.1.0
     use {
         'kyazdani42/nvim-web-devicons',
-        config = function()
+         config = function()
             require'nvim-web-devicons'.setup {
                 default = true;
             }

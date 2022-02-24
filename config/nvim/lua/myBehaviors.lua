@@ -46,17 +46,9 @@ local options = {
 
 }
 
-for k, v in pairs(options) do
-    vim.opt[k] = v
-end
-
---[[ Modified options ]]
-vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
-vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
-
 --[[ Case insensitive search, but not in command mode ]]
-vim.opt['ignorecase'] = true
-vim.opt['smartcase'] = true
+options['ignorecase'] = true
+options['smartcase'] = true
 
 vim.cmd [[
     augroup dynamic_smartcase
@@ -77,8 +69,8 @@ vim.cmd [[
 ]]
 
 --[[ Toggle between 3 line numbering states ]]
-vim.opt['number'] = false
-vim.opt['relativenumber'] = false
+options['number'] = false
+options['relativenumber'] = false
 
 myLineNumberToggle = function()
     if vim.wo.relativenumber == true then
@@ -92,3 +84,12 @@ myLineNumberToggle = function()
         vim.wo.relativenumber = false
     end
 end
+
+--[[ Set options in nvim ]]
+for k, v in pairs(options) do
+    vim.opt[k] = v
+end
+
+--[[ Modified existing nvim options ]]
+vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
+vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions

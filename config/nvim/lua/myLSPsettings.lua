@@ -60,12 +60,12 @@ metals_config = require'metals'.bare_config()
 
 metals_config.settings = {showImplicitArguments = true}
 
-vim.api.nvim_exec([[
+vim.cmd[[
     augroup metals_lsp
         au!
         au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
     augroup end
-]], false)
+]]
 
 -- Zig Configurations
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
