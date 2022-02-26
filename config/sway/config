@@ -111,7 +111,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #
 # Moving around:
 #
-    # Move your focus around
+    # Move your focus around with $mod+[h|j|k|l]
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
@@ -164,7 +164,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
+    # respectively.  Opposite to the vim convention.
     bindsym $mod+b splith
     bindsym $mod+v splitv
 

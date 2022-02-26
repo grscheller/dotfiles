@@ -33,7 +33,7 @@ RM_FILES='
 '
 
 CONFIG_FILES='
-   alacritty/alacritty.yml
+   alacritty/alacritty_default.yml
    alacritty/alacritty_darwin.yml
    fish/completions/alacritty.fish
    fish/config.fish
@@ -216,8 +216,10 @@ done
 if [[ $(uname) == Darwin ]]
 then
     mv $XDG_CONFIG_HOME/alacritty/alacritty{_darwin,}.yml
+    rm -f $XDG_CONFIG_HOME/alacritty/alacritty_default.yml
 else
-    rm $XDG_CONFIG_HOME/alacritty/alacritty_darwin.yml
+    mv $XDG_CONFIG_HOME/alacritty/alacritty{_default,}.yml
+    rm -f $XDG_CONFIG_HOME/alacritty/alacritty_darwin.yml
 fi
 
 # Install SSH Configs
@@ -225,7 +227,6 @@ for conf_file in $SSH_CONFIGS
 do
     install_config_file ~/.ssh "$conf_file" ./ssh
 done
-
 
 ### Some final clean up
 
