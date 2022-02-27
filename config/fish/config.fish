@@ -126,14 +126,3 @@ abbr -a -g kw 'iwctl device list;iwctl device list'
 abbr -a -g path 'string join \n $PATH'
 abbr -a -g gq 'geeqie &; disown'
 abbr -a -g sr swap_resolv_conf
-
-## Let the various POSIX shells know their configuration files
-if test -r ~/.shrc
-    abbr -a -g sh ENV=~/.shrc sh
-end
-
-if test -r ~/.dashrc
-    abbr -a -g dash ENV=~/.dashrc dash
-else if test -r ~/.shrc
-    abbr -a -g dash ENV=~/.shrc dash
-end
