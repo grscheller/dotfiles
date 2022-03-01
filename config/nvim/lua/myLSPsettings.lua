@@ -1,4 +1,4 @@
---[[ LSP Configurations ]]:
+--[[ LSP Configurations ]]
 
 local ok, nvim_lsp = pcall(require, 'lspconfig')
 if not ok then
