@@ -1,6 +1,9 @@
---[[ LSP Configurations ]]
+--[[ LSP Configurations ]]:
 
-local nvim_lsp = require'lspconfig'
+local ok, nvim_lsp = pcall(require, 'lspconfig')
+if not ok then
+    return
+end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
@@ -26,7 +29,7 @@ end
 --[[ Nvim LSP Installer ]]
 require'nvim-lsp-installer'.on_server_ready(function(server)
     local opts = {
-        settings = {capabilities = capabilities}
+        settings = { capabilities = capabilities }
     }
     server:setup(opts)
 end)
@@ -58,7 +61,7 @@ require('rust-tools').setup(rust_opts)
 vim.g.metals_server_version = '0.11.1'  -- See https://scalameta.org/metals/docs/editors/overview.html
 metals_config = require'metals'.bare_config()
 
-metals_config.settings = {showImplicitArguments = true}
+metals_config.settings = { showImplicitArguments = true }
 
 vim.cmd[[
     augroup metals_lsp

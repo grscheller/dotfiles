@@ -4,7 +4,10 @@
      keep track, consistency check, and provide
      popup guidance for my keybindings.               ]]
 
-local wk = require'which-key'
+local ok, wk = pcall(require, 'which-key')
+if not ok then
+    return
+end
 
 -- Reselect visual region upon indention of text in visual mode
 wk.register({

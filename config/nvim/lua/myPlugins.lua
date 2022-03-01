@@ -1,18 +1,14 @@
---[[ To bootstrap Packer for the first time, run the command
+--[[ Using Packer as the plugin manager ]]
 
-       $ ~/bin/bsPacker
-
-     Whenever changes are made to this file, or you just bootstrapped
-     Packer with the above method, from within nvim run the command
-
-       :PackerSync
-
-     Packer stores the packages it manages here
-
-       ~/.local/share/nvim/site/pack/packer      ]]
 return require'packer'.startup(function(use)
 
-    use 'wbthomason/packer.nvim'  -- Packer manages itself
+    --[[ Packer manages itself ]]
+
+    use { 'wbthomason/packer.nvim' }
+
+    --[[ Used by many other plugins ]] 
+
+    use { 'nvim-lua/plenary.nvim' }
 
     --[[ Setup colorscheme & statusline ]]
 
@@ -26,8 +22,8 @@ return require'packer'.startup(function(use)
     }
 
     -- Provide icons and colorizes theme
-    --   Needs a patched fort like Nerd Font like RobotoMono:
-    --   https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.1.0
+    --   Needs a patched fort like Noto Mono Nerd Font
+    --   https://github.com/ryanoasis/nerd-fonts
     use {
         'kyazdani42/nvim-web-devicons',
          config = function()
@@ -50,10 +46,9 @@ return require'packer'.startup(function(use)
         end
     }
 
-    -- Statusline - fork of hoob3rt/lualine.nvim
+    -- Statusline written in pure Lua
     use {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
             require'lualine'.setup {
                 options = {
@@ -86,31 +81,11 @@ return require'packer'.startup(function(use)
         end
     }
 
-    --[[ define keybindings, show keybindings in popup ]]
-    use {
-        'folke/which-key.nvim',
-        config = function()
-            require'which-key'.setup {
-                plugins = {
-                    spelling = {
-                        enabled = true,
-                        suggestions = 36
-                    }
-	            }
-            }
-        end
-    }
+    --[[ Treesitter - install language modules ]]
 
-    --[[ Fuzzy find over lists ]]
-    -- Telescope: Other plugins will use if available
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {'nvim-lua/plenary.nvim'}
-    }
-
-    -- Install language modules for built-in treesitter
     use {
         'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdateSync',
         config = function()
             require'nvim-treesitter.configs'.setup {
                 ensure_installed = 'maintained',
@@ -119,21 +94,48 @@ return require'packer'.startup(function(use)
         end
     }
 
+    --[[ Telescope - highly extendable fuzzy finder over lists ]]
+
+    use { 'nvim-telescope/telescope-ui-select.nvim' }
+
+    use {
+        'nvim-telescope/telescope.nvim',
+        config = function()
+            require'telescope'.setup {
+                ['ui-select'] = {
+                    require'telescope.themes'.get_dropdown {
+                    }
+                }
+            }
+            require'telescope'.load_extension('ui-select')
+        end
+    }
+
+    --[[ LSP configuration ]]
+
     -- Configs for Neovim's built-in LSP client
-    use 'neovim/nvim-lspconfig'  -- Provided by core neovim team
-    use 'ziglang/zig.vim'  -- File detection and syntax highlighting for Zig
-    use 'simrat39/rust-tools.nvim'  -- Extra functionality over rust analyzer
-    use 'scalameta/nvim-metals'  -- Config for Scala Metals
+    use { 'neovim/nvim-lspconfig' }  -- Provided by core neovim team
+    use { 'ziglang/zig.vim' }  -- File detection and syntax highlighting for Zig
+    use { 'simrat39/rust-tools.nvim' }  -- Extra functionality over rust analyzer
+    use { 'scalameta/nvim-metals' }  -- Config for Scala Metals
 
     -- Nvim LSP Installer
-    use 'williamboman/nvim-lsp-installer'  -- Good when Pacman not an option
+    use { 'williamboman/nvim-lsp-installer' }  -- Good when Pacman not an option
+
+    --[[ Completion and snippet support ]]
+
+    -- Completion sources
+    use { 'hrsh7th/cmp-nvim-lsp' }
+    use { 'hrsh7th/cmp-buffer' }
+    use { 'hrsh7th/cmp-path' }
+    use { 'hrsh7th/cmp-cmdline' }
+    use { 'hrsh7th/cmp-nvim-lua' }
 
     -- Snippets support
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'rafamadriz/friendly-snippets'
+    use { 'L3MON4D3/LuaSnip' }
+    use { 'saadparwaiz1/cmp_luasnip' }
+    use { 'rafamadriz/friendly-snippets' }
 
-    -- Completion support via hrsh7th/nvim-cmp
     use {
         'hrsh7th/nvim-cmp',
         config = function()
@@ -146,6 +148,8 @@ return require'packer'.startup(function(use)
                 return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
             end
 
+            -- I think the "mappings" defined below are artifacts of
+            -- popup completion windows and not true nvim keybindings.
             cmp.setup {
                 snippet = {
                     expand = function(args)
@@ -196,23 +200,37 @@ return require'packer'.startup(function(use)
 
             cmp.setup.cmdline('/', {
                 sources = cmp.config.sources(
-                    {{name = 'buffer'}},
-                    {{name = 'cmdline'}})
+                    {{ name = 'buffer'  }},
+                    {{ name = 'cmdline' }})
             })
 
             cmp.setup.cmdline(':', {
                 sources = cmp.config.sources(
-                    {{name = 'path'}},
-                    {{name = 'cmdline'}},
-                    {{name = 'nvim-lua'}})
+                    {{ name = 'path'     }},
+                    {{ name = 'cmdline'  }},
+                    {{ name = 'nvim-lua' }})
             })
 
         end
     }
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-nvim-lua'
 
-end)
+    --[[ WhichKey - used to
+         - define keybindings
+         - show keybindings in a popup
+         - provide extra spell checking functionality ]]
+
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require'which-key'.setup {
+                plugins = {
+                    spelling = {
+                        enabled = true,
+                        suggestions = 36
+                    }
+	            }
+            }
+        end
+    }
+
+end )
