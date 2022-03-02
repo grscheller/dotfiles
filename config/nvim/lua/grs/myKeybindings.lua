@@ -6,8 +6,18 @@
 
 local ok, wk = pcall(require, 'which-key')
 if not ok then
+    print('Warning: whick-key not configured')
     return
 end
+
+wk.setup {
+    plugins = {
+        spelling = {
+            enabled = true,
+            suggestions = 36
+        }
+    }
+}
 
 -- Reselect visual region upon indention of text in visual mode
 wk.register({

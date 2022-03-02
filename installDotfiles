@@ -30,6 +30,11 @@ RM_FILES='
    .shrc
    bin/hostnamectl
    .config/nvim/lua/myOptions.lua
+   .config/nvim/lua/myBehaviors.lua
+   .config/nvim/lua/myKeybindings.lua
+   .config/nvim/lua/myLSPsettings.lua
+   .config/nvim/lua/myPlugins.lua
+   .config/nvim/lua/grs/plugins/
 '
 
 CONFIG_FILES='
@@ -62,10 +67,10 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/myBehaviors.lua
-   nvim/lua/myKeybindings.lua
-   nvim/lua/myLSPsettings.lua
-   nvim/lua/myPlugins.lua
+   nvim/lua/grs/myBehaviors.lua
+   nvim/lua/grs/myKeybindings.lua
+   nvim/lua/grs/myLSPsettings.lua
+   nvim/lua/grs/myPlugins.lua
    sway/config
    waybar/config
    waybar/style.css

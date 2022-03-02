@@ -16,13 +16,26 @@ if vim.fn.empty(vim.fn.glob(install_path)) == 1 then
     print('Installing packer, close and reopen Neovim...')
 end
 
-require('packer').startup(function(use)
+local ok, packer = pcall(require, 'packer')
+if not ok then
+    print('Warning: Packer not installed - no plugins')
+    return
+end
 
-    --[[ Packer manages itself ]]
-    use { 'wbthomason/packer.nvim' }
+local packer_util = require('packer.util')
 
-    --[[ Used by many other plugins ]] 
-    use { 'nvim-lua/plenary.nvim' }
+packer.init {
+    display = {
+        open_fn = function ()
+            return packer_util.float { border = 'rounded' }
+        end
+    }
+}
+
+return packer.startup(function(use)
+
+    use { 'wbthomason/packer.nvim' }  -- Packer manages itself
+    use { 'nvim-lua/plenary.nvim' }  -- Used by many other plugins  
 
     --[[ Setup colorscheme & statusline ]]
     -- Colorize hexcodes & names like Blue, Yellow or Green
@@ -222,28 +235,12 @@ require('packer').startup(function(use)
         end
     }
 
-    --[[ WhichKey - used to
-         - define keybindings
-         - show keybindings in a popup
-         - provide extra spell checking functionality ]]
-    use {
-        'folke/which-key.nvim',
-        config = function()
-            require('which-key').setup {
-                plugins = {
-                    spelling = {
-                        enabled = true,
-                        suggestions = 36
-                    }
-                }
-            }
-        end
-    }
+    use { 'folke/which-key.nvim' }  -- manages keybindings
 
     --[[ Automatically Sync Packer if just installed ]]
     if packerBootstrapped then
         -- vim.cmd[[ :PackerSync ]]
-        require('packer').sync()
+        packer.sync()
         print('Packer installed.  Exit and restart Neovim...')
     end
 end )
