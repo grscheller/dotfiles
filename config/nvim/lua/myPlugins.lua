@@ -1,22 +1,35 @@
 --[[ Using Packer as the plugin manager ]]
 
-return require'packer'.startup(function(use)
+--[[ Bootstrap Packer if not already installed ]]
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local packer_src = 'https://github.com/wbthomason/packer.nvim'
+local packerBootstrapped = nil
+if vim.fn.empty(vim.fn.glob(install_path)) == 1 then
+    packerBootstrapped = vim.fn.system {
+        'git',
+        'clone',
+        '--depth',
+        '1',
+        packer_src,
+        install_path
+    }
+    print('Installing packer, close and reopen Neovim...')
+end
+
+require('packer').startup(function(use)
 
     --[[ Packer manages itself ]]
-
     use { 'wbthomason/packer.nvim' }
 
     --[[ Used by many other plugins ]] 
-
     use { 'nvim-lua/plenary.nvim' }
 
     --[[ Setup colorscheme & statusline ]]
-
     -- Colorize hexcodes & names like Blue, Yellow or Green
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
-            require'colorizer'.setup()
+            require('colorizer').setup()
         end
     }
 
@@ -26,7 +39,7 @@ return require'packer'.startup(function(use)
     use {
         'kyazdani42/nvim-web-devicons',
          config = function()
-            require'nvim-web-devicons'.setup {
+            require('nvim-web-devicons').setup {
                 default = true;
             }
         end
@@ -49,7 +62,7 @@ return require'packer'.startup(function(use)
     use {
         'nvim-lualine/lualine.nvim',
         config = function()
-            require'lualine'.setup {
+            require('lualine').setup {
                 options = {
                     icons_enabled = true,
                     theme = 'tokyonight',
@@ -81,12 +94,11 @@ return require'packer'.startup(function(use)
     }
 
     --[[ Treesitter - install language modules ]]
-
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdateSync',
         config = function()
-            require'nvim-treesitter.configs'.setup {
+            require('nvim-treesitter.configs').setup {
                 ensure_installed = 'maintained',
                 highlight = {enable = true}
             }
@@ -94,24 +106,21 @@ return require'packer'.startup(function(use)
     }
 
     --[[ Telescope - highly extendable fuzzy finder over lists ]]
-
     use { 'nvim-telescope/telescope-ui-select.nvim' }
-
     use {
         'nvim-telescope/telescope.nvim',
         config = function()
-            require'telescope'.setup {
+            require('telescope').setup {
                 ['ui-select'] = {
-                    require'telescope.themes'.get_dropdown {
+                    require('telescope.themes').get_dropdown {
                     }
                 }
             }
-            require'telescope'.load_extension('ui-select')
+            require('telescope').load_extension('ui-select')
         end
     }
 
     --[[ LSP configuration ]]
-
     -- Plugins for Neovim's built-in LSP client
     use { 'neovim/nvim-lspconfig' }  -- Provided by core neovim team
     use { 'ziglang/zig.vim' }  -- File detection and syntax highlighting for Zig
@@ -122,7 +131,6 @@ return require'packer'.startup(function(use)
     use { 'williamboman/nvim-lsp-installer' }  -- Good when Pacman not an option
 
     --[[ Completion and snippet support ]]
-
     -- Completion sources
     use { 'hrsh7th/cmp-nvim-lsp' }
     use { 'hrsh7th/cmp-buffer' }
@@ -138,8 +146,8 @@ return require'packer'.startup(function(use)
     use {
         'hrsh7th/nvim-cmp',
         config = function()
-            local cmp = require'cmp'
-            local luasnip = require'luasnip'
+            local cmp = require('cmp')
+            local luasnip = require('luasnip')
 
             vim.o.completeopt = "menuone,noinsert,noselect"
             local myHasWordsBefore = function()
@@ -188,13 +196,14 @@ return require'packer'.startup(function(use)
                             end
                         end, {"i", "s"})
                 },
-                sources = {
+                sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'nvim_lua' },
-                    { name = 'luasnip'  },
+                    { name = 'luasnip'  }
+                }, {
                     { name = 'buffer'   },
                     { name = 'path'     }
-                }
+                })
             }
 
             cmp.setup.cmdline('/', {
@@ -217,11 +226,10 @@ return require'packer'.startup(function(use)
          - define keybindings
          - show keybindings in a popup
          - provide extra spell checking functionality ]]
-
     use {
         'folke/which-key.nvim',
         config = function()
-            require'which-key'.setup {
+            require('which-key').setup {
                 plugins = {
                     spelling = {
                         enabled = true,
@@ -232,4 +240,10 @@ return require'packer'.startup(function(use)
         end
     }
 
+    --[[ Automatically Sync Packer if just installed ]]
+    if packerBootstrapped then
+        -- vim.cmd[[ :PackerSync ]]
+        require('packer').sync()
+        print('Packer installed.  Exit and restart Neovim...')
+    end
 end )
