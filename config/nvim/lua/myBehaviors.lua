@@ -38,11 +38,12 @@ local options = {
     nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
 
     --[[ Settings for LSP client & some plugins ]]
-    timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
-    updatetime = 300,    -- Set update time for CursorHold event
-    signcolumn = "yes",  -- Fixes first column, reduces jitter
-    showmode = false,    -- Redundant with Lualine
-    showcmd = false      -- Redundant with WhichKey
+    timeoutlen = 1000,    -- Milliseconds to wait for key mapped sequence to complete
+    updatetime = 300,     -- Set update time for CursorHold event
+    signcolumn = "yes",   -- Fixes first column, reduces jitter
+    showmode = false,     -- Redundant with Lualine
+    showcmd = false,      -- Redundant with WhichKey
+    termguicolors = true  -- If I am on a VT102 or VT220, I'll use vi
 
 }
 

@@ -16,7 +16,6 @@ return require'packer'.startup(function(use)
     use {
         'norcalli/nvim-colorizer.lua',
         config = function()
-            vim.o.termguicolors = true
             require'colorizer'.setup()
         end
     }
@@ -53,7 +52,7 @@ return require'packer'.startup(function(use)
             require'lualine'.setup {
                 options = {
                     icons_enabled = true,
-                    theme = 'moonfly',
+                    theme = 'tokyonight',
                     component_separators = {left = ' ', right = ' '},
                     section_separators = {left = ' ', right = ' '},
                     disabled_filetypes = {},
@@ -113,7 +112,7 @@ return require'packer'.startup(function(use)
 
     --[[ LSP configuration ]]
 
-    -- Configs for Neovim's built-in LSP client
+    -- Plugins for Neovim's built-in LSP client
     use { 'neovim/nvim-lspconfig' }  -- Provided by core neovim team
     use { 'ziglang/zig.vim' }  -- File detection and syntax highlighting for Zig
     use { 'simrat39/rust-tools.nvim' }  -- Extra functionality over rust analyzer
@@ -190,11 +189,11 @@ return require'packer'.startup(function(use)
                         end, {"i", "s"})
                 },
                 sources = {
-                    {name = 'nvim_lsp'},
-                    {name = 'nvim_lua'},
-                    {name = 'luasnip'},
-                    {name = 'buffer'},
-                    {name = 'path'}
+                    { name = 'nvim_lsp' },
+                    { name = 'nvim_lua' },
+                    { name = 'luasnip'  },
+                    { name = 'buffer'   },
+                    { name = 'path'     }
                 }
             }
 
@@ -228,7 +227,7 @@ return require'packer'.startup(function(use)
                         enabled = true,
                         suggestions = 36
                     }
-	            }
+                }
             }
         end
     }
