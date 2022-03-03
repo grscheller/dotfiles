@@ -1,14 +1,17 @@
 --[[ LSP Configurations ]]
 
-local ok_lsp, nvim_lsp = pcall(require, 'lspconfig')
-local ok_lsp_installer, nvim_lsp_installer = pcall(require, 'nvim-lsp-installer')
-local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'nvim-lsp-installer')
-if not ok_lsp or not ok_lsp_installer or not ok_bmp_nvim_lsp then
+local ok_lsp, lsp = pcall(require, 'lspconfig')
+local ok_lspInstall, lspInstall = pcall(require, 'nvim-lsp-installer')
+local ok_cmpLsp, cmpLsp = pcall(require, 'cmp_nvim_lsp')
+if not ok_lsp or not ok_lspInstall or not ok_cmpLsp then
+    if not ok_lsp then print('Problem loading lspconfig:' .. lsp) end
+    if not ok_lspInstall then print('Problem loading nvim-lsp-installer' .. lspInstall) end
+    if not ok_cmpLsp then print('Problem loading cmp_nvim_lsp' .. cmpLsp) end
     return
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+capabilities = cmpLsp.update_capabilities(capabilities)
 
 local lsp_servers = {
     -- For list of language servers, follow first
@@ -23,13 +26,13 @@ local lsp_servers = {
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
-    nvim_lsp[lsp_server].setup {
+    lsp[lsp_server].setup {
         capabilities = capabilities
     }
 end
 
 --[[ Nvim LSP Installer ]]
-nvim_lsp_installer.on_server_ready(function(server)
+lspInstall.on_server_ready(function(server)
     local opts = {
         settings = { capabilities = capabilities }
     }
@@ -60,6 +63,8 @@ local rust_opts = {
 local ok, rust = pcall(require, 'rust-tools')
 if ok then
     rust.setup(rust_opts)
+else
+    if not ok then print('Problem loading rust_tools' .. rust) end
 end
 
 --[[ Scala Metals configuration ]]
@@ -76,6 +81,8 @@ if ok then
             au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
         augroup end
     ]]
+else
+    if not ok then print('Problem loading metals' .. metals) end
 end
 
 -- Zig Configurations
