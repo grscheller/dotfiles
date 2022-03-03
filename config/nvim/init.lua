@@ -1,6 +1,10 @@
 --[[ Neovim configuration ~/.config/nvim/init.lua ]]
 
-require('grs.myBehaviors')    -- Personnal Neovim tweaks
-require('grs.myPlugins')  -- Packer as the plugin manager
-require('grs.myLSPsettings')  -- Language Server Protocol settings
-require('grs.myKeybindings')  -- WhickKey to manage keybindings
+require('grs.myBehaviors')       -- Personnal Neovim Tweaks
+require('grs.myPlugins')         -- Using Packer
+require('grs.setupColorscheme')  -- Colorscheme & Statusline
+require('grs.setupTreesitter')   -- Install Language Modules for Treesitter 
+require('grs.setupTelescope')    -- Fuzzy Finder Over Lists
+require('grs.setupLSP')          -- Language Server Protocol Settings
+require('grs.setupCompletions')  -- Completion and Snippet Support
+require('grs.myKeybindings')     -- WhickKey to Manage Keybindings

@@ -37,12 +37,13 @@ local options = {
     shortmess = "atToOc",  -- shorten statusline & don't give ins-completion-menu messages
     nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
 
-    --[[ Settings for LSP client & some plugins ]]
-    timeoutlen = 1000,    -- Milliseconds to wait for key mapped sequence to complete
-    updatetime = 300,     -- Set update time for CursorHold event
-    signcolumn = "yes",   -- Fixes first column, reduces jitter
-    showmode = false,     -- Redundant with Lualine
-    showcmd = false,      -- Redundant with WhichKey
+    --[[ Settings for LSP client & plugins ]]
+    timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
+    updatetime = 300,    -- Set update time for CursorHold event
+    signcolumn = "yes",  -- Fixes first column, reduces jitter
+    showmode = false,    -- Redundant with Lualine
+    showcmd = false,     -- Redundant with WhichKey
+    completeopt = "menuone,noinsert,noselect",  -- For nvim-cmp
     termguicolors = true  -- If I am on a VT102 or VT220, I'll use vi
 
 }
@@ -51,7 +52,7 @@ local options = {
 options['ignorecase'] = true
 options['smartcase'] = true
 
-vim.cmd [[
+vim.cmd[[
     augroup dynamic_smartcase
         au!
         au CmdLineEnter : set nosmartcase
@@ -62,7 +63,7 @@ vim.cmd [[
 ]]
 
 --[[ Give visual feedback for yanked text ]]
-vim.cmd [[
+vim.cmd[[
     augroup highlight_yank
         au!
         au TextYankPost * silent! lua vim.highlight.on_yank{timeout=600, on_visual=false}
@@ -94,3 +95,6 @@ end
 --[[ Modified existing nvim options ]]
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
+
+--[[ Default colorscheme if Tokyo Night not available ]]
+vim.cmd[[colorscheme desert]]

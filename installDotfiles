@@ -20,6 +20,7 @@ HOME_FILES='
 '
 
 RM_FILES='
+   bin/hostnamectl
    .alias_rc
    .dashrc
    .environment_rc
@@ -28,13 +29,13 @@ RM_FILES='
    .profile
    .prompt_rc
    .shrc
-   bin/hostnamectl
    .config/nvim/lua/myOptions.lua
    .config/nvim/lua/myBehaviors.lua
    .config/nvim/lua/myKeybindings.lua
    .config/nvim/lua/myLSPsettings.lua
    .config/nvim/lua/myPlugins.lua
    .config/nvim/lua/grs/plugins/
+   .config/nvim/lua/grs/myLSPsettings.lua
 '
 
 CONFIG_FILES='
@@ -69,8 +70,12 @@ CONFIG_FILES='
    nvim/init.lua
    nvim/lua/grs/myBehaviors.lua
    nvim/lua/grs/myKeybindings.lua
-   nvim/lua/grs/myLSPsettings.lua
    nvim/lua/grs/myPlugins.lua
+   nvim/lua/grs/setupColorscheme.lua
+   nvim/lua/grs/setupCompletions.lua
+   nvim/lua/grs/setupLSP.lua
+   nvim/lua/grs/setupTelescope.lua
+   nvim/lua/grs/setupTreesitter.lua
    sway/config
    waybar/config
    waybar/style.css

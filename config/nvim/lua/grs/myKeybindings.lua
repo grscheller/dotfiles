@@ -6,7 +6,6 @@
 
 local ok, wk = pcall(require, 'which-key')
 if not ok then
-    print('Warning: whick-key not configured')
     return
 end
 

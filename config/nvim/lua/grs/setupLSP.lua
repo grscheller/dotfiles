@@ -1,12 +1,14 @@
 --[[ LSP Configurations ]]
 
-local ok, nvim_lsp = pcall(require, 'lspconfig')
-if not ok then
+local ok_lsp, nvim_lsp = pcall(require, 'lspconfig')
+local ok_lsp_installer, nvim_lsp_installer = pcall(require, 'nvim-lsp-installer')
+local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'nvim-lsp-installer')
+if not ok_lsp or not ok_lsp_installer or not ok_bmp_nvim_lsp then
     return
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local lsp_servers = {
     -- For list of language servers, follow first
@@ -27,7 +29,7 @@ for _, lsp_server in ipairs(lsp_servers) do
 end
 
 --[[ Nvim LSP Installer ]]
-require'nvim-lsp-installer'.on_server_ready(function(server)
+nvim_lsp_installer.on_server_ready(function(server)
     local opts = {
         settings = { capabilities = capabilities }
     }
@@ -55,20 +57,26 @@ local rust_opts = {
     }
 }
 
-require('rust-tools').setup(rust_opts)
+local ok, rust = pcall(require, 'rust-tools')
+if ok then
+    rust.setup(rust_opts)
+end
 
--- Scala Metals configuration
+--[[ Scala Metals configuration ]]
 vim.g.metals_server_version = '0.11.1'  -- See https://scalameta.org/metals/docs/editors/overview.html
-metals_config = require'metals'.bare_config()
 
-metals_config.settings = { showImplicitArguments = true }
-
-vim.cmd[[
-    augroup metals_lsp
-        au!
-        au FileType scala,sbt lua require('metals').initialize_or_attach(metals_config)
-    augroup end
-]]
+local ok, metals = pcall(require, 'metals')
+if ok then
+    metals_config = metals.bare_config()
+    metals_config.settings = { showImplicitArguments = true }
+    
+    vim.cmd[[
+        augroup metals_lsp
+            au!
+            au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
+        augroup end
+    ]]
+end
 
 -- Zig Configurations
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
