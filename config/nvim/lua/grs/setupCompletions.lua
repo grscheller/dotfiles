@@ -19,13 +19,14 @@ if ok_cmp and ok_luasnip then
         mapping = {
             ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
             ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
-            ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+            ['<C-B>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
             ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
             ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-            ['<C-E>'] = cmp.mapping(cmp.mapping.close(), {'i', 'c'}),
-            ['<CR>'] = cmp.mapping.confirm {
-                behavior = cmp.ConfirmBehavior.Replace,
-                select = true },
+            ['<C-E>'] = cmp.mapping {
+                i = cmp.mapping.abort(),
+                c = cmp.mapping.close()
+            },
+            ['<CR>'] = cmp.mapping.confirm { select = false },
             ['<Tab>'] = cmp.mapping(
                 function(fallback)
                     if cmp.visible() then
