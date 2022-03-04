@@ -34,7 +34,9 @@ end
 --[[ Nvim LSP Installer ]]
 lspInstall.on_server_ready(function(server)
     local opts = {
-        settings = { capabilities = capabilities }
+        settings = {
+            capabilities = capabilities
+        }
     }
     server:setup(opts)
 end)
@@ -64,7 +66,7 @@ local ok, rust = pcall(require, 'rust-tools')
 if ok then
     rust.setup(rust_opts)
 else
-    if not ok then print('Problem loading rust_tools' .. rust) end
+    print('Problem loading rust_tools' .. rust)
 end
 
 --[[ Scala Metals configuration ]]
@@ -73,7 +75,9 @@ vim.g.metals_server_version = '0.11.1'  -- See https://scalameta.org/metals/docs
 local ok, metals = pcall(require, 'metals')
 if ok then
     metals_config = metals.bare_config()
-    metals_config.settings = { showImplicitArguments = true }
+    metals_config.settings = {
+        showImplicitArguments = true
+    }
     
     vim.cmd[[
         augroup metals_lsp
@@ -82,7 +86,7 @@ if ok then
         augroup end
     ]]
 else
-    if not ok then print('Problem loading metals' .. metals) end
+    print('Problem loading metals ' .. metals)
 end
 
 -- Zig Configurations

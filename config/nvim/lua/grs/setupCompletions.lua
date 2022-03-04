@@ -1,8 +1,8 @@
 --[[ Completions - using nvim-cmp and luasnip ]]
 
 local ok_cmp, cmp = pcall(require, 'cmp')
-local ok_snip, luasnip = pcall(require, 'luasnip')
-if ok_cmp and ok_snip then
+local ok_luasnip, luasnip = pcall(require, 'luasnip')
+if ok_cmp and ok_luasnip then
     local myHasWordsBefore = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -71,4 +71,7 @@ if ok_cmp and ok_snip then
             {{ name = 'cmdline'  }},
             {{ name = 'nvim-lua' }})
     })
+else
+    if not ok_cmp then print('Problem loading nvim-cmp ' .. cmp) end
+    if not ok_snip then print('Problem loading luasnip ' .. luasnip) end
 end

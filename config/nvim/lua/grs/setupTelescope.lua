@@ -8,4 +8,6 @@ if ok then
         }
     }
     telescope.load_extension('ui-select')
+else
+    print('Problem loading telescope ' .. telescope)
 end

@@ -1,9 +1,11 @@
 --[[ Treesitter - install language modules ]]
 
-local ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
+local ok, tsConfigs = pcall(require, 'nvim-treesitter.configs')
 if ok then
-    treesitter_configs.setup {
+    tsConfigs.setup {
         ensure_installed = 'maintained',
         highlight = {enable = true}
     }
+else
+    print('Problem loading nvim-treesittr.configs ' .. tsConfigs)
 end

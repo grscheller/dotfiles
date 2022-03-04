@@ -6,6 +6,7 @@
 
 local ok, wk = pcall(require, 'which-key')
 if not ok then
+    print('Problem loading which-key ' .. wk)
     return
 end
 

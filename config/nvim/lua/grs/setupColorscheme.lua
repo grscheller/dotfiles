@@ -1,19 +1,23 @@
 --[[ Setup colorscheme & statusline ]]
 
- --[[ Colorize hexcodes & names #00dddd Blue Green ]]
+ --[[ Colorize hexcodes & names like #00dddd Blue Green ]]
 local ok, colorizer = pcall(require, 'colorizer')
 if ok then
     colorizer.setup()
+else
+    print("Problem loading colorizer " .. colorizer)
 end
 
 --[[ Provide icons and colorizes theme
      Needs a patched font like Noto Mono Nerd Font
      see https://github.com/ryanoasis/nerd-fonts  ]]
-local ok, nvim_web_devicons = pcall(require, 'nvim-web-devicons')
+local ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
-    nvim_web_devicons.setup {
+    webDevicons.setup {
         default = true
     }
+else
+    print('Problem loading nvim-web-devicons ' .. webDevicons)
 end
 
 --[[ Setup Tokyo Night colorscheme ]]
@@ -58,4 +62,6 @@ if ok then
         tabline = {},
         extensions = {}
     }
+else
+    print('Problem loading lualine ' .. lualine)
 end
