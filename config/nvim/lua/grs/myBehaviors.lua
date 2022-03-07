@@ -7,25 +7,25 @@
 
 --[[ Set options ]]
 local options = {
-    shell = "/bin/bash",  -- Some packages need a POSIX compatible shell
-    wildmenu = true,                 -- Make tab completion in
-    wildmode = "longest:full,full",  -- command mode more useful.
-    --
-    --[[ Set default fileencoding, localizations, and file formats ]]
+    -- Some plugins need a POSIX compatible shell
+    shell = "/bin/bash",
+
+    -- Set default fileencoding, localizations, and file formats
     fileencoding = "utf-8",
     spelllang = "en_us",
     fileformats = "unix,mac,dos",
 
-    --[[ Set default tabstops and replace tabs with spaces ]]
-    tabstop = 4,       -- Display hard tab as 4 spaces
+    -- Set default tabstops, replace tabs with spaces
+    tabstop = 8,       -- Display hard tab as 8 spaces
     shiftwidth = 4,    -- Number of spaces used for auto-indent
     softtabstop = 4,   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
     expandtab = true,  -- Expand tabs to spaces when inserting tabs
 
-    --[[ Save undo history in ~/.local/share/nvim/undo/ ]]
-    undofile = true,  -- nvim never deletes the undo histories stored here
+    -- Save undo history in ~/.local/share/nvim/undo/, nvim
+    -- never deletes the undo histories stored there.
+    undofile = true,
 
-    --[[ Other personnal preferences ]]
+    -- Other personnal preferences
     mouse = "a",           -- Enable mouse for all modes
     joinspaces = true,     -- Use 2 spaces when joinig sentances
     scrolloff = 2,         -- Keep cursor away from top/bottom of window
@@ -37,15 +37,15 @@ local options = {
     shortmess = "atToOc",  -- shorten statusline & don't give ins-completion-menu messages
     nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
 
-    --[[ Settings for LSP client & plugins ]]
+    -- Settings for LSP client & plugins
     timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
     updatetime = 300,    -- Set update time for CursorHold event
     signcolumn = "yes",  -- Fixes first column, reduces jitter
     showmode = false,    -- Redundant with Lualine
     showcmd = false,     -- Redundant with WhichKey
     completeopt = "menuone,noinsert,noselect",  -- For nvim-cmp
-    termguicolors = true  -- If I am on a VT102 or VT220, I'll use vi
-
+    termguicolors = true,  -- for Tokyo Night, and most other, colorschemes
+    complete = ".,w,b,u,kspell"  -- no "t,i" for ins-completion-menu - redundant with LSP
 }
 
 --[[ Case insensitive search, but not in command mode ]]
