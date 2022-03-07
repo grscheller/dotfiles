@@ -1,21 +1,13 @@
---[[ Using Packer as the plugin manager ]]
+--[[ Using Packer as the plugin manager
 
---[[ Bootstrap Packer if not already installed ]]
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local packer_src = 'https://github.com/wbthomason/packer.nvim'
-local packerBootstrapped = nil
+     To keep plugin repos up to date, periodically run
 
-if vim.fn.empty(vim.fn.glob(install_path)) == 1 then
-    packerBootstrapped = vim.fn.system {
-        'git',
-        'clone',
-        '--depth',
-        '1',
-        packer_src,
-        install_path
-    }
-    vim.cmd[[packadd packer.nvim]]
-end
+       :PackerSync
+
+     When this file gets updated, you need to run
+
+       :PackerCompile
+  ]]
 
 local ok, packer = pcall(require, 'packer')
 if not ok then
@@ -91,10 +83,4 @@ return packer.startup(function(use)
     use {
         'folke/which-key.nvim'
     }
-
-    --[[ Automatically Sync Packer if just got installed ]]
-    if packerBootstrapped then
-        packer.sync()
-        print("Plugins reinstalled: Restart nvim")
-    end
 end)
