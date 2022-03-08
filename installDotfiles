@@ -20,22 +20,14 @@ HOME_FILES='
 '
 
 RM_FILES='
-   bin/hostnamectl
-   .alias_rc
-   .dashrc
-   .environment_rc
-   .env_rc
-   .functions_rc
-   .profile
-   .prompt_rc
-   .shrc
    .config/nvim/lua/myOptions.lua
    .config/nvim/lua/myBehaviors.lua
    .config/nvim/lua/myKeybindings.lua
    .config/nvim/lua/myLSPsettings.lua
    .config/nvim/lua/myPlugins.lua
-   .config/nvim/lua/grs/plugins/
    .config/nvim/lua/grs/myLSPsettings.lua
+   .config/nvim/lua/grs/setupColorscheme.lua
+   .config/nvim/lua/grs/setupTreesitter.lua
 '
 
 CONFIG_FILES='
@@ -71,11 +63,11 @@ CONFIG_FILES='
    nvim/lua/grs/myBehaviors.lua
    nvim/lua/grs/myKeybindings.lua
    nvim/lua/grs/myPlugins.lua
-   nvim/lua/grs/setupColorscheme.lua
    nvim/lua/grs/setupCompletions.lua
    nvim/lua/grs/setupLSP.lua
    nvim/lua/grs/setupTelescope.lua
-   nvim/lua/grs/setupTreesitter.lua
+   nvim/lua/grs/plugins/setupLualine.lua
+   nvim/lua/grs/plugins/setupTokyoNight.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -101,7 +93,7 @@ BIN_SCRIPTS='
    viewJarManifest
 '
 
-## Function to back up and optionally removes files
+## Function to removes files
 remove_item () {
 
    rmItem="$1"

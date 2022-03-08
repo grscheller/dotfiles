@@ -25,29 +25,50 @@ packer.init {
     }
 }
 
-return packer.startup(function(use)
+local use = packer.use
+
+return packer.startup(function()
 
     -- Packer manages itself
-    use {
-        'wbthomason/packer.nvim'
-    }
+    use 'wbthomason/packer.nvim'
 
-    -- Utilities used by many other plugins
-    use {
-        'nvim-lua/plenary.nvim'
+    -- Utilities used by other plugins
+    use { 'nvim-lua/plenary.nvim' }
+
+    -- Colorize hexcodes & names like #05aadd Blue Purple
+    use { 'norcalli/nvim-colorizer.lua',
+          config = function()
+              require('colorizer').setup()
+          end
     }
 
     -- Setup colorscheme & statusline
-    use {
-        'norcalli/nvim-colorizer.lua',
-        'kyazdani42/nvim-web-devicons',
-        'folke/tokyonight.nvim',
-        'nvim-lualine/lualine.nvim'
+    use { { 'kyazdani42/nvim-web-devicons',
+             config = function()
+                 require('nvim-web-devicons').setup { default = true }
+             end },
+
+          { 'folke/tokyonight.nvim',
+            config = function()
+                require('grs.plugins.setupTokyoNight')
+            end },
+
+          { 'nvim-lualine/lualine.nvim',
+            config = function()
+                require('grs.plugins.setupLualine')
+            end,
+            requires = {'kyazdani42/nvim-web-devicons'} }
     }
 
     -- Install language modules for built-in treesitter 
     use {
         'nvim-treesitter/nvim-treesitter',
+        config = function()
+            require('nvim-treesitter.configs').setup {
+                ensure_installed = 'maintained',
+                highlight = {enable = true}
+            }
+        end,
         run = ':TSUpdateSync'
     }
 
