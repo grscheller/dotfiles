@@ -1,15 +1,20 @@
 #!/bin/sh
 #
-#  Bootstrap by installing packer.nvim into the right place.
+#  Bootstraps packer.nvim by installing it into the right place.
 #
-#  Then from within nvim run
+#  This script a bit heavy handed if all you did was
+#  to update ~/.config/nvim/lua/grs/myPlugins.lua.
+#  In that case all you need to do is just run
 #
 #      :PackerSync
 #
-#  This must also be done whenever changes are made
-#  to the plugin configuration in ~/.config/nvim/lua/plugins.lua
+#  and then restart Neovim.
 #
-PackerLocation="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
+
+PackerClone="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
+PackerCompiled="${XDG_CONFIG_HOME:-$HOME/.config}"/nvim/plugin/packer_compiled.lua
 PackerGIT=https://github.com/wbthomason/packer.nvim
 
-git clone --depth 1 ${PackerGIT} "${PackerLocation}"
+rm -rf "$PackerClone" "$PackerCompiled"
+git clone --depth 1 ${PackerGIT} "${PackerClone}"
+nvim -c :PackerSync

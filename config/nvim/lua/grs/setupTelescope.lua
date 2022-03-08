@@ -9,5 +9,5 @@ if ok then
     }
     telescope.load_extension('ui-select')
 else
-    print('Problem loading telescope ' .. telescope)
+    print('Problem loading telescope.')
 end
