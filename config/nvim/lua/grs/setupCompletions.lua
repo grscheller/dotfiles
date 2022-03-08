@@ -73,6 +73,6 @@ if ok_cmp and ok_luasnip then
             {{ name = 'nvim-lua' }})
     })
 else
-    if not ok_cmp then print('Problem loading nvim-cmp ' .. cmp) end
-    if not ok_snip then print('Problem loading luasnip ' .. luasnip) end
+    if not ok_cmp then print('Problem loading nvim-cmp.') end
+    if not ok_snip then print('Problem loading luasnip.') end
 end

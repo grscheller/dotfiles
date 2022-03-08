@@ -97,4 +97,4 @@ vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pa
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
 --[[ Default colorscheme if Tokyo Night not available ]]
-vim.cmd[[colorscheme desert]]
+vim.cmd[[colorscheme darkblue]]

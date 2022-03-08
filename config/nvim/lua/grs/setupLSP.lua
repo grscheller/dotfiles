@@ -4,9 +4,9 @@ local ok_lsp, lsp = pcall(require, 'lspconfig')
 local ok_lspInstall, lspInstall = pcall(require, 'nvim-lsp-installer')
 local ok_cmpLsp, cmpLsp = pcall(require, 'cmp_nvim_lsp')
 if not ok_lsp or not ok_lspInstall or not ok_cmpLsp then
-    if not ok_lsp then print('Problem loading lspconfig:' .. lsp) end
-    if not ok_lspInstall then print('Problem loading nvim-lsp-installer' .. lspInstall) end
-    if not ok_cmpLsp then print('Problem loading cmp_nvim_lsp' .. cmpLsp) end
+    if not ok_lsp then print('Problem loading lspconfig.') end
+    if not ok_lspInstall then print('Problem loading nvim-lsp-installer.') end
+    if not ok_cmpLsp then print('Problem loading cmp_nvim_lsp.') end
     return
 end
 
@@ -66,7 +66,7 @@ local ok, rust = pcall(require, 'rust-tools')
 if ok then
     rust.setup(rust_opts)
 else
-    print('Problem loading rust_tools' .. rust)
+    print('Problem loading rust_tools.')
 end
 
 --[[ Scala Metals configuration ]]
@@ -86,7 +86,7 @@ if ok then
         augroup end
     ]]
 else
-    print('Problem loading metals ' .. metals)
+    print('Problem loading metals.')
 end
 
 -- Zig Configurations

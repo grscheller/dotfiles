@@ -7,5 +7,5 @@ if ok then
         highlight = {enable = true}
     }
 else
-    print('Problem loading nvim-treesittr.configs ' .. tsConfigs)
+    print('Problem loading nvim-treesittr.configs.')
 end

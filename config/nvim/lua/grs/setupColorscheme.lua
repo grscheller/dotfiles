@@ -5,7 +5,7 @@ local ok, colorizer = pcall(require, 'colorizer')
 if ok then
     colorizer.setup()
 else
-    print("Problem loading colorizer " .. colorizer)
+    print("Problem loading colorizer.")
 end
 
 --[[ Provide icons and colorizes theme
@@ -17,7 +17,7 @@ if ok then
         default = true
     }
 else
-    print('Problem loading nvim-web-devicons ' .. webDevicons)
+    print('Problem loading nvim-web-devicons.')
 end
 
 --[[ Setup Tokyo Night colorscheme ]]
@@ -28,7 +28,7 @@ if pcall(require, 'tokyonight') then
     vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
     vim.cmd[[colorscheme tokyonight]]
 else
-    vim.cmd[[colorscheme desert]]
+    vim.cmd[[colorscheme darkblue]]
 end
 
 --[[ Setup Lualine with Tokyo Night theme ]]
@@ -63,5 +63,5 @@ if ok then
         extensions = {}
     }
 else
-    print('Problem loading lualine ' .. lualine)
+    print('Problem loading lualine.')
 end
