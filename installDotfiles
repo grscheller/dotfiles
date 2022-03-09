@@ -28,6 +28,7 @@ RM_FILES='
    .config/nvim/lua/grs/myLSPsettings.lua
    .config/nvim/lua/grs/setupColorscheme.lua
    .config/nvim/lua/grs/setupTreesitter.lua
+   .config/nvim/lua/grs/setupTelescope.lua
 '
 
 CONFIG_FILES='
@@ -65,7 +66,6 @@ CONFIG_FILES='
    nvim/lua/grs/myPlugins.lua
    nvim/lua/grs/setupCompletions.lua
    nvim/lua/grs/setupLSP.lua
-   nvim/lua/grs/setupTelescope.lua
    nvim/lua/grs/plugins/setupLualine.lua
    nvim/lua/grs/plugins/setupTokyoNight.lua
    sway/config

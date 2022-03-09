@@ -30,7 +30,7 @@ local use = packer.use
 return packer.startup(function()
 
     -- Packer manages itself
-    use 'wbthomason/packer.nvim'
+    use { 'wbthomason/packer.nvim' }
 
     -- Utilities used by other plugins
     use { 'nvim-lua/plenary.nvim' }
@@ -72,10 +72,17 @@ return packer.startup(function()
         run = ':TSUpdateSync'
     }
 
-    --[[ Telescope - highly extendable fuzzy finder over lists ]]
-    use {
-        'nvim-telescope/telescope-ui-select.nvim',
-        'nvim-telescope/telescope.nvim'
+    -- Telescope - highly extendable fuzzy finder over lists
+    use { 'nvim-telescope/telescope.nvim',
+          config = function()
+              require('telescope').setup {
+                  ['ui-select'] = {
+                      require('telescope.themes').get_dropdown { }
+                  }
+              }
+              telescope.load_extension('ui-select')
+          end,
+          requires = {'nvim-telescope/telescope-ui-select.nvim'}
     }
 
     -- LSP configuration
