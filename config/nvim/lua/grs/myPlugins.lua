@@ -75,7 +75,8 @@ return packer.startup(function()
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
           config = function()
-              require('telescope').setup {
+              telescope = require('telescope')
+              telescope.setup {
                   ['ui-select'] = {
                       require('telescope.themes').get_dropdown { }
                   }
