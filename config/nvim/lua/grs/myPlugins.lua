@@ -110,6 +110,16 @@ return packer.startup(function()
 
     -- Manage keybindings
     use {
-        'folke/which-key.nvim'
+        'folke/which-key.nvim',
+        config = function()
+            require('which-key').setup {
+                plugins = {
+                    spelling = {
+                        enabled = true,
+                        suggestions = 36
+                    }
+                }
+            }
+        end
     }
 end)
