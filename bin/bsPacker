@@ -11,10 +11,23 @@
 #  and then restart Neovim.
 #
 
-PackerClone="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
+PackerCloneDir="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
 PackerCompiled="${XDG_CONFIG_HOME:-$HOME/.config}"/nvim/plugin/packer_compiled.lua
 PackerGIT=https://github.com/wbthomason/packer.nvim
 
-rm -rf "$PackerClone" "$PackerCompiled"
-git clone --depth 1 ${PackerGIT} "${PackerClone}"
-nvim -c :PackerSync
+test -e "$PackerCloneDir" && {
+    rm -rf "$PackerCloneDir"
+    printf 'Removed existing "%s" directory.\n' "$PackerCloneDir"
+}
+
+test -e "$PackerCompiled" && {
+    rm -rf "$PackerCompiled"
+    printf 'Removed existing "%s" file.\n' "$PackerCompiled"
+}
+
+if git clone --depth 1 $PackerGIT "$PackerCloneDir"
+then
+    nvim -c 'PackerSync'
+else
+    printf 'Error: "git clone" failed for "%s"\n' $PackerGIT
+fi

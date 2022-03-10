@@ -1,17 +1,17 @@
 --[[ LSP Configurations ]]
 
-local ok_lsp, lsp = pcall(require, 'lspconfig')
-local ok_lspInstall, lspInstall = pcall(require, 'nvim-lsp-installer')
-local ok_cmpLsp, cmpLsp = pcall(require, 'cmp_nvim_lsp')
-if not ok_lsp or not ok_lspInstall or not ok_cmpLsp then
-    if not ok_lsp then print('Problem loading lspconfig.') end
-    if not ok_lspInstall then print('Problem loading nvim-lsp-installer.') end
-    if not ok_cmpLsp then print('Problem loading cmp_nvim_lsp.') end
+local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
+local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
+local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
+    if not ok_lspconfig then print('Problem loading nvim-lspconfig.') end
+    if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer.') end
+    if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp.') end
     return
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmpLsp.update_capabilities(capabilities)
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local lsp_servers = {
     -- For list of language servers, follow first
@@ -26,13 +26,13 @@ local lsp_servers = {
 }
 
 for _, lsp_server in ipairs(lsp_servers) do
-    lsp[lsp_server].setup {
+    lspconfig[lsp_server].setup {
         capabilities = capabilities
     }
 end
 
 --[[ Nvim LSP Installer ]]
-lspInstall.on_server_ready(function(server)
+nvimLspInstaller.on_server_ready(function(server)
     local opts = {
         settings = {
             capabilities = capabilities

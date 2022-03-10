@@ -12,6 +12,7 @@
 local ok, packer = pcall(require, 'packer')
 if not ok then
     print('Warning: Packer not installed/configured - no plugins')
+    print('    To bootstrap, exit Neovim and run: ~/bin/bsPacker')
     return
 end
 
@@ -34,6 +35,21 @@ return packer.startup(function()
 
     -- Utilities used by other plugins
     use { 'nvim-lua/plenary.nvim' }
+
+    -- Manage keybindings with Whick Key
+    use {
+        'folke/which-key.nvim',
+        config = function()
+            require('which-key').setup {
+                plugins = {
+                    spelling = {
+                        enabled = true,
+                        suggestions = 36
+                    }
+                }
+            }
+        end
+    }
 
     -- Colorize hexcodes & names like #05aadd Blue Purple
     use { 'norcalli/nvim-colorizer.lua',
@@ -86,15 +102,6 @@ return packer.startup(function()
           requires = {'nvim-telescope/telescope-ui-select.nvim'}
     }
 
-    -- LSP configuration
-    use {
-        'neovim/nvim-lspconfig',
-        'williamboman/nvim-lsp-installer',
-        'ziglang/zig.vim',
-        'simrat39/rust-tools.nvim',
-        'scalameta/nvim-metals'
-    }
-
     -- Completion & snippet support
     use {
         'L3MON4D3/LuaSnip',
@@ -108,18 +115,12 @@ return packer.startup(function()
         'hrsh7th/nvim-cmp'
     }
 
-    -- Manage keybindings
+    -- LSP configuration
     use {
-        'folke/which-key.nvim',
-        config = function()
-            require('which-key').setup {
-                plugins = {
-                    spelling = {
-                        enabled = true,
-                        suggestions = 36
-                    }
-                }
-            }
-        end
+        'neovim/nvim-lspconfig',
+        'williamboman/nvim-lsp-installer',
+        'ziglang/zig.vim',
+        'simrat39/rust-tools.nvim',
+        'scalameta/nvim-metals'
     }
 end)
