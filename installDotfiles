@@ -1,15 +1,20 @@
 #!/bin/sh
 #
-#  Installs my Fish & Sway environment into
-#  the $HOME directory of my Wayland/Systemd
-#  based Linux systems.
+#  Installs my Fish/Bash, Sway. Neovim environments into the
+#  $HOME directory of my Wayland/Systemd based Linux systems.
 #
 #  Usage: ./installDotfiles
 #
 #         run from the cloned dotfiles directory
 #
+#  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
+#        contain whitespace.  Due to $RM_FILES.
+#
 
 ### Setup
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+umask 0022
 
 HOME_FILES='
    .bash_profile
@@ -19,17 +24,18 @@ HOME_FILES='
    .inputrc
 '
 
-RM_FILES='
-   .config/nvim/lua/myOptions.lua
-   .config/nvim/lua/myBehaviors.lua
-   .config/nvim/lua/myKeybindings.lua
-   .config/nvim/lua/myLSPsettings.lua
-   .config/nvim/lua/myPlugins.lua
-   .config/nvim/lua/grs/myLSPsettings.lua
-   .config/nvim/lua/grs/setupColorscheme.lua
-   .config/nvim/lua/grs/setupTreesitter.lua
-   .config/nvim/lua/grs/setupTelescope.lua
-'
+RM_FILES="
+   ${XDG_CONFIG_HOME}/nvim/lua/myOptions.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/myBehaviors.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/myKeybindings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/myLSPsettings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/myPlugins.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myLSPsettings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupColorscheme.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupTreesitter.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupTelescope.lua
+   ${HOME}/bin/bsPaq
+"
 
 CONFIG_FILES='
    alacritty/alacritty_default.yml
@@ -85,7 +91,6 @@ LOCAL_BIN_SCRIPTS='
 
 BIN_SCRIPTS='
    bsPacker
-   bsPaq
    buArch
    monitor
    rt
@@ -108,14 +113,15 @@ remove_item () {
    return 0
 }
 
-## Function to installs config files
-install_config_file () {
+## Function to install files
+install_file () {
 
-   conf_dir="$1"
+   install_dir="$1"
    file_path="$2"
    src_dir="$3"
+   perm="$4"
    src="$src_dir/$file_path"
-   trgt="$conf_dir/$file_path"
+   trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
    test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
@@ -128,10 +134,10 @@ install_config_file () {
    # Install file
    if cp "$src" "$trgt"
    then
-      chmod u=rw,g=,o= "$trgt" || {
-          printf '\n'
-          printf "Error: Failed to set permissions on '%s' to 600\\n" "$trgt" >&2
-          return 1
+      chmod "$perm" "$trgt" || {
+         printf '\n'
+         printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$perm" >&2
+         return 1
       }
    else
       printf "Error: Failed to install '%s'\\n" "$trgt" >&2
@@ -143,103 +149,61 @@ install_config_file () {
 
 ### Install files
 
-## Install home directory dot-files - backup existing files
-for File in $HOME_FILES
+## Install home directory dot-files
+for Home_File in $HOME_FILES
 do
-    # Install into $HOME
-    cp "${File}" ~ || {
-       printf "Error: Failed while installing '~/%s'\\n" "${File}" >&2
-       exit 1
-    }
-    # Set permissions
-    chmod u=rw,g=r,o= ~/"${File}" || {
-       printf 'Warning: Failed to set permissions' >&2
-       printf ' on ~/%s to 640\n' ".${File%.*}"  >&2
-    }
+   install_file "$HOME" "$Home_File" . 0644
 done
 
 ## Install local scripts
 
-# Create ~/.local/bin directory if necessary
-test -d ~/.local/bin || mkdir -p ~/.local/bin || {
-   printf '\n'
-   printf 'Error: Failed to create ~/.local/bin\n' >&2
-   exit 1
-}
-chmod u=rwx,g=rx,o= ~/.local/bin || {
-   printf '\n'
-   printf "Warning: Failed to set permissions on '~/.local/bin' to 750\\n" >&2
-}
-
-# Create ~/bin directory if necessary
-test -d ~/bin || mkdir ~/bin || {
-   printf '\n'
-   printf 'Error: Failed to create ~/bin\n' >&2
-   exit 1
-}
-chmod u=rwx,g=rx,o= ~/bin || {
-   printf '\n'
-   printf "Warning: Failed to set permissions on '~/bin' to 750\\n" >&2
-}
+# Install  ~/bin  scripts
+for File in $BIN_SCRIPTS
+do
+   install_file "$HOME/bin" "$File" ./bin 0755
+done
 
 # Install .local/bin scripts
 for File in $LOCAL_BIN_SCRIPTS
 do
-    cp bin/"$File" ~/.local/bin/ ||
-       printf 'Warning: Failed to install ~/.local/bin/%s\n' "$File" >&2
-    chmod u=rwx,g=rx,o= ~/.local/bin/"${File}" || {
-       printf 'Warning: Failed to set permissions' >&2
-       printf ' on ~/.local/bin/%s to 750\n' "${File}" >&2
-    }
-done
-
-# Install  ~/bin  scripts
-for File in $BIN_SCRIPTS
-do
-    cp bin/"$File" ~/bin/ ||
-       printf 'Warning: Failed to install ~/bin/%s\n' "$File" >&2
-    chmod u=rwx,g=rx,o= ~/bin/"${File}" || {
-       printf 'Warning: Failed to set permissions' >&2
-       printf ' on ~/bin/%s to 750\n' "${File}" >&2
-    }
+   install_file "$HOME/.local/bin" "$File" ./bin 0755
 done
 
 ## Install configuration files
 
-# Install ~/.config files
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+# Install SSH Configs
+for conf_file in $SSH_CONFIGS
+do
+   install_file ~/.ssh "$conf_file" ./ssh 0600 || exit 1
+   chmod 0700 ~/.ssh
+done
 
+# Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
 do
-    install_config_file "$XDG_CONFIG_HOME" "$conf_file" ./config
+   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
 
 # Choose alternate config files to use based on OS
 if [[ $(uname) == Darwin ]]
 then
-    mv $XDG_CONFIG_HOME/alacritty/alacritty{_darwin,}.yml
-    rm -f $XDG_CONFIG_HOME/alacritty/alacritty_default.yml
+   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_darwin,}.yml
+   rm -f "${XDG_CONFIG_HOME}"/alacritty/alacritty_default.yml
 else
-    mv $XDG_CONFIG_HOME/alacritty/alacritty{_default,}.yml
-    rm -f $XDG_CONFIG_HOME/alacritty/alacritty_darwin.yml
+   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_default,}.yml
+   rm -f "{$XDG_CONFIG_HOME}"/alacritty/alacritty_darwin.yml
 fi
-
-# Install SSH Configs
-for conf_file in $SSH_CONFIGS
-do
-    install_config_file ~/.ssh "$conf_file" ./ssh
-done
 
 ### Some final clean up
 
 ## Create ~/catch for the toSystem () family of shell functions
 test -d ~/catch || mkdir ~/catch || {
    printf '\n'
-   printf "Warning: Failed to create '~/catch', do so manually\\n" >&2
+   printf "Warning: Failed to create '~/catch'.\\n" >&2
 }
 
 ## Remove certain files
 for File in $RM_FILES
 do
-    remove_item ~/"$File" || exit 1
+   remove_item "$File" || exit 1
 done
