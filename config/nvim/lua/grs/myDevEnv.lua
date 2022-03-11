@@ -41,9 +41,6 @@ nvimLspInstaller.on_server_ready(function(server)
     server:setup(opts)
 end)
 
--- Python configuration
-vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
-
 --[[ Rust configuration, rust-tools.nvim will call lspconfig itself ]]
 local rust_opts = {
     tools = {
@@ -89,5 +86,8 @@ else
     print('Problem loading metals.')
 end
 
--- Zig Configurations
+--[[ Python configuration ]]
+vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
+
+--[[ Zig Configuration ]]
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save

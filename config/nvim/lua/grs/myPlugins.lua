@@ -33,6 +33,11 @@ return packer.startup(
     -- Packer manages itself
     use { 'wbthomason/packer.nvim' }
 
+    -- Replaces slow filetype.vim that comes with Neovim
+    --   bug: does not recognize 'git diff'
+    --        as producing a 'diff' file
+    use { 'nathom/filetype.nvim' }
+
     -- Lua libs
     use { 'nvim-lua/popup.nvim',
           'nvim-lua/plenary.nvim' }
