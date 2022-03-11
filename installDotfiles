@@ -35,6 +35,8 @@ RM_FILES="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/setupTreesitter.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/setupTelescope.lua
    ${HOME}/bin/bsPaq
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupCompletions.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupLSP.lua
 "
 
 CONFIG_FILES='
@@ -70,8 +72,8 @@ CONFIG_FILES='
    nvim/lua/grs/myBehaviors.lua
    nvim/lua/grs/myKeybindings.lua
    nvim/lua/grs/myPlugins.lua
-   nvim/lua/grs/setupCompletions.lua
-   nvim/lua/grs/setupLSP.lua
+   nvim/lua/grs/myDevEnv.lua
+   nvim/lua/grs/plugins/setupCmp.lua
    nvim/lua/grs/plugins/setupLualine.lua
    nvim/lua/grs/plugins/setupTokyoNight.lua
    sway/config

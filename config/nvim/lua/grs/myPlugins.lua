@@ -28,18 +28,18 @@ packer.init {
 
 local use = packer.use
 
-return packer.startup(function()
-
+return packer.startup(
+  function()
     -- Packer manages itself
     use { 'wbthomason/packer.nvim' }
 
-    -- Utilities used by other plugins
-    use { 'nvim-lua/plenary.nvim' }
+    -- Lua libs
+    use { 'nvim-lua/popup.nvim',
+          'nvim-lua/plenary.nvim' }
 
     -- Manage keybindings with Whick Key
-    use {
-        'folke/which-key.nvim',
-        config = function()
+    use { 'folke/which-key.nvim',
+          config = function()
             require('which-key').setup {
                 plugins = {
                     spelling = {
@@ -48,79 +48,83 @@ return packer.startup(function()
                     }
                 }
             }
-        end
-    }
+          end }
 
     -- Colorize hexcodes & names like #05aadd Blue Purple
     use { 'norcalli/nvim-colorizer.lua',
           config = function()
-              require('colorizer').setup()
-          end
-    }
+            require('colorizer').setup()
+          end }
 
     -- Setup colorscheme & statusline
     use { { 'kyazdani42/nvim-web-devicons',
              config = function()
-                 require('nvim-web-devicons').setup { default = true }
+               require('nvim-web-devicons').setup { default = true }
              end },
 
           { 'folke/tokyonight.nvim',
             config = function()
-                require('grs.plugins.setupTokyoNight')
+              require('grs.plugins.setupTokyoNight')
             end },
 
           { 'nvim-lualine/lualine.nvim',
             config = function()
-                require('grs.plugins.setupLualine')
+              require('grs.plugins.setupLualine')
             end,
-            requires = {'kyazdani42/nvim-web-devicons'} }
-    }
+            requires = {'kyazdani42/nvim-web-devicons'} } }
 
     -- Install language modules for built-in treesitter 
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        config = function()
+    use { 'nvim-treesitter/nvim-treesitter',
+          config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = 'maintained',
                 highlight = {enable = true}
             }
-        end,
-        run = ':TSUpdateSync'
-    }
+          end,
+          run = ':TSUpdateSync' }
 
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
           config = function()
-              telescope = require('telescope')
-              telescope.setup {
-                  ['ui-select'] = {
-                      require('telescope.themes').get_dropdown { }
-                  }
-              }
-              telescope.load_extension('ui-select')
+            telescope = require('telescope')
+            telescope.setup {
+                ['ui-select'] = {
+                    require('telescope.themes').get_dropdown { }
+                }
+            }
+            telescope.load_extension('ui-select')
           end,
-          requires = {'nvim-telescope/telescope-ui-select.nvim'}
-    }
+          requires = {
+              'nvim-lua/plenary.nvim',
+              'nvim-lua/popup.nvim',
+              'nvim-telescope/telescope-ui-select.nvim' } }
 
-    -- Completion & snippet support
-    use {
-        'L3MON4D3/LuaSnip',
-        'saadparwaiz1/cmp_luasnip',
-        'rafamadriz/friendly-snippets',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lua',
-        'hrsh7th/nvim-cmp'
-    }
+    -- Snippet support
+    use { 'L3MON4D3/LuaSnip',
+          requires = {'rafamadriz/friendly-snippets'} }
+
+    -- Completion
+    use { 'hrsh7th/nvim-cmp',
+          config = function()
+            require('grs.plugins.setupCmp')
+          end,
+          requires = {
+              'hrsh7th/cmp-buffer',
+              'hrsh7th/cmp-cmdline',
+              'hrsh7th/cmp-nvim-lsp',
+              'hrsh7th/cmp-nvim-lua',
+              'hrsh7th/cmp-path',
+              'lukas-reineke/cmp-rg',
+              'saadparwaiz1/cmp_luasnip' } }
 
     -- LSP configuration
-    use {
-        'neovim/nvim-lspconfig',
-        'williamboman/nvim-lsp-installer',
-        'ziglang/zig.vim',
-        'simrat39/rust-tools.nvim',
-        'scalameta/nvim-metals'
-    }
-end)
+    use { 'neovim/nvim-lspconfig',
+          'simrat39/rust-tools.nvim',
+          'scalameta/nvim-metals',
+          'williamboman/nvim-lsp-installer' }
+
+    -- File detection & syntax highlighting
+    use { 'ziglang/zig.vim' }
+
+  end
+)
