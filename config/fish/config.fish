@@ -116,13 +116,30 @@ set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore blink
 
 ## Set up abriviations
-abbr -a -g nv nvim
-abbr -a -g dp digpath
+
+# Gui programs
 abbr -a -g tm fishterm
-abbr -a -g ue UPDATE_ENV=yes fish
+abbr -a -g gq 'geeqie &; disown'
+
+# Shell terminal cmds
+abbr -a -g dp digpath
+abbr -a -g nv nvim
+abbr -a -g path 'string join \n $PATH'
+
+# Git related cmds - anything more complicated, I want to think about
+abbr -a -g ga git add
+abbr -a -g gc git commit
+abbr -a -g gd git diff
+abbr -a -g gf git fetch
+abbr -a -g gl git log
+abbr -a -g gm git mv
+abbr -a -g gp git pull
+abbr -a -g g  git status  # gs taken by ghostscript
+# Shell environment cmds
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
+abbr -a -g ue UPDATE_ENV=yes fish
+
+# Shell network cmds
 abbr -a -g kn sudo systemctl restart systemd-networkd.service
 abbr -a -g kw 'iwctl device list;iwctl device list'
-abbr -a -g path 'string join \n $PATH'
-abbr -a -g gq 'geeqie &; disown'
 abbr -a -g sr swap_resolv_conf
