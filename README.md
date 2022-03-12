@@ -21,4 +21,4 @@ Geared to Systemd/Wayland Linux systems.
 * Contain Pyenv hooks to manage Python versions and environments
 * Contains examples of Fish, Bash, and POSIX shell scripting
 * Neovim configs are Lua based and use LSP heavily
-* Neovim configs are still a work in progress
+* Neovim configs are coming together, but still a work in progress

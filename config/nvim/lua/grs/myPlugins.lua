@@ -55,7 +55,7 @@ return packer.startup(
             }
           end }
 
-    -- Colorize hexcodes & names like #05aadd Blue Purple
+    -- Colorize names & hexcodes like Purple Blue #15aadd
     use { 'norcalli/nvim-colorizer.lua',
           config = function()
             require('colorizer').setup()
@@ -76,14 +76,14 @@ return packer.startup(
             config = function()
               require('grs.plugins.setupLualine')
             end,
-            requires = {'kyazdani42/nvim-web-devicons'} } }
+            requires = { 'kyazdani42/nvim-web-devicons' } } }
 
     -- Install language modules for built-in treesitter 
     use { 'nvim-treesitter/nvim-treesitter',
           config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = 'maintained',
-                highlight = {enable = true}
+                highlight = { enable = true }
             }
           end,
           run = ':TSUpdateSync' }
@@ -91,13 +91,7 @@ return packer.startup(
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
           config = function()
-            telescope = require('telescope')
-            telescope.setup {
-                ['ui-select'] = {
-                    require('telescope.themes').get_dropdown { }
-                }
-            }
-            telescope.load_extension('ui-select')
+            require('grs.plugins.setupTelescope')
           end,
           requires = {
               'nvim-lua/plenary.nvim',
@@ -106,7 +100,7 @@ return packer.startup(
 
     -- Snippet support
     use { 'L3MON4D3/LuaSnip',
-          requires = {'rafamadriz/friendly-snippets'} }
+          requires = { 'rafamadriz/friendly-snippets' } }
 
     -- Completion
     use { 'hrsh7th/nvim-cmp',
