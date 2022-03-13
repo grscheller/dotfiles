@@ -266,7 +266,7 @@ schemes:
     # Default colors
     primary:
       #background: '#1a1b26'
-      background: '#090e13'
+      background: '#0d0e13'
       foreground: '#a9b1d6'
 
     # Normal colors

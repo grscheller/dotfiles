@@ -1,4 +1,5 @@
 function fish_prompt --description 'Customize prompt'
-    set_color cyan
+    set_color brcyan
     printf '\n[%s: %s]\n$ ' (hostnamectl hostname) (string replace -r "^$HOME" '~' (pwd))
+    set_color normal
 end

@@ -127,14 +127,15 @@ abbr -a -g nv nvim
 abbr -a -g path 'string join \n $PATH'
 
 # Git related cmds - anything more complicated, I want to think about
-abbr -a -g ga git add
+abbr -a -g ga git add .
 abbr -a -g gc git commit
 abbr -a -g gd git diff
 abbr -a -g gf git fetch
 abbr -a -g gl git log
 abbr -a -g gm git mv
 abbr -a -g gp git pull
-abbr -a -g g  git status  # gs taken by ghostscript
+abbr -a -g gh git push
+abbr -a -g gs git status  # gs steps on ghostscript
 # Shell environment cmds
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g ue UPDATE_ENV=yes fish
