@@ -12,7 +12,6 @@
 #
 
 ### Setup
-
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 umask 0022
 
@@ -33,6 +32,8 @@ RM_FILES="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/setupLSP.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/setupTokyoNight.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/setupLualine.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
 "
 
 CONFIG_FILES='
@@ -67,11 +68,11 @@ CONFIG_FILES='
    nvim/init.lua
    nvim/lua/grs/myBehaviors.lua
    nvim/lua/grs/myKeybindings.lua
-   nvim/lua/grs/myPlugins.lua
-   nvim/lua/grs/myDevEnv.lua
    nvim/lua/grs/plugins/init.lua
    nvim/lua/grs/plugins/setupCmp.lua
    nvim/lua/grs/plugins/setupColorscheme.lua
+   nvim/lua/grs/plugins/setupDevEnv.lua
+   nvim/lua/grs/plugins/setupPacker.lua
    nvim/lua/grs/plugins/setupTelescope.lua
    sway/config
    waybar/config
@@ -201,7 +202,7 @@ test -d ~/catch || mkdir ~/catch || {
    printf "Warning: Failed to create '~/catch'.\\n" >&2
 }
 
-## Remove certain files
+## Remove no longer needed files
 for File in $RM_FILES
 do
    remove_item "$File" || exit 1

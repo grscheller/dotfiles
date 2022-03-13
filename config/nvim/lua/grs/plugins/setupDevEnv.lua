@@ -1,4 +1,4 @@
---[[ LSP Configurations ]]
+--[[ Setup Develoment Environment - LSP Configurations ]]
 
 local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
@@ -77,10 +77,10 @@ if ok then
     }
     
     vim.cmd[[
-        augroup metals_lsp
-            au!
-            au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
-        augroup end
+      augroup metals_lsp
+          au!
+          au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
+      augroup end
     ]]
 else
     print('Problem loading metals.')
