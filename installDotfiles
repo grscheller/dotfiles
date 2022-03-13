@@ -34,6 +34,8 @@ RM_FILES="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/setupLualine.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myBehaviors.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myKeybindings.lua
 "
 
 CONFIG_FILES='
@@ -66,8 +68,7 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/grs/myBehaviors.lua
-   nvim/lua/grs/myKeybindings.lua
+   nvim/lua/grs/keybindings/myKeybindings.lua
    nvim/lua/grs/plugins/init.lua
    nvim/lua/grs/plugins/setupCmp.lua
    nvim/lua/grs/plugins/setupColorscheme.lua

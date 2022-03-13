@@ -2,7 +2,9 @@
 
      Using WhickKey (folke/which-key.nvim) to manage
      keep track, consistency check, and provide
-     popup guidance for my keybindings.               ]]
+     popup guidance for my keybindings.
+
+     My intension is to devide this file up. ]]
 
 local ok, wk = pcall(require, 'which-key')
 if not ok then
