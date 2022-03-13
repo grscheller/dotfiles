@@ -75,6 +75,7 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/setupDevEnv.lua
    nvim/lua/grs/plugins/setupPacker.lua
    nvim/lua/grs/plugins/setupTelescope.lua
+   nvim/lua/grs/plugins/setupWhichKey.lua
    sway/config
    waybar/config
    waybar/style.css
