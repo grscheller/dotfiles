@@ -61,14 +61,7 @@ return packer.startup(
           requires = { 'kyazdani42/nvim-web-devicons' } }
 
     -- Install language modules for built-in treesitter 
-    use { 'nvim-treesitter/nvim-treesitter',
-          config = function()
-              require('nvim-treesitter.configs').setup {
-                  ensure_installed = 'maintained',
-                  highlight = { enable = true }
-              }
-          end,
-          run = ':TSUpdateSync' }
+    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
 
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
