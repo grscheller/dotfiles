@@ -91,7 +91,7 @@ vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pa
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
 --[[ Set up plugins for an IDE like development environment ]]
-require('grs.plugins')
+require('grs')
 
 --[[ Set up general purpose keybindings ]]
 local ok, wk = pcall(require, 'which-key')

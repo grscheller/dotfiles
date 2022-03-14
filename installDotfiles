@@ -24,19 +24,13 @@ HOME_FILES='
 '
 
 RM_FILES="
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myLSPsettings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupColorscheme.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupTreesitter.lua
    ${HOME}/bin/bsPaq
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupCompletions.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/setupLSP.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/setupTokyoNight.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/setupLualine.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myBehaviors.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myKeybindings.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/keybindings/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/
 "
 
 CONFIG_FILES='
@@ -69,14 +63,14 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    nvim/init.lua
-   nvim/lua/grs/plugins/init.lua
-   nvim/lua/grs/plugins/setupCmp.lua
-   nvim/lua/grs/plugins/setupColorscheme.lua
-   nvim/lua/grs/plugins/setupDevEnv.lua
-   nvim/lua/grs/plugins/setupPacker.lua
-   nvim/lua/grs/plugins/setupTelescope.lua
-   nvim/lua/grs/plugins/setupTreesitter.lua
-   nvim/lua/grs/plugins/setupWhichKey.lua
+   nvim/lua/grs/init.lua
+   nvim/lua/grs/Cmp.lua
+   nvim/lua/grs/Colorscheme.lua
+   nvim/lua/grs/DevEnv.lua
+   nvim/lua/grs/Packer.lua
+   nvim/lua/grs/Telescope.lua
+   nvim/lua/grs/Treesitter.lua
+   nvim/lua/grs/WhichKey.lua
    sway/config
    waybar/config
    waybar/style.css
