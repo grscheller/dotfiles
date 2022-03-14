@@ -67,7 +67,6 @@ return packer.startup(
 
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
-          after = 'folke/which-key.nvim',
           requires = { 'nvim-lua/plenary.nvim',
                        'nvim-lua/popup.nvim',
                        'nvim-telescope/telescope-ui-select.nvim' } }
@@ -87,7 +86,7 @@ return packer.startup(
                        'saadparwaiz1/cmp_luasnip' } }
 
     -- LSP configuration
-    use { { 'neovim/nvim-lspconfig', after = 'folke/which-key.nvim' },
+    use { 'neovim/nvim-lspconfig',
           'simrat39/rust-tools.nvim',
           'scalameta/nvim-metals',
           'williamboman/nvim-lsp-installer' }

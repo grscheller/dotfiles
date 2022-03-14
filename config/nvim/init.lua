@@ -96,6 +96,7 @@ require('grs.plugins')
 --[[ Set up general purpose keybindings ]]
 local ok, wk = pcall(require, 'which-key')
 if not ok then
+    print('Problem loading which-key.nvim.')
     return
 end
 
