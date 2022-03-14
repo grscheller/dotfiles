@@ -55,7 +55,7 @@ local rust_opts = {
     -- Options to be sent to nvim-lspconfig
     -- overriding defaults set by rust-tools.nvim
     server = {
-        settings = {capabilities = capabilities}
+        settings = { capabilities = capabilities }
     }
 }
 
@@ -91,3 +91,39 @@ vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
 
 --[[ Zig Configuration ]]
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
+
+-- Eetup keybindings - using '\' until I choose better names
+ok, wk = pcall(require, 'which-key')
+if not ok then return end
+
+wk.register {
+    ['\\'] = {
+        name = '+lsp',
+        F = {':lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
+        g = {
+            name = '+goto',
+            d = {':lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
+            D = {':lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
+            i = {':lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
+            r = {':lua vim.lsp.buf.references()<CR>', 'Goto References'}
+        },
+        h = {':lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
+        H = {':lua vim.lsp.buf.hover()<CR>', 'Hover'},
+        K = {':lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
+        l = {':lua vim.lsp.diagnostic.set_loclist()<CR>', 'Diagnostic Set Loclist'},
+        m = {":lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
+        r = {':lua vim.lsp.buf.rename()<CR>', 'Rename'},
+        s = {
+            name = '+symbol',
+            d = {':lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+            w = {':lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'}
+        },
+        w = {
+            name = '+workspace folder',
+            a = {':lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+            r = {':lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'}
+        },
+        ['['] = {':lua vim.lsp.diagnostic.goto_prev({wrap = false})<CR>', 'Diagnostic Goto Prev'},
+        [']'] = {':lua vim.lsp.diagnostic.goto_next({wrap = false})<CR>', 'Diagnostic Goto Next'}
+    }
+}

@@ -31,7 +31,7 @@ local options = {
    shortmess = "atToOc",  -- shorten statusline & don't give ins-completion-menu messages
    nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
 
-   -- Settings for LSP client & plugins
+   -- Settings affected due to LSP client & plugins
    timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
    updatetime = 300,    -- Set update time for CursorHold event
    signcolumn = "yes",  -- Fixes first column, reduces jitter
@@ -81,7 +81,7 @@ myLineNumberToggle = function()
    end
 end
 
---[[ Set options in nvim ]]
+--[[ Let nvim know which options to set ]]
 for k, v in pairs(options) do
    vim.opt[k] = v
 end
@@ -90,8 +90,61 @@ end
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
---[[ Set up plugins ]]
+--[[ Set up plugins for an IDE like development environment ]]
 require('grs.plugins')
 
---[[ Set up Key Bindings ]]
-require('grs.keybindings.myKeybindings')
+--[[ Set up general purpose keybindings ]]
+local ok, wk = pcall(require, 'which-key')
+if not ok then
+    return
+end
+
+-- Reselect visual region upon indention of text in visual mode
+wk.register({
+    ['<'] = {'<gv', 'Shift Left & Reselect'},
+    ['>'] = {'>gv', 'Shift Right & Reselect'}
+}, {mode = 'v'})
+
+-- Window navigation/position/size related keybindings
+wk.register {
+    -- Navigate between windows using CTRL+arrow-keys
+    ['<C-h>'] = {'<C-W>h', 'Goto Window Left' },
+    ['<C-j>'] = {'<C-W>j', 'Goto Window Down' },
+    ['<C-k>'] = {'<C-W>k', 'Goto Window Up'   },
+    ['<C-l>'] = {'<C-W>l', 'Goto Window Right'},
+    -- Move windows around using CTRL-hjkl
+    ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},
+    ['<M-Down>']  = {'<C-W>J', 'Move Window BOT'},
+    ['<M-Up>']    = {'<C-W>K', 'Move Window TOP'},
+    ['<M-Right>'] = {'<C-W>L', 'Move Window RHS'},
+    -- Resize windows using ALT-hjkl for Linux
+    ['<M-h>'] = {'2<C-W><', 'Make Window Narrower'},
+    ['<M-j>'] = {'2<C-W>-', 'Make Window Shorter' },
+    ['<M-k>'] = {'2<C-W>+', 'Make Window Taller'  },
+    ['<M-l>'] = {'2<C-W>>', 'Make Window Wider'   }
+}
+
+-- Normal mode <Space> keybindings
+wk.register {
+    ['<Space>'] = {
+        ['<Space>'] = {':nohlsearch<CR>', 'Clear hlsearch'},
+        b = {':enew<CR>', 'New Unnamed Buffer'},
+        h = {':TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
+        k = {':dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
+        l = {':mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
+        n = {':lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
+        s = {
+            name = '+Spelling',
+            t = {':set invspell<CR>', 'Toggle Spelling'}
+        },
+        t = {
+            name = '+Fish Shell in Terminal',
+            s = {':split<CR>:term fish<CR>i', 'Fish Shell in split'},
+            v = {':vsplit<CR>:term fish<CR>i', 'Fish Shell in vsplit'}
+        },
+        w = {
+            name = '+Whitespace',
+            t = {':%s/\\s\\+$//<CR>', 'Trim Trailing Whitespace'}
+        }
+    }
+}

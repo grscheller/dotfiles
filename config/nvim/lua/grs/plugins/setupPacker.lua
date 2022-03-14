@@ -4,7 +4,8 @@
 
        :PackerSync
 
-     When this file gets updated, run
+     When this file gets updated, and you don't
+     want to Sync, then run
 
        :PackerCompile
   ]]
@@ -31,7 +32,7 @@ local use = packer.use
 return packer.startup(
   function()
     -- Packer manages itself
-    use {'wbthomason/packer.nvim'}
+    use { 'wbthomason/packer.nvim' }
 
     -- Replaces slow filetype.vim that comes with Neovim
     --
@@ -44,6 +45,7 @@ return packer.startup(
     --
     --         let g:do_filetype_lua = 1     -- to opt into filetype.lua
     --         let g:did_load_filetypes = 0  -- to opt out of filetype.vim
+    --         let g:did_load_filetypes = 1  -- to opt out of both
     --
     --   see: https://www.reddit.com/r/neovim/comments/rvwsl3/introducing_filetypelua_and_a_call_for_help/
     --
@@ -65,6 +67,7 @@ return packer.startup(
 
     -- Telescope - highly extendable fuzzy finder over lists
     use { 'nvim-telescope/telescope.nvim',
+          after = 'folke/which-key.nvim',
           requires = { 'nvim-lua/plenary.nvim',
                        'nvim-lua/popup.nvim',
                        'nvim-telescope/telescope-ui-select.nvim' } }
@@ -84,7 +87,7 @@ return packer.startup(
                        'saadparwaiz1/cmp_luasnip' } }
 
     -- LSP configuration
-    use { 'neovim/nvim-lspconfig',
+    use { { 'neovim/nvim-lspconfig', after = 'folke/which-key.nvim' },
           'simrat39/rust-tools.nvim',
           'scalameta/nvim-metals',
           'williamboman/nvim-lsp-installer' }
