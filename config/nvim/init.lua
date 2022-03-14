@@ -91,6 +91,7 @@ vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pa
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
 --[[ Set <leader> & <localleader> to things I will never use in a keymapping ]]
+vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
 vim.g.mapleader = '\\'      -- To help protect my keymappings from
 vim.g.maplocalleader = '-'  -- being stepped on by naughty plugins.
 
