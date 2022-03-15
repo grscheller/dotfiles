@@ -12,8 +12,8 @@
 
 local ok, packer = pcall(require, 'packer')
 if not ok then
-    print('Warning: Packer not installed/configured - no plugins')
-    print('    To bootstrap, exit Neovim and run: ~/bin/bsPacker')
+    print('Warning: Packer not installed/configured - no plugins,')
+    print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker')
     return
 end
 
@@ -33,6 +33,18 @@ return packer.startup(
   function()
     -- Packer manages itself
     use { 'wbthomason/packer.nvim' }
+
+    -- Speed up loading Lua modules and improve startup time
+    -- 
+    -- Remove loaded cache and delete cache file
+    --
+    --   :LuaCacheClear
+    --
+    -- View impatient log
+    --
+    --   :LuaCacheLog
+    --
+    use { 'lewis6991/impatient.nvim' }
 
     -- Replaces slow filetype.vim that comes with Neovim
     --
