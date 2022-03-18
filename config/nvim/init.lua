@@ -22,7 +22,6 @@ local options = {
    -- Other personnal preferences
    mouse = "a",           -- Enable mouse for all modes
    joinspaces = true,     -- Use 2 spaces when joinig sentances
-   scrolloff = 2,         -- Keep cursor away from top/bottom of window
    wrap = false,          -- Don't wrap lines
    sidescroll = 1,        -- Horizontally scroll nicely
    sidescrolloff = 5,     -- Keep cursor away from side of window
