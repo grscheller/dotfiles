@@ -12,19 +12,19 @@
 
 local ok, packer = pcall(require, 'packer')
 if not ok then
-    print('Warning: Packer not installed/configured - no plugins,')
-    print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker')
-    return
+  print('Warning: Packer not installed/configured - no plugins,')
+  print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker')
+  return
 end
 
 local packer_util = require('packer.util')
 
 packer.init {
-    display = {
-        open_fn = function ()
-            return packer_util.float { border = 'rounded' }
-        end
-    }
+  display = {
+    open_fn = function ()
+      return packer_util.float { border = 'rounded' }
+    end
+  }
 }
 
 local use = packer.use
