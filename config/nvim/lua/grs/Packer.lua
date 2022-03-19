@@ -35,14 +35,16 @@ return packer.startup(
     use { 'wbthomason/packer.nvim' }
 
     -- Speed up loading Lua modules and improve startup time
-    -- 
-    -- Remove loaded cache and delete cache file
     --
-    --   :LuaCacheClear
+    --   Remove loaded cache and delete cache file
     --
-    -- View impatient log
+    --     :LuaCacheClear
     --
-    --   :LuaCacheLog
+    --   View impatient log
+    --
+    --     :LuaCacheLog
+    --
+    -- To be merged with core, see https://github.com/neovim/neovim/pull/15436
     --
     use { 'lewis6991/impatient.nvim' }
 
@@ -74,7 +76,7 @@ return packer.startup(
     use { 'nvim-lualine/lualine.nvim',
           requires = { 'kyazdani42/nvim-web-devicons' } }
 
-    -- Install language modules for built-in treesitter 
+    -- Install language modules for built-in treesitter
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
 
     -- Telescope - highly extendable fuzzy finder over lists
