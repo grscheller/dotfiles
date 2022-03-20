@@ -22,7 +22,7 @@ local packer_util = require('packer.util')
 packer.init {
   display = {
     open_fn = function ()
-      return packer_util.float { border = 'rounded' }
+      return packer_util.float {border = 'rounded'}
     end
   }
 }
@@ -32,7 +32,7 @@ local use = packer.use
 return packer.startup(
   function()
     -- Packer manages itself
-    use { 'wbthomason/packer.nvim' }
+    use 'wbthomason/packer.nvim'
 
     -- Speed up loading Lua modules and improve startup time
     --
@@ -46,7 +46,7 @@ return packer.startup(
     --
     -- To be merged with core, see https://github.com/neovim/neovim/pull/15436
     --
-    use { 'lewis6991/impatient.nvim' }
+    use 'lewis6991/impatient.nvim'
 
     -- Replaces slow filetype.vim that comes with Neovim
     --
@@ -63,49 +63,77 @@ return packer.startup(
     --
     --   see: https://www.reddit.com/r/neovim/comments/rvwsl3/introducing_filetypelua_and_a_call_for_help/
     --
-    use { 'nathom/filetype.nvim' }
+    use 'nathom/filetype.nvim'
 
     -- Manage keybindings with Whick Key
-    use { 'folke/which-key.nvim' }
+    use 'folke/which-key.nvim'
 
     -- Colorize names & hexcodes like Purple Blue #15aadd
-    use { 'norcalli/nvim-colorizer.lua' }
+    use 'norcalli/nvim-colorizer.lua'
 
     -- Setup colorscheme & statusline
-    use { 'folke/tokyonight.nvim' }
-    use { 'nvim-lualine/lualine.nvim',
-          requires = { 'kyazdani42/nvim-web-devicons' } }
+    use 'folke/tokyonight.nvim'
+
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = {
+        'kyazdani42/nvim-web-devicons'
+      }
+    }
 
     -- Install language modules for built-in treesitter
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdateSync'
+    }
 
     -- Telescope - highly extendable fuzzy finder over lists
-    use { 'nvim-telescope/telescope.nvim',
-          requires = { 'nvim-lua/plenary.nvim',
-                       'nvim-lua/popup.nvim',
-                       'nvim-telescope/telescope-ui-select.nvim' } }
+    use {
+      'nvim-telescope/telescope.nvim',
+      requires = {
+        'nvim-lua/plenary.nvim',
+        'nvim-lua/popup.nvim',
+        'nvim-telescope/telescope-ui-select.nvim'
+      }
+    }
 
     -- Snippet support
-    use { 'L3MON4D3/LuaSnip',
-          requires = { 'rafamadriz/friendly-snippets' } }
+    use {
+      'L3MON4D3/LuaSnip',
+      requires = {
+        'rafamadriz/friendly-snippets'
+      }
+    }
 
     -- Completion
-    use { 'hrsh7th/nvim-cmp',
-          requires = { 'hrsh7th/cmp-buffer',
-                       'hrsh7th/cmp-cmdline',
-                       'hrsh7th/cmp-nvim-lsp',
-                       'hrsh7th/cmp-nvim-lua',
-                       'hrsh7th/cmp-path',
-                       'lukas-reineke/cmp-rg',
-                       'saadparwaiz1/cmp_luasnip' } }
+    use {
+      'hrsh7th/nvim-cmp',
+      requires = {
+        'hrsh7th/cmp-buffer',
+        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-nvim-lsp',
+        'hrsh7th/cmp-nvim-lua',
+        'hrsh7th/cmp-path',
+        'lukas-reineke/cmp-rg',
+        'saadparwaiz1/cmp_luasnip'
+      }
+    }
 
     -- LSP configuration
-    use { 'neovim/nvim-lspconfig',
-          'simrat39/rust-tools.nvim',
-          'scalameta/nvim-metals',
-          'williamboman/nvim-lsp-installer' }
+    use 'neovim/nvim-lspconfig'
+ 
+    use 'williamboman/nvim-lsp-installer'
+
+    use 'simrat39/rust-tools.nvim'
+
+    use {
+      'scalameta/nvim-metals',
+      requires = {
+        'nvim-lua/plenary.nvim'
+      }
+    }
 
     -- File detection & syntax highlighting
-    use { 'ziglang/zig.vim' }
+    use 'ziglang/zig.vim'
 
   end)
