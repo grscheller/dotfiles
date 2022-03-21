@@ -1,5 +1,14 @@
 -- Neovim configuration ~/.config/nvim/init.lua
 
+-- Turn off some redundant keybindings & setup leader keys
+vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })  -- will make <Leader>
+vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
+vim.api.nvim_set_keymap('n', '+', '<Nop>', { noremap = true })
+
+vim.g.mapleader = '<Space>'
+vim.g.maplocalleader = '\\'  -- set to single \
+
+-- Define some options to set
 local options = {
   shell = "/bin/bash",  -- A POSIX compatible shell is needed by some plugins
 
@@ -17,13 +26,14 @@ local options = {
                           actual <Tab> character ]]
 
   -- Other personnal preferences
-  mouse = "a",           -- Enable mouse for all modes
-  joinspaces = true,     -- Use 2 spaces when joinig sentances
-  wrap = false,          -- Don't wrap lines
-  sidescroll = 1,        -- Horizontally scroll nicely
-  sidescrolloff = 5,     -- Keep cursor away from side of window
-  splitbelow = true,     -- Horizontally split below
-  splitright = true,     -- Vertically split to right
+  mouse = "a",        -- Enable mouse for all modes
+  hidden = true,      -- by default on, my expectations are that buffers don't get abandoned
+  joinspaces = true,  -- Use 2 spaces when joinig sentances
+  wrap = false,       -- Don't wrap lines
+  sidescroll = 1,     -- Horizontally scroll nicely
+  sidescrolloff = 5,  -- Keep cursor away from side of window
+  splitbelow = true,  -- Horizontally split below
+  splitright = true,  -- Vertically split to right
   nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
   undofile = true,  --[[ Save undo history in ~/.local/share/nvim/undo/,
                          nvim never deletes thesw undo histories. ]]
@@ -41,7 +51,7 @@ local options = {
                               messages, removed F for Scala Metals ]]
 }
 
---[[ Case insensitive search, but not in command mode ]]
+-- Case insensitive search, but not in command mode
 options['ignorecase'] = true
 options['smartcase'] = true
 
@@ -55,7 +65,7 @@ vim.cmd [[
   augroup end
 ]]
 
---[[ Give visual feedback for yanked text ]]
+-- Give visual feedback for yanked text
 vim.cmd[[
   augroup highlight_yank
     au!
@@ -63,7 +73,7 @@ vim.cmd[[
   augroup end
 ]]
 
---[[ Toggle between 3 line numbering states ]]
+-- Toggle between 3 line numbering states
 options['number'] = false
 options['relativenumber'] = false
 
@@ -80,22 +90,16 @@ myLineNumberToggle = function()
   end
 end
 
---[[ Let nvim know which options to set ]]
+-- Now set up the options defined above
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
---[[ Modified existing nvim options ]]
+-- Modified existing nvim options
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
---[[ Set <leader> & <localleader> ]]
-vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
-vim.g.mapleader = '\\'      -- set to single `\`
-vim.g.maplocalleader = '-'  -- probably will never use this one
-
---[[ Set up plugins for an IDE like development environment ]]
-require('grs')
+require('grs')  -- Set up plugins for an IDE like development environment
 
 --[[ Set up general purpose keybindings ]]
 local ok, wk = pcall(require, 'which-key')
@@ -104,20 +108,19 @@ if not ok then
   return
 end
 
--- Window navigation/position/size related keybindings
+-- Window navigation/position/size keybindings
 local window_management_kb = {
-  -- Navigate between windows using CTRL+hjkl keys
-  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },
+  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },  -- Navigate between windows using CTRL+hjkl keys
   ['<C-J>'] = {'<C-W>j', 'Goto Window Down' },
   ['<C-K>'] = {'<C-W>k', 'Goto Window Up'   },
   ['<C-L>'] = {'<C-W>l', 'Goto Window Right'},
-  -- Move windows around using Alt-arrow keys
-  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},
+
+  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},  -- Move windows around using Alt-arrow keys
   ['<M-Down>']  = {'<C-W>J', 'Move Window BOT'},
   ['<M-Up>']    = {'<C-W>K', 'Move Window TOP'},
   ['<M-Right>'] = {'<C-W>L', 'Move Window RHS'},
-  -- Resize windows using ALT-hjkl for Linux
-  ['<M-h>'] = {'2<C-W><', 'Make Window Narrower'},
+
+  ['<M-h>'] = {'2<C-W><', 'Make Window Narrower'},  -- Resize windows using ALT-hjkl for Linux
   ['<M-j>'] = {'2<C-W>-', 'Make Window Shorter' },
   ['<M-k>'] = {'2<C-W>+', 'Make Window Taller'  },
   ['<M-l>'] = {'2<C-W>>', 'Make Window Wider'   }
@@ -151,14 +154,14 @@ local visual_mode_opts = {
 
 wk.register(visual_mode_kb, visual_mode_opts)
 
--- Normal mode <Space> keybindings
-local normal_mode_space_kb = {
+-- Normal mode leader keybindings
+local normal_mode_leader_kb = {
   b = {':enew<CR>', 'New Unnamed Buffer'},
   h = {':TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
   k = {':dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
   l = {':mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
   n = {':lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
-  f = {
+  f = {         
     name = '+Fish Shell in Terminal',
     s = {':split<CR>:term fish<CR>i', 'Fish Shell in split'},
     v = {':vsplit<CR>:term fish<CR>i', 'Fish Shell in vsplit'} },
@@ -167,13 +170,13 @@ local normal_mode_space_kb = {
   ['<Space>'] = {':nohlsearch<CR>', 'Clear hlsearch'}
 }
 
-local normal_mode_space_opts = {
+local normal_mode_leader_opts = {
   mode = 'n',
-  prefix = '<Space>',
+  prefix = '<Leader>',
   buffer = nil,
   silent = true,
   noremap = true,
-  nowait = true
+  nowait = false
 }
 
-wk.register(normal_mode_space_kb, normal_mode_space_opts)
+wk.register(normal_mode_leader_kb, normal_mode_leader_opts)
