@@ -8,7 +8,10 @@
 #         run from the cloned dotfiles directory
 #
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
-#        contain whitespace.  Due to $RM_FILES.
+#        contain whitespace.  Due to $RM_ITEMS.
+#
+#        Prefer keeping script simple to
+#        bulletproofing a POSIX Shell script.
 #
 
 ### Setup
@@ -85,7 +88,7 @@ BIN_SCRIPTS='
    viewJarManifest
 '
 
-RM_FILES="
+RM_ITEMS="
    ${HOME}/bin/bsPaq
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
@@ -193,14 +196,14 @@ fi
 
 ### Some final clean up
 
-## Create ~/catch for the toSystem () family of shell functions
+## Create ~/catch, for scp and downloads
 test -d ~/catch || mkdir ~/catch || {
    printf '\n'
    printf "Warning: Failed to create '~/catch'.\\n" >&2
 }
 
-## Remove no longer needed files
-for File in $RM_FILES
+## Remove no longer needed files system items
+for Item in $RM_ITEMS
 do
-   remove_item "$File" || exit 1
+   remove_item "$Item" || exit 1
 done

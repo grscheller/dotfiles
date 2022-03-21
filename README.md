@@ -18,7 +18,7 @@ Geared to Systemd/Wayland Linux systems.
 
 * Tested regularly against Arch Linux and MacOS
 * Assumes Fish version 3.0+
-* Contain Pyenv hooks to manage Python versions and environments
 * Contains examples of Fish, Bash, and POSIX shell scripting
+* Contain Pyenv hooks to manage Python versions and environments
 * Neovim configs are Lua based and use LSP heavily
 * Neovim configs are coming together, but still a work in progress
