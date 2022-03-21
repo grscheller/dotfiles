@@ -1,21 +1,21 @@
 -- Neovim configuration ~/.config/nvim/init.lua
 
 local options = {
-  shell = "/bin/bash",  -- POSIX compatible shell needed by some plugins
+  shell = "/bin/bash",  -- A POSIX compatible shell is needed by some plugins
 
   -- Set default fileencoding, localizations, and file formats
   fileencoding = "utf-8",
   spelllang = "en_us",
   fileformats = "unix,mac,dos",
 
-  -- Set default tabstops, replace tabs with spaces
-  tabstop = 8,       -- Tabstop actual <Tab>'s every 8 spaces
+  -- Set default tabstops, replacing entered tabs with spaces
+  tabstop = 8,       -- Tabstop actual tabs, but display as 8 spaces when on a tabstop
   shiftwidth = 4,    -- Number of spaces used for auto-indentation
   softtabstop = 4,   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
   expandtab = true,  --[[ Expand inserted tabs to spaces.  While in
                           insert mode, use <C-V><Tab> to insert an
-                          actual <Tab> ]]
-  
+                          actual <Tab> character ]]
+
   -- Other personnal preferences
   mouse = "a",           -- Enable mouse for all modes
   joinspaces = true,     -- Use 2 spaces when joinig sentances
@@ -38,7 +38,7 @@ local options = {
   termguicolors = true,  -- for Tokyo Night, and most other, colorschemes
   complete = ".,w,b,u,kspell",  -- no "t,i" for ins-completion-menu - redundant with LSP
   shortmess = "atToOc"  --[[ shorten statusline, don't give ins-completion-menu
-                              messages, remove F for Scala Metals ]]
+                              messages, removed F for Scala Metals ]]
 }
 
 --[[ Case insensitive search, but not in command mode ]]
@@ -105,22 +105,13 @@ if not ok then
 end
 
 -- Window navigation/position/size related keybindings
-local window_management_opts = {
-  mode = "n",
-  prefix = "",
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
 local window_management_kb = {
-  -- Navigate between windows using CTRL+arrow-keys
+  -- Navigate between windows using CTRL+hjkl keys
   ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },
   ['<C-J>'] = {'<C-W>j', 'Goto Window Down' },
   ['<C-K>'] = {'<C-W>k', 'Goto Window Up'   },
   ['<C-L>'] = {'<C-W>l', 'Goto Window Right'},
-  -- Move windows around using CTRL-hjkl
+  -- Move windows around using Alt-arrow keys
   ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},
   ['<M-Down>']  = {'<C-W>J', 'Move Window BOT'},
   ['<M-Up>']    = {'<C-W>K', 'Move Window TOP'},
@@ -132,9 +123,18 @@ local window_management_kb = {
   ['<M-l>'] = {'2<C-W>>', 'Make Window Wider'   }
 }
 
+local window_management_opts = {
+  mode = "n",
+  prefix = "",
+  buffer = nil,
+  silent = true,
+  noremap = true,
+  nowait = true
+}
+
 wk.register(window_management_kb, window_management_opts)
 
--- Visual mode keymappings
+-- Visual mode keybindings
 local visual_mode_kb = {
   ['<'] = {'<gv', 'Shift Left & Reselect'},  -- Reselect visual region
   ['>'] = {'>gv', 'Shift Right & Reselect'}  -- upon indention of text.
@@ -152,7 +152,7 @@ local visual_mode_opts = {
 wk.register(visual_mode_kb, visual_mode_opts)
 
 -- Normal mode <Space> keybindings
-normal_mode_space_kb = {
+local normal_mode_space_kb = {
   b = {':enew<CR>', 'New Unnamed Buffer'},
   h = {':TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
   k = {':dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
