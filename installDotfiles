@@ -23,16 +23,6 @@ HOME_FILES='
    .inputrc
 '
 
-RM_FILES="
-   ${HOME}/bin/bsPaq
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myBehaviors.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myKeybindings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/keybindings/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/
-"
-
 CONFIG_FILES='
    alacritty/alacritty_default.yml
    alacritty/alacritty_darwin.yml
@@ -95,6 +85,16 @@ BIN_SCRIPTS='
    viewJarManifest
 '
 
+RM_FILES="
+   ${HOME}/bin/bsPaq
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myBehaviors.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/myKeybindings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/keybindings/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/
+"
+
 ## Function to removes files
 remove_item () {
 
@@ -149,7 +149,7 @@ install_file () {
 ## Install home directory dot-files
 for Home_File in $HOME_FILES
 do
-   install_file "$HOME" "$Home_File" . 0644
+   install_file "$HOME" "$Home_File" ./home 0644
 done
 
 ## Install local scripts
