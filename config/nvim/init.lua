@@ -5,8 +5,8 @@ vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })  -- will ma
 vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
 vim.api.nvim_set_keymap('n', '+', '<Nop>', { noremap = true })
 
-vim.g.mapleader = '<Space>'
-vim.g.maplocalleader = '\\'  -- set to single \
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- Define some options to set
 local options = {
@@ -176,7 +176,7 @@ local normal_mode_leader_opts = {
   buffer = nil,
   silent = true,
   noremap = true,
-  nowait = false
+  nowait = true
 }
 
 wk.register(normal_mode_leader_kb, normal_mode_leader_opts)
