@@ -1,6 +1,13 @@
 --[[ Setup Develoment Environment - LSP Configurations ]]
 
--- Check if LSP related plugins I use are installed
+-- Punt LSP config if Which-Key not installed
+local ok, wk = pcall(require, 'which-key')
+if not ok then
+  print('No Which-Key, punting on LSP config: ')
+  return
+end
+
+-- Check if necessary LSP related plugins are installed
 local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
 local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
@@ -11,52 +18,49 @@ if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
   return
 end
 
--- Punt LSP config if Which-Key not installed
-local ok, wk = pcall(require, 'which-key')
-if not ok then
-  print('No Which-Key, punting on LSP config: ')
-  return
-end
+--[[ Minimal Nvim LSP Installer ]]
+nvimLspInstaller.on_server_ready(function(server)
+  local opts = {}
+  server:setup(opts)
+end)
+
+-- LSP related normal mode <localleader> keymappings
+local lsp_mappings = {
+  name = '+lsp',
+  F = {':lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
+  g = {
+    name = '+goto',
+    d = {':lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
+    D = {':lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
+    i = {':lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
+    r = {':lua vim.lsp.buf.references()<CR>', 'Goto References'} },
+  h = {':lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
+  H = {':lua vim.lsp.buf.hover()<CR>', 'Hover'},
+  K = {':lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
+  l = {':lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
+  m = {":lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
+  r = {':lua vim.lsp.buf.rename()<CR>', 'Rename'},
+  s = {
+    name = '+symbol',
+    d = {':lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+    w = {':lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
+  w = {
+    name = '+workspace folder',
+    a = {':lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+    r = {':lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} }
+}
+
+local lsp_opts = {
+  mode = 'n',
+  prefix = '<localleader>',
+  buffer = bufnr,
+  silent = true,
+  noremap = true,
+  nowait = true
+}
 
 local on_attach = function(client, bufnr)
-
-  -- LSP related normal mode <leader> keymappings
-  local mappings = {
-    name = '+lsp',
-    F = {':lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
-    g = {
-      name = '+goto',
-      d = {':lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
-      D = {':lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
-      i = {':lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
-      r = {':lua vim.lsp.buf.references()<CR>', 'Goto References'} },
-    h = {':lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
-    H = {':lua vim.lsp.buf.hover()<CR>', 'Hover'},
-    K = {':lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
-    l = {':lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
-    m = {":lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
-    r = {':lua vim.lsp.buf.rename()<CR>', 'Rename'},
-    s = {
-      name = '+symbol',
-      d = {':lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
-      w = {':lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
-    w = {
-      name = '+workspace folder',
-      a = {':lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
-      r = {':lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} }
-  }
-  
-  local opts = {
-    mode = "n",
-    prefix = "<leader>",
-    buffer = bufnr,
-    silent = true,
-    noremap = true,
-    nowait = true
-  }
-  
-  wk.register(mappings, opts)
-  
+  wk.register(lsp_mappings, lsp_opts)
 end
 
 local lsp_servers = {
@@ -84,18 +88,17 @@ for _, lsp_server in ipairs(lsp_servers) do
   }
 end
 
---[[ Nvim LSP Installer ]]
-nvimLspInstaller.on_server_ready(function(server)
-  local opts = {
-    settings = {
-      on_attach = on_attach,
-      capabilities = capabilities
-    }
-  }
-  server:setup(opts)
-end)
+--[[ Lua configuration ]]
+vim.cmd [[
+  augroup lua_config
+    au!
+    au FileType lua setlocal shiftwidth=2 softtabstop=2 expandtab
+  augroup end ]]
 
---[[ Rust configuration, rust-tools.nvim will call lspconfig itself ]]
+--[[ Python configuration ]]
+vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
+
+--[[ Rust configuration ]]
 local rust_opts = {
   -- Options sent to nvim-lspconfig overriding defaults set by rust-tools.nvim
   server = {
@@ -114,29 +117,31 @@ else
   print('Problem loading rust-tools.')
 end
 
---[[ Scala Metals configuration ]]
-vim.g.metals_server_version = '0.11.2'  -- See https://scalameta.org/metals/docs/editors/overview.html
+--[[ Scala configuration ]]
+vim.cmd [[
+  augroup scala_config
+    au!
+    au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
+  augroup end ]]
 
-local ok, metals = pcall(require, 'metals')
+-- Scala Metals, see https://scalameta.org/metals/docs/editors/overview.html
+vim.g.metals_server_version = '0.11.2'
+local ok, metals_loc = pcall(require, 'metals')
 if ok then
-  local metals_config = metals.bare_config()
+  metals = metals_loc  -- not local!
+  metals_config = metals.bare_config()  -- not local!
   metals_config.settings = {
-    showImplicitArguments = true --,
-    -- on_attach = on_attach,
-    -- capabilities = capabilities
+    showImplicitArguments = true,
   }
   
   vim.cmd [[
-    augroup metals_lsp
+    augroup scala_metals_lsp
       au!
       au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
     augroup end ]]
 else
   print('Problem loading metals.')
 end
-
---[[ Python configuration ]]
-vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
 
 --[[ Zig Configuration ]]
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
