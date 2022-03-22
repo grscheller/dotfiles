@@ -25,6 +25,10 @@ nvimLspInstaller.on_server_ready(function(server)
 end)
 
 -- LSP related normal mode <localleader> keymappings
+--
+-- See: https://github.com/scalameta/nvim-metals/discussions/39
+--      https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/lsp/handlers.lua
+ 
 local lsp_mappings = {
   name = '+lsp',
   F = {':lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
@@ -52,27 +56,30 @@ local lsp_mappings = {
 
 local lsp_opts = {
   mode = 'n',
-  prefix = '<localleader>',
-  buffer = bufnr,
+  prefix = '<Localleader>',
+  buffer = nil,
   silent = true,
   noremap = true,
   nowait = true
 }
 
 local on_attach = function(client, bufnr)
-  wk.register(lsp_mappings, lsp_opts)
+  local mappings = lsp_mappings
+  local opts = lsp_opts
+  opts['buffer'] = bufnr
+  wk.register(mappings, opts)
 end
 
 local lsp_servers = {
   -- For list of language servers, follow first
   -- link of https://github.com/neovim/nvim-lspconfig
-  "bashls",  -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
-  "clangd",  -- C and C++ - both clang and gcc
-  "cssls",   -- vscode-css-language-servers
-  "gopls",   -- go language server
-  "html",    -- vscode-html-language-servers
-  "jsonls",  -- vscode-json-language-servers
-  "pyright"  -- Pyright for Python (pacman or npm)
+  'bashls',  -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
+  'clangd',  -- C and C++ - both clang and gcc
+  'cssls',   -- vscode-css-language-servers
+  'gopls',   -- go language server
+  'html',    -- vscode-html-language-servers
+  'jsonls',  -- vscode-json-language-servers
+  'pyright'  -- Pyright for Python (pacman or npm)
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -96,7 +103,7 @@ vim.cmd [[
   augroup end ]]
 
 --[[ Python configuration ]]
-vim.g.python3_host_prog = os.getenv("HOME") .. '/.pyenv/shims/python'
+vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust configuration ]]
 local rust_opts = {
@@ -128,8 +135,8 @@ vim.cmd [[
 vim.g.metals_server_version = '0.11.2'
 local ok, metals_loc = pcall(require, 'metals')
 if ok then
-  metals = metals_loc  -- not local!
-  metals_config = metals.bare_config()  -- not local!
+  metals = metals_loc  -- global!
+  metals_config = metals.bare_config()  -- global!
   metals_config.settings = {
     showImplicitArguments = true,
   }

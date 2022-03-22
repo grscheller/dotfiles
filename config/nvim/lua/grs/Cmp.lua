@@ -18,60 +18,72 @@ end
 
 -- I think the "mappings" defined below are artifacts of
 -- popup completion windows and not true nvim keybindings.
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end
-  },
-  mapping = {
-    ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
-    ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
-    ['<C-B>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
-    ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
-    ['<C-E>'] = cmp.mapping {
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close()
+cmp.setup(
+  {
+    sources = cmp.config.sources(
+      {
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' }
+      },
+      {
+        { name = 'buffer' }
+      }),
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end
     },
-    ['<CR>'] = cmp.mapping.confirm { select = false },
-    ['<Tab>'] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif myHasWordsBefore() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-    ['<S-Tab>'] = cmp.mapping(
-      function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" })
-  },
-  sources = cmp.config.sources(
-    {{ name = 'nvim_lsp' }, { name = 'nvim_lua' }, { name = 'luasnip'  }},
-    {{ name = 'buffer'   }, { name = 'path'     }})
-}
+    mapping = {
+      ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
+      ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
+      ['<C-B>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
+      ['<C-F>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), {'i', 'c'}),
+      ['<C-E>'] = cmp.mapping {
+        i = cmp.mapping.abort(),
+        c = cmp.mapping.close()
+      },
+      ['<CR>'] = cmp.mapping.confirm { select = false },
+      ['<Tab>'] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          elseif myHasWordsBefore() then
+            cmp.complete()
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+      ['<S-Tab>'] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" })
+    }
+  })
 
-cmp.setup.cmdline( '/', {
-  sources = cmp.config.sources(
-    {{ name = 'buffer'  }},
-    {{ name = 'cmdline' }})
-})
+cmp.setup.cmdline('/',
+  {
+    sources = cmp.config.sources(
+      {
+        { name = 'buffer'  }
+      })
+  })
 
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources(
-    {{ name = 'path'     }},
-    {{ name = 'cmdline'  }},
-    {{ name = 'nvim-lua' }})
-})
+cmp.setup.cmdline(':',
+  {
+    sources = cmp.config.sources(
+      {
+        { name = 'path' }
+      },
+      {
+        { name = 'cmdline' }
+      })
+  })

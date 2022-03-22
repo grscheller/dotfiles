@@ -10,12 +10,12 @@ vim.g.maplocalleader = '\\'
 
 -- Define some options to set
 local options = {
-  shell = "/bin/bash",  -- A POSIX compatible shell is needed by some plugins
+  shell = '/bin/bash',  -- A POSIX compatible shell is needed by some plugins
 
   -- Set default fileencoding, localizations, and file formats
-  fileencoding = "utf-8",
-  spelllang = "en_us",
-  fileformats = "unix,mac,dos",
+  fileencoding = 'utf-8',
+  spelllang = 'en_us',
+  fileformats = 'unix,mac,dos',
 
   -- Set default tabstops, replacing entered tabs with spaces
   tabstop = 8,       -- Tabstop actual tabs, but display as 8 spaces when on a tabstop
@@ -26,7 +26,7 @@ local options = {
                           actual <Tab> character ]]
 
   -- Other personnal preferences
-  mouse = "a",        -- Enable mouse for all modes
+  mouse = 'a',        -- Enable mouse for all modes
   hidden = true,      -- by default on, my expectations are that buffers don't get abandoned
   joinspaces = true,  -- Use 2 spaces when joinig sentances
   wrap = false,       -- Don't wrap lines
@@ -34,20 +34,20 @@ local options = {
   sidescrolloff = 5,  -- Keep cursor away from side of window
   splitbelow = true,  -- Horizontally split below
   splitright = true,  -- Vertically split to right
-  nrformats = "bin,hex,octal,alpha",  -- bases & single letters for <C-A> & <C-X>
+  nrformats = 'bin,hex,octal,alpha',  -- bases & single letters for <C-A> & <C-X>
   undofile = true,  --[[ Save undo history in ~/.local/share/nvim/undo/,
                          nvim never deletes thesw undo histories. ]]
 
   -- Settings affected due to LSP client & plugins
   timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
   updatetime = 300,    -- Set update time for CursorHold event
-  signcolumn = "yes",  -- Fixes first column, reduces jitter
+  signcolumn = 'yes',  -- Fixes first column, reduces jitter
   showmode = false,    -- Redundant with Lualine
   showcmd = false,     -- Redundant with WhichKey
-  completeopt = "menuone,noinsert,noselect",  -- For nvim-cmp
+  completeopt = 'menuone,noinsert,noselect',  -- For nvim-cmp
   termguicolors = true,  -- for Tokyo Night, and most other, colorschemes
-  complete = ".,w,b,u,kspell",  -- no "t,i" for ins-completion-menu - redundant with LSP
-  shortmess = "atToOc"  --[[ shorten statusline, don't give ins-completion-menu
+  complete = '.,w,b,u,kspell',  -- no "t,i" for ins-completion-menu - redundant with LSP
+  shortmess = 'atToOc'  --[[ shorten statusline, don't give ins-completion-menu
                               messages, removed F for Scala Metals ]]
 }
 
@@ -127,8 +127,8 @@ local window_management_kb = {
 }
 
 local window_management_opts = {
-  mode = "n",
-  prefix = "",
+  mode = 'n',
+  prefix = '',
   buffer = nil,
   silent = true,
   noremap = true,
@@ -144,8 +144,8 @@ local visual_mode_kb = {
 }
 
 local visual_mode_opts = {
-  mode = "v",
-  prefix = "",
+  mode = 'v',
+  prefix = '',
   buffer = nil,
   silent = true,
   noremap = true,
