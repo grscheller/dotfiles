@@ -13,7 +13,7 @@
 local ok, packer = pcall(require, 'packer')
 if not ok then
   print('Warning: Packer not installed/configured - no plugins,')
-  print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker')
+  print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker ')
   return
 end
 

@@ -75,18 +75,18 @@ whichkey.register(visual_kb, visual_opts)
 
 -- Normal mode Leader keybindings
 local normal_leader_kb = {
-  b = {':enew<CR>', 'New Unnamed Buffer'},
-  h = {':TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
-  k = {':dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
-  l = {':mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
-  n = {':lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
+  b = {'<Cmd>enew<CR>', 'New Unnamed Buffer'},
+  h = {'<Cmd>TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
+  k = {'<Cmd>dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
+  r = {'<Cmd>mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
+  n = {'<Cmd>lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
   f = {
     name = '+Fish Shell in Terminal',
-    s = {':split<CR>:term fish<CR>i', 'Fish Shell in split'},
-    v = {':vsplit<CR>:term fish<CR>i', 'Fish Shell in vsplit'} },
-  s = {':set invspell<CR>', 'Toggle Spelling'},
-  w = {':%s/\\s\\+$//<CR>', 'Trim Trailing Whitespace'},
-  ['<Space>'] = {':nohlsearch<CR>', 'Clear hlsearch'}
+    s = {'<Cmd>split<Bar>term fish<CR>i', 'Fish Shell in split'},
+    v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'Fish Shell in vsplit'} },
+  s = {'<Cmd>set invspell<CR>', 'Toggle Spelling'},
+  w = {'<Cmd>%s/\\s\\+$//<CR>', 'Trim Trailing Whitespace'},
+  ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
 }
 
 local normal_leader_opts = {
@@ -107,21 +107,21 @@ local ts_mappings = {
     name = '+Telescope',
     b = {
       name = '+Telescope Buffer',
-      l = {":lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
-      z = {":lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'} },
+      l = {"<Cmd>lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
+      z = {"<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'} },
     f = {
       name = '+Telescope Files',
-      f = {":lua require('telescope.builtin').find_files()<CR>", 'Find File'},
-      r = {":lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'} },
+      f = {"<Cmd>lua require('telescope.builtin').find_files()<CR>", 'Find File'},
+      r = {"<Cmd>lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'} },
     g = {
       name = '+Telescope Grep',
-      l = {":lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
-      s = {":lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
+      l = {"<Cmd>lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
+      s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
     t = {
       name = '+Telescope Tags',
-      b = {":lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
-      h = {":lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
-      t = {":lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
+      b = {"<Cmd>lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
+      h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
+      t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
   }
 }
 
@@ -144,27 +144,27 @@ end
 --      https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/lsp/handlers.lua
 local lsp_mappings = {
   name = '+lsp',
-  F = {':lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
+  F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
   g = {
     name = '+goto',
-    d = {':lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
-    D = {':lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
-    i = {':lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
-    r = {':lua vim.lsp.buf.references()<CR>', 'Goto References'} },
-  h = {':lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
-  H = {':lua vim.lsp.buf.hover()<CR>', 'Hover'},
-  K = {':lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
-  l = {':lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
-  m = {":lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
-  r = {':lua vim.lsp.buf.rename()<CR>', 'Rename'},
+    d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
+    D = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
+    i = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
+    r = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'Goto References'} },
+  h = {'<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
+  H = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Hover'},
+  K = {'<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
+  l = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
+  m = {"<Cmd>lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
+  r = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'Rename'},
   s = {
     name = '+symbol',
-    d = {':lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
-    w = {':lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
+    d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+    w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
   w = {
     name = '+workspace folder',
-    a = {':lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
-    r = {':lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} }
+    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} }
 }
 
 local lsp_opts = {
