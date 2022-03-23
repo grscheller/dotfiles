@@ -2,11 +2,6 @@
 
 local M = {}
 
--- Turn off some redundant keybindings & setup Leader keys
-vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '+', '<Nop>', { noremap = true })
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
@@ -29,20 +24,20 @@ whichkey.setup {
 
 -- Window navigation/position/size keybindings
 local window_kb = {
-  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },  -- Navigate between windows using CTRL+hjkl keys
+  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },
   ['<C-J>'] = {'<C-W>j', 'Goto Window Down' },
   ['<C-K>'] = {'<C-W>k', 'Goto Window Up'   },
   ['<C-L>'] = {'<C-W>l', 'Goto Window Right'},
 
-  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},  -- Move windows around using Alt-arrow keys
-  ['<M-Down>']  = {'<C-W>J', 'Move Window BOT'},
-  ['<M-Up>']    = {'<C-W>K', 'Move Window TOP'},
-  ['<M-Right>'] = {'<C-W>L', 'Move Window RHS'},
+  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS of Screen'},
+  ['<M-Down>']  = {'<C-W>J', 'Move Window BOT of Screen'},
+  ['<M-Up>']    = {'<C-W>K', 'Move Window TOP of Screen'},
+  ['<M-Right>'] = {'<C-W>L', 'Move Window RHS of Screen'},
 
-  ['<M-h>'] = {'2<C-W><', 'Make Window Narrower'},  -- Resize windows using ALT-hjkl for Linux
-  ['<M-j>'] = {'2<C-W>-', 'Make Window Shorter' },
-  ['<M-k>'] = {'2<C-W>+', 'Make Window Taller'  },
-  ['<M-l>'] = {'2<C-W>>', 'Make Window Wider'   }
+  ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},
+  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'   },
+  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },
+  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }
 }
 
 local window_opts = {
