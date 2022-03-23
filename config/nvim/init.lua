@@ -1,16 +1,8 @@
--- Neovim configuration ~/.config/nvim/init.lua
-
--- Turn off some redundant keybindings & setup leader keys
-vim.api.nvim_set_keymap('n', '<Space>', '<Nop>', { noremap = true })  -- will make <Leader>
-vim.api.nvim_set_keymap('n', '-', '<Nop>', { noremap = true })
-vim.api.nvim_set_keymap('n', '+', '<Nop>', { noremap = true })
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+--[[ Neovim configuration ~/.config/nvim/init.lua ]]
 
 -- Define some options to set
 local options = {
-  shell = '/bin/bash',  -- A POSIX compatible shell is needed by some plugins
+  shell = '/bin/bash',  -- POSIX compatible shells are needed by some plugins
 
   -- Set default fileencoding, localizations, and file formats
   fileencoding = 'utf-8',
@@ -19,7 +11,7 @@ local options = {
 
   -- Set default tabstops, replacing entered tabs with spaces
   tabstop = 8,       -- Tabstop actual tabs, but display as 8 spaces when on a tabstop
-  shiftwidth = 4,    -- Number of spaces used for auto-indentation
+  shiftwidth = 4,    -- Number of spaces used for auto-indentation, geared to C like languages
   softtabstop = 4,   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
   expandtab = true,  --[[ Expand inserted tabs to spaces.  While in
                           insert mode, use <C-V><Tab> to insert an
@@ -27,7 +19,7 @@ local options = {
 
   -- Other personnal preferences
   mouse = 'a',        -- Enable mouse for all modes
-  hidden = true,      -- by default on, my expectations are that buffers don't get abandoned
+  hidden = true,      -- my expectations are that buffers don't get abandoned
   joinspaces = true,  -- Use 2 spaces when joinig sentances
   wrap = false,       -- Don't wrap lines
   sidescroll = 1,     -- Horizontally scroll nicely
@@ -73,7 +65,7 @@ vim.cmd[[
   augroup end
 ]]
 
--- Toggle between 3 line numbering states
+-- Toggle between 3 line numbering states on per window basis
 options['number'] = false
 options['relativenumber'] = false
 
@@ -90,7 +82,7 @@ myLineNumberToggle = function()
   end
 end
 
--- Now set up the options defined above
+-- Now set the options defined above
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
@@ -99,84 +91,5 @@ end
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
 vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
 
-require('grs')  -- Set up plugins for an IDE like development environment
-
---[[ Set up general purpose keybindings ]]
-local ok, wk = pcall(require, 'which-key')
-if not ok then
-  print('Problem loading which-key.nvim.')
-  return
-end
-
--- Window navigation/position/size keybindings
-local window_management_kb = {
-  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },  -- Navigate between windows using CTRL+hjkl keys
-  ['<C-J>'] = {'<C-W>j', 'Goto Window Down' },
-  ['<C-K>'] = {'<C-W>k', 'Goto Window Up'   },
-  ['<C-L>'] = {'<C-W>l', 'Goto Window Right'},
-
-  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS'},  -- Move windows around using Alt-arrow keys
-  ['<M-Down>']  = {'<C-W>J', 'Move Window BOT'},
-  ['<M-Up>']    = {'<C-W>K', 'Move Window TOP'},
-  ['<M-Right>'] = {'<C-W>L', 'Move Window RHS'},
-
-  ['<M-h>'] = {'2<C-W><', 'Make Window Narrower'},  -- Resize windows using ALT-hjkl for Linux
-  ['<M-j>'] = {'2<C-W>-', 'Make Window Shorter' },
-  ['<M-k>'] = {'2<C-W>+', 'Make Window Taller'  },
-  ['<M-l>'] = {'2<C-W>>', 'Make Window Wider'   }
-}
-
-local window_management_opts = {
-  mode = 'n',
-  prefix = '',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
-wk.register(window_management_kb, window_management_opts)
-
--- Visual mode keybindings
-local visual_mode_kb = {
-  ['<'] = {'<gv', 'Shift Left & Reselect'},  -- Reselect visual region
-  ['>'] = {'>gv', 'Shift Right & Reselect'}  -- upon indention of text.
-}
-
-local visual_mode_opts = {
-  mode = 'v',
-  prefix = '',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
-wk.register(visual_mode_kb, visual_mode_opts)
-
--- Normal mode leader keybindings
-local normal_mode_leader_kb = {
-  b = {':enew<CR>', 'New Unnamed Buffer'},
-  h = {':TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
-  k = {':dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
-  l = {':mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
-  n = {':lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
-  f = {         
-    name = '+Fish Shell in Terminal',
-    s = {':split<CR>:term fish<CR>i', 'Fish Shell in split'},
-    v = {':vsplit<CR>:term fish<CR>i', 'Fish Shell in vsplit'} },
-  s = {':set invspell<CR>', 'Toggle Spelling'},
-  t = {':%s/\\s\\+$//<CR>', 'Trim Trailing Whitespace'},
-  ['<Space>'] = {':nohlsearch<CR>', 'Clear hlsearch'}
-}
-
-local normal_mode_leader_opts = {
-  mode = 'n',
-  prefix = '<Leader>',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
-wk.register(normal_mode_leader_kb, normal_mode_leader_opts)
+-- Set up keybindings & plugins for an IDE like development environment
+require('grs')

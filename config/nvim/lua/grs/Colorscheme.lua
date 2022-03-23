@@ -1,6 +1,6 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
---[[ Colorize hexcodes & names like #00dddd Blue Green ]]
+-- Colorize hexcodes & names like #00dddd Blue Green
 local ok, colorizer = pcall(require, 'colorizer')
 if ok then
   colorizer.setup(nil, { css= true; })
@@ -8,7 +8,7 @@ else
   print("Problem loading colorizer.")
 end
 
---[[ Setup Tokyo Night colorscheme ]]
+-- Setup Tokyo Night colorscheme
 if pcall(require, 'tokyonight') then
   vim.g.tokyonight_style = "night"
   vim.g.tokyonight_colors = {bg = "#0d0e13"}  -- default is "#1a1b26"
@@ -19,7 +19,9 @@ else
   vim.cmd [[ colorscheme darkblue ]]
 end
 
---[[ Provide icons and colorizes theme
+--[[ A lua fork of vim-devicons. This plugin provides
+     the same icons as well as colors for each icon.
+
      Needs a patched font like Noto Mono Nerd Font
      see https://github.com/ryanoasis/nerd-fonts  ]]
 local ok, webDevicons = pcall(require, 'nvim-web-devicons')
@@ -29,7 +31,7 @@ else
   print('Problem loading nvim-web-devicons.')
 end
 
---[[ Setup Lualine with Tokyo Night theme ]]
+-- Setup Lualine with Tokyo Night theme
 local ok, lualine = pcall(require, 'lualine')
 if ok then
   lualine.setup {
