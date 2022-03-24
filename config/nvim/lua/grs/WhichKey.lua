@@ -22,23 +22,36 @@ whichkey.setup {
 
 --[[ Define some general purpose keybindings ]]
 
--- Window navigation/position/size keybindings
+-- Window management - modeled somewhat after Sway
 local window_kb = {
-  ['<C-H>'] = {'<C-W>h', 'Goto Window Left' },
-  ['<C-J>'] = {'<C-W>j', 'Goto Window Down' },
-  ['<C-K>'] = {'<C-W>k', 'Goto Window Up'   },
-  ['<C-L>'] = {'<C-W>l', 'Goto Window Right'},
+  -- Navigating between windows
+  ['<M-h>'] = {'<C-W>h', 'Goto Window Left' },
+  ['<M-j>'] = {'<C-W>j', 'Goto Window Down' },
+  ['<M-k>'] = {'<C-W>k', 'Goto Window Up'   },
+  ['<M-l>'] = {'<C-W>l', 'Goto Window Right'},
+  ['<M-p>'] = {'<C-W>p', 'Goto Previous Window'},
+  ['<M-t>'] = {'<Cmd>tabnew<CR>', 'Open New Tab'},
 
-  ['<M-Left>']  = {'<C-W>H', 'Move Window LHS of Screen'},
-  ['<M-Down>']  = {'<C-W>J', 'Move Window BOT of Screen'},
-  ['<M-Up>']    = {'<C-W>K', 'Move Window TOP of Screen'},
-  ['<M-Right>'] = {'<C-W>L', 'Move Window RHS of Screen'},
+  -- Moving, creating, removing windows 
+  ['<M-S-h>'] = {'<C-W>H', 'Move Window LHS of Screen'},
+  ['<M-S-j>'] = {'<C-W>J', 'Move Window BOT of Screen'},
+  ['<M-S-k>'] = {'<C-W>K', 'Move Window TOP of Screen'},
+  ['<M-S-l>'] = {'<C-W>L', 'Move Window RHS of Screen'},
+  ['<M-S-x>'] = {'<C-W>x', 'Exchange Windows Inner Split'},
+  ['<M-S-r>'] = {'<C-W>r', 'Rotate Windows Inner Split'},
+  ['<M-S-q>'] = {'<C-W>q', 'Quit Current Window'},
+  ['<M-S-c>'] = {'<C-W>c', 'Close Current Windows'},
+  ['<M-S-o>'] = {'<C-W>o', 'Close All other Windows in Tab'},
+  ['<M-S-=>'] = {'<C-W>=', 'Equalize Heights/Widths Windows'},
+  ['<M-S-t>'] = {'<C-W>T', 'Break Window Out New Tab'},
 
+  -- Resizing windows
   ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},
   ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'   },
   ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },
   ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }
 }
+
 
 local window_opts = {
   mode = 'n',

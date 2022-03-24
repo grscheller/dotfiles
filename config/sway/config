@@ -6,7 +6,7 @@
 
 ### Variables
 #
-# Logo key. Use Mod1 for Alt.
+# Super key. Use Mod1 for Alt.
 set $mod Mod4
 
 # Home row direction keys, like vim
@@ -86,8 +86,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     bindsym $mod+Return exec $term
 
     # Kill focused window
-    #bindsym $mod+Shift+q kill
-    bindsym $mod+q kill
+    bindsym $mod+Shift+q kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
