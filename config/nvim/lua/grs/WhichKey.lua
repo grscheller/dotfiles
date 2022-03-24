@@ -46,10 +46,10 @@ local window_kb = {
   ['<M-S-t>'] = {'<C-W>T', 'Break Window Out New Tab'},
 
   -- Resizing windows
-  ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},
-  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'   },
-  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },
-  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }
+  ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},  -- Think Alt+"-"
+  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'   },  -- Think Alt+"+"
+  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },  -- Think Alt+Shift+"-"
+  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }   -- Think Alt+Shift+"+"
 }
 
 
