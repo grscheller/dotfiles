@@ -705,24 +705,18 @@ mouse_bindings:
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
 key_bindings:
-  - { key: N, mods: Control|Shift, action: SpawnNewInstance }
-  - { key: N,      mods: Alt,      command: { program: "alacritty", args: [] }}
-  - { key: V,      mods: Alt,      action: Paste }  # Copy/paste from alactritty
-  - { key: C,      mods: Alt,      action: Copy }   # terminal on Linux.
-  - { key: V,      mods: Command,  action: Paste } # Copy/paste from alactritty
-  - { key: C,      mods: Command,  action: Copy }  # terminal on MacOS.
-  - { key: H,      mods: Alt,      chars: "\x1bh" } # On MacOS these 4 allow
-  - { key: J,      mods: Alt,      chars: "\x1bj" } # the <Option> key to function
-  - { key: K,      mods: Alt,      chars: "\x1bk" } # as the <Alt> key for some of
-  - { key: L,      mods: Alt,      chars: "\x1bl" } # my neovim keybindings.
-  - { key: Paste,                                       action: Paste          }
-  - { key: Copy,                                        action: Copy           }
-  - { key: L,         mods: Control,                    action: ClearLogNotice }
-  - { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
-  - { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp,  }
-  - { key: PageDown,  mods: Shift,   mode: ~Alt,        action: ScrollPageDown }
-  - { key: Home,      mods: Shift,   mode: ~Alt,        action: ScrollToTop,   }
-  - { key: End,       mods: Shift,   mode: ~Alt,        action: ScrollToBottom }
+  - { key: N,         mods: Control|Shift, action:  SpawnNewInstance }
+  - { key: N,         mods: Alt,           command: { program: "alacritty", args: [] }}
+  - { key: V,         mods: Alt,           action:  Paste   } # Copy/paste from alactritty
+  - { key: C,         mods: Alt,           action:  Copy    } # terminal on Linux.
+  - { key: Paste,                          action:  Paste          }
+  - { key: Copy,                           action:  Copy           }
+  - { key: L,         mods: Control,       action:  ClearLogNotice }
+  - { key: L,         mods: Control,       mode:    ~Vi|~Search, chars: "\x0c"          }
+  - { key: PageUp,    mods: Shift,         mode:    ~Alt,        action: ScrollPageUp,  }
+  - { key: PageDown,  mods: Shift,         mode:    ~Alt,        action: ScrollPageDown }
+  - { key: Home,      mods: Shift,         mode:    ~Alt,        action: ScrollToTop,   }
+  - { key: End,       mods: Shift,         mode:    ~Alt,        action: ScrollToBottom }
 
   # Vi Mode
   #- { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
