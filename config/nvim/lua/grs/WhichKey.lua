@@ -42,7 +42,7 @@ local window_kb = {
   ['<M-S-q>'] = {'<C-W>q', 'Quit Current Window'},
   ['<M-S-c>'] = {'<C-W>c', 'Close Current Windows'},
   ['<M-S-o>'] = {'<C-W>o', 'Close All other Windows in Tab'},
-  ['<M-S-=>'] = {'<C-W>=', 'Equalize Heights/Widths Windows'},
+  ['<M-S-e>'] = {'<C-W>=', 'Equalize Heights/Widths Windows'},
   ['<M-S-t>'] = {'<C-W>T', 'Break Window Out New Tab'},
 
   -- Resizing windows
