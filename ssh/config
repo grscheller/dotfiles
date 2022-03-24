@@ -29,7 +29,7 @@ Host euler7h
   User grs
 
 Host sc31
-  Hostname 10.100.51.89
+  Hostname 10.100.45.138
   Port 22
   User geoffreyscheller
 
