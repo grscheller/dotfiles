@@ -1,11 +1,16 @@
---[[ Setup colorizier, colorscheme & statusline ]]
+--[[ Setup colorizier, colorscheme & statusline
+
+       Module: grs
+       File: ~/.config/nvim/lua/grs/Completions.lua
+
+  ]]
 
 -- Colorize hexcodes & names like #00dddd Blue Green
 local ok, colorizer = pcall(require, 'colorizer')
 if ok then
   colorizer.setup(nil, { css= true; })
 else
-  print("Problem loading colorizer.")
+  print("Problem loading colorizer. ")
 end
 
 -- Setup Tokyo Night colorscheme

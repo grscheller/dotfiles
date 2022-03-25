@@ -1,4 +1,9 @@
---[[ Using Which-Key to manage keybindings ]]
+--[[ Using Which-Key to manage keybindings
+
+       Module: grs
+       File: ~/.config/nvim/lua/grs/WhichKey.lua
+
+  ]]
 
 local M = {}
 
@@ -7,7 +12,7 @@ vim.g.maplocalleader = '\\'
 
 local ok, whichkey = pcall(require, 'which-key')
 if not ok then
-  print('Problem loading which-key.nvim.')
+  print('Problem loading which-key.nvim. ')
   return false
 end
 

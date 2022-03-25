@@ -1,8 +1,13 @@
---[[ Telescope - fuzzy finder over lists ]]
+--[[ Telescope - fuzzy finder over lists
+
+       Module: grs
+       File: ~/.config/nvim/lua/grs/Telescope.lua
+
+  ]]
 
 local ok, telescope = pcall(require, 'telescope')
 if not ok then
-  print('Problem loading telescope.')
+  print('Problem loading telescope. ')
   return
 end
 

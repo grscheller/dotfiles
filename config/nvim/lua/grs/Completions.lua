@@ -1,10 +1,15 @@
---[[ Completions - using nvim-cmp and luasnip ]]
+--[[ Completions using nvim-cmp and luasnip
+
+       Module: grs
+       File: ~/.config/nvim/lua/grs/Completions.lua
+
+  ]]
 
 local ok_cmp, cmp = pcall(require, 'cmp')
 local ok_luasnip, luasnip = pcall(require, 'luasnip')
 if not ok_cmp or not ok_luasnip then
-  if not ok_cmp then print('Problem loading nvim-cmp.') end
-  if not ok_luasnip then print('Problem loading cmp_luasnip.') end
+  if not ok_cmp then print('Problem loading nvim-cmp. ') end
+  if not ok_luasnip then print('Problem loading cmp_luasnip. ') end
   return
 end
 

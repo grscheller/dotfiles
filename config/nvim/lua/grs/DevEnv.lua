@@ -1,9 +1,14 @@
---[[ Setup Develoment Environment - LSP Configurations ]]
+--[[ Setup Develoment Environment & LSP Configurations
+
+       Module: grs
+       File: ~/.config/nvim/lua/grs/DevEnv.lua
+
+  ]]
 
 -- Punt LSP config if Which-Key not available
 local wk = require('grs.WhichKey')
 if not wk then
-  print('Which-Key unavailable, punting on LSP config: ')
+  print('Which-Key unavailable, punting on LSP config. ')
   return
 end
 
@@ -12,9 +17,9 @@ local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
 local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
-  if not ok_lspconfig then print('Problem loading nvim-lspconfig: ') end
-  if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer: ') end
-  if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp: ') end
+  if not ok_lspconfig then print('Problem loading nvim-lspconfig. ') end
+  if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer. ') end
+  if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp. ') end
   return
 end
 

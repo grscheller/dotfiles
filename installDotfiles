@@ -57,9 +57,10 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/Cmp.lua
    nvim/lua/grs/Colorscheme.lua
+   nvim/lua/grs/Completions.lua
    nvim/lua/grs/DevEnv.lua
+   nvim/lua/grs/Options.lua
    nvim/lua/grs/Packer.lua
    nvim/lua/grs/Telescope.lua
    nvim/lua/grs/Treesitter.lua
@@ -90,12 +91,7 @@ BIN_SCRIPTS='
 
 RM_ITEMS="
    ${HOME}/bin/bsPaq
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myDevEnv.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myPlugins.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myBehaviors.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/myKeybindings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/keybindings/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Cmp.lua
 "
 
 ## Function to removes files
