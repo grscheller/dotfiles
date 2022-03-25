@@ -1,9 +1,6 @@
 --[[ Plugin configuration ]]
 
--- Speed up start times, impatient must be 1st plugin loaded
-if not pcall(require, 'impatient') then
-  print('Warning: Plugin "impatient" not loaded ') 
-end
+--require('grs.Options')      -- Setup options, functions, autocmds
 require('grs.Packer')       -- Setup plugin manager
 require('grs.WhichKey')     -- Setup keybindings
 require('grs.Colorscheme')  -- Colorscheme & statusline

@@ -1,5 +1,10 @@
 --[[ Neovim configuration ~/.config/nvim/init.lua ]]
 
+-- Speed up start times, impatient must be 1st Lua module loaded.
+if not pcall(require, 'impatient') then
+  print('Warning: Plugin "impatient" not loaded ') 
+end
+
 -- Define some options to set
 local options = {
   shell = '/bin/bash',  -- POSIX compatible shells are needed by some plugins
@@ -39,8 +44,9 @@ local options = {
   completeopt = 'menuone,noinsert,noselect',  -- For nvim-cmp
   termguicolors = true,  -- for Tokyo Night, and most other, colorschemes
   complete = '.,w,b,u,kspell',  -- no "t,i" for ins-completion-menu - redundant with LSP
-  shortmess = 'atToOc'  --[[ shorten statusline, don't give ins-completion-menu
+  shortmess = 'atToOc',  --[[ shorten statusline, don't give ins-completion-menu
                               messages, removed F for Scala Metals ]]
+
 }
 
 -- Case insensitive search, but not in command mode
