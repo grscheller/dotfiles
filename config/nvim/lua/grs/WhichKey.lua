@@ -185,8 +185,8 @@ local lsp_ll_mappings = {
     name = '+symbol',
     d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
     w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
-  ['['] = {'Cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>'},
-  [']'] = {'Cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>'}
+  ['['] = {'<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', 'Diag Prev'},
+  [']'] = {'<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', 'Diag Next'}
   -- To add nvim-dap debugging, see example for Scala here
   -- https://github.com/scalameta/nvim-metals/discussions/39
 }
