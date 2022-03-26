@@ -27,7 +27,9 @@ whichkey.setup {
 
 --[[ Define some general purpose keybindings ]]
 
--- Window management - modeled somewhat after Sway
+-- Window management - modeled somewhat after Sway on Linux
+   -- works with Alacritty out-of-the-box on Linux
+   -- Alacritty configuration changes needed to work on MacOS
 local window_kb = {
   -- Navigating between windows
   ['<M-h>'] = {'<C-W>h', 'Goto Window Left' },
@@ -152,37 +154,46 @@ M.setupTelescopeKB = function()
 end
 
 --[[ LSP related normal mode <LocalLeader> keymappings ]]
---
--- See: https://github.com/scalameta/nvim-metals/discussions/39
---      https://github.com/LunarVim/Neovim-from-scratch/blob/master/lua/user/lsp/handlers.lua
-local lsp_mappings = {
+
+local lsp_g_mappings = {
   name = '+lsp',
-  F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
   g = {
     name = '+goto',
     d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
     D = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
-    i = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
-    r = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'Goto References'} },
+    I = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
+    r = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'Goto References'},
+    s = {
+      name = '+goto symbol',
+      d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+      w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} } }
+}
+
+local lsp_ll_mappings = {
+  ca = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Action'},
+  d = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
+  f = {
+    name = '+workspace folder',
+    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} },
+  F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
   h = {'<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
   H = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Hover'},
   K = {'<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
-  l = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
-  m = {"<Cmd>lua require('metals').open_all_diagnostics()<CR>", 'Metals Diagnostics'},
   r = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'Rename'},
   s = {
     name = '+symbol',
     d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
     w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
-  w = {
-    name = '+workspace folder',
-    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
-    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} }
+  ['['] = {'Cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>'},
+  [']'] = {'Cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>'}
+  -- To add nvim-dap debugging, see example for Scala here
+  -- https://github.com/scalameta/nvim-metals/discussions/39
 }
 
-local lsp_opts = {
+local lsp_proto_opts = {
   mode = 'n',
-  prefix = '<LocalLeader>',
+  prefix = '',   -- can get swapped out for '<LocalLeader>'
   buffer = nil,  -- gets swapped out for buffer number
   silent = true,
   noremap = true,
@@ -190,10 +201,11 @@ local lsp_opts = {
 }
 
 M.lsp_on_attach = function(client, bufnr)
-  local mappings = lsp_mappings
-  local opts = lsp_opts
+  local opts = lsp_proto_opts
   opts['buffer'] = bufnr
-  whichkey.register(mappings, opts)
+  whichkey.register(lsp_g_mappings, opts)
+  opts['prefix'] = '<LocalLeader>'
+  whichkey.register(lsp_ll_mappings, opts)
 end
 
 return M

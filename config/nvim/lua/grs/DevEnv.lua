@@ -88,18 +88,18 @@ else
 end
 
 --[[ Scala lang configuration ]]
+-- Todo: fix keybindings
+-- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
 vim.cmd [[
   augroup scala_config
     au!
     au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
   augroup end ]]
 
--- Scala Metals, see https://scalameta.org/metals/docs/editors/overview.html
-vim.g.metals_server_version = '0.11.2'
-local ok, metals_loc = pcall(require, 'metals')
+local ok, metals_local = pcall(require, 'metals')
 if ok then
-  metals = metals_loc  -- global!
-  metals_config = metals.bare_config()  -- global!
+  metals = metals_local  -- global! for augroup bwlow
+  metals_config = metals.bare_config()  -- global! for augroup bwlow
   metals_config.settings = {
     showImplicitArguments = true,
   }
