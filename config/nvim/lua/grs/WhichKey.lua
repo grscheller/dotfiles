@@ -12,7 +12,7 @@ vim.g.maplocalleader = '\\'
 
 local ok, whichkey = pcall(require, 'which-key')
 if not ok then
-  print('Problem loading which-key.nvim. ')
+  print('Problem loading which-key.nvim: ' .. whichkey)
   return false
 end
 
@@ -25,14 +25,14 @@ whichkey.setup {
   }
 }
 
---[[ Define some general purpose keybindings ]]
+--[[ Immediately define some general purpose keybindings ]]
 
--- Window management - modeled somewhat after Sway on Linux
+-- Window management- modeled somewhat after Sway on Linux
 local window_kb = {
   -- Navigating between windows
-  ['<M-h>'] = {'<C-W>h', 'Goto Window Left' },
-  ['<M-j>'] = {'<C-W>j', 'Goto Window Down' },
-  ['<M-k>'] = {'<C-W>k', 'Goto Window Up'   },
+  ['<M-h>'] = {'<C-W>h', 'Goto Window Left'},
+  ['<M-j>'] = {'<C-W>j', 'Goto Window Down'},
+  ['<M-k>'] = {'<C-W>k', 'Goto Window Up'},
   ['<M-l>'] = {'<C-W>l', 'Goto Window Right'},
   ['<M-p>'] = {'<C-W>p', 'Goto Previous Window'},
   ['<M-t>'] = {'<Cmd>tabnew<CR>', 'Open New Tab'},
@@ -52,12 +52,18 @@ local window_kb = {
 
   -- Resizing windows
   ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},  -- Think Alt+"-"
-  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'   },  -- Think Alt+"+"
-  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },  -- Think Alt+Shift+"-"
-  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }   -- Think Alt+Shift+"+"
+  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'},     -- Think Alt+"+"
+  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter'},   -- Think Alt+Shift+"-"
+  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'},    -- Think Alt+Shift+"+"
+
+  -- Move view in window, only move cursor to keep on screen
+  ['<C-H>'] = {'z4h', 'Move View Left 4 Columns'  },
+  ['<C-J>'] = {'3<C-E>', 'Move View Down 3 Lines' },
+  ['<C-K>'] = {'3<C-Y>', 'Move View Up 3 Lines'   },
+  ['<C-L>'] = {'z4l', 'Move View Right 4 Colunms' }
 }
 
-local window_opts = {
+local opts = {
   mode = 'n',
   prefix = '',
   buffer = nil,
@@ -66,7 +72,7 @@ local window_opts = {
   nowait = true
 }
 
-whichkey.register(window_kb, window_opts)
+whichkey.register(window_kb, opts)
 
 -- Visual mode keybindings
 local visual_kb = {
@@ -113,30 +119,30 @@ local nl_opts = {
 whichkey.register(nl_kb, nl_opts)
 
 -- Setup telescope <leader> keybindings
-local ts_mappings = {
-  t = {
-    name = '+Telescope',
-    b = {
-      name = '+Telescope Buffer',
-      l = {"<Cmd>lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
-      z = {"<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'} },
-    f = {
-      name = '+Telescope Files',
-      f = {"<Cmd>lua require('telescope.builtin').find_files()<CR>", 'Find File'},
-      r = {"<Cmd>lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'} },
-    g = {
-      name = '+Telescope Grep',
-      l = {"<Cmd>lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
-      s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
-    t = {
-      name = '+Telescope Tags',
-      b = {"<Cmd>lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
-      h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
-      t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
-  }
-}
-
 M.setupTelescopeKB = function()
+
+  local ts_mappings = {
+    t = {
+      name = '+Telescope',
+      b = {
+        name = '+Telescope Buffer',
+        l = {"<Cmd>lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
+        z = {"<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'} },
+      f = {
+        name = '+Telescope Files',
+        f = {"<Cmd>lua require('telescope.builtin').find_files()<CR>", 'Find File'},
+        r = {"<Cmd>lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'} },
+      g = {
+        name = '+Telescope Grep',
+        l = {"<Cmd>lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
+        s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
+      t = {
+        name = '+Telescope Tags',
+        b = {"<Cmd>lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
+        h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
+        t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
+    }
+  }
 
   local ts_opts = {
     mode = 'n',
@@ -152,43 +158,43 @@ M.setupTelescopeKB = function()
 end
 
 -- LSP related normal mode localleader keymappings
-local lsp_g_mappings = {
-  name = '+lsp',
-  g = {
-    -- name = '+goto',
-    d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
-    D = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
-    I = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
-    r = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'Goto References'},
-    s = {
-      name = '+goto symbol',
-      d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
-      w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} } }
-}
-
-local lsp_ll_mappings = {
-  ca = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Action'},
-  d = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
-  F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
-  h = {'<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
-  H = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Hover'},
-  K = {'<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
-  r = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'Rename'},
-  s = {
-    name = '+symbol',
-    d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
-    w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
-  w = {
-    name = '+workspace folder',
-    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
-    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} },
-  ['['] = {'<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', 'Diag Prev'},
-  [']'] = {'<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', 'Diag Next'}
-  -- To add nvim-dap debugging, see example for Scala here
-  -- https://github.com/scalameta/nvim-metals/discussions/39
-}
-
 M.lsp_on_attach = function(client, bufnr)
+
+  local lsp_g_mappings = {
+    name = '+lsp',
+    g = {
+      -- name = '+goto',
+      d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
+      D = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
+      I = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
+      r = {'<Cmd>lua vim.lsp.buf.references()<CR>', 'Goto References'},
+      s = {
+        name = '+goto symbol',
+        d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+        w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} } }
+  }
+
+  local lsp_ll_mappings = {
+    ca = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Action'},
+    d = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
+    F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
+    h = {'<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
+    H = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Hover'},
+    K = {'<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', 'Worksheet Hover'},
+    r = {'<Cmd>lua vim.lsp.buf.rename()<CR>', 'Rename'},
+    s = {
+      name = '+symbol',
+      d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
+      w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
+    w = {
+      name = '+workspace folder',
+      a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+      r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} },
+    ['['] = {'<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', 'Diag Prev'},
+    [']'] = {'<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', 'Diag Next'}
+    -- To add nvim-dap debugging, see example for Scala here
+    -- https://github.com/scalameta/nvim-metals/discussions/39
+  }
 
   local lsp_opts = {
     mode = 'n',

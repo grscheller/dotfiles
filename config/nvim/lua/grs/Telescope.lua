@@ -17,8 +17,8 @@ telescope.setup {
 telescope.load_extension('ui-select')
 
 -- Setup telescope keybindings
-local ok_wk, wk = pcall(require, 'grs.WhichKey')
-if ok_wk then
+local wk = require('grs.WhichKey')
+if wk then
   wk.setupTelescopeKB()
 else
   print('Telescope keybinding setup failed')
