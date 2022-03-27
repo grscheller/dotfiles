@@ -28,8 +28,6 @@ whichkey.setup {
 --[[ Define some general purpose keybindings ]]
 
 -- Window management - modeled somewhat after Sway on Linux
-   -- works with Alacritty out-of-the-box on Linux
-   -- Alacritty configuration changes needed to work on MacOS
 local window_kb = {
   -- Navigating between windows
   ['<M-h>'] = {'<C-W>h', 'Goto Window Left' },
@@ -39,7 +37,7 @@ local window_kb = {
   ['<M-p>'] = {'<C-W>p', 'Goto Previous Window'},
   ['<M-t>'] = {'<Cmd>tabnew<CR>', 'Open New Tab'},
 
-  -- Moving, creating, removing windows 
+  -- Moving, creating, removing windows
   ['<M-S-h>'] = {'<C-W>H', 'Move Window LHS of Screen'},
   ['<M-S-j>'] = {'<C-W>J', 'Move Window BOT of Screen'},
   ['<M-S-k>'] = {'<C-W>K', 'Move Window TOP of Screen'},
@@ -58,7 +56,6 @@ local window_kb = {
   ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter' },  -- Think Alt+Shift+"-"
   ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'  }   -- Think Alt+Shift+"+"
 }
-
 
 local window_opts = {
   mode = 'n',
@@ -88,8 +85,8 @@ local visual_opts = {
 
 whichkey.register(visual_kb, visual_opts)
 
--- Normal mode Leader keybindings
-local normal_leader_kb = {
+-- Normal mode leader keybindings
+local nl_kb = {
   b = {'<Cmd>enew<CR>', 'New Unnamed Buffer'},
   h = {'<Cmd>TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
   k = {'<Cmd>dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
@@ -104,19 +101,18 @@ local normal_leader_kb = {
   ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
 }
 
-local normal_leader_opts = {
+local nl_opts = {
   mode = 'n',
-  prefix = '<Leader>',
+  prefix = '<leader>',
   buffer = nil,
   silent = true,
   noremap = true,
   nowait = true
 }
 
-whichkey.register(normal_leader_kb, normal_leader_opts)
+whichkey.register(nl_kb, nl_opts)
 
---[[ Setup telescope <Leader> keybindings ]]
-
+-- Setup telescope <leader> keybindings
 local ts_mappings = {
   t = {
     name = '+Telescope',
@@ -140,25 +136,26 @@ local ts_mappings = {
   }
 }
 
-local ts_opts = {
-  mode = "n",
-  prefix = "<Leader>",
-  buffer = nil,  -- global mappings for now
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
 M.setupTelescopeKB = function()
+
+  local ts_opts = {
+    mode = 'n',
+    prefix = '<leader>',
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = true
+  }
+
   whichkey.register(ts_mappings, ts_opts)
+
 end
 
---[[ LSP related normal mode <LocalLeader> keymappings ]]
-
+-- LSP related normal mode localleader keymappings
 local lsp_g_mappings = {
   name = '+lsp',
   g = {
-    name = '+goto',
+    -- name = '+goto',
     d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
     D = {'<Cmd>lua vim.lsp.buf.declaration()<CR>', 'Goto Declaration'},
     I = {'<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Goto Implementation'},
@@ -172,10 +169,6 @@ local lsp_g_mappings = {
 local lsp_ll_mappings = {
   ca = {'<Cmd>lua vim.lsp.buf.code_action()<CR>', 'Code Action'},
   d = {'<Cmd>lua vim.diagnostic.setloclist()<CR>', 'Diagnostic Set Local list'},
-  f = {
-    name = '+workspace folder',
-    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
-    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} },
   F = {'<Cmd>lua vim.lsp.buf.formatting()<CR>', 'Formatting'},
   h = {'<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'Signature Help'},
   H = {'<Cmd>lua vim.lsp.buf.hover()<CR>', 'Hover'},
@@ -185,27 +178,32 @@ local lsp_ll_mappings = {
     name = '+symbol',
     d = {'<Cmd>lua vim.lsp.buf.document_symbol()<CR>', 'Document Symbol'},
     w = {'<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'Workspace Symbol'} },
+  w = {
+    name = '+workspace folder',
+    a = {'<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'Add Workspace Folder'},
+    r = {'<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'Remove Workspace Folder'} },
   ['['] = {'<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', 'Diag Prev'},
   [']'] = {'<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', 'Diag Next'}
   -- To add nvim-dap debugging, see example for Scala here
   -- https://github.com/scalameta/nvim-metals/discussions/39
 }
 
-local lsp_proto_opts = {
-  mode = 'n',
-  prefix = '',   -- can get swapped out for '<LocalLeader>'
-  buffer = nil,  -- gets swapped out for buffer number
-  silent = true,
-  noremap = true,
-  nowait = true
-}
-
 M.lsp_on_attach = function(client, bufnr)
-  local opts = lsp_proto_opts
-  opts['buffer'] = bufnr
-  whichkey.register(lsp_g_mappings, opts)
-  opts['prefix'] = '<LocalLeader>'
-  whichkey.register(lsp_ll_mappings, opts)
+
+  local lsp_opts = {
+    mode = 'n',
+    prefix = '',
+    buffer = bufnr,
+    silent = true,
+    noremap = true,
+    nowait = true
+  }
+
+  whichkey.register(lsp_g_mappings, lsp_opts)
+
+  lsp_opts['prefix'] = '<localleader>'
+  whichkey.register(lsp_ll_mappings, lsp_opts)
+
 end
 
 return M

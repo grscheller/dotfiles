@@ -5,8 +5,8 @@
 
   ]]
 
-local ok, telescope = pcall(require, 'telescope')
-if not ok then
+local ok_telescope, telescope = pcall(require, 'telescope')
+if not ok_telescope then
   print('Problem loading telescope. ')
   return
 end
@@ -17,8 +17,8 @@ telescope.setup {
 telescope.load_extension('ui-select')
 
 -- Setup telescope keybindings
-local wk = require('grs.WhichKey')
-if wk then
+local ok_wk, wk = pcall(require, 'grs.WhichKey')
+if ok_wk then
   wk.setupTelescopeKB()
 else
   print('Telescope keybinding setup failed')
