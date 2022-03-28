@@ -13,12 +13,16 @@
 local wk = require('grs.WhichKey')
 
 --[[ Vim-Sneak
-       s<Char><Char>  -- like a 2 char f (but multiline)
-       S<Char><Char>  -- like a 2 char F 
-       f<Char>  -- Replace these with
-       F<Char>  -- one char sneak,
-       t<Char>  -- but without using
-       T<Char>  -- label-mode (poor man's EasyMotion)   ]]
+
+     s<Char><Char>  -- like a 2 char f (but multiline)
+     S<Char><Char>  -- like a 2 char F (but multiline)
+
+     Also, set up Sneak based single <char> versions
+     of f, F, t, T motion commands.
+
+     For operator pendding motions, use z & Z
+     instead of s & S since vim-surround took them   ]]
+
 if wk then
   wk.setupSneakKB()
 else

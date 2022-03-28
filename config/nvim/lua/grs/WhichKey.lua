@@ -67,12 +67,8 @@ local window_mappings = {
 }
 
 local opts = {
-  mode = 'n',
-  prefix = '',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
+  mode = 'n', prefix = '', buffer = nil,
+  silent = true, noremap = true, nowait = true
 }
 
 whichkey.register(window_mappings, opts)
@@ -84,12 +80,8 @@ local visual_mappings = {
 }
 
 local visual_opts = {
-  mode = 'v',
-  prefix = '',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
+  mode = 'v', prefix = '', buffer = nil,
+  silent = true, noremap = true, nowait = true
 }
 
 whichkey.register(visual_mappings, visual_opts)
@@ -99,7 +91,7 @@ local nl_mappings = {
   b = {'<Cmd>enew<CR>', 'New Unnamed Buffer'},
   h = {'<Cmd>TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
   k = {'<Cmd>dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
-  r = {'<Cmd>mode<CR>', 'Clear & Redraw Screen'},  -- Lost <C-L> for this above
+  r = {'<Cmd>mode<CR>', 'Clear & Redraw Screen'},
   n = {'<Cmd>lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
   f = {
     name = '+Fish Shell in Terminal',
@@ -111,12 +103,8 @@ local nl_mappings = {
 }
 
 local nl_opts = {
-  mode = 'n',
-  prefix = '<leader>',
-  buffer = nil,
-  silent = true,
-  noremap = true,
-  nowait = true
+  mode = 'n', prefix = '<leader>', buffer = nil,
+  silent = true, noremap = true, nowait = true
 }
 
 whichkey.register(nl_mappings, nl_opts)
@@ -132,14 +120,16 @@ M.setupSneakKB = function()
   }
 
   local sneak_opts = {
-    mode = 'n',
-    prefix = '',
-    buffer = nil,
-    silent = true,
-    noremap = false,
-    nowait = false
+    mode = 'n', prefix = '', buffer = nil,
+    silent = true, noremap = false, nowait = true
   }
 
+  whichkey.register(sneak_mappings, sneak_opts)
+
+  sneak_opts['mode'] = 'x'
+  whichkey.register(sneak_mappings, sneak_opts)
+
+  sneak_opts['mode'] = 'o'
   whichkey.register(sneak_mappings, sneak_opts)
 
 end
@@ -171,12 +161,8 @@ M.setupTelescopeKB = function()
   }
 
   local ts_opts = {
-    mode = 'n',
-    prefix = '<leader>',
-    buffer = nil,
-    silent = true,
-    noremap = true,
-    nowait = true
+    mode = 'n', prefix = '<leader>', buffer = nil,
+    silent = true, noremap = true, nowait = true
   }
 
   whichkey.register(ts_mappings, ts_opts)
@@ -223,12 +209,8 @@ M.lsp_on_attach = function(client, bufnr)
   }
 
   local lsp_opts = {
-    mode = 'n',
-    prefix = '',
-    buffer = bufnr,
-    silent = true,
-    noremap = true,
-    nowait = true
+    mode = 'n', prefix = '', buffer = bufnr,
+    silent = true, noremap = true, nowait = true
   }
 
   whichkey.register(lsp_g_mappings, lsp_opts)
