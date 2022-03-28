@@ -7,7 +7,7 @@
 
 local ok_telescope, telescope = pcall(require, 'telescope')
 if not ok_telescope then
-  print('Problem loading telescope. ')
+  print('Problem loading telescope.')
   return
 end
 
@@ -21,5 +21,5 @@ local wk = require('grs.WhichKey')
 if wk then
   wk.setupTelescopeKB()
 else
-  print('Telescope keybinding setup failed')
+  print('Telescope keybindings setup failed')
 end

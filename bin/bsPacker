@@ -18,13 +18,13 @@ PackerGIT=https://github.com/wbthomason/packer.nvim
 test -d "$PackerCloneDir" && {
     chmod -R u+rw "$PackerCloneDir"
     rm -r "$PackerCloneDir" ||
-      printf 'Failed to removed existing "%s" directory.\n' "$PackerCloneDir"
+        printf 'Failed to removed existing "%s" directory.\n' "$PackerCloneDir"
 }
 
 test -f "$PackerCompiled" && {
     chmod u+rw "$PackerCompiled"
     rm -r "$PackerCompiled" ||
-      printf 'Failed to removed existing "%s" file.\n' "$PackerCompiled"
+        printf 'Failed to removed existing "%s" file.\n' "$PackerCompiled"
 }
 
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"

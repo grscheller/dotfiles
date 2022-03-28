@@ -98,16 +98,16 @@ vim.cmd [[
 
 local ok, metals_local = pcall(require, 'metals')
 if ok then
-  metals = metals_local  -- global! for augroup bwlow
-  metals_config = metals.bare_config()  -- global! for augroup bwlow
-  metals_config.settings = {
-    showImplicitArguments = true,
+  g_metals = metals_local                   -- Global for the augroup
+  g_metals_config = g_metals.bare_config()  -- defined below.
+  g_metals_config.settings = {
+    showImplicitArguments = true
   }
   
   vim.cmd [[
     augroup scala_metals_lsp
       au!
-      au FileType scala,sbt lua metals.initialize_or_attach(metals_config)
+      au FileType scala,sbt lua g_metals.initialize_or_attach(g_metals_config)
     augroup end ]]
 else
   print('Problem loading metals.')

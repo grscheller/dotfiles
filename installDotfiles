@@ -63,6 +63,7 @@ CONFIG_FILES='
    nvim/lua/grs/Options.lua
    nvim/lua/grs/Packer.lua
    nvim/lua/grs/Telescope.lua
+   nvim/lua/grs/TextEdit.lua
    nvim/lua/grs/Treesitter.lua
    nvim/lua/grs/WhichKey.lua
    sway/config
