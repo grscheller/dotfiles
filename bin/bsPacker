@@ -2,32 +2,34 @@
 #
 #  Bootstraps packer.nvim by installing it into the right place.
 #
-#  This script a bit heavy handed if all you did was
-#  to update ~/.config/nvim/lua/grs/myPlugins.lua.
-#  In that case all you need to do is just run
+#  This script a bit heavy handed if all you did
+#  was update ~/.config/nvim/lua/grs/Packer.lua.
+#  In that case all just run
 #
 #      :PackerSync
 #
 #  and then restart Neovim.
 #
 
-PackerCloneDir="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim
+PackerCloneDir="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim/
 PackerCompiled="${XDG_CONFIG_HOME:-$HOME/.config}"/nvim/plugin/packer_compiled.lua
 PackerGIT=https://github.com/wbthomason/packer.nvim
 
-test -e "$PackerCloneDir" && {
-    rm -rf "$PackerCloneDir"
-    printf 'Removed existing "%s" directory.\n' "$PackerCloneDir"
+test -d "$PackerCloneDir" && {
+    chmod -R u+rw "$PackerCloneDir"
+    rm -r "$PackerCloneDir" ||
+      printf 'Failed to removed existing "%s" directory.\n' "$PackerCloneDir"
 }
 
-test -e "$PackerCompiled" && {
-    rm -rf "$PackerCompiled"
-    printf 'Removed existing "%s" file.\n' "$PackerCompiled"
+test -f "$PackerCompiled" && {
+    chmod u+rw "$PackerCompiled"
+    rm -r "$PackerCompiled" ||
+      printf 'Failed to removed existing "%s" file.\n' "$PackerCompiled"
 }
 
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"
 then
-    nvim -c 'PackerSync'
+    nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 else
     printf 'Error: "git clone" failed for "%s"\n' $PackerGIT
 fi
