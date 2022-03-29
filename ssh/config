@@ -14,7 +14,7 @@ Host gauss17w
   User grs
 
 Host euler7w
-  Hostname 10.100.51.
+  Hostname 10.100.51.180
   Port 22555
   User grs
 
