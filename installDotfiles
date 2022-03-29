@@ -26,6 +26,24 @@ HOME_FILES='
    .inputrc
 '
 
+BIN_SCRIPTS='
+   bsPacker
+   buArch
+   monitor
+   rt
+   spin
+   viewJarManifest
+'
+
+LOCAL_BIN_SCRIPTS='
+   digpath
+   pathtrim
+'
+
+SSH_CONFIGS='
+   config
+'
+
 CONFIG_FILES='
    alacritty/alacritty_default.yml
    alacritty/alacritty_darwin.yml
@@ -70,24 +88,6 @@ CONFIG_FILES='
    waybar/config
    waybar/style.css
    wofi/config
-'
-
-SSH_CONFIGS='
-   config
-'
-
-LOCAL_BIN_SCRIPTS='
-   digpath
-   pathtrim
-'
-
-BIN_SCRIPTS='
-   bsPacker
-   buArch
-   monitor
-   rt
-   spin
-   viewJarManifest
 '
 
 RM_ITEMS="
