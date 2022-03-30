@@ -1,10 +1,10 @@
 Host gauss17
-  Hostname 192.168.1.5
+  Hostname 192.168.1.2
   Port 31502
   User grs
 
 Host euler7
-  Hostname 192.168.1.6
+  Hostname 192.168.1.5
   Port 22555
   User grs
 
