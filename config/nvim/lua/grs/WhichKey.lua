@@ -98,7 +98,7 @@ local nl_mappings = {
     s = {'<Cmd>split<Bar>term fish<CR>i', 'Fish Shell in split'},
     v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'Fish Shell in vsplit'} },
   s = {'<Cmd>set invspell<CR>', 'Toggle Spelling'},
-  w = {'<Cmd>%s/\\s\\+$//<CR>', 'Trim Trailing Whitespace'},
+  w = {'<Cmd>%s/\\s\\+$//<CR><C-O>', 'Trim Trailing Whitespace'},
   ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
 }
 
