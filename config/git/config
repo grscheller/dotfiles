@@ -1,0 +1,10 @@
+[user]
+	name = grscheller
+	email = geoffrey@scheller.com
+[core]
+	editor = nvim
+	pager = nvim -R -c 'setfiletype git'
+[color]
+	pager = no
+[pull]
+	rebase = false
