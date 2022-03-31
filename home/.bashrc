@@ -32,8 +32,8 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     then
         export EDITOR=nvim
         export VISUAL=nvim
-        export MANPAGER='nvim +Man!'
         export PAGER='nvim -R'
+        export MANPAGER='nvim +Man!'
     elif digpath -q vim
     then
         export EDITOR=vim
