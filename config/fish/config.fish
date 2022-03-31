@@ -7,19 +7,6 @@ if [ -z "$fish_features" ]
     set_color normal
 end
 
-## Setup environment variables
-set -gx EDITOR nvim
-set -gx VISUAL nvim
-set -gx PAGER 'nvim -R'
-set -gx MANPAGER 'nvim +Man!'
-
-# Tell Firefox to use Wayland if available
-set -gx MOZ_ENABLE_WAYLAND 1
-# Get QT clients to play nice with Wayland
-set -gx QT_QPA_PLATFORM wayland
-# Set Dark Mode for GTK apps
-set -gx GTK_THEME 'Adwaita:dark'
-
 ## PATH variable management
 set -q VIRGINPATH
 or begin
@@ -35,6 +22,26 @@ end
 
 set -q UPDATE_ENV
 and begin
+    ## Setup initial environment variables
+    
+    # Use Neovim as the pager
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
+    set -gx PAGER 'nvim -R'
+    set -gx MANPAGER 'nvim +Man!'
+
+    # Configure Sway/Wayland for Arch Linux
+    if string match -qr 'arch' (uname -r)
+        # For a functional tray in Waybar, lie
+        set -gx XDG_CURRENT_DESKTOP Unity
+        # Tell Firefox to use Wayland if available
+        set -gx MOZ_ENABLE_WAYLAND 1
+        # Get QT clients to play nice with Wayland
+        set -gx QT_QPA_PLATFORM wayland
+        # Set Dark Mode for GTK apps
+        set -gx GTK_THEME 'Adwaita:dark'
+    end
+
     # Ruby tool chain
     #   Mostly for locally installed ruby gems,
     #     to install these:
