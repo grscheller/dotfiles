@@ -75,7 +75,6 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/init.lua
    nvim/lua/grs/Colorscheme.lua
    nvim/lua/grs/Completions.lua
    nvim/lua/grs/DevEnv.lua
@@ -94,6 +93,7 @@ CONFIG_FILES='
 RM_ITEMS="
    ${HOME}/bin/bsPaq
    ${HOME}/.gitconfig
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/init.lua
    ${XDG_CONFIG_HOME}/git/.gitconfig
    ${XDG_CONFIG_HOME}/git/gitconfig
    ${XDG_CONFIG_HOME}/nvim/lua/grs/Cmp.lua

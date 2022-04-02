@@ -48,35 +48,28 @@ return packer.startup(
     -- Packer manages itself
     use 'wbthomason/packer.nvim'
 
-    -- Speed up loading Lua modules and improve startup time
-    --
-    --   Remove loaded cache and delete cache file
-    --
-    --     :LuaCacheClear
-    --
-    --   View impatient log
-    --
-    --     :LuaCacheLog
-    --
-    -- To be merged with core, see https://github.com/neovim/neovim/pull/15436
-    --
+    --[[ Speed up loading Lua modules and improve startup time
+      
+         Remove loaded cache and delete cache file
+      
+           :LuaCacheClear
+      
+         View impatient log
+      
+           :LuaCacheLog
+      
+       To be merged with core, see https://github.com/neovim/neovim/pull/15436 ]]
     use 'lewis6991/impatient.nvim'
 
-    -- Replaces slow filetype.vim that comes with Neovim
-    --
-    --   bug: Does not recognize 'git diff' as producing
-    --        a 'diff' file.  For this and other edge
-    --        cases use ':setf git' or ':setf diff' as
-    --        work arounds.
-    --
-    --   note: In 0.7 there will be a filetype.lua
-    --
-    --         let g:do_filetype_lua = 1     -- to opt into filetype.lua
-    --         let g:did_load_filetypes = 0  -- to opt out of filetype.vim
-    --         let g:did_load_filetypes = 1  -- to opt out of both
-    --
-    --   see: https://www.reddit.com/r/neovim/comments/rvwsl3/introducing_filetypelua_and_a_call_for_help/
-    --
+    --[[ Replaces slow filetype.vim that comes with Neovim
+      
+         note: In 0.7 there will be a filetype.lua
+      
+              let g:do_filetype_lua = 1     -- to opt into filetype.lua
+              let g:did_load_filetypes = 0  -- to opt out of filetype.vim
+              let g:did_load_filetypes = 1  -- to opt out of both
+      
+         see: https://www.reddit.com/r/neovim/comments/rvwsl3/introducing_filetypelua_and_a_call_for_help/ ]]
     use 'nathom/filetype.nvim'
 
     -- Manage keybindings with Whick Key

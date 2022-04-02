@@ -14,37 +14,33 @@ local options = {
   spelllang = 'en_us',
   fileformats = 'unix,mac,dos',
 
-  -- Set default tabstops, replacing entered tabs with spaces
-  tabstop = 8,       -- Tabstop actual tabs, but display as 8 spaces when on a tabstop
-  shiftwidth = 4,    -- Number of spaces used for auto-indentation, geared to C like languages
-  softtabstop = 4,   -- Insert/delete 4 spaces when inserting <Tab>/<BS>
-  expandtab = true,  --[[ Expand inserted tabs to spaces.  While in
-                          insert mode, use <C-V><Tab> to insert an
-                          actual <Tab> character ]]
+  -- Set default tab stops and auto-indenting behavior
+  tabstop = 8,  -- Set tab stops every 8 columns
+  shiftwidth = 4,  -- Number of columns used for auto-indentation
+  softtabstop = 4,  -- Insert/delete 4 columns of ws when tabbing/backspacing
+  expandtab = true,  -- Use only spaces when tabbing or auto-indenting
 
   -- Other personnal preferences
-  mouse = 'a',        -- Enable mouse for all modes
-  hidden = true,      -- my expectations are that buffers don't get abandoned
+  mouse = 'a',  -- Enable mouse for all modes
+  hidden = true,  -- my expectations are that buffers don't get abandoned
   joinspaces = true,  -- Use 2 spaces when joinig sentances
-  wrap = false,       -- Don't wrap lines
+  wrap = false,  -- Don't wrap lines
   splitbelow = true,  -- Horizontally split below
   splitright = true,  -- Vertically split to right
   nrformats = 'bin,hex,octal,alpha',  -- bases & single letters for <C-A> & <C-X>
-  undofile = true,  --[[ Save undo history in ~/.local/share/nvim/undo/,
-                         nvim never deletes thesw undo histories. ]]
+  undofile = true,  -- Save undo history in ~/.local/share/nvim/undo/
 
   -- Settings affected due to LSP client & plugins
-  timeoutlen = 1000,   -- Milliseconds to wait for key mapped sequence to complete
-  updatetime = 300,    -- Set update time for CursorHold event
+  timeoutlen = 1000,  -- Milliseconds to wait for key mapped sequence to complete
+  updatetime = 300,  -- Set update time for CursorHold event
   signcolumn = 'yes',  -- Fixes first column, reduces jitter
-  showmode = false,    -- Redundant with Lualine
-  showcmd = false,     -- Redundant with WhichKey
+  showmode = false,  -- Redundant with Lualine
+  showcmd = false,  -- Redundant with WhichKey
   completeopt = 'menuone,noinsert,noselect',  -- For nvim-cmp
   termguicolors = true,  -- for Tokyo Night, and most other, colorschemes
   complete = '.,w,b,u,kspell',  -- no "t,i" for ins-completion-menu - redundant with LSP
-  shortmess = 'atToOc',  --[[ shorten statusline, don't give ins-completion-menu
+  shortmess = 'atToOc'  --[[ shorten statusline, don't give ins-completion-menu
                               messages, removed F for Scala Metals ]]
-
 }
 
 -- Case insensitive search, but not in command mode
@@ -93,4 +89,13 @@ end
 
 -- Modified existing nvim options
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
-vim.o.iskeyword = vim.o.iskeyword .. ',-'            -- Adds snake-case to word motions
+vim.o.iskeyword = vim.o.iskeyword .. ',-'  -- Adds snake-case to word motions
+
+-- Setup some general purpose key mappings
+local wk = require('grs.WhichKey')
+
+if wk then
+  wk.gpKB()
+else
+  print('General Purpose key binding setup failed')
+end

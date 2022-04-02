@@ -1,11 +1,19 @@
---[[ Using Which-Key to manage keymappings
+--[[ Using Which-Key to manage key mappings
 
        Module: grs
        File: ~/.config/nvim/lua/grs/WhichKey.lua
 
      The only things this config file should do
-     is setup Which-Key and define keymappings.
+     is setup Which-Key and define key mappings.
+     
+     Which-Keys default key mapping options are
 
+       mode = 'n', prefix = '', buffer = nil,
+       silent = true, noremap = true, nowait = false
+
+     unless specified command starts with <Plug>, then
+
+       noremap = false
   ]]
 
 local M = {}
@@ -28,89 +36,78 @@ whichkey.setup {
   }
 }
 
---[[ Immediately define some general purpose keymappings ]]
+--[[ Define some general purpose key mappings/bindings ]]
 
--- Window management- modeled somewhat after Sway on Linux
-local window_mappings = {
-  -- Navigating between windows
-  ['<M-h>'] = {'<C-W>h', 'Goto Window Left'},
-  ['<M-j>'] = {'<C-W>j', 'Goto Window Down'},
-  ['<M-k>'] = {'<C-W>k', 'Goto Window Up'},
-  ['<M-l>'] = {'<C-W>l', 'Goto Window Right'},
-  ['<M-p>'] = {'<C-W>p', 'Goto Previous Window'},
-  ['<M-t>'] = {'<Cmd>tabnew<CR>', 'Open New Tab'},
+M.gpKB = function()
 
-  -- Moving, creating, removing windows
-  ['<M-S-h>'] = {'<C-W>H', 'Move Window LHS of Screen'},
-  ['<M-S-j>'] = {'<C-W>J', 'Move Window BOT of Screen'},
-  ['<M-S-k>'] = {'<C-W>K', 'Move Window TOP of Screen'},
-  ['<M-S-l>'] = {'<C-W>L', 'Move Window RHS of Screen'},
-  ['<M-S-x>'] = {'<C-W>x', 'Exchange Windows Inner Split'},
-  ['<M-S-r>'] = {'<C-W>r', 'Rotate Windows Inner Split'},
-  ['<M-S-q>'] = {'<C-W>q', 'Quit Current Window'},
-  ['<M-S-c>'] = {'<C-W>c', 'Close Current Windows'},
-  ['<M-S-o>'] = {'<C-W>o', 'Close All other Windows in Tab'},
-  ['<M-S-e>'] = {'<C-W>=', 'Equalize Heights/Widths Windows'},
-  ['<M-S-t>'] = {'<C-W>T', 'Break Window Out New Tab'},
+  -- Window management, modeled somewhat after Sway on Linux
+  local window_mappings = {
+    -- Navigating between windows
+    ['<M-h>'] = {'<C-W>h', 'Goto Window Left'},
+    ['<M-j>'] = {'<C-W>j', 'Goto Window Down'},
+    ['<M-k>'] = {'<C-W>k', 'Goto Window Up'},
+    ['<M-l>'] = {'<C-W>l', 'Goto Window Right'},
+    ['<M-p>'] = {'<C-W>p', 'Goto Previous Window'},
+    ['<M-t>'] = {'<Cmd>tabnew<CR>', 'Open New Tab'},
 
-  -- Resizing windows
-  ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},  -- Think Alt+"-"
-  ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'},     -- Think Alt+"+"
-  ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter'},   -- Think Alt+Shift+"-"
-  ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'},    -- Think Alt+Shift+"+"
+    -- Moving, creating, removing windows
+    ['<M-S-h>'] = {'<C-W>H', 'Move Window LHS of Screen'},
+    ['<M-S-j>'] = {'<C-W>J', 'Move Window BOT of Screen'},
+    ['<M-S-k>'] = {'<C-W>K', 'Move Window TOP of Screen'},
+    ['<M-S-l>'] = {'<C-W>L', 'Move Window RHS of Screen'},
+    ['<M-S-x>'] = {'<C-W>x', 'Exchange Windows Inner Split'},
+    ['<M-S-r>'] = {'<C-W>r', 'Rotate Windows Inner Split'},
+    ['<M-S-q>'] = {'<C-W>q', 'Quit Current Window'},
+    ['<M-S-c>'] = {'<C-W>c', 'Close Current Windows'},
+    ['<M-S-o>'] = {'<C-W>o', 'Close All other Windows in Tab'},
+    ['<M-S-e>'] = {'<C-W>=', 'Equalize Heights/Widths Windows'},
+    ['<M-S-t>'] = {'<C-W>T', 'Break Window Out New Tab'},
 
-  -- Move view in window, only move cursor to keep on screen
-  ['<C-H>'] = {'z4h', 'Move View Left 4 Columns'  },
-  ['<C-J>'] = {'3<C-E>', 'Move View Down 3 Lines' },
-  ['<C-K>'] = {'3<C-Y>', 'Move View Up 3 Lines'   },
-  ['<C-L>'] = {'z4l', 'Move View Right 4 Colunms' }
-}
+    -- Resizing windows
+    ['<M-->'] = {'2<C-W><', 'Make Window Narrower'},  -- Think Alt+"-"
+    ['<M-=>'] = {'2<C-W>>', 'Make Window Wider'},     -- Think Alt+"+"
+    ['<M-_>'] = {'2<C-W>-', 'Make Window Shorter'},   -- Think Alt+Shift+"-"
+    ['<M-+>'] = {'2<C-W>+', 'Make Window Taller'},    -- Think Alt+Shift+"+"
 
-local opts = {
-  mode = 'n', prefix = '', buffer = nil,
-  silent = true, noremap = true, nowait = true
-}
+    -- Move view in window, only move cursor to keep on screen
+    ['<C-H>'] = {'z4h', 'Move View Left 4 Columns'},
+    ['<C-J>'] = {'3<C-E>', 'Move View Down 3 Lines'},
+    ['<C-K>'] = {'3<C-Y>', 'Move View Up 3 Lines'},
+    ['<C-L>'] = {'z4l', 'Move View Right 4 Colunms'}
+  }
 
-whichkey.register(window_mappings, opts)
+  whichkey.register(window_mappings, {})
 
--- Visual mode keymappings
-local visual_mappings = {
-  ['<'] = {'<gv', 'Shift Left & Reselect'},  -- Reselect visual region
-  ['>'] = {'>gv', 'Shift Right & Reselect'}  -- upon indention of text.
-}
+  -- Visual mode key mappings
+  local visual_mappings = {
+    ['<'] = {'<gv', 'Shift Left & Reselect'},  -- Reselect visual region
+    ['>'] = {'>gv', 'Shift Right & Reselect'}  -- upon indention of text.
+  }
 
-local visual_opts = {
-  mode = 'v', prefix = '', buffer = nil,
-  silent = true, noremap = true, nowait = true
-}
+  whichkey.register(visual_mappings, { mode = 'v' })
 
-whichkey.register(visual_mappings, visual_opts)
+  -- Normal mode leader key mappings
+  local nl_mappings = {
+    b = {'<Cmd>enew<CR>', 'New Unnamed Buffer'},
+    h = {'<Cmd>TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
+    k = {'<Cmd>dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
+    r = {'<Cmd>mode<CR>', 'Clear & Redraw Screen'},
+    n = {'<Cmd>lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
+    f = {
+      name = '+Fish Shell in Terminal',
+      s = {'<Cmd>split<Bar>term fish<CR>i', 'Fish Shell in split'},
+      v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'Fish Shell in vsplit'} },
+    s = {'<Cmd>set invspell<CR>', 'Toggle Spelling'},
+    w = {'<Cmd>%s/\\s\\+$//<CR><C-O>', 'Trim Trailing Whitespace'},
+    ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
+  }
 
--- Normal mode leader keymappings
-local nl_mappings = {
-  b = {'<Cmd>enew<CR>', 'New Unnamed Buffer'},
-  h = {'<Cmd>TSBufToggle highlight<CR>', 'Treesitter Highlight Toggle'},
-  k = {'<Cmd>dig<CR>a<C-K>', 'Pick & Enter Diagraph'},
-  r = {'<Cmd>mode<CR>', 'Clear & Redraw Screen'},
-  n = {'<Cmd>lua myLineNumberToggle()<CR>', 'Line Number Toggle'},
-  f = {
-    name = '+Fish Shell in Terminal',
-    s = {'<Cmd>split<Bar>term fish<CR>i', 'Fish Shell in split'},
-    v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'Fish Shell in vsplit'} },
-  s = {'<Cmd>set invspell<CR>', 'Toggle Spelling'},
-  w = {'<Cmd>%s/\\s\\+$//<CR><C-O>', 'Trim Trailing Whitespace'},
-  ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
-}
+  whichkey.register(nl_mappings, { prefix = '<leader>' })
 
-local nl_opts = {
-  mode = 'n', prefix = '<leader>', buffer = nil,
-  silent = true, noremap = true, nowait = true
-}
+end
 
-whichkey.register(nl_mappings, nl_opts)
-
--- Setup Plugin justinmk/vim-sneak
-M.setupSneakKB = function()
+-- Setup justinmk/vim-sneak key mappings
+M.sneakKB = function()
 
   local sneak_mappings = {
     f = {'<Plug>Sneak_f', 'f 1-char sneak'},
@@ -119,23 +116,14 @@ M.setupSneakKB = function()
     T = {'<Plug>Sneak_T', 'T 1-char sneak'}
   }
 
-  local sneak_opts = {
-    mode = 'n', prefix = '', buffer = nil,
-    silent = true, noremap = false, nowait = true
-  }
-
-  whichkey.register(sneak_mappings, sneak_opts)
-
-  sneak_opts['mode'] = 'x'
-  whichkey.register(sneak_mappings, sneak_opts)
-
-  sneak_opts['mode'] = 'o'
-  whichkey.register(sneak_mappings, sneak_opts)
+  whichkey.register(sneak_mappings, {})
+  whichkey.register(sneak_mappings, { mode = 'x' })
+  whichkey.register(sneak_mappings, { mode = 'o' })
 
 end
 
--- Setup telescope <leader> keymappings
-M.setupTelescopeKB = function()
+-- Setup telescope <leader> key mappings
+M.telescopeKB = function()
 
   local ts_mappings = {
     t = {
@@ -165,15 +153,14 @@ M.setupTelescopeKB = function()
     silent = true, noremap = true, nowait = true
   }
 
-  whichkey.register(ts_mappings, ts_opts)
+  whichkey.register(ts_mappings, { prefix = '<leader>' })
 
 end
 
--- LSP related normal mode localleader keymappings
+-- LSP related normal mode localleader key mappings
 M.lsp_on_attach = function(client, bufnr)
 
   local lsp_g_mappings = {
-    name = '+lsp',
     g = {
       -- name = '+goto',
       d = {'<Cmd>lua vim.lsp.buf.definition()<CR>', 'Goto Definition'},
@@ -208,15 +195,8 @@ M.lsp_on_attach = function(client, bufnr)
     -- https://github.com/scalameta/nvim-metals/discussions/39
   }
 
-  local lsp_opts = {
-    mode = 'n', prefix = '', buffer = bufnr,
-    silent = true, noremap = true, nowait = true
-  }
-
-  whichkey.register(lsp_g_mappings, lsp_opts)
-
-  lsp_opts['prefix'] = '<localleader>'
-  whichkey.register(lsp_ll_mappings, lsp_opts)
+  whichkey.register(lsp_g_mappings, { buffer = bufnr })
+  whichkey.register(lsp_ll_mappings, { prefix = '<localleader>', buffer = bufnr })
 
 end
 

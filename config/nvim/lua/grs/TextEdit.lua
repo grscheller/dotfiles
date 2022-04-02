@@ -1,4 +1,4 @@
---[[ Contains configurations for basic text editing using plugins
+--[[ Contains configurations for basic text editing plugins
 
        Module: grs
        File: ~/.config/nvim/lua/grs/TextEdit.lua
@@ -10,11 +10,6 @@
        tpope/vim-repeat     ]]
 
 local wk = require('grs.WhichKey')
-
---[[ Vim Commentary - comment out sections of code quickly
-
-     gc<motion>  -- in normal mode
-     gc          -- in visualmode  ]]
 
 --[[ Vim Sneak - 2 chaacter, multiline version of f & t
 
@@ -28,9 +23,9 @@ local wk = require('grs.WhichKey')
      instead of s & S since vim-surround took them   ]]
 
 if wk then
-  wk.setupSneakKB()
+  wk.sneakKB()
 else
-  print('Vim-Sneak keybindings setup failed')
+  print('Vim-Sneak key binding setup failed')
 end
 
 --[[ Vim Surround - manipulate matching surrounding symbols

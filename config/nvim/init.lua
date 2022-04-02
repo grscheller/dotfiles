@@ -9,4 +9,10 @@ end
 require('grs.Packer')
 
 -- Configure an IDE like Neovim software development environment
-require('grs')
+require('grs.Options')      -- Setup options, functions, autocmds
+require('grs.TextEdit')     -- Configure general text editing related plugins
+require('grs.Treesitter')   -- Install language modules for built in treesitter
+require('grs.Telescope')    -- Configure telescope, an extendable fuzzy finder
+require('grs.Completions')  -- Setup completions & snippets
+require('grs.DevEnv')       -- Development environment and LSP setup
+require('grs.Colorscheme')  -- Colorscheme & statusline
