@@ -75,7 +75,7 @@ return packer.startup(
     -- Manage keybindings with Whick Key
     use 'folke/which-key.nvim'
 
-    -- Text editing plugins
+    -- General purpose text editing plugins
     use 'tpope/vim-commentary'
     use 'justinmk/vim-sneak'
     use 'tpope/vim-surround'
