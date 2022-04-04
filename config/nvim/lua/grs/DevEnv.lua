@@ -53,7 +53,7 @@ for _, lsp_server in ipairs(lsp_servers) do
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
-      debounce_text_changes =150  -- Default for Neovim 0.7+
+      debounce_text_changes = 150  -- Default for Neovim 0.7+
     }
   }
 end
@@ -88,29 +88,24 @@ else
 end
 
 --[[ Scala lang configuration ]]
--- Todo: fix keybindings
 -- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
-vim.cmd [[
-  augroup scala_config
-    au!
-    au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
-  augroup end ]]
 
-local ok, metals_local = pcall(require, 'metals')
+local ok, l_metals = pcall(require, 'metals')
 if ok then
-  g_metals = metals_local                   -- Global for the augroup
+  g_metals = l_metals                       -- Global for the augroup
   g_metals_config = g_metals.bare_config()  -- defined below.
-  g_metals_config.settings = {
-    showImplicitArguments = true
-  }
+  g_metals_config.settings = { showImplicitArguments = true }
+  g_metals_config.on_attach = whichkey.lsp_on_attach
   
   vim.cmd [[
     augroup scala_metals_lsp
       au!
+      au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
       au FileType scala,sbt lua g_metals.initialize_or_attach(g_metals_config)
-    augroup end ]]
+    augroup end
+  ]]
 else
-  print('Problem loading metals.')
+  print('Problem loading metals: ' .. l_metals)
 end
 
 --[[ Zig lang Configuration ]]
