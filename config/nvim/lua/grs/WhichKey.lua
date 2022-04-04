@@ -21,13 +21,13 @@ local M = {}
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
-local ok, whichkey = pcall(require, 'which-key')
+local ok, wk = pcall(require, 'which-key')
 if not ok then
-  print('Problem loading which-key.nvim: ' .. whichkey)
+  print('Problem loading which-key.nvim: ' .. wk)
   return false
 end
 
-whichkey.setup {
+wk.setup {
   plugins = {
     spelling = {
       enabled = true,
@@ -36,8 +36,9 @@ whichkey.setup {
   }
 }
 
---[[ Define some general purpose key mappings/bindings ]]
+M.wk = wk
 
+-- Define some general purpose key mappings/bindings
 M.gpKB = function()
 
   -- Window management, modeled somewhat after Sway on Linux
@@ -76,7 +77,7 @@ M.gpKB = function()
     ['<C-L>'] = {'z4l', 'Move View Right 4 Colunms'}
   }
 
-  whichkey.register(window_mappings, {})
+  wk.register(window_mappings, {})
 
   -- Visual mode key mappings
   local visual_mappings = {
@@ -84,7 +85,7 @@ M.gpKB = function()
     ['>'] = {'>gv', 'Shift Right & Reselect'}  -- upon indention of text.
   }
 
-  whichkey.register(visual_mappings, { mode = 'v' })
+  wk.register(visual_mappings, { mode = 'v' })
 
   -- Normal mode leader key mappings
   local nl_mappings = {
@@ -102,58 +103,7 @@ M.gpKB = function()
     ['<Space>'] = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'}
   }
 
-  whichkey.register(nl_mappings, { prefix = '<leader>' })
-
-end
-
--- Setup justinmk/vim-sneak key mappings
-M.sneakKB = function()
-
-  local sneak_mappings = {
-    f = {'<Plug>Sneak_f', 'f 1-char sneak'},
-    F = {'<Plug>Sneak_F', 'F 1-char sneak'},
-    t = {'<Plug>Sneak_t', 't 1-char sneak'},
-    T = {'<Plug>Sneak_T', 'T 1-char sneak'}
-  }
-
-  whichkey.register(sneak_mappings, {})
-  whichkey.register(sneak_mappings, { mode = 'x' })
-  whichkey.register(sneak_mappings, { mode = 'o' })
-
-end
-
--- Setup telescope <leader> key mappings
-M.telescopeKB = function()
-
-  local ts_mappings = {
-    t = {
-      name = '+Telescope',
-      b = {
-        name = '+Telescope Buffer',
-        l = {"<Cmd>lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
-        z = {"<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'} },
-      f = {
-        name = '+Telescope Files',
-        f = {"<Cmd>lua require('telescope.builtin').find_files()<CR>", 'Find File'},
-        r = {"<Cmd>lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'} },
-      g = {
-        name = '+Telescope Grep',
-        l = {"<Cmd>lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
-        s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
-      t = {
-        name = '+Telescope Tags',
-        b = {"<Cmd>lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
-        h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
-        t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
-    }
-  }
-
-  local ts_opts = {
-    mode = 'n', prefix = '<leader>', buffer = nil,
-    silent = true, noremap = true, nowait = true
-  }
-
-  whichkey.register(ts_mappings, { prefix = '<leader>' })
+  wk.register(nl_mappings, { prefix = '<leader>' })
 
 end
 
@@ -195,8 +145,8 @@ M.lsp_on_attach = function(client, bufnr)
     -- https://github.com/scalameta/nvim-metals/discussions/39
   }
 
-  whichkey.register(lsp_g_mappings, { buffer = bufnr })
-  whichkey.register(lsp_ll_mappings, { prefix = '<localleader>', buffer = bufnr })
+  wk.register(lsp_g_mappings, { buffer = bufnr })
+  wk.register(lsp_ll_mappings, { prefix = '<localleader>', buffer = bufnr })
 
 end
 

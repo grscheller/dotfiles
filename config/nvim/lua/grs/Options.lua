@@ -92,10 +92,10 @@ vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pa
 vim.o.iskeyword = vim.o.iskeyword .. ',-'  -- Adds snake-case to word motions
 
 -- Setup some general purpose key mappings
-local wk = require('grs.WhichKey')
+local whichkey = require('grs.WhichKey')
 
-if wk then
-  wk.gpKB()
+if whichkey then
+  whichkey.gpKB()
 else
   print('General Purpose key binding setup failed')
 end

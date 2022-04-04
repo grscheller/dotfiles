@@ -6,8 +6,8 @@
   ]]
 
 -- Punt LSP config if Which-Key not available
-local wk = require('grs.WhichKey')
-if not wk then
+local whichkey = require('grs.WhichKey')
+if not whichkey then
   print('Which-Key unavailable, punting on LSP config. ')
   return
 end
@@ -45,7 +45,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local on_attach = function(client, bufnr)
-  wk.lsp_on_attach(client, bufnr)
+  whichkey.lsp_on_attach(client, bufnr)
 end
 
 for _, lsp_server in ipairs(lsp_servers) do
