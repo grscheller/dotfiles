@@ -45,7 +45,7 @@ SSH_CONFIGS='
 '
 
 CONFIG_FILES='
-   alacritty/alacritty_default.yml
+   alacritty/alacritty_archsway.yml
    alacritty/alacritty_darwin.yml
    fish/completions/alacritty.fish
    fish/config.fish
@@ -93,10 +93,9 @@ CONFIG_FILES='
 RM_ITEMS="
    ${HOME}/bin/bsPaq
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/init.lua
-   ${XDG_CONFIG_HOME}/git/.gitconfig
-   ${XDG_CONFIG_HOME}/git/gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Cmp.lua
+   ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
+   ${XDG_CONFIG_HOME}/alacritty/alacritty_default.yml
+   ${XDG_CONFIG_HOME}/alacritty/alacritty_archsway.yml
 "
 
 ## Function to removes files
@@ -189,10 +188,8 @@ done
 if [[ $(uname) == Darwin ]]
 then
    mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_darwin,}.yml
-   rm -f "${XDG_CONFIG_HOME}"/alacritty/alacritty_default.yml
 else
-   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_default,}.yml
-   rm -f "{$XDG_CONFIG_HOME}"/alacritty/alacritty_darwin.yml
+   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_archsway,}.yml
 fi
 
 ### Some final clean up
