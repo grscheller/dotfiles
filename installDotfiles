@@ -45,7 +45,7 @@ SSH_CONFIGS='
 '
 
 CONFIG_FILES='
-   alacritty/alacritty_archsway.yml
+   alacritty/alacritty_linux.yml
    alacritty/alacritty_darwin.yml
    fish/completions/alacritty.fish
    fish/config.fish
@@ -91,9 +91,9 @@ CONFIG_FILES='
 '
 
 RM_ITEMS="
-   ${HOME}/bin/bsPaq
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
+   ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_default.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_archsway.yml
 "
@@ -189,7 +189,7 @@ if [[ $(uname) == Darwin ]]
 then
    mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_darwin,}.yml
 else
-   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_archsway,}.yml
+   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_linux,}.yml
 fi
 
 ### Some final clean up
