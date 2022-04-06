@@ -147,7 +147,5 @@ abbr -a -g gs git status  # gs steps on ghostscript
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g ue UPDATE_ENV=yes fish
 
-# Shell network cmds
-abbr -a -g kn sudo systemctl restart systemd-networkd.service
-abbr -a -g kw 'iwctl device list;iwctl device list'
-abbr -a -g sr swap_resolv_conf
+# Kick wifi networking
+abbr -a -g kw 'swap_resolv_conf;iwctl device list;sleep 1;iwctl device list;getent hosts fast.net;swap_resolv_conf;getent hosts github.com'

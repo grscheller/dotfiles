@@ -105,7 +105,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     bindsym $mod+Escape exec swaylock -f -F -e -c 003333
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
 
 #
 # Moving around:
