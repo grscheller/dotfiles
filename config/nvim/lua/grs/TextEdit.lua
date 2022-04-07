@@ -14,6 +14,9 @@ if whichkey then
 end
 
 -- Configure justtinmk/vim-sneak plugin
+--
+vim.g['sneak#label'] = 1  -- minimalist alternative to EasyMotion
+
 if whichkey then
   local sneak_mappings = {
     f = {'<Plug>Sneak_f', 'f 1-char sneak'},
