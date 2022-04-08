@@ -6,6 +6,7 @@
 # under XWayland.  That said, we still want the fish shell
 # running in Alacritty to be aware of a Wayland environment
 # and have any launched applications run under Wayland, not XWayland.
+#
 function fishterm --description 'Launch fish shell running in Alacritty terminal'
 
     set -g _fishterm_do_it yes

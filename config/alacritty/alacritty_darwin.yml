@@ -401,8 +401,6 @@ selection:
 # Shell
 shell:
   program: fish
-  args:
-    - --login
 
 # Startup directory
 #

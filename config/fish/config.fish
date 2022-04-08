@@ -87,7 +87,7 @@ and begin
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
-        archJDK 11
+        archJDK 17
         set -x _JAVA_AWT_WM_NONREPARENTING 1
     end
 
