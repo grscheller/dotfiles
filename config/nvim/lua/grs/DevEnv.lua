@@ -88,15 +88,19 @@ else
 end
 
 --[[ Scala lang configuration ]]
+-- For latest Metals Server Version see: https://scalameta.org/metals/docs
 -- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
 
 local ok, l_metals = pcall(require, 'metals')
 if ok then
   g_metals = l_metals                       -- Global for the augroup
   g_metals_config = g_metals.bare_config()  -- defined below.
-  g_metals_config.settings = { showImplicitArguments = true }
+  g_metals_config.settings = {
+    showImplicitArguments = true,
+    serverVersion = '0.11.2+164-6583138f-SNAPSHOT'
+  }
   g_metals_config.on_attach = whichkey.lsp_on_attach
-  
+
   vim.cmd [[
     augroup scala_metals_lsp
       au!
