@@ -14,6 +14,14 @@ Geared to Systemd/Wayland Linux systems.
   * run `./installDotfiles` from cloned repo
   * installs everything into `$HOME`
 
+## Contains
+
+* $HOME configuration files in [home/](home/)
+* XDG configuration files in [config/](config/)
+* SSH configuration files in [ssh/](ssh/)
+* BIN scripts installed from [bin/](bin/)
+* System configuration files in [root/](root/)
+
 ## Factoids
 
 * Tested regularly against Arch Linux and MacOS

@@ -1,10 +1,8 @@
 Host gauss17
-  Hostname 192.168.1.2
   Port 31502
   User grs
 
 Host euler7
-  Hostname 192.168.1.7
   Port 22555
   User grs
 
@@ -36,11 +34,6 @@ Host sc31
 Host gauss17st
   Hostname 10.55.150.179
   Port 31502
-  User grs
-
-Host maxwell4st
-  Hostname 10.55.150.180
-  Port 22042
   User grs
 
 Host voltron
