@@ -167,7 +167,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 #
 # Scratchpad:
 #
-    # Sway has a "scratchpad", which is a bag of holding for floating windows.
+    # Sway has a "scratchpad", which is a bag for holding floating windows.
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
