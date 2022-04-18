@@ -6,35 +6,10 @@ Host euler7
   Port 22555
   User grs
 
-Host gauss17w
-  Hostname 10.100.45.87
-  Port 31502
-  User grs
-
-Host euler7w
-  Hostname 10.100.51.180
-  Port 22555
-  User grs
-
-Host gauss17h
-  Hostname 192.168.1.24
-  Port 31502
-  User grs
-
-Host euler7h
-  Hostname 192.168.1.22
-  Port 22555
-  User grs
-
 Host sc31
   Hostname 10.100.51.89
   Port 22
   User geoffreyscheller
-
-Host gauss17st
-  Hostname 10.55.150.179
-  Port 31502
-  User grs
 
 Host voltron
   Hostname rvsllschellerg2
