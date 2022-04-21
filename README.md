@@ -12,7 +12,7 @@ Geared to Systemd/Wayland Linux systems.
 
 * [installDotfiles](installDotfiles) installation script
   * run `./installDotfiles` from cloned repo
-  * installs everything into `$HOME`
+  * installs Linux environment into `$HOME`
 
 ## Contains
 
@@ -21,6 +21,7 @@ Geared to Systemd/Wayland Linux systems.
 * SSH configuration files in [ssh/](ssh/)
 * BIN scripts installed from [bin/](bin/)
 * System configuration files in [root/](root/)
+* Personnal "homepage" files in [web/](web/)
 
 ## Factoids
 
