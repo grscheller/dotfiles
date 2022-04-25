@@ -44,6 +44,11 @@ SSH_CONFIGS='
    config
 '
 
+WEB_FILES='
+   homepage.html
+   style.css
+'
+
 CONFIG_FILES='
    alacritty/alacritty_linux.yml
    alacritty/alacritty_darwin.yml
@@ -119,7 +124,7 @@ install_file () {
    install_dir="$1"
    file_path="$2"
    src_dir="$3"
-   perm="$4"
+   file_perm="$4"
    src="$src_dir/$file_path"
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
@@ -134,9 +139,9 @@ install_file () {
    # Install file
    if cp "$src" "$trgt"
    then
-      chmod "$perm" "$trgt" || {
+      chmod "$file_perm" "$trgt" || {
          printf '\n'
-         printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$perm" >&2
+         printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm" >&2
          return 1
       }
    else
@@ -175,7 +180,13 @@ done
 for conf_file in $SSH_CONFIGS
 do
    install_file ~/.ssh "$conf_file" ./ssh 0600 || exit 1
-   chmod 0700 ~/.ssh
+done
+chmod 0700 ~/.ssh
+
+# Install Web Files
+for web_file in $WEB_FILES
+do
+   install_file ~/web "$web_file" ./web 0644 || exit 1
 done
 
 # Install $XDG_CONFIG_HOME files
