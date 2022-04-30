@@ -3,7 +3,7 @@
 #  Installs my Fish/Bash, Sway. Neovim environments into the
 #  $HOME directory of my Wayland/Systemd based Linux systems.
 #
-#  Usage: ./installDotfiles
+#  Usage: ./dotfilesInstall
 #
 #         run from the cloned dotfiles directory
 #

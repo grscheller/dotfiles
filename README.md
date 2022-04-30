@@ -10,9 +10,14 @@ Installs my shell & GUI environment into the $HOME
 directory of any sufficiently POSIX like system.
 Geared to Systemd/Wayland Linux systems.
 
-* [installDotfiles](installDotfiles) installation script
-  * run `./installDotfiles` from cloned repo
+* [dotfilesInstall](installDotfiles) installation script
   * installs Linux environment into `$HOME`
+  * run `./dotfilesInstall` from cloned repo
+
+* [systemfilesInstall](installDotfiles) installation script
+  * For (Arch) Linux ONLY
+  * installs Linux system configuration files into `/etc`
+  * run `sudo ./systemfilesInstall` from cloned repo
 
 ## Contains
 
@@ -25,9 +30,12 @@ Geared to Systemd/Wayland Linux systems.
 
 ## Factoids
 
-* Tested regularly against Arch Linux and MacOS
-* Assumes Fish version 3.0+
 * Contains examples of Fish, Bash, and POSIX shell scripting
+  * Assumes Fish version 3.0+
+* Contains my Neovim configuration
+  * Assumes Neovim version 0.7.0+
+  * Neovim configs are Lua based and use LSP heavily
+  * Neovim configs are coming together, but still a work in progress
 * Contain Pyenv hooks to manage Python versions and environments
-* Neovim configs are Lua based and use LSP heavily
-* Neovim configs are coming together, but still a work in progress
+* Tested regularly against Arch Linux
+* No longer tested regularly against MacOS

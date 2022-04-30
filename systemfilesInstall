@@ -1,0 +1,23 @@
+#!/usr/bin/fish
+#
+#  Install system files into my Arch Linux Systems
+#
+#  Usage: sudo ./systemsfilesInstall
+#
+#         run from the cloned dotfiles directory
+#
+
+set -l Files (string sub --start=5 (find root/etc -type f))
+
+for File in $Files
+    test -e $File
+    or begin
+        set -l Dir (string replace -r '/[^/]*$' '' $File)
+        test -d $Dir
+        or mkdir -p $Dir
+        touch test/$File
+    end
+    cp root$File $File
+end
+
+
