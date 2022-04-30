@@ -2,7 +2,7 @@
 
 This repo contains the infrastructure I use
 to maintain and install my Fish, Bash, Neovim,
-Alacritty, Sway and SSH configurations.
+Alacritty, Sway, GIT and SSH configurations.
 
 ## Installation Script
 

@@ -99,8 +99,7 @@ RM_ITEMS="
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
-   ${XDG_CONFIG_HOME}/alacritty/alacritty_default.yml
-   ${XDG_CONFIG_HOME}/alacritty/alacritty_archsway.yml
+   ${XDG_CONFIG_HOME}/fish/functions/swap_resolv_conf.fish
 "
 
 ## Function to removes files
