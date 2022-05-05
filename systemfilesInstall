@@ -20,4 +20,15 @@ for File in $Files
     cp root$File $File
 end
 
+## Services using these configuration files
+#
+#    avahi-daemon.service
+#    dhcpcd.service
+#    iwd.service
+#    systemd-resolved,service
+#   
 
+## Timers needing enabling
+#
+#    reflector.timer
+#
