@@ -97,7 +97,7 @@ if ok then
   g_metals_config = g_metals.bare_config()  -- defined below.
   g_metals_config.settings = {
     showImplicitArguments = true,
-    serverVersion = '0.11.2+166-fc2e37c1-SNAPSHOT'
+    serverVersion = '0.11.5'
   }
   g_metals_config.on_attach = whichkey.lsp_on_attach
 
