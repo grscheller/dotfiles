@@ -21,23 +21,28 @@ local myHasWordsBefore = function()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
--- I think the "mappings" defined below are artifacts of
--- popup completion windows and not true nvim keybindings.
 cmp.setup(
   {
     sources = cmp.config.sources(
       {
         { name = 'nvim_lsp' },
-        { name = 'luasnip' }
-      },
-      {
-        { name = 'buffer' }
+        { name = 'luasnip' },
+        { name = 'buffer',
+          option = {
+            get_bufnrs = function()
+              return { vim.api.nvim_get_current_buf() }
+            end
+          }
+        },
+        { name = path }
       }),
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)
       end
     },
+    -- I think the "mappings" defined below are artifacts of
+    -- popup completion windows and not true nvim keybindings.
     mapping = {
       ['<C-P>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 'c'}),
       ['<C-N>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 'c'}),
@@ -86,9 +91,7 @@ cmp.setup.cmdline(':',
   {
     sources = cmp.config.sources(
       {
-        { name = 'path' }
-      },
-      {
+        { name = 'path' },
         { name = 'cmdline' }
       })
   })

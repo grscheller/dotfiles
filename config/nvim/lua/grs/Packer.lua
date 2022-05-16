@@ -111,12 +111,12 @@ return packer.startup(
     }
 
     -- Snippet support
-    use {
-      'L3MON4D3/LuaSnip',
-      requires = {
-        'rafamadriz/friendly-snippets'
-      }
-    }
+--    use {
+--      'L3MON4D3/LuaSnip',
+--      requires = {
+--        'rafamadriz/friendly-snippets'
+--      }
+--    }
 
     -- Completion
     use {
@@ -128,7 +128,12 @@ return packer.startup(
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path',
         'lukas-reineke/cmp-rg',
-        'saadparwaiz1/cmp_luasnip'
+        { 'saadparwaiz1/cmp_luasnip',
+          requires = {
+            'L3MON4D3/LuaSnip',
+            'rafamadriz/friendly-snippets'
+          }
+        }
       }
     }
 
