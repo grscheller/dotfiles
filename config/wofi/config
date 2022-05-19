@@ -1,5 +1,5 @@
 show=drun
-lines=5
+lines=10
 allow_images=true
 allow_markup=true
 term=/usr/bin/alacritty
