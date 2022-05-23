@@ -10,7 +10,6 @@
 BackupLocation='/buslink/grs/Backup'
 
 ExcludeDirs=(
-    build
     devel
     Downloads
     node_modules
@@ -26,16 +25,12 @@ ExcludeDirs=(
     .config/skypeforlinux/Cache
     .g8
     .gem
-    .gradle/caches
-    .gradle/wrapper
+    .gradle
     .ivy2
-    .local/share/evolution
-    .local/share/gvfs-metadata
-    .local/share/lbry/lbrynet/blobfiles
-    .local/share/nvim/site/pack
+    .local
     .mozilla
     .npm
-    .rustup/toolchains
+    .rustup
     .sane
     .scalac
     .sbt
@@ -49,30 +44,6 @@ ExcludeFiles=(
 ## Run script from home directory
 
 cd ~ || { printf 'Error: Cannot cd to home dir\n'; exit 1; } >&2
-
-## First, backup Evolution Mail App to filesystem before ext HD
-
-printf 'INFO: Archiving Evolution\n' >&2
-
-EvolutionBackupUtil=/usr/lib/evolution/evolution-backup
-EvolutionBackupFile=~/info/EvolutionBackup/evolution_backup.tar.gz
-
-if [[ ! -x $EvolutionBackupUtil ]]; then
-    printf 'WARNING: Evolution backup utility, %s,\n' $EvolutionBackupUtil >&2
-    printf '         either not found or not executable.\n' >&2
-elif [[ ! -d ${EvolutionBackupFile%/*} ]]; then
-    if mkdir -p "${EvolutionBackupFile%/*}"
-    then
-        $EvolutionBackupUtil --backup "$EvolutionBackupFile" ||
-            printf 'WARNING: Evolution backup failed\n' >&2
-    else
-        printf 'WARNING: Cannot create %s' "${EvolutionBackupFile%/*}" >&2
-        printf ' directory\n' >&2
-    fi
-else
-    $EvolutionBackupUtil --backup "$EvolutionBackupFile" ||
-        printf 'WARNING: Evolution backup failed\n' >&2
-fi
 
 ## Check backup location on external HD
 
