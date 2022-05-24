@@ -27,14 +27,14 @@ cmp.setup(
       {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'path' },
         { name = 'buffer',
           option = {
             get_bufnrs = function()
               return { vim.api.nvim_get_current_buf() }
             end
           }
-        },
-        { name = path }
+        }
       }),
     snippet = {
       expand = function(args)
