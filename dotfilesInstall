@@ -1,11 +1,11 @@
 #!/bin/sh
 #
-#  Installs my Fish/Bash, Sway. Neovim environments into the
-#  $HOME directory of my Wayland/Systemd based Linux systems.
+#  Installs my Fish, Bash, Sway. Neovim, Git and SSH configurations
+#  into the $HOME directory of my Wayland/Systemd based Linux systems.
 #
 #  Usage: ./dotfilesInstall
 #
-#         run from the cloned dotfiles directory
+#         run from the root of the cloned dotfiles repo
 #
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.

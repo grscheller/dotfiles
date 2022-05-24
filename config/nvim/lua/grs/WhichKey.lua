@@ -91,6 +91,7 @@ M.gpKB = function()
   local nl_mappings = {
     b = {'<Cmd>enew<CR>', 'new unnamed buffer'},
     h = {'<Cmd>TSBufToggle highlight<CR>', 'treesitter highlight toggle'},
+    i = {'<Cmd>set invspell<CR>', 'toggle spelling'},
     k = {'<Cmd>dig<CR>a<C-k>', 'pick & enter diagraph'},
     l = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'},
     r = {'<Cmd>mode<CR>', 'clear & redraw screen'},
@@ -99,7 +100,7 @@ M.gpKB = function()
       name = '+fish shell in terminal',
       s = {'<Cmd>split<Bar>term fish<CR>i', 'fish shell in split'},
       v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'fish shell in vsplit'} },
-    s = {'<Cmd>set invspell<CR>', 'toggle spelling'},
+    s = {'xi', 'replace lost normal mode s'},
     w = {'<Cmd>%s/\\s\\+$//<CR><C-o>', 'trim trailing whitespace'}
   }
 
