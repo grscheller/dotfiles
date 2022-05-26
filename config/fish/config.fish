@@ -33,7 +33,7 @@ and begin
     # Configure Sway/Wayland for Arch Linux
     if string match -qr 'arch' (uname -r)
         # For a functional tray in Waybar, lie
-        set -gx XDG_CURRENT_DESKTOP Unity
+        set -gx XDG_CURRENT_DESKTOP sway
         # Tell Firefox to use Wayland if available
         set -gx MOZ_ENABLE_WAYLAND 1
         # Get QT clients to play nice with Wayland
