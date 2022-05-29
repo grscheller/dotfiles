@@ -1,3 +1,8 @@
+## Fish configuration for my Arch Linux/Sway DE systems
+#
+#  In the process of removing MacOS support.
+#
+
 ## Make sure $fish_features is set in universal scope
 if [ -z "$fish_features" ]
     set -U fish_features stderr-nocaret qmark-noglob regex-easyesc
@@ -72,8 +77,11 @@ and begin
     # On iMac, put brew clang before system clang - for clangd language server
     set -p PATH /usr/local/opt/llvm/bin
 
-    # Utilities I want to overide most things
-    set -p PATH ~/.local/bin ~/opt/bin
+    # Haskell location used by Cabal and Stack
+    set -p PATH ~/.cabal/bin ~/.local/bin 
+
+    # Utilities I want to overide most things, I put sbt here
+    set -p PATH ~/opt/bin
     # Personal utilities available if not found elsewhere
     set -a PATH ~/bin
     # Added some relative paths, useful for some software projects
@@ -146,6 +154,3 @@ abbr -a -g gs git status  # gs steps on ghostscript
 # Shell environment cmds
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g ue UPDATE_ENV=yes fish
-
-# Kick wifi networking
-abbr -a -g kw 'swap_resolv_conf;iwctl device list;sleep 1;iwctl device list;getent hosts fast.net;swap_resolv_conf;getent hosts github.com'
