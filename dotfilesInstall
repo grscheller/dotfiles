@@ -44,6 +44,10 @@ SSH_CONFIGS='
    config
 '
 
+CABAL_CONFIGS='
+   config
+'
+
 WEB_FILES='
    homepage.html
    style.css
@@ -180,6 +184,12 @@ do
    install_file ~/.ssh "$conf_file" ./ssh 0600 || exit 1
 done
 chmod 0700 ~/.ssh
+
+# Install Cabal Configs for Haskell
+for conf_file in $CABAL_CONFIGS
+do
+   install_file ~/.cabal "$conf_file" ./cabal 0644 || exit 1
+done
 
 # Install Web Files
 for web_file in $WEB_FILES
