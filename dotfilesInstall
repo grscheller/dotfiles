@@ -1,7 +1,8 @@
 #!/bin/sh
 #
-#  Installs my Fish, Bash, Sway. Neovim, Git and SSH configurations
-#  into the $HOME directory of my Wayland/Systemd based Linux systems.
+#  Installs a Fish, Sway. Neovim, Git, SSH and Bash based
+#  software development environment into the $HOME directory
+#  of my Wayland/Systemd based Linux systems.
 #
 #  Usage: ./dotfilesInstall
 #
@@ -10,8 +11,8 @@
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.
 #
-#        Prefer keeping script simple to
-#        bulletproofing a POSIX Shell script.
+#        Prefer keeping this a very simple POSIX script
+#        than having to bulletproof something fancier.
 #
 
 ### Setup
@@ -46,10 +47,6 @@ SSH_CONFIGS='
 
 CABAL_CONFIGS='
    config
-'
-
-STACK_CONFIGS='
-   config.yaml
 '
 
 WEB_FILES='
@@ -193,12 +190,6 @@ chmod 0700 ~/.ssh
 for conf_file in $CABAL_CONFIGS
 do
    install_file ~/.cabal "$conf_file" ./cabal 0644 || exit 1
-done
-
-# Install Stack Configs for Haskell
-for conf_file in $STACK_CONFIGS
-do
-   install_file ~/.stack "$conf_file" ./stack 0644 || exit 1
 done
 
 # Install Web Files
