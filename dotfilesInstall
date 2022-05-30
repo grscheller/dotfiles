@@ -55,8 +55,7 @@ WEB_FILES='
 '
 
 CONFIG_FILES='
-   alacritty/alacritty_linux.yml
-   alacritty/alacritty_darwin.yml
+   alacritty/alacritty.yml
    fish/completions/alacritty.fish
    fish/config.fish
    fish/functions/archJDK.fish
@@ -103,7 +102,6 @@ RM_ITEMS="
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
-   ${XDG_CONFIG_HOME}/fish/functions/swap_resolv_conf.fish
 "
 
 ## Function to removes files
@@ -203,14 +201,6 @@ for conf_file in $CONFIG_FILES
 do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
-
-# Choose alternate config files to use based on OS
-if [[ $(uname) == Darwin ]]
-then
-   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_darwin,}.yml
-else
-   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_linux,}.yml
-fi
 
 ### Some final clean up
 

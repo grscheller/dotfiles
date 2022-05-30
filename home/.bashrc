@@ -34,6 +34,7 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
         export VISUAL=nvim
         export PAGER='nvim -R'
         export MANPAGER='nvim +Man!'
+        export DIFFPROG='nvim -d'
     elif digpath -q vim
     then
         export EDITOR=vim
@@ -49,54 +50,40 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     # Save original PATH
     [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
     
-    # On MacOS Brew installs symlinks here
-    PATH=/usr/local/sbin:$PATH
-    
     # Ruby tool chain
     #   Mostly for the Ruby Markdown linter,
     #   to install linter: $ gem install mdl
-    if [ -d /usr/local/lib/ruby/gems ]
-    then
-        eval PATH=/usr/local/lib/ruby/gems/*/bin:"$PATH"
-    fi
     if [ -d ~/.local/share/gem/ruby ]
     then
         eval PATH=~/.local/share/gem/ruby/*/bin:"$PATH"
     fi
-    PATH=/usr/local/opt/ruby/bin:"$PATH"
     
     # Location Rust Toolchain
     PATH=~/.cargo/bin:"$PATH"
     
-    # SBT on iMac installed with SDKMAN
-    PATH=~/.sdkman/canidates/sbt/current/bin:"$PATH"
-    
-    # On iMac node 16 is "Keg only"
-    PATH=/usr/local/opt/node@16/bin:"$PATH"
-    
-    # For iMac, put brew clang before system clang (for clangd language server)
-    PATH=/usr/local/opt/llvm/bin:"$PATH"
+    # Haskell locations used by Cabal and Stack
+    PATH=~/.cabal/bin:~/.local/bin:"$PATH"
     
     # Utilities I want to overide everything
-    PATH=~/.local/bin:~/opt/bin:"$PATH"
+    PATH=~/opt/bin:~/.local/bin:"$PATH"
     
     # If there is a ~/bin directory, put near end
     PATH="$PATH":~/bin
     
     # Put relative directories at end of PATH, this is for projects
     # where the user takes up residence in the project's root directory.
-    PATH="$PATH":bin:.
+    PATH="$PATH":bin:../bin:.
     
     # Initial Python configuration
     export PIP_REQUIRE_VIRTUALENV=true
-    export PYTHONPATH=lib
     export PYENV_ROOT=~/.pyenv
     PATH=$PYENV_ROOT/shims:"$PATH"
+    export PYTHONPATH=lib:../lib
     
     # Configure Java for Sway/Wayland on ARCH
     if uname -r | grep -q arch
     then
-        archJDK 11
+        archJDK 17
         export _JAVA_AWT_WM_NONREPARENTING=1
     fi
     

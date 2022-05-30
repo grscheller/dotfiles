@@ -30,6 +30,8 @@ function archJDK --description 'Setup JDK on Arch Linux'
         set -gx JAVA_HOME $javaHome
         if string match -q '/usr/lib/jvm/java-*-openjdk/bin' $PATH[1]
             set PATH $javaHome/bin $PATH[2..-1]
+        else if string match -q '/usr/lib/jvm/java-*-openjdk/bin' $PATH[2]
+            set PATH $javaHome/bin $PATH[1] $PATH[3..-1]
         else
             set -p PATH $javaHome/bin
         end

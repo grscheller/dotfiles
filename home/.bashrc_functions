@@ -157,7 +157,7 @@ b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
 fm () {
   local DiR="$1"
   [[ -n $DiR ]] || DiR="$PWD"
-  xdg-open "$DiR"
+  xdg-open "$DiR" 2>/dev/null &
 }
 
 # Terminal which inherits environment of parent shell

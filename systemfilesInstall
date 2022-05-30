@@ -15,7 +15,7 @@ for File in $Files
         set -l Dir (string replace -r '/[^/]*$' '' $File)
         test -d $Dir
         or mkdir -p $Dir
-        touch test/$File
+        touch $File
     end
     cp root$File $File
 end

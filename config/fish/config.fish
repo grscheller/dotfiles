@@ -34,6 +34,7 @@ and begin
     set -gx VISUAL nvim
     set -gx PAGER 'nvim -R'
     set -gx MANPAGER 'nvim +Man!'
+    set -gx DIFFPROG 'nvim -d'
 
     # Configure Sway/Wayland for Arch Linux
     if string match -qr 'arch' (uname -r)
@@ -91,7 +92,7 @@ and begin
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.pyenv
     set -p PATH $PYENV_ROOT/shims
-    set -gx PYTHONPATH lib ../lib
+    set -gx PYTHONPATH lib ../lib  # Not sure best way to handle this
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
