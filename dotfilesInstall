@@ -30,15 +30,12 @@ HOME_FILES='
 BIN_SCRIPTS='
    bsPacker
    buArch
+   digpath
    monitor
+   pathtrim
    rt
    spin
    viewJarManifest
-'
-
-LOCAL_BIN_SCRIPTS='
-   digpath
-   pathtrim
 '
 
 SSH_CONFIGS='
@@ -100,6 +97,8 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
+   ${HOME}/.local/bin/digpath
+   ${HOME}/.local/bin/pathtrim
    ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
 "
@@ -161,18 +160,10 @@ do
    install_file "$HOME" "$Home_File" ./home 0644
 done
 
-## Install local scripts
-
-# Install  ~/bin  scripts
+## Install  ~/bin  scripts
 for File in $BIN_SCRIPTS
 do
    install_file "$HOME/bin" "$File" ./bin 0755
-done
-
-# Install .local/bin scripts
-for File in $LOCAL_BIN_SCRIPTS
-do
-   install_file "$HOME/.local/bin" "$File" ./bin 0755
 done
 
 ## Install configuration files
