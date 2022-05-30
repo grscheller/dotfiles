@@ -2,7 +2,7 @@
 #
 #  Installs a Fish, Sway. Neovim, Git, SSH and Bash based
 #  software development environment into the $HOME directory
-#  of my Wayland/Systemd based Linux systems.
+#  of my Wayland/Systemd based Arch Linux systems.
 #
 #  Usage: ./dotfilesInstall
 #
@@ -52,7 +52,7 @@ WEB_FILES='
 '
 
 CONFIG_FILES='
-   alacritty/alacritty.yml
+   alacritty/alacritty_arch.yml
    fish/completions/alacritty.fish
    fish/config.fish
    fish/functions/archJDK.fish
@@ -192,6 +192,8 @@ for conf_file in $CONFIG_FILES
 do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
+# Keeps sway from rereading its config file mid copy
+mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
 
 ### Some final clean up
 
@@ -199,6 +201,14 @@ done
 test -d ~/catch || mkdir ~/catch || {
    printf '\n'
    printf "Warning: Failed to create '~/catch'.\\n" >&2
+}
+test -d ~/.local/bin || mkdir ~/.local/bin || {
+   printf '\n'
+   printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
+}
+test -d ~/.cabal/bin || mkdir ~/.cabal/bin || {
+   printf '\n'
+   printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
 }
 
 ## Remove no longer needed files system items

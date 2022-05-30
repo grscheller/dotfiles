@@ -36,11 +36,11 @@ world-file: /home/grs/.cabal/world
 -- with-hc-pkg:
 -- program-prefix: 
 -- program-suffix: 
--- library-vanilla: False
+library-vanilla: False
 -- library-profiling:
--- shared: True
+shared: True
 -- static:
--- executable-dynamic: True
+executable-dynamic: True
 -- executable-static: False
 -- profiling:
 -- executable-profiling:
