@@ -65,7 +65,7 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     PATH=~/.cabal/bin:~/.local/bin:"$PATH"
     
     # Utilities I want to overide everything
-    PATH=~/opt/bin:~/.local/bin:"$PATH"
+    PATH=~/opt/bin:"$PATH"
     
     # If there is a ~/bin directory, put near end
     PATH="$PATH":~/bin
@@ -100,12 +100,7 @@ unalias egrep 2>&-
 unalias fgrep 2>&-
 
 # ls alias family
-if [[ $(uname) = DarwinX ]]
-then
-    alias ls='ls -G'
-else
-    alias ls='ls --color=auto'
-fi
+alias ls='ls --color=auto'
 alias la='ls -a'
 alias lh='ls -lh'
 alias ll='ls -ltr'
@@ -113,8 +108,7 @@ alias ll='ls -ltr'
 # For current directory, takes no arguments
 alias l.='ls -dA .*'
 
-alias pst="ps axjf | sed -e '/^ PPID.*$/d' -e's/.*:...//'"
-alias bc='bc -q'
+alias pst='ps -ejH'
 alias nv=nvim
 
 # Website scrapping
@@ -167,18 +161,7 @@ PS2='> '
 PS3='#? '
 PS4='++ '
 
-## SDKMAN, for MacOS
-if [[ -s ~/.sdkman/bin/sdkman-init.sh ]]
-then
-    source ~/.sdkman/bin/sdkman-init.sh
-    PATH="$(pathtrim)"     # Clean up $PATH
-fi
-
-## Configure Haskell
-#  Suppress pedantic warnings, and whatever else may get in the
-#  way of quickly syntax-checking and evaluating an expression
-ghci() { command ghci -v0 -Wno-all "$@"; }
-
+## Configure Haskell Stack completion
 if digpath -q stack
 then
     # Bash completion for stack (Haskell)

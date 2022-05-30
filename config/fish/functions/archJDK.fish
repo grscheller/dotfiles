@@ -35,6 +35,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
         else
             set -p PATH $javaHome/bin
         end
+        set PATH (pathtrim)
         return 0
     else
         printf '\nNo JDK found for Java version %s in the\n' $jdkVersion >&2

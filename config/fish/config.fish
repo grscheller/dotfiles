@@ -1,7 +1,4 @@
 ## Fish configuration for my Arch Linux/Sway DE systems
-#
-#  In the process of removing MacOS support.
-#
 
 ## Make sure $fish_features is set in universal scope
 if [ -z "$fish_features" ]
@@ -38,12 +35,14 @@ and begin
 
     # Configure Sway/Wayland for Arch Linux
     if string match -qr 'arch' (uname -r)
-        # For a functional tray in Waybar, lie
+        # For a functional tray in Waybar
         set -gx XDG_CURRENT_DESKTOP sway
+        set -gx XDG_SESSION_DESKTOP sway
         # Tell Firefox to use Wayland if available
         set -gx MOZ_ENABLE_WAYLAND 1
         # Get QT clients to play nice with Wayland
-        set -gx QT_QPA_PLATFORM wayland
+        set -gx QT_QPA_PLATFORM qt5ct
+        set -gx QT_QPA_PLATFORMTHEME qt5ct
         # Set Dark Mode for GTK apps
         set -gx GTK_THEME 'Adwaita:dark'
     end
@@ -59,24 +58,6 @@ and begin
 
     # Rust toolchain
     set -p PATH ~/.cargo/bin
-
-    # Tools on iMac installed with SDKMAN
-    set -p PATH ~/.sdkman/candidates/java/current/bin
-    set -p PATH ~/.sdkman/candidates/sbt/current/bin
-    set -p PATH ~/.sdkman/candidates/maven/current/bin
-    set -p PATH ~/.sdkman/candidates/gradle/current/bin
-    set -p PATH ~/.sdkman/candidates/groovy/current/bin
-    set -p PATH ~/.sdkman/candidates/leiningen/current/bin
-    set -p PATH ~/.sdkman/candidates/kotlin/current/bin
-
-    # On iMac, node 16 is "keg only"
-    #   For compilers to find node@16 you may need to set:
-    #   set -gx LDFLAGS "-L/usr/local/opt/node@16/lib"
-    #   set -gx CPPFLAGS "-I/usr/local/opt/node@16/include"
-    set -p PATH /usr/local/opt/node@16/bin
-
-    # On iMac, put brew clang before system clang - for clangd language server
-    set -p PATH /usr/local/opt/llvm/bin
 
     # Haskell location used by Cabal and Stack
     set -p PATH ~/.cabal/bin ~/.local/bin 
@@ -141,6 +122,7 @@ abbr -a -g gq 'geeqie &; disown'
 abbr -a -g dp digpath
 abbr -a -g nv nvim
 abbr -a -g path 'string join \n $PATH'
+abbr -a -g -- pst ps -ejH
 
 # Git related cmds - anything more complicated, I want to think about
 abbr -a -g ga git add .
