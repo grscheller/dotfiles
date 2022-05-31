@@ -110,15 +110,7 @@ return packer.startup(
       }
     }
 
-    -- Snippet support
---    use {
---      'L3MON4D3/LuaSnip',
---      requires = {
---        'rafamadriz/friendly-snippets'
---      }
---    }
-
-    -- Completion
+    -- Completion & snippet support
     use {
       'hrsh7th/nvim-cmp',
       requires = {
