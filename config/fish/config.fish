@@ -41,7 +41,8 @@ and begin
         # Tell Firefox to use Wayland if available
         set -gx MOZ_ENABLE_WAYLAND 1
         # Get QT clients to play nice with Wayland
-        set -gx QT_QPA_PLATFORM qt5ct
+        set -gx QT_QPA_PLATFORM wayland
+        # Use /usr/bin/qt5ct utility to adjust QT
         set -gx QT_QPA_PLATFORMTHEME qt5ct
         # Set Dark Mode for GTK apps
         set -gx GTK_THEME 'Adwaita:dark'
