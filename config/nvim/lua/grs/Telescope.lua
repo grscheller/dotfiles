@@ -12,7 +12,7 @@ if not ok_telescope then
 end
 
 telescope.setup {
-  ['ui-select'] = { require('telescope.themes').get_dropdown {} }
+  ['ui-select'] = {require('telescope.themes').get_dropdown {}}
 }
 telescope.load_extension('ui-select')
 
@@ -39,13 +39,13 @@ if whichkey then
         s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'} },
       t = {
         name = '+Telescope Tags',
-        b = {"<Cmd>lua require('telescope.builtin').tags({ only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
+        b = {"<Cmd>lua require('telescope.builtin').tags({only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
         h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
         t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'} }
     }
   }
 
-  wk.register(ts_mappings, { prefix = '<leader>' })
+  wk.register(ts_mappings, {prefix = '<leader>'})
 else
   print('Warning: failed setting up Telescope key mappings')
 end

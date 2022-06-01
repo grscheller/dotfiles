@@ -85,7 +85,7 @@ M.gpKB = function()
     ['>'] = {'>gv', 'shift right & reselect'}  -- upon indention of text.
   }
 
-  wk.register(visual_mappings, { mode = 'v' })
+  wk.register(visual_mappings, {mode = 'v'})
 
   -- Normal mode leader key mappings
   local nl_mappings = {
@@ -104,7 +104,7 @@ M.gpKB = function()
     w = {'<Cmd>%s/\\s\\+$//<CR><C-o>', 'trim trailing whitespace'}
   }
 
-  wk.register(nl_mappings, { prefix = '<leader>' })
+  wk.register(nl_mappings, {prefix = '<leader>'})
 
 end
 
@@ -143,7 +143,7 @@ M.lsp_on_attach = function(client, bufnr)
     -- https://github.com/scalameta/nvim-metals/discussions/39
   }
 
-  wk.register(lsp_mappings, { prefix = '<localleader>', buffer = bufnr })
+  wk.register(lsp_mappings, {prefix = '<localleader>', buffer = bufnr})
 
 end
 

@@ -83,7 +83,7 @@ cmp.setup.cmdline('/',
   {
     sources = cmp.config.sources(
       {
-        { name = 'buffer'  }
+        { name = 'buffer' }
       })
   })
 

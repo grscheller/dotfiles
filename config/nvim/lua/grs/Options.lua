@@ -61,7 +61,7 @@ vim.cmd [[
 vim.cmd[[
   augroup highlight_yank
     au!
-    au TextYankPost * silent! lua vim.highlight.on_yank{timeout=600, on_visual=false}
+    au TextYankPost * silent! lua vim.highlight.on_yank{ timeout=600, on_visual=false }
   augroup end
 ]]
 

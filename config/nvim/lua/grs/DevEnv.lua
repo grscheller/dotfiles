@@ -25,20 +25,23 @@ end
 
 --[[ A minimal config for nvim LSP Installer ]]
 nvimLspInstaller.on_server_ready(function(server)
-  local opts = {}
+  local opts = { }
   server:setup(opts)
 end)
 
 local lsp_servers = {
   -- For list of language servers, follow first
   -- link of https://github.com/neovim/nvim-lspconfig
-  'bashls',  -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
-  'clangd',  -- C and C++ - both clang and gcc
-  'cssls',   -- vscode-css-language-servers
-  'gopls',   -- go language server
-  'html',    -- vscode-html-language-servers
-  'jsonls',  -- vscode-json-language-servers
-  'pyright'  -- Pyright for Python (pacman or npm)
+  'bashls',    -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
+  'clangd',    -- C and C++ - both clang and gcc (pacman clang package)
+  'cssls',     -- vscode-css-language-servers
+  'gopls',     -- go language server
+  'hls',       -- haskell-language-server
+  'html',      -- vscode-html-language-server
+  'jsonls',    -- vscode-json-language-server
+  'pyright',   -- Pyright for Python (pacman or npm)
+  'tsserver',  -- typescript-language-server (pacman)
+  'yamlls'     -- yaml-language-server (pacman or yarn)
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,12 +54,23 @@ end
 for _, lsp_server in ipairs(lsp_servers) do
   lspconfig[lsp_server].setup {
     on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150  -- Default for Neovim 0.7+
-    }
+    capabilities = capabilities
   }
 end
+
+-- lua-language-server configuration for editing Neovim configs
+lspconfig.sumneko_lua.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = { version = 'LuaJIT' },
+      diagnostics = { globals = 'vim' },
+      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      telemetry = { enable = false }
+    }
+  }
+}
 
 --[[ Lua lang configuration ]]
 vim.cmd [[
@@ -80,8 +94,8 @@ local rust_opts = {
   }
 }
 
-local ok, rust_tools = pcall(require, 'rust-tools')
-if ok then
+local ok_rt, rust_tools = pcall(require, 'rust-tools')
+if ok_rt then
   rust_tools.setup(rust_opts)
 else
   print('Problem loading rust-tools.')
@@ -91,21 +105,21 @@ end
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
 -- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
 
-local ok, l_metals = pcall(require, 'metals')
-if ok then
-  g_metals = l_metals                       -- Global for the augroup
-  g_metals_config = g_metals.bare_config()  -- defined below.
-  g_metals_config.settings = {
+local ok_metals, l_metals = pcall(require, 'metals')
+if ok_metals then
+  G_METALS = l_metals                       -- Global for the augroup
+  G_METALS_CONFIG = G_METALS.bare_config()  -- defined below.
+  G_METALS_CONFIG.settings = {
     showImplicitArguments = true,
     serverVersion = '0.11.5'
   }
-  g_metals_config.on_attach = whichkey.lsp_on_attach
+  G_METALS_CONFIG.on_attach = whichkey.lsp_on_attach
 
   vim.cmd [[
     augroup scala_metals_lsp
       au!
       au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
-      au FileType scala,sbt lua g_metals.initialize_or_attach(g_metals_config)
+      au FileType scala,sbt lua G_METALS.initialize_or_attach(G_METALS_CONFIG)
     augroup end
   ]]
 else

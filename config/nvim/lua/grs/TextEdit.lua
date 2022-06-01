@@ -19,13 +19,12 @@ vim.g['sneak#label'] = 1  -- minimalist alternative to EasyMotion
 
 if whichkey then
   local sneak_mappings = {
-    f = {'<Plug>Sneak_f', 'f 1-char sneak'},
-    F = {'<Plug>Sneak_F', 'F 1-char sneak'},
-    t = {'<Plug>Sneak_t', 't 1-char sneak'},
-    T = {'<Plug>Sneak_T', 'T 1-char sneak'}
+    f = { '<Plug>Sneak_f', 'f 1-char sneak' },
+    F = { '<Plug>Sneak_F', 'F 1-char sneak' },
+    t = { '<Plug>Sneak_t', 't 1-char sneak' },
+    T = { '<Plug>Sneak_T', 'T 1-char sneak' }
   }
-
-  wk.register(sneak_mappings, {})
+  wk.register(sneak_mappings, { })
   wk.register(sneak_mappings, { mode = 'x' })
   wk.register(sneak_mappings, { mode = 'o' })
 else
