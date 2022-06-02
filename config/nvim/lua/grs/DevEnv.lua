@@ -24,10 +24,7 @@ if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
 end
 
 --[[ A minimal config for nvim LSP Installer ]]
-nvimLspInstaller.on_server_ready(function(server)
-  local opts = { }
-  server:setup(opts)
-end)
+nvimLspInstaller.setup {}  -- Must be called before interacting with lspconfig
 
 local lsp_servers = {
   -- For list of language servers, follow first
@@ -44,8 +41,8 @@ local lsp_servers = {
   'yamlls'     -- yaml-language-server (pacman or yarn)
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+local capabilities =
+  cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local on_attach = function(client, bufnr)
   whichkey.lsp_on_attach(client, bufnr)
@@ -83,20 +80,17 @@ vim.cmd [[
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust lang configuration ]]
-local rust_opts = {
-  -- Options sent to nvim-lspconfig overriding defaults set by rust-tools.nvim
-  server = {
-    settings = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      standalone = true
-    }
-  }
-}
-
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
-  rust_tools.setup(rust_opts)
+  rust_tools.setup {
+    server = {
+      settings = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        standalone = true
+      }
+    }
+  }
 else
   print('Problem loading rust-tools.')
 end

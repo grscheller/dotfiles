@@ -43,7 +43,7 @@ and begin
         # Get QT clients to play nice with Wayland
         set -gx QT_QPA_PLATFORM wayland
         # Use /usr/bin/qt5ct utility to adjust QT
-        set -gx QT_QPA_PLATFORMTHEME qt5ct
+        set -gx QT_QPA_PLATFORMTHEME qt6ct
         # Set Dark Mode for GTK apps
         set -gx GTK_THEME 'Adwaita:dark'
     end
