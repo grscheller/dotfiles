@@ -17,10 +17,9 @@ telescope.setup {
 telescope.load_extension('ui-select')
 
 -- Using folke/which-key.nvim to manage telescope key mappings
-local whichkey, wk
-whichkey = require('grs.WhichKey')
+local whichkey = require('grs.WhichKey')
 if whichkey then
-  wk = whichkey.wk
+  local wk = whichkey.wk
 
   local ts_mappings = {
     t = {

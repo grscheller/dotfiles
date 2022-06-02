@@ -1,5 +1,5 @@
 --[[ Contains configurations for basic text editing
-     and simple general purpose plugins.
+     and simple general purpose text editing plugins.
 
        Module: grs
        File: ~/.config/nvim/lua/grs/TextEdit.lua
@@ -28,5 +28,5 @@ if whichkey then
   wk.register(sneak_mappings, { mode = 'x' })
   wk.register(sneak_mappings, { mode = 'o' })
 else
-  print('Vim-Sneak key binding setup failed')
+  print('Vim-Sneak "fFtT" key bindings setup failed')
 end

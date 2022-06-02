@@ -24,6 +24,7 @@ if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
 end
 
 --[[ A minimal config for nvim LSP Installer ]]
+
 nvimLspInstaller.setup {}  -- Must be called before interacting with lspconfig
 
 local lsp_servers = {

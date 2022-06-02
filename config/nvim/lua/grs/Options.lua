@@ -29,6 +29,10 @@ local options = {
   splitright = true,  -- Vertically split to right
   nrformats = 'bin,hex,octal,alpha',  -- bases & single letters for <C-A> & <C-X>
   undofile = true,  -- Save undo history in ~/.local/share/nvim/undo/
+  number = false,          -- Default initial window
+  relativenumber = false,  -- line numbering state.
+  ignorecase = true,  -- Default to case insensitive search if
+  smartcase = true,   -- give just lower case search patterns.
 
   -- Settings affected due to LSP client & plugins
   timeoutlen = 1000,  -- Milliseconds to wait for key mapped sequence to complete
@@ -43,10 +47,7 @@ local options = {
                               messages, removed F for Scala Metals ]]
 }
 
--- Case insensitive search, but not in command mode
-options['ignorecase'] = true
-options['smartcase'] = true
-
+-- Case sensitive search while in command mode
 vim.cmd [[
   augroup dynamic_smartcase
     au!
@@ -65,23 +66,6 @@ vim.cmd[[
   augroup end
 ]]
 
--- Toggle between 3 line numbering states on per window basis
-options['number'] = false
-options['relativenumber'] = false
-
-MYLINENUMBERTOGGLE = function()
-  if vim.wo.relativenumber == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  elseif vim.wo.number == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = true
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = false
-  end
-end
-
 -- Now set the options defined above
 for k, v in pairs(options) do
   vim.opt[k] = v
@@ -90,12 +74,3 @@ end
 -- Modified existing nvim options
 vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」'  -- Additional matching pairs of characters
 vim.o.iskeyword = vim.o.iskeyword .. ',-'  -- Adds snake-case to word motions
-
--- Setup some general purpose key mappings
-local whichkey = require('grs.WhichKey')
-
-if whichkey then
-  whichkey.gpKB()
-else
-  print('General Purpose key binding setup failed')
-end
