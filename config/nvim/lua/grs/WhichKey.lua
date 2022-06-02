@@ -41,24 +41,6 @@ vim.g.maplocalleader = '\\'
 
 M.wk = wk
 
---[[ Define functions used in below keymappings ]]
-
--- Toggle between 3 line numbering states on per window basis
-MYLINENUMBERTOGGLE = function()
-  if vim.wo.relativenumber == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  elseif vim.wo.number == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = true
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = false
-  end
-end
-
---[[  Define some general purpose keymappings ]]
-
 -- Window management, modeled somewhat after Sway on Linux
 local window_mappings = {
   -- Navigating between windows
@@ -113,7 +95,6 @@ local nl_mappings = {
   k = {'<Cmd>dig<CR>a<C-k>', 'pick & enter diagraph'},
   l = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'},
   r = {'<Cmd>mode<CR>', 'clear & redraw screen'},
-  n = {'<Cmd>lua MYLINENUMBERTOGGLE()<CR>', 'line number toggle'},
   f = {
     name = '+fish shell in terminal',
     s = {'<Cmd>split<Bar>term fish<CR>i', 'fish shell in split'},
@@ -123,6 +104,23 @@ local nl_mappings = {
 }
 
 wk.register(nl_mappings, {prefix = '<leader>'})
+
+vim.api.nvim_set_keymap('n', '<leader>n', '', {
+  noremap = true,
+  callback = function()
+    if vim.wo.relativenumber == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+    elseif vim.wo.number == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = true
+    else
+      vim.wo.number = true
+      vim.wo.relativenumber = false
+    end
+  end,
+  desc = "line number toggle"
+})
 
 -- LSP related normal mode localleader keymappings
 M.lsp_on_attach = function(client, bufnr)
