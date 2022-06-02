@@ -69,7 +69,7 @@ vim.cmd[[
 options['number'] = false
 options['relativenumber'] = false
 
-myLineNumberToggle = function()
+MYLINENUMBERTOGGLE = function()
   if vim.wo.relativenumber == true then
     vim.wo.number = false
     vim.wo.relativenumber = false

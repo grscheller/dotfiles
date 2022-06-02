@@ -46,7 +46,7 @@ local use = packer.use
 return packer.startup(
   function()
     -- Packer manages itself
-    use 'wbthomason/packer.nvim'
+    use { 'wbthomason/packer.nvim' }
 
     --[[ Speed up loading Lua modules and improve startup time
 
@@ -59,7 +59,7 @@ return packer.startup(
            :LuaCacheLog
 
        To be merged with core, see https://github.com/neovim/neovim/pull/15436 ]]
-    use 'lewis6991/impatient.nvim'
+    use { 'lewis6991/impatient.nvim' }
 
     --[[ Replaces slow filetype.vim that comes with Neovim
 
@@ -70,22 +70,22 @@ return packer.startup(
               let g:did_load_filetypes = 1  -- to opt out of both
 
          see: https://www.reddit.com/r/neovim/comments/rvwsl3/introducing_filetypelua_and_a_call_for_help/ ]]
-    use 'nathom/filetype.nvim'
+    use { 'nathom/filetype.nvim' }
 
     -- Manage keybindings with Whick Key
-    use 'folke/which-key.nvim'
+    use { 'folke/which-key.nvim' }
 
     -- General purpose text editing plugins
-    use 'tpope/vim-commentary'
-    use 'justinmk/vim-sneak'
-    use 'tpope/vim-surround'
-    use 'tpope/vim-repeat'
+    use { 'tpope/vim-commentary' }
+    use { 'justinmk/vim-sneak' }
+    use { 'tpope/vim-surround' }
+    use { 'tpope/vim-repeat' }
 
     -- Colorize names & hexcodes like Purple Blue #15aadd
-    use 'norcalli/nvim-colorizer.lua'
+    use { 'norcalli/nvim-colorizer.lua' }
 
     -- Setup colorscheme & statusline
-    use 'folke/tokyonight.nvim'
+    use { 'folke/tokyonight.nvim' }
 
     use {
       'nvim-lualine/lualine.nvim',
@@ -130,11 +130,11 @@ return packer.startup(
     }
 
     -- LSP configuration
-    use 'neovim/nvim-lspconfig'
+    use { 'neovim/nvim-lspconfig' }
 
-    use 'williamboman/nvim-lsp-installer'
+    use { 'williamboman/nvim-lsp-installer' }
 
-    use 'simrat39/rust-tools.nvim'
+    use { 'simrat39/rust-tools.nvim' }
 
     use {
       'scalameta/nvim-metals',
