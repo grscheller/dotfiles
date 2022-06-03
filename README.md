@@ -21,11 +21,12 @@ Geared to Systemd/Wayland Linux systems.
 
 ## Contains
 
-* $HOME configuration files in [home/](home/)
+* ~/bin scripts installed from [bin/](bin/)
+* Global Haskell Cabal configs in [cabal/](cabal/)
 * XDG configuration files in [config/](config/)
-* SSH configuration files in [ssh/](ssh/)
-* BIN scripts installed from [bin/](bin/)
+* $HOME configuration files in [home/](home/)
 * System configuration files in [root/](root/)
+* SSH configuration files in [ssh/](ssh/)
 * Personnal "homepage" files in [web/](web/)
 
 ## Factoids

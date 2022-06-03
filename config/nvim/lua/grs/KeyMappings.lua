@@ -35,16 +35,19 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
 --[[ Window management, modeled somewhat after Sway on Linux ]]
+local sk = vim.api.nvim_set_keymap
+
+-- Navigating between windows and tabs
+sk('n', '<M-h>', '<C-w>h', {noremap = true, desc = 'goto window left'})
+sk('n', '<M-j>', '<C-w>j', {noremap = true, desc = 'goto window below'})
+sk('n', '<M-k>', '<C-w>k', {noremap = true, desc = 'goto window above'})
+sk('n', '<M-l>', '<C-w>l', {noremap = true, desc = 'goto window right'})
+sk('n', '<M-p>', '<C-w>p', {noremap = true, desc = 'goto previous window'})
+sk('n', '<M-t>', '<Cmd>tabnew<CR>', {noremap = true, desc = 'goto new tab'})
+sk('n', '<M-,>', '<Cmd>-tabnext<CR>', {noremap = true, desc = 'goto tab left'})
+sk('n', '<M-.>', '<Cmd>+tabnext<CR>', {noremap = true, desc = 'goto tab right'})
 
 local window_mappings = {
-  -- Navigating between windows
-  ['<M-h>'] = {'<C-w>h', 'goto window left'},
-  ['<M-j>'] = {'<C-w>j', 'goto window down'},
-  ['<M-k>'] = {'<C-w>k', 'goto window up'},
-  ['<M-l>'] = {'<C-w>l', 'goto window right'},
-  ['<M-p>'] = {'<C-w>p', 'goto previous window'},
-  ['<M-t>'] = {'<Cmd>tabnew<CR>', 'open new tab'},
-
   -- Moving, creating, removing windows
   ['<M-S-h>'] = {'<C-w>H', 'move window lhs'},
   ['<M-S-j>'] = {'<C-w>J', 'move window bot'},
