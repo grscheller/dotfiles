@@ -5,10 +5,10 @@
 
   ]]
 
--- Punt LSP config if Which-Key not available
-local whichkey = require('grs.WhichKey')
-if not whichkey then
-  print('Which-Key unavailable, punting on LSP config. ')
+-- Punt if LSP related keymappings are not available
+local km = require('grs.KeyMappings')
+if not km then
+  print('LSP keymappings not found, problem loading grs.KeyMappings. ')
   return
 end
 
@@ -46,7 +46,7 @@ local capabilities =
   cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local on_attach = function(client, bufnr)
-  whichkey.lsp_on_attach(client, bufnr)
+  km.lsp_on_attach(client, bufnr)
 end
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -108,7 +108,7 @@ if ok_metals then
     showImplicitArguments = true,
     serverVersion = '0.11.6'
   }
-  G_METALS_CONFIG.on_attach = whichkey.lsp_on_attach
+  G_METALS_CONFIG.on_attach = km.lsp_on_attach
 
   vim.cmd [[
     augroup scala_metals_lsp

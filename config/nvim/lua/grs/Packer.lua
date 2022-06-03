@@ -61,7 +61,7 @@ return packer.startup(
        To be merged with core, see https://github.com/neovim/neovim/pull/15436 ]]
     use { 'lewis6991/impatient.nvim' }
 
-    -- Manage keybindings with Whick Key
+    -- Make keybindings discoverable with Whick-Key
     use { 'folke/which-key.nvim' }
 
     -- General purpose text editing plugins

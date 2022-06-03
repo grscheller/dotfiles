@@ -88,7 +88,7 @@ CONFIG_FILES='
    nvim/lua/grs/Telescope.lua
    nvim/lua/grs/TextEdit.lua
    nvim/lua/grs/Treesitter.lua
-   nvim/lua/grs/WhichKey.lua
+   nvim/lua/grs/KeyMappings.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -97,10 +97,9 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${HOME}/.local/bin/digpath
-   ${HOME}/.local/bin/pathtrim
    ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
    ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/WhichKey.lua
 "
 
 ## Function to removes files

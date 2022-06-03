@@ -1,25 +1,17 @@
---[[ Using Which-Key to manage keymappings/bindings
+--[[ Using Which-Key to make keymappings/bindings user discoverable
 
        Module: grs
-       File: ~/.config/nvim/lua/grs/WhichKey.lua
+       File: ~/.config/nvim/lua/grs/KeyMappings.lua
 
      The only things this config file should do
      is setup Which-Key, define keymappings, and
-     functions used by some of the keymappings.
-
-     Which-Keys default keymapping options are
-
-       mode = 'n', prefix = '', buffer = nil,
-       silent = true, noremap = true, nowait = false
-
-     unless specified command starts with <Plug>, then
-
-       noremap = false
+     some of the functions used by the keymappings.
   ]]
 
 local M = {}
 
---[[ WhichKey setup ]]
+--[[ Which-Key setup ]]
+
 local ok, wk = pcall(require, 'which-key')
 if not ok then
   print('Problem loading which-key.nvim: ' .. wk)
@@ -35,13 +27,15 @@ wk.setup {
   }
 }
 
+M.wk = wk
+
 --[[ Define Leader Keys ]]
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
-M.wk = wk
+--[[ Window management, modeled somewhat after Sway on Linux ]]
 
--- Window management, modeled somewhat after Sway on Linux
 local window_mappings = {
   -- Navigating between windows
   ['<M-h>'] = {'<C-w>h', 'goto window left'},
@@ -79,7 +73,8 @@ local window_mappings = {
 
 wk.register(window_mappings, {})
 
--- Visual mode keymappings
+--[[ Visual mode keymappings ]]
+
 local visual_mappings = {
   ['<'] = {'<gv', 'shift left & reselect'},  -- Reselect visual region
   ['>'] = {'>gv', 'shift right & reselect'}  -- upon indention of text.
@@ -87,7 +82,8 @@ local visual_mappings = {
 
 wk.register(visual_mappings, {mode = 'v'})
 
--- Normal mode leader keymappings
+--[[ Normal mode leader keymappings ]]
+
 local nl_mappings = {
   b = {'<Cmd>enew<CR>', 'new unnamed buffer'},
   h = {'<Cmd>TSBufToggle highlight<CR>', 'treesitter highlight toggle'},
@@ -122,7 +118,8 @@ vim.api.nvim_set_keymap('n', '<leader>n', '', {
   desc = "line number toggle"
 })
 
--- LSP related normal mode localleader keymappings
+--[[ LSP related normal mode localleader keymappings ]]
+
 M.lsp_on_attach = function(client, bufnr)
 
   local lsp_mappings = {

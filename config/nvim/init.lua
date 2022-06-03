@@ -16,7 +16,7 @@ require('grs.Packer')
 
 -- Configure an IDE like Neovim software development environment
 require('grs.Options')      -- Setup options and autocmds
-require('grs.WhichKey')     -- Setup some general purpose keybindings
+require('grs.KeyMappings')  -- Setup some general purpose keybindings
 require('grs.TextEdit')     -- Configure general text editing related plugins
 require('grs.Treesitter')   -- Install language modules for built in treesitter
 require('grs.Telescope')    -- Configure telescope, an extendable fuzzy finder
