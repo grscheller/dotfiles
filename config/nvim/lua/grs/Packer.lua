@@ -48,19 +48,6 @@ return packer.startup(
     -- Packer manages itself
     use { 'wbthomason/packer.nvim' }
 
-    --[[ Speed up loading Lua modules and improve startup time
-
-         Remove loaded cache and delete cache file
-
-           :LuaCacheClear
-
-         View impatient log
-
-           :LuaCacheLog
-
-       To be merged with core, see https://github.com/neovim/neovim/pull/15436 ]]
-    use { 'lewis6991/impatient.nvim' }
-
     -- Make keybindings discoverable with Whick-Key
     use { 'folke/which-key.nvim' }
 
