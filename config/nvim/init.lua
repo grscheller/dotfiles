@@ -1,5 +1,11 @@
 --[[ Neovim configuration ~/.config/nvim/init.lua ]]
 
+-- Use new Lua based filetype detection instead of vimL
+-- based one.  Speeds up start time and avoids the many
+-- the generation of a huge number of autocommands.
+vim.g.do_filetype_lua = 1
+vim.g.did_load_filetypes = 0
+
 -- Speed up start times, impatient must be 1st Lua module loaded.
 if not pcall(require, 'impatient') then
   print('Warning: Plugin "impatient" not loaded ')

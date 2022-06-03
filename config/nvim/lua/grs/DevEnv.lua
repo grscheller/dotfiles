@@ -106,7 +106,7 @@ if ok_metals then
   G_METALS_CONFIG = G_METALS.bare_config()  -- defined below.
   G_METALS_CONFIG.settings = {
     showImplicitArguments = true,
-    serverVersion = '0.11.5'
+    serverVersion = '0.11.6'
   }
   G_METALS_CONFIG.on_attach = whichkey.lsp_on_attach
 
