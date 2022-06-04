@@ -12,38 +12,44 @@ if not ok_telescope then
 end
 
 telescope.setup {
-  ['ui-select'] = {require('telescope.themes').get_dropdown {}}
+  ['ui-select'] = { require('telescope.themes').get_dropdown {} }
 }
 telescope.load_extension('ui-select')
 
-local kb = require('grs.KeyMappings')
+--[[ Set Telescope key mappings/bindings ]]
+
+local sk = vim.api.nvim_set_keymap
+
+sk('n', 'tbl', "<leader><Cmd>lua require('telescope.builtin').buffers()<CR>", { noremap = true, desc = 'List Buffers' })
+sk('n', 'tbz', "<leader><Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { noremap = true, desc = 'Fuzzy Find Current Buffer' })
+sk('n', 'tff', "<leader><Cmd>lua require('telescope.builtin').find_files()<CR>", { noremap = true, desc = 'Find File' })
+sk('n', 'tfr', "<leader><Cmd>lua require('telescope.builtin').oldfiles()<CR>", { noremap = true, desc = 'Open Recent File' })
+sk('n', 'tgl', "<leader><Cmd>lua require('telescope.builtin').live_grep()<CR>", { noremap = true, desc = 'Live Grep' })
+sk('n', 'tgs', "<leader><Cmd>lua require('telescope.builtin').grep_string()<CR>", { noremap = true, desc = 'Grep String' })
+sk('n', 'ttb', "<leader><Cmd>lua require('telescope.builtin').tags({only_current_buffer() = true })<CR>", { noremap = true, desc = 'List Tags Current Buffer' })
+sk('n', 'tth', "<leader><Cmd>lua require('telescope.builtin').help_tags()<CR>", { noremap = true, desc = 'Help Tags' })
+sk('n', 'ttt', "<leader><Cmd>lua require('telescope.builtin').tags()<CR>", { noremap = true, desc = 'List Tags' })
+
+-- Set up Whick-Key labels
 local ts_mappings = {
   t = {
     name = '+Telescope',
     b = {
-      name = '+Telescope Buffer',
-      l = {"<Cmd>lua require('telescope.builtin').buffers()<CR>", 'List Buffers'},
-      z = {"<Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", 'Fuzzy Find Current Buffer'}
+      name = '+Telescope Buffer'
     },
     f = {
-      name = '+Telescope Files',
-      f = {"<Cmd>lua require('telescope.builtin').find_files()<CR>", 'Find File'},
-      r = {"<Cmd>lua require('telescope.builtin').oldfiles()<CR>", 'Open Recent File'}
+      name = '+Telescope Files'
     },
     g = {
-      name = '+Telescope Grep',
-      l = {"<Cmd>lua require('telescope.builtin').live_grep()<CR>", 'Live Grep'},
-      s = {"<Cmd>lua require('telescope.builtin').grep_string()<CR>", 'Grep String'}
+      name = '+Telescope Grep'
     },
     t = {
-      name = '+Telescope Tags',
-      b = {"<Cmd>lua require('telescope.builtin').tags({only_current_buffer() = true })<CR>", 'List Tags Current Buffer'},
-      h = {"<Cmd>lua require('telescope.builtin').help_tags()<CR>", 'Help Tags'},
-      t = {"<Cmd>lua require('telescope.builtin').tags()<CR>", 'List Tags'}
+      name = '+Telescope Tags'
     }
   }
 }
 
+local kb = require('grs.KeyMappings')
 if kb.wk then
-  kb.wk.register(ts_mappings, {prefix = '<leader>'})
+  kb.wk.register(ts_mappings, { prefix = '<leader>' })
 end
