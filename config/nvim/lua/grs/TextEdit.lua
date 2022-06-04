@@ -12,7 +12,7 @@ local kb = require('grs.KeyMappings')
 
 vim.g['sneak#label'] = 1  -- minimalist alternative to EasyMotion
 
-if kb then
+if kb.wk then
   local sneak_mappings = {
     f = { '<Plug>Sneak_f', 'f 1-char sneak' },
     F = { '<Plug>Sneak_F', 'F 1-char sneak' },

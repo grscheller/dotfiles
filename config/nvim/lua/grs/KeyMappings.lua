@@ -1,4 +1,4 @@
---[[ Using Which-Key to make keymappings/bindings user discoverable
+--[[ Setup keymappings/keybindings
 
        Module: grs
        File: ~/.config/nvim/lua/grs/KeyMappings.lua
@@ -10,116 +10,102 @@
 
 local M = {}
 
---[[ Which-Key setup ]]
+--[[ Which-Key setup - helps make keymappings user discoverable ]]
 
 local ok, wk = pcall(require, 'which-key')
-if not ok then
-  print('Problem loading which-key.nvim: ' .. wk)
-  return false
-end
-
-wk.setup {
-  plugins = {
-    spelling = {
-      enabled = true,
-      suggestions = 36
+if ok then
+  wk.setup {
+    plugins = {
+      spelling = {
+        enabled = true,
+        suggestions = 36
+      }
     }
   }
-}
-
-M.wk = wk
+  M.wk = wk
+else
+  print('Problem loading which-key.nvim: ' .. wk)
+end
 
 --[[ Define Leader Keys ]]
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
---[[ Window management, modeled somewhat after Sway on Linux ]]
+--[[ Set key mappings/bindings ]]
+
 local sk = vim.api.nvim_set_keymap
 
--- Navigating between windows and tabs
+-- Creating, closing & navigating windows and tabs
 sk('n', '<M-h>', '<C-w>h', {noremap = true, desc = 'goto window left'})
 sk('n', '<M-j>', '<C-w>j', {noremap = true, desc = 'goto window below'})
 sk('n', '<M-k>', '<C-w>k', {noremap = true, desc = 'goto window above'})
 sk('n', '<M-l>', '<C-w>l', {noremap = true, desc = 'goto window right'})
 sk('n', '<M-p>', '<C-w>p', {noremap = true, desc = 'goto previous window'})
+sk('n', '<M-q>', '<C-w>q', {noremap = true, desc = 'quit current window'})
 sk('n', '<M-t>', '<Cmd>tabnew<CR>', {noremap = true, desc = 'goto new tab'})
 sk('n', '<M-,>', '<Cmd>-tabnext<CR>', {noremap = true, desc = 'goto tab left'})
 sk('n', '<M-.>', '<Cmd>+tabnext<CR>', {noremap = true, desc = 'goto tab right'})
+sk('n', '<M-o>', '<C-w>o', {noremap = true, desc = 'close other windows in tab'})
 
-local window_mappings = {
   -- Moving, creating, removing windows
-  ['<M-S-h>'] = {'<C-w>H', 'move window lhs'},
-  ['<M-S-j>'] = {'<C-w>J', 'move window bot'},
-  ['<M-S-k>'] = {'<C-w>K', 'move window top'},
-  ['<M-S-l>'] = {'<C-w>L', 'move window rhs'},
-  ['<M-S-x>'] = {'<C-w>x', 'exchange windows inner split'},
-  ['<M-S-r>'] = {'<C-w>r', 'rotate windows inner split'},
-  ['<M-S-q>'] = {'<C-w>q', 'quit current window'},
-  ['<M-S-c>'] = {'<C-w>c', 'close current windows'},
-  ['<M-S-o>'] = {'<C-w>o', 'close all other windows in tab'},
-  ['<M-S-e>'] = {'<C-w>=', 'equalize heights/widths windows'},
-  ['<M-S-t>'] = {'<C-w>T', 'break window out new tab'},
+sk('n', '<M-S-h>', '<C-w>H', {noremap = true, desc = 'move window lhs'})
+sk('n', '<M-S-j>', '<C-w>J', {noremap = true, desc = 'move window bot'})
+sk('n', '<M-S-k>', '<C-w>K', {noremap = true, desc = 'move window top'})
+sk('n', '<M-S-l>', '<C-w>L', {noremap = true, desc = 'move window rhs'})
+sk('n', '<M-S-x>', '<C-w>x', {noremap = true, desc = 'exchange windows inner split'})
+sk('n', '<M-S-r>', '<C-w>r', {noremap = true, desc = 'rotate windows inner split'})
+sk('n', '<M-S-e>', '<C-w>=', {noremap = true, desc = 'equalize heights/widths windows'})
+sk('n', '<M-S-t>', '<C-w>T', {noremap = true, desc = 'break window out new tab'})
 
   -- Resizing windows
-  ['<M-->'] = {'2<C-w><', 'make window narrower'},  -- Think Alt+"-"
-  ['<M-=>'] = {'2<C-w>>', 'make window wider'},     -- Think Alt+"+"
-  ['<M-_>'] = {'2<C-w>-', 'make window shorter'},   -- Think Alt+Shift+"-"
-  ['<M-+>'] = {'2<C-w>+', 'make window taller'},    -- Think Alt+Shift+"+"
+sk('n', '<M-->', '2<C-w><', {noremap = true, desc = 'make window narrower'})
+sk('n', '<M-=>', '2<C-w>>', {noremap = true, desc = 'make window wider'})
+sk('n', '<M-_>', '2<C-w>-', {noremap = true, desc = 'make window shorter'})
+sk('n', '<M-+>', '2<C-w>+', {noremap = true, desc = 'make window taller'})
 
   -- Move view in window, only move cursor to keep on screen
-  ['<C-h>'] = {'z4h', 'move view left 4 columns'},
-  ['<C-j>'] = {'3<C-e>', 'move view down 3 lines'},
-  ['<C-k>'] = {'3<C-y>', 'move view up 3 lines'},
-  ['<C-l>'] = {'z4l', 'move view right 4 colunms'}
-}
+sk('n', '<C-h>', 'z4h', {noremap = true, desc = 'move view left 4 columns'})
+sk('n', '<C-j>', '3<C-e>', {noremap = true, desc = 'move view down 3 lines'})
+sk('n', '<C-k>', '3<C-y>', {noremap = true, desc = 'move view up 3 lines'})
+sk('n', '<C-l>', 'z4l', {noremap = true, desc = 'move view right 4 colunms'})
 
-wk.register(window_mappings, {})
+-- Shift text and reselect
+sk('v', '<', '<gv', {noremap=true, desc='shift left & reselect'})
+sk('v', '>', '>gv', {noremap=true, desc='shift right & reselect'})
 
---[[ Visual mode keymappings ]]
+-- Normal mode leader keymappings
+sk('n', '<leader>b', '<Cmd>enew<CR>', {noremap=true, desc ='new unnamed buffer'})
+sk('n', '<leader>h', '<Cmd>TSBufToggle highlight<CR>', {noremap=true, desc ='treesitter highlight toggle'})
+sk('n', '<leader>i', '<Cmd>set invspell<CR>', {noremap=true, desc ='toggle spelling'})
+sk('n', '<leader>k', '<Cmd>dig<CR>a<C-k>', {noremap=true, desc ='pick & enter diagraph'})
+sk('n', '<leader>l', '<Cmd>nohlsearch<Bar>diffupdate<CR>', {noremap=true, desc ='Clear hlsearch'})
+sk('n', '<leader>r', '<Cmd>mode<CR>', {noremap=true, desc ='clear & redraw screen'})
+sk('n', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {noremap=true, desc ='trim trailing whitespace'})
+sk('n', '<leader>n', '', {
+    noremap = true,
+    desc = "line number toggle",
+    callback = function()
+      if vim.wo.relativenumber == true then
+        vim.wo.number = false
+        vim.wo.relativenumber = false
+      elseif vim.wo.number == true then
+        vim.wo.number = false
+        vim.wo.relativenumber = true
+      else
+        vim.wo.number = true
+        vim.wo.relativenumber = false
+      end
+    end })
+sk('n', '<leader>fs', '<Cmd>split<Bar>term fish<CR>i', {noremap=true, desc ='fish shell in split'})
+sk('n', '<leader>fv', '<Cmd>vsplit<Bar>term fish<CR>i', {noremap=true, desc ='fish shell in vsplit'})
 
-local visual_mappings = {
-  ['<'] = {'<gv', 'shift left & reselect'},  -- Reselect visual region
-  ['>'] = {'>gv', 'shift right & reselect'}  -- upon indention of text.
-}
-
-wk.register(visual_mappings, {mode = 'v'})
-
---[[ Normal mode leader keymappings ]]
-
-local nl_mappings = {
-  b = {'<Cmd>enew<CR>', 'new unnamed buffer'},
-  h = {'<Cmd>TSBufToggle highlight<CR>', 'treesitter highlight toggle'},
-  i = {'<Cmd>set invspell<CR>', 'toggle spelling'},
-  k = {'<Cmd>dig<CR>a<C-k>', 'pick & enter diagraph'},
-  l = {'<Cmd>nohlsearch<Bar>diffupdate<CR>', 'Clear hlsearch'},
-  r = {'<Cmd>mode<CR>', 'clear & redraw screen'},
-  f = {
-    name = '+fish shell in terminal',
-    s = {'<Cmd>split<Bar>term fish<CR>i', 'fish shell in split'},
-    v = {'<Cmd>vsplit<Bar>term fish<CR>i', 'fish shell in vsplit'} },
-  s = {'xi', 'replace lost normal mode s'},
-  w = {'<Cmd>%s/\\s\\+$//<CR><C-o>', 'trim trailing whitespace'}
-}
-
-wk.register(nl_mappings, {prefix = '<leader>'})
-
-vim.api.nvim_set_keymap('n', '<leader>n', '', {
-  noremap = true,
-  callback = function()
-    if vim.wo.relativenumber == true then
-      vim.wo.number = false
-      vim.wo.relativenumber = false
-    elseif vim.wo.number == true then
-      vim.wo.number = false
-      vim.wo.relativenumber = true
-    else
-      vim.wo.number = true
-      vim.wo.relativenumber = false
-    end
-  end,
-  desc = "line number toggle"
-})
+if M.wk then
+  local leader_mappings_labels = {
+    f = { name = '+fish shell in terminal' }
+  }
+  wk.register(leader_mappings_labels, {prefix = '<leader>'})
+end
 
 --[[ LSP related normal mode localleader keymappings ]]
 
