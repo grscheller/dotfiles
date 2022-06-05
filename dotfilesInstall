@@ -80,15 +80,16 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
+   nvim/lua/grs/AutoCmds.lua
    nvim/lua/grs/Colorscheme.lua
    nvim/lua/grs/Completions.lua
    nvim/lua/grs/DevEnv.lua
+   nvim/lua/grs/KeyMappings.lua
    nvim/lua/grs/Options.lua
    nvim/lua/grs/Packer.lua
    nvim/lua/grs/Telescope.lua
    nvim/lua/grs/TextEdit.lua
    nvim/lua/grs/Treesitter.lua
-   nvim/lua/grs/KeyMappings.lua
    sway/config
    waybar/config
    waybar/style.css
