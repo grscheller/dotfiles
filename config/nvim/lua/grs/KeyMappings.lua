@@ -36,7 +36,13 @@ vim.g.maplocalleader = '\\'
 
 local sk = vim.api.nvim_set_keymap
 
+-- Turn off some redundant keybindings
+sk('n', '<BS>', '<Nop>', { noremap = true })
+sk('n', '-', '<Nop>', { noremap = true })
+sk('n', '+', '<Nop>', { noremap = true })
+
 -- Creating, closing & navigating windows
+sk('n', '<M-e>', '<C-w>=', { noremap = true, desc = 'equalize heights/widths windows' })
 sk('n', '<M-h>', '<C-w>h', { noremap = true, desc = 'goto window left' })
 sk('n', '<M-j>', '<C-w>j', { noremap = true, desc = 'goto window below' })
 sk('n', '<M-k>', '<C-w>k', { noremap = true, desc = 'goto window above' })
@@ -44,21 +50,23 @@ sk('n', '<M-l>', '<C-w>l', { noremap = true, desc = 'goto window right' })
 sk('n', '<M-p>', '<C-w>p', { noremap = true, desc = 'goto previous window' })
 sk('n', '<M-c>', '<C-w>c', { noremap = true, desc = 'close current window' })
 sk('n', '<M-o>', '<C-w>o', { noremap = true, desc = 'close other windows in tab' })
+sk('n', '<M-s>', '<C-w>s', { noremap = true, desc = 'split current window' })
+sk('n', '<M-h>', '<C-w>v', { noremap = true, desc = 'vsplit current window' })
 
 -- Creating, closing & navigating windows tabs
-sk('n', '<M-t>',   '<Cmd>tabnew<CR>', { noremap = true, desc = 'goto new tab' })
+sk('n', '<M-t>b', '<C-w>T', { noremap = true, desc = 'break window out new tab' })
+sk('n', '<M-t>c', '<Cmd>tabclose<CR>', { noremap = true, desc = 'close current tab' })
+sk('n', '<M-t>n', '<Cmd>tabnew<CR>', { noremap = true, desc = 'goto new tab' })
 sk('n', '<M-,>', '<Cmd>-tabnext<CR>', { noremap = true, desc = 'goto tab left' })
 sk('n', '<M-.>', '<Cmd>+tabnext<CR>', { noremap = true, desc = 'goto tab right' })
 
--- Moving, creating, removing windows
+-- Changing window layout
 sk('n', '<M-S-h>', '<C-w>H', { noremap = true, desc = 'move window lhs' })
 sk('n', '<M-S-j>', '<C-w>J', { noremap = true, desc = 'move window bot' })
 sk('n', '<M-S-k>', '<C-w>K', { noremap = true, desc = 'move window top' })
 sk('n', '<M-S-l>', '<C-w>L', { noremap = true, desc = 'move window rhs' })
 sk('n', '<M-S-x>', '<C-w>x', { noremap = true, desc = 'exchange windows inner split' })
 sk('n', '<M-S-r>', '<C-w>r', { noremap = true, desc = 'rotate windows inner split' })
-sk('n', '<M-S-e>', '<C-w>=', { noremap = true, desc = 'equalize heights/widths windows' })
-sk('n', '<M-S-t>', '<C-w>T', { noremap = true, desc = 'break window out new tab' })
 
 -- Resizing windows
 sk('n', '<M-->', '2<C-w><', { noremap = true, desc = 'make window narrower' })
@@ -77,14 +85,13 @@ sk('v', '<', '<gv', { noremap = true, desc = 'shift left & reselect' })
 sk('v', '>', '>gv', { noremap = true, desc = 'shift right & reselect' })
 
 -- Normal mode leader keymappings
-sk('n',  '<leader>b', '<Cmd>enew<CR>', { noremap = true, desc = 'new unnamed buffer' })
-sk('n', '<leader>fs', '<Cmd>split<Bar>term fish<CR>i', { noremap = true, desc = 'fish shell in split' })
-sk('n', '<leader>fv', '<Cmd>vsplit<Bar>term fish<CR>i', { noremap = true, desc = 'fish shell in vsplit' })
-sk('n',  '<leader>h', '<Cmd>TSBufToggle highlight<CR>', { noremap = true, desc = 'treesitter highlight toggle' })
-sk('n',  '<leader>i', '<Cmd>set invspell<CR>', { noremap = true, desc = 'toggle spelling' })
-sk('n',  '<leader>k', '<Cmd>dig<CR>a<C-k>', { noremap = true, desc = 'pick & enter diagraph' })
-sk('n',  '<leader>l', '<Cmd>nohlsearch<Bar>diffupdate<CR>', { noremap = true, desc = 'Clear hlsearch' })
-sk('n',  '<leader>n', '', {
+sk('n',  '<Leader><Leader>', '<Cmd>nohlsearch<Bar>diffupdate<CR>', { noremap = true, desc = 'Clear hlsearch' })
+sk('n',  '<Leader>b', '<Cmd>enew<CR>', { noremap = true, desc = 'new unnamed buffer' })
+sk('n', '<Leader>fs', '<Cmd>split<Bar>term fish<CR>i',  { noremap = true, desc = 'fish shell in split' })
+sk('n', '<Leader>fv', '<Cmd>vsplit<Bar>term fish<CR>i', { noremap = true, desc = 'fish shell in vsplit' })
+sk('n',  '<Leader>h', '<Cmd>TSBufToggle highlight<CR>', { noremap = true, desc = 'treesitter highlight toggle' })
+sk('n',  '<Leader>k', '<Cmd>dig<CR>a<C-k>', { noremap = true, desc = 'pick & enter diagraph' })
+sk('n',  '<Leader>n', '', {
   noremap = true,
   desc = "line number toggle",
   callback = function()
@@ -99,39 +106,40 @@ sk('n',  '<leader>n', '', {
       vim.wo.relativenumber = false
     end
   end })
-sk('n', '<leader>r', '<Cmd>mode<CR>', { noremap = true, desc = 'clear & redraw screen' })
-sk('n', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', { noremap = true, desc = 'trim trailing whitespace' })
+sk('n', '<Leader>r', '<Cmd>mode<CR>', { noremap = true, desc = 'clear & redraw screen' })
+sk('n', '<Leader>s', '<Cmd>set invspell<CR>', { noremap = true, desc = 'toggle spelling' })
+sk('n', '<Leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', { noremap = true, desc = 'trim trailing whitespace' })
 
 if M.wk then
   local leader_mappings_labels = {
     f = { name = '+fish shell in terminal' }
   }
-  wk.register(leader_mappings_labels, { prefix = '<leader>' })
+  wk.register(leader_mappings_labels, { prefix = '<Leader>' })
 end
 
 --[[ LSP related normal mode localleader keymappings ]]
 
 M.lsp_on_attach = function(client, bufnr)
 
-  sk('n',   '<localleader>c', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, desc = 'code action' })
-  sk('n',   '<localleader>d', '<Cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, desc = 'diagnostic set local list' })
-  sk('n',   '<localleader>f', '<Cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, desc = 'format' })
-  sk('n',  '<localleader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, desc = 'goto definition' })
-  sk('n',  '<localleader>gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, desc = 'goto Declaration' })
-  sk('n',  '<localleader>gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, desc = 'goto implementation' })
-  sk('n',  '<localleader>gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, desc = 'goto references' })
-  sk('n', '<localleader>gsd', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, desc = 'document symbol' })
-  sk('n', '<localleader>gsw', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, desc = 'workspace symbol' })
-  sk('n',   '<localleader>H', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, desc = 'signature Help' })
-  sk('n',   '<localleader>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, desc = 'hover' })
-  sk('n',   '<localleader>k', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', { noremap = true, desc = 'worksheet hover' })
-  sk('n',   '<localleader>r', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, desc = 'rename' })
-  sk('n',  '<localleader>sd', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, desc = 'document symbol' })
-  sk('n',  '<localleader>sw', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, desc = 'workspace symbol' })
-  sk('n',  '<localleader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { noremap = true, desc = 'add workspace folder' })
-  sk('n',  '<localleader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { noremap = true, desc = 'remove workspace folder' })
-  sk('n',   '<localleader>[', '<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', { noremap = true, desc = 'diagnostic previous' })
-  sk('n',   '<localleader>]', '<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', { noremap = true, desc = 'diagnostic next' })
+  sk('n',   '<Localleader>c', '<Cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, desc = 'code action' })
+  sk('n',   '<Localleader>d', '<Cmd>lua vim.diagnostic.setloclist()<CR>', { noremap = true, desc = 'diagnostic set local list' })
+  sk('n',   '<Localleader>f', '<Cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true, desc = 'format' })
+  sk('n',  '<Localleader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, desc = 'goto definition' })
+  sk('n',  '<Localleader>gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, desc = 'goto Declaration' })
+  sk('n',  '<Localleader>gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true, desc = 'goto implementation' })
+  sk('n',  '<Localleader>gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { noremap = true, desc = 'goto references' })
+  sk('n', '<Localleader>gsd', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, desc = 'document symbol' })
+  sk('n', '<Localleader>gsw', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, desc = 'workspace symbol' })
+  sk('n',   '<Localleader>H', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', { noremap = true, desc = 'signature Help' })
+  sk('n',   '<Localleader>h', '<Cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, desc = 'hover' })
+  sk('n',   '<Localleader>k', '<Cmd>lua vim.lsp.buf.worksheet_hover()<CR>', { noremap = true, desc = 'worksheet hover' })
+  sk('n',   '<Localleader>r', '<Cmd>lua vim.lsp.buf.rename()<CR>', { noremap = true, desc = 'rename' })
+  sk('n',  '<Localleader>sd', '<Cmd>lua vim.lsp.buf.document_symbol()<CR>', { noremap = true, desc = 'document symbol' })
+  sk('n',  '<Localleader>sw', '<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>', { noremap = true, desc = 'workspace symbol' })
+  sk('n',  '<Localleader>wa', '<Cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', { noremap = true, desc = 'add workspace folder' })
+  sk('n',  '<Localleader>wr', '<Cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', { noremap = true, desc = 'remove workspace folder' })
+  sk('n',   '<Localleader>[', '<Cmd>lua vim.diagnostic.goto_prev {wrap = false}<CR>', { noremap = true, desc = 'diagnostic previous' })
+  sk('n',   '<Localleader>]', '<Cmd>lua vim.diagnostic.goto_next {wrap = false}<CR>', { noremap = true, desc = 'diagnostic next' })
 
   local lsp_mappings = {
     g = {
@@ -149,7 +157,7 @@ M.lsp_on_attach = function(client, bufnr)
   }
 
   if M.wk then
-    wk.register(lsp_mappings, { prefix = '<localleader>', buffer = bufnr })
+    wk.register(lsp_mappings, { prefix = '<Localleader>', buffer = bufnr })
   end
 
 end

@@ -50,6 +50,6 @@ local ts_mappings = {
 }
 
 local kb = require('grs.KeyMappings')
-if kb.wk then
+if kb then
   kb.wk.register(ts_mappings, { prefix = '<leader>' })
 end
