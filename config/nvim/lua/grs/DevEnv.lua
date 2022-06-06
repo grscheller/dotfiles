@@ -5,13 +5,6 @@
 
   ]]
 
--- Punt if LSP related keymappings are not available
-local km = require('grs.KeyMappings')
-if not km then
-  print('LSP keymappings not found, problem loading grs.KeyMappings. ')
-  return
-end
-
 -- Check if necessary LSP related plugins are installed
 local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
@@ -45,8 +38,9 @@ local lsp_servers = {
 local capabilities =
   cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+local km = require('grs.KeyMappings')
 local on_attach = function(client, bufnr)
-  km.lsp_on_attach(client, bufnr)
+  km.lsp_keybindings(bufnr)
 end
 
 for _, lsp_server in ipairs(lsp_servers) do
@@ -55,6 +49,11 @@ for _, lsp_server in ipairs(lsp_servers) do
     capabilities = capabilities
   }
 end
+
+--[[ Lua lang configuration ]]
+
+-- Lua auto-indent configuration
+vim.cmd [[ au FileType lua setlocal shiftwidth=2 softtabstop=2 expandtab ]]
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
@@ -69,13 +68,6 @@ lspconfig.sumneko_lua.setup {
     }
   }
 }
-
---[[ Lua lang configuration ]]
-vim.cmd [[
-  augroup lua_config
-    au!
-    au FileType lua setlocal shiftwidth=2 softtabstop=2 expandtab
-  augroup end ]]
 
 --[[ Python lang configuration ]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
@@ -97,28 +89,30 @@ else
 end
 
 --[[ Scala lang configuration ]]
+
+-- Scala Metals configuration
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
 -- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
-
-local ok_metals, l_metals = pcall(require, 'metals')
+local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
-  G_METALS = l_metals                       -- Global for the augroup
-  G_METALS_CONFIG = G_METALS.bare_config()  -- defined below.
-  G_METALS_CONFIG.settings = {
+
+  local metals_config = metals.bare_config()
+  metals_config.settings = {
     showImplicitArguments = true,
     serverVersion = '0.11.6'
   }
-  G_METALS_CONFIG.on_attach = km.lsp_on_attach
+  metals_config.on_attach = on_attach
 
-  vim.cmd [[
-    augroup scala_metals_lsp
-      au!
-      au FileType scala,sbt setlocal shiftwidth=2 softtabstop=2 expandtab
-      au FileType scala,sbt lua G_METALS.initialize_or_attach(G_METALS_CONFIG)
-    augroup end
-  ]]
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = { '*.scala', '*.sbt' },
+    callback = function()
+        metals.initialize_or_attach(metals_config)
+    end,
+    desc = 'Configure Scala Metals'
+  })
+
 else
-  print('Problem loading metals: ' .. l_metals)
+  print('Problem loading metals: ' .. metals)
 end
 
 --[[ Zig lang Configuration ]]

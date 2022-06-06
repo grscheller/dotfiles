@@ -37,9 +37,9 @@ vim.g.maplocalleader = '\\'
 local sk = vim.api.nvim_set_keymap
 
 -- Turn off some redundant keybindings
-sk('n', '<BS>', '<Nop>', { noremap = true })
-sk('n', '-', '<Nop>', { noremap = true })
-sk('n', '+', '<Nop>', { noremap = true })
+sk('n', '<BS>', '', { noremap = true })
+sk('n', '-', '', { noremap = true })
+sk('n', '+', '', { noremap = true })
 
 -- Creating, closing & navigating windows
 sk('n', '<M-e>', '<C-w>=', { noremap = true, desc = 'equalize heights/widths windows' })
@@ -119,7 +119,7 @@ end
 
 --[[ LSP related normal mode localleader keymappings ]]
 
-M.lsp_on_attach = function(client, bufnr)
+M.lsp_keybindings = function(bufnr)
 
   sk('n',   '<Localleader>c', '', { noremap = true, callback = vim.lsp.buf.code_action, desc = 'code action' })
   sk('n',   '<Localleader>d', '', { noremap = true, callback = vim.diagnostic.setloclist, desc = 'diagnostic set local list' })

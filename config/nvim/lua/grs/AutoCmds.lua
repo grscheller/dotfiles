@@ -5,21 +5,29 @@
 
   ]]
 
--- Case sensitive search while in command mode
-vim.cmd [[
-  augroup dynamic_smartcase
-    au!
-    au CmdLineEnter : set nosmartcase
-    au CmdLineEnter : set noignorecase
-    au CmdLineLeave : set ignorecase
-    au CmdLineLeave : set smartcase
-  augroup end
-]]
+--[[ Case sensitive search while in command mode ]]
 
--- Give visual feedback for yanked text
-vim.cmd[[
-  augroup highlight_yank
-    au!
-    au TextYankPost * silent! lua vim.highlight.on_yank{ timeout=600, on_visual=false }
-  augroup end
-]]
+vim.api.nvim_create_autocmd('CmdLineEnter', {
+  pattern = '*',
+  command = 'set nosmartcase noignorecase',
+  desc = "Don't ignore case when in Command Mode"
+})
+
+vim.api.nvim_create_autocmd('CmdLineLeave', {
+  pattern = '*',
+  command = 'set ignorecase smartcase',
+  desc = "Use smartcase when not in Command Mode"
+})
+
+--[[ Give visual feedback when yanking text ]]
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+  pattern = '*',
+  callback = function()
+    vim.highlight.on_yank {
+      timeout = 600,
+      on_visual = false
+    }
+  end,
+  desc = 'Give visual feedback when yanking text'
+})
