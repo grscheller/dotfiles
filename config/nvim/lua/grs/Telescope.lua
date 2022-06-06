@@ -19,16 +19,17 @@ telescope.load_extension('ui-select')
 --[[ Set Telescope key mappings/bindings ]]
 
 local sk = vim.api.nvim_set_keymap
+local tb = require('telescope.builtin')
 
-sk('n', 'tbl', "<leader><Cmd>lua require('telescope.builtin').buffers()<CR>", { noremap = true, desc = 'List Buffers' })
-sk('n', 'tbz', "<leader><Cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", { noremap = true, desc = 'Fuzzy Find Current Buffer' })
-sk('n', 'tff', "<leader><Cmd>lua require('telescope.builtin').find_files()<CR>", { noremap = true, desc = 'Find File' })
-sk('n', 'tfr', "<leader><Cmd>lua require('telescope.builtin').oldfiles()<CR>", { noremap = true, desc = 'Open Recent File' })
-sk('n', 'tgl', "<leader><Cmd>lua require('telescope.builtin').live_grep()<CR>", { noremap = true, desc = 'Live Grep' })
-sk('n', 'tgs', "<leader><Cmd>lua require('telescope.builtin').grep_string()<CR>", { noremap = true, desc = 'Grep String' })
-sk('n', 'ttb', "<leader><Cmd>lua require('telescope.builtin').tags({only_current_buffer() = true })<CR>", { noremap = true, desc = 'List Tags Current Buffer' })
-sk('n', 'tth', "<leader><Cmd>lua require('telescope.builtin').help_tags()<CR>", { noremap = true, desc = 'Help Tags' })
-sk('n', 'ttt', "<leader><Cmd>lua require('telescope.builtin').tags()<CR>", { noremap = true, desc = 'List Tags' })
+sk('n', '<Leader>tbl', '', { noremap = true, callback = tb.buffers, desc = 'List Buffers' })
+sk('n', '<Leader>tbz', '', { noremap = true, callback = tb.current_buffer_fuzzy_find, desc = 'Fuzzy Find Current Buffer' })
+sk('n', '<Leader>tff', '', { noremap = true, callback = tb.find_files, desc = 'Find File' })
+sk('n', '<Leader>tfr', '', { noremap = true, callback = tb.oldfiles, desc = 'Open Recent File' })
+sk('n', '<Leader>tgl', '', { noremap = true, callback = tb.live_grep, desc = 'Live Grep' })
+sk('n', '<Leader>tgs', '', { noremap = true, callback = tb.grep_string, desc = 'Grep String' })
+sk('n', '<Leader>ttb', '', { noremap = true, callback = function () tb.tags { only_current_buffer = true } end, desc = 'List Tags Current Buffer' })
+sk('n', '<Leader>tth', '', { noremap = true, callback = tb.help_tags, desc = 'Help Tags' })
+sk('n', '<Leader>ttl', '', { noremap = true, callback = tb.tags, desc = 'List Tags' })
 
 -- Set up Whick-Key labels
 local ts_mappings = {
