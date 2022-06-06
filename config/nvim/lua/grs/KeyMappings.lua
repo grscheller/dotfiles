@@ -51,7 +51,7 @@ sk('n', '<M-p>', '<C-w>p', { noremap = true, desc = 'goto previous window' })
 sk('n', '<M-c>', '<C-w>c', { noremap = true, desc = 'close current window' })
 sk('n', '<M-o>', '<C-w>o', { noremap = true, desc = 'close other windows in tab' })
 sk('n', '<M-s>', '<C-w>s', { noremap = true, desc = 'split current window' })
-sk('n', '<M-h>', '<C-w>v', { noremap = true, desc = 'vsplit current window' })
+sk('n', '<M-d>', '<C-w>v', { noremap = true, desc = 'vsplit current window' })
 
 -- Creating, closing & navigating windows tabs
 sk('n', '<M-t>b', '<C-w>T', { noremap = true, desc = 'break window out new tab' })
