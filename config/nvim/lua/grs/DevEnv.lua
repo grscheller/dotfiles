@@ -16,13 +16,12 @@ if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
   return
 end
 
---[[ A minimal config for nvim LSP Installer ]]
+--[[ Nvim LSP Installer Configuration ]]
 
 nvimLspInstaller.setup {}  -- Must be called before interacting with lspconfig
 
+-- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
 local lsp_servers = {
-  -- For list of language servers, follow first
-  -- link of https://github.com/neovim/nvim-lspconfig
   'bashls',    -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
   'clangd',    -- C and C++ - both clang and gcc (pacman clang package)
   'cssls',     -- vscode-css-language-servers
@@ -50,10 +49,10 @@ for _, lsp_server in ipairs(lsp_servers) do
   }
 end
 
---[[ Lua lang configuration ]]
+--[[ Lua Lang Configuration ]]
 
 -- Lua auto-indent configuration
-vim.cmd [[ au FileType lua setlocal shiftwidth=2 softtabstop=2 expandtab ]]
+vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=2 softtabstop=2 expandtab ]]
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
@@ -69,10 +68,10 @@ lspconfig.sumneko_lua.setup {
   }
 }
 
---[[ Python lang configuration ]]
+--[[ Python Lang Configuration ]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
---[[ Rust lang configuration ]]
+--[[ Rust Lang Configuration ]]
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
   rust_tools.setup {
@@ -88,9 +87,9 @@ else
   print('Problem loading rust-tools.')
 end
 
---[[ Scala lang configuration ]]
+--[[ Scala Lang Configuration ]]
 
--- Scala Metals configuration
+-- Scala Metals Configuration
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
 -- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
 local ok_metals, metals = pcall(require, 'metals')
@@ -115,5 +114,5 @@ else
   print('Problem loading metals: ' .. metals)
 end
 
---[[ Zig lang Configuration ]]
+--[[ Zig Lang Configuration ]]
 vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
