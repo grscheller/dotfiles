@@ -9,15 +9,14 @@ Geared to Systemd/Wayland Arch Linux systems.
 
 ## Installation Scripts
 
-Installs my shell & GUI environment into the $HOME
-directory of my Arch Linux systems.
+Installs my software development environment onto my Arch Linux systems.
 
-* [dotfilesInstall](installDotfiles) installation script
-  * installs Linux environment into `$HOME`
+* [dotfilesInstall](dotfilesInstall)
+  * installs my Linux environment into `$HOME`
   * from cloned repo run:
     * `$ ./dotfilesInstall`
 
-* [systemfilesInstall](installDotfiles) installation script
+* [systemfilesInstall](systemfilesInstall)
   * for Arch Linux ONLY
   * installs system configuration files into `/etc`
   * from cloned repo run:

@@ -2,5 +2,5 @@
 
 ## $HOME Files
 
-This directory contains configuration files installed
-directly into my `$HOME` directory.
+This directory contains my Bash and Readline configuration Files
+which are installed into my `$HOME` directory.
