@@ -52,10 +52,10 @@ return packer.startup(
     use { 'folke/which-key.nvim' }
 
     -- General purpose text editing plugins
-    use { 'tpope/vim-commentary' }
-    use { 'justinmk/vim-sneak' }
-    use { 'tpope/vim-surround' }
-    use { 'tpope/vim-repeat' }
+    use { 'numToStr/Comment.nvim' }  -- comment out code - treesitter aware
+    use { 'justinmk/vim-sneak' }  -- easy motion replacement
+    use { 'tpope/vim-surround' }  -- surround text objects with matching symbols
+    use { 'tpope/vim-repeat' }  -- enable supported plugins to use '.'
 
     -- Colorize names & hexcodes like Purple Blue #15aadd
     use { 'norcalli/nvim-colorizer.lua' }
