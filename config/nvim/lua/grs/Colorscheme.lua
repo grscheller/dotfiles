@@ -1,7 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline
 
        Module: grs
-       File: ~/.config/nvim/lua/grs/Completions.lua
+       File: ~/.config/nvim/lua/grs/Colorscheme.lua
 
   ]]
 
