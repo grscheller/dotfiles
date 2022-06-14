@@ -14,13 +14,17 @@ Installs my software development environment onto my Arch Linux systems.
 * [dotfilesInstall](dotfilesInstall)
   * installs my Linux environment into `$HOME`
   * from cloned repo run:
-    * `$ ./dotfilesInstall`
+    ```
+       $ ./dotfilesInstall
+    ```
 
 * [systemfilesInstall](systemfilesInstall)
   * for Arch Linux ONLY
   * installs system configuration files into `/etc`
   * from cloned repo run:
-    * `$ sudo ./systemfilesInstall`
+    ```
+       $ sudo ./systemfilesInstall
+    ```
 
 ## Contains
 
