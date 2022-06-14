@@ -114,7 +114,6 @@ remove_item () {
          printf "Error: Failed to remove item '%s'\\n" "$rmItem" >&2
          return 1
       }
-
    return 0
 }
 
@@ -148,7 +147,6 @@ install_file () {
       printf "Error: Failed to install '%s'\\n" "$trgt" >&2
       return 1
    fi
-
    return 0
 }
 
@@ -192,10 +190,11 @@ for conf_file in $CONFIG_FILES
 do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
-# Keeps sway from rereading its config file mid copy
+
+# Keep sway from rereading its config file mid copy
 mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
 
-### Some final clean up
+### Some final tweaks and clean up
 
 ## Create ~/catch, for scp and downloads
 test -d ~/catch || mkdir ~/catch || {
@@ -211,7 +210,7 @@ test -d ~/.cabal/bin || mkdir ~/.cabal/bin || {
    printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
 }
 
-## Remove no longer needed files system items
+## Remove no longer needed files and directories.
 for Item in $RM_ITEMS
 do
    remove_item "$Item" || exit 1
