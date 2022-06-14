@@ -1,42 +1,43 @@
 # Configuration Files "dotfiles"
 
-This repo contains the infrastructure I use
-to maintain and install my Fish, Bash, Neovim,
-Alacritty, Sway, GIT and SSH configurations.
+This repo contains the infrastructure I use to manage my
+Fish, Bash, Neovim, Sway, Alacritty, GIT, SSH, Python, 
+and Haskell configurations.  Also contains my Personnal
+"homepage" used in lieu of browser bookmarks.
 
-## Installation Script
+Geared to Systemd/Wayland Arch Linux systems.
+
+## Installation Scripts
 
 Installs my shell & GUI environment into the $HOME
-directory of any sufficiently POSIX like system.
-Geared to Systemd/Wayland Linux systems.
+directory of my Arch Linux systems.
 
 * [dotfilesInstall](installDotfiles) installation script
   * installs Linux environment into `$HOME`
-  * run `./dotfilesInstall` from cloned repo
+  * from cloned repo run:
+    * `$ ./dotfilesInstall`
 
 * [systemfilesInstall](installDotfiles) installation script
-  * For (Arch) Linux ONLY
-  * installs Linux system configuration files into `/etc`
-  * run `sudo ./systemfilesInstall` from cloned repo
+  * for Arch Linux ONLY
+  * installs system configuration files into `/etc`
+  * from cloned repo run:
+    * `$ sudo ./systemfilesInstall`
 
 ## Contains
 
-* ~/bin scripts installed from [bin/](bin/)
-* Global Haskell Cabal configs in [cabal/](cabal/)
-* XDG configuration files in [config/](config/)
-* $HOME configuration files in [home/](home/)
-* System configuration files in [root/](root/)
-* SSH configuration files in [ssh/](ssh/)
-* Personnal "homepage" files in [web/](web/)
+* Bin scripts: [bin/](bin/) -> `$HOME/bin/`
+* Global Haskell Cabal configs: [cabal/](cabal/) -> `$HOME/.cabal/`
+* XDG configuration files: [config/](config/) -> `$XDG_CONFIG_HOME/`
+* $HOME configuration files: [home/](home/) -> `$HOME/`
+* System configuration files: [root/](root/) -> `/`
+* SSH configuration files: [ssh/](ssh/) -> `$HOME/.ssh/`
+* Personnal "homepage" files: [web/](web/) -> `$HOME/web/`
 
 ## Factoids
 
 * Contains examples of Fish, Bash, and POSIX shell scripting
-  * Assumes Fish version 3.0+
 * Contains my Neovim configuration
   * Assumes Neovim version 0.7.0+
   * Neovim configs are Lua based and use LSP heavily
-  * Neovim configs are coming together, but still a work in progress
 * Contain Pyenv hooks to manage Python versions and environments
 * Tested regularly against Arch Linux
-* No longer tested regularly against MacOS
