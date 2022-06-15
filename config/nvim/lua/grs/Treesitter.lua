@@ -7,7 +7,7 @@
 
 local ok, nv_ts_configs = pcall(require, 'nvim-treesitter.configs')
 if not ok then
-  print('Problem loading nvim-treesitter.configs. ')
+  print('Problem loading nvim-treesitter.configs: ' .. nv_ts_configs)
   return
 end
 

@@ -10,32 +10,31 @@ local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
 local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
 local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
-  if not ok_lspconfig then print('Problem loading nvim-lspconfig. ') end
-  if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer. ') end
-  if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp. ') end
+  if not ok_lspconfig then print('Problem loading nvim-lspconfig: ' .. lspconfig) end
+  if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer: ' .. nvimLspInstaller) end
+  if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp: ' .. cmp_nvim_lsp) end
   return
 end
 
 --[[ Nvim LSP Installer Configuration ]]
 
-nvimLspInstaller.setup {}  -- Must be called before interacting with lspconfig
+nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
 
 -- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
 local lsp_servers = {
-  'bashls',    -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
-  'clangd',    -- C and C++ - both clang and gcc (pacman clang package)
-  'cssls',     -- vscode-css-language-servers
-  'gopls',     -- go language server
-  'hls',       -- haskell-language-server
-  'html',      -- vscode-html-language-server
-  'jsonls',    -- vscode-json-language-server
-  'pyright',   -- Pyright for Python (pacman or npm)
-  'tsserver',  -- typescript-language-server (pacman)
-  'yamlls'     -- yaml-language-server (pacman or yarn)
+  'bashls', -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
+  'clangd', -- C and C++ - both clang and gcc (pacman clang package)
+  'cssls', -- vscode-css-language-servers
+  'gopls', -- go language server
+  'hls', -- haskell-language-server
+  'html', -- vscode-html-language-server
+  'jsonls', -- vscode-json-language-server
+  'pyright', -- Pyright for Python (pacman or npm)
+  'tsserver', -- typescript-language-server (pacman)
+  'yamlls' -- yaml-language-server (pacman or yarn)
 }
 
-local capabilities =
-  cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local km = require('grs.KeyMappings')
 local on_attach = function(client, bufnr)
@@ -84,7 +83,7 @@ if ok_rt then
     }
   }
 else
-  print('Problem loading rust-tools.')
+  print('Problem loading rust-tools: ' .. rust_tools)
 end
 
 --[[ Scala Lang Configuration ]]
@@ -105,7 +104,7 @@ if ok_metals then
   vim.api.nvim_create_autocmd('FileType', {
     pattern = { '*.scala', '*.sbt' },
     callback = function()
-        metals.initialize_or_attach(metals_config)
+      metals.initialize_or_attach(metals_config)
     end,
     desc = 'Configure Scala Metals'
   })
@@ -115,4 +114,4 @@ else
 end
 
 --[[ Zig Lang Configuration ]]
-vim.g.zig_fmt_autosave = 0  -- Don't auto-format on save
+vim.g.zig_fmt_autosave = 0 -- Don't auto-format on save

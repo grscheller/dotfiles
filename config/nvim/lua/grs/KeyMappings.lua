@@ -32,83 +32,100 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
+--[[ Define some utility functions ]]
+
+local setKM = function(mode, desc, kb, cmd)
+  vim.api.nvim_set_keymap(mode, kb, cmd, {
+    noremap = true,
+    silent = true,
+    desc = desc
+  })
+end
+
+local setCB = function(mode, desc, kb, callback)
+  vim.api.nvim_set_keymap(mode, kb, '', {
+    noremap = true,
+    silent = true,
+    desc = desc,
+    callback = callback
+  })
+end
+
+M.setKM = setKM
+M.setCB = setCB
+
 --[[ Set key mappings/bindings ]]
 
-local sk = vim.api.nvim_set_keymap
-
 -- Turn off some redundant keybindings
-sk('n', '<BS>', '', { noremap = true })
-sk('n', '-', '', { noremap = true })
-sk('n', '+', '', { noremap = true })
+setKM('n', '', '<BS>', '')
+setKM('n', '', '-',    '')
+setKM('n', '', '+',    '')
 
 -- Creating, closing & navigating windows
-sk('n', '<M-e>', '<C-w>=', { noremap = true, desc = 'equalize heights/widths windows' })
-sk('n', '<M-h>', '<C-w>h', { noremap = true, desc = 'goto window left' })
-sk('n', '<M-j>', '<C-w>j', { noremap = true, desc = 'goto window below' })
-sk('n', '<M-k>', '<C-w>k', { noremap = true, desc = 'goto window above' })
-sk('n', '<M-l>', '<C-w>l', { noremap = true, desc = 'goto window right' })
-sk('n', '<M-p>', '<C-w>p', { noremap = true, desc = 'goto previous window' })
-sk('n', '<M-c>', '<C-w>c', { noremap = true, desc = 'close current window' })
-sk('n', '<M-o>', '<C-w>o', { noremap = true, desc = 'close other windows in tab' })
-sk('n', '<M-s>', '<C-w>s', { noremap = true, desc = 'split current window' })
-sk('n', '<M-d>', '<C-w>v', { noremap = true, desc = 'vsplit current window' })
+setKM('n', 'equalize windows',        '<M-e>', '<C-w>=')
+setKM('n', 'goto window left',        '<M-h>', '<C-w>h')
+setKM('n', 'goto window below',       '<M-j>', '<C-w>j')
+setKM('n', 'goto window above',       '<M-k>', '<C-w>k')
+setKM('n', 'goto window right',       '<M-l>', '<C-w>l')
+setKM('n', 'goto previous window',    '<M-p>', '<C-w>p')
+setKM('n', 'close current window',    '<M-c>', '<C-w>c')
+setKM('n', 'close other tab windows', '<M-o>', '<C-w>o')
+setKM('n', 'split current window',    '<M-s>', '<C-w>s')
+setKM('n', 'vsplit current window',   '<M-d>', '<C-w>v')
 
 -- Creating, closing & navigating windows tabs
-sk('n', '<M-t>b', '<C-w>T', { noremap = true, desc = 'break window out new tab' })
-sk('n', '<M-t>c', '<Cmd>tabclose<CR>', { noremap = true, desc = 'close current tab' })
-sk('n', '<M-t>n', '<Cmd>tabnew<CR>', { noremap = true, desc = 'goto new tab' })
-sk('n', '<M-,>', '<Cmd>-tabnext<CR>', { noremap = true, desc = 'goto tab left' })
-sk('n', '<M-.>', '<Cmd>+tabnext<CR>', { noremap = true, desc = 'goto tab right' })
+setKM('n', 'break window out new tab', '<M-t>b', '<C-w>T')
+setKM('n', 'close current tab',        '<M-t>c', '<Cmd>tabclose<CR>')
+setKM('n', 'goto new tab',             '<M-t>n', '<Cmd>tabnew<CR>')
+setKM('n', 'goto tab left',            '<M-,>',  '<Cmd>-tabnext<CR>')
+setKM('n', 'goto tab right',           '<M-.>',  '<Cmd>+tabnext<CR>')
 
 -- Changing window layout
-sk('n', '<M-S-h>', '<C-w>H', { noremap = true, desc = 'move window lhs' })
-sk('n', '<M-S-j>', '<C-w>J', { noremap = true, desc = 'move window bot' })
-sk('n', '<M-S-k>', '<C-w>K', { noremap = true, desc = 'move window top' })
-sk('n', '<M-S-l>', '<C-w>L', { noremap = true, desc = 'move window rhs' })
-sk('n', '<M-S-x>', '<C-w>x', { noremap = true, desc = 'exchange windows inner split' })
-sk('n', '<M-S-r>', '<C-w>r', { noremap = true, desc = 'rotate windows inner split' })
+setKM('n', 'move window lhs',  '<M-S-h>', '<C-w>H')
+setKM('n', 'move window bot',  '<M-S-j>', '<C-w>J')
+setKM('n', 'move window top',  '<M-S-k>', '<C-w>K')
+setKM('n', 'move window rhs',  '<M-S-l>', '<C-w>L')
+setKM('n', 'exchange windows', '<M-S-x>', '<C-w>x')
+setKM('n', 'rotate windows',   '<M-S-r>', '<C-w>r')
 
 -- Resizing windows
-sk('n', '<M-->', '2<C-w><', { noremap = true, desc = 'make window narrower' })
-sk('n', '<M-=>', '2<C-w>>', { noremap = true, desc = 'make window wider' })
-sk('n', '<M-_>', '2<C-w>-', { noremap = true, desc = 'make window shorter' })
-sk('n', '<M-+>', '2<C-w>+', { noremap = true, desc = 'make window taller' })
+setKM('n', 'make window narrower', '<M-->', '2<C-w><') -- think Alt+Minus
+setKM('n', 'make window wider',    '<M-=>', '2<C-w>>') -- think Alt+Plus
+setKM('n', 'make window shorter',  '<M-_>', '2<C-w>-') -- think Alt+Shift+Minus
+setKM('n', 'make window taller',   '<M-+>', '2<C-w>+') -- think Alt+Shift+Plus
 
 -- Move view in window, only move cursor to keep on screen
-sk('n', '<C-h>',    'z4h', { noremap = true, desc = 'move view left 4 columns' })
-sk('n', '<C-j>', '3<C-e>', { noremap = true, desc = 'move view down 3 lines' })
-sk('n', '<C-k>', '3<C-y>', { noremap = true, desc = 'move view up 3 lines' })
-sk('n', '<C-l>',    'z4l', { noremap = true, desc = 'move view right 4 colunms' })
+setKM('n', 'move view left 4 columns',  '<C-h>', 'z4h')
+setKM('n', 'move view down 3 lines',    '<C-j>', '3<C-e>')
+setKM('n', 'move view up 3 lines',      '<C-k>', '3<C-y>')
+setKM('n', 'move view right 4 colunms', '<C-l>', 'z4l')
 
 -- Shift text and reselect
-sk('v', '<', '<gv', { noremap = true, desc = 'shift left & reselect' })
-sk('v', '>', '>gv', { noremap = true, desc = 'shift right & reselect' })
+setKM('v', 'shift left & reselect',  '<', '<gv')
+setKM('v', 'shift right & reselect', '>', '>gv')
 
 -- Normal mode leader keymappings
-sk('n',  '<Leader><Leader>', '<Cmd>nohlsearch<Bar>diffupdate<CR>', { noremap = true, desc = 'Clear hlsearch' })
-sk('n',  '<Leader>b', '<Cmd>enew<CR>', { noremap = true, desc = 'new unnamed buffer' })
-sk('n', '<Leader>fs', '<Cmd>split<Bar>term fish<CR>i',  { noremap = true, desc = 'fish shell in split' })
-sk('n', '<Leader>fv', '<Cmd>vsplit<Bar>term fish<CR>i', { noremap = true, desc = 'fish shell in vsplit' })
-sk('n',  '<Leader>h', '<Cmd>TSBufToggle highlight<CR>', { noremap = true, desc = 'treesitter highlight toggle' })
-sk('n',  '<Leader>k', '<Cmd>dig<CR>a<C-k>', { noremap = true, desc = 'pick & enter diagraph' })
-sk('n',  '<Leader>n', '', {
-  noremap = true,
-  desc = "line number toggle",
-  callback = function()
-    if vim.wo.relativenumber == true then
-      vim.wo.number = false
-      vim.wo.relativenumber = false
-    elseif vim.wo.number == true then
-      vim.wo.number = false
-      vim.wo.relativenumber = true
-    else
-      vim.wo.number = true
-      vim.wo.relativenumber = false
-    end
-  end })
-sk('n', '<Leader>r', '<Cmd>mode<CR>', { noremap = true, desc = 'clear & redraw screen' })
-sk('n', '<Leader>s', '<Cmd>set invspell<CR>', { noremap = true, desc = 'toggle spelling' })
-sk('n', '<Leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', { noremap = true, desc = 'trim trailing whitespace' })
+setKM('n', 'Clear hlsearch',              '<Leader><Leader>', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
+setKM('n', 'new unnamed buffer',          '<Leader>b',        '<Cmd>enew<CR>')
+setKM('n', 'fish shell in split',         '<Leader>fs',       '<Cmd>split<Bar>term fish<CR>i')
+setKM('n', 'fish shell in vsplit',        '<Leader>fv',       '<Cmd>vsplit<Bar>term fish<CR>i')
+setKM('n', 'treesitter highlight toggle', '<Leader>h',        '<Cmd>TSBufToggle highlight<CR>')
+setKM('n', 'pick & enter diagraph',       '<Leader>k',        '<Cmd>dig<CR>a<C-k>')
+setCB('n', 'line number toggle', '<Leader>n', function()
+  if vim.wo.relativenumber == true then
+    vim.wo.number = false
+    vim.wo.relativenumber = false
+  elseif vim.wo.number == true then
+    vim.wo.number = false
+    vim.wo.relativenumber = true
+  else
+    vim.wo.number = true
+    vim.wo.relativenumber = false
+  end
+end )
+setKM('n', 'clear & redraw screen',    '<Leader>r', '<Cmd>mode<CR>')
+setKM('n', 'toggle spelling',          '<Leader>s', '<Cmd>set invspell<CR>')
+setKM('n', 'trim trailing whitespace', '<Leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
 
 if M.wk then
   local leader_mappings_labels = {
@@ -117,29 +134,29 @@ if M.wk then
   wk.register(leader_mappings_labels, { prefix = '<Leader>' })
 end
 
---[[ LSP related normal mode localleader keymappings ]]
-
+--[[ LSP related localleader keymappings ]]
 M.lsp_keybindings = function(bufnr)
 
-  sk('n',   '<Localleader>c', '', { noremap = true, callback = vim.lsp.buf.code_action, desc = 'code action' })
-  sk('n',   '<Localleader>d', '', { noremap = true, callback = vim.diagnostic.setloclist, desc = 'diagnostic set local list' })
-  sk('n',   '<Localleader>f', '', { noremap = true, callback = vim.lsp.buf.formatting, desc = 'format' })
-  sk('n',  '<Localleader>gd', '', { noremap = true, callback = vim.lsp.buf.definition, desc = 'goto definition' })
-  sk('n',  '<Localleader>gD', '', { noremap = true, callback = vim.lsp.buf.declaration, desc = 'goto declaration' })
-  sk('n',  '<Localleader>gi', '', { noremap = true, callback = vim.lsp.buf.implementation, desc = 'goto implementation' })
-  sk('n',  '<Localleader>gr', '', { noremap = true, callback = vim.lsp.buf.references, desc = 'goto references' })
-  sk('n',   '<Localleader>H', '', { noremap = true, callback = vim.lsp.buf.signatue_help, desc = 'signatue help' })
-  sk('n',   '<Localleader>h', '', { noremap = true, callback = vim.lsp.buf.hover, desc = 'hover' })
-  sk('n',   '<Localleader>k', '', { noremap = true, callback = vim.lsp.buf.worksheet_hover, desc = 'worksheet hover' })
-  sk('n',   '<Localleader>r', '', { noremap = true, callback = vim.lsp.buf.rename, desc = 'rename' })
-  sk('n',  '<Localleader>sd', '', { noremap = true, callback = vim.lsp.buf.document_symbol, desc = 'document symbol' })
-  sk('n',  '<Localleader>sw', '', { noremap = true, callback = vim.lsp.buf.workspace_symbol, desc = 'workspace symbol' })
-  sk('n',  '<Localleader>wa', '', { noremap = true, callback = vim.lsp.buf.add_workspace_folder, desc = 'add workspace folder' })
-  sk('n',  '<Localleader>wr', '', { noremap = true, callback = vim.lsp.buf.remove_workspace_folder, desc = 'remove workspace folder' })
-  sk('n',   '<Localleader>[', '', { noremap = true, callback = function () vim.diagnostic.goto_prev {wrap = false} end, desc = 'diagnostic prev' })
-  sk('n',   '<Localleader>]', '', { noremap = true, callback = function () vim.diagnostic.goto_next {wrap = false} end, desc = 'diagnostic next' })
+  setCB('n', 'code action',          '<Localleader>c',  vim.lsp.buf.code_action)
+  setCB('n', 'diag set local list',  '<Localleader>d',  vim.diagnostic.setloclist)
+  setCB('n', 'format',               '<Localleader>f',  vim.lsp.buf.formatting)
+  setCB('n', 'goto definition',      '<Localleader>gd', vim.lsp.buf.definition)
+  setCB('n', 'goto declaration',     '<Localleader>gD', vim.lsp.buf.declaration)
+  setCB('n', 'goto implementation',  '<Localleader>gi', vim.lsp.buf.implementation)
+  setCB('n', 'goto references',      '<Localleader>gr', vim.lsp.buf.references)
+  setCB('n', 'signatue help',        '<Localleader>H',  vim.lsp.buf.signatue_help)
+  setCB('n', 'hover',                '<Localleader>h',  vim.lsp.buf.hover)
+  setCB('n', 'worksheet hover',      '<Localleader>k',  vim.lsp.buf.worksheet_hover)
+  setCB('n', 'rename',               '<Localleader>r',  vim.lsp.buf.rename)
+  setCB('n', 'document symbol',      '<Localleader>sd', vim.lsp.buf.document_symbol)
+  setCB('n', 'workspace symbol',     '<Localleader>sw', vim.lsp.buf.workspace_symbol)
+  setCB('n', 'add workspace folder', '<Localleader>wa', vim.lsp.buf.add_workspace_folder)
+  setCB('n', 'rm workspace folder',  '<Localleader>wr', vim.lsp.buf.remove_workspace_folder)
+  setCB('n', 'diagnostic prev',      '<Localleader>[',  function () vim.diagnostic.goto_prev {wrap = false} end)
+  setCB('n', 'diagnostic next',      '<Localleader>]',  function () vim.diagnostic.goto_next {wrap = false} end)
 
-  local lsp_mappings = {
+  -- Labels for WhichKey
+  local lsp_labels = {
     g = {
       name = '+goto',
       s = {
@@ -155,9 +172,46 @@ M.lsp_keybindings = function(bufnr)
   }
 
   if M.wk then
-    wk.register(lsp_mappings, { prefix = '<Localleader>', buffer = bufnr })
+    wk.register(lsp_labels, { prefix = '<Localleader>', buffer = bufnr })
   end
 
+end
+
+--[[ Telescope related localleader keymappings ]]
+M.telescope_keybindings = function(tb)
+
+  setCB('n', 'List Buffers',              '<Leader>tbl', tb.buffers)
+  setCB('n', 'Fuzzy Find Current Buffer', '<Leader>tbz', tb.current_buffer_fuzzy_find)
+  setCB('n', 'Find File',                 '<Leader>tff', tb.find_files)
+  setCB('n', 'Open Recent File',          '<Leader>tfr', tb.oldfiles)
+  setCB('n', 'Live Grep',                 '<Leader>tgl', tb.live_grep)
+  setCB('n', 'Grep String',               '<Leader>tgs', tb.grep_string)
+  setCB('n', 'List Tags Current Buffer',  '<Leader>ttb', function () tb.tags { only_current_buffer = true } end)
+  setCB('n', 'Help Tags',                 '<Leader>tth', tb.help_tags)
+  setCB('n', 'List Tags',                 '<Leader>ttl', tb.tags)
+
+  -- Labels for WhichKey
+  local ts_labels = {
+    t = {
+      name = '+Telescope',
+      b = {
+        name = '+Telescope Buffer'
+      },
+      f = {
+        name = '+Telescope Files'
+      },
+      g = {
+        name = '+Telescope Grep'
+      },
+      t = {
+        name = '+Telescope Tags'
+      }
+    }
+  }
+
+  if M.wk then
+    wk.register(ts_labels, { prefix = '<leader>' })
+  end
 end
 
 return M

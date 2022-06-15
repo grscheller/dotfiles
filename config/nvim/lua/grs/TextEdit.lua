@@ -7,7 +7,7 @@
   ]]
 
 --[[ Configure justtinmk/vim-sneak plugin ]]
-vim.g['sneak#label'] = 1  -- minimalist alternative to EasyMotion
+vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
 local sk = vim.api.nvim_set_keymap
 sk('', 'f', '<Plug>Sneak_f', { desc = 'f 1-character sneak' })
@@ -23,7 +23,7 @@ if ok_comment then
     mappings = {
       basic = true,
       extra = true,
-      extended =true
+      extended = true
     }
   }
 else
