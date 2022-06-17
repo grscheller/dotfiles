@@ -191,7 +191,7 @@ do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
 
-# Keep sway from rereading its config file mid copy
+# Keep alacritty from rereading its config file mid copy
 mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
 
 ### Some final tweaks and clean up

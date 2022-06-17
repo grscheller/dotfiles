@@ -11,7 +11,6 @@
 local M = {}
 
 --[[ Which-Key setup - helps make keymappings user discoverable ]]
-
 local ok, wk = pcall(require, 'which-key')
 if ok then
   wk.setup {
@@ -28,12 +27,10 @@ else
 end
 
 --[[ Define Leader Keys ]]
-
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+vim.g.maplocalleader = '<bslash><bslash>'
 
 --[[ Define some utility functions ]]
-
 local setKM = function(mode, desc, kb, cmd)
   vim.api.nvim_set_keymap(mode, kb, cmd, {
     noremap = true,
@@ -62,33 +59,33 @@ setKM('n', '', '-',    '')
 setKM('n', '', '+',    '')
 
 -- Creating, closing & navigating windows
-setKM('n', 'equalize windows',        '<M-e>', '<C-w>=')
-setKM('n', 'goto window left',        '<M-h>', '<C-w>h')
-setKM('n', 'goto window below',       '<M-j>', '<C-w>j')
-setKM('n', 'goto window above',       '<M-k>', '<C-w>k')
-setKM('n', 'goto window right',       '<M-l>', '<C-w>l')
-setKM('n', 'goto previous window',    '<M-p>', '<C-w>p')
-setKM('n', 'close current window',    '<M-c>', '<C-w>c')
-setKM('n', 'close other tab windows', '<M-o>', '<C-w>o')
-setKM('n', 'split current window',    '<M-s>', '<C-w>s')
-setKM('n', 'vsplit current window',   '<M-d>', '<C-w>v')
+setKM('n', 'goto window left',      '<M-h>', '<C-w>h')
+setKM('n', 'goto window below',     '<M-j>', '<C-w>j')
+setKM('n', 'goto window above',     '<M-k>', '<C-w>k')
+setKM('n', 'goto window right',     '<M-l>', '<C-w>l')
+setKM('n', 'goto previous window',  '<M-p>', '<C-w>p')
+setKM('n', 'close current window',  '<M-c>', '<C-w>c')
+setKM('n', 'split current window',  '<M-s>', '<C-w>s')
+setKM('n', 'vsplit current window', '<M-d>', '<C-w>v')
+setKM('n', 'breakout window new tabpage', '<M-b>', '<C-w>T')
+setKM('n', 'close other tabpage windows', '<M-o>', '<C-w>o')
 
--- Creating, closing & navigating windows tabs
-setKM('n', 'create new tab',        '<C-n>',    '<Cmd>tabnew<CR>')
-setKM('n', 'breakout wind new tab', '<C-b>',    '<C-w>T')
-setKM('n', 'close current tab',     '<C-c>',    '<Cmd>tabclose<CR>')
-setKM('n', 'goto tab left',         '<C-Left>', '<Cmd>-tabnext<CR>')
-setKM('n', 'goto tab last',         '<C-Down>', '<Cmd>tablast<CR>')
-setKM('n', 'goto tab first',        '<C-Up>',   '<Cmd>tabfirst<CR>')
-setKM('n', 'goto tab right',        '<C-Right>', '<Cmd>+tabnext<CR>')
+-- Creating, closing & navigating tabpages
+setKM('n', 'create new tab',    '<C-n>',     '<Cmd>tabnew<CR>')
+setKM('n', 'close current tab', '<C-e>',     '<Cmd>tabclose<CR>')
+setKM('n', 'goto tab left',     '<C-Left>',  '<Cmd>-tabnext<CR>')
+setKM('n', 'goto tab last',     '<C-Down>',  '<Cmd>tablast<CR>')
+setKM('n', 'goto tab first',    '<C-Up>',    '<Cmd>tabfirst<CR>')
+setKM('n', 'goto tab right',    '<C-Right>', '<Cmd>+tabnext<CR>')
 
 -- Changing window layout
-setKM('n', 'move wind lhs',   '<M-S-h>', '<C-w>H')
-setKM('n', 'move wind bot',   '<M-S-j>', '<C-w>J')
-setKM('n', 'move wind top',   '<M-S-k>', '<C-w>K')
-setKM('n', 'move wind rhs',   '<M-S-l>', '<C-w>L')
-setKM('n', 'exch wind next',  '<M-S-x>', '<C-w>x')
-setKM('n', 'rot inner split', '<M-S-r>', '<C-w>r')
+setKM('n', 'move window lhs',    '<M-S-h>', '<C-w>H')
+setKM('n', 'move window bot',    '<M-S-j>', '<C-w>J')
+setKM('n', 'move window top',    '<M-S-k>', '<C-w>K')
+setKM('n', 'move window rhs',    '<M-S-l>', '<C-w>L')
+setKM('n', 'exch window next',   '<M-x>',   '<C-w>x')
+setKM('n', 'rotate inner split', '<M-r>',   '<C-w>r')
+setKM('n', 'equalize windows',   '<M-e>',   '<C-w>=')
 
 -- Resizing windows
 setKM('n', 'make window narrower', '<M-->', '2<C-w><') -- think Alt+Minus
@@ -136,7 +133,7 @@ if M.wk then
   wk.register(leader_mappings_labels, { prefix = '<leader>' })
 end
 
---[[ LSP related localleader keymappings ]]
+--[[ LSP related keymappings - using localleader ]]
 M.lsp_keybindings = function(bufnr)
 
   setCB('n', 'code action',          '<localleader>c',  vim.lsp.buf.code_action)
@@ -157,20 +154,14 @@ M.lsp_keybindings = function(bufnr)
   setCB('n', 'diagnostic prev',      '<localleader>[',  function () vim.diagnostic.goto_prev {wrap = false} end)
   setCB('n', 'diagnostic next',      '<localleader>]',  function () vim.diagnostic.goto_next {wrap = false} end)
 
-  -- Labels for WhichKey
+  -- LSP labels configured by WhichKey
   local lsp_labels = {
     g = {
       name = 'goto',
-      s = {
-        name = 'goto symbol'
-      }
+      s = { name = 'goto symbol' }
     },
-    s = {
-      name = 'symbol'
-    },
-    w = {
-      name = 'workspace folder'
-    }
+    s = { name = 'symbol' },
+    w = { name = 'workspace folder' }
   }
 
   if M.wk then
@@ -182,31 +173,23 @@ end
 --[[ Telescope related localleader keymaplings ]]
 M.telescope_keybindings = function(tb)
 
-  setKM('n', 'Telescope',            '<C-l><C-t>', '<Cmd>Telescope<CR>')
-  setCB('n', 'List Buffers',         '<C-l>bl', tb.buffers)
-  setCB('n', 'Fuzzy Find Curr Buff', '<C-l>bz', tb.current_buffer_fuzzy_find)
-  setCB('n', 'Find File',            '<C-l>ff', tb.find_files)
-  setCB('n', 'Open Recent File',     '<C-l>fr', tb.oldfiles)
-  setCB('n', 'Live Grep',            '<C-l>gl', tb.live_grep)
-  setCB('n', 'Grep String',          '<C-l>gs', tb.grep_string)
-  setCB('n', 'Help Tags',            '<C-l>h',  tb.help_tags)
+  setKM('n', 'Telescope',            '<C-t><C-t>', '<Cmd>Telescope<CR>')
+  setCB('n', 'List Buffers',         '<C-t>bl', tb.buffers)
+  setCB('n', 'Fuzzy Find Curr Buff', '<C-t>bz', tb.current_buffer_fuzzy_find)
+  setCB('n', 'Find File',            '<C-t>ff', tb.find_files)
+  setCB('n', 'Open Recent File',     '<C-t>fr', tb.oldfiles)
+  setCB('n', 'Live Grep',            '<C-t>gl', tb.live_grep)
+  setCB('n', 'Grep String',          '<C-t>gs', tb.grep_string)
+  setCB('n', 'Help Tags',            '<C-t>h',  tb.help_tags)
 
-  -- Labels for WhichKey
+  -- Telescope labels configured by WhichKey
   local ts_labels = {
     ['<C-t>'] = {
       name = 'Telescope',
-      b = {
-        name = 'telescope buffer'
-      },
-      f = {
-        name = 'telescope files'
-      },
-      g = {
-        name = 'telescope grep'
-      },
-      t = {
-        name = 'telescope tags'
-      }
+      b = { name = 'telescope buffer' },
+      f = { name = 'telescope files' },
+      g = { name = 'telescope grep' },
+      t = { name = 'telescope tags' }
     }
   }
 
