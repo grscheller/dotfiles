@@ -37,7 +37,7 @@ local packer_util = require('packer.util')
 
 packer.init {
   display = {
-    open_fn = function ()
+    open_fn = function()
       return packer_util.float { border = 'rounded' }
     end
   }
@@ -54,10 +54,10 @@ return packer.startup(
     use { 'folke/which-key.nvim' }
 
     -- General purpose text editing plugins
-    use { 'numToStr/Comment.nvim' }  -- comment out code - treesitter aware
-    use { 'justinmk/vim-sneak' }  -- easy motion replacement
-    use { 'tpope/vim-surround' }  -- surround text objects with matching symbols
-    use { 'tpope/vim-repeat' }  -- enable supported plugins to use '.'
+    use { 'numToStr/Comment.nvim' } -- comment out code - treesitter aware
+    use { 'justinmk/vim-sneak' } -- easy motion replacement
+    use { 'tpope/vim-surround' } -- surround text objects with matching symbols
+    use { 'tpope/vim-repeat' } -- enable supported plugins to use '.'
 
     -- Colorize names & hexcodes like Purple Blue #15aadd
     use { 'norcalli/nvim-colorizer.lua' }
