@@ -163,21 +163,21 @@ M.lsp_keybindings = function(bufnr)
 
 end
 
---[[ Telescope related localleader keymaplings ]]
+--[[ Telescope related keybindings ]]
 M.telescope_keybindings = function(tb)
 
-  setKM('n', 'Telescope',            '<C-t><C-t>', '<Cmd>Telescope<CR>')
-  setCB('n', 'List Buffers',         '<C-t>bl', tb.buffers)
-  setCB('n', 'Fuzzy Find Curr Buff', '<C-t>bz', tb.current_buffer_fuzzy_find)
-  setCB('n', 'Find File',            '<C-t>ff', tb.find_files)
-  setCB('n', 'Open Recent File',     '<C-t>fr', tb.oldfiles)
-  setCB('n', 'Live Grep',            '<C-t>gl', tb.live_grep)
-  setCB('n', 'Grep String',          '<C-t>gs', tb.grep_string)
-  setCB('n', 'Help Tags',            '<C-t>h',  tb.help_tags)
+  setKM('n', 'Telescope Command',    '<M-t>T',  '<Cmd>Telescope<CR>')
+  setCB('n', 'List Buffers',         '<M-t>bl', tb.buffers)
+  setCB('n', 'Fuzzy Find Curr Buff', '<M-t>bz', tb.current_buffer_fuzzy_find)
+  setCB('n', 'Find File',            '<M-t>ff', tb.find_files)
+  setCB('n', 'Open Recent File',     '<M-t>fr', tb.oldfiles)
+  setCB('n', 'Live Grep',            '<M-t>gl', tb.live_grep)
+  setCB('n', 'Grep String',          '<M-t>gs', tb.grep_string)
+  setCB('n', 'Help Tags',            '<M-t>h',  tb.help_tags)
 
   -- Telescope labels configured by WhichKey
   local ts_labels = {
-    ['<C-t>'] = {
+    ['<M-t>'] = {
       name = 'Telescope',
       b = { name = 'telescope buffer' },
       f = { name = 'telescope files' },
