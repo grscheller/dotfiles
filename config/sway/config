@@ -1,4 +1,5 @@
-# Default config for sway
+# Config for sway
+# Modified from: /etc/sway/config
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
