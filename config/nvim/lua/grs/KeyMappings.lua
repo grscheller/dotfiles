@@ -59,16 +59,18 @@ setKM('n', '', '-',    '')
 setKM('n', '', '+',    '')
 
 -- Creating, closing & navigating windows
-setKM('n', 'goto window left',      '<M-h>', '<C-w>h')
-setKM('n', 'goto window below',     '<M-j>', '<C-w>j')
-setKM('n', 'goto window above',     '<M-k>', '<C-w>k')
-setKM('n', 'goto window right',     '<M-l>', '<C-w>l')
-setKM('n', 'goto previous window',  '<M-p>', '<C-w>p')
-setKM('n', 'close current window',  '<M-c>', '<C-w>c')
-setKM('n', 'split current window',  '<M-s>', '<C-w>s')
-setKM('n', 'vsplit current window', '<M-d>', '<C-w>v')
+setKM('n', 'goto window left',     '<M-h>', '<C-w>h')
+setKM('n', 'goto window below',    '<M-j>', '<C-w>j')
+setKM('n', 'goto window above',    '<M-k>', '<C-w>k')
+setKM('n', 'goto window right',    '<M-l>', '<C-w>l')
+setKM('n', 'goto previous window', '<M-p>', '<C-w>p')
+setKM('n', 'close current window', '<M-c>', '<C-w>c')
 setKM('n', 'breakout window new tabpage', '<M-b>', '<C-w>T')
 setKM('n', 'close other tabpage windows', '<M-o>', '<C-w>o')
+setKM('n', 'split current window',  '<M-s>', '<C-w>s')
+setKM('n', 'vsplit current window', '<M-d>', '<C-w>v')
+setKM('n', 'fish term in split',  '<M-f>', '<Cmd>split<Bar>term fish<CR>i')
+setKM('n', 'fish term in vsplit', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i')
 
 -- Creating, closing & navigating tabpages
 setKM('n', 'create new tab',    '<C-n>',     '<Cmd>tabnew<CR>')
@@ -106,8 +108,6 @@ setKM('v', 'shift right & reselect', '>', '>gv')
 -- Normal mode leader keymappings
 setKM('n', 'Clear hlsearch',              '<leader><leader>', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
 setKM('n', 'new unnamed buffer',          '<leader>b',        '<Cmd>enew<CR>')
-setKM('n', 'fish shell in split',         '<leader>fs',       '<Cmd>split<Bar>term fish<CR>i')
-setKM('n', 'fish shell in vsplit',        '<leader>fv',       '<Cmd>vsplit<Bar>term fish<CR>i')
 setKM('n', 'treesitter highlight toggle', '<leader>h',        '<Cmd>TSBufToggle highlight<CR>')
 setKM('n', 'pick & enter diagraph',       '<leader>k',        '<Cmd>dig<CR>a<C-k>')
 setCB('n', 'line number toggle', '<leader>n', function()
@@ -125,13 +125,6 @@ end )
 setKM('n', 'clear & redraw screen',    '<leader>r', '<Cmd>mode<CR>')
 setKM('n', 'toggle spelling',          '<leader>s', '<Cmd>set invspell<CR>')
 setKM('n', 'trim trailing whitespace', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
-
-if M.wk then
-  local leader_mappings_labels = {
-    f = { name = '+fish shell in terminal' }
-  }
-  wk.register(leader_mappings_labels, { prefix = '<leader>' })
-end
 
 --[[ LSP related keymappings - using localleader ]]
 M.lsp_keybindings = function(bufnr)
