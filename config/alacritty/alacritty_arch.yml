@@ -38,9 +38,9 @@ window:
   #
   # Specified in number of pixels.
   # If the position is not set, the window manager will handle the placement.
-  #position:
-  #  x: 0
-  #  y: 0
+  position:
+    x: 0
+    y: 0
 
   # Window padding (changes require restart)
   #
@@ -127,7 +127,6 @@ font:
     #   - (macOS) Menlo
     #   - (Linux/BSD) monospace
     #   - (Windows) Consolas
-    #family: monospace
     family: Noto Mono Nerd Font
 
     # The `style` can be specified to pick a specific face.
@@ -207,7 +206,7 @@ schemes:
     # Default colors
     primary:
       # background: '#1a1b26'
-      background: '#0d0e13'
+      background: '#000000'
       foreground: '#c0caf5'
 
     # Cursor colors
@@ -228,18 +227,18 @@ schemes:
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#bb9af7'
-      cyan:    '#108991'
+      cyan:    '#0cb4c0'
       white:   '#a9b1d6'
 
     # Bright colors
     bright:
       black:   '#414868'
-      red:     '#ff7a93'
+      red:     '#db4b4b'
       green:   '#b9f27c'
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
-      magenta: '#dd4db9'
-      cyan:    '#00eeff'
+      magenta: '#ff007c'
+      cyan:    '#10ddff'
       white:   '#c0caf5'
 
 colors: *tokyo-night
