@@ -207,7 +207,6 @@ schemes:
     # Default colors
     primary:
       # background: '#1a1b26'
-      # foreground: '#a9b1d6'
       background: '#0d0e13'
       foreground: '#c0caf5'
 
@@ -223,26 +222,25 @@ schemes:
 
     # Normal colors
     normal:
-      black:   '#32344a'
+      black:   '#15161e'
       red:     '#f7768e'
       green:   '#9ece6a'
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
-      # magenta: '#ad8ee6'
-      magenta: '#dd4db9'
-      cyan:    '#449dab'
-      white:   '#787c99'
+      magenta: '#bb9af7'
+      cyan:    '#108991'
+      white:   '#a9b1d6'
 
     # Bright colors
     bright:
-      black:   '#444b6a'
+      black:   '#414868'
       red:     '#ff7a93'
       green:   '#b9f27c'
-      yellow:  '#ff9e64'
-      blue:    '#7da6ff'
-      magenta: '#bb9af7'
-      cyan:    '#0db9d7'
-      white:   '#acb0d0'
+      yellow:  '#e0af68'
+      blue:    '#7aa2f7'
+      magenta: '#dd4db9'
+      cyan:    '#00eeff'
+      white:   '#c0caf5'
 
 colors: *tokyo-night
 
