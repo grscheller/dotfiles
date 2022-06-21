@@ -200,12 +200,13 @@ draw_bold_text_with_bright_colors: true
 
 # Colors (Tokyo Night)
 schemes:
-  # Tokyo Night theme - grs modified background/foreground
-  # https://github.com/zatchheems/tokyo-night-alacritty-theme
+  # Tokyo Night theme,
+  # modified background & cyan, otherwise based
+  # on folke/tokyonight.nvim color palette.
   tokyo-night: &tokyo-night
     # Default colors
     primary:
-      # background: '#1a1b26'
+      #background: '#1a1b26'
       background: '#000000'
       foreground: '#c0caf5'
 
@@ -227,6 +228,7 @@ schemes:
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#bb9af7'
+      #cyan:   '#7dcfff'  # more azure then cyan
       cyan:    '#0cb4c0'
       white:   '#a9b1d6'
 

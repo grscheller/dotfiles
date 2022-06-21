@@ -28,7 +28,7 @@ end
 
 --[[ Define Leader Keys ]]
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '<bslash><bslash>'
+vim.g.maplocalleader = '\\'
 
 --[[ Define some utility functions ]]
 local setKM = function(mode, desc, kb, cmd)

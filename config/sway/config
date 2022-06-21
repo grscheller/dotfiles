@@ -34,12 +34,12 @@ output * bg #000000 solid_color
 # Using swayidle:
 #
 exec swayidle -w \
-    timeout 1200 'swaylock -f -F -e -c 440044' \
+    timeout 1200 'swaylock -f -F -e -c 220022' \
     timeout 1500 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f -F -e -c 440044'
+    before-sleep 'swaylock -f -F -e -c 220022'
 
 # Manually lock the screen, use different background color than swayidle
-bindsym $mod+Escape exec swaylock -f -F -e -c 003333
+bindsym $mod+Escape exec swaylock -f -F -e -c 002222
 
 ### Input configuration
 #
