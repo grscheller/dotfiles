@@ -35,15 +35,13 @@ local lsp_servers = {
 }
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 local km = require('grs.KeyMappings')
-local on_attach = function(client, bufnr)
-  km.lsp_keybindings(bufnr)
-end
 
 for _, lsp_server in ipairs(lsp_servers) do
   lspconfig[lsp_server].setup {
-    on_attach = on_attach,
+    on_attach = function(client, bufnr)
+      km.lsp_kb(bufnr)
+    end,
     capabilities = capabilities
   }
 end
@@ -55,7 +53,9 @@ vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=2 softtabstop=2 expa
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    km.lsp_kb(bufnr)
+  end,
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -76,7 +76,9 @@ if ok_rt then
   rust_tools.setup {
     server = {
       settings = {
-        on_attach = on_attach,
+        on_attach = function(client, bufnr)
+          km.lsp_kb(bufnr)
+        end,
         capabilities = capabilities,
         standalone = true
       }
@@ -88,18 +90,22 @@ end
 
 --[[ Scala Lang Configuration ]]
 
+-- Still need to configure DAP for Scala.
+-- Following: https://github.com/scalameta/nvim-metals/discussions/39
+
 -- Scala Metals Configuration
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
--- Todo: Align with https://github.com/scalameta/nvim-metals/discussions/39
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
-
   local metals_config = metals.bare_config()
   metals_config.settings = {
     showImplicitArguments = true,
     serverVersion = '0.11.6'
   }
-  metals_config.on_attach = on_attach
+  metals_config.on_attach = function(client, bufnr)
+    km.lsp_kb(bufnr)
+    km.sm_kb(bufnr, metals)
+  end
 
   vim.api.nvim_create_autocmd('FileType', {
     pattern = { '*.scala', '*.sbt' },
@@ -108,7 +114,6 @@ if ok_metals then
     end,
     desc = 'Configure Scala Metals'
   })
-
 else
   print('Problem loading metals: ' .. metals)
 end
