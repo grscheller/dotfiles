@@ -1,5 +1,4 @@
-# Config for sway
-# Modified from: /etc/sway/config
+# GRS config for sway - modified from: /etc/sway/config
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -7,21 +6,17 @@
 
 ### Variables
 #
-# Super key. Use Mod1 for Alt.
+# Logo key. Use Mod1 for Alt.
 set $mod Mod4
-
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
-
 # Your preferred terminal emulator
 set $term alacritty
-
 # Your preferred application launcher
-# see ~/.config/wofi/config for Wofi application launcher configuration
-set $menu wofi
+set $menu wofi  # See ~/.config/wofi/config for configuration
 
 ### Output configuration
 #
@@ -35,10 +30,16 @@ output * bg #000000 solid_color
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
+#
+# Using swayidle:
+#
 exec swayidle -w \
-    timeout 1800 'swaylock -f -F -e -c 333333' \
-    timeout 1810 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f -F -e -c 333333'
+    timeout 1200 'swaylock -f -F -e -c 440044' \
+    timeout 1500 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -F -e -c 440044'
+
+# Manually lock the screen, use different background color than swayidle
+bindsym $mod+Escape exec swaylock -f -F -e -c 003333
 
 ### Input configuration
 #
@@ -56,7 +57,7 @@ exec swayidle -w \
 
 ### Polkit Daemon
 #
-# Allows apps requiring permissions to ask "mother may I?".
+# Allows apps requiring permissions to ask "mother may I?":
 #
 exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
@@ -83,12 +84,9 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # Lock the screen, use different background than swayidle
-    bindsym $mod+Escape exec swaylock -f -F -e -c 003333
-
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes, exit sway' 'swaymsg exit'
-
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' \
+            -B 'Yes.  Exit sway now.' 'swaymsg exit'
 #
 # Moving around:
 #
@@ -117,6 +115,7 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # Workspaces:
 #
     # Switch to workspace
+    bindsym $mod+0 workspace number 0
     bindsym $mod+1 workspace number 1
     bindsym $mod+2 workspace number 2
     bindsym $mod+3 workspace number 3
@@ -126,8 +125,8 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     bindsym $mod+7 workspace number 7
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
-    bindsym $mod+0 workspace number 10
     # Move focused container to workspace
+    bindsym $mod+Shift+0 move container to workspace number 0
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
     bindsym $mod+Shift+3 move container to workspace number 3
@@ -137,7 +136,6 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
     bindsym $mod+Shift+7 move container to workspace number 7
     bindsym $mod+Shift+8 move container to workspace number 8
     bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
 #
@@ -202,9 +200,12 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+### Status Bar:
 #
-# Status Bar:
+# Waybar application launcher:
+#
 bar {
+    # See ~/.config/waybar/config/ for configuration
     swaybar_command waybar
 }
 
