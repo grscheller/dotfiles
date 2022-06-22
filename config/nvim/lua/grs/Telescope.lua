@@ -12,7 +12,11 @@ if not ok_telescope then
 end
 
 telescope.setup {
-  ['ui-select'] = { require('telescope.themes').get_dropdown {} }
+  extensions = {
+    ['ui-select'] = {
+      require('telescope.themes').get_dropdown {}
+    }
+  }
 }
 telescope.load_extension('ui-select')
 

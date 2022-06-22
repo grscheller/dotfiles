@@ -18,8 +18,6 @@ end
 
 --[[ Nvim LSP Installer Configuration ]]
 
-nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
-
 -- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
 local lsp_servers = {
   'bashls', -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
@@ -37,11 +35,11 @@ local lsp_servers = {
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local km = require('grs.KeyMappings')
 
+nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
+
 for _, lsp_server in ipairs(lsp_servers) do
   lspconfig[lsp_server].setup {
-    on_attach = function(client, bufnr)
-      km.lsp_kb(bufnr)
-    end,
+    on_attach = km.lsp_kb,
     capabilities = capabilities
   }
 end
@@ -53,9 +51,7 @@ vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=2 softtabstop=2 expa
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
-  on_attach = function(client, bufnr)
-    km.lsp_kb(bufnr)
-  end,
+  on_attach = km.lsp_kb,
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -75,13 +71,9 @@ local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
   rust_tools.setup {
     server = {
-      settings = {
-        on_attach = function(client, bufnr)
-          km.lsp_kb(bufnr)
-        end,
-        capabilities = capabilities,
-        standalone = true
-      }
+      on_attach = km.lsp_kb,
+      capabilities = capabilities,
+      standalone = true
     }
   }
 else
@@ -98,21 +90,26 @@ end
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
   local metals_config = metals.bare_config()
+
   metals_config.settings = {
     showImplicitArguments = true,
     serverVersion = '0.11.6'
   }
+
   metals_config.on_attach = function(client, bufnr)
-    km.lsp_kb(bufnr)
+    km.lsp_kb(client, bufnr)
     km.sm_kb(bufnr, metals)
   end
 
+  local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', {
+    clear = true
+  })
   vim.api.nvim_create_autocmd('FileType', {
-    pattern = { '*.scala', '*.sbt' },
+    pattern = { 'scala', 'sbt' },
     callback = function()
       metals.initialize_or_attach(metals_config)
     end,
-    desc = 'Configure Scala Metals'
+    group = scala_metals_group
   })
 else
   print('Problem loading metals: ' .. metals)

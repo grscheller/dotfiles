@@ -127,8 +127,7 @@ setKM('n', 'toggle spelling',          '<leader>s', '<Cmd>set invspell<CR>')
 setKM('n', 'trim trailing whitespace', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
 
 --[[ LSP related keymappings - using localleader ]]
-M.lsp_kb = function(bufnr)
-
+M.lsp_kb = function(client, bufnr)
   setCB('n', 'code action',          '<localleader>c',  vim.lsp.buf.code_action)
   setCB('n', 'diag set local list',  '<localleader>D',  vim.diagnostic.setloclist)
   setCB('n', 'format',               '<localleader>f',  vim.lsp.buf.formatting)
@@ -158,11 +157,13 @@ M.lsp_kb = function(bufnr)
     wk.register(lsp_labels, { prefix = '<localleader>', buffer = bufnr })
   end
 
+  return client
+
 end
 
 --[[ Scala Metals related keybindings ]]
 M.sm_kb = function(bufnr, metals)
-  setCB('n', 'metals hover_worksheet', '<localleader>mh', metals.hover_worksheet())
+  setCB('n', 'metals hover_worksheet', '<localleader>mh', metals.hover_worksheet)
 
   -- Metals labels configured by WhichKey
   local metals_labels = {
@@ -225,6 +226,7 @@ M.telescope_keybindings = function(tb)
   if M.wk then
     wk.register(ts_labels, { })
   end
+
 end
 
 return M
