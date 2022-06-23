@@ -95,40 +95,41 @@ if ok_metals then
 
   metals_config.settings = {
     showImplicitArguments = true,
-    serverVersion = '0.11.6'
+    serverVersion = 'SNAPSHOP'
   }
 
   metals_config.init_options.statusBarProvider = "on"
 
   metals_config.capabilities = capabilities
 
+  if ok_dap then
+    dap.configurations.scala = {
+      {
+        type = "scala",
+        request = "launch",
+        name = "RunOrTest",
+        metals = {
+          runType = "runOrTestFile"
+          --args = { "firstArg", "secondArg, ..." }
+        }
+      },
+      {
+        type = "scala",
+        request = "launch",
+        name = "Test Target",
+        metals = {
+          runType = "testTarget"
+        }
+      }
+    }
+  end
+
   metals_config.on_attach = function(client, bufnr)
     km.lsp_kb(client, bufnr)
     km.sm_kb(bufnr, metals)
     if ok_dap then
-      dap.configurations.scala = {
-        {
-          type = "scala",
-          request = "launch",
-          name = "RunOrTest",
-          metals = {
-            runType = "runOrTestFile"
-            --args = { "firstArg", "secondArg, ..." }
-          }
-        },
-        {
-          type = "scala",
-          request = "launch",
-          name = "Test Target",
-          metals = {
-            runType = "testTarget"
-          }
-        }
-      }
-
-      metals.setup_dap()
-
       km.dap_kb(bufnr, dap)
+      metals.setup_dap()
     end
   end
 

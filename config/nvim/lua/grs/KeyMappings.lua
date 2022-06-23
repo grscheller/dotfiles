@@ -26,9 +26,8 @@ else
   print('Problem loading which-key.nvim: ' .. wk)
 end
 
---[[ Define Leader Keys ]]
+--[[ Define Leader Key ]]
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
 
 --[[ Define some utility functions ]]
 local setKM = function(mode, desc, kb, cmd)
@@ -126,44 +125,75 @@ setKM('n', 'clear & redraw screen',    '<leader>r', '<Cmd>mode<CR>')
 setKM('n', 'toggle spelling',          '<leader>s', '<Cmd>set invspell<CR>')
 setKM('n', 'trim trailing whitespace', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
 
---[[ LSP related keymappings - using localleader ]]
+--[[ LSP related keymappings ]]
 M.lsp_kb = function(client, bufnr)
-  setCB('n', 'code action',          '<localleader>c',  vim.lsp.buf.code_action)
-  setCB('n', 'diag set local list',  '<localleader>D',  vim.diagnostic.setloclist)
-  setCB('n', 'format',               '<localleader>f',  vim.lsp.buf.formatting)
-  setCB('n', 'goto definition',      '<localleader>gd', vim.lsp.buf.definition)
-  setCB('n', 'goto declaration',     '<localleader>gD', vim.lsp.buf.declaration)
-  setCB('n', 'goto implementation',  '<localleader>gi', vim.lsp.buf.implementation)
-  setCB('n', 'goto references',      '<localleader>gr', vim.lsp.buf.references)
-  setCB('n', 'signatue help',        '<localleader>H',  vim.lsp.buf.signatue_help)
-  setCB('n', 'hover',                '<localleader>K',  vim.lsp.buf.hover)
-  setCB('n', 'worksheet_hover',      '<localleader>k',  vim.lsp.buf.worksheet_hover)
-  setCB('n', 'rename',               '<localleader>r',  vim.lsp.buf.rename)
-  setCB('n', 'document symbol',      '<localleader>sd', vim.lsp.buf.document_symbol)
-  setCB('n', 'workspace symbol',     '<localleader>sw', vim.lsp.buf.workspace_symbol)
-  setCB('n', 'add workspace folder', '<localleader>wa', vim.lsp.buf.add_workspace_folder)
-  setCB('n', 'rm workspace folder',  '<localleader>wr', vim.lsp.buf.remove_workspace_folder)
-  setCB('n', 'diagnostic prev',      '<localleader>[',  function () vim.diagnostic.goto_prev {wrap = false} end)
-  setCB('n', 'diagnostic next',      '<localleader>]',  function () vim.diagnostic.goto_next {wrap = false} end)
+  setCB('n', 'code action',           '\\ca',  vim.lsp.buf.code_action)
+  --setCB('n', 'code lens',             '\\cl',  vim.lsp.buf.codelens.run)
+  setCB('n', 'buffer diagnostics',    '\\d',   vim.diagnostic.setloclist)
+  setCB('n', 'format',                '\\f',   vim.lsp.buf.formatting)
+  setCB('n', 'goto definition',       '\\gd',  vim.lsp.buf.definition)
+  setCB('n', 'goto declaration',      '\\gD',  vim.lsp.buf.declaration)
+  setCB('n', 'goto implementation',   '\\gi',  vim.lsp.buf.implementation)
+  setCB('n', 'goto references',       '\\gr',  vim.lsp.buf.references)
+  setCB('n', 'document symbol',       '\\gsd', vim.lsp.buf.document_symbol)
+  setCB('n', 'workspace symbol',      '\\gsw', vim.lsp.buf.workspace_symbol)
+  setCB('n', 'signatue help',         '\\H',   vim.lsp.buf.signatue_help)
+  setCB('n', 'hover',                 '\\h',   vim.lsp.buf.hover)
+  setCB('n', 'worksheet_hover',       '\\k',   vim.lsp.buf.worksheet_hover)
+  setCB('n', 'qflist ws diagnostics', '\\qd',  vim.diagnostic.setqflist)
+  setCB('n', 'qflist ws errors',      '\\qe',  function() vim.diagnostic.setqflist {severity = 'E'} end)
+  setCB('n', 'qflist ws warnings',    '\\qw',  function() vim.diagnostic.setqflist {severity = 'W'} end)
+  setCB('n', 'rename',                '\\r',   vim.lsp.buf.rename)
+  setCB('n', 'add workspace folder',  '\\wa',  vim.lsp.buf.add_workspace_folder)
+  setCB('n', 'rm workspace folder',   '\\wr',  vim.lsp.buf.remove_workspace_folder)
+  setCB('n', 'diagnostic prev',       '\\[',   function() vim.diagnostic.goto_prev {wrap = false} end)
+  setCB('n', 'diagnostic next',       '\\]',   function() vim.diagnostic.goto_next {wrap = false} end)
 
   -- LSP labels configured by WhichKey
   local lsp_labels = {
-    g = { name = 'goto' },
-    s = { name = 'symbol' },
-    w = { name = 'workspace folder' }
+    c = { name = 'code' },
+    g = {
+      name = 'goto',
+      s = { name = 'symbol' }
+    },
+    q = { name = 'quickfix' },
+    w = { name = 'workspace' }
   }
 
   if M.wk then
-    wk.register(lsp_labels, { prefix = '<localleader>', buffer = bufnr })
+    wk.register(lsp_labels, { prefix = '\\', buffer = bufnr })
   end
 
   return client
 
 end
 
+--[[ DAP (Debug Adapter Protocol) related keybindings ]]
+M.dap_kb = function(bufnr, dap)
+  setCB('n', 'dap continue',          '\\\\c', dap.continue())
+  setCB('n', 'dap repl toggle',       '\\\\r', dap.repl.toggle())
+  setCB('n', 'dap hover',             '\\\\K', dap.ui.widgets())
+  setCB('n', 'dap toggle breakpoint', '\\\\t', dap.toggle_breakpoint())
+  setCB('n', 'dap step over',         '\\\\o', dap.step_over())
+  setCB('n', 'dap step into',         '\\\\i', dap.step_into())
+  setCB('n', 'dap run last',          '\\\\l', dap.run_last())
+
+  -- DAP labels configured by WhichKey
+  local dap_labels = {
+    ['\\'] = {
+      name = 'dap'
+    },
+  }
+
+  if M.wk then
+    wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
+  end
+
+end
+
 --[[ Scala Metals related keybindings ]]
 M.sm_kb = function(bufnr, metals)
-  setCB('n', 'metals hover_worksheet', '<localleader>mh', metals.hover_worksheet)
+  setCB('n', 'metals hover_worksheet', '\\mh', metals.hover_worksheet)
 
   -- Metals labels configured by WhichKey
   local metals_labels = {
@@ -171,31 +201,7 @@ M.sm_kb = function(bufnr, metals)
   }
 
   if M.wk then
-    wk.register(metals_labels, { prefix = '<localleader>', buffer = bufnr })
-  end
-
-end
-
---[[ DAP (Debug Adapter Protocol) related keybindings ]]
-M.dap_kb = function(bufnr, dap)
-  setCB('n', 'dap continue',  '<localleader>dc', dap.continue())
-  setCB('n', 'dap repl toggle',  '<localleader>dr', dap.repl.toggle())
-  setCB('n', 'dap hover',  '<localleader>dK', dap.ui.widgets())
-  setCB('n', 'dap toggle breakpoint',  '<localleader>dt', dap.toggle_breakpoint())
-  setCB('n', 'dap step over',  '<localleader>dso', dap.step_over())
-  setCB('n', 'dap step into',  '<localleader>dsi', dap.step_into())
-  setCB('n', 'dap run last',  '<localleader>dl', dap.run_last())
-
-  -- DAP labels configured by WhichKey
-  local dap_labels = {
-    d = {
-      name = 'dap',
-      s = { name = 'step' }
-    },
-  }
-
-  if M.wk then
-    wk.register(dap_labels, { prefix = '<localleader>', buffer = bufnr })
+    wk.register(metals_labels, { prefix = '\\', buffer = bufnr })
   end
 
 end
