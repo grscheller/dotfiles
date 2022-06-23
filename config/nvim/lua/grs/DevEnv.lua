@@ -16,6 +16,12 @@ if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
   return
 end
 
+-- Check if DAP for debugging is available
+local ok_dap, dap = pcall(require, 'dap')
+if not ok_dap then
+  print('Problem loading nvim-dap: ' .. dap)
+end
+
 --[[ Nvim LSP Installer Configuration ]]
 
 -- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
@@ -63,7 +69,7 @@ lspconfig.sumneko_lua.setup {
   }
 }
 
---[[ Python Lang Configuration ]]
+--[[ Python Aditional Configurations ]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust Lang Configuration ]]
@@ -81,11 +87,7 @@ else
 end
 
 --[[ Scala Lang Configuration ]]
-
--- Still need to configure DAP for Scala.
 -- Following: https://github.com/scalameta/nvim-metals/discussions/39
-
--- Scala Metals Configuration
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
@@ -96,9 +98,38 @@ if ok_metals then
     serverVersion = '0.11.6'
   }
 
+  metals_config.init_options.statusBarProvider = "on"
+
+  metals_config.capabilities = capabilities
+
   metals_config.on_attach = function(client, bufnr)
     km.lsp_kb(client, bufnr)
     km.sm_kb(bufnr, metals)
+    if ok_dap then
+      dap.configurations.scala = {
+        {
+          type = "scala",
+          request = "launch",
+          name = "RunOrTest",
+          metals = {
+            runType = "runOrTestFile"
+            --args = { "firstArg", "secondArg, ..." }
+          }
+        },
+        {
+          type = "scala",
+          request = "launch",
+          name = "Test Target",
+          metals = {
+            runType = "testTarget"
+          }
+        }
+      }
+
+      metals.setup_dap()
+
+      km.dap_kb(bufnr, dap)
+    end
   end
 
   local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', {
