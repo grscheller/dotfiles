@@ -26,16 +26,17 @@ end
 
 -- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
 local lsp_servers = {
-  'bashls', -- Bash-language-server (pacman or sudo npm i -g bash-language-server)
-  'clangd', -- C and C++ - both clang and gcc (pacman clang package)
-  'cssls', -- vscode-css-language-servers
-  'gopls', -- go language server
-  'hls', -- haskell-language-server
-  'html', -- vscode-html-language-server
-  'jsonls', -- vscode-json-language-server
+  'bashls', -- bash-language-server (pacman or sudo npm i -g bash-language-server)
+  'clangd', -- C and C++ - both clang and gcc (pacman clang)
+  'cssls', -- vscode-css-language-servers (pacman + symlink name tweak)
+  'gopls', -- go language server (pacman gopls)
+  'hls', -- haskell-language-server (pacman)
+  'html', -- vscode-html-language-server (pacman + symlink name tweak)
+  'jsonls', -- vscode-json-language-server (pacman + symlink name tweak)
   'pyright', -- Pyright for Python (pacman or npm)
   'tsserver', -- typescript-language-server (pacman)
-  'yamlls' -- yaml-language-server (pacman or yarn)
+  'yamlls', -- yaml-language-server (pacman yaml-language-server)
+  'zls' -- zig language server (packer ziglang/zig.vim)
 }
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())

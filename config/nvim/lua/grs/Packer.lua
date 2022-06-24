@@ -47,24 +47,21 @@ local use = packer.use
 
 return packer.startup(
   function()
-    -- Packer manages itself
+    --[[ Packer manages itself ]]
     use { 'wbthomason/packer.nvim' }
 
     -- Make keybindings discoverable with Whick-Key
     use { 'folke/which-key.nvim' }
 
-    -- General purpose text editing plugins
+    --[[ General purpose text editing plugins ]]
     use { 'numToStr/Comment.nvim' } -- comment out code - treesitter aware
     use { 'justinmk/vim-sneak' } -- easy motion replacement
     use { 'tpope/vim-surround' } -- surround text objects with matching symbols
     use { 'tpope/vim-repeat' } -- enable supported plugins to use '.'
 
-    -- Colorize names & hexcodes like Purple Blue #15aadd
-    use { 'norcalli/nvim-colorizer.lua' }
-
-    -- Setup colorscheme & statusline
+    --[[ Setup colorscheme & statusline ]]
+    use { 'norcalli/nvim-colorizer.lua' } -- Colorize names & hexcodes
     use { 'folke/tokyonight.nvim' }
-
     use {
       'nvim-lualine/lualine.nvim',
       requires = {
@@ -72,13 +69,13 @@ return packer.startup(
       }
     }
 
-    -- Install language modules for built-in treesitter
+    --[[ Install language modules for built-in treesitter ]]
     use {
       'nvim-treesitter/nvim-treesitter',
       run = ':TSUpdateSync'
     }
 
-    -- Telescope - highly extendable fuzzy finder over lists
+    --[[ Telescope - highly extendable fuzzy finder over lists ]]
     use {
       'nvim-telescope/telescope.nvim',
       requires = {
@@ -87,7 +84,7 @@ return packer.startup(
       }
     }
 
-    -- Completion & snippet support
+    --[[ Completion & snippet support ]]
     use {
       'hrsh7th/nvim-cmp',
       requires = {
@@ -106,13 +103,10 @@ return packer.startup(
       }
     }
 
-    -- LSP configuration
+    --[[ LSP configuration ]]
     use { 'neovim/nvim-lspconfig' }
-
     use { 'williamboman/nvim-lsp-installer' }
-
     use { 'simrat39/rust-tools.nvim' }
-
     use {
       'scalameta/nvim-metals',
       requires = {
@@ -121,7 +115,6 @@ return packer.startup(
       }
     }
 
-    -- File detection & syntax highlighting
+    --[[ File detection/syntax highlighting for zig ]]
     use 'ziglang/zig.vim'
-
   end)
