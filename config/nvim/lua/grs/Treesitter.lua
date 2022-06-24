@@ -5,13 +5,13 @@
 
   ]]
 
-local ok, nv_ts_configs = pcall(require, 'nvim-treesitter.configs')
+local ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
 if not ok then
-  print('Problem loading nvim-treesitter.configs: ' .. nv_ts_configs)
+  print('Problem loading nvim-treesitter.configs: ' .. ts_configs)
   return
 end
 
-nv_ts_configs.setup {
+ts_configs.setup {
   ensure_installed = 'all',
   highlight = { enable = true }
 }

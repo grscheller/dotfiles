@@ -2,7 +2,7 @@
     border: none;
     border-radius: 4px;
     /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Roboto Mono Medium", Roboto, Arial, sans-serif;
+    font-family: "Roboto Mono Medium", Noto, Arial, sans-serif;
     font-size: 18px;
     min-height: 0;
 }
