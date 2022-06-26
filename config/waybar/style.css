@@ -1,8 +1,10 @@
 * {
     border: none;
     border-radius: 4px;
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: "Roboto Mono Medium", Noto, Arial, sans-serif;
+    /* For icons install /usr/local/share/fonts/roboto-nerd-fonts
+     * from https://www.nerdfonts.com/font-downloads
+     */
+    font-family: "RobotoMono Nerd Font", Roboto, Helvetica, Arial, sans-serif;
     font-size: 18px;
     min-height: 0;
 }
@@ -39,7 +41,7 @@ window#waybar.chromium {
 }
 
 #workspaces button {
-    padding: 0 0.4em;
+    padding: 0.2em 0.4em;
     background-color: transparent;
     color: #ffffff;
     /* Use box-shadow instead of border so the text isn't offset */
@@ -101,11 +103,11 @@ window#waybar.chromium {
 }
 
 #clock {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
 }
 
 #battery {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
     color: #000000;
 }
 
@@ -136,24 +138,24 @@ label:focus {
 }
 
 #cpu {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
     color: #000000;
 }
 
 #memory {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
 }
 
 #disk {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
 }
 
 #backlight {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
 }
 
 #network {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
 }
 
 #network.disconnected {
@@ -161,7 +163,7 @@ label:focus {
 }
 
 #pulseaudio {
-    background-color: #bbccdd;
+    background-color: #7dcfff;
     color: #333333;
 }
 
@@ -232,7 +234,7 @@ label:focus {
 }
 
 #language {
-    background: #bbccdd;
+    background: #7dcfff;
     color: #333333;
     padding: 0 5px;
     margin: 6px 3px;

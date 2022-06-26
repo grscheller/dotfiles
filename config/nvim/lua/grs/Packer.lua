@@ -94,7 +94,8 @@ return packer.startup(
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-path',
         'lukas-reineke/cmp-rg',
-        { 'saadparwaiz1/cmp_luasnip',
+        {
+          'saadparwaiz1/cmp_luasnip',
           requires = {
             'L3MON4D3/LuaSnip',
             'rafamadriz/friendly-snippets'
@@ -116,5 +117,5 @@ return packer.startup(
     }
 
     --[[ File detection/syntax highlighting for zig ]]
-    use 'ziglang/zig.vim'
+    use { 'ziglang/zig.vim' }
   end)

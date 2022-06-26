@@ -15,8 +15,8 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term alacritty
-# Your preferred application launcher
-set $menu wofi  # See ~/.config/wofi/config for configuration
+# Application launcher, see ~/.config/wofi/config for configuration
+set $menu wofi
 
 ### Output configuration
 #
@@ -54,6 +54,9 @@ bindsym $mod+Escape exec swaylock -f -F -e -c 002222
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+#
+# Swap Capslock & Escape keys
+input "type:keyboard" xkb_options caps:escape
 
 ### Polkit Daemon
 #
@@ -202,10 +205,9 @@ bindsym $mod+r mode "resize"
 
 ### Status Bar:
 #
-# Waybar application launcher:
+# Set to Waybar, see ~/.config/waybar/config/ for configuration
 #
 bar {
-    # See ~/.config/waybar/config/ for configuration
     swaybar_command waybar
 }
 
