@@ -42,7 +42,7 @@ local lsp_servers = {
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
 local km = require('grs.KeyMappings')
 
-nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
+nvimLspInstaller.setup { } -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
   lspconfig[lsp_server].setup {
@@ -64,7 +64,7 @@ lspconfig.sumneko_lua.setup {
     Lua = {
       runtime = { version = 'LuaJIT' },
       diagnostics = { globals = 'vim' },
-      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+      workspace = { library = vim.api.nvim_get_runtime_file('', true) },
       telemetry = { enable = false }
     }
   }
@@ -96,30 +96,30 @@ if ok_metals then
 
   metals_config.settings = {
     showImplicitArguments = true,
-    serverVersion = 'SNAPSHOP'
+    serverVersion = 'SNAPSHOT'
   }
 
-  metals_config.init_options.statusBarProvider = "on"
+  metals_config.init_options.statusBarProvider = 'on'
 
   metals_config.capabilities = capabilities
 
   if ok_dap then
     dap.configurations.scala = {
       {
-        type = "scala",
-        request = "launch",
-        name = "RunOrTest",
+        type = 'scala',
+        request = 'launch',
+        name = 'RunOrTest',
         metals = {
-          runType = "runOrTestFile"
-          --args = { "firstArg", "secondArg, ..." }
+          runType = 'runOrTestFile'
+          --args = { 'firstArg', 'secondArg, ...' }
         }
       },
       {
-        type = "scala",
-        request = "launch",
-        name = "Test Target",
+        type = 'scala',
+        request = 'launch',
+        name = 'Test Target',
         metals = {
-          runType = "testTarget"
+          runType = 'testTarget'
         }
       }
     }

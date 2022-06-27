@@ -26,9 +26,6 @@ else
   print('Problem loading which-key.nvim: ' .. wk)
 end
 
---[[ Define Leader Key ]]
-vim.g.mapleader = ' '
-
 --[[ Define some utility functions ]]
 local setKM = function(mode, desc, kb, cmd)
   vim.api.nvim_set_keymap(mode, kb, cmd, {
@@ -104,12 +101,11 @@ setKM('n', 'move view right 4 colunms', '<C-l>', 'z4l')
 setKM('v', 'shift left & reselect',  '<', '<gv')
 setKM('v', 'shift right & reselect', '>', '>gv')
 
--- Normal mode leader keymappings
-setKM('n', 'Clear hlsearch',              '<leader><leader>', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
-setKM('n', 'new unnamed buffer',          '<leader>b',        '<Cmd>enew<CR>')
-setKM('n', 'treesitter highlight toggle', '<leader>h',        '<Cmd>TSBufToggle highlight<CR>')
-setKM('n', 'pick & enter diagraph',       '<leader>k',        '<Cmd>dig<CR>a<C-k>')
-setCB('n', 'line number toggle', '<leader>n', function()
+-- Misc keymappings
+setKM('n', 'Clear hlsearch',        '  ', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
+setKM('n', 'new unnamed buffer',    ' b', '<Cmd>enew<CR>')
+setKM('n', 'pick & enter diagraph', ' k', '<Cmd>dig<CR>a<C-k>')
+setCB('n', 'line number toggle', ' n', function()
   if vim.wo.relativenumber == true then
     vim.wo.number = false
     vim.wo.relativenumber = false
@@ -121,15 +117,16 @@ setCB('n', 'line number toggle', '<leader>n', function()
     vim.wo.relativenumber = false
   end
 end )
-setKM('n', 'clear & redraw screen',    '<leader>r', '<Cmd>mode<CR>')
-setKM('n', 'toggle spelling',          '<leader>s', '<Cmd>set invspell<CR>')
-setKM('n', 'trim trailing whitespace', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
+setKM('n', 'clear & redraw screen',       ' r', '<Cmd>mode<CR>')
+setKM('n', 'toggle spelling',             ' s', '<Cmd>set invspell<CR>')
+setKM('n', 'trim trailing whitespace',    ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
+setKM('n', 'treesitter highlight toggle', ' h', '<Cmd>TSBufToggle highlight<CR>')
 
 --[[ LSP related keymappings ]]
 M.lsp_kb = function(client, bufnr)
   setCB('n', 'code action',           '\\ca',  vim.lsp.buf.code_action)
   --setCB('n', 'code lens',             '\\cl',  vim.lsp.buf.codelens.run)
-  setCB('n', 'buffer diagnostics',    '\\d',   vim.diagnostic.setloclist)
+  setCB('n', 'buffer diagnostics',    '\\D',   vim.diagnostic.setloclist)
   setCB('n', 'format',                '\\f',   vim.lsp.buf.formatting)
   setCB('n', 'goto definition',       '\\gd',  vim.lsp.buf.definition)
   setCB('n', 'goto declaration',      '\\gD',  vim.lsp.buf.declaration)
@@ -157,7 +154,7 @@ M.lsp_kb = function(client, bufnr)
       s = { name = 'symbol' }
     },
     q = { name = 'quickfix' },
-    w = { name = 'workspace' }
+    w = { name = 'workspace folder' }
   }
 
   if M.wk then
@@ -170,19 +167,17 @@ end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
 M.dap_kb = function(bufnr, dap)
-  setCB('n', 'dap continue',          '\\\\c', dap.continue())
-  setCB('n', 'dap repl toggle',       '\\\\r', dap.repl.toggle())
-  setCB('n', 'dap hover',             '\\\\K', dap.ui.widgets())
-  setCB('n', 'dap toggle breakpoint', '\\\\t', dap.toggle_breakpoint())
-  setCB('n', 'dap step over',         '\\\\o', dap.step_over())
-  setCB('n', 'dap step into',         '\\\\i', dap.step_into())
-  setCB('n', 'dap run last',          '\\\\l', dap.run_last())
+  setCB('n', 'dap continue',          '\\dc', dap.continue)
+  setCB('n', 'dap repl toggle',       '\\dr', dap.repl.toggle)
+  --setCB('n', 'dap hover',             '\\dh', dap.ui.widgets)
+  setCB('n', 'dap toggle breakpoint', '\\dt', dap.toggle_breakpoint)
+  setCB('n', 'dap step over',         '\\do', dap.step_over)
+  setCB('n', 'dap step into',         '\\di', dap.step_into)
+  setCB('n', 'dap run last',          '\\dl', dap.run_last)
 
   -- DAP labels configured by WhichKey
   local dap_labels = {
-    ['\\'] = {
-      name = 'dap'
-    },
+    d = { name = 'dap' }
   }
 
   if M.wk then
@@ -193,7 +188,7 @@ end
 
 --[[ Scala Metals related keybindings ]]
 M.sm_kb = function(bufnr, metals)
-  setCB('n', 'metals hover_worksheet', '\\mh', metals.hover_worksheet)
+  setCB('n', 'metals hover worksheet', '\\mh', metals.hover_worksheet)
 
   -- Metals labels configured by WhichKey
   local metals_labels = {
@@ -219,7 +214,7 @@ M.telescope_keybindings = function(tb)
   setCB('n', 'Help Tags',            '<M-t>h',  tb.help_tags)
 
   -- Telescope labels configured by WhichKey
-  local ts_labels = {
+  local telescope_labels = {
     ['<M-t>'] = {
       name = 'Telescope',
       b = { name = 'telescope buffer' },
@@ -230,7 +225,7 @@ M.telescope_keybindings = function(tb)
   }
 
   if M.wk then
-    wk.register(ts_labels, { })
+    wk.register(telescope_labels, { })
   end
 
 end
