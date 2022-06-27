@@ -125,7 +125,8 @@ setKM('n', 'treesitter highlight toggle', ' h', '<Cmd>TSBufToggle highlight<CR>'
 --[[ LSP related keymappings ]]
 M.lsp_kb = function(client, bufnr)
   setCB('n', 'code action',           '\\ca',  vim.lsp.buf.code_action)
-  --setCB('n', 'code lens',             '\\cl',  vim.lsp.buf.codelens.run)
+  setCB('n', 'code lens refresh',     '\\clh', vim.lsp.codelens.refresh)
+  setCB('n', 'code lens run',         '\\clr', vim.lsp.codelens.run)
   setCB('n', 'buffer diagnostics',    '\\D',   vim.diagnostic.setloclist)
   setCB('n', 'format',                '\\f',   vim.lsp.buf.formatting)
   setCB('n', 'goto definition',       '\\gd',  vim.lsp.buf.definition)
@@ -136,7 +137,7 @@ M.lsp_kb = function(client, bufnr)
   setCB('n', 'workspace symbol',      '\\gsw', vim.lsp.buf.workspace_symbol)
   setCB('n', 'signatue help',         '\\H',   vim.lsp.buf.signatue_help)
   setCB('n', 'hover',                 '\\h',   vim.lsp.buf.hover)
-  setCB('n', 'worksheet_hover',       '\\k',   vim.lsp.buf.worksheet_hover)
+  setCB('n', 'hover_worksheet',       '\\k',   vim.lsp.buf.hover_worksheet)
   setCB('n', 'qflist ws diagnostics', '\\qd',  vim.diagnostic.setqflist)
   setCB('n', 'qflist ws errors',      '\\qe',  function() vim.diagnostic.setqflist {severity = 'E'} end)
   setCB('n', 'qflist ws warnings',    '\\qw',  function() vim.diagnostic.setqflist {severity = 'W'} end)
@@ -148,7 +149,10 @@ M.lsp_kb = function(client, bufnr)
 
   -- LSP labels configured by WhichKey
   local lsp_labels = {
-    c = { name = 'code' },
+    c = {
+      name = 'code',
+      l = { name = 'code lens' }
+    },
     g = {
       name = 'goto',
       s = { name = 'symbol' }
@@ -169,7 +173,7 @@ end
 M.dap_kb = function(bufnr, dap)
   setCB('n', 'dap continue',          '\\dc', dap.continue)
   setCB('n', 'dap repl toggle',       '\\dr', dap.repl.toggle)
-  --setCB('n', 'dap hover',             '\\dh', dap.ui.widgets)
+  setCB('n', 'dap hover',             '\\dh', dap.ui.widgets.hover)
   setCB('n', 'dap toggle breakpoint', '\\dt', dap.toggle_breakpoint)
   setCB('n', 'dap step over',         '\\do', dap.step_over)
   setCB('n', 'dap step into',         '\\di', dap.step_into)
