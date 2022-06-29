@@ -74,11 +74,20 @@ lspconfig.sumneko_lua.setup {
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust Lang Configuration ]]
+-- For DAP to work, download the vscode-lldb extention from
+--   https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
+-- and put it here
+--   ~/.vscode/extensions/
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
   rust_tools.setup {
     server = {
-      on_attach = km.lsp_kb,
+      on_attach = function(client, bufnr)
+        km.lsp_kb(client, bufnr)
+        if ok_dap then
+          km.dap_kb(bufnr, dap)
+        end
+      end,
       capabilities = capabilities,
       standalone = true
     }
@@ -103,32 +112,29 @@ if ok_metals then
 
   metals_config.capabilities = capabilities
 
-  if ok_dap then
-    dap.configurations.scala = {
-      {
-        type = 'scala',
-        request = 'launch',
-        name = 'RunOrTest',
-        metals = {
-          runType = 'runOrTestFile'
-          --args = { 'firstArg', 'secondArg, ...' }
-        }
-      },
-      {
-        type = 'scala',
-        request = 'launch',
-        name = 'Test Target',
-        metals = {
-          runType = 'testTarget'
-        }
-      }
-    }
-  end
-
   metals_config.on_attach = function(client, bufnr)
     km.lsp_kb(client, bufnr)
     km.sm_kb(bufnr, metals)
     if ok_dap then
+      dap.configurations.scala = {
+        {
+          type = 'scala',
+          request = 'launch',
+          name = 'RunOrTest',
+          metals = {
+            runType = 'runOrTestFile'
+            --args = { 'firstArg', 'secondArg, ...' }
+          }
+        },
+        {
+          type = 'scala',
+          request = 'launch',
+          name = 'Test Target',
+          metals = {
+            runType = 'testTarget'
+          }
+        }
+      }
       km.dap_kb(bufnr, dap)
       metals.setup_dap()
     end

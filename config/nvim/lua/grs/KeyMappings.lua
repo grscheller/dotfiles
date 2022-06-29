@@ -173,7 +173,7 @@ end
 M.dap_kb = function(bufnr, dap)
   setCB('n', 'dap continue',          '\\dc', dap.continue)
   setCB('n', 'dap repl toggle',       '\\dr', dap.repl.toggle)
-  setCB('n', 'dap hover',             '\\dh', dap.ui.widgets.hover)
+--  setCB('n', 'dap hover',             '\\dh', dap.ui.widgets.hover)
   setCB('n', 'dap toggle breakpoint', '\\dt', dap.toggle_breakpoint)
   setCB('n', 'dap step over',         '\\do', dap.step_over)
   setCB('n', 'dap step into',         '\\di', dap.step_into)

@@ -107,7 +107,13 @@ return packer.startup(
     --[[ LSP configuration ]]
     use { 'neovim/nvim-lspconfig' }
     use { 'williamboman/nvim-lsp-installer' }
-    use { 'simrat39/rust-tools.nvim' }
+    use {
+      'simrat39/rust-tools.nvim',
+      requires = {
+        'nvim-lua/plenary',
+        'mfussenegger/nvim-dap'
+      }
+    }
     use {
       'scalameta/nvim-metals',
       requires = {
