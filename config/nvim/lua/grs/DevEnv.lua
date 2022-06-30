@@ -73,11 +73,16 @@ lspconfig.sumneko_lua.setup {
 --[[ Python Aditional Configurations ]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
---[[ Rust Lang Configuration ]]
+--[[ Rust Lang Configuration
+--
+-- Follow setup from https://github.com/simrat39/rust-tools.nvim
+--
 -- For DAP to work, download the vscode-lldb extention from
 --   https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
 -- and put it here
 --   ~/.vscode/extensions/
+--
+--]]
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
   rust_tools.setup {
@@ -85,7 +90,7 @@ if ok_rt then
       on_attach = function(client, bufnr)
         km.lsp_kb(client, bufnr)
         if ok_dap then
-          km.dap_kb(bufnr, dap)
+          km.dap_kb(bufnr)
         end
       end,
       capabilities = capabilities,
@@ -96,9 +101,12 @@ else
   print('Problem loading rust-tools: ' .. rust_tools)
 end
 
---[[ Scala Lang Configuration ]]
+--[[ Scala Lang Configuration
+--
 -- Following: https://github.com/scalameta/nvim-metals/discussions/39
 -- For latest Metals Server Version see: https://scalameta.org/metals/docs
+--
+--]]
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
   local metals_config = metals.bare_config()
@@ -114,7 +122,7 @@ if ok_metals then
 
   metals_config.on_attach = function(client, bufnr)
     km.lsp_kb(client, bufnr)
-    km.sm_kb(bufnr, metals)
+    km.sm_kb(bufnr)
     if ok_dap then
       dap.configurations.scala = {
         {
@@ -135,8 +143,8 @@ if ok_metals then
           }
         }
       }
-      km.dap_kb(bufnr, dap)
       metals.setup_dap()
+      km.dap_kb(bufnr)
     end
   end
 

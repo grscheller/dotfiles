@@ -170,10 +170,12 @@ M.lsp_kb = function(client, bufnr)
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
-M.dap_kb = function(bufnr, dap)
+M.dap_kb = function(bufnr)
+  local dap = require 'dap'
+  local dapUiWidgets = require 'dap.ui.widgets'
   setCB('n', 'dap continue',          '\\dc', dap.continue)
   setCB('n', 'dap repl toggle',       '\\dr', dap.repl.toggle)
---  setCB('n', 'dap hover',             '\\dh', dap.ui.widgets.hover)
+  setCB('n', 'dap hover',             '\\dh', dapUiWidgets.hover)
   setCB('n', 'dap toggle breakpoint', '\\dt', dap.toggle_breakpoint)
   setCB('n', 'dap step over',         '\\do', dap.step_over)
   setCB('n', 'dap step into',         '\\di', dap.step_into)
@@ -191,7 +193,8 @@ M.dap_kb = function(bufnr, dap)
 end
 
 --[[ Scala Metals related keybindings ]]
-M.sm_kb = function(bufnr, metals)
+M.sm_kb = function(bufnr)
+  local metals = require 'metals'
   setCB('n', 'metals hover worksheet', '\\mh', metals.hover_worksheet)
 
   -- Metals labels configured by WhichKey
@@ -206,7 +209,8 @@ M.sm_kb = function(bufnr, metals)
 end
 
 --[[ Telescope related keybindings ]]
-M.telescope_keybindings = function(tb)
+M.telescope_keybindings = function()
+  local tb = require 'telescope.builtin'
 
   setKM('n', 'Telescope Command',    '<M-t>T',  '<Cmd>Telescope<CR>')
   setCB('n', 'List Buffers',         '<M-t>bl', tb.buffers)

@@ -20,9 +20,5 @@ telescope.setup {
 }
 telescope.load_extension('ui-select')
 
---[[ Set Telescope key mappings/bindings ]]
-
-local km = require('grs.KeyMappings')
-local tb = require('telescope.builtin')
-
-km.telescope_keybindings(tb)
+-- Set Telescope key mappings/bindings
+require('grs.KeyMappings').telescope_keybindings()

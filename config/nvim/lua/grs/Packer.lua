@@ -48,20 +48,23 @@ local use = packer.use
 return packer.startup(
   function()
     --[[ Packer manages itself ]]
-    use { 'wbthomason/packer.nvim' }
+    use 'wbthomason/packer.nvim'
+
+    --[[ Library used by other plugins ]]
+    use 'nvim-lua/plenary.nvim'
 
     -- Make keybindings discoverable with Whick-Key
-    use { 'folke/which-key.nvim' }
+    use 'folke/which-key.nvim'
 
     --[[ General purpose text editing plugins ]]
-    use { 'numToStr/Comment.nvim' } -- comment out code - treesitter aware
-    use { 'justinmk/vim-sneak' } -- easy motion replacement
-    use { 'tpope/vim-surround' } -- surround text objects with matching symbols
-    use { 'tpope/vim-repeat' } -- enable supported plugins to use '.'
+    use 'numToStr/Comment.nvim' -- comment out code - treesitter aware
+    use 'justinmk/vim-sneak' -- easy motion replacement
+    use 'tpope/vim-surround' -- surround text objects with matching symbols
+    use 'tpope/vim-repeat' -- enable supported plugins to use '.'
 
     --[[ Setup colorscheme & statusline ]]
-    use { 'norcalli/nvim-colorizer.lua' } -- Colorize names & hexcodes
-    use { 'folke/tokyonight.nvim' }
+    use 'norcalli/nvim-colorizer.lua' -- Colorize names & hexcodes
+    use 'folke/tokyonight.nvim'
     use {
       'nvim-lualine/lualine.nvim',
       requires = {
@@ -76,13 +79,8 @@ return packer.startup(
     }
 
     --[[ Telescope - highly extendable fuzzy finder over lists ]]
-    use {
-      'nvim-telescope/telescope.nvim',
-      requires = {
-        'nvim-lua/plenary.nvim',
-        'nvim-telescope/telescope-ui-select.nvim'
-      }
-    }
+    use 'nvim-telescope/telescope.nvim'
+    use 'nvim-telescope/telescope-ui-select.nvim'
 
     --[[ Completion & snippet support ]]
     use {
@@ -104,24 +102,15 @@ return packer.startup(
       }
     }
 
-    --[[ LSP configuration ]]
-    use { 'neovim/nvim-lspconfig' }
-    use { 'williamboman/nvim-lsp-installer' }
-    use {
-      'simrat39/rust-tools.nvim',
-      requires = {
-        'nvim-lua/plenary',
-        'mfussenegger/nvim-dap'
-      }
-    }
-    use {
-      'scalameta/nvim-metals',
-      requires = {
-        'nvim-lua/plenary.nvim',
-        'mfussenegger/nvim-dap'
-      }
-    }
+    --[[ DAP Debug Adapter Protocol ]]
+    use 'mfussenegger/nvim-dap'
+
+    --[[ LSP Language Server Protocol ]]
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
+    use 'simrat39/rust-tools.nvim'
+    use 'scalameta/nvim-metals'
 
     --[[ File detection/syntax highlighting for zig ]]
-    use { 'ziglang/zig.vim' }
+    use 'ziglang/zig.vim'
   end)
