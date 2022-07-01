@@ -73,18 +73,21 @@ lspconfig.sumneko_lua.setup {
 --[[ Python Aditional Configurations ]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
---[[ Rust Lang Configuration
+--[[ Rust Lang Configuration - rust_tools & lldb-vscode
 --
 -- Follow setup from https://github.com/simrat39/rust-tools.nvim
 --
--- For DAP to work, download the vscode-lldb extention from
+-- Install the LLDB DAP server, a vscode extension, from
 --   https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
--- and put it here
---   ~/.vscode/extensions/
+-- The easiest way to install it is to install vscode and, through vscode's
+-- GUI interface, install the CodeLLDB extension.
 --
 --]]
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
+  local extension_path = vim.env.HOME .. '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.0/'
+  local codelldb_path = extension_path .. 'adapter/codelldb'
+  local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
   rust_tools.setup {
     server = {
       on_attach = function(client, bufnr)
@@ -94,7 +97,10 @@ if ok_rt then
         end
       end,
       capabilities = capabilities,
-      standalone = true
+      standalone = true,
+      dap = {
+        adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
+      }
     }
   }
 else
