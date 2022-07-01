@@ -20,7 +20,7 @@
        :PackerCompile
 
      Not sure if necessary, but I would restart
-     Neovim after running either of the aove commands.
+     Neovim after running either of the above commands.
 
   ]]
 
@@ -113,4 +113,5 @@ return packer.startup(
 
     --[[ File detection/syntax highlighting for zig ]]
     use 'ziglang/zig.vim'
-  end)
+  end
+)
