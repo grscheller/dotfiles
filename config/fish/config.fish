@@ -85,7 +85,7 @@ and begin
     # Clean up duplicate and non-existing paths
     set PATH (pathtrim)
 
-    # Let Bash Shell know initial environment configured
+    # Let Bash Shells know initial environment configured
     set -q _ENV_INITIALIZED
     or set -gx _ENV_INITIALIZED 0
     set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
