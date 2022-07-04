@@ -27,14 +27,17 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end
   },
+
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered()
   },
+
   mapping = cmp.mapping.preset.insert {
-    ['<C-B>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-F>'] = cmp.mapping.scroll_docs(4),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-<Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
     ['<CR>'] = function(fallback)
       if cmp.visible() then
         cmp.confirm { select = true }
@@ -63,18 +66,24 @@ cmp.setup {
       end
     end
   },
+
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' }
   }, {
     { name = 'buffer' },
     { name = 'path' }
+  }, {
+    { name = 'rg',
+      keyword_length = 5,
+      max_item_count = 5,
+      option = { additional_arguments = '--smart-case --hidden' } }
   }),
 }
 
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources {
+  sources = {
     { name = 'buffer' }
   }
 })
