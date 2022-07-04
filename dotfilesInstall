@@ -194,6 +194,17 @@ done
 # Keep alacritty from rereading its config file mid copy
 mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
 
+# Swap in a Sway background image if present
+Picture="${HOME}/Pictures/Nature/Antarctica-sunset-1920x1080.jpg"
+if [ -f $Picture ]
+then
+    mv "${XDG_CONFIG_HOME}"/sway/config{,_orig} 
+    sed -e "s|^\(output \* bg \).* solid_color$|\1$Picture fill|" \
+        "${XDG_CONFIG_HOME}"/sway/config_orig > \
+        "${XDG_CONFIG_HOME}"/sway/config
+    rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
+fi
+
 ### Some final tweaks and clean up
 
 ## Create ~/catch, for scp and downloads
