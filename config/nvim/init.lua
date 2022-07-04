@@ -8,7 +8,7 @@ vim.g.did_load_filetypes = 0
 -- Configure an IDE like Neovim software development environment
 require('grs.Packer')       -- Plug-in manager "wbthomason/packer.nvim"
 require('grs.Options')      -- Setup options reflecting personal preferences
-require('grs.AutoCmds')     -- Useful autocmds not related to specific plugins
+require('grs.Commands')     -- Commands & autocmds not related to specific plugins
 require('grs.KeyMappings')  -- Setup some general purpose keybindings
 require('grs.Treesitter')   -- Install language modules for built in treesitter
 require('grs.Telescope')    -- Configure telescope, an extendable fuzzy finder

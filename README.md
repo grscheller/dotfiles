@@ -1,15 +1,14 @@
 # Configuration Files "dotfiles"
 
-This repo contains the infrastructure I use to manage my
-Fish, Bash, Neovim, Sway, Alacritty, GIT, SSH, Python, 
-and Haskell configurations.  Also contains my Personnal
-"homepage" used in lieu of browser bookmarks.
+This repo contains the infrastructure I use to manage
+my Fish, Bash, Neovim (0.7.0+), Sway, Alacritty, GIT,
+SSH, and software development environment configurations.
 
 Geared to Systemd/Wayland Arch Linux systems.
 
 ## Installation Scripts
 
-Installs my software development environment onto my Arch Linux systems.
+Installs into my home directory.
 
 * [dotfilesInstall](dotfilesInstall)
   * installs my Linux environment into `$HOME`
@@ -18,9 +17,11 @@ Installs my software development environment onto my Arch Linux systems.
        $ ./dotfilesInstall
     ```
 
+Installs into the system directories of my Arch Linux systems.
+
 * [systemfilesInstall](systemfilesInstall)
   * for Arch Linux ONLY
-  * installs system configuration files into `/etc`
+  * installs into system directories
   * from cloned repo run:
     ```
        $ sudo ./systemfilesInstall

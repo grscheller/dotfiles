@@ -80,8 +80,8 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/AutoCmds.lua
    nvim/lua/grs/Colorscheme.lua
+   nvim/lua/grs/Commands.lua
    nvim/lua/grs/Completions.lua
    nvim/lua/grs/DevEnv.lua
    nvim/lua/grs/KeyMappings.lua
@@ -98,9 +98,7 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/alacritty/alacritty_darwin.yml
-   ${XDG_CONFIG_HOME}/alacritty/alacritty_linux.yml
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/WhichKey.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/AutoCmds.lua
 "
 
 ## Function to removes files
