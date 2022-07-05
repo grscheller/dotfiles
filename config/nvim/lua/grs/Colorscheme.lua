@@ -1,9 +1,4 @@
---[[ Setup colorizier, colorscheme & statusline
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Colorscheme.lua
-
-  ]]
+--[[ Setup colorizier, colorscheme & statusline ]]
 
 -- Colorize hexcodes & names like #00dddd Blue Green
 local ok_col, colorizer = pcall(require, 'colorizer')
@@ -13,7 +8,7 @@ else
   print('Problem loading colorizer: ' .. colorizer)
 end
 
--- Setup Tokyo Night colorscheme
+-- Setup & tweak Tokyo Night colorscheme
 if pcall(require, 'tokyonight') then
   vim.g.tokyonight_style = 'night'
   vim.g.tokyonight_colors = {
@@ -32,8 +27,7 @@ end
      the same icons as well as colors for each icon.
 
      Needs a patched font like Noto Mono Nerd Font
-     see https://github.com/ryanoasis/nerd-fonts
-  ]]
+     see https://github.com/ryanoasis/nerd-fonts ]]
 local ok_webD, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok_webD then
   webDevicons.setup {default = true}

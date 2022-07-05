@@ -1,9 +1,4 @@
---[[ Options reflecting my personal preferences
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Options.lua
-
-  ]]
+--[[ Options reflecting my personal preferences ]]
 
 -- Define options to be set
 local options = {

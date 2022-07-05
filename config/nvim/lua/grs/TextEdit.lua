@@ -1,10 +1,5 @@
 --[[ Contains configurations for basic text editing
-     and simple general purpose text editing plugins.
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/TextEdit.lua
-
-  ]]
+     and simple general purpose text editing plugins. ]]
 
 local setKM = require('grs.KeyMappings').setKM
 

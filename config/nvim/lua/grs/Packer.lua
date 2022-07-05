@@ -1,8 +1,6 @@
---[[ Using Packer as the plugin manager.  The Packer plugin
-     manages the plugins I install as a Vim8/Neovim Package.
+--[[ Using Packer as the plugin manager ]]
 
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Packer.lua
+--[[ The Packer plugin manages the plugins I install as a Neovim Package.
 
      This file configures the packer.nvim plugin which
      creates and manages the plugin package.  This package
@@ -20,10 +18,7 @@
        :PackerCompile
 
      Not sure if necessary, but I would restart
-     Neovim after running either of the above commands.
-
-  ]]
-
+     Neovim after running either of the above commands.  ]]
 local ok, packer = pcall(require, 'packer')
 if not ok then
   print('Warning: Packer not installed/configured - no plugins, ')

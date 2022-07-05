@@ -1,9 +1,4 @@
---[[ Nvim-Treesitter - language modules for built-in Treesitter
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Treesitter.lua
-
-  ]]
+--[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 
 local ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
 if not ok then

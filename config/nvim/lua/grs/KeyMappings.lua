@@ -1,13 +1,9 @@
---[[ Setup keymappings/keybindings
+--[[ Setup keymappings/keybindings ]]
 
-       Module: grs
-       File: ~/.config/nvim/lua/grs/KeyMappings.lua
-
-     The only things this config file should do
-     is setup Which-Key, define keymappings, and
-     some of the functions used by the keymappings.
-  ]]
-
+--[[ The only things this config file should do
+     is setup Which-Key, define keymappings, define
+     a couple of utility functions, and functions
+     used by some of the keymappings. ]]
 local M = {}
 
 --[[ Which-Key setup - helps make keymappings user discoverable ]]

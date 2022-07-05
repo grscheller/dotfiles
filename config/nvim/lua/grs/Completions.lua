@@ -1,9 +1,4 @@
---[[ Completions using nvim-cmp and luasnip
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Completions.lua
-
-  ]]
+--[[ Completions using nvim-cmp and luasnip ]]
 
 local ok_cmp, cmp = pcall(require, 'cmp')
 local ok_luasnip, luasnip = pcall(require, 'luasnip')

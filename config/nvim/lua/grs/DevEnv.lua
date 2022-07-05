@@ -1,9 +1,4 @@
---[[ Setup Develoment Environment & LSP Configurations
-
-       Module: grs
-       File: ~/.config/nvim/lua/grs/DevEnv.lua
-
-  ]]
+--[[ Setup Develoment Environment & LSP Configurations ]]
 
 -- Check if necessary LSP related plugins are installed
 local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')

@@ -1,14 +1,8 @@
---[[ Commands & autocmds not related to specific plugins
+--[[ Commands & autocmds not related to specific plugins ]]
 
-       Module: grs
-       File: ~/.config/nvim/lua/grs/Commands.lua
-
-  ]]
-
---[[ Write file as root]]
--- Works when sudo does not require a password
+--[[ Write file as root - works when sudo does not require a password ]]
 vim.api.nvim_create_user_command('WR', 'w !sudo tee % > /dev/null', {})
-vim.api.nvim_create_user_command('WF', 'w !sudo tee <f-args> > /dev/null', {nargs = 1})
+vim.api.nvim_create_user_command('WF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
 
 --[[ Case sensitive search while in command mode ]]
 vim.api.nvim_create_autocmd('CmdLineEnter', {
