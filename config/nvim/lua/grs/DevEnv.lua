@@ -77,6 +77,8 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 -- The easiest way to install it is to install vscode and, through vscode's
 -- GUI interface, install the CodeLLDB extension.
 --
+-- Todo: See https://github.com/sharksforarms/neovim-rust for 
+--       example rust/dap configurations.
 --]]
 local ok_rt, rust_tools = pcall(require, 'rust-tools')
 if ok_rt then
