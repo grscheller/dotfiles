@@ -1,7 +1,7 @@
 # Neovim Lua Based configuration Files
 
 This directory contains the infrastructure I use to manage
-my Neovim (0.7.2+) onfiguration.
+my Neovim (0.7.2+) configuration.
 
 ## Guidelines
 
@@ -17,5 +17,5 @@ my Neovim (0.7.2+) onfiguration.
   * may require latest stable release of Neovim
   * may use plug-ins which potentially may incorporate breaking changes
   * try to base configs on documentation
-  * may contain "monkey-see-monkey-do" from other peoples repos
+  * may contain "monkey-see-monkey-do" from other people's repos
 
