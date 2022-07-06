@@ -1,8 +1,8 @@
-# Configuration Files "dotfiles"
+# Dotfiles
 
 This repo contains the infrastructure I use to manage
-my Fish, Bash, Neovim (0.7.0+), Sway, Alacritty, GIT,
-SSH, and software development environment configurations.
+my Fish, Bash, Neovim, Sway, Alacritty, GIT, and SSH
+configurations.
 
 Geared to Systemd/Wayland Arch Linux systems.
 
@@ -35,13 +35,12 @@ Installs into the system directories of my Arch Linux systems.
 * $HOME configuration files: [home/](home/) -> `$HOME/`
 * System configuration files: [root/](root/) -> `/`
 * SSH configuration files: [ssh/](ssh/) -> `$HOME/.ssh/`
-* Personnal "homepage" files: [web/](web/) -> `$HOME/web/`
 
 ## Factoids
 
 * Contains examples of Fish, Bash, and POSIX shell scripting
 * Contains my Neovim configuration
   * Assumes Neovim version 0.7.0+
-  * Neovim configs are Lua based and use LSP heavily
+  * Neovim configs are Lua based and use LSP, BSP, DAP heavily
 * Contain Pyenv hooks to manage Python versions and environments
 * Tested regularly against Arch Linux

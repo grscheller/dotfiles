@@ -1,7 +1,4 @@
-
-# Configuration Files "dotfiles"
-
-## SSH Configuration Files
+# SSH Configuration Files
 
 This directory contains SSH user-specific configureation files
 installed into `~/.ssh`.

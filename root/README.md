@@ -1,7 +1,4 @@
-
-# Configuration Files "dotfiles"
-
-## System Configuration Files
+# System Configuration Files
 
 This directory contains system configureation files which
 I used to MANUALLY install on Systemd based Linux systems.
@@ -16,13 +13,13 @@ of the dotfiles repository, run
     sudo ./systemfilesInstall
 ```
 
-### Services using these configuration files
+## Services using these configuration files
 
 * avahi-daemon.service
 * dhcpcd.service
 * iwd.service
 * systemd-resolved.service
 
-### Timers using these configuration files
+## Timers using these configuration files
 
 * reflector.timer

@@ -1,7 +1,4 @@
-
-# Configuration Files "dotfiles"
-
-## Haskell Cabal Configuration File
+# Haskell Cabal Configuration File
 
 This directory contains my global Cabal configureation file.
 It is installed into `~/.cabal`.

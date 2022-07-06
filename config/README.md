@@ -1,6 +1,4 @@
-# Configuration Files "dotfiles"
-
-## XDG Configuration Files
+# XDG Configuration Files
 
 This directory contains user-specific configuration files installed
 under the XDG Base Directory Specification.
