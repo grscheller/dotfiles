@@ -6,6 +6,8 @@ configurations.
 
 Geared to Systemd/Wayland Arch Linux systems.
 
+![CC0-1.0](LICENSE/CC0-1.0.html)
+
 ## Installation Scripts
 
 Installs into my home directory.
