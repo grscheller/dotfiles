@@ -1,9 +1,8 @@
-# Dotfiles
+# dotfiles
 
-This repo contains the infrastructure I use to manage
-my Neovim, Fish, Sway, Alacritty, Bash, GIT, SSH and
-other configurations.  Also system configurations
-geared to Systemd/Wayland Arch Linux systems.
+This repo contains the infrastructure I use to manage my
+Neovim, Fish, Sway, Alacritty, Bash, GIT, SSH as well as
+system configurations geared to Systemd/Wayland Arch Linux.
 
 ## Installation Scripts
 
@@ -42,7 +41,6 @@ Installs into the system directories of my Arch Linux systems.
   * Assumes Neovim version 0.7.0+
   * Neovim configs are Lua based and use LSP, BSP, DAP heavily
 * Contain Pyenv hooks to manage Python versions and environments
-* Tested regularly against Arch Linux
 
 ## License Information
 
