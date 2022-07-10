@@ -21,7 +21,7 @@ shell and desktop software development environments.
   * Scala
   * Typescript
   * YAML
-* System confs for my Systemd/Wayland Arch Linux desktop environments
+* System configurations for my Systemd/Wayland Arch Linux systems
 
 ## Repo's purposes
 
@@ -33,10 +33,10 @@ shell and desktop software development environments.
 
 ## Installation Scripts
 
-Install into home directory:
+Install into home directory
 
 * [dotfilesInstall](dotfilesInstall)
-  * from cloned repo run:
+  * From cloned repo run:
     ```
        $ ./dotfilesInstall
     ```
@@ -44,7 +44,7 @@ Install into home directory:
 Install into system directories:
 
 * [systemfilesInstall](systemfilesInstall)
-  * from cloned repo run:
+  * From cloned repo run
     ```
        $ sudo ./systemfilesInstall
     ```

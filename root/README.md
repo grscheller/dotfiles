@@ -1,13 +1,14 @@
 # System Configuration Files
 
 This directory contains system configureation files which
-I used to MANUALLY install on Systemd based Linux systems.
+I used to MANUALLY install on my Systemd/Wayland based Linux
+systems.
 
-Paths are realtive to `/`.
+Paths are realtive to the `/` directory.
 
 Eventually, due to making too many errors, I wrote an
-installation script `systemfilesInstall`.  From the root
-of the dotfiles repository, run
+installation script `systemfilesInstall`.  From the
+base of the dotfiles repository, run
 
 ```
     sudo ./systemfilesInstall
