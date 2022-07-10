@@ -1,31 +1,56 @@
 # dotfiles
 
-This repo contains the infrastructure I use to manage my
-Neovim, Fish, Sway, Alacritty, Bash, GIT, SSH as well as
-system configurations geared to Systemd/Wayland Arch Linux.
+Infrastructure used to manage my Fish/Bash/Sway
+shell and desktop software development environments.
+
+* Neovim configurations
+  * Neovim configs are Lua based and use LSP, BSP, DAP heavily
+  * Tested on Neovim version 0.7.2+
+* Login shell fish, bash configured as backup
+* Alacritty, SSH and global GIT configurations
+* Language configurations (work in progress)
+  * C, C++ and Zig Languages
+  * CSS
+  * Go
+  * Haskell
+  * JSON
+  * Lua
+  * Markdown
+  * Python with pyenv hooks
+  * Rust
+  * Scala
+  * Typescript
+  * YAML
+* System confs for my Systemd/Wayland Arch Linux desktop environments
+
+## Repo's purposes
+
+1. To maintain my configuration files
+2. To preserve this information for myself
+3. To help quickly configure new systems for myself
+4. To provide others useful examples for their own configuration files
+5. Allow others to use as starting point to manage their own configuration files
 
 ## Installation Scripts
 
-Installs into my home directory.
+Install into home directory:
 
 * [dotfilesInstall](dotfilesInstall)
-  * installs my Linux environment into `$HOME`
   * from cloned repo run:
     ```
        $ ./dotfilesInstall
     ```
 
-Installs into the system directories of my Arch Linux systems.
+Install into system directories:
 
 * [systemfilesInstall](systemfilesInstall)
-  * for Arch Linux ONLY
-  * installs into system directories
   * from cloned repo run:
     ```
        $ sudo ./systemfilesInstall
     ```
+  * for (my) Arch Linux systems ONLY!
 
-## Contains
+## Contents
 
 * Bin scripts: [bin/](bin/) -> `$HOME/bin/`
 * Global Haskell Cabal configs: [cabal/](cabal/) -> `$HOME/.cabal/`
@@ -33,14 +58,6 @@ Installs into the system directories of my Arch Linux systems.
 * $HOME configuration files: [home/](home/) -> `$HOME/`
 * System configuration files: [root/](root/) -> `/`
 * SSH configuration files: [ssh/](ssh/) -> `$HOME/.ssh/`
-
-## Factoids
-
-* Contains examples of Fish, Bash, and POSIX shell scripting
-* Contains my Neovim configuration
-  * Assumes Neovim version 0.7.0+
-  * Neovim configs are Lua based and use LSP, BSP, DAP heavily
-* Contain Pyenv hooks to manage Python versions and environments
 
 ## License Information
 
@@ -52,12 +69,12 @@ Installs into the system directories of my Arch Linux systems.
   <br />
   To the extent possible under law,
   <a rel="dct:publisher"
-     href="https://github.com/grscheller/dotfiles">
+     href="https://github.com/grscheller">
     <span property="dct:title">Geoffrey R. Scheller</span></a>
   has waived all copyright and related or neighboring rights to
   <span property="dct:title">dotfiles</span>.
 This work is published from:
 <span property="vcard:Country" datatype="dct:ISO3166"
-      content="US" about="https://github.com/grscheller/dotfiles">
+      content="US" about="https://github.com/grscheller">
   United States</span>.
 </p>
