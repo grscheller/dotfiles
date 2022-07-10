@@ -15,7 +15,7 @@ my Neovim (0.7.2+) configuration.
 * cutting edge
   * always a "work in progress"
   * may require latest stable release of Neovim
-  * may use plug-ins which potentially may incorporate breaking changes
+  * uses plug-ins which potentially may incorporate breaking changes
   * try to base configs on documentation
-  * may contain "monkey-see-monkey-do" from other people's repos
+  * still may contain "monkey-see-monkey-do" when documentation is lacking
 
