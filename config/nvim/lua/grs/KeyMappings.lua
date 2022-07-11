@@ -1,7 +1,7 @@
 --[[ Setup keymappings/keybindings ]]
 
 --[[ The only things this config file should do
-     is setup Which-Key, define keymappings, define
+     is setup WhichKey, define keymappings, define
      a couple of utility functions, and functions
      used by some of the keymappings. ]]
 local M = {}
@@ -56,21 +56,19 @@ setKM('n', 'goto window below',    '<M-j>', '<C-w>j')
 setKM('n', 'goto window above',    '<M-k>', '<C-w>k')
 setKM('n', 'goto window right',    '<M-l>', '<C-w>l')
 setKM('n', 'goto previous window', '<M-p>', '<C-w>p')
-setKM('n', 'close current window', '<M-c>', '<C-w>c')
-setKM('n', 'breakout window new tabpage', '<M-b>', '<C-w>T')
-setKM('n', 'close other tabpage windows', '<M-o>', '<C-w>o')
 setKM('n', 'split current window',  '<M-s>', '<C-w>s')
 setKM('n', 'vsplit current window', '<M-d>', '<C-w>v')
 setKM('n', 'fish term in split',  '<M-f>', '<Cmd>split<Bar>term fish<CR>i')
 setKM('n', 'fish term in vsplit', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i')
+setKM('n', 'close other tab windows', '<M-o>', '<C-w>o')
+setKM('n', 'close current window',    '<M-c>', '<C-w>c')
 
 -- Creating, closing & navigating tabpages
-setKM('n', 'create new tab',    '<C-n>',     '<Cmd>tabnew<CR>')
-setKM('n', 'close current tab', '<C-e>',     '<Cmd>tabclose<CR>')
-setKM('n', 'goto tab left',     '<C-Left>',  '<Cmd>-tabnext<CR>')
-setKM('n', 'goto tab last',     '<C-Down>',  '<Cmd>tablast<CR>')
-setKM('n', 'goto tab first',    '<C-Up>',    '<Cmd>tabfirst<CR>')
-setKM('n', 'goto tab right',    '<C-Right>', '<Cmd>+tabnext<CR>')
+setKM('n', 'create new tab',          '<C-n>', '<Cmd>tabnew<CR>')
+setKM('n', 'close current tab',       '<C-e>', '<Cmd>tabclose<CR>')
+setKM('n', 'breakout window new tab', '<C-b>', '<C-w>T')
+setKM('n', 'goto tab left',  '<C-Left>',  '<Cmd>-tabnext<CR>')
+setKM('n', 'goto tab right', '<C-Right>', '<Cmd>tablast<CR>')
 
 -- Changing window layout
 setKM('n', 'move window lhs',    '<M-S-h>', '<C-w>H')
@@ -98,25 +96,27 @@ setKM('v', 'shift left & reselect',  '<', '<gv')
 setKM('v', 'shift right & reselect', '>', '>gv')
 
 -- Misc keymappings
-setKM('n', 'Clear hlsearch',        '  ', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
-setKM('n', 'new unnamed buffer',    ' b', '<Cmd>enew<CR>')
-setKM('n', 'pick & enter diagraph', ' k', '<Cmd>dig<CR>a<C-k>')
-setCB('n', 'line number toggle', ' n', function()
-  if vim.wo.relativenumber == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = false
-  elseif vim.wo.number == true then
-    vim.wo.number = false
-    vim.wo.relativenumber = true
-  else
-    vim.wo.number = true
-    vim.wo.relativenumber = false
+setKM('n', 'clear hlsearch', '<Space><Space>', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
+setKM('n', 'new unnamed buffer', '<Space>b', '<Cmd>enew<CR>')
+setKM('n', 'pick & enter diagraph', '<Space>k', '<Cmd>dig<CR>a<C-k>')
+setCB('n', 'line number toggle', '<Space>n',
+  function()
+    if vim.wo.relativenumber == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+    elseif vim.wo.number == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = true
+    else
+      vim.wo.number = true
+      vim.wo.relativenumber = false
+    end
   end
-end )
-setKM('n', 'clear & redraw screen',       ' r', '<Cmd>mode<CR>')
-setKM('n', 'toggle spelling',             ' s', '<Cmd>set invspell<CR>')
-setKM('n', 'trim trailing whitespace',    ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
-setKM('n', 'treesitter highlight toggle', ' h', '<Cmd>TSBufToggle highlight<CR>')
+)
+setKM('n', 'clear & redraw screen',       '<Space>r', '<Cmd>mode<CR>')
+setKM('n', 'toggle spelling',             'z<Space>', '<Cmd>set invspell<CR>')
+setKM('n', 'trim trailing whitespace',    '<Space>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
+setKM('n', 'treesitter highlight toggle', '<Space>h', '<Cmd>TSBufToggle highlight<CR>')
 
 --[[ LSP related keymappings ]]
 M.lsp_kb = function(client, bufnr)
@@ -143,7 +143,6 @@ M.lsp_kb = function(client, bufnr)
   setCB('n', 'diagnostic prev',       '\\[',   function() vim.diagnostic.goto_prev {wrap = false} end)
   setCB('n', 'diagnostic next',       '\\]',   function() vim.diagnostic.goto_next {wrap = false} end)
 
-  -- LSP labels configured by WhichKey
   local lsp_labels = {
     c = {
       name = 'code',
@@ -162,13 +161,12 @@ M.lsp_kb = function(client, bufnr)
   end
 
   return client
-
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
 M.dap_kb = function(bufnr)
-  local dap = require 'dap'
-  local dapUiWidgets = require 'dap.ui.widgets'
+  local dap = require('dap')
+  local dapUiWidgets = require('dap.ui.widgets')
   setCB('n', 'dap continue',          '\\dc', dap.continue)
   setCB('n', 'dap repl toggle',       '\\dr', dap.repl.toggle)
   setCB('n', 'dap hover',             '\\dh', dapUiWidgets.hover)
@@ -177,7 +175,6 @@ M.dap_kb = function(bufnr)
   setCB('n', 'dap step into',         '\\di', dap.step_into)
   setCB('n', 'dap run last',          '\\dl', dap.run_last)
 
-  -- DAP labels configured by WhichKey
   local dap_labels = {
     d = { name = 'dap' }
   }
@@ -185,15 +182,13 @@ M.dap_kb = function(bufnr)
   if M.wk then
     wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
   end
-
 end
 
 --[[ Scala Metals related keybindings ]]
 M.sm_kb = function(bufnr)
-  local metals = require 'metals'
+  local metals = require('metals')
   setCB('n', 'metals hover worksheet', '\\mh', metals.hover_worksheet)
 
-  -- Metals labels configured by WhichKey
   local metals_labels = {
     m = { name = 'metals' }
   }
@@ -201,37 +196,33 @@ M.sm_kb = function(bufnr)
   if M.wk then
     wk.register(metals_labels, { prefix = '\\', buffer = bufnr })
   end
-
 end
 
 --[[ Telescope related keybindings ]]
 M.telescope_keybindings = function()
-  local tb = require 'telescope.builtin'
+  local tb = require('telescope.builtin')
 
-  setKM('n', 'Telescope Command',    '<M-t>T',  '<Cmd>Telescope<CR>')
-  setCB('n', 'List Buffers',         '<M-t>bl', tb.buffers)
-  setCB('n', 'Fuzzy Find Curr Buff', '<M-t>bz', tb.current_buffer_fuzzy_find)
-  setCB('n', 'Find File',            '<M-t>ff', tb.find_files)
-  setCB('n', 'Open Recent File',     '<M-t>fr', tb.oldfiles)
-  setCB('n', 'Live Grep',            '<M-t>gl', tb.live_grep)
-  setCB('n', 'Grep String',          '<M-t>gs', tb.grep_string)
-  setCB('n', 'Help Tags',            '<M-t>h',  tb.help_tags)
+  setKM('n', 'telescope command',    '<Space>T',  '<Cmd>Telescope<CR>')
+  setCB('n', 'list buffers',         '<Space>tbl', tb.buffers)
+  setCB('n', 'fuzzy find curr buff', '<Space>tbz', tb.current_buffer_fuzzy_find)
+  setCB('n', 'find file',            '<Space>tff', tb.find_files)
+  setCB('n', 'open recent file',     '<Space>tfr', tb.oldfiles)
+  setCB('n', 'live grep',            '<Space>tgl', tb.live_grep)
+  setCB('n', 'grep string',          '<Space>tgs', tb.grep_string)
+  setCB('n', 'help tags',            '<Space>th',  tb.help_tags)
 
-  -- Telescope labels configured by WhichKey
   local telescope_labels = {
-    ['<M-t>'] = {
-      name = 'Telescope',
+    t = {
+      name = 'telescope',
       b = { name = 'telescope buffer' },
       f = { name = 'telescope files' },
-      g = { name = 'telescope grep' },
-      t = { name = 'telescope tags' }
+      g = { name = 'telescope grep' }
     }
   }
 
   if M.wk then
-    wk.register(telescope_labels, { })
+    wk.register(telescope_labels, { prefix = '<Space>' })
   end
-
 end
 
 return M

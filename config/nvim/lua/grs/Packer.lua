@@ -67,6 +67,7 @@ return packer.startup(
         opt = true
       }
     }
+    use 'jghauser/shade.nvim'
 
     --[[ Install language modules for built-in treesitter ]]
     use {

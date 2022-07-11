@@ -70,3 +70,19 @@ if ok_lualine then
 else
   print('Problem loading lualine: ' .. lualine)
 end
+
+-- Setup Shade to help identify active window
+local ok_shade, shade = pcall(require, 'shade')
+if ok_shade then
+  shade.setup {
+    overlay_opacity = 70,
+    opacity_step = 2,
+    keys = {
+      brightness_up = '<C-Up>',
+      brightness_down = '<C-Down>',
+      toggle = '<Space>s'
+    }
+  }
+else
+  print('Problem loading shade: ' .. shade)
+end
