@@ -72,17 +72,26 @@ else
 end
 
 -- Setup Shade to help identify active window
-local ok_shade, shade = pcall(require, 'shade')
-if ok_shade then
-  shade.setup {
-    overlay_opacity = 70,
-    opacity_step = 2,
-    keys = {
-      brightness_up = '<C-Up>',
-      brightness_down = '<C-Down>',
-      toggle = '<Space>s'
-    }
+-- local ok_shade, shade = pcall(require, 'shade')
+-- if ok_shade then
+--   shade.setup {
+--     overlay_opacity = 70,
+--     opacity_step = 2,
+--     keys = {
+--       brightness_up = '<C-Up>',
+--       brightness_down = '<C-Down>',
+--       toggle = '<Space>s'
+--     }
+--   }
+-- else
+--   print('Problem loading shade: ' .. shade)
+-- end
+
+-- Setup folke/twilight to help identify active window
+local ok_twilight, twilight = pcall(require, 'twilight')
+if ok_twilight then
+  twilight.setup {
   }
 else
-  print('Problem loading shade: ' .. shade)
+  print('Problem loading twilight: ' .. twilight)
 end

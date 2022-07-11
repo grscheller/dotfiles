@@ -67,7 +67,8 @@ return packer.startup(
         opt = true
       }
     }
-    use 'jghauser/shade.nvim'
+    -- use 'jghauser/shade.nvim'
+    use 'folke/twilight.nvim'
 
     --[[ Install language modules for built-in treesitter ]]
     use {
