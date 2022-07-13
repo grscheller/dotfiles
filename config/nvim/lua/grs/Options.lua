@@ -26,6 +26,7 @@ local options = {
 
   -- Windowing preferences
   mouse = 'a', -- enable mouse for all modes
+  ruler = false, -- disable ruler
   splitbelow = true, -- horizontally split window below
   splitright = true, -- vertically split window to right
   number = false,         -- Default initial window

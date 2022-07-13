@@ -71,27 +71,34 @@ else
   print('Problem loading lualine: ' .. lualine)
 end
 
--- Setup Shade to help identify active window
--- local ok_shade, shade = pcall(require, 'shade')
--- if ok_shade then
---   shade.setup {
---     overlay_opacity = 70,
---     opacity_step = 2,
---     keys = {
---       brightness_up = '<C-Up>',
---       brightness_down = '<C-Down>',
---       toggle = '<Space>s'
---     }
---   }
--- else
---   print('Problem loading shade: ' .. shade)
--- end
-
--- Setup folke/twilight to help identify active window
+-- Setup folke/twilight.nvim
 local ok_twilight, twilight = pcall(require, 'twilight')
 if ok_twilight then
   twilight.setup {
   }
 else
   print('Problem loading twilight: ' .. twilight)
+end
+
+-- Setup folke/zen-mode.nvim
+local ok_zen, zen = pcall(require, 'zen-mode')
+if ok_zen then
+  zen.setup {
+    window = {
+      backdrop = 0.95, -- shade backdrop, 1 to keep normal
+      width = 120, -- abs num of cells when > 1, % of width when < 1
+      height = 1,  -- abs num of cells when > 1, % of height when <= 1
+      options = {} -- by default, not options are changed
+    },
+    plugins = {
+      options = {},
+      twilght = { enable = true }
+    },
+    on_open = function(win)
+    end,
+    on_close = function()
+    end
+  }
+else
+  print('Problem loading zen-mode: ' .. zen)
 end

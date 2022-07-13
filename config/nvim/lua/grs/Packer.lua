@@ -57,7 +57,7 @@ return packer.startup(
     use 'tpope/vim-surround' -- surround text objects with matching symbols
     use 'tpope/vim-repeat' -- enable supported plugins to use '.'
 
-    --[[ Setup colorscheme & statusline ]]
+    --[[ Colorscheme, statusline & zen-mode]]
     use 'norcalli/nvim-colorizer.lua' -- Colorize names & hexcodes
     use 'folke/tokyonight.nvim'
     use {
@@ -67,8 +67,8 @@ return packer.startup(
         opt = true
       }
     }
-    -- use 'jghauser/shade.nvim'
     use 'folke/twilight.nvim'
+    use 'folke/zen-mode.nvim'
 
     --[[ Install language modules for built-in treesitter ]]
     use {
