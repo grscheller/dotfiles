@@ -1,5 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
+local setKM = require('grs.KeyMappings').setKM
+
 -- Colorize hexcodes & names like #00dddd Blue Green
 local ok_col, colorizer = pcall(require, 'colorizer')
 if ok_col then
@@ -12,8 +14,8 @@ end
 if pcall(require, 'tokyonight') then
   vim.g.tokyonight_style = 'night'
   vim.g.tokyonight_colors = {
-    bg = '#000000',
-    fg = '#c0caf5',
+    bg = '#12141d',
+    bg_highlight = '#141721',
     comment = '#818ecd',
     cyan = '#0cb4c0'
   }
@@ -71,22 +73,13 @@ else
   print('Problem loading lualine: ' .. lualine)
 end
 
--- Setup folke/twilight.nvim
-local ok_twilight, twilight = pcall(require, 'twilight')
-if ok_twilight then
-  twilight.setup {
-  }
-else
-  print('Problem loading twilight: ' .. twilight)
-end
-
 -- Setup folke/zen-mode.nvim
 local ok_zen, zen = pcall(require, 'zen-mode')
 if ok_zen then
   zen.setup {
     window = {
-      backdrop = 0.95, -- shade backdrop, 1 to keep normal
-      width = 120, -- abs num of cells when > 1, % of width when < 1
+      backdrop = 0.4, -- shade backdrop, 1 to keep normal
+      width = 0.85, -- abs num of cells when > 1, % of width when <= 1
       height = 1,  -- abs num of cells when > 1, % of height when <= 1
       options = {} -- by default, not options are changed
     },
@@ -99,6 +92,8 @@ if ok_zen then
     on_close = function()
     end
   }
+  setKM('n', 'zen-mode toggle', 'Z', '<Cmd>ZenMode<CR>')
+  setKM('n', 'twilight toggle', 'T', '<Cmd>Twilight<CR>')
 else
   print('Problem loading zen-mode: ' .. zen)
 end

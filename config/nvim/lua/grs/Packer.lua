@@ -67,8 +67,12 @@ return packer.startup(
         opt = true
       }
     }
-    use 'folke/twilight.nvim'
-    use 'folke/zen-mode.nvim'
+    use {
+      'folke/zen-mode.nvim',
+      requires = {
+        'folke/twilight.nvim'
+      }
+    }
 
     --[[ Install language modules for built-in treesitter ]]
     use {
