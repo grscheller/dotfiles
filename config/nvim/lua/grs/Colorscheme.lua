@@ -25,11 +25,9 @@ else
   vim.cmd [[ colorscheme darkblue ]]
 end
 
---[[ A lua fork of vim-devicons. This plugin provides
-     the same icons as well as colors for each icon.
-
-     Needs a patched font like Noto Mono Nerd Font
-     see https://github.com/ryanoasis/nerd-fonts ]]
+-- Setup WebDevicons
+   -- Needs a patched font like Noto Mono Nerd Font
+   -- see https://github.com/ryanoasis/nerd-fonts ]]
 local ok_webD, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok_webD then
   webDevicons.setup {default = true}
@@ -73,6 +71,16 @@ else
   print('Problem loading lualine: ' .. lualine)
 end
 
+--- Setup folke/twilight.nvim
+local ok_twilight, twilight = pcall(require, 'twilight')
+if ok_twilight then
+  twilight.setup {
+    context = 20
+  }
+else
+  print('Problem loading twilight: ' .. twilight)
+end
+
 -- Setup folke/zen-mode.nvim
 local ok_zen, zen = pcall(require, 'zen-mode')
 if ok_zen then
@@ -88,6 +96,8 @@ if ok_zen then
       twilght = { enable = true }
     },
     on_open = function(win)
+      vim.api.nvim_win_set_option(win, 'scrolloff', 10)
+      vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
     end,
     on_close = function()
     end
