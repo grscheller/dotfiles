@@ -14,8 +14,9 @@ end
 if pcall(require, 'tokyonight') then
   vim.g.tokyonight_style = 'night'
   vim.g.tokyonight_colors = {
-    bg = '#12141d',
-    bg_highlight = '#141721',
+    bg_dark = '#000000',
+    bg = '#090a0e',
+    bg_highlight = '#12141d',
     comment = '#818ecd',
     cyan = '#0cb4c0'
   }
@@ -102,8 +103,8 @@ if ok_zen then
     on_close = function()
     end
   }
-  setKM('n', 'zen-mode toggle', 'Z', '<Cmd>ZenMode<CR>')
-  setKM('n', 'twilight toggle', 'T', '<Cmd>Twilight<CR>')
+  setKM('n', 'zen-mode toggle', 'zZ', '<Cmd>ZenMode<CR>')
+  setKM('n', 'twilight toggle', 'zT', '<Cmd>Twilight<CR>')
 else
   print('Problem loading zen-mode: ' .. zen)
 end
