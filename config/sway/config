@@ -216,7 +216,7 @@ gaps outer 2
 #
 # No boarders
 #
-#default_border none
+default_border none
 
 ### Status Bar:
 #
