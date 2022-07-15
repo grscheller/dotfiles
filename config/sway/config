@@ -207,6 +207,17 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+### Customizations
+#
+# Gaps
+#
+gaps inner 4
+gaps outer 2
+#
+# No boarders
+#
+#default_border none
+
 ### Status Bar:
 #
 # Set to Waybar, see ~/.config/waybar/config/ for configuration
