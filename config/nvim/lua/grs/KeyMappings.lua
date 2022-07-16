@@ -23,7 +23,7 @@ else
 end
 
 --[[ Define some utility functions ]]
-local setKM = function(mode, desc, kb, cmd)
+local function setKM(mode, desc, kb, cmd)
    vim.api.nvim_set_keymap(mode, kb, cmd, {
       noremap = true,
       silent = true,
@@ -31,7 +31,7 @@ local setKM = function(mode, desc, kb, cmd)
    })
 end
 
-local setCB = function(mode, desc, kb, callback)
+local function setCB(mode, desc, kb, callback)
    vim.api.nvim_set_keymap(mode, kb, '', {
       noremap = true,
       silent = true,
