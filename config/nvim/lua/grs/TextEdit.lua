@@ -14,14 +14,14 @@ setKM('', 'T one char sneak', 'T', '<Plug>Sneak_T')
 --[[ Configure numToStr/Comment.nvim ]]
 local ok_comment, comment = pcall(require, 'Comment')
 if ok_comment then
-  comment.setup {
-    ignore = '^$',
-    mappings = {
-      basic = true,
-      extra = true,
-      extended = true
-    }
-  }
+   comment.setup {
+      ignore = '^$',
+      mappings = {
+         basic = true,
+         extra = true,
+         extended = true
+      }
+   }
 else
-  print('Problem loading numToStr/Comment.nvim: ' .. comment)
+   print('Problem loading numToStr/Comment.nvim: ' .. comment)
 end

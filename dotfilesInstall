@@ -84,7 +84,6 @@ CONFIG_FILES='
    nvim/lua/grs/Packer.lua
    nvim/lua/grs/Telescope.lua
    nvim/lua/grs/TextEdit.lua
-   nvim/lua/grs/Treesitter.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -93,13 +92,11 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${HOME}/web
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/AutoCmds.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Treesitter.lua
 "
 
 ## Function to removes files
 remove_item () {
-
    rmItem="$1"
 
    test ! -e "$rmItem" ||
@@ -113,7 +110,6 @@ remove_item () {
 
 ## Function to install files
 install_file () {
-
    install_dir="$1"
    file_path="$2"
    src_dir="$3"
