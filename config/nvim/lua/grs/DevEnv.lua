@@ -132,7 +132,7 @@ if ok_metals then
 
    metals_config.capabilities = capabilities
 
-   metals_config.on_attach = function(client, bufnr)
+   function metals_config.on_attach(client, bufnr)
       km.lsp_kb(client, bufnr)
       km.sm_kb(bufnr)
       if ok_dap then

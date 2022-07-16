@@ -119,7 +119,7 @@ setKM('n', 'trim trailing whitespace', '<Space>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
 setKM('n', 'treesitter highlight toggle', '<Space>h', '<Cmd>TSBufToggle highlight<CR>')
 
 --[[ LSP related keymappings ]]
-M.lsp_kb = function(client, bufnr)
+function M.lsp_kb(client, bufnr)
    setCB('n', 'code action', '\\ca', vim.lsp.buf.code_action)
    setCB('n', 'code lens refresh', '\\clh', vim.lsp.codelens.refresh)
    setCB('n', 'code lens run', '\\clr', vim.lsp.codelens.run)
@@ -164,7 +164,7 @@ M.lsp_kb = function(client, bufnr)
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
-M.dap_kb = function(bufnr)
+function M.dap_kb(bufnr)
    local dap = require('dap')
    local dapUiWidgets = require('dap.ui.widgets')
    setCB('n', 'dap continue', '\\dc', dap.continue)
@@ -185,7 +185,7 @@ M.dap_kb = function(bufnr)
 end
 
 --[[ Scala Metals related keybindings ]]
-M.sm_kb = function(bufnr)
+function M.sm_kb(bufnr)
    local metals = require('metals')
    setCB('n', 'metals hover worksheet', '\\mh', metals.hover_worksheet)
 
@@ -199,7 +199,7 @@ M.sm_kb = function(bufnr)
 end
 
 --[[ Telescope related keybindings ]]
-M.telescope_keybindings = function()
+function M.telescope_keybindings()
    local tb = require('telescope.builtin')
 
    setKM('n', 'telescope command', '<Space>T', '<Cmd>Telescope<CR>')
