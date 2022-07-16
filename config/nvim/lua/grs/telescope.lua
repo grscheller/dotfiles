@@ -16,4 +16,4 @@ telescope.setup {
 telescope.load_extension('ui-select')
 
 -- Set Telescope key mappings/bindings
-require('grs.KeyMappings').telescope_keybindings()
+require('grs.util.keymappings').telescope_keybindings()

@@ -1,7 +1,7 @@
 --[[ Contains configurations for basic text editing
      and simple general purpose text editing plugins. ]]
 
-local setKM = require('grs.KeyMappings').setKM
+local setKM = require('grs.util.keymappings').setKM
 
 --[[ Configure justtinmk/vim-sneak plugin ]]
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion

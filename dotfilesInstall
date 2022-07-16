@@ -75,15 +75,15 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/Colorscheme.lua
-   nvim/lua/grs/Commands.lua
-   nvim/lua/grs/Completions.lua
-   nvim/lua/grs/DevEnv.lua
-   nvim/lua/grs/KeyMappings.lua
-   nvim/lua/grs/Options.lua
-   nvim/lua/grs/Packer.lua
-   nvim/lua/grs/Telescope.lua
-   nvim/lua/grs/TextEdit.lua
+   nvim/lua/grs/appearance.lua
+   nvim/lua/grs/commands.lua
+   nvim/lua/grs/completions.lua
+   nvim/lua/grs/devel_environment.lua
+   nvim/lua/grs/options.lua
+   nvim/lua/grs/telescope.lua
+   nvim/lua/grs/textedit.lua
+   nvim/lua/grs/util/keymappings.lua
+   nvim/lua/grs/util/packer.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -92,6 +92,15 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Colorscheme.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Commands.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Completions.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/DevEnv.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/KeyMappings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Options.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Packer.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/Telescope.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/TextEdit.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/Treesitter.lua
 "
 

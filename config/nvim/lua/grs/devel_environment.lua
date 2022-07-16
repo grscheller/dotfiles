@@ -45,13 +45,13 @@ local lsp_servers = {
 }
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local km = require('grs.KeyMappings')
+local keymappings = require('grs.util.keymappings')
 
 nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
    lspconfig[lsp_server].setup {
-      on_attach = km.lsp_kb,
+      on_attach = keymappings.lsp_kb,
       capabilities = capabilities
    }
 end
@@ -62,7 +62,7 @@ vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=3 softtabstop=3 expa
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
-   on_attach = km.lsp_kb,
+   on_attach = keymappings.lsp_kb,
    capabilities = capabilities,
    settings = {
       Lua = {
@@ -97,9 +97,9 @@ if ok_rt then
    rust_tools.setup {
       server = {
          on_attach = function(client, bufnr)
-            km.lsp_kb(client, bufnr)
+            keymappings.lsp_kb(client, bufnr)
             if ok_dap then
-               km.dap_kb(bufnr)
+               keymappings.dap_kb(bufnr)
             end
          end,
          capabilities = capabilities,
@@ -133,8 +133,8 @@ if ok_metals then
    metals_config.capabilities = capabilities
 
    function metals_config.on_attach(client, bufnr)
-      km.lsp_kb(client, bufnr)
-      km.sm_kb(bufnr)
+      keymappings.lsp_kb(client, bufnr)
+      keymappings.sm_kb(bufnr)
       if ok_dap then
          dap.configurations.scala = {
             {
@@ -156,7 +156,7 @@ if ok_metals then
             }
          }
          metals.setup_dap()
-         km.dap_kb(bufnr)
+         keymappings.dap_kb(bufnr)
       end
    end
 

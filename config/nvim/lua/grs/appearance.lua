@@ -1,6 +1,6 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local setKM = require('grs.KeyMappings').setKM
+local setKM = require('grs.util.keymappings').setKM
 
 -- Colorize hexcodes & names like #00dddd Blue Green
 local ok_col, colorizer = pcall(require, 'colorizer')
