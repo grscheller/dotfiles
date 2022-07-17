@@ -8,11 +8,15 @@ vim.g.did_load_filetypes = 0
 -- Plugin manager
 require('grs.util.packer')
 
--- Configure an IDE like Neovim based software development environment
-require('grs.options') -- Setup options reflecting personal preferences
+-- General Text editing reflecting personnal preferences
+require('grs.options') -- Neovim options
 require('grs.commands') -- Commands & autocmds not related to specific plugins
 require('grs.textedit') -- Configure general text editing related plugins
+
+-- Configure an IDE like Neovim based software development environment
 require('grs.telescope') -- Configure telescope, an extendable fuzzy finder
-require('grs.completions') -- Setup completions & snippets
-require('grs.devel_environment') -- Development environment and LSP setup
+require('grs.completions') -- Configure completions & snippets
+require('grs.devel_environment') -- Development environment - LSP setup
+
+-- Theme/Overall Appearance 
 require('grs.appearance') -- Colorscheme, statusline & zen-mode

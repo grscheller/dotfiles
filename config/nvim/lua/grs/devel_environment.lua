@@ -125,7 +125,7 @@ if ok_metals then
 
    metals_config.settings = {
       showImplicitArguments = true,
-      serverVersion = '0.11.6'
+      serverVersion = '0.11.7'
    }
 
    metals_config.init_options.statusBarProvider = 'on'
