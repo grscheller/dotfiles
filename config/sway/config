@@ -209,14 +209,13 @@ bindsym $mod+r mode "resize"
 
 ### Customizations
 #
-# Gaps
+# Gaps & Borders
 #
-gaps inner 4
-gaps outer 2
-#
-# No boarders
-#
-default_border none
+gaps inner 3
+gaps top 1
+gaps bottom 2
+smart_gaps on
+default_border pixel 3
 
 ### Status Bar:
 #
