@@ -20,8 +20,13 @@ set $menu wofi
 
 ### Output configuration
 #
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg #000000 solid_color
+# The dotfilesInstall script swaps in a Sway background image
+#   ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
+# if present to the output cmd below.  See dotfilesInstall for
+# details where I obtained picture I've to which I've tweaked
+# the configuration.
+#
+output * bg #400535 solid_color
 #
 # Example configuration:
 #

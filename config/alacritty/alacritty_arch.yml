@@ -68,7 +68,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.7
+  opacity: 0.70
 
   # Startup Mode (changes require restart)
   #
@@ -211,7 +211,7 @@ schemes:
     # Default colors
     primary:
       #background: '#1a1b26'
-      background: '#090a0e'
+      background: '#000000'
       foreground: '#c0caf5'
 
     # Cursor colors

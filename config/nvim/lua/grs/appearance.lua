@@ -15,7 +15,7 @@ if pcall(require, 'tokyonight') then
    vim.g.tokyonight_style = 'night'
    vim.g.tokyonight_colors = {
       bg_dark = '#000000',
-      bg = '#090a0e',
+      bg = '#0c010a',
       bg_highlight = '#12141d',
       comment = '#818ecd',
       cyan = '#0cb4c0'
