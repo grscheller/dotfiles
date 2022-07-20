@@ -2,7 +2,7 @@
 
 local setKM = require('grs.util.keymappings').setKM
 
--- Colorize hexcodes & names like #00dddd Blue Green
+-- Colorize color names, hexcodes, and other color formats
 local ok_col, colorizer = pcall(require, 'colorizer')
 if ok_col then
    colorizer.setup(nil, { css = true; })

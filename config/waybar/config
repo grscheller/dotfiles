@@ -7,7 +7,7 @@
     //"modules-left": ["sway/workspaces", "sway/mode", "custom/media"],
     //"modules-center": ["sway/window"],
     //"modules-right": ["mpd", "idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "keyboard-state", "sway/language", "battery", "battery#bat2", "clock", "tray"],
-    "modules-left": ["sway/workspaces"],
+    "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": [],
     "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "clock", "tray"],
     // Modules configuration
