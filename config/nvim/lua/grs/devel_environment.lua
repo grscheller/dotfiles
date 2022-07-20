@@ -51,8 +51,8 @@ nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
    lspconfig[lsp_server].setup {
-      on_attach = keymappings.lsp_kb,
-      capabilities = capabilities
+      capabilities = capabilities,
+      on_attach = keymappings.lsp_kb
    }
 end
 
@@ -62,8 +62,8 @@ vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=3 softtabstop=3 expa
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig.sumneko_lua.setup {
-   on_attach = keymappings.lsp_kb,
    capabilities = capabilities,
+   on_attach = keymappings.lsp_kb,
    settings = {
       Lua = {
          runtime = { version = 'LuaJIT' },
@@ -96,13 +96,13 @@ if ok_rt then
    local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
    rust_tools.setup {
       server = {
+         capabilities = capabilities,
          on_attach = function(client, bufnr)
             keymappings.lsp_kb(client, bufnr)
             if ok_dap then
                keymappings.dap_kb(bufnr)
             end
          end,
-         capabilities = capabilities,
          standalone = true,
          dap = {
             adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
@@ -128,9 +128,9 @@ if ok_metals then
       serverVersion = '0.11.7'
    }
 
-   metals_config.init_options.statusBarProvider = 'on'
-
    metals_config.capabilities = capabilities
+
+   metals_config.init_options.statusBarProvider = 'on'
 
    function metals_config.on_attach(client, bufnr)
       keymappings.lsp_kb(client, bufnr)
