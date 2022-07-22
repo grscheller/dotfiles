@@ -1,4 +1,4 @@
-## Fish configuration for my Arch Linux/Sway DE systems
+## Fish configuration for my workstations
 
 ## Make sure $fish_features is set in universal scope
 test "$fish_features" = all
@@ -113,10 +113,10 @@ test -d $PYENV_ROOT; and pyenv init - | source
 
 ## Enable vi keybindings
 fish_vi_key_bindings
-set fish_cursor_default block
-set fish_cursor_insert line
-set fish_cursor_replace_one underscore
-set fish_cursor_visual underscore blink
+set -g fish_cursor_default block
+set -g fish_cursor_insert line
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_visual underscore blink
 
 ## Set up abriviations
 
@@ -145,6 +145,8 @@ abbr -a -g gs git status  # gs steps on ghostscript
 abbr -a -g -- re REDO_ENV=yes fish -l -C cd
 abbr -a -g ue UPDATE_ENV=yes fish
 
+## Functions better managed not as separate files
+
 # Convert between various bases (use capital A-F for hex-digits)
 function h2h; printf 'ibase=16\nobase=10\n%s\n'   "$argv" | /usr/bin/bc; end
 function h2d; printf 'ibase=16\nobase=A\n%s\n'    "$argv" | /usr/bin/bc; end
@@ -162,3 +164,39 @@ function b2h; printf 'ibase=2\nobase=10000\n%s\n' "$argv" | /usr/bin/bc; end
 function b2d; printf 'ibase=2\nobase=1010\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2o; printf 'ibase=2\nobase=1000\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2b; printf 'ibase=2\nobase=10\n%s\n'    "$argv" | /usr/bin/bc; end
+
+## Setup Tokyo Night based colors for fish to use
+
+# TokyoNight based colors consistent with alacritty.yml configuration
+set -l foreground c0caf5  #c0caf5  bright white
+set -l selection 33467c   #33467c
+set -l comment 565f89     #565f89
+set -l red f7768e         #f7768e  red
+set -l orange ff9e64      #ff9e64  index color 16
+set -l yellow e0af68      #e0af68  yellow
+set -l green 9ece6a       #9ece6a  green
+set -l purple 9d7cd8      #9d7cd8  dimmed "magenta" 
+set -l azure 7dcfff       #7dcfff  bright "cyan"
+set -l pink bb9af7        #bb9af7  "magenta" - not pink
+
+# Syntax highlighting colors
+set -g fish_color_normal $foreground
+set -g fish_color_command $azure
+set -g fish_color_keyword $pink
+set -g fish_color_quote $yellow
+set -g fish_color_redirection $foreground
+set -g fish_color_end $orange
+set -g fish_color_error $red
+set -g fish_color_param $purple
+set -g fish_color_comment $comment
+set -g fish_color_selection --background=$selection
+set -g fish_color_search_match --background=$selection
+set -g fish_color_operator $green
+set -g fish_color_escape $pink
+set -g fish_color_autosuggestion $comment
+
+# Completion pager colors
+set -g fish_pager_color_progress $comment
+set -g fish_pager_color_prefix $azure
+set -g fish_pager_color_completion $foreground
+set -g fish_pager_color_description $comment

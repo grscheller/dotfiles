@@ -50,6 +50,7 @@ CONFIG_FILES='
    alacritty/alacritty_arch.yml
    fish/completions/alacritty.fish
    fish/config.fish
+   fish/fish_variables
    fish/functions/archJDK.fish
    fish/functions/ax.fish
    fish/functions/digpath.fish
@@ -92,16 +93,6 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Colorscheme.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Commands.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Completions.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/DevEnv.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/KeyMappings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Options.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Packer.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Telescope.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/TextEdit.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/Treesitter.lua
 "
 
 ## Function to removes files
