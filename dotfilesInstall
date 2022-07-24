@@ -50,7 +50,6 @@ CONFIG_FILES='
    alacritty/alacritty_arch.yml
    fish/completions/alacritty.fish
    fish/config.fish
-   fish/fish_variables
    fish/functions/archJDK.fish
    fish/functions/ax.fish
    fish/functions/digpath.fish

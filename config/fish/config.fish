@@ -1,18 +1,8 @@
-## Fish configuration for my workstations
+## Fish configurstion for my workstations
 
-## Make sure $fish_features is set in universal scope
-test "$fish_features" = all
-or begin
-    set_color red
-    printf '\nWarn: fish_features was not set to "all",'
-    printf '\n      the current status of each feature is\n\n'
-    status features | string replace -r '^' '        '
-    set -U fish_features all
-    set_color green
-    printf '\nInfo: fish_features now universally set to "all",'
-    printf '\n      restart fish for them to take effect.\n'
-    set_color normal
-end
+## Using universal variables to configure fish itself
+set -U fish_features all
+set -U fish_key_bindings fish_vi_key_bindings
 
 ## PATH variable management
 set -q VIRGINPATH
