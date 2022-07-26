@@ -13,13 +13,15 @@ end
 
 set -q REDO_ENV
 and begin
-    set -x PATH $VIRGINPATH
     set -x UPDATE_ENV
+    set PATH $VIRGINPATH
 end
 
 set -q UPDATE_ENV
 and begin
     ## Setup initial environment variables
+    set -e UPDATE_ENV
+    set -e REDO_ENV
     
     # Use Neovim as the pager
     set -gx EDITOR nvim
@@ -85,17 +87,16 @@ and begin
     or set -gx _ENV_INITIALIZED 0
     set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
 
-    set -e UPDATE_ENV
-    set -e REDO_ENV
+    ## For non-Systemd systems
+    if not digpath -q hostnamectl
+        set -gx make_phoney_hostnamectl
+    end
 end
 
-## For non-Systemd systems - provide a phony hostnamectl command
-function hostnamectl
-    hostname
-end
-
-if digpath -q hostnamectl
-    functions --erase hostnamectl
+if set -q make_phoney_hostnamectl
+    function hostnamectl
+        hostname
+    end
 end
 
 ## Python Pyenv function configuration
@@ -103,37 +104,12 @@ test -d $PYENV_ROOT; and pyenv init - | source
 
 ## Enable vi keybindings
 fish_vi_key_bindings
+
+# Use cursor shape to indicate mode
 set -g fish_cursor_default block
 set -g fish_cursor_insert line
 set -g fish_cursor_replace_one underscore
 set -g fish_cursor_visual underscore blink
-
-## Set up abriviations
-
-# Gui programs
-abbr -a -g tm fishterm
-abbr -a -g gq 'geeqie &; disown'
-
-# Shell terminal cmds
-abbr -a -g dp digpath
-abbr -a -g nv nvim
-abbr -a -g path 'string join \n $PATH'
-abbr -a -g -- pst ps -ejH
-
-# Git related cmds - anything more complicated, I want to think about
-abbr -a -g ga git add .
-abbr -a -g gc git commit
-abbr -a -g gd git diff
-abbr -a -g gf git fetch
-abbr -a -g gl git log
-abbr -a -g gm git mv
-abbr -a -g gp git pull
-abbr -a -g gh git push
-abbr -a -g gs git status  # gs steps on ghostscript
-
-# Shell environment cmds
-abbr -a -g -- re REDO_ENV=yes fish -l -C cd
-abbr -a -g ue UPDATE_ENV=yes fish
 
 ## Functions better managed not as separate files
 
@@ -154,50 +130,3 @@ function b2h; printf 'ibase=2\nobase=10000\n%s\n' "$argv" | /usr/bin/bc; end
 function b2d; printf 'ibase=2\nobase=1010\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2o; printf 'ibase=2\nobase=1000\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2b; printf 'ibase=2\nobase=10\n%s\n'    "$argv" | /usr/bin/bc; end
-
-## Setup Tokyo Night based colors for fish to use
-
-# TokyoNight based colors consistent with my alacritty configuration
-set -l foreground c0caf5  #c0caf5  bright white
-set -l selection 33467c   #33467c
-set -l comment 565f89     #565f89
-set -l red f7768e         #f7768e  red
-set -l orange ff9e64      #ff9e64  index color 16
-set -l yellow e0af68      #e0af68  yellow
-set -l green 9ece6a       #9ece6a  green
-set -l purple 9d7cd8      #9d7cd8  dimmed "magenta" 
-set -l azure 7dcfff       #7dcfff  bright "cyan"
-set -l pink bb9af7        #bb9af7  "magenta" - not pink nor magenta
-set -l cyan 0cb4c0        #0cb4c0  cyan
-
-# Syntax highlighting colors
-set -g fish_color_autosuggestion $comment
-set -g fish_color_cancel -r
-set -g fish_color_cwd $green
-set -g fish_color_cwd_root $red
-set -g fish_color_command $azure
-set -g fish_color_comment $comment
-set -g fish_color_end $orange
-set -g fish_color_error $red
-set -g fish_color_escape $pink
-set -g fish_color_history_current --bold
-set -g fish_color_host $pink
-set -g fish_color_host_remote $yellow
-set -g fish_color_keyword $pink
-set -g fish_color_normal $foreground
-set -g fish_color_operator $green
-set -g fish_color_param $purple
-set -g fish_color_quote $yellow
-set -g fish_color_redirection $foreground
-set -g fish_color_search_match --background=$selection
-set -g fish_color_selection --background=$selection
-set -g fish_color_status $orange
-set -g fish_color_user $cyan
-set -g fish_color_valid_path --underline
-
-# Completion pager colors
-set -g fish_pager_color_completion $foreground
-set -g fish_pager_color_description $comment
-set -g fish_pager_color_prefix $azure
-set -g fish_pager_color_progress $comment
-set -g fish_pager_color_selected_background -r

@@ -49,6 +49,8 @@ CABAL_CONFIGS='
 CONFIG_FILES='
    alacritty/alacritty_arch.yml
    fish/completions/alacritty.fish
+   fish/conf.d/abbrs.fish
+   fish/conf.d/colors.fish
    fish/config.fish
    fish/functions/archJDK.fish
    fish/functions/ax.fish
@@ -70,6 +72,7 @@ CONFIG_FILES='
    fish/functions/nsort.fish
    fish/functions/pathtrim.fish
    fish/functions/rc.fish
+   fish/functions/redo_universals.fish
    fish/functions/ud.fish
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
