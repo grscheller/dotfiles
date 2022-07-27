@@ -1,10 +1,9 @@
 ## Fish configurstion for my workstations
 
-## Using universal variables to configure fish itself
+## Configure fish itself
 set -U fish_features all
-set -U fish_key_bindings fish_vi_key_bindings
 
-## PATH variable management
+## Setup initial environment if it has not been done so
 set -q VIRGINPATH
 or begin
     set -gx VIRGINPATH $PATH
@@ -19,14 +18,13 @@ end
 
 set -q UPDATE_ENV
 and begin
-    ## Setup initial environment variables
     set -e UPDATE_ENV
     set -e REDO_ENV
-    
-    # Use Neovim as the pager
+
+    # Set up paging
     set -gx EDITOR nvim
     set -gx VISUAL nvim
-    set -gx PAGER 'nvim -R'
+    set -gx PAGER less
     set -gx MANPAGER 'nvim +Man!'
     set -gx DIFFPROG 'nvim -d'
 
@@ -45,33 +43,26 @@ and begin
         set -gx GTK_THEME 'Adwaita:dark'
     end
 
-    # Ruby tool chain
-    #   Mostly for locally installed ruby gems,
-    #     to install these:
-    #       Markdown linter: $ gem install mdl
-    #       Neovim syntax:   $ gem install neovim
-    set -p PATH /usr/local/lib/ruby/gems/*/bin
-    set -p PATH /usr/local/opt/ruby/bin
-    set -p PATH ~/.local/share/gem/ruby/*/bin
+    # Added ~/bin and relative paths to end of PATH
+    set -a PATH ~/bin bin ../bin .
+
+    # RubyGems
+    #   Neovim syntax:      $ gem install neovim
+    #   Markdown linter:    $ gem install mdl
+    #   Markdown converter: $ gem install kramdown
+    fish_add_path -gpP ~/.local/share/gem/ruby/*/bin
 
     # Rust toolchain
-    set -p PATH ~/.cargo/bin
+    fish_add_path -gpP ~/.cargo/bin
 
     # Haskell location used by Cabal and Stack
-    set -p PATH ~/.cabal/bin ~/.local/bin 
+    fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
 
-    # Utilities I want to overide most things, I put sbt here
-    set -p PATH ~/opt/bin
-    # Personal utilities available if not found elsewhere
-    set -a PATH ~/bin
-    # Added some relative paths, useful for some software projects
-    set -a PATH bin ../bin .
-
-    # Python configuration
+    # Python configuration (see also at end)
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.pyenv
-    set -p PATH $PYENV_ROOT/shims
-    set -gx PYTHONPATH lib ../lib  # Not sure best way to handle this
+    fish_add_path -gpP $PYENV_ROOT/shims
+    set -gx PYTHONPATH lib ../lib  # Very old method, frowned upon?
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
@@ -79,39 +70,25 @@ and begin
         set -gx _JAVA_AWT_WM_NONREPARENTING 1
     end
 
-    # Clean up duplicate and non-existing paths
-    set PATH (pathtrim)
-
     # Let Bash Shells know initial environment configured
     set -q _ENV_INITIALIZED
     or set -gx _ENV_INITIALIZED 0
     set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
 
-    ## For non-Systemd systems
+    # For non-Systemd systems
     if not digpath -q hostnamectl
         set -gx make_phoney_hostnamectl
     end
 end
 
+## Functions better managed not as separate files
+
+# For non-Systemd systems
 if set -q make_phoney_hostnamectl
     function hostnamectl
         hostname
     end
 end
-
-## Python Pyenv function configuration
-test -d $PYENV_ROOT; and pyenv init - | source
-
-## Enable vi keybindings
-fish_vi_key_bindings
-
-# Use cursor shape to indicate mode
-set -g fish_cursor_default block
-set -g fish_cursor_insert line
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_visual underscore blink
-
-## Functions better managed not as separate files
 
 # Convert between various bases (use capital A-F for hex-digits)
 function h2h; printf 'ibase=16\nobase=10\n%s\n'   "$argv" | /usr/bin/bc; end
@@ -130,3 +107,15 @@ function b2h; printf 'ibase=2\nobase=10000\n%s\n' "$argv" | /usr/bin/bc; end
 function b2d; printf 'ibase=2\nobase=1010\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2o; printf 'ibase=2\nobase=1000\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2b; printf 'ibase=2\nobase=10\n%s\n'    "$argv" | /usr/bin/bc; end
+
+## Enable vi keybindings
+fish_vi_key_bindings
+
+# Use cursor shape to indicate mode
+set -g fish_cursor_default block
+set -g fish_cursor_insert line
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_visual underscore blink
+
+## Python Pyenv function configuration
+test -d $PYENV_ROOT; and pyenv init - | source
