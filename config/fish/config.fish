@@ -3,7 +3,7 @@
 ## Configure fish itself
 set -U fish_features all
 
-## Setup initial environment if it has not been done so
+## Setup initial environment if it has not been done so yet
 set -q VIRGINPATH
 or begin
     set -gx VIRGINPATH $PATH
@@ -20,6 +20,15 @@ set -q UPDATE_ENV
 and begin
     set -e UPDATE_ENV
     set -e REDO_ENV
+
+    # Enable vi keybindings
+    fish_vi_key_bindings
+
+    # Use cursor shape to indicate vi-mode
+    set -gx fish_cursor_default block
+    set -gx fish_cursor_insert line
+    set -gx fish_cursor_replace_one underscore
+    set -gx fish_cursor_visual underscore blink
 
     # Set up paging
     set -gx EDITOR nvim
@@ -43,7 +52,7 @@ and begin
         set -gx GTK_THEME 'Adwaita:dark'
     end
 
-    # Added ~/bin and relative paths to end of PATH
+    # Added ~/bin and relative paths at end of PATH
     set -a PATH ~/bin bin ../bin .
 
     # RubyGems
@@ -58,7 +67,7 @@ and begin
     # Haskell location used by Cabal and Stack
     fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
 
-    # Python configuration (see also at end)
+    # Python configuration (see also below at end)
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.pyenv
     fish_add_path -gpP $PYENV_ROOT/shims
@@ -66,8 +75,8 @@ and begin
 
     # Configure Java for Arch Linux (Sway/Wayland)
     if string match -qr 'arch' (uname -r)
-        archJDK 17
         set -gx _JAVA_AWT_WM_NONREPARENTING 1
+        archJDK 17
     end
 
     # Let Bash Shells know initial environment configured
@@ -107,15 +116,6 @@ function b2h; printf 'ibase=2\nobase=10000\n%s\n' "$argv" | /usr/bin/bc; end
 function b2d; printf 'ibase=2\nobase=1010\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2o; printf 'ibase=2\nobase=1000\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2b; printf 'ibase=2\nobase=10\n%s\n'    "$argv" | /usr/bin/bc; end
-
-## Enable vi keybindings
-fish_vi_key_bindings
-
-# Use cursor shape to indicate mode
-set -g fish_cursor_default block
-set -g fish_cursor_insert line
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_visual underscore blink
 
 ## Python Pyenv function configuration
 test -d $PYENV_ROOT; and pyenv init - | source
