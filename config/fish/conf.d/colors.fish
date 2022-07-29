@@ -22,9 +22,9 @@ if not set -q tokyo_night_colors_set
     set -U fish_color_cancel -r
     set -U fish_color_cwd $green
     set -U fish_color_cwd_root $red
-    set -U fish_color_command $azure
+    set -U fish_color_command $blue
     set -U fish_color_comment $comment
-    set -U fish_color_end $azure
+    set -U fish_color_end $cyan
     set -U fish_color_error --background=$red
     set -U fish_color_escape $red
     set -U fish_color_history_current --bold
@@ -45,7 +45,7 @@ if not set -q tokyo_night_colors_set
     # Completion pager colors
     set -U fish_pager_color_completion $foreground
     set -U fish_pager_color_description $comment
-    set -U fish_pager_color_prefix $azure
+    set -U fish_pager_color_prefix $blue
     set -U fish_pager_color_progress $comment
     set -U fish_pager_color_selected_background -r
 
