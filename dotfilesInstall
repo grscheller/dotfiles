@@ -72,8 +72,8 @@ CONFIG_FILES='
    fish/functions/nsort.fish
    fish/functions/pathtrim.fish
    fish/functions/rc.fish
-   fish/functions/redo_universals.fish
    fish/functions/ud.fish
+   fish/functions/unguard_universals.fish
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    git/config
@@ -95,6 +95,8 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
+   ${XDG_CONFIG_HOME}/fish/fish_variables
+   ${XDG_CONFIG_HOME}/fish/functions/redo_universals.fish
 "
 
 ## Function to removes files

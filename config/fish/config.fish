@@ -1,4 +1,12 @@
 ## Fish configurstion for my workstations
+#
+#  Warning: non-idiomatic use of Universals
+#
+#    dotfilesInstall installation script will blow away
+#    $XDG_CONFIG_HOME/fish/fish_variables - therefore
+#    any Universal variables not reconfigured below or
+#    via conf.d/* files will not be persistent between
+#    installs.
 
 ## Setup initial environment if it has not been done so yet
 set -q VIRGINPATH

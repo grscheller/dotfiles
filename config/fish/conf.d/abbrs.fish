@@ -8,7 +8,7 @@ if not set -q fish_abbr_initialized
     # Shell terminal cmds
     abbr -a dp digpath
     abbr -a nv nvim
-    abbr -a path 'string join \n $PATH'
+    abbr -a pa 'string join \n $PATH'
     abbr -a -- pst ps -ejH
 
     # Git related cmds - anything more complicated, I want to think about
@@ -23,7 +23,7 @@ if not set -q fish_abbr_initialized
     abbr -a gs git status  # gs steps on ghostscript
 
     # Shell environment cmds
-    abbr -a re 'redo_universals; REDO_ENV=yes fish -l -C cd'
+    abbr -a re 'unguard_universals; REDO_ENV=yes fish -l -C cd'
     abbr -a ue UPDATE_ENV=yes fish
 
     set -U fish_abbr_initialized
