@@ -1,5 +1,8 @@
 ## Setup Tokyo Night based colors for fish to use
 
+# Examples: https://github.com/dmi3/fish/blob/master/colors.fish
+#           https://github.com/fish-shell/fish-shell/issues/3443
+
 if not set -q tokyo_night_colors_set
 
     # TokyoNight based colors consistent with my alacritty configuration
@@ -19,20 +22,20 @@ if not set -q tokyo_night_colors_set
     set -U fish_color_cancel -r
     set -U fish_color_cwd $green
     set -U fish_color_cwd_root $red
-    set -U fish_color_command $blue
+    set -U fish_color_command $azure
     set -U fish_color_comment $comment
-    set -U fish_color_end $orange
-    set -U fish_color_error $red
+    set -U fish_color_end $azure
+    set -U fish_color_error --background=$red
     set -U fish_color_escape $red
     set -U fish_color_history_current --bold
     set -U fish_color_host $red
     set -U fish_color_host_remote $yellow
     set -U fish_color_keyword $purple
     set -U fish_color_normal $foreground
-    set -U fish_color_operator $green
+    set -U fish_color_operator $cyan
     set -U fish_color_param $purple
-    set -U fish_color_quote $yellow
-    set -U fish_color_redirection $foreground
+    set -U fish_color_quote $green
+    set -U fish_color_redirection $cyan
     set -U fish_color_search_match --background=$selection
     set -U fish_color_selection --background=$selection
     set -U fish_color_status $orange
@@ -40,9 +43,9 @@ if not set -q tokyo_night_colors_set
     set -U fish_color_valid_path --underline
 
     # Completion pager colors
-    set >  -U fish_pager_color_completion $foreground
+    set -U fish_pager_color_completion $foreground
     set -U fish_pager_color_description $comment
-    set -U fish_pager_color_prefix $blue
+    set -U fish_pager_color_prefix $azure
     set -U fish_pager_color_progress $comment
     set -U fish_pager_color_selected_background -r
 
