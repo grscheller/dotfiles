@@ -232,19 +232,18 @@ schemes:
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#bb9af7'
-      #cyan:   '#7dcfff'  # more azure then cyan
-      cyan:    '#0cb4c0'
+      cyan:    '#0cb4c0'  # folke uses #7dcfff
       white:   '#a9b1d6'
 
     # Bright colors
     bright:
       black:   '#414868'
-      red:     '#db4b4b'
-      green:   '#b9f27c'
+      red:     '#f7768e'
+      green:   '#9ece6a'
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#ff007c'
-      cyan:    '#7dcfff'
+      cyan:    '#7dcfff'  # more azure than cyan
       white:   '#c0caf5'
 
     indexed_colors:

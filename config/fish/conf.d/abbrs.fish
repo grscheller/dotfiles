@@ -23,7 +23,7 @@ if not set -q fish_abbr_initialized
     abbr -a gs git status  # gs steps on ghostscript
 
     # Shell environment cmds
-    abbr -a -- re REDO_ENV=yes fish -l -C cd
+    abbr -a re 'redo_universals; REDO_ENV=yes fish -l -C cd'
     abbr -a ue UPDATE_ENV=yes fish
 
     set -U fish_abbr_initialized

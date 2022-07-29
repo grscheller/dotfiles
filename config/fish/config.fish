@@ -1,18 +1,15 @@
 ## Fish configurstion for my workstations
 
-## Configure fish itself
-set -U fish_features all
-
 ## Setup initial environment if it has not been done so yet
 set -q VIRGINPATH
 or begin
     set -gx VIRGINPATH $PATH
-    set -x UPDATE_ENV
+    set -g UPDATE_ENV
 end
 
 set -q REDO_ENV
 and begin
-    set -x UPDATE_ENV
+    set -g UPDATE_ENV
     set PATH $VIRGINPATH
 end
 
@@ -20,6 +17,9 @@ set -q UPDATE_ENV
 and begin
     set -e UPDATE_ENV
     set -e REDO_ENV
+
+    ## Configure fish itself
+    set -U fish_features all
 
     # Enable vi keybindings
     fish_vi_key_bindings
