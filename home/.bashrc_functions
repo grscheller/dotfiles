@@ -40,17 +40,26 @@ path () {
 # are supported.
 digpath () (
   usage_digpath () {
-      printf 'Usage: digpath [-q] file1 file2 ...\n' >&2
-      printf '       digpath [-q] shell_pattern\n'   >&2
-      printf '       digpath [-h]\n'                 >&2
+    printf 'Usage: digpath [-q] [-x] file1 file2 ...\n'       >&2
+    printf '       digpath [-q] [-x] shell_pattern\n'         >&2
+    printf '       digpath [-h]\n\n'                          >&2
+    printf 'Output: print any matches on $PATH to stdout,\n'  >&2
+    printf '        suppresses output if -q given,\n'         >&2
+    printf '        suppresses nonexecutables if -x given,\n' >&2
+    printf '        print help to stderr if -h given\n\n'     >&2
+    printf 'Exit Status: 0 (true) if match found on $PATH\n'  >&2
+    printf '             1 (false) if no match found\n'       >&2
+    printf '             2 -h or --help option was given\n'   >&2
   }
 
   local OPTIND opt
   local quiet_flag=
-  while getopts :hq opt
+  while getopts :hqx opt
   do
     case $opt in
       q) quiet_flag=1
+         ;;
+      x) executable_flag=1
          ;;
       h) usage_digpath
          return 2
@@ -65,7 +74,7 @@ digpath () (
   IFS=':'
 
   local ii=0  # for array index
-  local File match
+  local File Target
   local FileList=()
 
   for File in "$@"
@@ -74,13 +83,16 @@ digpath () (
      for Dir in $PATH
      do
         [[ ! -d "$Dir" ]] && continue
-        if [[ -d "$Dir" ]]
-        then
-            for match in $Dir/$File
-            do
-                [[ -f $match ]] && FileList[((ii++))]="$match"
-            done
-        fi
+        for Target in $Dir/$File
+        do
+            if [[ -f $Target ]]
+            then
+                if [[ -z $executable_flag ]] || [[ -x $Target ]]
+                then
+                    FileList[((ii++))]="$Target"
+                fi
+            fi
+        done
      done
   done
 

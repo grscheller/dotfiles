@@ -96,7 +96,6 @@ CONFIG_FILES='
 RM_ITEMS="
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/fish/fish_variables
-   ${XDG_CONFIG_HOME}/fish/functions/redo_universals.fish
 "
 
 ## Function to removes files
@@ -216,3 +215,6 @@ for Item in $RM_ITEMS
 do
    remove_item "$Item" || exit 1
 done
+
+## Trigger fish, if installed, to update itself
+~/bin/digpath -q -x fish && REDO_ENV=yes fish -C "printf 'updating fish\n'" -c 'sleep 1'
