@@ -6,6 +6,7 @@ if not set -q fish_abbr_initialized
     abbr -a gq 'geeqie &; disown'
 
     # Shell terminal cmds
+    abbr -a da date
     abbr -a dp digpath
     abbr -a nv nvim
     abbr -a pa 'string join \n $PATH'
