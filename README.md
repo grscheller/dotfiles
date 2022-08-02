@@ -6,36 +6,11 @@
 2. To preserve this information for myself
 3. To help quickly configure new systems for myself
 4. To provide others useful examples for their own configuration files
-5. To allow others to use as a starting point for their own version
-
-## Contents
-
-Infrastructure used to manage my Fish/Bash/Sway
-shell and desktop software development environments.
-
-* Neovim configurations
-  * Neovim configs are Lua based and use LSP, BSP, DAP heavily
-  * Tested on Neovim version 0.7.2+
-* Login shell fish, bash configured as backup
-* Alacritty, SSH and global GIT configurations
-* Language configurations (work in progress)
-  * C, C++ and Zig Languages
-  * CSS
-  * Go
-  * Haskell
-  * JSON
-  * Lua
-  * Markdown
-  * Python with pyenv hooks
-  * Rust
-  * Scala
-  * Typescript
-  * YAML
-* System configurations for my Systemd/Wayland Arch Linux systems
+5. To allow others to use as a starting point for their own versions
 
 ## Installation Scripts
 
-Install into home directory
+Installs into home directory
 
 * [dotfilesInstall](dotfilesInstall)
   * From cloned repo run:
@@ -43,14 +18,13 @@ Install into home directory
        $ ./dotfilesInstall
     ```
 
-Install into system directories:
+Installs into system directories:
 
 * [systemfilesInstall](systemfilesInstall)
   * From cloned repo run
     ```
        $ sudo ./systemfilesInstall
     ```
-  * for my own Arch Linux systems ONLY!
 
 ## License Information
 
