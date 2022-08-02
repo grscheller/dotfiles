@@ -18,8 +18,7 @@
        :PackerCompile
 
      Not always necessary, but I'd restart Neovim after
-     running either of the above commands.
-  ]]
+     running either of the above commands. ]]
 
 local ok, packer = pcall(require, 'packer')
 if not ok then
@@ -44,22 +43,22 @@ local use = packer.use
 
 return packer.startup(
    function()
-      --[[ Packer manages itself ]]
+      -- Packer manages itself
       use { 'wbthomason/packer.nvim' }
 
-      --[[ Library used by other plugins ]]
+      -- Library used by other plugins
       use { 'nvim-lua/plenary.nvim' }
 
       -- Make keybindings discoverable with Whick-Key
       use { 'folke/which-key.nvim' }
 
-      --[[ General purpose text editing plugins ]]
+      -- General purpose text editing plugins
       use { 'numToStr/Comment.nvim' } -- comment out code - treesitter aware
       use { 'justinmk/vim-sneak' } -- easy motion replacement
       use { 'tpope/vim-surround' } -- surround text objects with matching symbols
       use { 'tpope/vim-repeat' } -- enable supported plugins to use `.` to repeat
 
-      --[[ Colorscheme, statusline & zen-mode]]
+      -- Colorscheme, statusline & zen-mode
       use { 'norcalli/nvim-colorizer.lua' } -- Colorize names & hexcodes
       use { 'folke/tokyonight.nvim' }
       use { 'nvim-lualine/lualine.nvim',
@@ -72,17 +71,17 @@ return packer.startup(
          requires = { 'folke/twilight.nvim' }
       }
 
-      --[[ Install language modules for built-in treesitter ]]
+      -- Install language modules for built-in treesitter
       use {
          'nvim-treesitter/nvim-treesitter',
          run = ':TSUpdateSync'
       }
 
-      --[[ Telescope - highly extendable fuzzy finder over lists ]]
+      -- Telescope - highly extendable fuzzy finder over lists
       use { 'nvim-telescope/telescope.nvim' }
       use { 'nvim-telescope/telescope-ui-select.nvim' }
 
-      --[[ Completion & snippet support ]]
+      -- Completion & snippet support
       use { 'hrsh7th/nvim-cmp',
          requires = {
             'hrsh7th/cmp-buffer',
@@ -101,16 +100,16 @@ return packer.startup(
          }
       }
 
-      --[[ DAP Debug Adapter Protocol ]]
+      -- DAP Debug Adapter Protocol
       use { 'mfussenegger/nvim-dap' }
 
-      --[[ LSP Language Server Protocol ]]
+      -- LSP Language Server Protocol
       use { 'neovim/nvim-lspconfig' }
       use { 'williamboman/nvim-lsp-installer' }
       use { 'simrat39/rust-tools.nvim' }
       use { 'scalameta/nvim-metals' }
 
-      --[[ File detection/syntax highlighting for zig ]]
+      -- File detection/syntax highlighting for zig
       use { 'ziglang/zig.vim' }
    end
 )

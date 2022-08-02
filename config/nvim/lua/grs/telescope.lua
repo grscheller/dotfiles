@@ -1,7 +1,9 @@
 --[[ Telescope - fuzzy finder over lists ]]
 
-local ok_telescope, telescope = pcall(require, 'telescope')
-if not ok_telescope then
+local ok, telescope
+
+ok, telescope = pcall(require, 'telescope')
+if not ok then
    print('Problem loading telescope: ' .. telescope)
    return
 end

@@ -2,9 +2,11 @@
 
 local setKM = require('grs.util.keymappings').setKM
 
+local ok, colorizer, webDevicons, lualine, twilight, zen
+
 -- Colorize color names, hexcodes, and other color formats
-local ok_col, colorizer = pcall(require, 'colorizer')
-if ok_col then
+ok, colorizer = pcall(require, 'colorizer')
+if ok then
    colorizer.setup(nil, { css = true; })
 else
    print('Problem loading colorizer: ' .. colorizer)
@@ -21,24 +23,24 @@ if pcall(require, 'tokyonight') then
       cyan = '#0cb4c0'
    }
    vim.g.tokyonight_italic_functions = 1
-   vim.cmd [[ colorscheme tokyonight ]]
+   vim.cmd [[colorscheme tokyonight]]
 else
-   vim.cmd [[ colorscheme darkblue ]]
+   vim.cmd [[colorscheme darkblue]]
 end
 
 -- Setup WebDevicons
--- Needs a patched font like Noto Mono Nerd Font
--- see https://github.com/ryanoasis/nerd-fonts ]]
-local ok_webD, webDevicons = pcall(require, 'nvim-web-devicons')
-if ok_webD then
+   -- Needs a patched font like Noto Mono Nerd Font
+   -- see https://github.com/ryanoasis/nerd-fonts
+ok, webDevicons = pcall(require, 'nvim-web-devicons')
+if ok then
    webDevicons.setup { default = true }
 else
    print('Problem loading nvim-web-devicons: ' .. webDevicons)
 end
 
 -- Setup Lualine with Tokyo Night theme
-local ok_lualine, lualine = pcall(require, 'lualine')
-if ok_lualine then
+ok, lualine = pcall(require, 'lualine')
+if ok then
    lualine.setup {
       options = {
          icons_enabled = true,
@@ -73,8 +75,8 @@ else
 end
 
 --- Setup folke/twilight.nvim
-local ok_twilight, twilight = pcall(require, 'twilight')
-if ok_twilight then
+ok, twilight = pcall(require, 'twilight')
+if ok then
    twilight.setup {
       context = 20
    }
@@ -83,8 +85,8 @@ else
 end
 
 -- Setup folke/zen-mode.nvim
-local ok_zen, zen = pcall(require, 'zen-mode')
-if ok_zen then
+ok, zen = pcall(require, 'zen-mode')
+if ok then
    zen.setup {
       window = {
          backdrop = 0.4, -- shade backdrop, 1 to keep normal

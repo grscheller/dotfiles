@@ -1,5 +1,7 @@
 --[[ Contains configurations for basic text editing
-     and simple general purpose text editing plugins. ]]
+     and simple general purpose text editing plugins ]]
+
+local ok, comment
 
 local setKM = require('grs.util.keymappings').setKM
 
@@ -12,8 +14,8 @@ setKM('', 't one char sneak', 't', '<Plug>Sneak_t')
 setKM('', 'T one char sneak', 'T', '<Plug>Sneak_T')
 
 --[[ Configure numToStr/Comment.nvim ]]
-local ok_comment, comment = pcall(require, 'Comment')
-if ok_comment then
+ok, comment = pcall(require, 'Comment')
+if ok then
    comment.setup {
       ignore = '^$',
       mappings = {

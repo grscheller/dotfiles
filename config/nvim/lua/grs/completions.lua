@@ -1,17 +1,23 @@
 --[[ Completions using nvim-cmp and luasnip ]]
 
-local ok_cmp, cmp = pcall(require, 'cmp')
-local ok_luasnip, luasnip = pcall(require, 'luasnip')
-if not ok_cmp or not ok_luasnip then
-   if not ok_cmp then print('Problem loading nvim-cmp: ' .. cmp) end
-   if not ok_luasnip then print('Problem loading luasnip: ' .. luasnip) end
+local ok, cmp, luasnip
+
+ok, cmp = pcall(require, 'cmp')
+if not ok or not cmp then
+   print('Problem loading nvim-cmp: ' .. cmp)
+   return
+end
+
+ok, luasnip = pcall(require, 'luasnip')
+if not ok then
+   print('Problem loading luasnip: ' .. luasnip)
    return
 end
 
 -- Have Luasnip lazy load snippets
 require('luasnip.loaders.from_vscode').lazy_load()
 
-local function myHasWordsBefore()
+local function hasWordsBefore()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -45,7 +51,7 @@ cmp.setup {
             cmp.select_next_item()
          elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
-         elseif myHasWordsBefore() then
+         elseif hasWordsBefore() then
             cmp.complete()
          else
             fallback()

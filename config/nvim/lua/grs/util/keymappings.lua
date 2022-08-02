@@ -1,9 +1,10 @@
---[[ Setup keymappings/keybindings ]]
+--[[ Setup keymappings/keybindings
 
---[[ The only things this config file should do
+     The only things this config file should do
      is setup WhichKey, define keymappings, define
      a couple of utility functions, and functions
      used by some of the keymappings. ]]
+
 local M = {}
 
 --[[ Which-Key setup - helps make keymappings user discoverable ]]

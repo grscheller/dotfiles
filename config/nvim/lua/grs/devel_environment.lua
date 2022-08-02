@@ -1,8 +1,15 @@
 --[[ Setup Develoment Environment & LSP Configurations ]]
 
+local ok
+local ts_configs
+local lspconfig, nvimLspInstaller, cmp_nvim_lsp
+local ok_dap, dap
+local rust_tools
+
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
-local ok_ts, ts_configs = pcall(require, 'nvim-treesitter.configs')
-if ok_ts then
+
+ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if ok then
    ts_configs.setup {
       ensure_installed = 'all',
       highlight = { enable = true }
@@ -11,25 +18,35 @@ else
    print('Problem loading nvim-treesitter.configs: ' .. ts_configs)
 end
 
--- Check if necessary LSP related plugins are installed
-local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
-local ok_nvimLspInstaller, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
-local ok_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not ok_lspconfig or not ok_nvimLspInstaller or not ok_cmp_nvim_lsp then
-   if not ok_lspconfig then print('Problem loading nvim-lspconfig: ' .. lspconfig) end
-   if not ok_nvimLspInstaller then print('Problem loading nvim-lsp-installer: ' .. nvimLspInstaller) end
-   if not ok_cmp_nvim_lsp then print('Problem loading cmp_nvim_lsp: ' .. cmp_nvim_lsp) end
+-- Punt if necessary LSP related plugins are not installed
+ok, lspconfig = pcall(require, 'lspconfig')
+if not ok then
+   print('Problem loading nvim-lspconfig: ' .. lspconfig)
+   return
+end
+
+ok, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
+if not ok then
+   print('Problem loading nvim-lsp-installer: ' .. nvimLspInstaller)
+   return
+end
+
+ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok then
+   print('Problem loading cmp_nvim_lsp: ' .. cmp_nvim_lsp)
    return
 end
 
 -- Check if DAP for debugging is available
-local ok_dap, dap = pcall(require, 'dap')
+ok_dap, dap = pcall(require, 'dap')
 if not ok_dap then
    print('Problem loading nvim-dap: ' .. dap)
 end
 
---[[ Nvim LSP Installer Configuration ]]
--- For lang server list see 1st link https://github.com/neovim/nvim-lspconfig
+--[[ Nvim LSP Installer Configuration
+       For lang server list see the 1st link
+       of https://github.com/neovim/nvim-lspconfig ]]
+
 local lsp_servers = {
    'bashls', -- bash-language-server (pacman or sudo npm i -g bash-language-server)
    'clangd', -- C and C++ - both clang and gcc (pacman clang)
@@ -57,11 +74,12 @@ for _, lsp_server in ipairs(lsp_servers) do
 end
 
 --[[ Lua Lang Configuration ]]
+
 -- Lua auto-indent configuration
-vim.api.nvim_command [[ au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab ]]
+vim.api.nvim_command [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
 -- lua-language-server configuration for editing Neovim configs
-lspconfig.sumneko_lua.setup {
+lspconfig['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = keymappings.lsp_kb,
    settings = {
@@ -74,23 +92,24 @@ lspconfig.sumneko_lua.setup {
    }
 }
 
---[[ Python Aditional Configurations ]]
+--[[ Python Configurations ]]
+
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust Lang Configuration - rust_tools & lldb-vscode
---
--- Follow setup from https://github.com/simrat39/rust-tools.nvim
---
--- Install the LLDB DAP server, a vscode extension, from
---   https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
--- The easiest way to install it is to install vscode and, through vscode's
--- GUI interface, install the CodeLLDB extension.
---
--- Todo: See https://github.com/sharksforarms/neovim-rust for 
---       example rust/dap configurations.
---]]
-local ok_rt, rust_tools = pcall(require, 'rust-tools')
-if ok_rt then
+
+     Follow setup from https://github.com/simrat39/rust-tools.nvim
+
+     Install the LLDB DAP server, a vscode extension, from
+       https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
+     The easiest way to install it is to install vscode and, through vscode's
+     GUI interface, install the CodeLLDB extension.
+
+     Todo: see https://github.com/sharksforarms/neovim-rust
+           for an example rust/dap configuration ]]
+
+ok, rust_tools = pcall(require, 'rust-tools')
+if ok then
    local extension_path = vim.env.HOME .. '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.0/'
    local codelldb_path = extension_path .. 'adapter/codelldb'
    local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
@@ -114,11 +133,10 @@ else
 end
 
 --[[ Scala Lang Configuration
---
--- Following: https://github.com/scalameta/nvim-metals/discussions/39
--- For latest Metals Server Version see: https://scalameta.org/metals/docs
---
---]]
+
+     Following: https://github.com/scalameta/nvim-metals/discussions/39
+     For latest Metals Server Version see: https://scalameta.org/metals/docs ]]
+
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals then
    local metals_config = metals.bare_config()

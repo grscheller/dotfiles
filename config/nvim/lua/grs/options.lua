@@ -1,6 +1,5 @@
 --[[ Options reflecting my personal preferences ]]
 
--- Define options to be set
 local options = {
    -- POSIX compatible shells are needed by some plugins
    shell = '/bin/bash',
@@ -51,7 +50,6 @@ local options = {
    -- removed F for Scala Metals
 }
 
--- Now set the options defined above
 for k, v in pairs(options) do
    vim.opt[k] = v
 end
