@@ -1,5 +1,15 @@
 # dotfiles
 
+## Repo's purposes
+
+1. To maintain my own configuration files
+2. To preserve this information for myself
+3. To help quickly configure new systems for myself
+4. To provide others useful examples for their own configuration files
+5. To allow others to use as a starting point for their own version
+
+## Contents
+
 Infrastructure used to manage my Fish/Bash/Sway
 shell and desktop software development environments.
 
@@ -23,14 +33,6 @@ shell and desktop software development environments.
   * YAML
 * System configurations for my Systemd/Wayland Arch Linux systems
 
-## Repo's purposes
-
-1. To maintain my configuration files
-2. To preserve this information for myself
-3. To help quickly configure new systems for myself
-4. To provide others useful examples for their own configuration files
-5. Allow others to use as starting point to manage their own configuration files
-
 ## Installation Scripts
 
 Install into home directory
@@ -48,16 +50,7 @@ Install into system directories:
     ```
        $ sudo ./systemfilesInstall
     ```
-  * for (my) Arch Linux systems ONLY!
-
-## Contents
-
-* Bin scripts: [bin/](bin/) -> `$HOME/bin/`
-* Global Haskell Cabal configs: [cabal/](cabal/) -> `$HOME/.cabal/`
-* XDG configuration files: [config/](config/) -> `$XDG_CONFIG_HOME/`
-* $HOME configuration files: [home/](home/) -> `$HOME/`
-* System configuration files: [root/](root/) -> `/`
-* SSH configuration files: [ssh/](ssh/) -> `$HOME/.ssh/`
+  * for my own Arch Linux systems ONLY!
 
 ## License Information
 
