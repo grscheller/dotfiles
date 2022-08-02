@@ -16,7 +16,7 @@ require('grs.textedit') -- Configure general text editing related plugins
 -- Configure an IDE like Neovim based software development environment
 require('grs.telescope') -- Configure telescope, an extendable fuzzy finder
 require('grs.completions') -- Configure completions & snippets
-require('grs.devel_environment') -- Development environment - LSP setup
+require('grs.devel_environment') -- Development environment and LSP configuration
 
 -- Theme/Overall Appearance 
 require('grs.appearance') -- Colorscheme, statusline & zen-mode
