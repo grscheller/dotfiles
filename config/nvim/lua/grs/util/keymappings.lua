@@ -46,30 +46,30 @@ M.setCB = setCB
 
 --[[ Set key mappings/bindings ]]
 
--- Turn off some redundant keybindings
-setKM('n', '', '<BS>', '')
-setKM('n', '', '-', '')
-setKM('n', '', '+', '')
+-- Turn off some redundant motions
+vim.keymap.set('n', '<BS>', '')
+vim.keymap.set('n', '-', '')
+vim.keymap.set('n', '+', '')
 
 -- Creating, closing & navigating windows
-setKM('n', 'goto window left', '<M-h>', '<C-w>h')
-setKM('n', 'goto window below', '<M-j>', '<C-w>j')
-setKM('n', 'goto window above', '<M-k>', '<C-w>k')
-setKM('n', 'goto window right', '<M-l>', '<C-w>l')
-setKM('n', 'goto previous window', '<M-p>', '<C-w>p')
-setKM('n', 'split current window', '<M-s>', '<C-w>s')
-setKM('n', 'vsplit current window', '<M-d>', '<C-w>v')
-setKM('n', 'fish term in split', '<M-f>', '<Cmd>split<Bar>term fish<CR>i')
-setKM('n', 'fish term in vsplit', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i')
-setKM('n', 'close other tab windows', '<M-o>', '<C-w>o')
-setKM('n', 'close current window', '<M-c>', '<C-w>c')
+vim.keymap.set('n', '<M-h>', '<C-w>h', {desc = 'goto window left'})
+vim.keymap.set('n', '<M-j>', '<C-w>j', {desc = 'goto window below'})
+vim.keymap.set('n', '<M-k>', '<C-w>k', {desc = 'goto window above'})
+vim.keymap.set('n', '<M-l>', '<C-w>l', {desc = 'goto window right'})
+vim.keymap.set('n', '<M-p>', '<C-w>p', {desc = 'goto previous window'})
+vim.keymap.set('n', '<M-s>', '<C-w>s', {desc = 'split current window'})
+vim.keymap.set('n', '<M-d>', '<C-w>v', {desc = 'vsplit current window'})
+vim.keymap.set('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {desc = 'fish term in split'})
+vim.keymap.set('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {desc = 'fish term in vsplit'})
+vim.keymap.set('n', '<M-o>', '<C-w>o', {desc = 'close other tab windows'})
+vim.keymap.set('n', '<M-c>', '<C-w>c', {desc = 'close current window'})
 
 -- Creating, closing & navigating tabpages
-setKM('n', 'create new tab', '<C-n>', '<Cmd>tabnew<CR>')
-setKM('n', 'close current tab', '<C-e>', '<Cmd>tabclose<CR>')
-setKM('n', 'breakout window new tab', '<C-b>', '<C-w>T')
-setKM('n', 'goto tab left', '<C-Left>', '<Cmd>-tabnext<CR>')
-setKM('n', 'goto tab right', '<C-Right>', '<Cmd>tablast<CR>')
+vim.keymap.set('n', '<C-n>', '<Cmd>tabnew<CR>', {desc = 'create new tab'})
+vim.keymap.set('n', '<C-e>', '<Cmd>tabclose<CR>', {desc = 'close current tab'})
+vim.keymap.set('n', '<C-b>', '<C-w>T', {desc = 'breakout window to new tab'})
+vim.keymap.set('n', '<C-Left>', '<Cmd>tabprev<CR>', {desc = 'goto tab left'})
+vim.keymap.set('n', '<C-Right>', '<Cmd>tabnext<CR>', {desc = 'goto tab right'})
 
 -- Changing window layout
 setKM('n', 'move window lhs', '<M-S-h>', '<C-w>H')
@@ -97,27 +97,25 @@ setKM('v', 'shift left & reselect', '<', '<gv')
 setKM('v', 'shift right & reselect', '>', '>gv')
 
 -- Misc keymappings
-setKM('n', 'clear hlsearch', '<Space><Space>', '<Cmd>nohlsearch<Bar>diffupdate<CR>')
-setKM('n', 'new unnamed buffer', '<Space>b', '<Cmd>enew<CR>')
-setKM('n', 'pick & enter diagraph', '<Space>k', '<Cmd>dig<CR>a<C-k>')
-setCB('n', 'line number toggle', '<Space>n',
-   function()
-      if vim.wo.relativenumber == true then
-         vim.wo.number = false
-         vim.wo.relativenumber = false
-      elseif vim.wo.number == true then
-         vim.wo.number = false
-         vim.wo.relativenumber = true
-      else
-         vim.wo.number = true
-         vim.wo.relativenumber = false
-      end
+vim.keymap.set('n', 'z ', '<Cmd>set invspell<CR>', {desc = 'toggle spelling'})
+vim.keymap.set('n', '  ', '<Cmd>nohlsearch<Bar>diffupdate<CR>', {desc = 'clear hlsearch'})
+vim.keymap.set('n', ' b', '<Cmd>enew<CR>', {desc = 'new unnamed buffer'})
+vim.keymap.set('n', ' k', '<Cmd>dig<CR>a<C-k>', {desc = 'pick & enter diagraph'})
+vim.keymap.set('n', ' l', '<Cmd>mode<CR>', {desc = 'clear & redraw screen'})
+vim.keymap.set('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {desc = 'trim trailing whitespace'})
+vim.keymap.set('n', ' h', '<Cmd>TSBufToggle highlight<CR>', {desc = 'treesitter highlight toggle'})
+vim.keymap.set('n', ' n', function()
+   if vim.wo.relativenumber == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = false
+   elseif vim.wo.number == true then
+      vim.wo.number = false
+      vim.wo.relativenumber = true
+   else
+      vim.wo.number = true
+      vim.wo.relativenumber = false
    end
-)
-setKM('n', 'clear & redraw screen', '<Space>r', '<Cmd>mode<CR>')
-setKM('n', 'toggle spelling', 'z<Space>', '<Cmd>set invspell<CR>')
-setKM('n', 'trim trailing whitespace', '<Space>w', '<Cmd>%s/\\s\\+$//<CR><C-o>')
-setKM('n', 'treesitter highlight toggle', '<Space>h', '<Cmd>TSBufToggle highlight<CR>')
+end, {desc = 'line number toggle'})
 
 --[[ LSP related keymappings ]]
 function M.lsp_kb(client, bufnr)
