@@ -11,8 +11,12 @@
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.
 #
-#        Prefer keeping this a very simple POSIX script
-#        than having to bulletproof something fancier.
+#  Note: Found no good way to bulletproof regenerating
+#        ~/.config/fish/fish_variables, especially when
+#        there are a lot of fish configuration changes.
+#        Usually just using the "re" abbreviation is
+#        enough, but sometimes more of a manual "kick"
+#        is needed.
 #
 
 ### Setup
@@ -95,7 +99,6 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/fish/fish_variables
 "
 
 ## Function to removes files
@@ -198,23 +201,23 @@ fi
 
 ## Create ~/catch, for scp and downloads
 test -d ~/catch || mkdir ~/catch || {
-   printf '\n'
-   printf "Warning: Failed to create '~/catch'.\\n" >&2
+    printf '\n'
+    printf "Warning: Failed to create '~/catch'.\\n" >&2
 }
 test -d ~/.local/bin || mkdir ~/.local/bin || {
-   printf '\n'
-   printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
+    printf '\n'
+    printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
 }
 test -d ~/.cabal/bin || mkdir ~/.cabal/bin || {
-   printf '\n'
-   printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
+    printf '\n'
+    printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
 }
 
 ## Remove no longer needed files and directories.
 for Item in $RM_ITEMS
 do
-   remove_item "$Item" || exit 1
+    remove_item "$Item" || exit 1
 done
 
-## Trigger fish, if installed, to update itself
-~/bin/digpath -q -x fish && REDO_ENV=yes fish -C "printf 'updating fish\n'" -c 'sleep 1'
+## Warning message
+printf '\nMake sure fish environment gets properly updated.\n'

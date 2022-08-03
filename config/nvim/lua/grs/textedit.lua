@@ -3,15 +3,13 @@
 
 local ok, comment
 
-local setKM = require('grs.util.keymappings').setKM
-
 --[[ Configure justtinmk/vim-sneak plugin ]]
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-setKM('', 'f one char sneak', 'f', '<Plug>Sneak_f')
-setKM('', 'F one char sneak', 'F', '<Plug>Sneak_F')
-setKM('', 't one char sneak', 't', '<Plug>Sneak_t')
-setKM('', 'T one char sneak', 'T', '<Plug>Sneak_T')
+vim.keymap.set({'n', 'v'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
+vim.keymap.set({'n', 'v'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
+vim.keymap.set({'n', 'v'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
+vim.keymap.set({'n', 'v'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
 
 --[[ Configure numToStr/Comment.nvim ]]
 ok, comment = pcall(require, 'Comment')

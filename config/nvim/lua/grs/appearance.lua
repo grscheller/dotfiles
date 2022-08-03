@@ -1,7 +1,5 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local setKM = require('grs.util.keymappings').setKM
-
 local ok, colorizer, webDevicons, lualine, twilight, zen
 
 -- Colorize color names, hexcodes, and other color formats
@@ -80,6 +78,7 @@ if ok then
    twilight.setup {
       context = 20
    }
+   vim.keymap.set('n', 'zT', '<Cmd>Twilight<CR>', {desc = 'twilight toggle'})
 else
    print('Problem loading twilight: ' .. twilight)
 end
@@ -105,8 +104,7 @@ if ok then
       on_close = function()
       end
    }
-   setKM('n', 'zen-mode toggle', 'zZ', '<Cmd>ZenMode<CR>')
-   setKM('n', 'twilight toggle', 'zT', '<Cmd>Twilight<CR>')
+   vim.keymap.set('n', 'zZ', '<Cmd>ZenMode<CR>', {desc = 'zen-mode toggle'})
 else
    print('Problem loading zen-mode: ' .. zen)
 end
