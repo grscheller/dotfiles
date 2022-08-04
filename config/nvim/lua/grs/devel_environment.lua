@@ -44,8 +44,9 @@ if not ok_dap then
 end
 
 --[[ Nvim LSP Installer Configuration
-       For lang server list see the 1st link
-       of https://github.com/neovim/nvim-lspconfig ]]
+
+     For lang server list see the 1st link
+     of https://github.com/neovim/nvim-lspconfig ]]
 
 local lsp_servers = {
    'bashls', -- bash-language-server (pacman or sudo npm i -g bash-language-server)
@@ -105,8 +106,7 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
      The easiest way to install it is to install vscode and, through vscode's
      GUI interface, install the CodeLLDB extension.
 
-     Todo: see https://github.com/sharksforarms/neovim-rust
-           for an example rust/dap configuration ]]
+     See https://github.com/sharksforarms/neovim-rust ]]
 
 ok, rust_tools = pcall(require, 'rust-tools')
 if ok then

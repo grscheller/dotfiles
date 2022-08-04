@@ -104,27 +104,27 @@ end, {desc = 'line number toggle'})
 -- and https://github.com/sharksforarms/neovim-rust
 --
 function M.lsp_kb(client, bufnr)
-   vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, { desc = 'code action' })
-   vim.keymap.set('n', '\\clh', vim.lsp.codelens.refresh, { desc = 'code lens refresh' })
-   vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, { desc = 'code lens run' })
-   vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, { desc = 'buffer diagnostics' })
-   vim.keymap.set('n', '\\f', vim.lsp.buf.formatting, { desc = 'format' })
-   vim.keymap.set('n', '\\gd', vim.lsp.buf.definition, { desc = 'goto definition' })
-   vim.keymap.set('n', '\\gD', vim.lsp.buf.declaration, { desc = 'goto declaration' })
-   vim.keymap.set('n', '\\gi', vim.lsp.buf.implementation, { desc = 'goto implementation' })
-   vim.keymap.set('n', '\\gr', vim.lsp.buf.references, { desc = 'goto references' })
-   vim.keymap.set('n', '\\gsd', vim.lsp.buf.document_symbol, { desc = 'document symbol' })
-   vim.keymap.set('n', '\\gsw', vim.lsp.buf.workspace_symbol, { desc = 'workspace symbol' })
-   vim.keymap.set('n', '\\H', vim.lsp.buf.signature_help, { desc = 'signature help' })
-   vim.keymap.set('n', '\\h', vim.lsp.buf.hover, { desc = 'hover' })
-   vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, { desc = 'qf list ws diagnostics' })
-   vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist { severity = 'E' } end, { desc = 'qf list ws errors' })
-   vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist { severity = 'W' } end, { desc = 'qf list ws warnings' })
-   vim.keymap.set('n', '\\r', vim.lsp.buf.rename, {desc = 'rename' })
-   vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, { desc = 'add workspace folder' })
-   vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, { desc = 'remove workspace folder' })
-   vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev { wrap = false } end, { desc = 'diagnostic goto previous' })
-   vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next { wrap = false } end, { desc = 'diagnostic goto next' })
+   vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, {desc = 'code action'})
+   vim.keymap.set('n', '\\clh', vim.lsp.codelens.refresh, {desc = 'code lens refresh'})
+   vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, {desc = 'code lens run'})
+   vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, {desc = 'buffer diagnostics'})
+   vim.keymap.set('n', '\\f', vim.lsp.buf.formatting, {desc = 'format'})
+   vim.keymap.set('n', '\\gd', vim.lsp.buf.definition, {desc = 'goto definition'})
+   vim.keymap.set('n', '\\gD', vim.lsp.buf.declaration, {desc = 'goto declaration'})
+   vim.keymap.set('n', '\\gi', vim.lsp.buf.implementation, {desc = 'goto implementation'})
+   vim.keymap.set('n', '\\gr', vim.lsp.buf.references, {desc = 'goto references'})
+   vim.keymap.set('n', '\\gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol'})
+   vim.keymap.set('n', '\\gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol'})
+   vim.keymap.set('n', '\\H', vim.lsp.buf.signature_help, {desc = 'signature help'})
+   vim.keymap.set('n', '\\h', vim.lsp.buf.hover, {desc = 'hover'})
+   vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics'})
+   vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors'})
+   vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings'})
+   vim.keymap.set('n', '\\r', vim.lsp.buf.rename, {desc = 'rename'})
+   vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, {desc = 'add workspace folder'})
+   vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, {desc = 'remove workspace folder'})
+   vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous'})
+   vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next'})
 
    local lsp_labels = {
       c = {
@@ -188,6 +188,7 @@ end
 function M.telescope_keybindings()
    local tb = require('telescope.builtin')
 
+   -- telescope
    vim.keymap.set('n', ' T', '<Cmd>Telescope<CR>', {desc = 'telescope command'})
    vim.keymap.set('n', ' tbl', tb.buffers, {desc = 'list buffers'})
    vim.keymap.set('n', ' tbz', tb.current_buffer_fuzzy_find, {desc = 'fuzzy find current buffer'})
@@ -196,6 +197,12 @@ function M.telescope_keybindings()
    vim.keymap.set('n', ' tgl', tb.live_grep, {desc = 'live grep'})
    vim.keymap.set('n', ' tgs', tb.grep_string, {desc = 'grep string'})
    vim.keymap.set('n', ' th', tb.help_tags, {desc = 'help tags'})
+
+   -- telescope-file-browser
+   vim.keymap.set('n', ' tfb', '<Cmd>:Telescope file_browser<CR>', {desc = 'telescope file browser'})
+
+   -- telescope-frecency
+   vim.keymap.set('n', ' tfq', '<Cmd>:Telescope file_browser<CR>', {desc = 'telescope frecency'})
 
    local telescope_labels = {
       t = {

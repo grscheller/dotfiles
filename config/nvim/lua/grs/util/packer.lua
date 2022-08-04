@@ -80,6 +80,15 @@ return packer.startup(
       -- Telescope - highly extendable fuzzy finder over lists
       use { 'nvim-telescope/telescope.nvim' }
       use { 'nvim-telescope/telescope-ui-select.nvim' }
+      use { 'nvim-telescope/telescope-file-browser.nvim' }
+      use {
+         'nvim-telescope/telescope-fzf-native.nvim',
+         run = 'make'
+      }
+      use {
+         'nvim-telescope/telescope-frecency.nvim',
+         requires = { 'kkharji/sqlite.lua' }
+      }
 
       -- Completion & snippet support
       use { 'hrsh7th/nvim-cmp',
