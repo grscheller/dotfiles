@@ -101,6 +101,8 @@ RM_ITEMS="
    ${HOME}/.gitconfig
 "
 
+### functions
+
 ## Function to removes files
 remove_item () {
    rmItem="$1"
@@ -143,6 +145,7 @@ install_file () {
       printf "Error: Failed to install '%s'\\n" "$trgt" >&2
       return 1
    fi
+
    return 0
 }
 
@@ -151,13 +154,13 @@ install_file () {
 ## Install home directory dotfiles
 for Home_File in $HOME_FILES
 do
-   install_file "$HOME" "$Home_File" ./home 0644
+   install_file "$HOME" "$Home_File" ./home 0644 || exit 1
 done
 
 ## Install  ~/bin  scripts
 for File in $BIN_SCRIPTS
 do
-   install_file "$HOME/bin" "$File" ./bin 0755
+   install_file "$HOME/bin" "$File" ./bin 0755 || exit 1
 done
 
 ## Install configuration files
@@ -220,4 +223,4 @@ do
 done
 
 ## Warning message
-printf '\nMake sure fish environment gets properly updated.\n'
+printf '\nMake sure fish & nvim environments get properly updated.\n'
