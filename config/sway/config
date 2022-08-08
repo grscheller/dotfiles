@@ -217,6 +217,7 @@ bindsym $mod+r mode "resize"
 # Gaps & Borders
 #
 gaps inner 3
+gaps outer 4
 gaps top 1
 gaps bottom 2
 smart_gaps on
