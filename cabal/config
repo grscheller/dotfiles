@@ -10,7 +10,7 @@
 -- This config file was generated using the following versions
 -- of Cabal and cabal-install:
 -- Cabal library version: 3.4.1.0
--- cabal-install version: 3.4.0.0
+-- cabal-install version: 3.4.1.0
 
 
 repository hackage.haskell.org
@@ -111,7 +111,7 @@ jobs: $ncpus
 -- offline: False
 -- lib: False
 -- package-env:
--- overwrite-policy:
+overwrite-policy: always
 -- install-method:
 installdir: /home/grs/.cabal/bin
 -- username:
