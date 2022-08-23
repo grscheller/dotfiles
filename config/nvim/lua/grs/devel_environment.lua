@@ -53,7 +53,6 @@ local lsp_servers = {
    'clangd', -- C and C++ - both clang and gcc (pacman clang)
    'cssls', -- vscode-css-language-servers (pacman + symlink name tweak)
    'gopls', -- go language server (pacman gopls)
-   'hls', -- haskell-language-server (pacman)
    'html', -- vscode-html-language-server (pacman + symlink name tweak)
    'jsonls', -- vscode-json-language-server (pacman + symlink name tweak)
    'pyright', -- Pyright for Python (pacman or npm)
@@ -91,6 +90,20 @@ lspconfig['sumneko_lua'].setup {
          telemetry = { enable = false }
       }
    }
+}
+
+--[[ Haskell Lang Configuration ]]
+
+-- Lua auto-indent configuration
+vim.api.nvim_command [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
+
+-- haskell-language-server (hls) configuration - install via pacman
+lspconfig['hls'].setup {
+   capabilities = capabilities,
+   on_attach = function(client, bufnr)
+      keymappings.lsp_kb(client, bufnr)
+      keymappings.haskell_kb(bufnr)
+   end
 }
 
 --[[ Python Configurations ]]

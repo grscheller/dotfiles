@@ -73,8 +73,8 @@ vim.keymap.set('n', '<C-k>', '3<C-y>', {desc = 'move view up 3 lines'})
 vim.keymap.set('n', '<C-l>', 'z4l', {desc = 'move view right 4 columns'})
 
 -- Shift text and reselect
-vim.keymap.set('v', '<', '<gv', {desc = 'shift left & reselect'})
-vim.keymap.set('v', '>', '>gv', {desc = 'shift right & reselect'})
+vim.keymap.set('x', '<', '<gv', {desc = 'shift left & reselect'})
+vim.keymap.set('x', '>', '>gv', {desc = 'shift right & reselect'})
 
 -- Misc keymappings
 vim.keymap.set('n', 'z ', '<Cmd>set invspell<CR>', {desc = 'toggle spelling'})
@@ -96,93 +96,6 @@ vim.keymap.set('n', ' n', function()
       vim.wo.relativenumber = false
    end
 end, {desc = 'line number toggle'})
-
---[[ LSP related keymappings ]]
--- The below keymappings may be out of date.
---
--- See https://github.com/neovim/nvim-lspconfig
--- and https://github.com/sharksforarms/neovim-rust
---
-function M.lsp_kb(client, bufnr)
-   vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, {desc = 'code action'})
-   vim.keymap.set('n', '\\clh', vim.lsp.codelens.refresh, {desc = 'code lens refresh'})
-   vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, {desc = 'code lens run'})
-   vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, {desc = 'buffer diagnostics'})
-   vim.keymap.set('n', '\\f', vim.lsp.buf.formatting, {desc = 'format'})
-   vim.keymap.set('n', '\\gd', vim.lsp.buf.definition, {desc = 'goto definition'})
-   vim.keymap.set('n', '\\gD', vim.lsp.buf.declaration, {desc = 'goto declaration'})
-   vim.keymap.set('n', '\\gi', vim.lsp.buf.implementation, {desc = 'goto implementation'})
-   vim.keymap.set('n', '\\gr', vim.lsp.buf.references, {desc = 'goto references'})
-   vim.keymap.set('n', '\\gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol'})
-   vim.keymap.set('n', '\\gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol'})
-   vim.keymap.set('n', '\\H', vim.lsp.buf.signature_help, {desc = 'signature help'})
-   vim.keymap.set('n', '\\h', vim.lsp.buf.hover, {desc = 'hover'})
-   vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics'})
-   vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors'})
-   vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings'})
-   vim.keymap.set('n', '\\r', vim.lsp.buf.rename, {desc = 'rename'})
-   vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, {desc = 'add workspace folder'})
-   vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, {desc = 'remove workspace folder'})
-   vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous'})
-   vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next'})
-
-   local lsp_labels = {
-      c = {
-         name = 'code',
-         l = { name = 'code lens' }
-      },
-      g = {
-         name = 'goto',
-         s = { name = 'symbol' }
-      },
-      q = { name = 'quickfix' },
-      w = { name = 'workspace folder' }
-   }
-
-   if M.wk then
-      wk.register(lsp_labels, { prefix = '\\', buffer = bufnr })
-   end
-
-   return client
-end
-
---[[ DAP (Debug Adapter Protocol) related keybindings ]]
-function M.dap_kb(bufnr)
-   local dap = require('dap')
-   local dapUiWidgets = require('dap.ui.widgets')
-   vim.keymap.set('n', '\\db', dap.toggle_breakpoint, {desc = 'dap toggle breakpoint'})
-   vim.keymap.set('n', '\\dc', dap.continue, {desc = 'dap continue'})
-   vim.keymap.set('n', '\\dh', dapUiWidgets.hover, {desc = 'dap hover'})
-   vim.keymap.set('n', '\\dl', dap.run_last, {desc = 'dap run last'})
-   vim.keymap.set('n', '\\dr', dap.repl.toggle, {desc = 'dap repl toggle'})
-   vim.keymap.set('n', '\\dso', dap.step_over, {desc = 'dap step over'})
-   vim.keymap.set('n', '\\dsi', dap.step_into, {desc = 'dap step into'})
-
-   local dap_labels = {
-      d = {
-         name = 'dap',
-         s = { name = 'step' }
-      }
-   }
-
-   if M.wk then
-      wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
-   end
-end
-
---[[ Scala Metals related keybindings ]]
-function M.sm_kb(bufnr)
-   local metals = require('metals')
-   vim.keymap.set('n', '\\mh', metals.hover_worksheet, {desc = 'metals hover worksheet'})
-
-   local metals_labels = {
-      m = { name = 'metals' }
-   }
-
-   if M.wk then
-      wk.register(metals_labels, { prefix = '\\', buffer = bufnr })
-   end
-end
 
 --[[ Telescope related keybindings ]]
 function M.telescope_keybindings()
@@ -215,6 +128,99 @@ function M.telescope_keybindings()
 
    if M.wk then
       wk.register(telescope_labels, { prefix = '<Space>' })
+   end
+end
+
+--[[ LSP related keymappings ]]
+-- The below keymappings may be out of date.
+--
+-- See https://github.com/neovim/nvim-lspconfig
+-- and https://github.com/sharksforarms/neovim-rust
+--
+function M.lsp_kb(client, bufnr)
+   vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, {desc = 'code action', buffer = bufnr})
+   vim.keymap.set('n', '\\clh', vim.lsp.codelens.refresh, {desc = 'code lens refresh', buffer = bufnr})
+   vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, {desc = 'code lens run', buffer = bufnr})
+   vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, {desc = 'buffer diagnostics', buffer = bufnr})
+   vim.keymap.set('n', '\\ff', vim.lsp.buf.formatting, {desc = 'format', buffer = bufnr})
+   vim.keymap.set('n', '\\gd', vim.lsp.buf.definition, {desc = 'goto definition', buffer = bufnr})
+   vim.keymap.set('n', '\\gD', vim.lsp.buf.declaration, {desc = 'goto declaration', buffer = bufnr})
+   vim.keymap.set('n', '\\gi', vim.lsp.buf.implementation, {desc = 'goto implementation', buffer = bufnr})
+   vim.keymap.set('n', '\\gr', vim.lsp.buf.references, {desc = 'goto references', buffer = bufnr})
+   vim.keymap.set('n', '\\gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol', buffer = bufnr})
+   vim.keymap.set('n', '\\gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol', buffer = bufnr})
+   vim.keymap.set('n', '\\H', vim.lsp.buf.signature_help, {desc = 'signature help', buffer = bufnr})
+   vim.keymap.set('n', '\\h', vim.lsp.buf.hover, {desc = 'hover', buffer = bufnr})
+   vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics', buffer = bufnr})
+   vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors', buffer = bufnr})
+   vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings', buffer = bufnr})
+   vim.keymap.set('n', '\\r', vim.lsp.buf.rename, {desc = 'rename', buffer = bufnr})
+   vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, {desc = 'add workspace folder', buffer = bufnr})
+   vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, {desc = 'remove workspace folder', buffer = bufnr})
+   vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous', buffer = bufnr})
+   vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next', buffer = bufnr})
+
+   local lsp_labels = {
+      c = {
+         name = 'code',
+         l = { name = 'code lens' }
+      },
+      f = { name = 'format' },
+      g = {
+         name = 'goto',
+         s = { name = 'symbol' }
+      },
+      q = { name = 'quickfix' },
+      w = { name = 'workspace folder' }
+   }
+
+   if M.wk then
+      wk.register(lsp_labels, { prefix = '\\', buffer = bufnr })
+   end
+
+   return client
+end
+
+--[[ Haskell related keybindings ]]
+function M.haskell_kb(bufnr)
+   vim.keymap.set('n', '\\fs', '<Cmd>%!stylish-haskell<CR>', {desc = 'stylish-haskell', buffer = bufnr})
+end
+
+--[[ Scala Metals related keybindings ]]
+function M.sm_kb(bufnr)
+   local metals = require('metals')
+   vim.keymap.set('n', '\\mh', metals.hover_worksheet, {desc = 'metals hover worksheet', buffer = bufnr})
+
+   local metals_labels = {
+      m = { name = 'metals' }
+   }
+
+   if M.wk then
+      wk.register(metals_labels, { prefix = '\\', buffer = bufnr })
+   end
+end
+
+--[[ DAP (Debug Adapter Protocol) related keybindings ]]
+function M.dap_kb(bufnr)
+   local dap = require('dap')
+   local dapUiWidgets = require('dap.ui.widgets')
+   vim.keymap.set('n', '\\db', dap.toggle_breakpoint, {desc = 'dap toggle breakpoint', buffer = bufnr})
+   vim.keymap.set('n', '\\dc', dap.continue, {desc = 'dap continue', buffer = bufnr})
+   vim.keymap.set('n', '\\dh', dapUiWidgets.hover, {desc = 'dap hover', buffer = bufnr})
+   vim.keymap.set('n', '\\dl', dap.run_last, {desc = 'dap run last', buffer = bufnr})
+   vim.keymap.set('n', '\\dr', dap.repl.toggle, {desc = 'dap repl toggle', buffer = bufnr})
+   vim.keymap.set('n', '\\dso', dap.step_over, {desc = 'dap step over', buffer = bufnr})
+   vim.keymap.set('n', '\\dsi', dap.step_into, {desc = 'dap step into', buffer = bufnr})
+
+   local dap_labels = {
+      d = {
+         name = 'dap',
+         s = { name = 'step' }
+      }
+   }
+
+   if M.wk then
+      wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
    end
 end
 
