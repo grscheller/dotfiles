@@ -4,13 +4,13 @@ local ok, cmp, luasnip
 
 ok, cmp = pcall(require, 'cmp')
 if not ok or not cmp then
-   print('Problem loading nvim-cmp: ' .. cmp)
+   print('Problem loading nvim-cmp: %s', cmp)
    return
 end
 
 ok, luasnip = pcall(require, 'luasnip')
 if not ok then
-   print('Problem loading luasnip: ' .. luasnip)
+   print('Problem loading luasnip: %s', luasnip)
    return
 end
 
@@ -35,10 +35,10 @@ cmp.setup {
    },
 
    mapping = cmp.mapping.preset.insert {
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-<Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
+      ['<C-c>'] = cmp.mapping.complete(),
+      ['<C- >'] = cmp.mapping.abort(),
       ['<CR>'] = function(fallback)
          if cmp.visible() then
             cmp.confirm { select = true }
@@ -76,7 +76,7 @@ cmp.setup {
          { name = 'path' },
          { name = 'buffer' },
          { name = 'rg',
-           keyword_length = 5,
+           keyword_length = 4,
            max_item_count = 5,
            option = { additional_arguments = '--smart-case --hidden' }
          }

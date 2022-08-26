@@ -23,5 +23,5 @@ if ok then
       }
    }
 else
-   print('Problem loading numToStr/Comment.nvim: ' .. comment)
+   print('Problem loading numToStr/Comment.nvim: %s', comment)
 end

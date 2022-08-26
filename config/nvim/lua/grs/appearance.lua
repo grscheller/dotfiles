@@ -34,7 +34,7 @@ ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
 else
-   print('Problem loading nvim-web-devicons: ' .. webDevicons)
+   print('Problem loading nvim-web-devicons: %s', webDevicons)
 end
 
 -- Setup Lualine with Tokyo Night theme

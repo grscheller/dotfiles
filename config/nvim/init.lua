@@ -11,6 +11,7 @@ require('grs.util.packer')
 -- General Text editing reflecting personnal preferences
 require('grs.options') -- Neovim options
 require('grs.commands') -- Commands & autocmds not related to specific plugins
+require('grs.util.keymappings') -- Set general keymappings
 require('grs.textedit') -- Configure general text editing related plugins
 
 -- Configure an IDE like Neovim based software development environment

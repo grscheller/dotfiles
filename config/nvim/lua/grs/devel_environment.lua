@@ -15,32 +15,32 @@ if ok then
       highlight = { enable = true }
    }
 else
-   print('Problem loading nvim-treesitter.configs: ' .. ts_configs)
+   print('Problem loading nvim-treesitter.configs: %s', ts_configs)
 end
 
 -- Punt if necessary LSP related plugins are not installed
 ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
-   print('Problem loading nvim-lspconfig: ' .. lspconfig)
+   print('Problem loading nvim-lspconfig: %s', lspconfig)
    return
 end
 
 ok, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
 if not ok then
-   print('Problem loading nvim-lsp-installer: ' .. nvimLspInstaller)
+   print('Problem loading nvim-lsp-installer: %s', nvimLspInstaller)
    return
 end
 
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
-   print('Problem loading cmp_nvim_lsp: ' .. cmp_nvim_lsp)
+   print('Problem loading cmp_nvim_lsp: %s', cmp_nvim_lsp)
    return
 end
 
 -- Check if DAP for debugging is available
 ok_dap, dap = pcall(require, 'dap')
 if not ok_dap then
-   print('Problem loading nvim-dap: ' .. dap)
+   print('Problem loading nvim-dap: %s', dap)
 end
 
 --[[ Nvim LSP Installer Configuration

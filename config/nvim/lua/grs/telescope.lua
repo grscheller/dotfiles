@@ -4,7 +4,7 @@ local ok, telescope
 
 ok, telescope = pcall(require, 'telescope')
 if not ok then
-   print('Problem loading telescope: ' .. telescope)
+   print('Problem loading telescope: %s', telescope)
    return
 end
 

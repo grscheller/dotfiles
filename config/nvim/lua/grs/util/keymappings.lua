@@ -21,7 +21,7 @@ if ok then
    }
    M.wk = wk
 else
-   print('Problem loading which-key.nvim: ' .. wk)
+   print('Problem loading which-key.nvim: %s', wk)
 end
 
 --[[ Set key mappings/bindings ]]
