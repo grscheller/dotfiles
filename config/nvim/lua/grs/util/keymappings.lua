@@ -24,7 +24,7 @@ else
    print('Problem loading which-key.nvim: %s', wk)
 end
 
---[[ Set key mappings/bindings ]]
+--[[ Set key mappings/bindings lu]]
 
 -- Turn off some redundant motions
 vim.keymap.set('n', '<BS>', '')
@@ -143,14 +143,15 @@ function M.lsp_kb(client, bufnr)
    vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, {desc = 'code lens run', buffer = bufnr})
    vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, {desc = 'buffer diagnostics', buffer = bufnr})
    vim.keymap.set('n', '\\ff', vim.lsp.buf.formatting, {desc = 'format', buffer = bufnr})
-   vim.keymap.set('n', '\\gd', vim.lsp.buf.definition, {desc = 'goto definition', buffer = bufnr})
-   vim.keymap.set('n', '\\gD', vim.lsp.buf.declaration, {desc = 'goto declaration', buffer = bufnr})
-   vim.keymap.set('n', '\\gi', vim.lsp.buf.implementation, {desc = 'goto implementation', buffer = bufnr})
-   vim.keymap.set('n', '\\gr', vim.lsp.buf.references, {desc = 'goto references', buffer = bufnr})
-   vim.keymap.set('n', '\\gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol', buffer = bufnr})
-   vim.keymap.set('n', '\\gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol', buffer = bufnr})
-   vim.keymap.set('n', '\\H', vim.lsp.buf.signature_help, {desc = 'signature help', buffer = bufnr})
-   vim.keymap.set('n', '\\h', vim.lsp.buf.hover, {desc = 'hover', buffer = bufnr})
+   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'goto definition', buffer = bufnr})
+   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {desc = 'goto declaration', buffer = bufnr})
+   vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {desc = 'goto implementation', buffer = bufnr})
+   vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'goto references', buffer = bufnr})
+   vim.keymap.set('n', 'gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol', buffer = bufnr})
+   vim.keymap.set('n', 'gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol', buffer = bufnr})
+   vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, {desc = 'goto type definition', buffer = bufnr})
+   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, {desc = 'signature help', buffer = bufnr})
+   vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'hover', buffer = bufnr})
    vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics', buffer = bufnr})
    vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors', buffer = bufnr})
    vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings', buffer = bufnr})
@@ -160,22 +161,26 @@ function M.lsp_kb(client, bufnr)
    vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous', buffer = bufnr})
    vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next', buffer = bufnr})
 
-   local lsp_labels = {
+   local lsp_labels_1 = {
+      g = {
+         name = 'goto',
+         s = { name = 'symbol' }
+      }
+   }
+
+   local lsp_labels_2 = {
       c = {
          name = 'code',
          l = { name = 'code lens' }
       },
       f = { name = 'format' },
-      g = {
-         name = 'goto',
-         s = { name = 'symbol' }
-      },
       q = { name = 'quickfix' },
       w = { name = 'workspace folder' }
    }
 
    if M.wk then
-      wk.register(lsp_labels, { prefix = '\\', buffer = bufnr })
+      wk.register(lsp_labels_1, { buffer = bufnr })
+      wk.register(lsp_labels_2, { prefix = '\\', buffer = bufnr })
    end
 
    return client
@@ -189,14 +194,14 @@ end
 --[[ Scala Metals related keybindings ]]
 function M.sm_kb(bufnr)
    local metals = require('metals')
-   vim.keymap.set('n', '\\mh', metals.hover_worksheet, {desc = 'metals hover worksheet', buffer = bufnr})
+   vim.keymap.set('n', 'mK', metals.hover_worksheet, {desc = 'metals hover worksheet', buffer = bufnr})
 
    local metals_labels = {
       m = { name = 'metals' }
    }
 
    if M.wk then
-      wk.register(metals_labels, { prefix = '\\', buffer = bufnr })
+      wk.register(metals_labels, { buffer = bufnr })
    end
 end
 
