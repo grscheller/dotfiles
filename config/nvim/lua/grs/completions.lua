@@ -72,13 +72,16 @@ cmp.setup {
       {
          { name = 'nvim_lsp' },
          { name = 'nvim_lsp_signature_help' },
+         { name = 'nvim_lua' },
          { name = 'luasnip' },
          { name = 'path' },
          { name = 'buffer' },
          { name = 'rg',
-           keyword_length = 4,
+           keyword_length = 3,
            max_item_count = 5,
-           option = { additional_arguments = '--smart-case --hidden' }
+           option = {
+              additional_arguments = '--smart-case --hidden'
+           }
          }
       }
    )
@@ -87,16 +90,18 @@ cmp.setup {
 cmp.setup.cmdline('/',
    {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = { { name = 'buffer' } }
+      sources = {
+         { name = 'buffer' }
+      }
    }
 )
 
 cmp.setup.cmdline(':',
    {
       mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources(
-         { { name = 'path' } },
-         { { name = 'cmdline' } }
-      )
+      sources = cmp.config.sources {
+         { name = 'path' },
+         { name = 'cmdline' }
+      }
    }
 )

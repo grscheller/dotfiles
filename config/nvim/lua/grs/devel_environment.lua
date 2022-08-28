@@ -156,7 +156,7 @@ if ok_metals then
 
    metals_config.settings = {
       showImplicitArguments = true,
-      serverVersion = '0.11.7'
+      serverVersion = '0.11.8'
    }
 
    metals_config.capabilities = capabilities
