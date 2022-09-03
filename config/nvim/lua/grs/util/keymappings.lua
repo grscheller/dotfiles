@@ -39,7 +39,7 @@ vim.keymap.set('n', '<M-l>', '<C-w>l', {desc = 'goto window right'})
 vim.keymap.set('n', '<M-p>', '<C-w>p', {desc = 'goto previous window'})
 vim.keymap.set('n', '<M-s>', '<C-w>s', {desc = 'split current window'})
 vim.keymap.set('n', '<M-d>', '<C-w>v', {desc = 'vsplit current window'})
-vim.keymap.set('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {desc = 'fish term in split'})
+vim.keymap.set('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i',  {desc = 'fish term in split'})
 vim.keymap.set('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {desc = 'fish term in vsplit'})
 vim.keymap.set('n', '<M-o>', '<C-w>o', {desc = 'close other tab windows'})
 vim.keymap.set('n', '<M-c>', '<C-w>c', {desc = 'close current window'})
@@ -105,45 +105,42 @@ function M.telescope_keybindings()
    local tfq = ts.extensions.frecency
 
    -- telescope
-   vim.keymap.set('n', '<C-t>t', '<Cmd>Telescope<CR>', {desc = 'telescope command'})
-   vim.keymap.set('n', '<C-t>bl', tb.buffers, {desc = 'list buffers'})
-   vim.keymap.set('n', '<C-t>bz', tb.current_buffer_fuzzy_find, {desc = 'fuzzy find current buffer'})
-   vim.keymap.set('n', '<C-t>ff', tb.find_files, {desc = 'find files'})
-   vim.keymap.set('n', '<C-t>fr', tb.oldfiles, {desc = 'find recent files'})
-   vim.keymap.set('n', '<C-t>gl', tb.live_grep, {desc = 'live grep'})
-   vim.keymap.set('n', '<C-t>gs', tb.grep_string, {desc = 'grep string'})
-   vim.keymap.set('n', '<C-t>h',  tb.help_tags, {desc = 'help tags'})
-
-   -- telescope-file-browser
-   vim.keymap.set('n', '<C-t>fb', tfb.file_browser, {desc = 'telescope file browser'})
-
-   -- telescope-frecency
-   vim.keymap.set('n', '<C-t>fq', tfq.frecency, {desc = 'telescope frecency'})
+   vim.keymap.set('n', ' tt', '<Cmd>Telescope<CR>', {desc = 'telescope command'})
+   vim.keymap.set('n', ' tl', tb.buffers, {desc = 'list buffers'})
+   vim.keymap.set('n', ' tz', tb.current_buffer_fuzzy_find, {desc = 'fuzzy find current buffer'})
+   vim.keymap.set('n', ' tfb', tfb.file_browser, {desc = 'telescope file browser'})
+   vim.keymap.set('n', ' tff', tb.find_files, {desc = 'find files'})
+   vim.keymap.set('n', ' tfq', tfq.frecency, {desc = 'telescope frecency'})
+   vim.keymap.set('n', ' tfr', tb.oldfiles, {desc = 'find recent files'})
+   vim.keymap.set('n', ' tgl', tb.live_grep, {desc = 'live grep'})
+   vim.keymap.set('n', ' tgs', tb.grep_string, {desc = 'grep string'})
+   vim.keymap.set('n', ' th',  tb.help_tags, {desc = 'help tags'})
 
    if M.wk then
       local telescope_labels = {
-         name = 'telescope',
-         b = { name = 'telescope buffers' },
-         f = { name = 'telescope files' },
-         g = { name = 'telescope grep' }
+         t = {
+            name = 'telescope',
+            f = { name = 'telescope files' },
+            g = { name = 'telescope grep' }
+         }
       }
 
-      wk.register(telescope_labels, { prefix = '<C-t>' })
+      wk.register(telescope_labels, { prefix = ' ' })
    end
 end
 
---[[ LSP related keymappings ]]
--- The below keymappings may be out of date.
+--[[ LSP related keymappings
 --
--- See https://github.com/neovim/nvim-lspconfig
--- and https://github.com/sharksforarms/neovim-rust
+--   Using g and z as "leader keys" for LSP,
+--   stepping on folding keymappings which I never use.
 --
+--]]
 function M.lsp_kb(client, bufnr)
-   vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, {desc = 'code action', buffer = bufnr})
-   vim.keymap.set('n', '\\clh', vim.lsp.codelens.refresh, {desc = 'code lens refresh', buffer = bufnr})
-   vim.keymap.set('n', '\\clr', vim.lsp.codelens.run, {desc = 'code lens run', buffer = bufnr})
-   vim.keymap.set('n', '\\D', vim.diagnostic.setloclist, {desc = 'buffer diagnostics', buffer = bufnr})
-   vim.keymap.set('n', '\\ff', vim.lsp.buf.formatting, {desc = 'format', buffer = bufnr})
+   vim.keymap.set('n', 'za', vim.lsp.buf.code_action, {desc = 'code action', buffer = bufnr})
+   vim.keymap.set('n', 'zlh', vim.lsp.codelens.refresh, {desc = 'code lens refresh', buffer = bufnr})
+   vim.keymap.set('n', 'zlr', vim.lsp.codelens.run, {desc = 'code lens run', buffer = bufnr})
+   vim.keymap.set('n', 'zd', vim.diagnostic.setloclist, {desc = 'buffer diagnostics', buffer = bufnr})
+   vim.keymap.set('n', 'zFf', vim.lsp.buf.formatting, {desc = 'lsp format', buffer = bufnr})
    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'goto definition', buffer = bufnr})
    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {desc = 'goto declaration', buffer = bufnr})
    vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {desc = 'goto implementation', buffer = bufnr})
@@ -151,37 +148,33 @@ function M.lsp_kb(client, bufnr)
    vim.keymap.set('n', 'gsd', vim.lsp.buf.document_symbol, {desc = 'document symbol', buffer = bufnr})
    vim.keymap.set('n', 'gsw', vim.lsp.buf.workspace_symbol, {desc = 'workspace symbol', buffer = bufnr})
    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, {desc = 'goto type definition', buffer = bufnr})
-   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, {desc = 'signature help', buffer = bufnr})
+   vim.keymap.set('n', 'zK', vim.lsp.buf.signature_help, {desc = 'signature help', buffer = bufnr})
    vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'hover', buffer = bufnr})
-   vim.keymap.set('n', '\\qd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics', buffer = bufnr})
-   vim.keymap.set('n', '\\qe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors', buffer = bufnr})
-   vim.keymap.set('n', '\\qw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings', buffer = bufnr})
-   vim.keymap.set('n', '\\r', vim.lsp.buf.rename, {desc = 'rename', buffer = bufnr})
-   vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, {desc = 'add workspace folder', buffer = bufnr})
-   vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, {desc = 'remove workspace folder', buffer = bufnr})
-   vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous', buffer = bufnr})
-   vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next', buffer = bufnr})
+   vim.keymap.set('n', 'zqd', vim.diagnostic.setqflist, {desc = 'qf list ws diagnostics', buffer = bufnr})
+   vim.keymap.set('n', 'zqe', function() vim.diagnostic.setqflist {severity = 'E'} end, {desc = 'qf list ws errors', buffer = bufnr})
+   vim.keymap.set('n', 'zqw', function() vim.diagnostic.setqflist {severity = 'W'} end, {desc = 'qf list ws warnings', buffer = bufnr})
+   vim.keymap.set('n', 'zr', vim.lsp.buf.rename, {desc = 'rename', buffer = bufnr})
+   vim.keymap.set('n', 'zfa', vim.lsp.buf.add_workspace_folder, {desc = 'add workspace folder', buffer = bufnr})
+   vim.keymap.set('n', 'zfr', vim.lsp.buf.remove_workspace_folder, {desc = 'remove workspace folder', buffer = bufnr})
+   vim.keymap.set('n', '[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous', buffer = bufnr})
+   vim.keymap.set('n', ']', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next', buffer = bufnr})
 
    if M.wk then
-      local lsp_labels_1 = {
-         g = {
-            name = 'goto',
-            s = { name = 'symbol' }
-         }
+      local lsp_labels_g = {
+         name = 'goto with LSP',
+         s = { name = 'symbol' }
       }
 
-      local lsp_labels_2 = {
-         c = {
-            name = 'code',
-            l = { name = 'code lens' }
-         },
-         f = { name = 'format' },
+      local lsp_labels_z = {
+         name = 'spelling and LSP',
+         l = { name = 'code lens' },
          q = { name = 'quickfix' },
-         w = { name = 'workspace folder' }
+         f = { name = 'workspace folder' },
+         F = { name = 'format' }
       }
 
-      wk.register(lsp_labels_1, { buffer = bufnr })
-      wk.register(lsp_labels_2, { prefix = '\\', buffer = bufnr })
+      wk.register(lsp_labels_g, { prefix = 'g', buffer = bufnr })
+      wk.register(lsp_labels_z, { prefix = 'z', buffer = bufnr })
    end
 
    return client
@@ -189,7 +182,7 @@ end
 
 --[[ Haskell related keybindings ]]
 function M.haskell_kb(bufnr)
-   vim.keymap.set('n', '\\fs', '<Cmd>%!stylish-haskell<CR>', {desc = 'stylish-haskell', buffer = bufnr})
+   vim.keymap.set('n', 'zFh', '<Cmd>%!stylish-haskell<CR>', {desc = 'stylish haskell format', buffer = bufnr})
 end
 
 --[[ Scala Metals related keybindings ]]
@@ -199,10 +192,10 @@ function M.sm_kb(bufnr)
 
    if M.wk then
       local metals_labels = {
-         m = { name = 'metals' }
+         name = 'metals'
       }
 
-      wk.register(metals_labels, { buffer = bufnr })
+      wk.register(metals_labels, { prefix = 'm', buffer = bufnr })
    end
 end
 
@@ -210,20 +203,18 @@ end
 function M.dap_kb(bufnr)
    local dap = require('dap')
    local dapUiWidgets = require('dap.ui.widgets')
-   vim.keymap.set('n', '\\db', dap.toggle_breakpoint, {desc = 'dap toggle breakpoint', buffer = bufnr})
-   vim.keymap.set('n', '\\dc', dap.continue, {desc = 'dap continue', buffer = bufnr})
-   vim.keymap.set('n', '\\dh', dapUiWidgets.hover, {desc = 'dap hover', buffer = bufnr})
-   vim.keymap.set('n', '\\dl', dap.run_last, {desc = 'dap run last', buffer = bufnr})
-   vim.keymap.set('n', '\\dr', dap.repl.toggle, {desc = 'dap repl toggle', buffer = bufnr})
-   vim.keymap.set('n', '\\dso', dap.step_over, {desc = 'dap step over', buffer = bufnr})
-   vim.keymap.set('n', '\\dsi', dap.step_into, {desc = 'dap step into', buffer = bufnr})
+   vim.keymap.set('n', '\\b', dap.toggle_breakpoint, {desc = 'dap toggle breakpoint', buffer = bufnr})
+   vim.keymap.set('n', '\\c', dap.continue, {desc = 'dap continue', buffer = bufnr})
+   vim.keymap.set('n', '\\h', dapUiWidgets.hover, {desc = 'dap hover', buffer = bufnr})
+   vim.keymap.set('n', '\\l', dap.run_last, {desc = 'dap run last', buffer = bufnr})
+   vim.keymap.set('n', '\\r', dap.repl.toggle, {desc = 'dap repl toggle', buffer = bufnr})
+   vim.keymap.set('n', '\\so', dap.step_over, {desc = 'dap step over', buffer = bufnr})
+   vim.keymap.set('n', '\\si', dap.step_into, {desc = 'dap step into', buffer = bufnr})
 
    if M.wk then
       local dap_labels = {
-         d = {
-            name = 'dap',
-            s = { name = 'step' }
-         }
+         name = 'dap',
+         s = { name = 'step' }
       }
 
       wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
