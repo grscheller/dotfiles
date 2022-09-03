@@ -99,35 +99,36 @@ end, {desc = 'line number toggle'})
 
 --[[ Telescope related keybindings ]]
 function M.telescope_keybindings()
+   local ts = require('telescope')
    local tb = require('telescope.builtin')
+   local tfb = ts.extensions.file_browser
+   local tfq = ts.extensions.frecency
 
    -- telescope
-   vim.keymap.set('n', ' T', '<Cmd>Telescope<CR>', {desc = 'telescope command'})
-   vim.keymap.set('n', ' tbl', tb.buffers, {desc = 'list buffers'})
-   vim.keymap.set('n', ' tbz', tb.current_buffer_fuzzy_find, {desc = 'fuzzy find current buffer'})
-   vim.keymap.set('n', ' tff', tb.find_files, {desc = 'find files'})
-   vim.keymap.set('n', ' tfr', tb.oldfiles, {desc = 'find recent files'})
-   vim.keymap.set('n', ' tgl', tb.live_grep, {desc = 'live grep'})
-   vim.keymap.set('n', ' tgs', tb.grep_string, {desc = 'grep string'})
-   vim.keymap.set('n', ' th', tb.help_tags, {desc = 'help tags'})
+   vim.keymap.set('n', '<C-t>t', '<Cmd>Telescope<CR>', {desc = 'telescope command'})
+   vim.keymap.set('n', '<C-t>bl', tb.buffers, {desc = 'list buffers'})
+   vim.keymap.set('n', '<C-t>bz', tb.current_buffer_fuzzy_find, {desc = 'fuzzy find current buffer'})
+   vim.keymap.set('n', '<C-t>ff', tb.find_files, {desc = 'find files'})
+   vim.keymap.set('n', '<C-t>fr', tb.oldfiles, {desc = 'find recent files'})
+   vim.keymap.set('n', '<C-t>gl', tb.live_grep, {desc = 'live grep'})
+   vim.keymap.set('n', '<C-t>gs', tb.grep_string, {desc = 'grep string'})
+   vim.keymap.set('n', '<C-t>h',  tb.help_tags, {desc = 'help tags'})
 
    -- telescope-file-browser
-   vim.keymap.set('n', ' tfb', '<Cmd>:Telescope file_browser<CR>', {desc = 'telescope file browser'})
+   vim.keymap.set('n', '<C-t>fb', tfb.file_browser, {desc = 'telescope file browser'})
 
    -- telescope-frecency
-   vim.keymap.set('n', ' tfq', '<Cmd>:Telescope file_browser<CR>', {desc = 'telescope frecency'})
+   vim.keymap.set('n', '<C-t>fq', tfq.frecency, {desc = 'telescope frecency'})
 
-   local telescope_labels = {
-      t = {
+   if M.wk then
+      local telescope_labels = {
          name = 'telescope',
          b = { name = 'telescope buffers' },
          f = { name = 'telescope files' },
          g = { name = 'telescope grep' }
       }
-   }
 
-   if M.wk then
-      wk.register(telescope_labels, { prefix = '<Space>' })
+      wk.register(telescope_labels, { prefix = '<C-t>' })
    end
 end
 
@@ -161,24 +162,24 @@ function M.lsp_kb(client, bufnr)
    vim.keymap.set('n', '\\[', function() vim.diagnostic.goto_prev {wrap = false} end, {desc = 'diagnostic goto previous', buffer = bufnr})
    vim.keymap.set('n', '\\]', function() vim.diagnostic.goto_next {wrap = false} end, {desc = 'diagnostic goto next', buffer = bufnr})
 
-   local lsp_labels_1 = {
-      g = {
-         name = 'goto',
-         s = { name = 'symbol' }
-      }
-   }
-
-   local lsp_labels_2 = {
-      c = {
-         name = 'code',
-         l = { name = 'code lens' }
-      },
-      f = { name = 'format' },
-      q = { name = 'quickfix' },
-      w = { name = 'workspace folder' }
-   }
-
    if M.wk then
+      local lsp_labels_1 = {
+         g = {
+            name = 'goto',
+            s = { name = 'symbol' }
+         }
+      }
+
+      local lsp_labels_2 = {
+         c = {
+            name = 'code',
+            l = { name = 'code lens' }
+         },
+         f = { name = 'format' },
+         q = { name = 'quickfix' },
+         w = { name = 'workspace folder' }
+      }
+
       wk.register(lsp_labels_1, { buffer = bufnr })
       wk.register(lsp_labels_2, { prefix = '\\', buffer = bufnr })
    end
@@ -196,11 +197,11 @@ function M.sm_kb(bufnr)
    local metals = require('metals')
    vim.keymap.set('n', 'mK', metals.hover_worksheet, {desc = 'metals hover worksheet', buffer = bufnr})
 
-   local metals_labels = {
-      m = { name = 'metals' }
-   }
-
    if M.wk then
+      local metals_labels = {
+         m = { name = 'metals' }
+      }
+
       wk.register(metals_labels, { buffer = bufnr })
    end
 end
@@ -217,14 +218,14 @@ function M.dap_kb(bufnr)
    vim.keymap.set('n', '\\dso', dap.step_over, {desc = 'dap step over', buffer = bufnr})
    vim.keymap.set('n', '\\dsi', dap.step_into, {desc = 'dap step into', buffer = bufnr})
 
-   local dap_labels = {
-      d = {
-         name = 'dap',
-         s = { name = 'step' }
-      }
-   }
-
    if M.wk then
+      local dap_labels = {
+         d = {
+            name = 'dap',
+            s = { name = 'step' }
+         }
+      }
+
       wk.register(dap_labels, { prefix = '\\', buffer = bufnr })
    end
 end

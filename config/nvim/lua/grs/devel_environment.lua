@@ -3,8 +3,8 @@
 local ok
 local ts_configs
 local lspconfig, nvimLspInstaller, cmp_nvim_lsp
-local ok_dap, dap
 local rust_tools
+local metals
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 
@@ -38,7 +38,7 @@ if not ok then
 end
 
 -- Check if DAP for debugging is available
-ok_dap, dap = pcall(require, 'dap')
+local ok_dap, dap = pcall(require, 'dap')
 if not ok_dap then
    print('Problem loading nvim-dap: %s', dap)
 end
@@ -150,8 +150,8 @@ end
      Following: https://github.com/scalameta/nvim-metals/discussions/39
      For latest Metals Server Version see: https://scalameta.org/metals/docs ]]
 
-local ok_metals, metals = pcall(require, 'metals')
-if ok_metals then
+ok, metals = pcall(require, 'metals')
+if ok then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
