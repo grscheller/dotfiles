@@ -155,8 +155,7 @@ if ok then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
-      showImplicitArguments = true,
-      serverVersion = '0.11.8'
+      showImplicitArguments = true
    }
 
    metals_config.capabilities = capabilities
