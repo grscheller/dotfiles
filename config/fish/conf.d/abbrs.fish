@@ -12,6 +12,10 @@ if not set -q fish_abbr_initialized
     abbr -a pa 'string join \n $PATH'
     abbr -a -- pst ps -ejH
 
+    # enable/disable touchpad
+    abbr -a tpd disable_touch_pad
+    abbr -a tpe enable_touch_pad
+
     # Git related cmds - anything more complicated, I want to think about
     abbr -a ga git add .
     abbr -a gc git commit
@@ -24,7 +28,7 @@ if not set -q fish_abbr_initialized
     abbr -a gs git status  # gs steps on ghostscript
 
     # Shell environment cmds
-    abbr -a re 'unguard_universals; REDO_ENV=yes fish -l -C cd'
+    abbr -a re 'cd; unguard_universals; REDO_ENV=yes fish -l'
     abbr -a ue UPDATE_ENV=yes fish
 
     set -U fish_abbr_initialized

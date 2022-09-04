@@ -59,6 +59,8 @@ CONFIG_FILES='
    fish/functions/archJDK.fish
    fish/functions/ax.fish
    fish/functions/digpath.fish
+   fish/functions/disable_touch_pad.fish
+   fish/functions/enable_touch_pad.fish
    fish/functions/ev.fish
    fish/functions/ff.fish
    fish/functions/fields.fish
