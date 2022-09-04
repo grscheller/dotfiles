@@ -4,7 +4,7 @@ function ud --description 'Jump up multiple directories, default is 1'
     set -l nDirs "$argv[1]"
     set -l maxUp (math (string split / (pwd) | count) - 1)
 
-    if string match -qr '^[1-9]\d*$' $nDirs
+    if string match -qr -- '^[1-9]\d*$' $nDirs
         # if argument is a number, jump up that number of directories
         if [ $nDirs -gt $maxUp ]
             set nDirs $maxUp
