@@ -12,6 +12,9 @@ if not set -q fish_abbr_initialized
     abbr -a pa 'string join \n $PATH'
     abbr -a -- pst ps -ejH
 
+    # Exec sway if not already running
+    abbr -a sw 'set -qx SWAYSOCK; or exec sway'
+
     # enable/disable touchpad
     abbr -a tpd disable_touch_pad
     abbr -a tpe enable_touch_pad
