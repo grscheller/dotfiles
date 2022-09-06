@@ -187,7 +187,7 @@ do
 done
 
 # Keep alacritty from rereading its config file mid-copy
-mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
+mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
 # Swap in a Sway background image if present
 # Picture obtained from here:
@@ -195,7 +195,7 @@ mv "${XDG_CONFIG_HOME}"/alacritty/alacritty{_arch,}.yml
 Picture="${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg"
 if [ -f $Picture ]
 then
-    mv "${XDG_CONFIG_HOME}"/sway/config{,_orig} 
+    mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
     sed -e "s|^\(output \* bg \).* solid_color$|\1$Picture fill|" \
         "${XDG_CONFIG_HOME}"/sway/config_orig > \
         "${XDG_CONFIG_HOME}"/sway/config
