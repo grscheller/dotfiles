@@ -11,12 +11,16 @@
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.
 #
-#  Note: Found no good way to bulletproof regenerating
-#        ~/.config/fish/fish_variables, especially when
-#        there are a lot of fish configuration changes.
+#  Note: Found no good way to bulletproof automatically
+#        regenerating ~/.config/fish/fish_variables, especially
+#        when there are lots of fish configuration changes.
+#
 #        Usually just using the "re" abbreviation is
 #        enough, but sometimes more of a manual "kick"
 #        is needed.
+#
+#        Probably just fighting against someone else's
+#        beloved configuration paradigm.
 #
 
 ### Setup
@@ -193,7 +197,7 @@ mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml "${XDG_CONFIG_HOME}"/alacri
 # Picture obtained from here:
 #   https://www.facebook.com/alittleofmeinyou/photos/325964185818238
 Picture="${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg"
-if [ -f $Picture ]
+if [ -f "$Picture" ]
 then
     mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
     sed -e "s|^\(output \* bg \).* solid_color$|\1$Picture fill|" \

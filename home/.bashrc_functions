@@ -17,7 +17,7 @@ ud () {
           upDir=../$upDir
       done
   fi
-  cd $upDir
+  cd $upDir || return
 }
 
 # Similar to the DOS path command
