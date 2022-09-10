@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 #
 # ~/.bash_profile
 #
@@ -19,4 +20,5 @@
 # source .bash_profile.
 #
 
+# shellcheck disable=SC1090
 [[ -f ~/.bashrc ]] && source ~/.bashrc

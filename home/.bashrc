@@ -6,18 +6,293 @@
 #  more or or less, POSIX complient systems.
 #
 
-## If not interactive, don't do anything.
+### If not interactive, don't do anything.
+
 [[ $- != *i* ]] && return
 
-## System wide configurations
-#  Debian and Arch source /etc/bash.bashrc before ~/.bashrc.
+### System wide configurations - Debian & Arch source /etc/bash.bashrc before ~/.bashrc
+
+# shellcheck disable=SC1091
 [[ -f /etc/bashrc ]] && source /etc/bashrc  # Used on Redhat & Fedora
 
-## Shell functions
-source ~/.bashrc_functions
+### Shell functions
 
-## Make sure an initial shell environment is well defined.
-#  In the olde days, this was done in "~/.bash_prfile".
+## Command line utility functions
+
+#  Jump up multiple directories
+ud () {
+  local upDir=..
+  local nDirs="$1"
+  if [[ $nDirs == @([1-9])*([0-9]) ]]
+  then
+      until (( nDirs-- <= 1 ))
+      do
+          upDir=../$upDir
+      done
+  fi
+  cd $upDir || return
+}
+
+# Similar to the DOS path command
+path () {
+  if (( $# == 0 ))
+  then
+      PathWord="$PATH"
+  else
+      PathWord="$1"
+  fi
+
+  # shellcheck disable=SC2086
+  ( IFS=':'; printf '%s\n' $PathWord )
+}
+
+# Drill down through $PATH to look for files or directories.
+# Like the ksh builtin whence, except it does not stop
+# after finding the first instance.  Handles spaces in both
+# filenames and directories on $PATH.  Also, shell patterns
+# are supported.
+digpath () (
+  usage_digpath () {
+    printf 'Usage: digpath [-q] [-x] file1 file2 ...\n'       >&2
+    printf '       digpath [-q] [-x] shell_pattern\n'         >&2
+    printf '       digpath [-h]\n\n'                          >&2
+    printf 'Output: print any matches on PATH to stdout,\n'   >&2
+    printf '        suppresses output if -q given,\n'         >&2
+    printf '        suppresses nonexecutables if -x given,\n' >&2
+    printf '        print help to stderr if -h given\n\n'     >&2
+    printf 'Exit Status: 0 (true) if match found on PATH\n'   >&2
+    printf '             1 (false) if no match found\n'       >&2
+    printf '             2 -h or --help option was given\n'   >&2
+  }
+
+  local OPTIND opt
+  local quiet_flag=
+  while getopts :hqx opt
+  do
+    case $opt in
+      q) quiet_flag=1
+         ;;
+      x) executable_flag=1
+         ;;
+      h) usage_digpath
+         return 2
+         ;;
+      ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
+         usage_digpath
+         return 2
+         ;;
+    esac
+  done
+
+  IFS=':'
+
+  local ii=0  # for array index
+  local File Target
+  local FileList=()
+
+  for File in "$@"
+  do
+     [[ -z "$File" ]] && continue
+     for Dir in $PATH
+     do
+        [[ ! -d "$Dir" ]] && continue
+        for Target in $Dir/$File
+        do
+            if [[ -f $Target ]]
+            then
+                if [[ -z $executable_flag ]] || [[ -x $Target ]]
+                then
+                    FileList[((ii++))]="$Target"
+                fi
+            fi
+        done
+     done
+  done
+
+  [[ -z $quiet_flag ]] && printf '%s\n' "${FileList[@]}"
+
+  if ((${#FileList[@]} > 0))
+  then
+      return 0
+  else
+      return 1
+  fi
+)
+
+# Archive eXtractor: usage: ax <file>
+ax () {
+  if [[ -f $1 ]]
+  then
+      case $1 in
+        *.tar)     tar -xvf "$1"               ;;
+        *.tar.bz2) tar -xjvf "$1"              ;;
+        *.tbz2)    tar -xjvf "$1"              ;;
+        *.tar.gz)  tar -xzvf "$1"              ;;
+        *.tgz)     tar -xzvf "$1"              ;;
+        *.tar.Z)   tar -xZvf "$1"              ;;
+        *.gz)      gunzip "$1"                 ;;
+        *.bz2)     bunzip2 "$1"                ;;
+        *.zip)     unzip "$1"                  ;;
+        *.Z)       uncompress "$1"             ;;
+        *.rar)     unrar x "$1"                ;;
+        *.tar.xz)  xz -dc "$1" | tar -xvf -    ;;
+        *.tar.7z)  7za x -so "$1" | tar -xvf - ;;
+        *.7z)      7z x "$1"                   ;;
+        *.tar.zst) zstd -dc "$1" | tar -xvf -  ;;
+        *.zst)     zstd -d "$1"                ;;
+        *.cpio)    cpio -idv < "$1"            ;;
+        *) printf 'ax: error: "%s" unknown file type' "$1"  >&2 ;;
+      esac
+  else
+      if [[ -n $1 ]]
+      then
+          printf 'ax: error: "%s" is not a file' "$1" >&2
+      else
+          printf 'ax: error: No file argument given' >&2
+      fi
+  fi
+}
+
+# Convert between various bases (use capital A-F for hex-digits)
+#
+#   Examples: h2d "AA + BB" -> 357
+#             h2h "AA + BB" -> 165
+#             d2h 357       -> 165
+#
+h2h () { printf 'ibase=16\nobase=10\n%s\n'   "$*" | /usr/bin/bc; }
+h2d () { printf 'ibase=16\nobase=A\n%s\n'    "$*" | /usr/bin/bc; }
+h2o () { printf 'ibase=16\nobase=8\n%s\n'    "$*" | /usr/bin/bc; }
+h2b () { printf 'ibase=16\nobase=2\n%s\n'    "$*" | /usr/bin/bc; }
+d2h () { printf 'ibase=10\nobase=16\n%s\n'   "$*" | /usr/bin/bc; }
+d2d () { printf 'ibase=10\nobase=10\n%s\n'   "$*" | /usr/bin/bc; }
+d2o () { printf 'ibase=10\nobase=8\n%s\n'    "$*" | /usr/bin/bc; }
+d2b () { printf 'ibase=10\nobase=2\n%s\n'    "$*" | /usr/bin/bc; }
+o2h () { printf 'ibase=8\nobase=20\n%s\n'    "$*" | /usr/bin/bc; }
+o2d () { printf 'ibase=8\nobase=12\n%s\n'    "$*" | /usr/bin/bc; }
+o2o () { printf 'ibase=8\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
+o2b () { printf 'ibase=8\nobase=2\n%s\n'     "$*" | /usr/bin/bc; }
+b2h () { printf 'ibase=2\nobase=10000\n%s\n' "$*" | /usr/bin/bc; }
+b2d () { printf 'ibase=2\nobase=1010\n%s\n'  "$*" | /usr/bin/bc; }
+b2o () { printf 'ibase=2\nobase=1000\n%s\n'  "$*" | /usr/bin/bc; }
+b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
+
+## Launch Desktop GUI Apps from command line
+
+#  Open Desktop file manager
+fm () {
+  local DiR="$1"
+  [[ -n $DiR ]] || DiR="$PWD"
+  xdg-open "$DiR" 2>/dev/null &
+}
+
+# Terminal which inherits environment of parent shell
+tm () {
+  if [[ -x /usr/bin/alacritty ]]; then
+      ( /usr/bin/alacritty -e bash & )
+  elif [[ -x /usr/local/bin/alacritty ]]; then
+      ( /usr/local/bin/alacritty -e bash & )
+  elif [[ -x /usr/bin/gnome-terminal ]]; then
+      ( /usr/bin/gnome-terminal >&- 2>&- )
+  elif [[ -x /usr/bin/urxvt ]]; then
+      ( /usr/bin/urxvt >/dev/null 2>&1 & )
+  elif [[ -x /usr/bin/xterm ]]; then
+      ( /usr/bin/xterm >/dev/null 2>&1 & )
+  else
+      printf "tm: error: terminal emulator not found\n" >&2
+  fi
+}
+
+## GUI-land apps
+
+#  PDF Reader
+ev () ( /usr/bin/evince "$@" >/dev/null 2>&1 & )
+
+# LBRY AppImage
+lbry () {
+  local LBRY_Dir=~/opt/AppImages
+  # shellcheck disable=SC2206
+  local LBRY_App=(${LBRY_Dir}/LBRY_*.AppImage)
+
+  (( ${#LBRY_App[@]} > 1  )) && {
+      printf "  Error: Multiple LBRY apps found in :\n"
+      printf "\t%s\n" "${LBRY_App[@]}"
+      return 1
+  }
+
+  [[ ${LBRY_App[0]} == ${LBRY_Dir}/LBRY_/*.AppImage ]] && {
+      printf '  Error: LBRY app not found in %s\n' "$LBRY_Dir"
+      return 1
+  }
+
+  ( ${LBRY_App[0]} >/dev/null 2>&1 & )
+}
+
+# Firefox Browser
+ff () {
+  if digpath -q firefox
+  then
+      ( firefox "$@" >&- 2>&- & )
+  else
+      printf 'firefox not found\n' >&2
+  fi
+}
+
+# LibreOffice
+lo () ( /usr/bin/libreoffice & )
+low () ( /usr/bin/libreoffice --writer "$@" & )
+
+## For non-Systemd systems - supply phony hostnamectl command
+
+if ! digpath -q hostnamectl
+then
+    function hostnamectl { hostname; }
+fi
+
+## Software development related functions
+
+#  Setup JDK on Arch
+archJDK () {
+  local version="$1"
+  local jdir
+  local jver
+
+  if [[ -z $version ]]
+  then
+      printf "\nAvailable Java Versions:"
+      for jdir in /usr/lib/jvm/java-*-openjdk
+      do
+          jver=${jdir%-*}
+          jver=${jver#*-}
+          printf ' %s' "$jver"
+      done
+      printf '\n'
+      return 0
+  fi
+
+  if [[ ! $version == @([1-9])*([0-9]) ]]
+  then
+      printf 'Malformed JDK version number: "%s"\n' "$version" >&2
+      return 1
+  fi
+
+  if [[ -d /usr/lib/jvm/java-${version}-openjdk ]]
+  then
+      export JAVA_HOME=/usr/lib/jvm/java-${version}-openjdk
+      if [[ $PATH == /usr/lib/jvm/java-@([1-9])*([0-9])-openjdk/bin:* ]]
+      then
+          PATH=${PATH#[^:]*:}
+      fi
+      PATH=$JAVA_HOME/bin:$PATH
+      return 0
+  else
+      printf '\nNo JDK found for Java version %s in the\n' "$version" >&2
+      printf 'standard location on Arch Linux: /usr/lib/jvm/\n' >&2
+      return 1
+  fi
+}
+
+### Make sure an initial shell environment is well defined.
+
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
 ((_ENV_INITIALIZED < 1)) && {
     _ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
@@ -89,8 +364,7 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     PATH="$(pathtrim)"
 }
 
-## Aliases
-# Remove any "helpful" aliases
+### Aliases remove "helpful" aliases
 unalias rm 2>&-
 unalias ls 2>&-
 unalias grep 2>&-
@@ -109,20 +383,19 @@ alias l.='ls -dA .*'
 alias pst='ps -ejH'
 alias nv=nvim
 
-# Website scrapping
-#   Pull down a subset of a website
+# Website scrapping - pull down a subset of a website
 alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
-#   Pull down more -- Not good for large websites
+# Pull down more -- Not good for large websites
 alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
-## SSH related functions, variables and aliases
-#    Restart SSH key-agent and add your private
-#    key, which is located here: ~/.ssh/id_rsa
+## SSH related variables and aliases
+# Restart SSH key-agent and add your private
+# key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
-#    Make sure git asks for passwords on the command line
+# Make sure git asks for passwords on the command line
 unset SSH_ASKPASS
 
-## Setup behaviors - make BASH more Korn Shell like
+### Setup behaviors - make BASH more Korn Shell like
 set -o pipefail  # Return right most nonzero error, otherwise 0
 shopt -s extglob
 shopt -s checkwinsize
@@ -135,15 +408,15 @@ HISTSIZE=5000
 HISTFILESIZE=5000
 HISTCONTROL=ignoredups
 
-## Prompt and window construction
-# Adjust hostname - change cattle names to pet names
+### Prompt and window construction
+## Adjust hostname - change cattle names to pet names
 MyHostName=$(hostnamectl hostname); MyHostName=${MyHostName%%.*}
 case $MyHostName in
   rvsllschellerg2) MyHostName=voltron ;;
       SpaceCAMP31) MyHostName=sc31    ;;
 esac
 
-# Terminal window title prompt string
+## Terminal window title prompt string
 case $TERM in
   xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
       TERM_TITLE=$'\e]0;'"$(id -un)@${MyHostName}"$'\007' ;;
@@ -153,18 +426,20 @@ esac
 
 unset MyHostName
 
-# Setup up 3 line prompt
+## Setup up 3 line prompt
 PS1="\n[\s: \w]\n\$ ${TERM_TITLE}"
 PS2='> '
 PS3='#? '
 PS4='++ '
 
-## Configure Haskell Stack completion
+### Configure Haskell Stack completion
+
 if digpath -q stack
 then
     # Bash completion for stack (Haskell)
     eval "$(stack --bash-completion-script stack)"
 fi
 
-## Python Pyenv function configuration
+### Python Pyenv function configuration
+
 test -d "$PYENV_ROOT" && eval "$(pyenv init -)"
