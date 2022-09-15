@@ -62,10 +62,7 @@ return packer.startup(
       use { 'norcalli/nvim-colorizer.lua' } -- Colorize names & hexcodes
       use { 'folke/tokyonight.nvim' }
       use { 'nvim-lualine/lualine.nvim',
-         requires = {
-            'kyazdani42/nvim-web-devicons',
-            opt = true
-         }
+         requires = { 'kyazdani42/nvim-web-devicons' }
       }
       use { 'folke/zen-mode.nvim',
          requires = { 'folke/twilight.nvim' }
