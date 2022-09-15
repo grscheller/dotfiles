@@ -10,23 +10,6 @@ else
    print('Problem loading colorizer: ' .. colorizer)
 end
 
--- Setup & tweak Tokyo Night colorscheme
-if pcall(require, 'tokyonight') then
-   vim.g.tokyonight_style = 'night'
-   vim.g.tokyonight_colors = {
-      bg_dark = '#000000',
-      bg = '#080309',
-      bg_highlight = '#12141d',
-      comment = '#818ecd',
-      cyan = '#0cb4c0'
-   }
-   vim.g.tokyonight_italic_functions = true
-   vim.g.tokyonight_italic_keywords = false
-   vim.cmd [[colorscheme tokyonight]]
-else
-   vim.cmd [[colorscheme darkblue]]
-end
-
 -- Setup WebDevicons
    -- Needs a patched font like Noto Mono Nerd Font
    -- see https://github.com/ryanoasis/nerd-fonts
@@ -108,4 +91,28 @@ if ok then
    vim.keymap.set('n', 'zZ', '<Cmd>ZenMode<CR>', {desc = 'zen-mode toggle'})
 else
    print('Problem loading zen-mode: ' .. zen)
+end
+
+-- Setup & tweak TokyoNight colorscheme
+--
+-- Consifering to wqitch to rebelot/kanagawa.nvim
+--   A colorschemen inspired by TokyoNight, gruvbox, and
+--   the painting by Kanagawa
+--
+--   Mainly because it provides a mechanism to override fefaults
+if pcall(require, 'tokyonight') then
+   vim.g.tokyonight_style = 'night'
+   vim.g.tokyonight_colors = {
+      bg_dark = '#000000',
+      -- bg = '#080309',
+      bg = '#000000',
+      bg_highlight = '#12141d',
+      comment = '#818ecd',
+      cyan = '#0cb4c0'
+   }
+   vim.g.tokyonight_italic_functions = true
+   vim.g.tokyonight_italic_keywords = false
+   vim.cmd [[colorscheme tokyonight]]
+else
+   vim.cmd [[colorscheme darkblue]]
 end
