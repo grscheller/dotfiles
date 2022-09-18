@@ -23,10 +23,9 @@ set $menu wofi
 # The dotfilesInstall script swaps in a Sway background image
 #   ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
 # if present to the output cmd below.  See dotfilesInstall for
-# details where I obtained picture I've to which I've tweaked
-# the configuration.
+# details of where I obtained the picture.
 #
-output * bg #400535 solid_color
+output * bg #1F1F28 solid_color
 #
 # Example configuration:
 #
@@ -216,12 +215,14 @@ bindsym $mod+r mode "resize"
 #
 # Gaps & Borders
 #
-gaps inner 3
+gaps inner 4
 gaps outer 4
 gaps top 1
 gaps bottom 2
 smart_gaps on
 default_border pixel 3
+client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
+client.focused_inactive "#727169" "#727169" "#c8c093" "#727169" "#727169"
 
 ### Status Bar:
 #

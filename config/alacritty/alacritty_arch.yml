@@ -170,7 +170,7 @@ font:
     style: Bold Italic
 
   # Point size
-  size: 14.0
+  size: 13.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -202,16 +202,14 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
-# Colors (Tokyo Night)
+# Colors
 schemes:
-  # Tokyo Night theme,
-  # modified background & cyan, otherwise based
-  # on folke/tokyonight.nvim color palette.
+  # Tokyo Night Theme - kept here for reference
   tokyo-night: &tokyo-night
     # Default colors
     primary:
       #background: '#1a1b26'
-      background: '#000000'
+      background: '#000000'  # So background wallpaper dims
       foreground: '#c0caf5'
 
     # Cursor colors
@@ -250,7 +248,55 @@ schemes:
       - { index: 16, color: '#ff9e64' }
       - { index: 17, color: '#db4b4b' }
 
-colors: *tokyo-night
+  # Kanagawa Theme - currently used & coordinated with Waybar
+  kanagawa: &kanagawa
+    # Default colors
+    primary:
+      #background: '#1f1f28'
+      background: '#000000'  # So background wallpaper dims
+      foreground: '#9cd7ba'
+
+    # Cursor colors
+    cursor:
+      text: CellBackground
+      cursor: CellForeground
+
+    # Vi mode cursor colors
+    vi_mode_cursor:
+      text: CellBackground
+      cursor: CellForeground
+
+    selection:
+      background: '#2d4f67'
+      foreground: '#c8c093'
+
+    # Normal colors
+    normal:
+      black:   '#090618'
+      red:     '#c34043'
+      green:   '#76946a'
+      yellow:  '#c0a36e'
+      blue:    '#7e9cd8'
+      magenta: '#957fb8'
+      cyan:    '#6a9589'
+      white:   '#c8c093'
+
+    # Bright colors
+    bright:
+      black:   '#727169'
+      red:     '#e82424'
+      green:   '#98bb6c'
+      yellow:  '#e6c384'
+      blue:    '#7fb4ca'
+      magenta: '#938aa9'
+      cyan:    '#7aa89f'  # more azure than cyan
+      white:   '#dcd7ba'
+
+    indexed_colors:
+      - { index: 16, color: '#2d4f67' }
+      - { index: 17, color: '#c8c093' }
+
+colors: *kanagawa
 
 # Bell
 #

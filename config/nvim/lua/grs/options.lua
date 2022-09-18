@@ -43,7 +43,7 @@ local options = {
    showmode = false, -- redundant with Lualine
    showcmd = false, -- redundant with WhichKey
    completeopt = 'menuone,noinsert,noselect', -- for nvim-cmp
-   termguicolors = true, -- for Tokyo Night, and most other, colorschemes
+   termguicolors = true, -- enable 24-bit RGB color on ISO-8613-3 compaible terminals
    complete = '.,w,b,u,kspell', -- no "t,i" for ins-completion-menu - redundant with LSP
    shortmess = 'atToOc' -- shorten statusline,
    -- don't give ins-completion-menu messages,

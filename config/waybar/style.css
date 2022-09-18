@@ -5,14 +5,14 @@
      * from https://www.nerdfonts.com/font-downloads
      */
     font-family: "Roboto Mono Bold Nerd Font Complete Mono", Roboto, Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     min-height: 0;
 }
 
 window#waybar {
-    background-color: rgba(30, 17, 38, 1.0);
-    border-bottom: 3px solid rgba(41, 128, 185, 0.5);
-    color: #DDCCDD;
+    background-color: #1F1F28;
+    border-bottom: 3px solid #727169;
+    color: #C8C093;
     transition-property: background-color;
     transition-duration: .5s;
     border-radius: 0;
@@ -25,28 +25,23 @@ window#waybar.hidden {
 #workspaces button {
     padding: 0.2em 0.4em;
     background-color: transparent;
-    color: #DDCCDD;
+    color: #C8C093;
     /* Use box-shadow instead of border so the text isn't offset */
     box-shadow: inset 0 -3px transparent;
 }
 
 #workspaces button:hover {
-    background: rgba(150, 86, 188, 0.5);
-    box-shadow: inset 0 -3px rgba(41, 128, 185, 1.0);
+    background: #3F4E6C;
+    box-shadow: inset 0 -3px #5F75A2;
 }
 
 #workspaces button.focused {
-    background-color: rgba(150, 86, 188, 0.5);
-    box-shadow: inset 0 -3px rgba(150, 86, 188, 1.0);
+    background-color: #3F4E6C;
+    box-shadow: inset 0 -3px #7e9cd8;
 }
 
 #workspaces button.urgent {
     background-color: #EB4D4B;
-}
-
-#mode {
-    background-color: #64727D;
-    border-bottom: 3px solid #DDCCDD;
 }
 
 #clock,
@@ -65,8 +60,8 @@ window#waybar.hidden {
 #mpd {
     padding: 0 10px;
     margin: 6px 3px;
-    color: #DDCCDD;
-    background-color: rgba(150, 86, 188, 0.5);
+    color: #C8C093;
+    background-color: #3F4E6C;
 }
 
 #window,
@@ -141,7 +136,7 @@ label:focus {
 }
 
 #tray {
-    background-color: rgba(41, 128, 185, 1.0);
+    background-color: rgba(149, 127, 184, 0.5);
 }
 
 #tray > .passive {

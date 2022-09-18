@@ -20,13 +20,13 @@ else
    print('Problem loading nvim-web-devicons: %s', webDevicons)
 end
 
--- Setup Lualine with Tokyo Night theme
+-- Setup Lualine using Kanagawa theme
 ok, lualine = pcall(require, 'lualine')
 if ok then
    lualine.setup {
       options = {
          icons_enabled = true,
-         theme = 'tokyonight',
+         theme = 'kanagawa',
          component_separators = { left = ' ', right = ' ' },
          section_separators = { left = ' ', right = ' ' },
          disabled_filetypes = {},
@@ -93,26 +93,13 @@ else
    print('Problem loading zen-mode: ' .. zen)
 end
 
--- Setup & tweak TokyoNight colorscheme
+-- Setup Kanagawa colorscheme
 --
--- Consifering to wqitch to rebelot/kanagawa.nvim
---   A colorschemen inspired by TokyoNight, gruvbox, and
---   the painting by Kanagawa
+--   A colorschemen inspired by TokyoNight,
+--   Gruvbox, and the painting by Kanagawa.
 --
---   Mainly because it provides a mechanism to override fefaults
-if pcall(require, 'tokyonight') then
-   vim.g.tokyonight_style = 'night'
-   vim.g.tokyonight_colors = {
-      bg_dark = '#000000',
-      -- bg = '#080309',
-      bg = '#000000',
-      bg_highlight = '#12141d',
-      comment = '#818ecd',
-      cyan = '#0cb4c0'
-   }
-   vim.g.tokyonight_italic_functions = true
-   vim.g.tokyonight_italic_keywords = false
-   vim.cmd [[colorscheme tokyonight]]
+if pcall(require, 'kanagawa') then
+   vim.cmd [[colorscheme kanagawa]]
 else
    vim.cmd [[colorscheme darkblue]]
 end
