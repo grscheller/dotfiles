@@ -241,14 +241,14 @@ schemes:
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#ff007c'
-      cyan:    '#7dcfff'  # more azure than cyan
+      cyan:    '#7dcfff'
       white:   '#c0caf5'
 
     indexed_colors:
       - { index: 16, color: '#ff9e64' }
       - { index: 17, color: '#db4b4b' }
 
-  # Kanagawa Theme - currently used & coordinated with Waybar
+  # Kanagawa Theme - currently used & coordinated with Waybar;s config
   kanagawa: &kanagawa
     # Default colors
     primary:
@@ -267,7 +267,7 @@ schemes:
       cursor: CellForeground
 
     selection:
-      background: '#2d4f67'
+      background: '#33467c'  # rebelot uses #2d4f67
       foreground: '#c8c093'
 
     # Normal colors
@@ -289,7 +289,7 @@ schemes:
       yellow:  '#e6c384'
       blue:    '#7fb4ca'
       magenta: '#938aa9'
-      cyan:    '#7aa89f'  # more azure than cyan
+      cyan:    '#7aa89f'
       white:   '#dcd7ba'
 
     indexed_colors:

@@ -1,21 +1,21 @@
-## Setup Tokyo Night based colors for fish to use
+## Setup Kanagawa based colorscheme for fish
 
 # Examples: https://github.com/dmi3/fish/blob/master/colors.fish
 #           https://github.com/fish-shell/fish-shell/issues/3443
 
-if not set -q tokyo_night_colors_set
+if not set -q kanagawa_colors_set
 
-    # TokyoNight based colors consistent with my alacritty configuration
-    set -l foreground c0caf5  #c0caf5  bright white
+    # Kanagawa inspired color pallet
+    set -l foreground c0caf5  #9cd7ba
     set -l selection 33467c   #33467c
     set -l comment 818ecd     #818ecd
-    set -l red f7768e         #f7768e  red
-    set -l orange ff9e64      #ff9e64  index color 16
-    set -l yellow e0af68      #e0af68  yellow
-    set -l green 9ece6a       #9ece6a  green
-    set -l purple bb9af7      #bb9af7  magenta
-    set -l blue 7dcfff        #7aa2f7
-    set -l cyan 0cb4c0        #0cb4c0  my cyan
+    set -l red f7768e         #c34043
+    set -l orange ff9e64      #ff9e64
+    set -l yellow e0af68      #c0a36e
+    set -l green 9ece6a       #76946a
+    set -l purple bb9af7      #957fb8
+    set -l blue 7dcfff        #7e9cd8
+    set -l cyan 0cb4c0        #0cb4c0
 
     # Syntax highlighting colors
     set -U fish_color_autosuggestion $comment
@@ -49,5 +49,5 @@ if not set -q tokyo_night_colors_set
     set -U fish_pager_color_progress $comment
     set -U fish_pager_color_selected_background -r
 
-    set -U tokyo_night_colors_set
+    set -U kanagawa_colors_set
 end
