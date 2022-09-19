@@ -200,7 +200,7 @@ Picture="${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg"
 if [ -f "$Picture" ]
 then
     mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
-    sed -e "s|^\(    output \* bg \).* solid_color$|\1$Picture fill|" \
+    sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
         "${XDG_CONFIG_HOME}"/sway/config_orig > \
         "${XDG_CONFIG_HOME}"/sway/config
     rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
