@@ -1,6 +1,6 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local ok, colorizer, webDevicons, lualine, twilight, zen
+local ok, colorizer, webDevicons, lualine, twilight, zen, kanagawa
 
 -- Colorize color names, hexcodes, and other color formats
 ok, colorizer = pcall(require, 'colorizer')
@@ -98,7 +98,10 @@ end
 --   A colorschemen inspired by TokyoNight,
 --   Gruvbox, and the painting by Kanagawa.
 --
-if pcall(require, 'kanagawa') then
+ok, kanagawa = pcall(require, 'kanagawa')
+if ok then
+   local my_colors = { bg = '#090618' }
+   kanagawa.setup({ colors = my_colors })
    vim.cmd [[colorscheme kanagawa]]
 else
    vim.cmd [[colorscheme darkblue]]
