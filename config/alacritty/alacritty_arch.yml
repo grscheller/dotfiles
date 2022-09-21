@@ -254,7 +254,6 @@ schemes:
     # Default colors
     primary:
       #background: '#1f1f28'
-      #background: '#000000'  # So background wallpaper just dims
       background: '#090618'
       foreground: '#9cd7ba'
 
@@ -269,7 +268,7 @@ schemes:
       cursor: CellForeground
 
     selection:
-      background: '#33467c'  # rebelot uses #2d4f67
+      background: '#33467c'
       foreground: '#c8c093'
 
     # Normal colors
@@ -295,8 +294,8 @@ schemes:
       white:   '#dcd7ba'
 
     indexed_colors:
-      - { index: 16, color: '#2d4f67' }
-      - { index: 17, color: '#c8c093' }
+      - { index: 16, color: '#ffa066' }
+      - { index: 17, color: '#ff5d62' }
 
 colors: *kanagawa
 

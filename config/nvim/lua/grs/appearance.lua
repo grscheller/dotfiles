@@ -100,7 +100,9 @@ end
 --
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
-   local my_colors = { bg = '#090618' }
+   local my_colors = {
+      bg = '#090618'
+   }
    kanagawa.setup({ colors = my_colors })
    vim.cmd [[colorscheme kanagawa]]
 else
