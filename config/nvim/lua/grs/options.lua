@@ -2,7 +2,7 @@
 
 local options = {
    -- POSIX compatible shells are needed by some plugins
-   shell = '/bin/bash',
+   shell = '/bin/sh',
 
    -- Set default fileencoding, localizations, and file formats
    fileencoding = 'utf-8',
@@ -34,10 +34,9 @@ local options = {
    scrolloff = 1, -- try to keep cursor off of top/bottom line of window
    sidescrolloff = 4, -- try to keep cursor away from side of window
    sidescroll = 1, -- horizontally scroll one character at a time
-   laststatus = 3, -- if lualine fails to load; single shared status line at bottom
 
    -- Settings affecting LSP clients & plugins
-   timeoutlen = 1000, -- milliseconds to wait for key mapped sequence to complete
+   timeoutlen = 1500, -- milliseconds to wait for key mapped sequence to complete
    updatetime = 300, -- set update time for CursorHold event
    signcolumn = 'yes', -- fixes first column, reduces jitter
    showmode = false, -- redundant with Lualine
