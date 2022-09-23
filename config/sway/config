@@ -74,9 +74,9 @@ exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 # Gaps & Borders
 #
 gaps inner 4
-gaps outer 4
-gaps top 4
-gaps bottom 4
+gaps outer 1
+gaps top 3
+gaps bottom 3
 smart_gaps on
 default_border pixel 3
 client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"

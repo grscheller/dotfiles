@@ -196,7 +196,7 @@ mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml "${XDG_CONFIG_HOME}"/alacri
 # Swap in a Sway background image if present
 # Picture obtained from here:
 #   https://www.facebook.com/alittleofmeinyou/photos/325964185818238
-Picture="${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg"
+Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
 if [ -f "$Picture" ]
 then
     mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
