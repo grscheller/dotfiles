@@ -32,7 +32,7 @@ set $menu wofi
 #   ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
 # if present to the output cmd below.  See dotfilesInstall for
 # details of where I obtained the picture.
-output * bg #1f1f28 solid_color
+output * bg #33467c solid_color
 
 ### Idle configuration
 
@@ -67,20 +67,21 @@ input "type:keyboard" xkb_options caps:escape
 ### Polkit Daemon
 
 # Allows apps requiring permissions to ask "mother may I?":
-exec_always /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-### Gaps & Boarders
+### Gaps & Borders
 #
 # Gaps & Borders
 #
 gaps inner 4
-gaps outer 1
-gaps top 3
-gaps bottom 3
+gaps outer 2
+default_border pixel 2
+smart_borders on
 smart_gaps on
-default_border pixel 3
+default_floating_border pixel 2
 client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
-client.focused_inactive "#727169" "#727169" "#c8c093" "#727169" "#727169"
+client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
+client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
 ### Status Bar:
 #
