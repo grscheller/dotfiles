@@ -255,8 +255,8 @@ schemes:
     primary:
       #background: '#1f1f28'
       background: '#090618'
-      foreground: '#9cd7ba'
-
+      foreground: '#c8c093'
+ 
     # Cursor colors
     cursor:
       text: CellBackground
@@ -269,7 +269,7 @@ schemes:
 
     selection:
       background: '#33467c'
-      foreground: '#c8c093'
+      foreground: '#dcd7ba'
 
     # Normal colors
     normal:
@@ -294,7 +294,7 @@ schemes:
       white:   '#dcd7ba'
 
     indexed_colors:
-      - { index: 16, color: '#ffa066' }
+      - { index: 16, color: '#ff9e64' }
       - { index: 17, color: '#ff5d62' }
 
 colors: *kanagawa
