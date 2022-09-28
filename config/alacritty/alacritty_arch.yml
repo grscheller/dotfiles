@@ -68,8 +68,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  #opacity: 0.6
-  opacity: 0.9
+  opacity: 0.85
 
   # Startup Mode (changes require restart)
   #
@@ -205,7 +204,7 @@ draw_bold_text_with_bright_colors: true
 
 # Colors
 schemes:
-  # Tokyo Night Theme - kept here for reference
+  # Tokyo Night Theme - Past theme, kept here for reference.
   tokyo-night: &tokyo-night
     # Default colors
     primary:
@@ -249,12 +248,14 @@ schemes:
       - { index: 16, color: '#ff9e64' }
       - { index: 17, color: '#db4b4b' }
 
-  # Kanagawa Theme - currently used & coordinated with Waybar;s config
+  # Kanagawa Theme - Currently used & coordinated with Waybar config,
+  #                  very similar to my Neovim choices.
   kanagawa: &kanagawa
     # Default colors
     primary:
-      #background: '#1f1f28'
-      background: '#090618'
+      #background: '#1f1f28'  # Theme default
+      #background: '#090618'  # Used wheb I set opacity = 1.0
+      background: '#000000'  # So background wallpaper just dims
       foreground: '#a0b1d6'
  
     # Cursor colors
