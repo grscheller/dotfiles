@@ -18,6 +18,9 @@ if not set -q kanagawa_colors_set
     set -l cyan 6a9589        #6a9589
     set -l pink d27e99        #d27e99
 
+    # Personnal colors
+    set -U grs_color_cyan cyan    #0cb4c0
+
     # Syntax highlightin  colors
     set -U fish_color_autosuggestion $comment
     set -U fish_color_cancel -r
