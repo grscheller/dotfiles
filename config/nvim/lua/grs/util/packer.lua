@@ -69,8 +69,7 @@ return packer.startup(
       }
 
       -- Install language modules for built-in treesitter
-      use {
-         'nvim-treesitter/nvim-treesitter',
+      use { 'nvim-treesitter/nvim-treesitter',
          run = ':TSUpdateSync'
       }
 
@@ -78,16 +77,16 @@ return packer.startup(
       use { 'nvim-telescope/telescope.nvim' }
       use { 'nvim-telescope/telescope-ui-select.nvim' }
       use { 'nvim-telescope/telescope-file-browser.nvim' }
-      use {
-         'nvim-telescope/telescope-fzf-native.nvim',
+      use { 'nvim-telescope/telescope-fzf-native.nvim',
          run = 'make'
       }
-      use {
-         'nvim-telescope/telescope-frecency.nvim',
+      use { 'nvim-telescope/telescope-frecency.nvim',
          requires = { 'kkharji/sqlite.lua' }
       }
 
       -- Completion & snippet support
+      use { 'L3MON4D3/LuaSnip' }
+      use { 'rafamadriz/friendly-snippets' }
       use { 'hrsh7th/nvim-cmp',
          requires = {
             'hrsh7th/cmp-buffer',
@@ -96,13 +95,7 @@ return packer.startup(
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-path',
-            'lukas-reineke/cmp-rg', {
-               'saadparwaiz1/cmp_luasnip',
-               requires = {
-                  'L3MON4D3/LuaSnip',
-                  'rafamadriz/friendly-snippets'
-               }
-            }
+            'lukas-reineke/cmp-rg'
          }
       }
 

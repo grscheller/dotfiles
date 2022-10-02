@@ -77,12 +77,11 @@ cmp.setup {
          { name = 'buffer' },
          { name = 'rg',
            keyword_length = 3,
-           max_item_count = 5,
+           max_item_count = 8,
            option = {
               additional_arguments = '--smart-case --hidden'
-           },
-         },
-         { name = 'luasnip' }
+           }
+         }
       }
    )
 }
