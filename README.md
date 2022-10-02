@@ -50,3 +50,5 @@ This work is published from:
 
 * To the best of my knowledge, there is nothing patentable in this repo
 * I have no intention to attempt to patent anything from this repo
+* I do not support software being patentable
+* I do support software being copyrightable
