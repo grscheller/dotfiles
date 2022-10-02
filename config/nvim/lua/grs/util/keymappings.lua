@@ -76,6 +76,11 @@ vim.keymap.set('n', '<C-l>', 'z4l', {desc = 'move view right 4 columns'})
 vim.keymap.set('x', '<', '<gv', {desc = 'shift left & reselect'})
 vim.keymap.set('x', '>', '>gv', {desc = 'shift right & reselect'})
 
+-- Copy & paste to & from system clipboard
+vim.keymap.set({'n', 'x'}, 'cy', '"+y', {desc = 'yank to system clipboard'})
+vim.keymap.set({'n', 'x'}, 'cp', '"+p', {desc = 'paste from system clipboard'})
+vim.keymap.set('x', 'cx', '"+ygvdi', {desc = 'cut to system clipboard'})
+
 -- Misc keymappings
 vim.keymap.set('n', 'z ', '<Cmd>set invspell<CR>', {desc = 'toggle spelling'})
 vim.keymap.set('n', '  ', '<Cmd>nohlsearch<Bar>diffupdate<CR>', {desc = 'clear hlsearch'})
@@ -140,7 +145,7 @@ function M.lsp_kb(client, bufnr)
    vim.keymap.set('n', 'zlh', vim.lsp.codelens.refresh, {desc = 'code lens refresh', buffer = bufnr})
    vim.keymap.set('n', 'zlr', vim.lsp.codelens.run, {desc = 'code lens run', buffer = bufnr})
    vim.keymap.set('n', 'zd', vim.diagnostic.setloclist, {desc = 'buffer diagnostics', buffer = bufnr})
-   vim.keymap.set('n', 'zFf', vim.lsp.buf.formatting, {desc = 'lsp format', buffer = bufnr})
+   vim.keymap.set('n', 'zFf', vim.lsp.buf.format, {desc = 'lsp format', buffer = bufnr})
    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'goto definition', buffer = bufnr})
    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {desc = 'goto declaration', buffer = bufnr})
    vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, {desc = 'goto implementation', buffer = bufnr})

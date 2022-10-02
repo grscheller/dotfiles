@@ -1,12 +1,12 @@
 # dotfiles
 
-## Repo's purposes
+## Repo's purposes is to
 
-1. To maintain my own configuration files
-2. To preserve this information for myself
-3. To help quickly configure new systems for myself
-4. To provide others useful examples for their own configuration files
-5. To allow others to use as a starting point for their own versions
+1. maintain my own configuration files
+2. preserve this information for myself
+3. help quickly configure new systems for myself
+4. provide others useful examples for their own configuration files
+5. allow others to use as a starting point for their own versions
 
 ## Installation Scripts
 
@@ -18,7 +18,7 @@ Installs into home directory
        $ ./dotfilesInstall
     ```
 
-Installs into system directories:
+Installs into system directories (Arch Linux Only):
 
 * [systemfilesInstall](systemfilesInstall)
   * From cloned repo run
@@ -45,3 +45,8 @@ This work is published from:
       content="US" about="https://github.com/grscheller">
   United States</span>.
 </p>
+
+### Patent Information
+
+* To the best of my knowledge, there is nothing patentable in this repo
+* I have no intention to attempt to patent anything from this repo
