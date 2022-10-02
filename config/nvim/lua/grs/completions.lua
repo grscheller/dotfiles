@@ -1,6 +1,6 @@
 --[[ Completions using nvim-cmp and luasnip ]]
 
-local ok, cmp, luasnip
+local ok, cmp, ls
 
 ok, cmp = pcall(require, 'cmp')
 if not ok or not cmp then
@@ -8,15 +8,17 @@ if not ok or not cmp then
    return
 end
 
-ok, luasnip = pcall(require, 'luasnip')
+ok, ls = pcall(require, 'luasnip')
 if not ok then
-   print('Problem loading luasnip: %s', luasnip)
+   print('Problem loading luasnip: %s', ls)
    return
 end
 
--- Have Luasnip lazy load snippets
-require('luasnip.loaders.from_vscode').lazy_load()
+-- Configure luasnip 
+ls.snippets = {}
+require('luasnip.loaders.from_vscode').lazy_load()  -- lazy load vscode format snippets
 
+-- Configure nvim-cmp
 local function hasWordsBefore()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -25,7 +27,7 @@ end
 cmp.setup {
    snippet = {
       expand = function(args)
-         luasnip.lsp_expand(args.body)
+         ls.lsp_expand(args.body)
       end
    },
 
@@ -49,8 +51,8 @@ cmp.setup {
       ['<Tab>'] = function(fallback)
          if cmp.visible() then
             cmp.select_next_item()
-         elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
+         elseif ls.expand_or_jumpable() then
+            ls.expand_or_jump()
          elseif hasWordsBefore() then
             cmp.complete()
          else
@@ -60,8 +62,8 @@ cmp.setup {
       ['<S-Tab>'] = function(fallback)
          if cmp.visible() then
             cmp.select_prev_item()
-         elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
+         elseif ls.jumpable(-1) then
+            ls.jump(-1)
          else
             fallback()
          end
