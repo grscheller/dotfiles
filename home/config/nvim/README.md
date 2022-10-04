@@ -1,7 +1,7 @@
 # Neovim Lua Based Configuration Files
 
 This directory contains the infrastructure I use to manage
-my Neovim (0.7.2+) configuration.
+my Neovim (0.8.0+) configuration.
 
 ## Guidelines
 
