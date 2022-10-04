@@ -3,6 +3,9 @@
 
 local ok, comment
 
+--[[ Set some text editing related keybindings ]]
+require('grs.util.keybindings').textedit_kb()
+
 --[[ Configure justtinmk/vim-sneak plugin ]]
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 

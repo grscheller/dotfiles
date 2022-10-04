@@ -22,4 +22,4 @@ telescope.load_extension('frecency')
 telescope.load_extension('fzf')
 
 -- Set Telescope key mappings/bindings
-require('grs.util.keymappings').telescope_keybindings()
+require('grs.util.keybindings').telescope_kb()

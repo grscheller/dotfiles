@@ -62,14 +62,14 @@ local lsp_servers = {
 }
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
-local keymappings = require('grs.util.keymappings')
+local keybindings = require('grs.util.keybindings')
 
 nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
    lspconfig[lsp_server].setup {
       capabilities = capabilities,
-      on_attach = keymappings.lsp_kb
+      on_attach = keybindings.lsp_kb
    }
 end
 
@@ -81,7 +81,7 @@ vim.api.nvim_command [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expan
 -- lua-language-server configuration for editing Neovim configs
 lspconfig['sumneko_lua'].setup {
    capabilities = capabilities,
-   on_attach = keymappings.lsp_kb,
+   on_attach = keybindings.lsp_kb,
    settings = {
       Lua = {
          runtime = { version = 'LuaJIT' },
@@ -101,8 +101,8 @@ vim.api.nvim_command [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 e
 lspconfig['hls'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
-      keymappings.lsp_kb(client, bufnr)
-      keymappings.haskell_kb(bufnr)
+      keybindings.lsp_kb(client, bufnr)
+      keybindings.haskell_kb(bufnr)
    end
 }
 
@@ -130,9 +130,9 @@ if ok then
       server = {
          capabilities = capabilities,
          on_attach = function(client, bufnr)
-            keymappings.lsp_kb(client, bufnr)
+            keybindings.lsp_kb(client, bufnr)
             if ok_dap then
-               keymappings.dap_kb(bufnr)
+               keybindings.dap_kb(bufnr)
             end
          end,
          standalone = true,
@@ -163,8 +163,8 @@ if ok then
    metals_config.init_options.statusBarProvider = 'on'
 
    function metals_config.on_attach(client, bufnr)
-      keymappings.lsp_kb(client, bufnr)
-      keymappings.sm_kb(bufnr)
+      keybindings.lsp_kb(client, bufnr)
+      keybindings.sm_kb(bufnr)
       if ok_dap then
          dap.configurations.scala = {
             {
@@ -186,7 +186,7 @@ if ok then
             }
          }
          metals.setup_dap()
-         keymappings.dap_kb(bufnr)
+         keybindings.dap_kb(bufnr)
       end
    end
 

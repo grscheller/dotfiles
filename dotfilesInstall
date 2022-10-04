@@ -87,14 +87,14 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/appearance.lua
+   nvim/lua/grs/theming.lua
    nvim/lua/grs/commands.lua
    nvim/lua/grs/completions.lua
    nvim/lua/grs/devel_environment.lua
    nvim/lua/grs/options.lua
    nvim/lua/grs/telescope.lua
    nvim/lua/grs/textedit.lua
-   nvim/lua/grs/util/keymappings.lua
+   nvim/lua/grs/util/keybindings.lua
    nvim/lua/grs/util/packer.lua
    sway/config
    waybar/config
@@ -105,6 +105,8 @@ CONFIG_FILES='
 RM_ITEMS="
    ${HOME}/.gitconfig
    ${HOME}/.bashrc_functions
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/appearance.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keymappings.lua
 "
 
 ### functions
