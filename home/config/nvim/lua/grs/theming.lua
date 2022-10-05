@@ -20,37 +20,22 @@ else
    print('Problem loading nvim-web-devicons: %s', webDevicons)
 end
 
--- Setup winbar
--- local function win_bar()
---    local buf_nr = '[%n]'
---    local right_align = '%='
---    local modified = '%-m '
---    local file_name = '%-.32t'
---    local file_type = ' %y '
--- 
---    return string.format('%s%s%s%s%s',
---       buf_nr,
---       right_align,
---       modified,
---       file_name,
---       file_type
---    )
--- end
---
--- vim.opt.winbar = win_bar()
-
 -- Setup Lualine using Kanagawa theme
 ok, lualine = pcall(require, 'lualine')
 if ok then
    lualine.setup {
       options = {
          icons_enabled = true,
-         theme = 'everforest',
+         theme = 'codedark',
          component_separators = {left = '', right = ''},
          section_separators = {left = '', right = ''},
          disabled_filetypes = {
-            statusline = {},
-            winbar = {}
+            statusline = {
+               'help'
+            },
+            winbar = {
+               'help'
+            }
          },
          ignore_focus = {},
          always_divide_middle = true,
@@ -64,17 +49,23 @@ if ok then
          lualine_y = {'location'},
          lualine_z = {'progress'}
       },
-      inactive_sections = {
-         kualine_a = {},
+      tabline = {},
+      winbar = {
+         lualine_a = {},
          lualine_b = {},
          lualine_c = {'filename'},
-         lualine_x = {'progress'},
+         lualine_x = {'branch'},
          lualine_y = {},
          lualine_z = {}
       },
-      tabline = {},
-      winbar = {},
-      inactive_winbar = {},
+      inactive_winbar = {
+         lualine_a = {},
+         lualine_b = {},
+         lualine_c = {'filename'},
+         lualine_x = {'branch'},
+         lualine_y = {},
+         lualine_z = {}
+      },
       extensions = {}
    }
 else
