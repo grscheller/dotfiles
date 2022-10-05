@@ -296,10 +296,10 @@ archJDK () {
 export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
 ((_ENV_INITIALIZED < 1)) && {
     _ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
-    
+
     ## Set locale so commandline tools & other programs default to unicode
     export LANG=en_US.utf8
-    
+
     ## Setup editors/pagers
     if digpath -q nvim
     then
@@ -316,13 +316,13 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
         export EDITOR=vi
         export VISUAL=vi
     fi
-    
+
     ## Construct the shell's PATH for all my different computers,
     ## non-existent and duplicate path elements dealt with at end.
-    
+
     # Save original PATH
     [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
-    
+
     # Ruby tool chain
     #   Mostly for the Ruby Markdown linter,
     #   to install linter: $ gem install mdl
@@ -330,36 +330,36 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     then
         eval PATH=~/.local/share/gem/ruby/*/bin:"$PATH"
     fi
-    
+
     # Location Rust Toolchain
     PATH=~/.cargo/bin:"$PATH"
-    
+
     # Haskell locations used by Cabal and Stack
     PATH=~/.cabal/bin:~/.local/bin:"$PATH"
-    
+
     # Utilities I want to overide everything
     PATH=~/opt/bin:"$PATH"
-    
+
     # If there is a ~/bin directory, put near end
     PATH="$PATH":~/bin
-    
+
     # Put relative directories at end of PATH, this is for projects
     # where the user takes up residence in the project's root directory.
     PATH="$PATH":bin:../bin:.
-    
+
     # Initial Python configuration
     export PIP_REQUIRE_VIRTUALENV=true
     export PYENV_ROOT=~/.pyenv
     PATH=$PYENV_ROOT/shims:"$PATH"
     export PYTHONPATH=lib:../lib
-    
+
     # Configure Java for Sway/Wayland on ARCH
     if uname -r | grep -q arch
     then
         archJDK 17
         export _JAVA_AWT_WM_NONREPARENTING=1
     fi
-    
+
     ## Clean up PATH
     PATH="$(pathtrim)"
 }
