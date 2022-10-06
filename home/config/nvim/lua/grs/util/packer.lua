@@ -53,13 +53,13 @@ return packer.startup(
       use { 'folke/which-key.nvim' }
 
       -- General purpose text editing plugins
-      use { 'numToStr/Comment.nvim' } -- comment out code - treesitter aware
-      use { 'justinmk/vim-sneak' } -- easy motion replacement
-      use { 'tpope/vim-surround' } -- surround text objects with matching symbols
-      use { 'tpope/vim-repeat' } -- enable supported plugins to use `.` to repeat
+      use { 'numToStr/Comment.nvim' }
+      use { 'justinmk/vim-sneak' }
+      use { 'tpope/vim-surround' }
+      use { 'tpope/vim-repeat' }
 
       -- Colorscheme, statusline & zen-mode
-      use { 'norcalli/nvim-colorizer.lua' } -- Colorize names & hexcodes
+      use { 'norcalli/nvim-colorizer.lua' }
       use { 'rebelot/kanagawa.nvim' }
       use { 'nvim-lualine/lualine.nvim',
          requires = { 'kyazdani42/nvim-web-devicons' }

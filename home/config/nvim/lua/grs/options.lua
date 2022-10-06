@@ -44,9 +44,7 @@ local options = {
    completeopt = 'menuone,noinsert,noselect', -- for nvim-cmp
    termguicolors = true, -- enable 24-bit RGB color on ISO-8613-3 compaible terminals
    complete = '.,w,b,u,kspell', -- no "t,i" for ins-completion-menu - redundant with LSP
-   shortmess = 'atToOc' -- shorten statusline,
-   -- don't give ins-completion-menu messages,
-   -- removed F for Scala Metals
+   shortmess = 'atToOc' -- shorten statusline - removed F for Scala Metals
 }
 
 for k, v in pairs(options) do

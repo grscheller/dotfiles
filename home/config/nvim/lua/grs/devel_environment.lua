@@ -46,18 +46,20 @@ end
 --[[ Nvim LSP Installer Configuration
 
      For lang server list see the 1st link
-     of https://github.com/neovim/nvim-lspconfig ]]
+     of https://github.com/neovim/nvim-lspconfig
+
+     Install via pacman or sudo npm i -g <language-server> ]]
 
 local lsp_servers = {
-   'bashls', -- bash-language-server (pacman or sudo npm i -g bash-language-server)
+   'bashls', -- bash lang server (pacman or npm)
    'clangd', -- C and C++ - both clang and gcc (pacman clang)
-   'cssls', -- vscode-css-language-servers (pacman + symlink name tweak)
+   'cssls', -- vscode-css-languageserver (pacman)
    'gopls', -- go language server (pacman gopls)
-   'html', -- vscode-html-language-server (pacman + symlink name tweak)
-   'jsonls', -- vscode-json-language-server (pacman + symlink name tweak)
+   'html', -- vscode-html-languageserver (pacman)
+   'jsonls', -- vscode-json-languageserver (pacman)
    'pyright', -- Pyright for Python (pacman or npm)
    'tsserver', -- typescript-language-server (pacman)
-   'yamlls', -- yaml-language-server (pacman yaml-language-server)
+   'yamlls', -- yaml-language-server (pacman)
    'zls' -- zig language server (packer ziglang/zig.vim)
 }
 
@@ -85,7 +87,7 @@ lspconfig['sumneko_lua'].setup {
    settings = {
       Lua = {
          runtime = { version = 'LuaJIT' },
-         diagnostics = { globals = {'vim'} },
+         diagnostics = { globals = { 'vim' } },
          workspace = { library = vim.api.nvim_get_runtime_file('', true) },
          telemetry = { enable = false }
       }
@@ -137,7 +139,10 @@ if ok then
          end,
          standalone = true,
          dap = {
-            adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path)
+            adapter = require('rust-tools.dap').get_codelldb_adapter(
+               codelldb_path,
+               liblldb_path
+            )
          }
       }
    }
@@ -190,9 +195,10 @@ if ok then
       end
    end
 
-   local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', {
-      clear = true
-   })
+   local scala_metals_group = vim.api.nvim_create_augroup(
+      'scala-metals',
+      { clear = true }
+   )
    vim.api.nvim_create_autocmd('FileType', {
       pattern = { 'scala', 'sbt' },
       callback = function()
