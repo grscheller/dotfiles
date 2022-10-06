@@ -28,10 +28,9 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 umask 0022
 
 HOME_FILES='
-   .bash_profile
-   .bashrc
-   .bash_sessions_disable
-   .inputrc
+   bash_profile
+   bashrc
+   inputrc
 '
 
 BIN_SCRIPTS='
@@ -104,7 +103,7 @@ CONFIG_FILES='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${HOME}/.bashrc_functions
+   ${HOME}/.bash_sessions_disable
    ${XDG_CONFIG_HOME}/nvim/lua/grs/appearance.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keymappings.lua
 "
@@ -163,6 +162,7 @@ install_file () {
 for Home_File in $HOME_FILES
 do
    install_file "$HOME" "$Home_File" ./home 0644 || exit 1
+   mv "${HOME}/${Home_File}" "${HOME}/.${Home_File}" || exit 1
 done
 
 ## Install  ~/bin  scripts
