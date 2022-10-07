@@ -52,5 +52,5 @@ for k, v in pairs(options) do
 end
 
 -- Modified existing nvim options
-vim.o.matchpairs = vim.o.matchpairs .. ',<:>,「:」' -- additional matching pairs of characters
-vim.o.iskeyword = vim.o.iskeyword .. ',-' -- adds snake-case to word motions
+vim.opt.matchpairs:append { '<:>', '「:」' } -- additional matching char pairs
+vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions
