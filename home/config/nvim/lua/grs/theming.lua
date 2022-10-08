@@ -1,5 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
+local kb = vim.keymap.set
+
 local ok, colorizer, webDevicons, lualine, twilight, zen, kanagawa
 
 -- Colorize color names, hexcodes, and other color formats
@@ -78,7 +80,7 @@ if ok then
    twilight.setup {
       context = 20
    }
-   vim.keymap.set('n', 'zT', '<Cmd>Twilight<CR>', {desc = 'twilight toggle'})
+   kb('n', 'zT', '<Cmd>Twilight<CR>', {desc = 'twilight toggle'})
 else
    print('Problem loading twilight: ' .. twilight)
 end
@@ -104,7 +106,7 @@ if ok then
       on_close = function()
       end
    }
-   vim.keymap.set('n', 'zZ', '<Cmd>ZenMode<CR>', {desc = 'zen-mode toggle'})
+   kb('n', 'zZ', '<Cmd>ZenMode<CR>', {desc = 'zen-mode toggle'})
 else
    print('Problem loading zen-mode: ' .. zen)
 end

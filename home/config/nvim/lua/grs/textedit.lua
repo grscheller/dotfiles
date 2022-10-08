@@ -1,6 +1,7 @@
 --[[ Contains configurations for basic text editing
      and simple general purpose text editing plugins ]]
 
+local kb = vim.keymap.set
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
@@ -13,10 +14,10 @@ require('grs.util.keybindings').textedit_kb()
 -- Configure justtinmk/vim-sneak plugin
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-vim.keymap.set({'n', 'v'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
-vim.keymap.set({'n', 'v'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
-vim.keymap.set({'n', 'v'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
-vim.keymap.set({'n', 'v'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
+kb({'n', 'v'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
+kb({'n', 'v'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
+kb({'n', 'v'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
+kb({'n', 'v'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
 
 -- Configure numToStr/Comment.nvim
 ok, comment = pcall(require, 'Comment')
