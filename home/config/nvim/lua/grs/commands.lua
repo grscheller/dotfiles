@@ -30,14 +30,9 @@ autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
       vim.highlight.on_yank {
-         timeout = 600,
-         on_visual = false
+         timeout = 300
       }
    end,
    group = grs_group,
    desc = 'Give visual feedback when yanking text'
 })
-
--- Todo: Incorporated ideas from
--- https://github.com/ThePrimeagen/.dotfiles/blob/master/nvim/.config/nvim/lua/theprimeagen/init.lua
--- See where else autocmds/augroups are used.
