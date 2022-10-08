@@ -87,8 +87,7 @@ CONFIG_FILES='
    git/config
    nvim/init.lua
    nvim/lua/grs/theming.lua
-   nvim/lua/grs/commands.lua
-   nvim/lua/grs/completions.lua
+   nvim/lua/grs/completions_snippets.lua
    nvim/lua/grs/devel_environment.lua
    nvim/lua/grs/options.lua
    nvim/lua/grs/telescope.lua
@@ -104,8 +103,8 @@ CONFIG_FILES='
 RM_ITEMS="
    ${HOME}/.gitconfig
    ${HOME}/.bash_sessions_disable
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/appearance.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keymappings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/commands.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/completions.lua
 "
 
 ### functions

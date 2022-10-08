@@ -27,8 +27,8 @@ end
 
 --[[ Define key mappings/bindings, to be set later ]]
 
--- layout and navigation related keybindings
-function M.motion_layout_kb()
+-- Window & tab layout and navigation related keybindings
+function M.navigation_layout_kb()
 
    -- Turn off some redundant motions
    vim.keymap.set('n', '<BS>', '')
@@ -138,23 +138,6 @@ function M.motion_layout_kb()
       { desc = 'move view right 4 columns' }
    )
 
-   -- toggle line numberings schemes
-   vim.keymap.set('n', ' n',
-      function()
-         if vim.wo.relativenumber == true then
-            vim.wo.number = false
-            vim.wo.relativenumber = false
-         elseif vim.wo.number == true then
-            vim.wo.number = false
-            vim.wo.relativenumber = true
-         else
-            vim.wo.number = true
-            vim.wo.relativenumber = false
-         end
-      end,
-      { desc = 'line number toggle' }
-   )
-
 end
 
 function M.textedit_kb()
@@ -199,6 +182,23 @@ function M.textedit_kb()
    )
    vim.keymap.set('n', ' h', '<Cmd>TSBufToggle highlight<CR>',
       { desc = 'treesitter highlight toggle' }
+   )
+
+   -- toggle line numberings schemes
+   vim.keymap.set('n', ' n',
+      function()
+         if vim.wo.relativenumber == true then
+            vim.wo.number = false
+            vim.wo.relativenumber = false
+         elseif vim.wo.number == true then
+            vim.wo.number = false
+            vim.wo.relativenumber = true
+         else
+            vim.wo.number = true
+            vim.wo.relativenumber = false
+         end
+      end,
+      { desc = 'line number toggle' }
    )
 
 end
