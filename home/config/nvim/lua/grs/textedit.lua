@@ -14,10 +14,10 @@ require('grs.util.keybindings').textedit_kb()
 -- Configure justtinmk/vim-sneak plugin
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-kb({'n', 'v'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
-kb({'n', 'v'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
-kb({'n', 'v'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
-kb({'n', 'v'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
+kb({'n', 'x'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
+kb({'n', 'x'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
+kb({'n', 'x'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
+kb({'n', 'x'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
 
 -- Configure numToStr/Comment.nvim
 ok, comment = pcall(require, 'Comment')

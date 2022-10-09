@@ -159,20 +159,15 @@ ok, metals = pcall(require, 'metals')
 if ok then
    local metals_config = metals.bare_config()
 
-   metals_config.settings = {
-      showImplicitArguments = true
-   }
-
+   metals_config.settings = { showImplicitArguments = true }
    metals_config.capabilities = capabilities
-
    metals_config.init_options.statusBarProvider = 'on'
 
    function metals_config.on_attach(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
       keybindings.sm_kb(bufnr)
       if ok_dap then
-         dap.configurations.scala = {
-            {
+         dap.configurations.scala = {{
                type = 'scala',
                request = 'launch',
                name = 'RunOrTest',
@@ -180,8 +175,7 @@ if ok then
                   runType = 'runOrTestFile'
                   --args = { 'firstArg', 'secondArg, ...' }
                }
-            },
-            {
+            }, {
                type = 'scala',
                request = 'launch',
                name = 'Test Target',
@@ -196,8 +190,7 @@ if ok then
    end
 
    local scala_metals_group = vim.api.nvim_create_augroup(
-      'scala-metals',
-      { clear = true }
+      'scala-metals', { clear = true }
    )
    vim.api.nvim_create_autocmd('FileType', {
       pattern = { 'scala', 'sbt' },

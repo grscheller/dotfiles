@@ -6,16 +6,14 @@ if not ok then
    return
 end
 
-telescope.setup {
-   extensions = {
-      ['ui-select'] = {
-         require('telescope.themes').get_dropdown {}
-      },
-      file_browser = {},
-      frecency = {},
-      fzf = {}
+telescope.setup { extensions = {
+   file_browser = {},
+   frecency = {},
+   fzf = {},
+   ['ui-select'] = {
+      require('telescope.themes').get_dropdown {}
    }
-}
+}}
 telescope.load_extension('ui-select')
 telescope.load_extension('file_browser')
 telescope.load_extension('frecency')

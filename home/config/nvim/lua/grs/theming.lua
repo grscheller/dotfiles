@@ -7,7 +7,12 @@ local ok, colorizer, webDevicons, lualine, twilight, zen, kanagawa
 -- Colorize color names, hexcodes, and other color formats
 ok, colorizer = pcall(require, 'colorizer')
 if ok then
-   colorizer.setup(nil, {css = true;})
+   colorizer.setup {
+      '*',
+      '!vim',
+      css = { rgb_fn = true },
+      html = { names = false }
+   }
 else
    print('Problem loading colorizer: ' .. colorizer)
 end
@@ -17,7 +22,7 @@ end
 -- see https://github.com/ryanoasis/nerd-fonts
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
-   webDevicons.setup {default = true}
+   webDevicons.setup { default = true }
 else
    print('Problem loading nvim-web-devicons: %s', webDevicons)
 end
@@ -29,42 +34,49 @@ if ok then
       options = {
          icons_enabled = true,
          theme = 'codedark',
-         component_separators = {left = '', right = ''},
-         section_separators = {left = '', right = ''},
+         component_separators = { left = '', right = '' },
+         section_separators = { left = '', right = '' },
          disabled_filetypes = {
-            statusline = {
-               'help'
-            },
-            winbar = {
-               'help'
-            }
+            statusline = { 'help' },
+            winbar = { 'help' }
          },
          ignore_focus = {},
          always_divide_middle = true,
          globalstatus = true
       },
       sections = {
-         lualine_a = {'mode'},
-         lualine_b = {'branch', 'diff', {'diagnostics', sources = {'nvim_diagnostic'}}},
+         lualine_a = { 'mode' },
+         lualine_b = {
+            'branch',
+            'diff',
+            {
+               'diagnostics',
+               sources = { 'nvim_diagnostic' }
+            }
+         },
          lualine_c = {'filename'},
-         lualine_x = {'encoding', 'fileformat', 'filetype'},
-         lualine_y = {'location'},
-         lualine_z = {'progress'}
+         lualine_x = {
+            'encoding',
+            'fileformat',
+            'filetype'
+         },
+         lualine_y = { 'location' },
+         lualine_z = { 'progress' }
       },
       tabline = {},
       winbar = {
          lualine_a = {},
          lualine_b = {},
-         lualine_c = {'filename'},
-         lualine_x = {'branch'},
+         lualine_c = { 'filename' },
+         lualine_x = { 'branch' },
          lualine_y = {},
          lualine_z = {}
       },
       inactive_winbar = {
          lualine_a = {},
          lualine_b = {},
-         lualine_c = {'filename'},
-         lualine_x = {'branch'},
+         lualine_c = { 'filename' },
+         lualine_x = { 'branch' },
          lualine_y = {},
          lualine_z = {}
       },
@@ -77,10 +89,8 @@ end
 --- Setup folke/twilight.nvim
 ok, twilight = pcall(require, 'twilight')
 if ok then
-   twilight.setup {
-      context = 20
-   }
-   kb('n', 'zT', '<Cmd>Twilight<CR>', {desc = 'twilight toggle'})
+   twilight.setup { context = 20 }
+   kb('n', 'zT', '<Cmd>Twilight<CR>', { desc = 'twilight toggle' })
 else
    print('Problem loading twilight: ' .. twilight)
 end
@@ -97,7 +107,7 @@ if ok then
       },
       plugins = {
          options = {},
-         twilght = {enable = true}
+         twilght = { enable = true }
       },
       on_open = function(win)
          vim.api.nvim_win_set_option(win, 'scrolloff', 10)
@@ -106,7 +116,7 @@ if ok then
       on_close = function()
       end
    }
-   kb('n', 'zZ', '<Cmd>ZenMode<CR>', {desc = 'zen-mode toggle'})
+   kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
 else
    print('Problem loading zen-mode: ' .. zen)
 end
@@ -121,7 +131,7 @@ if ok then
    local my_colors = {
       bg = '#090618'
    }
-   kanagawa.setup({colors = my_colors})
+   kanagawa.setup { colors = my_colors }
    vim.cmd [[colorscheme kanagawa]]
 else
    vim.cmd [[colorscheme darkblue]]

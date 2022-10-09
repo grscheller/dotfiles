@@ -30,12 +30,10 @@ cmp.setup {
          ls.lsp_expand(args.body)
       end
    },
-
    window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered()
    },
-
    mapping = cmp.mapping.preset.insert {
       ['<C-d>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -69,40 +67,33 @@ cmp.setup {
          end
       end
    },
-
-   sources = cmp.config.sources(
-      {
-         { name = 'nvim_lsp' },
-         { name = 'nvim_lsp_signature_help' },
-         { name = 'nvim_lua' },
-         { name = 'path' },
-         { name = 'buffer' },
-         { name = 'rg',
-           keyword_length = 3,
-           max_item_count = 8,
-           option = {
-              additional_arguments = '--smart-case --hidden'
-           }
-         }
+   sources = cmp.config.sources {
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lua' },
+      { name = 'path' },
+      { name = 'buffer' },
+      { name = 'rg',
+        keyword_length = 3,
+        max_item_count = 8,
+        option = {
+           additional_arguments = '--smart-case --hidden'
+        }
       }
-   )
+   }
 }
 
-cmp.setup.cmdline('/',
-   {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-         { name = 'buffer' }
-      }
+cmp.setup.cmdline(':', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = cmp.config.sources {
+      { name = 'path' },
+      { name = 'cmdline' }
    }
-)
+})
 
-cmp.setup.cmdline(':',
-   {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources {
-         { name = 'path' },
-         { name = 'cmdline' }
-      }
+cmp.setup.cmdline('/', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = {
+      { name = 'buffer' }
    }
-)
+})
