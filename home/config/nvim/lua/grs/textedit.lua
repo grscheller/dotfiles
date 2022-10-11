@@ -26,8 +26,7 @@ if ok then
       ignore = '^$',
       mappings = {
          basic = true,
-         extra = true,
-         extended = true
+         extra = true
       }
    }
 else
