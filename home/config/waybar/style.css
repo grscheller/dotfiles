@@ -81,6 +81,7 @@ window#waybar.hidden {
 
 #battery.charging, #battery.plugged {
     background-color: rgba(118, 146, 106, 1.0);
+    color: rgba(255, 255, 255, 1.0);
 }
 
 @keyframes blink {
