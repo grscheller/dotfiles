@@ -36,6 +36,7 @@ HOME_FILES='
 BIN_SCRIPTS='
    bsPacker
    buArch
+   chkcolor
    digpath
    monitor
    pathtrim
