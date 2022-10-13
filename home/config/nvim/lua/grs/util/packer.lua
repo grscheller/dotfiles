@@ -109,6 +109,9 @@ return packer.startup(
       use { 'simrat39/rust-tools.nvim' }
       use { 'scalameta/nvim-metals' }
 
+      -- Live-updating Neovim LSP diagnostics - quickfix & loclist
+      use { 'onsails/diaglist.nvim' }
+
       -- File detection/syntax highlighting for zig
       use { 'ziglang/zig.vim' }
    end

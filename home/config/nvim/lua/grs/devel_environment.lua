@@ -5,6 +5,7 @@ local ts_configs
 local lspconfig, nvimLspInstaller, cmp_nvim_lsp
 local rust_tools
 local metals
+local diaglist
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 
@@ -201,6 +202,17 @@ if ok then
    })
 else
    print('Problem loading metals: ' .. metals)
+end
+
+--[[ Live-updating Neovim LSP diagnostics - quickfix & loclist ]]
+ok, diaglist = pcall(require, 'diaglist')
+if ok then
+   diaglist.init {
+      debug = false,
+      debounce_ms = 150  -- increase for noisy servers
+   }
+else
+   print('Problem loading diaglist.nvim: %s', diaglist)
 end
 
 --[[ Zig Lang Configuration ]]
