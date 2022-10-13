@@ -7,12 +7,15 @@ Paths are all realtive to the `/` directory.
 
 I originally installed these files by hand.  Eventually, due
 to making too many errors, I wrote an installation script
-called `systemfilesInstall`.  From the base of the dotfiles
-repository, run
+called `systemfilesInstall`.
+
+To install, run
 
 ```
     sudo ./systemfilesInstall
 ```
+
+from the base of the dotfiles repository.
 
 ## Services using these configuration files
 

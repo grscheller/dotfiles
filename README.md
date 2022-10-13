@@ -9,11 +9,29 @@ Contains my user configuation files.
   * Wofi config
   * Alacritty config
 * GIT config
-* Haskell Cabal configuration
-* Minimal SSH configuration
+* Haskell Cabal config
+* Minimal SSH config
 * $HOME/bin scripts
 
-Also, contains my Arch Linux system configuration modifications
+Also, contains my Arch Linux system configuration modifications.
+
+## Installation Scripts
+
+Installs into home directory
+
+* [dotfilesInstall](dotfilesInstall)
+  * From the base of the cloned repo run
+    ```
+       $ ./dotfilesInstall
+    ```
+
+Installs into system directories (Arch Linux Only!)
+
+* [systemfilesInstall](systemfilesInstall)
+  * From the base of the cloned repo run
+    ```
+       $ sudo ./systemfilesInstall
+    ```
 
 ## Repo's purposes is to
 
@@ -22,24 +40,6 @@ Also, contains my Arch Linux system configuration modifications
 3. help quickly configure new systems for myself
 4. provide others useful examples for their own configuration files
 5. allow others to use as a starting point for their own version of this repo
-
-## Installation Scripts
-
-Installs into home directory
-
-* [dotfilesInstall](dotfilesInstall)
-  * From cloned repo run:
-    ```
-       $ ./dotfilesInstall
-    ```
-
-Installs into system directories (Arch Linux Only):
-
-* [systemfilesInstall](systemfilesInstall)
-  * From cloned repo run
-    ```
-       $ sudo ./systemfilesInstall
-    ```
 
 ## License Information
 
