@@ -103,7 +103,10 @@ if ok then
          backdrop = 0.4, -- shade backdrop, 1 to keep normal
          width = 0.85, -- abs num of cells when > 1, % of width when <= 1
          height = 1, -- abs num of cells when > 1, % of height when <= 1
-         options = {} -- by default, not options are changed
+         options = {
+            number = false,
+            relativenumber = false
+         }
       },
       plugins = {
          options = {},

@@ -1,6 +1,6 @@
 --[[ Completions using nvim-cmp and luasnip ]]
 
-local ok, cmp, ls
+local ok, cmp, snip, lspkind
 
 ok, cmp = pcall(require, 'cmp')
 if not ok or not cmp then
@@ -8,14 +8,22 @@ if not ok or not cmp then
    return
 end
 
-ok, ls = pcall(require, 'luasnip')
+ok, snip = pcall(require, 'luasnip')
 if not ok then
-   print('Problem loading luasnip: %s', ls)
+   print('Problem loading luasnip: %s', snip)
    return
 end
 
+ok, lspkind = pcall(require, 'lspkind')
+if not ok then
+   print('Problem loading lspkind: %s', lspkind)
+   return
+end
+
+lspkind.init()
+
 -- Configure luasnip 
-ls.snippets = {}
+snip.snippets = {}
 require('luasnip.loaders.from_vscode').lazy_load()  -- lazy load vscode format snippets
 
 -- Configure nvim-cmp
@@ -27,7 +35,7 @@ end
 cmp.setup {
    snippet = {
       expand = function(args)
-         ls.lsp_expand(args.body)
+         snip.lsp_expand(args.body)
       end
    },
    window = {
@@ -49,8 +57,8 @@ cmp.setup {
       ['<Tab>'] = function(fallback)
          if cmp.visible() then
             cmp.select_next_item()
-         elseif ls.expand_or_jumpable() then
-            ls.expand_or_jump()
+         elseif snip.expand_or_jumpable() then
+            snip.expand_or_jump()
          elseif hasWordsBefore() then
             cmp.complete()
          else
@@ -60,8 +68,8 @@ cmp.setup {
       ['<S-Tab>'] = function(fallback)
          if cmp.visible() then
             cmp.select_prev_item()
-         elseif ls.jumpable(-1) then
-            ls.jump(-1)
+         elseif snip.jumpable(-1) then
+            snip.jump(-1)
          else
             fallback()
          end
@@ -79,6 +87,23 @@ cmp.setup {
         option = {
            additional_arguments = '--smart-case --hidden'
         }
+      },
+      { name = 'luasnip' }
+   },
+   formatting = {
+      format = lspkind.cmp_format {
+         mode = 'symbol',
+         maxwidth = 50,
+         ellipsis = '…',
+         menu = {
+            nvim_lsp = "[lsp]",
+            nvim_lsp_signature_help = "[lsp-sh]",
+            nvim_lua = "[lua]",
+            path = "[path]",
+            buffer = "[buf]",
+            rg = "[rg]",
+            luasnip = "[snip]"
+         }
       }
    }
 }
