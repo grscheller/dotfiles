@@ -1,12 +1,27 @@
-# dotfiles
+# Dotfiles
+
+Contains my user configuation files.
+
+* Fish and Bash configs
+* Neovim config
+* Sway config
+  * Waybar config
+  * Wofi config
+  * Alacritty config
+* GIT config
+* Haskell Cabal configuration
+* Minimal SSH configuration
+* $HOME/bin scripts
+
+Also, contains my Arch Linux system configuration modifications
 
 ## Repo's purposes is to
 
-1. maintain my own configuration files
+1. maintain my own personal configuration files
 2. preserve this information for myself
 3. help quickly configure new systems for myself
 4. provide others useful examples for their own configuration files
-5. allow others to use as a starting point for their own versions
+5. allow others to use as a starting point for their own version of this repo
 
 ## Installation Scripts
 
@@ -50,5 +65,5 @@ This work is published from:
 
 * To the best of my knowledge, there is nothing patentable in this repo
 * I have no intention to attempt to patent anything from this repo
-* I do not support software being patentable
+* I do not support the concept of software patents
 * I do support software being copyrightable

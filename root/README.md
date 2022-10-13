@@ -1,14 +1,14 @@
 # System Configuration Files
 
-This directory contains system configureation files which
-I used to MANUALLY install on my Systemd/Wayland based Linux
-systems.
+This directory contains system configureation files for my
+Arch Linux systemd/wayland/sway based desktop workstations.
 
-Paths are realtive to the `/` directory.
+Paths are all realtive to the `/` directory.
 
-Eventually, due to making too many errors, I wrote an
-installation script `systemfilesInstall`.  From the
-base of the dotfiles repository, run
+I originally installed these files by hand.  Eventually, due
+to making too many errors, I wrote an installation script
+called `systemfilesInstall`.  From the base of the dotfiles
+repository, run
 
 ```
     sudo ./systemfilesInstall
