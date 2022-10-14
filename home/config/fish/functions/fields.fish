@@ -19,7 +19,7 @@ function fields --description 'Extract fields from lines'
         printf '       str is a string separating the fields,\n' >&2
         printf '       file1 file2 are file names\n\n'           >&2
         printf 'Output: prints matches to stdout,\n'          >&2
-        printf '        print help to stderr if -h given\n\n' >&2
+        printf '        prints help message to stderr if -h given\n\n' >&2
         printf 'Exit Status: 3 if -h or --help option given\n'                   >&2
         printf '             4 if an invalid option or argument given\n'         >&2
         printf '             5 if no field positions were given\n'               >&2
@@ -32,27 +32,27 @@ function fields --description 'Extract fields from lines'
     set -l Fields ()
     set -l Files ()
     for Arg in $argv
-        if string match -qr '^[1-9]\d*$' $Arg
-            set -a Fields $Arg
-        else if [ -f $Arg ] && [ -r $Arg ]
-            set -a Files $Arg
-        else
-            printf '\nError: Argument "%s" is neither Field' $Arg[1] >&2
-            printf ' position nor readable regular file\n' >&2
-            return 4
-        end
+       if string match -qr '^[1-9]\d*$' $Arg
+          set -a Fields $Arg
+       else if [ -f $Arg ] && [ -r $Arg ]
+          set -a Files $Arg
+       else
+          printf '\nError: Argument "%s" is neither Field' $Arg[1] >&2
+          printf ' position nor readable regular file\n' >&2
+          return 4
+       end
     end
 
     if set -q Fields[1]
-        if set -q _flag_separator
-            awk -F $_flag_separator[1] '{ print '(string join ', ' \$$Fields)' }' $Files
-        else
-            awk '{ print '(string join ', ' \$$Fields)' }' $Files
-        end
+       if set -q _flag_separator
+          awk -F $_flag_separator[1] '{ print '(string join ', ' \$$Fields)' }' $Files
+       else
+          awk '{ print '(string join ', ' \$$Fields)' }' $Files
+       end
     else
-        printf '\nError: No Field positions' >&2
-        printf ' were given on commandline\n' >&2
-        return 5
+       printf '\nError: No Field positions' >&2
+       printf ' were given on commandline\n' >&2
+       return 5
     end
 
 end
