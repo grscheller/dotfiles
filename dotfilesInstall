@@ -87,11 +87,12 @@ CONFIG_FILES='
    fish/functions/WgetM.fish
    git/config
    nvim/init.lua
+   nvim/lua/grs/devel/init.lua
+   nvim/lua/grs/devel/completions_snippets.lua
+   nvim/lua/grs/devel/lsp.lua
+   nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/theming.lua
-   nvim/lua/grs/completions_snippets.lua
-   nvim/lua/grs/devel_environment.lua
    nvim/lua/grs/options.lua
-   nvim/lua/grs/telescope.lua
    nvim/lua/grs/textedit.lua
    nvim/lua/grs/util/keybindings.lua
    nvim/lua/grs/util/packer.lua
@@ -106,6 +107,10 @@ RM_ITEMS="
    ${HOME}/.bash_sessions_disable
    ${XDG_CONFIG_HOME}/nvim/lua/grs/commands.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/completions.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel_environment.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/completions_snippets.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/lsp.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/telescope.lua
 "
 
 ### functions

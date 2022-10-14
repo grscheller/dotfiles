@@ -11,9 +11,7 @@ require('grs.options')
 require('grs.textedit')
 
 -- Configure an IDE like LSP based software development environment
-require('grs.telescope')
-require('grs.completions_snippets')
-require('grs.devel_environment')
+require('grs.devel')
 
 -- Theme/Appearance - colorscheme, statusline & zen-mode
 require('grs.theming')

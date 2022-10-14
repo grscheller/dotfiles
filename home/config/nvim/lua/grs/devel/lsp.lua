@@ -38,6 +38,17 @@ if not ok then
    return
 end
 
+--[[ Live-updating Neovim LSP diagnostics - quickfix & loclist ]]
+ok, diaglist = pcall(require, 'diaglist')
+if ok then
+   diaglist.init {
+      debug = false,
+      debounce_ms = 200  -- increase for noisy servers (default 150)
+   }
+else
+   print('Problem loading diaglist.nvim: %s', diaglist)
+end
+
 -- Check if DAP for debugging is available
 local ok_dap, dap = pcall(require, 'dap')
 if not ok_dap then
@@ -202,17 +213,6 @@ if ok then
    })
 else
    print('Problem loading metals: ' .. metals)
-end
-
---[[ Live-updating Neovim LSP diagnostics - quickfix & loclist ]]
-ok, diaglist = pcall(require, 'diaglist')
-if ok then
-   diaglist.init {
-      debug = false,
-      debounce_ms = 150  -- increase for noisy servers
-   }
-else
-   print('Problem loading diaglist.nvim: %s', diaglist)
 end
 
 --[[ Zig Lang Configuration ]]
