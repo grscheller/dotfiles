@@ -13,8 +13,6 @@ if ok then
       css = { rgb_fn = true },
       html = { names = false }
    }
-else
-   print('Problem loading colorizer: ' .. colorizer)
 end
 
 -- Setup WebDevicons
@@ -23,8 +21,6 @@ end
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
-else
-   print('Problem loading nvim-web-devicons: %s', webDevicons)
 end
 
 -- Setup Lualine using Kanagawa theme
@@ -82,8 +78,6 @@ if ok then
       },
       extensions = {}
    }
-else
-   print('Problem loading lualine: ' .. lualine)
 end
 
 --- Setup folke/twilight.nvim
@@ -91,8 +85,6 @@ ok, twilight = pcall(require, 'twilight')
 if ok then
    twilight.setup { context = 20 }
    kb('n', 'zT', '<Cmd>Twilight<CR>', { desc = 'twilight toggle' })
-else
-   print('Problem loading twilight: ' .. twilight)
 end
 
 -- Setup folke/zen-mode.nvim
@@ -120,8 +112,6 @@ if ok then
       end
    }
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
-else
-   print('Problem loading zen-mode: ' .. zen)
 end
 
 -- Setup Kanagawa colorscheme

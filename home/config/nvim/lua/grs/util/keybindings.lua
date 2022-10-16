@@ -23,8 +23,6 @@ if ok then
      }
   }
    M.wk = wk
-else
-   print('Problem loading which-key.nvim: %s', wk)
 end
 
 --[[ Define key mappings/bindings, to be set later ]]

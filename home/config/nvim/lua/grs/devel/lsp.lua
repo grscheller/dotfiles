@@ -14,34 +14,26 @@ if ok then
       ensure_installed = 'all',
       highlight = { enable = true }
    }
-else
-   print('Problem loading nvim-treesitter.configs: %s', ts_configs)
 end
 
 -- Punt if necessary LSP related plugins are not installed
 ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
-   print('Problem loading nvim-lspconfig: %s', lspconfig)
    return
 end
 
 ok, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
 if not ok then
-   print('Problem loading nvim-lsp-installer: %s', nvimLspInstaller)
    return
 end
 
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
-   print('Problem loading cmp_nvim_lsp: %s', cmp_nvim_lsp)
    return
 end
 
--- Check if DAP for debugging is available
+-- set flag ok_dap if DAP debugging is available
 local ok_dap, dap = pcall(require, 'dap')
-if not ok_dap then
-   print('Problem loading nvim-dap: %s', dap)
-end
 
 --[[ Nvim LSP Installer Configuration
 
@@ -146,8 +138,6 @@ if ok then
          }
       }
    }
-else
-   print('Problem loading rust-tools: ' .. rust_tools)
 end
 
 --[[ Scala Lang Configuration
@@ -190,7 +180,9 @@ if ok then
    end
 
    local scala_metals_group = vim.api.nvim_create_augroup(
-      'scala-metals', { clear = true }
+      'scala-metals', {
+         clear = true
+      }
    )
    vim.api.nvim_create_autocmd(
       'FileType', {
@@ -201,8 +193,6 @@ if ok then
          group = scala_metals_group
       }
    )
-else
-   print('Problem loading metals: ' .. metals)
 end
 
 --[[ Zig Lang Configuration ]]

@@ -29,13 +29,11 @@ if ok then
          extra = true
       }
    }
-else
-   print('Problem loading numToStr/Comment.nvim: %s', comment)
 end
 
 --[[ Commands & autocmds not related to specific plugins ]]
 
-local grs_group = augroup('grs', {})
+local text_group = augroup('grs', {})
 
 -- Write file as root - works when sudo does not require a password
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
@@ -45,14 +43,14 @@ usercmd('WR', 'WRF %', {})
 autocmd('CmdLineEnter', {
    pattern = '*',
    command = 'set nosmartcase noignorecase',
-   group = grs_group,
+   group = text_group,
    desc = "Don't ignore case when in Command Mode"
 })
 
 autocmd('CmdLineLeave', {
    pattern = '*',
    command = 'set ignorecase smartcase',
-   group = grs_group,
+   group = text_group,
    desc = "Use smartcase when not in Command Mode"
 })
 
@@ -65,6 +63,6 @@ autocmd('TextYankPost', {
          higroup = 'Visual'
       }
    end,
-   group = grs_group,
+   group = text_group,
    desc = 'Give visual feedback when yanking text'
 })

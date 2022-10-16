@@ -4,19 +4,16 @@ local ok, cmp, snip, lspkind
 
 ok, cmp = pcall(require, 'cmp')
 if not ok or not cmp then
-   print('Problem loading nvim-cmp: %s', cmp)
    return
 end
 
 ok, snip = pcall(require, 'luasnip')
 if not ok then
-   print('Problem loading luasnip: %s', snip)
    return
 end
 
 ok, lspkind = pcall(require, 'lspkind')
 if not ok then
-   print('Problem loading lspkind: %s', lspkind)
    return
 end
 
