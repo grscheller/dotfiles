@@ -226,7 +226,7 @@ function M.haskell_kb(bufnr)
 end
 
 --[[ Scala Metals related keybindings ]]
-function M.sm_kb(bufnr)
+function M.metals_kb(bufnr)
    local metals = require('metals')
    kb('n', 'mK', metals.hover_worksheet,
       { desc = 'metals hover worksheet', buffer = bufnr })

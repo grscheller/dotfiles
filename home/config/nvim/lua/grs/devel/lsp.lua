@@ -5,7 +5,6 @@ local ts_configs
 local lspconfig, nvimLspInstaller, cmp_nvim_lsp
 local rust_tools
 local metals
-local diaglist
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 
@@ -38,17 +37,6 @@ if not ok then
    return
 end
 
---[[ Live-updating Neovim LSP diagnostics - quickfix & loclist ]]
-ok, diaglist = pcall(require, 'diaglist')
-if ok then
-   diaglist.init {
-      debug = false,
-      debounce_ms = 200  -- increase for noisy servers (default 150)
-   }
-else
-   print('Problem loading diaglist.nvim: %s', diaglist)
-end
-
 -- Check if DAP for debugging is available
 local ok_dap, dap = pcall(require, 'dap')
 if not ok_dap then
@@ -75,7 +63,7 @@ local lsp_servers = {
    'zls' -- zig language server (packer ziglang/zig.vim)
 }
 
-local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
 
 nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
@@ -177,7 +165,7 @@ if ok then
 
    function metals_config.on_attach(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
-      keybindings.sm_kb(bufnr)
+      keybindings.metals_kb(bufnr)
       if ok_dap then
          dap.configurations.scala = {{
                type = 'scala',
@@ -204,13 +192,15 @@ if ok then
    local scala_metals_group = vim.api.nvim_create_augroup(
       'scala-metals', { clear = true }
    )
-   vim.api.nvim_create_autocmd('FileType', {
-      pattern = { 'scala', 'sbt' },
-      callback = function()
-         metals.initialize_or_attach(metals_config)
-      end,
-      group = scala_metals_group
-   })
+   vim.api.nvim_create_autocmd(
+      'FileType', {
+         pattern = { 'scala', 'sbt' },
+         callback = function()
+            metals.initialize_or_attach(metals_config)
+         end,
+         group = scala_metals_group
+      }
+   )
 else
    print('Problem loading metals: ' .. metals)
 end
