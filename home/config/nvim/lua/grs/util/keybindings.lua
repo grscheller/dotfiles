@@ -50,11 +50,10 @@ function M.navigation_layout_kb()
    kb('n', '<M-c>', '<C-w>c', { desc = 'close current window' })
 
    -- Creating, closing & navigating tabpages
-   kb('n', '<C-n>', '<Cmd>tabnew<CR>', { desc = 'create new tab' })
-   kb('n', '<C-e>', '<Cmd>tabclose<CR>', { desc = 'close current tab' })
-   kb('n', '<C-b>', '<C-w>T', { desc = 'breakout window to new tab' })
-   kb('n', '<C-Left>', '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
-   kb('n', '<C-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
+   kb('n', '<M-n>', '<Cmd>tabnew<CR>', { desc = 'create new tab' })
+   kb('n', '<M-t>', '<C-w>T', { desc = 'breakout window to new tab' })
+   kb('n', '<M-Left>', '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
+   kb('n', '<M-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
 
    -- Changing window layout
    kb('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })

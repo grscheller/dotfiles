@@ -87,7 +87,6 @@ return packer.startup(
       -- Completion & snippet support
       use { 'L3MON4D3/LuaSnip' }
       use { 'rafamadriz/friendly-snippets' }
-      use { 'onsails/lspkind.nvim' }
       use { 'hrsh7th/nvim-cmp',
          requires = {
             'hrsh7th/cmp-buffer',
@@ -96,7 +95,9 @@ return packer.startup(
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-path',
-            'lukas-reineke/cmp-rg'
+            'onsails/lspkind.nvim',
+            'lukas-reineke/cmp-rg',
+            'lukas-reineke/cmp-under-comparator'
          }
       }
 
