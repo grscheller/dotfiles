@@ -35,6 +35,18 @@ end
 -- set flag ok_dap if DAP debugging is available
 local ok_dap, dap = pcall(require, 'dap')
 
+--[[ Python Configuration
+
+     Pointing python3_host_prog to the pyenv shim,
+     then run nvim in the virtual environment.
+
+     Will need to install pynvim into each virtual
+     environment.  I am not sure the pyright LSP server
+     will use the correct virtual environment when nvim
+     itself is using the base pyenv python environment. ]]
+
+vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
+
 --[[ Nvim LSP Installer Configuration
 
      For lang server list see the 1st link
@@ -99,10 +111,6 @@ lspconfig['hls'].setup {
       keybindings.haskell_kb(bufnr)
    end
 }
-
---[[ Python Configurations ]]
-
-vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[ Rust Lang Configuration - rust_tools & lldb-vscode
 
