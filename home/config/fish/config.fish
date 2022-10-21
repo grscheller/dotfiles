@@ -23,6 +23,11 @@ end
 
 set -q UPDATE_ENV
 and begin
+    # Let Bash know initial environment already configured
+    set -q _ENV_INITIALIZED
+    or set -gx _ENV_INITIALIZED 0
+    set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
+
     set -e UPDATE_ENV
     set -e REDO_ENV
 
@@ -45,6 +50,27 @@ and begin
     set -gx MANPAGER 'nvim +Man!'
     set -gx DIFFPROG 'nvim -d'
 
+    # Added ~/bin and relative paths at end of PATH
+    fish_add_path -gP ~/bin bin ../bin .
+
+    # RubyGems
+    #   Neovim syntax:      $ gem install neovim
+    #   Markdown linter:    $ gem install mdl
+    #   Markdown converter: $ gem install kramdown
+    fish_add_path -gpP ~/.local/share/gem/ruby/*/bin
+
+    # Rust toolchain
+    fish_add_path -gpP ~/.cargo/bin
+
+    # Haskell location used by Stack and Cabal
+    fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
+
+    # Configure Java for Arch Linux (Sway/Wayland)
+    if string match -qr 'arch' (uname -r)
+        set -gx _JAVA_AWT_WM_NONREPARENTING 1
+        archJDK 17
+    end
+
     # Configure Sway/Wayland for Arch Linux
     if string match -qr 'arch' (uname -r)
         # For a functional tray in Waybar
@@ -60,45 +86,19 @@ and begin
         set -gx GTK_THEME 'Adwaita:dark'
     end
 
-    # Added ~/bin and relative paths at end of PATH
-    set -a PATH ~/bin bin ../bin .
-
-    # RubyGems
-    #   Neovim syntax:      $ gem install neovim
-    #   Markdown linter:    $ gem install mdl
-    #   Markdown converter: $ gem install kramdown
-    fish_add_path -gpP ~/.local/share/gem/ruby/*/bin
-
-    # Rust toolchain
-    fish_add_path -gpP ~/.cargo/bin
-
-    # Haskell location used by Cabal and Stack
-    fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
-
-    # Python configuration (see also below at end)
-    set -gx PIP_REQUIRE_VIRTUALENV true
-    set -gx PYENV_ROOT ~/.pyenv
-    fish_add_path -gpP $PYENV_ROOT/shims
-    set -gx PYTHONPATH lib ../lib  # Very old method, frowned upon?
-
-    # Configure Java for Arch Linux (Sway/Wayland)
-    if string match -qr 'arch' (uname -r)
-        set -gx _JAVA_AWT_WM_NONREPARENTING 1
-        archJDK 17
-    end
-
-    # Let Bash Shells know initial environment configured
-    set -q _ENV_INITIALIZED
-    or set -gx _ENV_INITIALIZED 0
-    set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
-
     # For non-Systemd systems
     if not digpath -q hostnamectl
         set -gx make_phoney_hostnamectl
     end
+
+    # Python configuration (see also below at end)
+    set -gx PIP_REQUIRE_VIRTUALENV true
+    set -gx PYENV_ROOT ~/.local/share/pyenv
+    set -gx PYTHONPATH lib ../lib  # Very old method, frowned upon?
 end
 
-## Functions better managed not as separate files
+# Python Pyenv function and environment configuration
+test -d $PYENV_ROOT; and pyenv init - | source
 
 # For non-Systemd systems
 if set -q make_phoney_hostnamectl
@@ -124,6 +124,3 @@ function b2h; printf 'ibase=2\nobase=10000\n%s\n' "$argv" | /usr/bin/bc; end
 function b2d; printf 'ibase=2\nobase=1010\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2o; printf 'ibase=2\nobase=1000\n%s\n'  "$argv" | /usr/bin/bc; end
 function b2b; printf 'ibase=2\nobase=10\n%s\n'    "$argv" | /usr/bin/bc; end
-
-## Python Pyenv function configuration
-test -d $PYENV_ROOT; and pyenv init - | source
