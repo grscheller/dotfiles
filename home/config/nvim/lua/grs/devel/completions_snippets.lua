@@ -1,6 +1,6 @@
 --[[ Completions using nvim-cmp and luasnip ]]
 
-local ok, cmp, snip, lspkind, cmp_under_comparator
+local ok, cmp, luasnip, lspkind, cmp_under_comparator
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -9,9 +9,9 @@ else
    return
 end
 
-ok, snip = pcall(require, 'luasnip')
+ok, luasnip = pcall(require, 'luasnip')
 if ok then
-   snip.snippets = {}
+   luasnip.snippets = {}
    require('luasnip.loaders.from_vscode').lazy_load()
 else
    return
@@ -37,6 +37,8 @@ cmp.setup {
          cmp.config.compare.offset,
          cmp.config.compare.exact,
          cmp.config.compare.score,
+         cmp.config.compare.recently_used,
+         cmp.config.compare.locality,
          cmp_under_comparator.under,
          cmp.config.compare.kind,
          cmp.config.compare.sort_text,
@@ -46,7 +48,7 @@ cmp.setup {
    },
    snippet = {
       expand = function(args)
-         snip.lsp_expand(args.body)
+         luasnip.lsp_expand(args.body)
       end
    },
    window = {
@@ -54,6 +56,8 @@ cmp.setup {
       documentation = cmp.config.window.bordered()
    },
    formatting = {
+      expandable_indicator = true,
+      fields = { 'abbr', 'kind', 'menu' },
       format = lspkind.cmp_format {
          mode = 'symbol',
          maxwidth = 50,
@@ -70,24 +74,29 @@ cmp.setup {
       }
    },
    mapping = cmp.mapping.preset.insert {
+      ['<C-y>'] = cmp.config.disable,
       ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping( cmp.mapping.scroll_docs(4), { 'i', 'c' }),
       ['<C- >'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-y>'] = cmp.config.disable,
+      ['<C-s>'] = cmp.mapping.complete {
+         config = {
+            sources = {{ name = 'luasnip' }}
+         }
+      },
       ['<C-e>'] = cmp.mapping {
          i = cmp.mapping.abort(),
          c = cmp.mapping.close()
       },
       ['<CR>'] = cmp.mapping.confirm {
-         select = true,
+         select = false,
          behavior = cmp.ConfirmBehavior.Replace
       },
       ['<Tab>'] = cmp.mapping(
          function(fallback)
             if cmp.visible() then
                cmp.select_next_item()
-            elseif snip.expand_or_jumpable() then
-               snip.expand_or_jump()
+            elseif luasnip.expand_or_jumpable() then
+               luasnip.expand_or_jump()
             elseif hasWordsBefore() then
                cmp.complete()
             else
@@ -100,8 +109,8 @@ cmp.setup {
          function(fallback)
             if cmp.visible() then
                cmp.select_prev_item()
-            elseif snip.jumpable(-1) then
-               snip.jump(-1)
+            elseif luasnip.jumpable(-1) then
+               luasnip.jump(-1)
             else
                fallback()
             end
@@ -110,35 +119,53 @@ cmp.setup {
       )
    },
    sources = {
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' },
-      { name = 'nvim_lua' },
-      { name = 'path' },
-      { name = 'buffer' },
-      { name = 'rg',
-        keyword_length = 3,
-        max_item_count = 8,
-        option = {
-           additional_arguments = '--smart-case --hidden'
-        }
-      }
+     { name = 'nvim_lsp_signature_help' },
+     { name = 'nvim_lsp' },
+     { name = 'luasnip' },
+     { name = 'nvim_lua' },
+     { name = 'buffer',
+       option = {
+         get_bufnrs = function()
+            return vim.api.nvim_list_bufs()
+         end
+       }
+     },
+     { name = 'rg',
+       keyword_length = 3,
+       max_item_count = 12,
+       option = {
+         additional_arguments = '--smart-case --hidden'
+       }
+     },
+     { name = 'path',
+       option = {
+         label_trailing_slash = true,
+         trailing_slash = true
+       }
+     }
+   },
+   experimental = {
+      ghost_text = true
    }
 }
 
 cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources(
-         {{ name = 'path' }},
-         {{ name = 'cmdline' }}
-      )
-   }
-)
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = cmp.config.sources(
+     {{ name = 'path' }},
+     {{ name = 'cmdline' }}
+   )
+})
 
-cmp.setup.cmdline({ '/', '?' }, {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = {
-         { name = 'buffer' }
-      }
-   }
-)
+cmp.setup.cmdline('/', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = cmp.config.sources(
+     {{ name = 'nvim_lsp_document_symbol' }},
+     {{ name = 'buffer' }}
+   )
+})
+
+cmp.setup.cmdline('?', {
+   mapping = cmp.mapping.preset.cmdline(),
+   sources = {{ name = 'buffer' }}
+})
