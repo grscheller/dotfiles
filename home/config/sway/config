@@ -1,54 +1,51 @@
-### GRS config for sway
-#   - modified from: /etc/sway/config
-#   - for a complete reference, read: man -s5 sway 
+## GRScheller Sway Config
+#  - modified from: /etc/sway/config
+#  - for a complete reference: "man -s5 sway" 
 
-### Variables - used in the configuration
-
-# Super key. Use Mod1 for Alt.
+## Use Super key used as the mod key
 set $mod Mod4
 
-# Home row direction keys, like vim
+## Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 
-# My preferred terminal emulator
+## My preferred terminal emulator
 set $term alacritty
 
-# Application launcher, configured in ~/.config/wofi/config
+## Application launcher, configured in ~/.config/wofi/config
 set $menu wofi
 
-### Output configuration
+## Output configuration
 #
-# Example configuration:
+#  Example configuration:
+# 
+#    output HDMI-A-1 resolution 1920x1080 position 1920,0
+# 
+#  You can get the names of your outputs by running:
+# 
+#    swaymsg -t get_outputs
+# 
+#  The dotfilesInstall script swaps in a Sway background image
 #
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#    ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
 #
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-#
-
-# The dotfilesInstall script swaps in a Sway background image
-#   ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
-# if present to the output cmd below.  See dotfilesInstall for
-# details of where I obtained the picture.
+#  when present to the output cmd below.  See dotfilesInstall
+#  for the details of where to obtained the picture.
 output * bg #33467c solid_color
 
-### Idle configuration
-
-# Using swayidle:
+## Screen locking and idle configuration
+bindsym $mod+Escape exec swaylock -f -F -e -c 002222
 exec swayidle -w \
   timeout 1200 'swaylock -f -F -e -c 220022' \
   timeout 1500 'swaymsg "output * dpms off"' \
   resume 'swaymsg "output * dpms on"' \
   before-sleep 'swaylock -f -F -e -c 220022'
 
-# Manually lock the screen, use different background color than swayidle
-bindsym $mod+Escape exec swaylock -f -F -e -c 002222
-
-### Input configuration
+## Input configuration
 #
-#   Example configuration:
+#  Example configuration:
 #
 #     input "2:14:SynPS/2_Synaptics_TouchPad" {
 #         dwt enabled
@@ -57,22 +54,17 @@ bindsym $mod+Escape exec swaylock -f -F -e -c 002222
 #         middle_emulation enabled
 #     }
 #
-#   You can get the names of your inputs by running: swaymsg -t get_inputs
-#   For more information on this section, read: man 5 sway-input
+#  You can get the names of your inputs by running: swaymsg -t get_inputs
+#  For more information on this section, read: man 5 sway-input
 #
-
-# Make Capslock a second Escape key
+#  Make Capslock a second Escape key
 input "type:keyboard" xkb_options caps:escape
 
-### Polkit Daemon
-
-# Allows apps requiring permissions to ask "mother may I?":
+## Polkit Daemon
+#  - Allows apps requiring permissions to ask "mother may I?"
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-### Gaps & Borders
-#
-# Gaps & Borders
-#
+## Gaps & Borders
 gaps inner 4
 gaps outer 2
 default_border pixel 2
@@ -83,104 +75,72 @@ client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
 client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
 client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
-### Status Bar:
-#
-#   Set to Waybar, see ~/.config/waybar/config/ for configuration
-#
-bar {
-    swaybar_command waybar
-}
+## Status Bar
+#  - Set to Waybar, see ~/.config/waybar/config/ for configuration
+bar swaybar_command waybar
 
-### Key bindings
-
-#
-#   Basics:
-#
-
-# Start a terminal
+## Some basic keybindings
+#  Start a terminal
 bindsym $mod+Return exec $term
-
-# Kill focused window
+#  Kill focused window
 bindsym $mod+q kill
-
-# Start your launcher
+#  Start your launcher
 bindsym $mod+Tab exec $menu
-
-# Drag floating windows by holding down $mod and left mouse button.
-# Resize them with right mouse button + $mod.
-# Despite the name, also works for non-floating windows.
-# Change normal to inverse to use left mouse button for resizing and right
-# mouse button for dragging.
-floating_modifier $mod normal
-
-# Reload sway configuration file
+#  Reload sway configuration file
 bindsym $mod+Shift+c reload
+#  Exit sway
+bindsym $mod+Shift+e exit
 
-# Exit sway (logs you out of your Sway session)
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' \
-        -B 'Yes.  Exit sway now.' 'swaymsg exit'
-
-#
-# Moving around:
-#
-
-# Move focus with $mod+[h|j|k|l] - can cross monitors
+## Move focus with $mod+[h|j|k|l] or $mod+[up|down|left|right]
+#  - navigates splits, tabs, and stacked windows
+#  - focus can cross monitors and enter another workspace
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-# Or use $mod+[up|down|left|right]
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+#  Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
+#  Move focus to the parent container
+bindsym $mod+a focus parent
 
-# Move focused container around by adding Shift
+## Move focused item around workspace
+#  - items can be windows or containers
+#  - moves items into and through containers
+#  - item can cross monitors and enter another workspace
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
-# Ditto, with arrow keys
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+#  Toggle the current focused item between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+#  Toggle the current focused item fullscreen
+bindsym $mod+f fullscreen
 
-#
-# Layout stuff:
-#
+## Split current window into its own container
+#  - opposite to the vim conventions
+bindsym $mod+b split horizontal
+bindsym $mod+v split vertical
 
-# You can "split" the current object of your focus with
-# $mod+b or $mod+v, for horizontal and vertical splits
-# respectively.  Opposite to the vim convention.
-bindsym $mod+b splith
-bindsym $mod+v splitv
-
-# Switch the current container between different layout styles
+## Switch the current container between different layout styles
+#  - focus must be on one of the container's child items
+bindsym $mod+d layout default
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# Make the current focus fullscreen
-bindsym $mod+f fullscreen
-
-# Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
-
-# Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
-
-# Move focus to the parent container
-bindsym $mod+a focus parent
-
+## Move ficus beteen workspaces
+#  - workspaces can have any name you want, not just numbers
+#  - the numbers 1-10 are good enough for me.
 #
-# Workspaces:
-#
-# Workspaces can have any name you want, not just numbers.
-# The numbers 1-10 seem good enough for me.
-#
-
-# Switch to workspace
+#  Switch focus to another workspace
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
 bindsym $mod+3 workspace number 3
@@ -191,8 +151,11 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
+#  Move to next/prev numeric workspace
+bindsym $mod+Ctrl+Left workspace prev
+bindsym $mod+Ctrl+Right workspace next
 
-# Move focused container to workspace
+##  Move focused item to ianother workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
@@ -204,27 +167,7 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
-# Move to next/prev numeric workspace
-bindsym $mod+Ctrl+Left workspace prev
-bindsym $mod+Ctrl+Right workspace next
-
-#
-# Scratchpad:
-#
-# Sway has a "scratchpad", which is a bag for holding floating windows.
-# You can send windows there and get them back later.
-#
-
-# Move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
-
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
-
-#
-# Resizing containers:
-#
+## Resizing containers
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
@@ -245,10 +188,35 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
+#  Switch to resize mode
 bindsym $mod+r mode "resize"
 
-### OS Distibution Tweaks
+## Mouse settings
 #
-#   On Arch this will do some Wayland related configurations
+#  Setting I find best duplicates sloppy mouse focus
+focus_follows_mouse yes
+#  Drag & resize floating windows with mouse
+#  - to drag: $mod+<left mouse>
+#  - to resize: $mod+<right-mouse>
+#  - despite name
+#    - works ok to resize non-floating windows
+#    - works submarginally to move non-floating windows
+floating_modifier $mod normal
+
+## Scratchpad
 #
+#  Sway has a "scratchpad", which is a hidden workspace
+#  for holding floating windows.  You can send windows
+#  there and get them back later.
+#
+#  Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+#  Show the next scratchpad window or hide the focused scratchpad window.
+#  - if there are multiple scratchpad windows, cycle through them
+#  - move displayed scratchpad window to current workspace
+#  - tiling scratchpad window to a workspace remove it from scratchpad 
+bindsym $mod+minus scratchpad show
+
+## OS Distibution Tweaks
+#  - On Arch this will do some Wayland related configurations
 include /etc/sway/config.d/*
