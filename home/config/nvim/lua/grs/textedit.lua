@@ -8,8 +8,8 @@ local usercmd = vim.api.nvim_create_user_command
 
 local ok, comment
 
--- Set some text editing related keybindings
-require('grs.util.keybindings').textedit_kb()
+-- Set some general text editing, navigation and layout keybindings
+require('grs.util.keybindings').general_kb()
 
 -- Configure justtinmk/vim-sneak plugin
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion

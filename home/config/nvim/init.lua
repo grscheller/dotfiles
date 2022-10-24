@@ -3,10 +3,7 @@
 -- Plugin manager
 require('grs.util.packer')
 
--- Define keybindings, then set window/tab related keybindings
-require('grs.util.keybindings').navigation_layout_kb()
-
--- General text editing & text editing related plugins
+-- Set options and general text editing related plugins
 require('grs.options')
 require('grs.textedit')
 
