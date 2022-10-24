@@ -14,6 +14,6 @@ function lf --description 'Hierarchically list just files'
    for target in {$targets}**
      test -d $target
      or echo $target
-   end
+   end | sort | uniq
 
 end
