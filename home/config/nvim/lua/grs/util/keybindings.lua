@@ -126,7 +126,7 @@ function M.general_kb()
    })
 
    -- Used with LSP
-   kb('n', '[', function()
+   --[[ kb('n', '[', function()
          vim.diagnostic.goto_prev { wrap = false }
       end, {
       desc = 'diagnostic goto previous'
@@ -135,14 +135,14 @@ function M.general_kb()
          vim.diagnostic.goto_next { wrap = false }
       end, {
       desc = 'diagnostic goto next'
-   })
+   }) ]]
 
    -- WhichKey labels
    if M.wk then
       local label = { name = 'system clipboard' }
       local opts_n = {
          mode = 'n',
-         prefix = ' x'
+         prefix = ' s'
       }
       local opts_x = {
          mode = 'x',
@@ -178,7 +178,7 @@ function M.telescope_kb()
    -- WhichKey labels
    if M.wk then
       local label = { name = 'telescope' }
-      local opts = { prefix = ' s' }
+      local opts = { prefix = ' t' }
       wk.register(label, opts)
    end
 

@@ -98,7 +98,8 @@ return packer.startup(
             'hrsh7th/cmp-path',
             'onsails/lspkind.nvim',
             'lukas-reineke/cmp-rg',
-            'lukas-reineke/cmp-under-comparator'
+            'lukas-reineke/cmp-under-comparator',
+            'saadparwaiz1/cmp_luasnip'
          }
       }
 
