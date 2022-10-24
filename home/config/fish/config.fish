@@ -2,11 +2,16 @@
 #
 #  Warning: non-idiomatic use of Universals
 #
-#    dotfilesInstall installation script will blow away
-#    $XDG_CONFIG_HOME/fish/fish_variables - therefore
-#    any Universal variables not reconfigured below or
-#    via conf.d/* files will not be persistent between
-#    installs.
+#    Found no good way to bulletproof automatically
+#    regenerating ~/.config/fish/fish_variables, especially
+#    when there are lots of fish configuration changes.
+#
+#    Usually just using the "re" abbreviation is enough,
+#    but sometimes also blowing away the fish_variables
+#    file and restarting fish is needed.
+#
+#    Probably just fighting against someone else's
+#    beloved configuration paradigm.
 
 ## Setup initial environment if it has not been done so yet
 set -q VIRGINPATH
