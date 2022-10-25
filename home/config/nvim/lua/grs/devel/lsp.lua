@@ -1,13 +1,11 @@
 --[[ Setup Develoment Environment & LSP Configurations ]]
 
-local ok
+local ok, ok_dap
 local ts_configs
 local lspconfig, nvimLspInstaller, cmp_nvim_lsp
-local rust_tools
-local metals
+local rust_tools, metals, dap
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
-
 ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
 if ok then
    ts_configs.setup {
@@ -16,7 +14,7 @@ if ok then
    }
 end
 
--- Punt if necessary LSP related plugins are not installed
+--[[ Punt if necessary LSP related plugins are not installed ]]
 ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
    return
@@ -32,8 +30,9 @@ if not ok then
    return
 end
 
--- set flag ok_dap if DAP debugging is available
-local ok_dap, dap = pcall(require, 'dap')
+--[[ Set flag ok_dap if DAP debugging is available ]]
+ok_dap, dap = pcall(require, 'dap')
+ok, dap_widgits = pcall(require, 'dap.ui.widgits')
 
 --[[ Python Configuration
 
@@ -134,7 +133,7 @@ if ok then
          on_attach = function(client, bufnr)
             keybindings.lsp_kb(client, bufnr)
             if ok_dap then
-               keybindings.dap_kb(bufnr)
+               keybindings.dap_kb(bufnr, dap, dap_widgits)
             end
          end,
          standalone = true,
@@ -163,7 +162,7 @@ if ok then
 
    function metals_config.on_attach(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
-      keybindings.metals_kb(bufnr)
+      keybindings.metals_kb(bufnr, metals)
       if ok_dap then
          dap.configurations.scala = {{
                type = 'scala',
@@ -183,7 +182,7 @@ if ok then
             }
          }
          metals.setup_dap()
-         keybindings.dap_kb(bufnr)
+         keybindings.dap_kb(bufnr, dap, dap_widgits)
       end
    end
 

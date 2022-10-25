@@ -39,10 +39,16 @@ function M.general_kb()
    -- Creating new windows
    kb('n', '<M-s>', '<C-w>s', { desc = 'split current window' })
    kb('n', '<M-d>', '<C-w>v', { desc = 'vsplit current window' })
-   kb('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i',
-                              { desc = 'fish term in split' })
-   kb('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i',
-                              { desc = 'fish term in vsplit' })
+   kb('n',
+      '<M-f>',
+      '<Cmd>split<Bar>term fish<CR>i',
+      { desc = 'fish term in split' }
+   )
+   kb('n',
+      '<M-g>',
+      '<Cmd>vsplit<Bar>term fish<CR>i',
+      { desc = 'fish term in vsplit' }
+   )
 
    -- Changing window layout
    kb('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })
@@ -68,6 +74,7 @@ function M.general_kb()
 
    -- Managing tabpages
    kb('n', '<M-Left>',  '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
+
    kb('n', '<M-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
    kb('n', '<M-n>',     '<Cmd>tabnew<CR>',  { desc = 'create new tab' })
    kb('n', '<M-t>',     '<C-w>T',  { desc = 'breakout window new tab' })
@@ -79,34 +86,29 @@ function M.general_kb()
    kb('x', '>', '>gv', { desc = 'shift right & reselect' })
 
    -- Yank, delete, change & paste with system clipboard
-   kb({ 'n', 'v' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
-   kb({ 'n', 'v' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
-   kb({ 'n', 'v' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
-   kb({ 'n', 'v' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
+   kb({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
+   kb({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
+   kb({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
+   kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
 
    -- Delete & change text without affecting default register
-   kb({ 'n', 'v' }, ' d', '"_d', { desc = 'delete text to blackhole register' })
-   kb({ 'n', 'v' }, ' c', '"_c', { desc = 'change text to blackhole register' })
+   kb({ 'n', 'x' }, ' d', '"_d',
+      { desc = 'delete text to blackhole register' })
+   kb({ 'n', 'x' }, ' c', '"_c',
+      { desc = 'change text to blackhole register' })
 
    -- Misc keybindings
-   kb('n', ' b', '<Cmd>enew<CR>', {
-      desc = 'new unnamed buffer'
-   })
-   kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>', {
-      desc = 'toggle treesitter'
-   })
-   kb('n', ' k', '<Cmd>dig<CR>a<C-k>', {
-      desc = 'pick & enter diagraph'
-   })
-   kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
-      desc = 'clear & redraw window'
-   })
-   kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
-      desc = 'trim trailing whitespace'
-   })
-   kb('n', 'z ', '<Cmd>set invspell<CR>', {
-      desc = 'toggle spelling'
-   })
+   kb('n', ' b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
+   kb('n', ' k', '<Cmd>dig<CR>a<C-k>',
+                                  { desc = 'pick & enter diagraph' })
+   kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>',
+                                  { desc = 'toggle treesitter' })
+   kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>',
+                                  { desc = 'trim trailing whitespace' })
+   kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>',
+                                  { desc = 'clear & redraw window' })
+   kb('n', 'z ', '<Cmd>set invspell<CR>',
+                                  { desc = 'toggle spelling' })
 
    -- toggle line numberings schemes
    kb('n', ' n', function()
@@ -121,25 +123,11 @@ function M.general_kb()
             vim.wo.number = false
             vim.wo.relativenumber = false
          end
-      end, {
-      desc = 'line number toggle'
-   })
-
-   -- Used with LSP
-   --[[ kb('n', '[', function()
-         vim.diagnostic.goto_prev { wrap = false }
-      end, {
-      desc = 'diagnostic goto previous'
-   })
-   kb('n', ']', function()
-         vim.diagnostic.goto_next { wrap = false }
-      end, {
-      desc = 'diagnostic goto next'
-   }) ]]
+      end, { desc = 'line number toggle' })
 
    -- WhichKey labels
    if M.wk then
-      local label = { name = 'system clipboard' }
+      local labels = { name = 'system clipboard' }
       local opts_n = {
          mode = 'n',
          prefix = ' s'
@@ -148,38 +136,46 @@ function M.general_kb()
          mode = 'x',
          prefix = ' s'
       }
-      wk.register(label, opts_n)
-      wk.register(label, opts_x)
+      wk.register(labels, opts_n)
+      wk.register(labels, opts_x)
    end
 
 end
 
 --[[ Telescope related keybindings ]]
-function M.telescope_kb()
-   local ts = require('telescope')
-   local tb = require('telescope.builtin')
-   local tfb = ts.extensions.file_browser
-   local tfq = ts.extensions.frecency
+function M.telescope_kb(ts, tb)
 
-   -- Telescope
+   -- Telescope built-ins
+   local tb_td = tb.grep_string
+   local tb_tf = tb.find_files
+   local tb_tg = tb.live_grep
+   local tb_th = tb.help_tags
+   local tb_tl = tb.buffers
+   local tb_tr = tb.oldfiles
+   local tb_tz = tb.current_buffer_fuzzy_find
+
+   kb('n', ' td', tb_td, { desc = 'grep files curr dir' })
+   kb('n', ' tf', tb_tf, { desc = 'find files' })
+   kb('n', ' tg', tb_tg, { desc = 'grep content files' })
+   kb('n', ' th', tb_th, { desc = 'help tags' })
+   kb('n', ' tl', tb_tl, { desc = 'list buffers' })
+   kb('n', ' tr', tb_tr, { desc = 'find recent files' })
+   kb('n', ' tz', tb_tz, { desc = 'fuzzy find curr buff' })
+
+   -- Telescope extensions
+   local filebrowser = ts.extensions.file_browser.file_browser
+   local frecency = ts.extensions.frecency.frecency
+   kb('n', ' tb', filebrowser, { desc = 'file browser' })
+   kb('n', ' tq', frecency,    { desc = 'telescope frecency' })
+
+   -- Telescope commands
    kb('n', ' tt', '<Cmd>Telescope<CR>', { desc = 'telescope command' })
-   kb('n', ' tl', tb.buffers,           { desc = 'list buffers' })
-   kb('n', ' tz',
-      tb.current_buffer_fuzzy_find,
-      { desc = 'fuzzy find current buffer' })
-   kb('n', ' tb', tfb.file_browser, { desc = 'telescope file browser' })
-   kb('n', ' tf', tb.find_files,    { desc = 'find files' })
-   kb('n', ' tq', tfq.frecency,     { desc = 'telescope frecency' })
-   kb('n', ' tr', tb.oldfiles,      { desc = 'find recent files' })
-   kb('n', ' tg', tb.live_grep,     { desc = 'grep file contents' })
-   kb('n', ' tn', tb.grep_string,   { desc = 'fzy find file names' })
-   kb('n', ' th', tb.help_tags,     { desc = 'help tags' })
 
    -- WhichKey labels
    if M.wk then
-      local label = { name = 'telescope' }
+      local labels = { name = 'telescope' }
       local opts = { prefix = ' t' }
-      wk.register(label, opts)
+      wk.register(labels, opts)
    end
 
 end
@@ -190,56 +186,69 @@ end
 --   stepping on folding keybindings which I never use.
 --
 function M.lsp_kb(client, bufnr)
-   kb('n', 'za',  vim.lsp.buf.code_action, {
-      desc = 'code action', buffer = bufnr
-   })
-   kb('n', 'zlh', vim.lsp.codelens.refresh, {
-      desc = 'code lens refresh', buffer = bufnr
-   })
-   kb('n', 'zlr', vim.lsp.codelens.run, {
-      desc = 'code lens run', buffer = bufnr
-   })
-   kb('n', 'zd',  vim.diagnostic.setloclist, {
-      desc = 'buffer diagnostics', buffer = bufnr
-   })
-   kb('n', 'zFf', vim.lsp.buf.format, {
-      desc = 'lsp format', buffer = bufnr
-   })
    kb('n', 'gd',  vim.lsp.buf.definition, {
-      desc = 'goto definition', buffer = bufnr
+      buffer = bufnr,
+      desc = 'goto definition'
    })
    kb('n', 'gD',  vim.lsp.buf.declaration, {
-      desc = 'goto declaration', buffer = bufnr
+      buffer = bufnr,
+      desc = 'goto declaration'
    })
    kb('n', 'gI',  vim.lsp.buf.implementation, {
-      desc = 'goto implementation', buffer = bufnr
+      buffer = bufnr,
+      desc = 'goto implementation'
    })
    kb('n', 'gr',  vim.lsp.buf.references, {
-      desc = 'goto references', buffer = bufnr
+      buffer = bufnr,
+      desc = 'goto references'
    })
    kb('n', 'gsd', vim.lsp.buf.document_symbol, {
-      desc = 'document symbol', buffer = bufnr
+      buffer = bufnr,
+      desc = 'document symbol'
    })
    kb('n', 'gsw', vim.lsp.buf.workspace_symbol, {
-      desc = 'workspace symbol', buffer = bufnr
+      buffer = bufnr,
+      desc = 'workspace symbol'
    })
    kb('n', 'gt',  vim.lsp.buf.type_definition, {
-      desc = 'goto type definition', buffer = bufnr
+      buffer = bufnr,
+      desc = 'goto type definition'
    })
-   kb('n', 'zS',  vim.lsp.buf.signature_help, {
-      desc = 'signature help', buffer = bufnr
+   kb('n', 'za',  vim.lsp.buf.code_action, {
+      buffer = bufnr,
+      desc = 'code action'
    })
-   kb('n', 'zh',   vim.lsp.buf.hover, {
-      desc = 'hover', buffer = bufnr
+   kb('n', 'zll', vim.lsp.codelens.refresh, {
+     buffer = bufnr,
+      desc = 'code lens refresh'
+   })
+   kb('n', 'zlr', vim.lsp.codelens.run, {
+      buffer = bufnr,
+      desc = 'code lens run'
+   })
+   kb('n', 'zd',  vim.diagnostic.setloclist, {
+      buffer = bufnr,
+      desc = 'buffer diagnostics'
+   })
+   kb('n', 'zFf', vim.lsp.buf.format, {
+      buffer = bufnr,
+      desc = 'lsp format'
+   })
+   kb('n', 'zh',  vim.lsp.buf.hover, {
+      buffer = bufnr,
+      desc = 'hover'
    })
    kb('n', 'zr',  vim.lsp.buf.rename, {
-      desc = 'rename', buffer = bufnr
+      buffer = bufnr,
+      desc = 'rename'
    })
    kb('n', 'zWa', vim.lsp.buf.add_workspace_folder, {
-      desc = 'add workspace folder', buffer = bufnr
+      buffer = bufnr,
+      desc = 'add workspace folder'
    })
    kb('n', 'zWr', vim.lsp.buf.remove_workspace_folder, {
-      desc = 'remove workspace folder', buffer = bufnr
+      buffer = bufnr,
+      desc = 'remove workspace folder',
    })
 
    -- WhichKey labels
@@ -252,10 +261,10 @@ function M.lsp_kb(client, bufnr)
          l = { name = 'code lens' },
          W = { name = 'workspace folder' }
       }
-      local opts_g = { prefix = ' g' }
-      local opts_z = { prefix = ' z' }
-      wk.register(labels_g, { opts_g, buffer = bufnr })
-      wk.register(labels_z, { opts_z, buffer = bufnr })
+      local opts_g = { prefix = 'g', buffer = bufnr }
+      local opts_z = { prefix = 'z', buffer = bufnr }
+      wk.register(labels_g, opts_g)
+      wk.register(labels_z, opts_z)
    end
 
    return client
@@ -270,65 +279,62 @@ function M.haskell_kb(bufnr)
 end
 
 --[[ Scala Metals related keybindings ]]
-function M.metals_kb(bufnr)
-   local metals = require('metals')
+function M.metals_kb(bufnr, metals)
    kb('n', 'mh', metals.hover_worksheet, {
       desc = 'metals hover worksheet', buffer = bufnr
    })
 
    -- WhichKey labels
    if M.wk then
-      local label = { name = 'metals' }
+      local labels = { name = 'metals' }
       local opts = {
          prefix = 'm',
          buffer = bufnr
       }
-      wk.register(label, opts)
+      wk.register(labels, opts)
    end
 
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
-function M.dap_kb(bufnr)
-   local dap = require('dap')
-   local dapUiWidgets = require('dap.ui.widgets')
+function M.dap_kb(bufnr, dap, dap_widgits)
    kb('n', '\\c', dap.continue, {
-      desc = 'dap continue',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap continue'
    })
-   kb('n', '\\h', dapUiWidgets.hover, {
-      desc = 'dap hover',
-      buffer = bufnr
+   kb('n', '\\h', dap_widgits.hover, {
+      buffer = bufnr,
+      desc = 'dap hover'
    })
    kb('n', '\\l', dap.run_last, {
-      desc = 'dap run last',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap run last'
    })
    kb('n', '\\o', dap.step_over, {
-      desc = 'dap step over',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap step over'
    })
    kb('n', '\\i', dap.step_into, {
-      desc = 'dap step into',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap step into'
    })
    kb('n', '\\b', dap.toggle_breakpoint, {
-      desc = 'dap toggle breakpoint',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap toggle breakpoint'
    })
    kb('n', '\\r', dap.repl.toggle, {
-      desc = 'dap repl toggle',
-      buffer = bufnr
+      buffer = bufnr,
+      desc = 'dap repl toggle'
    })
 
    -- WhichKey labels
    if M.wk then
-      local label = { name = 'dap' }
+      local labels = { name = 'dap' }
       local opts = {
-         prefix = '\\',
-         buffer = bufnr
+         buffer = bufnr,
+         prefix = '\\'
       }
-      wk.register(label, opts)
+      wk.register(labels, opts)
    end
 
 end
