@@ -114,11 +114,9 @@ function M.general_kb()
    kb('n', ' n', function()
          if not vim.wo.number and not vim.wo.relativenumber then
             vim.wo.number = true
-            vim.wo.relativenumber = false
-         elseif vim.wo.number and not vim.wo.relativenumber then
             vim.wo.relativenumber = true
          elseif vim.wo.number and vim.wo.relativenumber then
-            vim.wo.number = false
+            vim.wo.relativenumber = false
          else
             vim.wo.number = false
             vim.wo.relativenumber = false
