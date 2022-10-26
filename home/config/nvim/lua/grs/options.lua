@@ -18,10 +18,11 @@ local options = {
    -- Buffer/Editing preferences
    hidden = true, -- my expectations are that buffers don't get abandoned
    joinspaces = true, -- use 2 spaces when joinig sentances
-   nrformats = 'bin,hex,octal,alpha', -- bases & single letters for <C-A> & <C-X>
+   nrformats = 'bin,hex,octal,alpha', -- for <C-A> & <C-X>
    undofile = true, -- save undo history in ~/.local/share/nvim/undo/
-   ignorecase = true, -- Default to case insensitive search if
-   smartcase = true, -- give just lower case search patterns.
+   ignorecase = true, -- Case insensitive search when given
+   smartcase = true,  -- just lower case search patterns.
+   colorcolumn = '80', -- indicate column 80, as a guide to keep source code
 
    -- Windowing preferences
    mouse = 'a', -- enable mouse for all modes
@@ -36,14 +37,14 @@ local options = {
    sidescroll = 1, -- horizontally scroll one character at a time
 
    -- Settings affecting LSP clients & plugins
-   timeoutlen = 1500, -- milliseconds to wait for key mapped sequence to complete
+   timeoutlen = 1500, -- ms to wait for key mapped sequence to complete
    updatetime = 300, -- set update time for CursorHold event
    signcolumn = 'yes', -- fixes first column, reduces jitter
    showmode = false, -- redundant with Lualine
    showcmd = false, -- redundant with WhichKey
    completeopt = 'menu,menuone,noinsert', -- for nvim-cmp
-   termguicolors = true, -- enable 24-bit RGB color on ISO-8613-3 compaible terminals
-   complete = '.,w,b,u,kspell', -- no "t,i" for ins-completion-menu - redundant with LSP
+   termguicolors = true, -- enable 24-bit RGB color for ISO-8613-3 terminals
+   complete = '.,w,b,u,kspell', -- no "t,i" - redundant with LSP
    shortmess = 'atToOc' -- shorten statusline - removed F for Scala Metals
 }
 
@@ -52,5 +53,5 @@ for k, v in pairs(options) do
 end
 
 -- Modified existing nvim options
-vim.opt.matchpairs:append { '<:>', '「:」' } -- additional matching char pairs
+vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
 vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions

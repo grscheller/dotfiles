@@ -9,18 +9,20 @@ else
    return
 end
 
-ts.setup { extensions = {
-   file_browser = {},
-   frecency = {},
-   fzf = {},
-   ['ui-select'] = {
-      require('telescope.themes').get_dropdown {}
+ts.setup {
+   extensions = {
+      file_browser = {},
+      frecency = {},
+      fzf = {},
+      ['ui-select'] = {
+         require('telescope.themes').get_dropdown {}
+      }
    }
-}}
-ts.load_extension('ui-select')
+}
 ts.load_extension('file_browser')
 ts.load_extension('frecency')
 ts.load_extension('fzf')
+ts.load_extension('ui-select')
 
 -- Set Telescope key mappings/bindings
 require('grs.util.keybindings').telescope_kb(ts, tb)

@@ -1,14 +1,15 @@
 --[[ Setup Develoment Environment & LSP Configurations ]]
 
-local ok, ok_dap
-local ts_configs
+local ok
+local treesitter_configs
 local lspconfig, nvimLspInstaller, cmp_nvim_lsp
-local rust_tools, metals, dap
+local rust_tools, metals
+local ok_dap, dap, dap_widgits
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
-ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if ok then
-   ts_configs.setup {
+   treesitter_configs.setup {
       ensure_installed = 'all',
       highlight = { enable = true }
    }
@@ -80,8 +81,10 @@ end
 
 --[[ Lua Lang Configuration ]]
 
+local cmd = vim.api.nvim_command
+
 -- Lua auto-indent configuration
-vim.api.nvim_command [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
+cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
 -- lua-language-server configuration for editing Neovim configs
 lspconfig['sumneko_lua'].setup {
@@ -100,7 +103,7 @@ lspconfig['sumneko_lua'].setup {
 --[[ Haskell Lang Configuration ]]
 
 -- Lua auto-indent configuration
-vim.api.nvim_command [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
+cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
 -- haskell-language-server (hls) configuration - install via pacman
 lspconfig['hls'].setup {
@@ -120,13 +123,16 @@ lspconfig['hls'].setup {
      The easiest way to install it is to install vscode and, through vscode's
      GUI interface, install the CodeLLDB extension.
 
-     See https://github.com/sharksforarms/neovim-rust ]]
+     See https://github.com/sharksforarms/neovim-rust
+
+     TODO: Below paths are BROKEN!!! Whole section may be out of date!!! ]]
 
 ok, rust_tools = pcall(require, 'rust-tools')
 if ok then
-   local extension_path = vim.env.HOME .. '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.0/'
-   local codelldb_path = extension_path .. 'adapter/codelldb'
-   local liblldb_path = extension_path .. 'lldb/lib/liblldb.so'
+   local extension_path = vim.env.HOME ..
+                           '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.4'
+   local codelldb_path = extension_path .. '/adapter/codelldb'
+   local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
    rust_tools.setup {
       server = {
          capabilities = capabilities,
