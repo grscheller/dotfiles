@@ -2,9 +2,6 @@
 
 local ok
 local treesitter_configs
-local lspconfig, nvimLspInstaller, cmp_nvim_lsp
-local rust_tools, metals
-local ok_dap, dap, dap_widgits
 
 --[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
@@ -16,12 +13,14 @@ if ok then
 end
 
 --[[ Punt if necessary LSP related plugins are not installed ]]
+local lspconfig, nvim_lsp_installer, cmp_nvim_lsp
+
 ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
    return
 end
 
-ok, nvimLspInstaller = pcall(require, 'nvim-lsp-installer')
+ok, nvim_lsp_installer = pcall(require, 'nvim-lsp-installer')
 if not ok then
    return
 end
@@ -32,8 +31,9 @@ if not ok then
 end
 
 --[[ Set flag ok_dap if DAP debugging is available ]]
+local ok_dap, dap, dap_ui_widgets
 ok_dap, dap = pcall(require, 'dap')
-ok, dap_widgits = pcall(require, 'dap.ui.widgits')
+ok, dap_ui_widgets = pcall(require, 'dap.ui.widgets')
 
 --[[ Python Configuration
 
@@ -70,7 +70,7 @@ local lsp_servers = {
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
 
-nvimLspInstaller.setup {} -- Must be called before interacting with lspconfig
+nvim_lsp_installer.setup {} -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
    lspconfig[lsp_server].setup {
@@ -114,40 +114,43 @@ lspconfig['hls'].setup {
    end
 }
 
---[[ Rust Lang Configuration - rust_tools & lldb-vscode
+--[[ Rust Lang Configuration - rust_tools & lldb
 
-     Follow setup from https://github.com/simrat39/rust-tools.nvim
+     Following https://github.com/simrat39/rust-tools.nvim
+           and https://github.com/sharksforarms/neovim-rust 
 
-     Install the LLDB DAP server, a vscode extension, from
-       https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb
-     The easiest way to install it is to install vscode and, through vscode's
-     GUI interface, install the CodeLLDB extension.
+     Install the LLDB DAP server, a vscode extension. On
+     Arch Linux, install the lldb pacman package from extra.  ]]
 
-     See https://github.com/sharksforarms/neovim-rust
-
-     TODO: Below paths are BROKEN!!! Whole section may be out of date!!! ]]
-
-ok, rust_tools = pcall(require, 'rust-tools')
+local rt
+ok, rt = pcall(require, 'rust-tools')
 if ok then
-   local extension_path = vim.env.HOME ..
-                           '/.vscode-oss/extensions/vadimcn.vscode-lldb-1.7.4'
-   local codelldb_path = extension_path .. '/adapter/codelldb'
-   local liblldb_path = extension_path .. '/lldb/lib/liblldb.so'
-   rust_tools.setup {
+   if ok_dap then
+      dap.configurations.rust = {{
+         type = 'rust';
+         request = 'launch';
+         name = 'rt_lldb';
+      }}
+   end
+   rt.setup {
+      runnables = {
+         use_telescope = true
+      },
       server = {
          capabilities = capabilities,
          on_attach = function(client, bufnr)
             keybindings.lsp_kb(client, bufnr)
             if ok_dap then
-               keybindings.dap_kb(bufnr, dap, dap_widgits)
+               keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
             end
          end,
-         standalone = true,
-         dap = {
-            adapter = require('rust-tools.dap').get_codelldb_adapter(
-               codelldb_path,
-               liblldb_path
-            )
+         standalone = true
+      },
+      dap = {
+         adapter = {
+            type = 'executable',
+            command = 'lldb-vscode',
+            name = 'rt_lldb'
          }
       }
    }
@@ -158,11 +161,15 @@ end
      Following: https://github.com/scalameta/nvim-metals/discussions/39
      For latest Metals Server Version see: https://scalameta.org/metals/docs ]]
 
+local metals
 ok, metals = pcall(require, 'metals')
 if ok then
    local metals_config = metals.bare_config()
 
-   metals_config.settings = { showImplicitArguments = true }
+   metals_config.settings = {
+      showImplicitArguments = true,
+      serverVersion = '0.11.9'
+   }
    metals_config.capabilities = capabilities
    metals_config.init_options.statusBarProvider = 'on'
 
@@ -188,7 +195,7 @@ if ok then
             }
          }
          metals.setup_dap()
-         keybindings.dap_kb(bufnr, dap, dap_widgits)
+         keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
       end
    end
 

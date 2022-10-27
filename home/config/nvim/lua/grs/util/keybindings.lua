@@ -183,7 +183,7 @@ end
 --   Using g and z as "leader keys" for LSP,
 --   stepping on folding keybindings which I never use.
 --
-function M.lsp_kb(client, bufnr)
+function M.lsp_kb(_, bufnr)
    kb('n', 'gd',  vim.lsp.buf.definition, {
       buffer = bufnr,
       desc = 'goto definition'
@@ -265,8 +265,6 @@ function M.lsp_kb(client, bufnr)
       wk.register(labels_z, opts_z)
    end
 
-   return client
-
 end
 
 --[[ Haskell related keybindings ]]
@@ -295,12 +293,12 @@ function M.metals_kb(bufnr, metals)
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
-function M.dap_kb(bufnr, dap, dap_widgits)
+function M.dap_kb(bufnr, dap, dap_ui_widgets)
    kb('n', '\\c', dap.continue, {
       buffer = bufnr,
       desc = 'dap continue'
    })
-   kb('n', '\\h', dap_widgits.hover, {
+   kb('n', '\\h', dap_ui_widgets.hover, {
       buffer = bufnr,
       desc = 'dap hover'
    })
