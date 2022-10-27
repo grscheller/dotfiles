@@ -1,4 +1,4 @@
---[[ Completions using nvim-cmp and luasnip ]]
+--[[ Completions and Snippets ]]
 
 local ok, cmp, luasnip, lspkind, cmp_under_comparator
 

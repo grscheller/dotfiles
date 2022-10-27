@@ -1,9 +1,11 @@
---[[ Setup Develoment Environment & LSP Configurations ]]
+--[[ LSP and Language Configurations ]]
 
+local cmd = vim.api.nvim_command
 local ok
+
+-- Nvim-Treesitter - language modules for built-in Treesitter
 local treesitter_configs
 
---[[ Nvim-Treesitter - language modules for built-in Treesitter ]]
 ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if ok then
    treesitter_configs.setup {
@@ -12,7 +14,7 @@ if ok then
    }
 end
 
---[[ Punt if necessary LSP related plugins are not installed ]]
+-- Punt if necessary LSP related plugins are not installed
 local lspconfig, nvim_lsp_installer, cmp_nvim_lsp
 
 ok, lspconfig = pcall(require, 'lspconfig')
@@ -30,30 +32,33 @@ if not ok then
    return
 end
 
---[[ Set flag ok_dap if DAP debugging is available ]]
+-- Prepare to conditionally configure DAP
 local ok_dap, dap, dap_ui_widgets
 ok_dap, dap = pcall(require, 'dap')
-ok, dap_ui_widgets = pcall(require, 'dap.ui.widgets')
+if ok_dap then
+   dap_ui_widgets = require('dap.ui.widgets')
+end
 
---[[ Python Configuration
+--[[
+     Python Configuration
 
-     Pointing python3_host_prog to the pyenv shim,
-     then run nvim in the virtual environment.
+     Pointing python3_host_prog to the pyenv shim
+     and running nvim in the virtual environment.
 
-     Will need to install pynvim into each virtual
-     environment.  I am not sure the pyright LSP server
-     will use the correct virtual environment when nvim
-     itself is using the base pyenv python environment. ]]
-
+     Todo: Figure out where pipenv and pynvim 
+           need to be installed.  Base python
+           environment or each virtual environment?
+--]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
---[[ Nvim LSP Installer Configuration
+--[[
+     Nvim LSP Installer Configuration
 
-     For lang server list see the 1st link
-     of https://github.com/neovim/nvim-lspconfig
+     See https://github.com/neovim/nvim-lspconfig
+     for a language server list.
 
-     Install via pacman or sudo npm i -g <language-server> ]]
-
+     Install via pacman or sudo npm i -g <language-server>
+--]]
 local lsp_servers = {
    'bashls', -- bash lang server (pacman or npm)
    'clangd', -- C and C++ - both clang and gcc (pacman clang)
@@ -79,14 +84,9 @@ for _, lsp_server in ipairs(lsp_servers) do
    }
 end
 
---[[ Lua Lang Configuration ]]
-
-local cmd = vim.api.nvim_command
-
--- Lua auto-indent configuration
+-- Lua configuration - geared towards editing Neovim configs 
 cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
--- lua-language-server configuration for editing Neovim configs
 lspconfig['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = keybindings.lsp_kb,
@@ -100,12 +100,9 @@ lspconfig['sumneko_lua'].setup {
    }
 }
 
---[[ Haskell Lang Configuration ]]
-
--- Lua auto-indent configuration
+-- Haskell configuration - Lua auto-indent configuration
 cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
--- haskell-language-server (hls) configuration - install via pacman
 lspconfig['hls'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
@@ -114,14 +111,15 @@ lspconfig['hls'].setup {
    end
 }
 
---[[ Rust Lang Configuration - rust_tools & lldb
+--[[
+     Rust Lang Configuration - rust_tools & lldb
 
      Following https://github.com/simrat39/rust-tools.nvim
            and https://github.com/sharksforarms/neovim-rust 
 
      Install the LLDB DAP server, a vscode extension. On
-     Arch Linux, install the lldb pacman package from extra.  ]]
-
+     Arch Linux, install the lldb pacman package from extra.
+--]]
 local rt
 ok, rt = pcall(require, 'rust-tools')
 if ok then

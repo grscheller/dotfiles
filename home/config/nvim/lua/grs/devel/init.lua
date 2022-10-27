@@ -1,4 +1,4 @@
---[[ Configure an IDE like LSP based software development environment ]]
+--[[ Create an LSP based software development environment ]]
 
 require('grs.devel.telescope')
 require('grs.devel.completions')
