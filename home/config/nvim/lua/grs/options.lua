@@ -1,4 +1,4 @@
---[[ Options reflecting my personal preferences ]]
+--[[ Options - reflecting my personal preferences ]]
 
 local options = {
    -- POSIX compatible shells are needed by some plugins
@@ -9,8 +9,8 @@ local options = {
    spelllang = 'en_us',
    fileformats = 'unix,mac,dos',
 
-   -- Set default tab stops and auto-indenting behavior
-   tabstop = 8, -- set tab stops every 8 columns
+   -- Set default tab/indenting behavior
+   tabstop = 8, -- set tab stops every 8 columns, makes tab chars easy to spot
    shiftwidth = 4, -- number of columns used for auto-indentation
    softtabstop = 4, -- insert/delete 4 columns of ws when tabbing/backspacing
    expandtab = true, -- use only spaces when tabbing or auto-indenting

@@ -1,6 +1,8 @@
---[[ Completions and Snippets ]]
+--[[ Completions & Snippets ]]
 
-local ok, cmp, luasnip, lspkind, cmp_under_comparator
+local ok
+local cmp, luasnip, lspkind
+local cmp_under_comparator
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -61,13 +63,15 @@ cmp.setup {
          maxwidth = 50,
          ellipsis = '…',
          menu = {
-            nvim_lsp = '[lsp]',
+            luasnip = '[snip]',
             nvim_lsp_signature_help = '[lsp-sh]',
+            nvim_lsp = '[lsp]',
             nvim_lua = '[lua]',
-            path = '[path]',
             buffer = '[buf]',
             rg = '[rg]',
-            luasnip = '[snip]'
+            path = '[path]',
+            cmdline = '[cmd]',
+            nvim_lsp_document_symbol = '[lsp-ds]',
          }
       }
    },

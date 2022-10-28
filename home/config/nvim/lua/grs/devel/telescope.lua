@@ -1,4 +1,4 @@
---[[ Telescope - fuzzy finder over lists ]]
+--[[ Telescope - search, filter, find & pick items with Lua ]]
 
 local ok, ts, tb
 

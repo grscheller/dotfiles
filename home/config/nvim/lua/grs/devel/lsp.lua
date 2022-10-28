@@ -1,7 +1,7 @@
---[[ LSP and Language Configurations ]]
+--[[ LSP and Tooling Configurations ]]
 
-local cmd = vim.api.nvim_command
 local ok
+local cmd = vim.api.nvim_command
 
 -- Nvim-Treesitter - language modules for built-in Treesitter
 local treesitter_configs
@@ -40,24 +40,25 @@ if ok_dap then
 end
 
 --[[
-     Python Configuration
-
-     Pointing python3_host_prog to the pyenv shim
-     and running nvim in the virtual environment.
-
-     Todo: Figure out where pipenv and pynvim 
-           need to be installed.  Base python
-           environment or each virtual environment?
---]]
-vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
-
---[[
      Nvim LSP Installer Configuration
 
      See https://github.com/neovim/nvim-lspconfig
      for a language server list.
 
      Install via pacman or sudo npm i -g <language-server>
+
+     TODO: nvim-lsp-installer has been DEPRECATED!!!
+
+           Need to replace
+             - williamboman/nvim-lsp-installer
+             - neovim/nvim-lspconfig
+
+           with these
+
+             - williamboman/mason.nvim
+             - williamboman/mason-lspconfig.nvim
+
+           These will also help with DAP configuraation.
 --]]
 local lsp_servers = {
    'bashls', -- bash lang server (pacman or npm)
@@ -84,7 +85,18 @@ for _, lsp_server in ipairs(lsp_servers) do
    }
 end
 
--- Lua configuration - geared towards editing Neovim configs 
+--[[ Haskell configuration - Lua auto-indent configuration ]]
+cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
+
+lspconfig['hls'].setup {
+   capabilities = capabilities,
+   on_attach = function(client, bufnr)
+      keybindings.lsp_kb(client, bufnr)
+      keybindings.haskell_kb(bufnr)
+   end
+}
+
+--[[ Lua configuration - geared towards editing Neovim configs ]]
 cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
 lspconfig['sumneko_lua'].setup {
@@ -100,16 +112,17 @@ lspconfig['sumneko_lua'].setup {
    }
 }
 
--- Haskell configuration - Lua auto-indent configuration
-cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
+--[[
+     Python Configuration
 
-lspconfig['hls'].setup {
-   capabilities = capabilities,
-   on_attach = function(client, bufnr)
-      keybindings.lsp_kb(client, bufnr)
-      keybindings.haskell_kb(bufnr)
-   end
-}
+     Pointing python3_host_prog to the pyenv shim
+     and running nvim in the virtual environment.
+
+     Todo: Figure out where pipenv and pynvim 
+           need to be installed.  Base python
+           environment or each virtual environment?
+--]]
+vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[
      Rust Lang Configuration - rust_tools & lldb
@@ -154,11 +167,12 @@ if ok then
    }
 end
 
---[[ Scala Lang Configuration
+--[[
+     Scala Lang Configuration
 
      Following: https://github.com/scalameta/nvim-metals/discussions/39
-     For latest Metals Server Version see: https://scalameta.org/metals/docs ]]
-
+     For latest Metals Server Version see: https://scalameta.org/metals/docs
+--]]
 local metals
 ok, metals = pcall(require, 'metals')
 if ok then

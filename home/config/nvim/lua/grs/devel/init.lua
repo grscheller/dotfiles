@@ -1,5 +1,5 @@
---[[ Create an LSP based software development environment ]]
+--[[ Create LSP based software development environment ]]
 
-require('grs.devel.telescope')
-require('grs.devel.completions')
-require('grs.devel.lsp')
+require('grs.devel.telescope')   -- search, filter, find & pick items with Lua
+require('grs.devel.completions') -- completions & Snippets
+require('grs.devel.lsp')         -- lsp & computer language configuration

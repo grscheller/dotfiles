@@ -15,9 +15,12 @@ if ok then
    }
 end
 
--- Setup WebDevicons
--- Needs a patched font like Noto Mono Nerd Font
--- see https://github.com/ryanoasis/nerd-fonts
+--[[
+     Setup WebDevicons
+
+     Needs a patched font like Noto Mono Nerd Font,
+     see https://github.com/ryanoasis/nerd-fonts
+--]]
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
@@ -114,11 +117,12 @@ if ok then
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
 end
 
--- Setup Kanagawa colorscheme
---
---   A colorschemen inspired by TokyoNight,
---   Gruvbox, and the painting by Kanagawa.
---
+--[[
+     Setup Kanagawa colorscheme
+
+     A colorschemen inspired by TokyoNight,
+     Gruvbox, and the painting by Kanagawa.
+--]]
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
    local my_colors = {

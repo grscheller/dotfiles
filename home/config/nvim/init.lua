@@ -1,4 +1,4 @@
---[[ Neovim configuration ]]
+--[[ Start of Neovim Configuration ]]
 
 require('grs.util.packer') -- plugin manager
 require('grs.options')     -- set options

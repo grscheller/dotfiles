@@ -1,5 +1,6 @@
---[[ Using Packer as the plugin manager
+--[[ Using Packer as the plugin manager ]]
 
+--[[
      Manages the plugins I install as a Neovim Package.
 
      This file configures the packer.nvim plugin which
@@ -18,8 +19,8 @@
        :PackerCompile
 
      Not always necessary, but I'd restart Neovim after
-     running either of the above commands. ]]
-
+     running either of the above commands.
+--]]
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
    print('Warning: Packer not installed/configured - no plugins, ')
