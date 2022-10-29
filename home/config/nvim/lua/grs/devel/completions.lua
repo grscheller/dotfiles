@@ -9,9 +9,13 @@ local msg = grs_utils.msg_hit_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
-   cmp_under_comparator = require('cmp-under-comparator')
+   ok, cmp_under_comparator = pcall(require, 'cmp-under-comparator')
+   if not ok then
+      msg('Problem in completions.lua: cmp_under_comparator failed to load')
+      return
+   end
 else
-   msg('Problem in completions.lua: cmp_under_comparator failed to load')
+   msg('Problem in completions.lua: cmp failed to load')
    return
 end
 
@@ -29,12 +33,6 @@ if ok then
 else
    msg('Problem in completions.lua: lspkind failed to load')
    return
-end
-
-local function has_words_before()
-   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-   return col ~= 0 and vim.api.nvim_buf_get_lines(
-      0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
 cmp.setup {
@@ -126,53 +124,40 @@ cmp.setup {
          { 'i', 's' }
       )
    },
-   sources = {
-     { name = 'nvim_lsp_signature_help' },
-     { name = 'nvim_lsp' },
-     { name = 'nvim_lua' },
-     { name = 'buffer',
-       option = {
-         get_bufnrs = function()
-            return vim.api.nvim_list_bufs()
-         end
-       }
-     },
-     { name = 'rg',
-       keyword_length = 3,
-       max_item_count = 12,
-       option = {
-         additional_arguments = '--smart-case --hidden'
-       }
-     },
-     { name = 'path',
-       option = {
-         label_trailing_slash = true,
-         trailing_slash = true
-       }
-     }
-   },
-   experimental = {
-      ghost_text = true
-   }
+   sources = cmp.config.sources(
+      {{ name = 'nvim_lsp_signature_help' },
+       { name = 'nvim_lsp' },
+       { name = 'nvim_lua' }},
+      {{ name = 'path',
+         option = {
+            label_trailing_slash = true,
+            trailing_slash = true
+         } },
+       { name = 'buffer',
+         option = {
+            get_bufnrs = function()
+               return vim.api.nvim_list_bufs()
+            end
+         } },
+       { name = 'rg',
+         option = {
+            additional_arguments = '--smart-case --hidden'
+         },
+         keyword_length = 3,
+         max_item_count = 12 }})
 }
 
 cmp.setup.cmdline(':', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = cmp.config.sources(
-     {{ name = 'path' }},
-     {{ name = 'cmdline' }}
-   )
+   sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }})
 })
 
 cmp.setup.cmdline('/', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = cmp.config.sources(
-     {{ name = 'nvim_lsp_document_symbol' }},
-     {{ name = 'buffer' }}
-   )
+   sources = {{ name = 'nvim_lsp_document_symbol' }, { name = 'buffer' }}
 })
 
 cmp.setup.cmdline('?', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = {{ name = 'buffer' }}
+   sources = {{ name = 'nvim_lsp_document_symbol' }, { name = 'buffer' }}
 })
