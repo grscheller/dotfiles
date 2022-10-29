@@ -1,13 +1,17 @@
 --[[ Completions & Snippets ]]
 
+local grs_utils = require('grs.util.utils')
+
 local ok
-local cmp, luasnip, lspkind
 local cmp_under_comparator
+local cmp, luasnip, lspkind
+local msg = grs_utils.msg_hit_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
    cmp_under_comparator = require('cmp-under-comparator')
 else
+   msg('Problem in completions.lua: cmp_under_comparator failed to load')
    return
 end
 
@@ -15,6 +19,7 @@ ok, luasnip = pcall(require, 'luasnip')
 if ok then
    require('luasnip.loaders.from_vscode').lazy_load()
 else
+   msg('Problem in completions.lua: luasnip failed to load')
    return
 end
 
@@ -22,10 +27,11 @@ ok, lspkind = pcall(require, 'lspkind')
 if ok then
    lspkind.init()
 else
+   msg('Problem in completions.lua: lspkind failed to load')
    return
 end
 
-local function hasWordsBefore()
+local function has_words_before()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0 and vim.api.nvim_buf_get_lines(
       0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -99,7 +105,7 @@ cmp.setup {
                cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
                luasnip.expand_or_jump()
-            elseif hasWordsBefore() then
+            elseif grs_utils.cursor_has_words_before_it() then
                cmp.complete()
             else
                fallback()

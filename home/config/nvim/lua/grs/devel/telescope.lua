@@ -1,11 +1,13 @@
 --[[ Telescope - search, filter, find & pick items with Lua ]]
 
 local ok, ts, tb
+local msg = require('grs.util.utils').msg_hit_return_to_continue
 
 ok, ts = pcall(require, 'telescope')
 if ok then
    tb = require('telescope.builtin')
 else
+   msg('Problem in telescope.lua: telescope failed to load')
    return
 end
 

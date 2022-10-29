@@ -1,7 +1,8 @@
---[[ LSP and Tooling Configurations ]]
+--[[ Software Devel Tooling and LSP Configuration ]]
 
 local ok
 local cmd = vim.api.nvim_command
+local msg = require('grs.util.utils').msg_hit_return_to_continue
 
 -- Nvim-Treesitter - language modules for built-in Treesitter
 local treesitter_configs
@@ -12,23 +13,22 @@ if ok then
       ensure_installed = 'all',
       highlight = { enable = true }
    }
+else
+   msg('Problem in tooling.lua loading nvim-treesitter configs')
 end
 
 -- Punt if necessary LSP related plugins are not installed
-local lspconfig, nvim_lsp_installer, cmp_nvim_lsp
+local lspconfig, cmp_nvim_lsp
 
 ok, lspconfig = pcall(require, 'lspconfig')
 if not ok then
-   return
-end
-
-ok, nvim_lsp_installer = pcall(require, 'nvim-lsp-installer')
-if not ok then
+   msg('Problem in tooling.lua: nvim-lspconfig failed to load')
    return
 end
 
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
+   msg('Problem in tooling.lua: cmp_nvim_lsp failed to load')
    return
 end
 
@@ -37,6 +37,8 @@ local ok_dap, dap, dap_ui_widgets
 ok_dap, dap = pcall(require, 'dap')
 if ok_dap then
    dap_ui_widgets = require('dap.ui.widgets')
+else
+   msg('Problem in tooling.lua: nvim_dap failed to load')
 end
 
 --[[
@@ -75,8 +77,6 @@ local lsp_servers = {
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
-
-nvim_lsp_installer.setup {} -- Must be called before interacting with lspconfig
 
 for _, lsp_server in ipairs(lsp_servers) do
    lspconfig[lsp_server].setup {
@@ -118,7 +118,7 @@ lspconfig['sumneko_lua'].setup {
      Pointing python3_host_prog to the pyenv shim
      and running nvim in the virtual environment.
 
-     Todo: Figure out where pipenv and pynvim 
+     Todo: Figure out where pipenv and pynvim
            need to be installed.  Base python
            environment or each virtual environment?
 --]]
@@ -128,7 +128,7 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
      Rust Lang Configuration - rust_tools & lldb
 
      Following https://github.com/simrat39/rust-tools.nvim
-           and https://github.com/sharksforarms/neovim-rust 
+           and https://github.com/sharksforarms/neovim-rust
 
      Install the LLDB DAP server, a vscode extension. On
      Arch Linux, install the lldb pacman package from extra.
@@ -165,6 +165,8 @@ if ok then
          }
       }
    }
+else
+   msg('Problem in tooling.lua: rust-tools failed to load')
 end
 
 --[[
@@ -225,6 +227,8 @@ if ok then
          group = scala_metals_group
       }
    )
+else
+   msg('Problem in tooling.lua: scala metals failed to load')
 end
 
 --[[ Zig Lang Configuration ]]

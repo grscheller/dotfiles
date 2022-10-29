@@ -21,12 +21,14 @@
      Not always necessary, but I'd restart Neovim after
      running either of the above commands.
 --]]
+local msg = require('grs.util.utils').msg_hit_return_to_continue
+
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
-   print('Warning: Packer not installed/configured - no plugins, ')
-   print('         to bootstrap, exit Neovim and run: ~/bin/bsPacker ')
-   print(' ')
-   print(packer)
+   local message =
+      'Warning: Packer not installed/configured - no plugins,\n' ..
+      '         to bootstrap, exit Neovim and run: ~/bin/bsPacker'
+   msg(message)
    return
 end
 

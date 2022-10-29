@@ -1,14 +1,18 @@
---[[ Define keybindings/keymappings
+--[[ Define keybindings/keymappings ]]
 
+--[[
      The only things this config file should do
      is setup WhichKey and define keybindings.
 
      Not all keybindings need be defined here, just
-     those that help declutter other config files. ]]
-
-local kb = vim.keymap.set
+     those that help declutter other config files.
+--]]
 
 local M = {}
+
+local grs_utils = require('grs.util.utils')
+local msg = grs_utils.msg_hit_return_to_continue
+local kb = vim.keymap.set
 
 --[[ Which-Key setup - helps make keybindings user discoverable ]]
 
@@ -23,6 +27,8 @@ if ok then
      }
   }
    M.wk = wk
+else
+   msg('Problem in keybindings.lua: which-key failed to load')
 end
 
 --[[ General key mappings/bindings ]]
@@ -98,30 +104,19 @@ function M.general_kb()
       { desc = 'change text to blackhole register' })
 
    -- Misc keybindings
-   kb('n', ' b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
-   kb('n', ' k', '<Cmd>dig<CR>a<C-k>',
-                                  { desc = 'pick & enter diagraph' })
+   kb('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
+   kb('n', ' b', '<Cmd>enew<CR>',         { desc = 'new unnamed buffer' })
+   kb('n', ' k', '<Cmd>dig<CR>a<C-k>',    { desc = 'pick & enter diagraph' })
    kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>',
-                                  { desc = 'toggle treesitter' })
-   kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>',
-                                  { desc = 'trim trailing whitespace' })
+                                          { desc = 'toggle treesitter' })
    kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>',
-                                  { desc = 'clear & redraw window' })
-   kb('n', 'z ', '<Cmd>set invspell<CR>',
-                                  { desc = 'toggle spelling' })
+                                          { desc = 'clear & redraw window' })
+   kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>',
+                                          { desc = 'trim trailing whitespc' })
 
    -- toggle line numberings schemes
-   kb('n', ' n', function()
-         if not vim.wo.number and not vim.wo.relativenumber then
-            vim.wo.number = true
-            vim.wo.relativenumber = true
-         elseif vim.wo.number and vim.wo.relativenumber then
-            vim.wo.relativenumber = false
-         else
-            vim.wo.number = false
-            vim.wo.relativenumber = false
-         end
-      end, { desc = 'line number toggle' })
+   kb('n', ' n', grs_utils.toggle_line_numbering,
+                                          { desc = 'toggle line numbering' })
 
    -- WhichKey labels
    if M.wk then

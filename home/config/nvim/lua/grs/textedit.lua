@@ -5,6 +5,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
 
 local kb = vim.keymap.set
+local msg = require('grs.util.utils').msg_hit_return_to_continue
 
 -- Configure numToStr/Comment.nvim
 local ok, comment = pcall(require, 'Comment')
@@ -16,6 +17,8 @@ if ok then
          extra = true
       }
    }
+else
+   msg('Problem in textedit.lua: Comment failed to load')
 end
 
 -- Configure justtinmk/vim-sneak plugin

@@ -1,6 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
 local kb = vim.keymap.set
+local msg = require('grs.util.utils').msg_hit_return_to_continue
 
 local ok, colorizer, webDevicons, lualine, twilight, zen, kanagawa
 
@@ -13,6 +14,8 @@ if ok then
       css = { rgb_fn = true },
       html = { names = false }
    }
+else
+   msg('Problem in theming.lua: colorizer failed to load')
 end
 
 --[[
@@ -24,6 +27,8 @@ end
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
+else
+   msg('Problem in theming.lua: nvim-web-devicons failed to load')
 end
 
 -- Setup Lualine using Kanagawa theme
@@ -81,6 +86,8 @@ if ok then
       },
       extensions = {}
    }
+else
+   msg('Problem in theming.lua: lualine failed to load')
 end
 
 --- Setup folke/twilight.nvim
@@ -88,6 +95,8 @@ ok, twilight = pcall(require, 'twilight')
 if ok then
    twilight.setup { context = 20 }
    kb('n', 'zT', '<Cmd>Twilight<CR>', { desc = 'twilight toggle' })
+else
+   msg('Problem in theming.lua: twilight failed to load')
 end
 
 -- Setup folke/zen-mode.nvim
@@ -115,6 +124,8 @@ if ok then
       end
    }
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
+else
+   msg('Problem in theming.lua: zen-mode failed to load')
 end
 
 --[[
@@ -131,5 +142,5 @@ if ok then
    kanagawa.setup { colors = my_colors }
    vim.cmd [[colorscheme kanagawa]]
 else
-   vim.cmd [[colorscheme darkblue]]
+   vim.cmd [[colorscheme elflord]]
 end
