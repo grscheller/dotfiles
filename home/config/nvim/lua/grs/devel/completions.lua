@@ -35,6 +35,12 @@ else
    return
 end
 
+local select_opts = { behavior = cmp.SelectBehavior.Select }
+local confirm_opts = {
+   select = true,
+   behavior = cmp.ConfirmBehavior.Replace
+}
+
 cmp.setup {
    sorting = {
       comparators = {
@@ -67,84 +73,111 @@ cmp.setup {
          maxwidth = 50,
          ellipsis = '…',
          menu = {
-            luasnip = '[snip]',
-            nvim_lsp_signature_help = '[lsp-sh]',
-            nvim_lsp = '[lsp]',
-            nvim_lua = '[lua]',
             buffer = '[buf]',
-            rg = '[rg]',
-            path = '[path]',
             cmdline = '[cmd]',
+            luasnip = '[snip]',
+            nvim_lsp = '[lsp]',
             nvim_lsp_document_symbol = '[lsp-ds]',
+            nvim_lsp_signature_help = '[lsp-sh]',
+            nvim_lua = '[lua]',
+            path = '[path]',
+            rg = '[rg]'
          }
       }
    },
    mapping = cmp.mapping.preset.insert {
-      ['<C-y>'] = cmp.config.disable,
-      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-f>'] = cmp.mapping( cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C- >'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<C-s>'] = cmp.mapping.complete {
-         config = {
-            sources = {{ name = 'luasnip' }}
-         }
-      },
-      ['<C-e>'] = cmp.mapping {
-         i = cmp.mapping.abort(),
-         c = cmp.mapping.close()
-      },
-      ['<CR>'] = cmp.mapping.confirm {
-         select = false,
-         behavior = cmp.ConfirmBehavior.Replace
-      },
+      ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+      ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+
+      ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
+      ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+
+      ['<C- >'] = cmp.mapping.complete(),
+
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['  '] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm(confirm_opts),
+      ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
+
+      ['<c-d>'] = cmp.mapping(
+         function(fallback)
+            if luasnip.jumpable(1) then
+               luasnip.jump(1)
+            else
+               fallback()
+            end
+         end),
+
+      ['<c-u>'] = cmp.mapping(
+         function(fallback)
+            if luasnip.jumpable(-1) then
+               luasnip.jump(-1)
+            else
+               fallback()
+            end
+         end),
+
       ['<Tab>'] = cmp.mapping(
          function(fallback)
             if cmp.visible() then
                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-               luasnip.expand_or_jump()
             elseif grs_utils.cursor_has_words_before_it() then
                cmp.complete()
             else
                fallback()
             end
-         end,
-         { 'i', 's' }
-      ),
+         end),
+
       ['<S-Tab>'] = cmp.mapping(
          function(fallback)
             if cmp.visible() then
                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-               luasnip.jump(-1)
             else
                fallback()
             end
-         end,
-         { 'i', 's' }
-      )
+         end),
+
+      ['<C-s>'] = cmp.mapping.complete {
+         config = {
+            sources = {{ name = 'luasnip' }}
+         }
+      }
    },
    sources = cmp.config.sources(
-      {{ name = 'nvim_lsp_signature_help' },
-       { name = 'nvim_lsp' },
-       { name = 'nvim_lua' }},
-      {{ name = 'path',
-         option = {
-            label_trailing_slash = true,
-            trailing_slash = true
-         } },
-       { name = 'buffer',
-         option = {
-            get_bufnrs = function()
-               return vim.api.nvim_list_bufs()
-            end
-         } },
-       { name = 'rg',
-         option = {
-            additional_arguments = '--smart-case --hidden'
+      {
+         { name = 'nvim_lsp_signature_help' },
+         { name = 'nvim_lua' },
+         { name = 'nvim_lsp' },
+         { name = 'luasnip' }
+      },
+      {
+         {
+           name = 'path',
+           option = {
+              label_trailing_slash = true,
+              trailing_slash = true
+           }
          },
-         keyword_length = 3,
-         max_item_count = 12 }})
+         {
+           name = 'buffer',
+           option = {
+              get_bufnrs = function()
+                 return vim.api.nvim_list_bufs()
+              end
+           }
+         },
+         {
+           name = 'rg',
+           option = {
+              additional_arguments = '--smart-case --hidden'
+           },
+           keyword_length = 3,
+           max_item_count = 12
+         }
+      })
 }
 
 cmp.setup.cmdline(':', {
