@@ -1,4 +1,4 @@
-function lf --description 'Hierarchically list just files'
+function ldir --description 'Hierarchically list just directories'
 
    set -l arg
    set -l targets ()
@@ -10,10 +10,10 @@ function lf --description 'Hierarchically list just files'
       end
    end
 
-   # By "files" we mean anything that is not a directory.
+   # Print just directories.
    for target in {$targets}**
       test -d $target
-      or echo $target
+      and echo $target
    end | sort | uniq
 
 end

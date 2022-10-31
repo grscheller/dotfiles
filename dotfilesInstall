@@ -75,6 +75,7 @@ CONFIG_FILES='
    fish/functions/fish_title.fish
    fish/functions/la.fish
    fish/functions/lbry.fish
+   fish/functions/ldir.fish
    fish/functions/ldot.fish
    fish/functions/lf.fish
    fish/functions/lh.fish

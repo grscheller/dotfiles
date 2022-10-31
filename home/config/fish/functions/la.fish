@@ -1,3 +1,3 @@
-function la --description 'List all files'
-    ls -a $argv
+function la --description 'List all files except . & ..'
+    ls -A $argv
 end
