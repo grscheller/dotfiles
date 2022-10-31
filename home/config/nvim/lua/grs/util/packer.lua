@@ -64,12 +64,10 @@ return packer.startup(
       -- Colorscheme, statusline & zen-mode
       use { 'norcalli/nvim-colorizer.lua' }
       use { 'rebelot/kanagawa.nvim' }
-      use { 'nvim-lualine/lualine.nvim',
-         requires = { 'kyazdani42/nvim-web-devicons' }
-      }
-      use { 'folke/zen-mode.nvim',
-         requires = { 'folke/twilight.nvim' }
-      }
+      use { 'nvim-lualine/lualine.nvim' }
+      use { 'kyazdani42/nvim-web-devicons' }
+      use { 'folke/zen-mode.nvim' }
+      use { 'folke/twilight.nvim' }
 
       -- Install language modules for built-in treesitter
       use { 'nvim-treesitter/nvim-treesitter',
@@ -83,9 +81,8 @@ return packer.startup(
       use { 'nvim-telescope/telescope-fzf-native.nvim',
          run = 'make'
       }
-      use { 'nvim-telescope/telescope-frecency.nvim',
-         requires = { 'kkharji/sqlite.lua' }
-      }
+      use { 'nvim-telescope/telescope-frecency.nvim' }
+      use { 'kkharji/sqlite.lua' }
 
       -- Completion & snippet support
       use { 'L3MON4D3/LuaSnip' }
