@@ -33,8 +33,12 @@ end
 
 --[[ General key mappings/bindings ]]
 
--- Window & tab layout and navigation related keybindings
 function M.general_kb()
+   -- Remove normal mode motions, confusing when part of failed keybinding
+   kb('n', ' ',    '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
+   kb('n', '  ',   '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
+   kb('n', '<BS>', '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
+
    -- Navigating windows
    kb('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
    kb('n', '<M-j>', '<C-w>j', { desc = 'goto window below' })

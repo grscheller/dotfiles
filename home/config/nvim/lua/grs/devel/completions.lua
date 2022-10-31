@@ -77,7 +77,6 @@ cmp.setup {
             cmdline = '[cmd]',
             luasnip = '[snip]',
             nvim_lsp = '[lsp]',
-            nvim_lsp_document_symbol = '[lsp-ds]',
             nvim_lsp_signature_help = '[lsp-sh]',
             nvim_lua = '[lua]',
             path = '[path]',
@@ -85,7 +84,7 @@ cmp.setup {
          }
       }
    },
-   mapping = cmp.mapping.preset.insert {
+   mapping = {
       ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
       ['<Down>'] = cmp.mapping.select_next_item(select_opts),
 
@@ -96,9 +95,8 @@ cmp.setup {
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
       ['<C- >'] = cmp.mapping.complete(),
-
       ['<C-e>'] = cmp.mapping.abort(),
-      ['  '] = cmp.mapping.close(),
+      ['<C-h>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm(confirm_opts),
       ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
 
@@ -182,15 +180,15 @@ cmp.setup {
 
 cmp.setup.cmdline(':', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = cmp.config.sources({{ name = 'path' }}, {{ name = 'cmdline' }})
+   sources = {{ name = 'cmdline' }}
 })
 
 cmp.setup.cmdline('/', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = {{ name = 'nvim_lsp_document_symbol' }, { name = 'buffer' }}
+   sources = {{ name = 'buffer' }}
 })
 
 cmp.setup.cmdline('?', {
    mapping = cmp.mapping.preset.cmdline(),
-   sources = {{ name = 'nvim_lsp_document_symbol' }, { name = 'buffer' }}
+   sources = {{ name = 'buffer' }}
 })
