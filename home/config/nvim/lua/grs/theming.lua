@@ -3,39 +3,13 @@
 local kb = vim.keymap.set
 local msg = require('grs.util.utils').msg_hit_return_to_continue
 
-local ok, colorizer, webDevicons, lualine, twilight, zen, kanagawa
-
--- Colorize color names, hexcodes, and other color formats
-ok, colorizer = pcall(require, 'colorizer')
-if ok then
-   colorizer.setup {
-      '*',
-      '!vim',
-      css = { rgb_fn = true },
-      html = { names = false }
-   }
-else
-   msg('Problem in theming.lua: colorizer failed to load')
-end
-
---[[
-     Setup WebDevicons
-
-     Needs a patched font like Noto Mono Nerd Font,
-     see https://github.com/ryanoasis/nerd-fonts
---]]
-ok, webDevicons = pcall(require, 'nvim-web-devicons')
-if ok then
-   webDevicons.setup { default = true }
-else
-   msg('Problem in theming.lua: nvim-web-devicons failed to load')
-end
+local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 
 --[[
      Setup Kanagawa colorscheme
 
      A colorschemen inspired by TokyoNight,
-     Gruvbox, and the painting by Kanagawa.
+     Gruvbox, and the art of Kanagawa.
 --]]
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
@@ -48,7 +22,7 @@ else
    vim.cmd [[colorscheme elflord]]
 end
 
--- Setup Lualine using Kanagawa theme
+-- Setup Lualine with Kanagawa theme based colors
 ok, lualine = pcall(require, 'lualine')
 if ok then
    local colors = {
@@ -183,4 +157,30 @@ if ok then
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
 else
    msg('Problem in theming.lua: zen-mode failed to load')
+end
+
+--[[
+     Setup WebDevicons
+
+     Needs a patched font like Noto Mono Nerd Font,
+     see https://github.com/ryanoasis/nerd-fonts
+--]]
+ok, webDevicons = pcall(require, 'nvim-web-devicons')
+if ok then
+   webDevicons.setup { default = true }
+else
+   msg('Problem in theming.lua: nvim-web-devicons failed to load')
+end
+
+-- Colorize color names, hexcodes, and other color formats
+ok, colorizer = pcall(require, 'colorizer')
+if ok then
+   colorizer.setup {
+      '*',
+      '!vim',
+      css = { rgb_fn = true },
+      html = { names = false }
+   }
+else
+   msg('Problem in theming.lua: colorizer failed to load')
 end
