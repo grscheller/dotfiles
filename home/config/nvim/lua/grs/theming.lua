@@ -31,43 +31,67 @@ else
    msg('Problem in theming.lua: nvim-web-devicons failed to load')
 end
 
+--[[
+     Setup Kanagawa colorscheme
+
+     A colorschemen inspired by TokyoNight,
+     Gruvbox, and the painting by Kanagawa.
+--]]
+ok, kanagawa = pcall(require, 'kanagawa')
+if ok then
+   local my_colors = {
+      bg = '#090618'
+   }
+   kanagawa.setup { colors = my_colors }
+   vim.cmd [[colorscheme kanagawa]]
+else
+   vim.cmd [[colorscheme elflord]]
+end
+
 -- Setup Lualine using Kanagawa theme
 ok, lualine = pcall(require, 'lualine')
 if ok then
    local colors = {
-      gray     = '#3C3C3C',
-      lightred = '#D16969',
-      blue     = '#569CD6',
-      pink     = '#C586C0',
-      black    = '#262626',
-      white    = '#D4D4D4',
-      green    = '#608B4E',
+      gray    = '#33467C',
+      magenta = '#957FB8',
+      blue    = '#7E9CD8',
+      yellow  = '#E0AF68',
+      black   = '#1F1F28',
+      white   = '#DCD7BA',
+      green   = '#76946A',
+      cyan    = '#7AA89F',
    }
+
    lualine.setup {
       options = {
          icons_enabled = true,
          theme = {
             normal = {
-               b = { fg = colors.green, bg = colors.black },
                a = { fg = colors.black, bg = colors.green, gui = 'bold' },
+               b = { fg = colors.green, bg = colors.black },
                c = { fg = colors.white, bg = colors.black }
             },
             visual = {
-               b = { fg = colors.pink, bg = colors.black },
-               a = { fg = colors.black, bg = colors.gray, gui = 'bold' },
+               a = { fg = colors.black, bg = colors.yellow, gui = 'bold' },
+               b = { fg = colors.yellow, bg = colors.gray },
             },
             inactive = {
-               b = { fg = colors.black, bg = colors.blue },
                a = { fg = colors.white, bg = colors.gray, gui = 'bold' },
+               b = { fg = colors.black, bg = colors.blue },
             },
             replace = {
-               b = { fg = colors.lightred, bg = colors.black },
-               a = { fg = colors.black, bg = colors.lightred, gui = 'bold' },
+               a = { fg = colors.black, bg = colors.magenta, gui = 'bold' },
+               b = { fg = colors.magenta, bg = colors.black },
                c = { fg = colors.white, bg = colors.black }
             },
             insert = {
-               b = { fg = colors.blue, bg = colors.black },
                a = { fg = colors.black, bg = colors.blue, gui = 'bold' },
+               b = { fg = colors.blue, bg = colors.black },
+               c = { fg = colors.white, bg = colors.black }
+            },
+            command = {
+               a = { fg = colors.black, bg = colors.cyan, gui = 'bold' },
+               b = { fg = colors.cyan, bg = colors.black },
                c = { fg = colors.white, bg = colors.black }
             }
          },
@@ -159,21 +183,4 @@ if ok then
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
 else
    msg('Problem in theming.lua: zen-mode failed to load')
-end
-
---[[
-     Setup Kanagawa colorscheme
-
-     A colorschemen inspired by TokyoNight,
-     Gruvbox, and the painting by Kanagawa.
---]]
-ok, kanagawa = pcall(require, 'kanagawa')
-if ok then
-   local my_colors = {
-      bg = '#090618'
-   }
-   kanagawa.setup { colors = my_colors }
-   vim.cmd [[colorscheme kanagawa]]
-else
-   vim.cmd [[colorscheme elflord]]
 end
