@@ -56,37 +56,35 @@ return packer.startup(
       use { 'folke/which-key.nvim' }
 
       -- General purpose text editing plugins
-      use { 'numToStr/Comment.nvim' }
-      use { 'justinmk/vim-sneak' }
-      use { 'tpope/vim-surround' }
-      use { 'tpope/vim-repeat' }
+      use { 'numToStr/Comment.nvim',
+            'justinmk/vim-sneak',
+            'tpope/vim-surround',
+            'tpope/vim-repeat' }
 
       -- Colorscheme, statusline & zen-mode
-      use { 'norcalli/nvim-colorizer.lua' }
-      use { 'rebelot/kanagawa.nvim' }
-      use { 'nvim-lualine/lualine.nvim' }
-      use { 'kyazdani42/nvim-web-devicons' }
-      use { 'folke/zen-mode.nvim' }
-      use { 'folke/twilight.nvim' }
+      use { 'norcalli/nvim-colorizer.lua',
+            'rebelot/kanagawa.nvim',
+            'nvim-lualine/lualine.nvim',
+            'kyazdani42/nvim-web-devicons',
+            'folke/zen-mode.nvim',
+            'folke/twilight.nvim' }
 
       -- Install language modules for built-in treesitter
-      use { 'nvim-treesitter/nvim-treesitter',
-         run = ':TSUpdateSync'
-      }
+      use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
 
       -- Telescope - highly extendable fuzzy finder over lists
-      use { 'nvim-telescope/telescope.nvim' }
-      use { 'nvim-telescope/telescope-ui-select.nvim' }
-      use { 'nvim-telescope/telescope-file-browser.nvim' }
-      use { 'nvim-telescope/telescope-fzf-native.nvim',
-         run = 'make'
-      }
-      use { 'nvim-telescope/telescope-frecency.nvim' }
-      use { 'kkharji/sqlite.lua' }
+      use { 'nvim-telescope/telescope.nvim',
+            'nvim-telescope/telescope-ui-select.nvim',
+            'nvim-telescope/telescope-file-browser.nvim',
+            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+            'nvim-telescope/telescope-frecency.nvim',
+            'kkharji/sqlite.lua' }
 
-      -- Completion & snippet support
-      use { 'L3MON4D3/LuaSnip' }
-      use { 'rafamadriz/friendly-snippets' }
+      -- Snippet support
+      use { 'L3MON4D3/LuaSnip',
+            'rafamadriz/friendly-snippets' }
+
+      -- Completion support
       use { 'hrsh7th/nvim-cmp',
          requires = {
             'hrsh7th/cmp-buffer',
@@ -98,18 +96,16 @@ return packer.startup(
             'onsails/lspkind.nvim',
             'lukas-reineke/cmp-rg',
             'lukas-reineke/cmp-under-comparator',
-            'saadparwaiz1/cmp_luasnip'
-         }
-      }
+            'saadparwaiz1/cmp_luasnip' } }
 
-      -- DAP Debug Adapter Protocol
-      use { 'mfussenegger/nvim-dap' }
-
-      -- LSP Language Server Protocol
-      use { 'neovim/nvim-lspconfig' }
-      use { 'williamboman/nvim-lsp-installer' }
-      use { 'simrat39/rust-tools.nvim' }
-      use { 'scalameta/nvim-metals' }
+      -- LSP & DAP support
+      use { "williamboman/mason.nvim",
+            "williamboman/mason-lspconfig.nvim",
+            "neovim/nvim-lspconfig",
+            "jayp0521/mason-nvim-dap.nvim",
+            "mfussenegger/nvim-dap",
+            'simrat39/rust-tools.nvim',
+            'scalameta/nvim-metals' }
 
       -- File detection/syntax highlighting for zig
       use { 'ziglang/zig.vim' }

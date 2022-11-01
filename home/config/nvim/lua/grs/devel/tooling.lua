@@ -42,25 +42,32 @@ else
 end
 
 --[[
-     Nvim LSP Installer Configuration
+     Nvim LSP Configuration
 
-     See https://github.com/neovim/nvim-lspconfig
-     for a language server list.
+     see: https://github.com/williamboman/mason.nvim
+          https://github.com/williamboman/mason-lspconfig.nvim
+          https://github.com/neovim/nvim-lspconfig
+          https://github.com/jayp0521/mason-nvim-dap.nvim
+          https://github.com/mfussenegger/nvim-dap
 
-     Install via pacman or sudo npm i -g <language-server>
+     for a language server list,
 
-     TODO: nvim-lsp-installer has been DEPRECATED!!!
+      see: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
 
-           Need to replace
-             - williamboman/nvim-lsp-installer
-             - neovim/nvim-lspconfig
+--]]
 
-           with these
+-- set up Mason, but leave unconfigured
+require("mason").setup()
+require("mason-lspconfig").setup()
+require("mason-nvim-dap").setup()
 
-             - williamboman/mason.nvim
-             - williamboman/mason-lspconfig.nvim
+--[[
+     For now, continue doing what was previously done.
 
-           These will also help with DAP configuraation.
+     Todo: Figure out what can be configured with Mason and what
+           needs to be done manually.  Determine how well Mason
+           plays with "natively" installed LSP & DAP servers.
+
 --]]
 local lsp_servers = {
    'bashls', -- bash lang server (pacman or npm)
@@ -121,6 +128,7 @@ lspconfig['sumneko_lua'].setup {
      Todo: Figure out where pipenv and pynvim
            need to be installed.  Base python
            environment or each virtual environment?
+
 --]]
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
@@ -132,6 +140,7 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
      Install the LLDB DAP server, a vscode extension. On
      Arch Linux, install the lldb pacman package from extra.
+
 --]]
 local rt
 ok, rt = pcall(require, 'rust-tools')
@@ -174,6 +183,7 @@ end
 
      Following: https://github.com/scalameta/nvim-metals/discussions/39
      For latest Metals Server Version see: https://scalameta.org/metals/docs
+
 --]]
 local metals
 ok, metals = pcall(require, 'metals')
