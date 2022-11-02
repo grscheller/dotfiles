@@ -35,9 +35,7 @@ end
 
 function M.general_kb()
    -- Remove normal mode motions, confusing when part of failed keybinding
-   kb('n', ' ',    '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
-   kb('n', '  ',   '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
-   kb('n', '<BS>', '<Nop>', { desc = 'SPACE & BS no longer navigation keys' })
+   kb('n', '  ',   '<Nop>', { desc = 'punt on <Space> Keymap' })
 
    -- Navigating windows
    kb('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
@@ -49,16 +47,12 @@ function M.general_kb()
    -- Creating new windows
    kb('n', '<M-s>', '<C-w>s', { desc = 'split current window' })
    kb('n', '<M-d>', '<C-w>v', { desc = 'vsplit current window' })
-   kb('n',
-      '<M-f>',
-      '<Cmd>split<Bar>term fish<CR>i',
-      { desc = 'fish term in split' }
-   )
-   kb('n',
-      '<M-g>',
-      '<Cmd>vsplit<Bar>term fish<CR>i',
-      { desc = 'fish term in vsplit' }
-   )
+   kb('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {
+      desc = 'fish term in split'
+   })
+   kb('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {
+      desc = 'fish term in vsplit'
+   })
 
    -- Changing window layout
    kb('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })
@@ -102,25 +96,31 @@ function M.general_kb()
    kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
 
    -- Delete & change text without affecting default register
-   kb({ 'n', 'x' }, ' d', '"_d',
-      { desc = 'delete text to blackhole register' })
-   kb({ 'n', 'x' }, ' c', '"_c',
-      { desc = 'change text to blackhole register' })
+   kb({ 'n', 'x' }, ' d', '"_d', {
+      desc = 'delete text to blackhole register'
+   })
+   kb({ 'n', 'x' }, ' c', '"_c', {
+      desc = 'change text to blackhole register'
+   })
+
+   -- toggle line numberings schemes
+   kb('n', ' n', grs_utils.toggle_line_numbering, {
+      desc = 'toggle line numbering'
+   })
 
    -- Misc keybindings
    kb('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
    kb('n', ' b', '<Cmd>enew<CR>',         { desc = 'new unnamed buffer' })
    kb('n', ' k', '<Cmd>dig<CR>a<C-k>',    { desc = 'pick & enter diagraph' })
-   kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>',
-                                          { desc = 'toggle treesitter' })
-   kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>',
-                                          { desc = 'clear & redraw window' })
-   kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>',
-                                          { desc = 'trim trailing whitespc' })
-
-   -- toggle line numberings schemes
-   kb('n', ' n', grs_utils.toggle_line_numbering,
-                                          { desc = 'toggle line numbering' })
+   kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>', {
+      desc = 'toggle treesitter'
+   })
+   kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
+      desc = 'clear & redraw window'
+   })
+   kb('n', ' w', "<Cmd>%s/\\s\\+$//<CR><C-o>", {
+      desc = 'trim trailing whitespace'
+   })
 
    -- WhichKey labels
    if M.wk then
