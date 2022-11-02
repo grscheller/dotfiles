@@ -93,6 +93,7 @@ CONFIG_FILES='
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/telescope.lua
+   nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/theming.lua
    nvim/lua/grs/options.lua
    nvim/lua/grs/textedit.lua

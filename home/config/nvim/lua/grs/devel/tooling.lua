@@ -1,45 +1,7 @@
 --[[ Software Devel Tooling and LSP Configuration ]]
 
-local ok
 local cmd = vim.api.nvim_command
 local msg = require('grs.util.utils').msg_hit_return_to_continue
-
--- Nvim-Treesitter - language modules for built-in Treesitter
-local treesitter_configs
-
-ok, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
-if ok then
-   treesitter_configs.setup {
-      ensure_installed = 'all',
-      highlight = { enable = true }
-   }
-else
-   msg('Problem in tooling.lua loading nvim-treesitter configs')
-end
-
--- Punt if necessary LSP related plugins are not installed
-local lspconfig, cmp_nvim_lsp
-
-ok, lspconfig = pcall(require, 'lspconfig')
-if not ok then
-   msg('Problem in tooling.lua: nvim-lspconfig failed to load')
-   return
-end
-
-ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not ok then
-   msg('Problem in tooling.lua: cmp_nvim_lsp failed to load')
-   return
-end
-
--- Prepare to conditionally configure DAP
-local ok_dap, dap, dap_ui_widgets
-ok_dap, dap = pcall(require, 'dap')
-if ok_dap then
-   dap_ui_widgets = require('dap.ui.widgets')
-else
-   msg('Problem in tooling.lua: nvim_dap failed to load')
-end
 
 --[[
      Nvim LSP Configuration
@@ -50,37 +12,77 @@ end
           https://github.com/jayp0521/mason-nvim-dap.nvim
           https://github.com/mfussenegger/nvim-dap
 
-     for a language server list,
-
-      see: https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
-
 --]]
 
--- set up Mason, but leave unconfigured
-require("mason").setup()
-require("mason-lspconfig").setup()
-require("mason-nvim-dap").setup()
+local ok, mason
+local lspconfig, cmp_nvim_lsp, mason_lspconfig
+local dap, dap_ui_widgets, mason_nvim_dap
 
 --[[
-     For now, continue doing what was previously done.
+     For now, do nothing with mason and continue
+     doing what was previously done manually.
 
      Todo: Figure out what can be configured with Mason and what
            needs to be done manually.  Determine how well Mason
            plays with "natively" installed LSP & DAP servers.
 
 --]]
-local lsp_servers = {
-   'bashls', -- bash lang server (pacman or npm)
-   'clangd', -- C and C++ - both clang and gcc (pacman clang)
-   'cssls', -- vscode-css-languageserver (pacman)
-   'gopls', -- go language server (pacman gopls)
-   'html', -- vscode-html-languageserver (pacman)
-   'jsonls', -- vscode-json-languageserver (pacman)
-   'pyright', -- Pyright for Python (pacman or npm)
-   'tsserver', -- typescript-language-server (pacman)
-   'yamlls', -- yaml-language-server (pacman)
-   'zls' -- zig language server (packer ziglang/zig.vim)
-}
+
+-- set up mason.nvim, a package manager for Neovim, if available
+ok, mason = pcall(require, "mason")
+if ok then
+   mason.setup()
+else
+   msg('Problem in tooling.lua with mason')
+end
+
+-- set up neovim/nvim-lspconfig
+ok, lspconfig = pcall(require, 'lspconfig')
+if ok then
+   ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+   if ok then
+      mason_lspconfig.setup()
+   else
+      msg('Problem in tooling.lua with mason-lspconfig')
+   end
+else
+   msg('Problem in tooling.lua with nvim-lspconfig, PUNTING!!!')
+   return
+end
+
+-- configure DAP if available
+ok, dap = pcall(require, 'dap')
+if ok then
+   dap_ui_widgets = require('dap.ui.widgets')
+   ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+   if ok then
+      mason_nvim_dap.setup()
+   else
+      msg('Problem in tooling.lua with mason-nvim-dap')
+   end
+else
+   msg('Problem in tooling.lua with nvim_dap, PUNTING!!!')
+   return
+end
+
+ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok then
+   msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
+   return
+end
+
+   local lsp_servers = {
+      'bashls',   -- bash lang server (pacman or npm)
+      'clangd',   -- C and C++ - both clang and gcc (pacman clang)
+      'cssls',    -- vscode-css-languageserver (pacman)
+      'gopls',    -- go language server (pacman gopls)
+      'html',     -- vscode-html-languageserver (pacman)
+      'jsonls',   -- vscode-json-languageserver (pacman)
+      'pyright',  -- Pyright for Python (pacman or npm)
+      'tsserver', -- typescript-language-server (pacman)
+      'yamlls',   -- yaml-language-server (pacman)
+      'zls'       -- zig language server (packer ziglang/zig.vim)
+   }
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
@@ -130,6 +132,7 @@ lspconfig['sumneko_lua'].setup {
            environment or each virtual environment?
 
 --]]
+
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[
@@ -142,16 +145,15 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
      Arch Linux, install the lldb pacman package from extra.
 
 --]]
+
 local rt
 ok, rt = pcall(require, 'rust-tools')
 if ok then
-   if ok_dap then
-      dap.configurations.rust = {{
-         type = 'rust';
-         request = 'launch';
-         name = 'rt_lldb';
+  dap.configurations.rust = {{
+     type = 'rust';
+     request = 'launch';
+     name = 'rt_lldb';
       }}
-   end
    rt.setup {
       runnables = {
          use_telescope = true
@@ -175,7 +177,7 @@ if ok then
       }
    }
 else
-   msg('Problem in tooling.lua: rust-tools failed to load')
+   msg('Problem in tooling.lua with rust-tools')
 end
 
 --[[
@@ -185,6 +187,7 @@ end
      For latest Metals Server Version see: https://scalameta.org/metals/docs
 
 --]]
+
 local metals
 ok, metals = pcall(require, 'metals')
 if ok then
@@ -223,22 +226,18 @@ if ok then
       end
    end
 
-   local scala_metals_group = vim.api.nvim_create_augroup(
-      'scala-metals', {
-         clear = true
-      }
-   )
-   vim.api.nvim_create_autocmd(
-      'FileType', {
-         pattern = { 'scala', 'sbt' },
-         callback = function()
-            metals.initialize_or_attach(metals_config)
-         end,
-         group = scala_metals_group
-      }
-   )
+   local scala_metals_group =
+      vim.api.nvim_create_augroup('scala-metals', { clear = true })
+
+   vim.api.nvim_create_autocmd('FileType', {
+      pattern = { 'scala', 'sbt' },
+      callback = function()
+         metals.initialize_or_attach(metals_config)
+      end,
+      group = scala_metals_group
+   })
 else
-   msg('Problem in tooling.lua: scala metals failed to load')
+   msg('Problem in tooling.lua with scala metals')
 end
 
 --[[ Zig Lang Configuration ]]

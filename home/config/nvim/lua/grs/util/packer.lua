@@ -21,6 +21,7 @@
      Not always necessary, but I'd restart Neovim after
      running either of the above commands.
 --]]
+
 local msg = require('grs.util.utils').msg_hit_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
@@ -102,8 +103,8 @@ return packer.startup(
       use { "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             "neovim/nvim-lspconfig",
-            "jayp0521/mason-nvim-dap.nvim",
             "mfussenegger/nvim-dap",
+            "jayp0521/mason-nvim-dap.nvim",
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }
 

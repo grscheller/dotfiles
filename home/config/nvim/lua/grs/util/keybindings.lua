@@ -140,6 +140,7 @@ function M.general_kb()
 end
 
 --[[ Telescope related keybindings ]]
+
 function M.telescope_kb(ts, tb)
 
    -- Telescope built-ins
@@ -177,11 +178,13 @@ function M.telescope_kb(ts, tb)
 
 end
 
--- LSP related keybindings
---
---   Using g and z as "leader keys" for LSP,
---   stepping on folding keybindings which I never use.
---
+--[[
+     LSP related keybindings
+
+     Using g and z as "leader keys" for LSP, stepping
+     on some folding keybindings which I never use.
+--]]
+
 function M.lsp_kb(_, bufnr)
    kb('n', 'gd',  vim.lsp.buf.definition, {
       buffer = bufnr,

@@ -10,7 +10,9 @@ local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 
      A colorschemen inspired by TokyoNight,
      Gruvbox, and the art of Kanagawa.
+
 --]]
+
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
    local my_colors = {
@@ -159,12 +161,8 @@ else
    msg('Problem in theming.lua: zen-mode failed to load')
 end
 
---[[
-     Setup WebDevicons
-
-     Needs a patched font like Noto Mono Nerd Font,
-     see https://github.com/ryanoasis/nerd-fonts
---]]
+-- WebDevicons needs a patched font like Noto Mono Nerd Font.
+--    see https://github.com/ryanoasis/nerd-fonts
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
