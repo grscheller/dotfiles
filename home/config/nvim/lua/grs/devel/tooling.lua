@@ -28,15 +28,16 @@ local dap, dap_ui_widgets, mason_nvim_dap
 
 --]]
 
--- set up mason.nvim, a package manager for Neovim, if available
+-- mason.nvim - installes/manages LSP & DAP servers, linters, formatters 
 ok, mason = pcall(require, "mason")
 if ok then
    mason.setup()
 else
-   msg('Problem in tooling.lua with mason')
+   msg('Problem in tooling.lua with neovim package manager mason')
 end
 
--- set up neovim/nvim-lspconfig
+-- neovim/nvim-lspconfig - collection of LSP server configurations
+-- williamboman/mason-lspconfig.nvim - integrate lspconfig with mason
 ok, lspconfig = pcall(require, 'lspconfig')
 if ok then
    ok, mason_lspconfig = pcall(require, "mason-lspconfig")
@@ -50,7 +51,8 @@ else
    return
 end
 
--- configure DAP if available
+-- mfussenegger/nvim-dap - debug adapter protocol client
+-- jayp0521/mason-nvim-dap.nvim - integrates dap with mason
 ok, dap = pcall(require, 'dap')
 if ok then
    dap_ui_widgets = require('dap.ui.widgets')
