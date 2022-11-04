@@ -168,14 +168,14 @@ install_file () {
 ## Install home directory dotfiles
 for Home_File in $HOME_FILES
 do
-   install_file "$HOME" "$Home_File" ./home 0644 || exit 1
+   install_file "$HOME" "$Home_File" . 0644 || exit 1
    mv "${HOME}/${Home_File}" "${HOME}/.${Home_File}" || exit 1
 done
 
 ## Install  ~/bin  scripts
 for File in $BIN_SCRIPTS
 do
-   install_file "$HOME/bin" "$File" ./home/bin 0755 || exit 1
+   install_file "$HOME/bin" "$File" ./bin 0755 || exit 1
 done
 chmod 0755 "$HOME/bin"
 
@@ -184,21 +184,21 @@ chmod 0755 "$HOME/bin"
 # Install SSH Configs
 for conf_file in $BLOOP_FILES
 do
-   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600 || exit 1
+   install_file "$HOME/.bloop" "$conf_file" ./bloop 0600 || exit 1
 done
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal Configs for Haskell
 for conf_file in $CABAL_CONFIGS
 do
-   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644 || exit 1
+   install_file "$HOME/.cabal" "$conf_file" ./cabal 0644 || exit 1
 done
 chmod 0755 "$HOME/.cabal"
 
 # Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
 do
-   install_file "$XDG_CONFIG_HOME" "$conf_file" ./home/config 0644 || exit 1
+   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
 
 # Keep alacritty from rereading its config file mid-copy
@@ -220,7 +220,7 @@ fi
 # Install SSH Configs
 for conf_file in $SSH_CONFIGS
 do
-   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600 || exit 1
+   install_file "$HOME/.ssh" "$conf_file" ./ssh 0600 || exit 1
 done
 chmod 0700 "$HOME/.ssh"
 

@@ -3,7 +3,7 @@
 #  Bootstraps packer.nvim by installing it into the right place.
 #
 #  This script a bit heavy handed if all you did
-#  was update ~/.config/nvim/lua/grs/Packer.lua.
+#  was update ~/.config/nvim/lua/grs/util/packer.lua.
 #  In that case all just run
 #
 #      :PackerSync

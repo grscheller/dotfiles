@@ -2,14 +2,14 @@
 
 Contains my user configuation files.
 
-* Fish and Bash configs
 * Neovim config
+* Fish and Bash configs
 * Sway config
   * Waybar config
   * Wofi config
   * Alacritty config
 * GIT config
-* Haskell Cabal config
+* Haskell Cabal & Bloop configs
 * Minimal SSH config
 * $HOME/bin scripts
 

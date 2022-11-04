@@ -1,7 +1,8 @@
 --[[ Using Packer as the plugin manager ]]
 
 --[[
-     Manages the plugins I install as a Neovim Package.
+     The packer plugin turns itself and all the plugins configured
+     below into a single Neovim Package.
 
      This file configures and loads the packer.nvim plugin
      manager.  Once loaded, packer manages all of your plugins,
