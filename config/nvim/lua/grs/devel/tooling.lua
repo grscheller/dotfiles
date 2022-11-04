@@ -6,29 +6,18 @@ local msg = require('grs.util.utils').msg_hit_return_to_continue
 --[[
      Nvim LSP Configuration
 
-     see: https://github.com/williamboman/mason.nvim
-          https://github.com/williamboman/mason-lspconfig.nvim
-          https://github.com/neovim/nvim-lspconfig
-          https://github.com/jayp0521/mason-nvim-dap.nvim
+     see: https://github.com/neovim/nvim-lspconfig
           https://github.com/mfussenegger/nvim-dap
+          https://github.com/williamboman/mason.nvim
+          https://github.com/williamboman/mason-lspconfig.nvim
+          https://github.com/jayp0521/mason-nvim-dap.nvim
 
 --]]
+
+local lspconfig, cmp_nvim_lsp, mason_lspconfig
 
 local ok, mason
-local lspconfig, cmp_nvim_lsp, mason_lspconfig
-local dap, dap_ui_widgets, mason_nvim_dap
-
---[[
-     For now, do nothing with mason and continue
-     doing what was previously done manually.
-
-     Todo: Figure out what can be configured with Mason and what
-           needs to be done manually.  Determine how well Mason
-           plays with "natively" installed LSP & DAP servers.
-
---]]
-
--- mason.nvim - installes/manages LSP & DAP servers, linters, formatters 
+-- williamboman/mason.nvim
 ok, mason = pcall(require, "mason")
 if ok then
    mason.setup()
@@ -36,13 +25,15 @@ else
    msg('Problem in tooling.lua with neovim package manager mason')
 end
 
--- neovim/nvim-lspconfig - collection of LSP server configurations
--- williamboman/mason-lspconfig.nvim - integrate lspconfig with mason
-ok, lspconfig = pcall(require, 'lspconfig')
+ok, lspconfig = pcall(require, 'lspconfig') -- neovim/nvim-lspconfig
 if ok then
+   -- williamboman/mason-lspconfig.nvim
    ok, mason_lspconfig = pcall(require, "mason-lspconfig")
    if ok then
-      mason_lspconfig.setup()
+      mason_lspconfig.setup {
+         ensure_installed = { 'zls' },
+         automatic_installation = false
+      }
    else
       msg('Problem in tooling.lua with mason-lspconfig')
    end
@@ -51,23 +42,27 @@ else
    return
 end
 
--- mfussenegger/nvim-dap - debug adapter protocol client
--- jayp0521/mason-nvim-dap.nvim - integrates dap with mason
-ok, dap = pcall(require, 'dap')
+local dap, dap_ui_widgets, mason_nvim_dap
+ok, dap = pcall(require, 'dap') -- mfussenegger/nvim-dap
 if ok then
-   dap_ui_widgets = require('dap.ui.widgets')
+   -- jayp0521/mason-nvim-dap.nvim
    ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
    if ok then
-      mason_nvim_dap.setup()
+      mason_nvim_dap.setup {
+         ensure_installed = { 'zls' },
+         automatic_installation = false,
+         automatic_setup = false
+      }
    else
       msg('Problem in tooling.lua with mason-nvim-dap')
    end
+   dap_ui_widgets = require('dap.ui.widgets')
 else
    msg('Problem in tooling.lua with nvim_dap, PUNTING!!!')
    return
 end
 
-ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp') -- hrsh7th/cmp-nvim-lsp
 if not ok then
    msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
    return
@@ -134,7 +129,6 @@ lspconfig['sumneko_lua'].setup {
            environment or each virtual environment?
 
 --]]
-
 vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
 
 --[[
@@ -147,15 +141,16 @@ vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
      Arch Linux, install the lldb pacman package from extra.
 
 --]]
-
 local rt
 ok, rt = pcall(require, 'rust-tools')
 if ok then
-  dap.configurations.rust = {{
-     type = 'rust';
-     request = 'launch';
-     name = 'rt_lldb';
-      }}
+   dap.configurations.rust = {
+      {
+         type = 'rust';
+         request = 'launch';
+         name = 'rt_lldb';
+      }
+   }
    rt.setup {
       runnables = {
          use_telescope = true
@@ -164,9 +159,7 @@ if ok then
          capabilities = capabilities,
          on_attach = function(client, bufnr)
             keybindings.lsp_kb(client, bufnr)
-            if ok_dap then
-               keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
-            end
+            keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
          end,
          standalone = true
       },
@@ -189,7 +182,6 @@ end
      For latest Metals Server Version see: https://scalameta.org/metals/docs
 
 --]]
-
 local metals
 ok, metals = pcall(require, 'metals')
 if ok then
@@ -205,27 +197,26 @@ if ok then
    function metals_config.on_attach(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
       keybindings.metals_kb(bufnr, metals)
-      if ok_dap then
-         dap.configurations.scala = {{
-               type = 'scala',
-               request = 'launch',
-               name = 'RunOrTest',
-               metals = {
-                  runType = 'runOrTestFile'
-                  --args = { 'firstArg', 'secondArg, ...' }
-               }
-            }, {
-               type = 'scala',
-               request = 'launch',
-               name = 'Test Target',
-               metals = {
-                  runType = 'testTarget'
-               }
+      dap.configurations.scala = {
+         {
+            type = 'scala',
+            request = 'launch',
+            name = 'RunOrTest',
+            metals = {
+               runType = 'runOrTestFile'
+               --args = { 'firstArg', 'secondArg, ...' }
+            }
+         }, {
+            type = 'scala',
+            request = 'launch',
+            name = 'Test Target',
+            metals = {
+               runType = 'testTarget'
             }
          }
-         metals.setup_dap()
-         keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
-      end
+      }
+      metals.setup_dap()
+      keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
    end
 
    local scala_metals_group =
@@ -242,5 +233,5 @@ else
    msg('Problem in tooling.lua with scala metals')
 end
 
---[[ Zig Lang Configuration ]]
+--[[ Zig File detection and syntax highlighting ]]
 vim.g.zig_fmt_autosave = 0 -- Don't auto-format on save
