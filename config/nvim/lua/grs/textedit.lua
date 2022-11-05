@@ -1,11 +1,15 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local usercmd = vim.api.nvim_create_user_command
+local utils = require('grs.util.utils')
+local keymaps = require('grs.util.keybindings')
 
-local kb = vim.keymap.set
-local msg = require('grs.util.utils').msg_hit_return_to_continue
+local kb = keymaps.kb
+local msg = utils.msg_hit_return_to_continue
+
+--[[ Keybindings not related to any specific plugins ]]
+keymaps.general_kb()
+
+--[[ Configure specific text editing relaed plugins ]]
 
 -- Configure numToStr/Comment.nvim
 local ok, comment = pcall(require, 'Comment')
@@ -24,17 +28,19 @@ end
 -- Configure justtinmk/vim-sneak plugin
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-kb({'n', 'x'}, 'f', '<Plug>Sneak_f', {desc = 'f one char sneak'})
-kb({'n', 'x'}, 'F', '<Plug>Sneak_F', {desc = 'F one char sneak'})
-kb({'n', 'x'}, 't', '<Plug>Sneak_t', {desc = 't one char sneak'})
-kb({'n', 'x'}, 'T', '<Plug>Sneak_T', {desc = 'T one char sneak'})
+kb({'n', 'x'}, 'f', '<Plug>Sneak_f')
+kb({'n', 'x'}, 'F', '<Plug>Sneak_F')
+kb({'n', 'x'}, 't', '<Plug>Sneak_t')
+kb({'n', 'x'}, 'T', '<Plug>Sneak_T')
 
---[[ Commands/autocmds/keybindings not related to specific plugins ]]
-require('grs.util.keybindings').general_kb()
+--[[ Text editing commands/autocmds not related to specific plugins ]]
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local usercmd = vim.api.nvim_create_user_command
 
 local grs_text_group = augroup('grs_text', {})
 
--- Write file as root - works when sudo does not require a password
+-- Write file as root - works when sudo doesn't require a password
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
 usercmd('WR', 'WRF %', {})
 

@@ -232,6 +232,3 @@ if ok then
 else
    msg('Problem in tooling.lua with scala metals')
 end
-
---[[ Zig File detection and syntax highlighting ]]
-vim.g.zig_fmt_autosave = 0 -- Don't auto-format on save

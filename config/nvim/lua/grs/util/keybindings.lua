@@ -14,8 +14,9 @@ local grs_utils = require('grs.util.utils')
 local msg = grs_utils.msg_hit_return_to_continue
 local kb = vim.keymap.set
 
---[[ Which-Key setup - helps make keybindings user discoverable ]]
+M.kb = kb
 
+--[[ Which-Key setup - helps make keybindings user discoverable ]]
 local ok, wk = pcall(require, 'which-key')
 if ok then
    wk.setup {
@@ -25,14 +26,13 @@ if ok then
             suggestions = 36
         }
      }
-  }
+   }
    M.wk = wk
 else
    msg('Problem in keybindings.lua: which-key failed to load')
 end
 
 --[[ General key mappings/bindings ]]
-
 function M.general_kb()
    -- Remove normal mode motions, confusing when part of failed keybinding
    kb('n', '  ',   '<Nop>', { desc = 'punt on <Space> Keymap' })
@@ -122,25 +122,14 @@ function M.general_kb()
       desc = 'trim trailing whitespace'
    })
 
-   -- WhichKey labels
    if M.wk then
-      local labels = { name = 'system clipboard' }
-      local opts_n = {
-         mode = 'n',
-         prefix = ' s'
-      }
-      local opts_x = {
-         mode = 'x',
-         prefix = ' s'
-      }
-      wk.register(labels, opts_n)
-      wk.register(labels, opts_x)
+      wk.register({ name = 'system clipboard' },
+                  { mode = {'n', 'x'}, prefix = ' s' })
    end
 
 end
 
 --[[ Telescope related keybindings ]]
-
 function M.telescope_kb(ts, tb)
 
    -- Telescope built-ins
@@ -169,11 +158,8 @@ function M.telescope_kb(ts, tb)
    -- Telescope commands
    kb('n', ' tt', '<Cmd>Telescope<CR>', { desc = 'telescope command' })
 
-   -- WhichKey labels
    if M.wk then
-      local labels = { name = 'telescope' }
-      local opts = { prefix = ' t' }
-      wk.register(labels, opts)
+      wk.register({ name = 'telescope' }, { prefix = ' t' })
    end
 
 end
@@ -184,7 +170,6 @@ end
      Using g and z as "leader keys" for LSP, stepping
      on some folding keybindings which I never use.
 --]]
-
 function M.lsp_kb(_, bufnr)
    kb('n', 'gd',  vim.lsp.buf.definition, {
       buffer = bufnr,
@@ -251,20 +236,15 @@ function M.lsp_kb(_, bufnr)
       desc = 'remove workspace folder',
    })
 
-   -- WhichKey labels
    if M.wk then
-      local labels_g = {
+      wk.register({
          s = { name = 'symbol' }
-      }
-      local labels_z = {
+      }, { prefix = 'g', buffer = bufnr })
+      wk.register({
          F = { name = 'format' },
          l = { name = 'code lens' },
          W = { name = 'workspace folder' }
-      }
-      local opts_g = { prefix = 'g', buffer = bufnr }
-      local opts_z = { prefix = 'z', buffer = bufnr }
-      wk.register(labels_g, opts_g)
-      wk.register(labels_z, opts_z)
+      }, { prefix = 'z', buffer = bufnr })
    end
 
 end
@@ -282,14 +262,8 @@ function M.metals_kb(bufnr, metals)
       desc = 'metals hover worksheet', buffer = bufnr
    })
 
-   -- WhichKey labels
    if M.wk then
-      local labels = { name = 'metals' }
-      local opts = {
-         prefix = 'm',
-         buffer = bufnr
-      }
-      wk.register(labels, opts)
+      wk.register({ name = 'metals' }, { prefix = 'm', buffer = bufnr })
    end
 
 end
@@ -325,14 +299,8 @@ function M.dap_kb(bufnr, dap, dap_ui_widgets)
       desc = 'dap repl toggle'
    })
 
-   -- WhichKey labels
    if M.wk then
-      local labels = { name = 'dap' }
-      local opts = {
-         buffer = bufnr,
-         prefix = '\\'
-      }
-      wk.register(labels, opts)
+      wk.register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
    end
 
 end

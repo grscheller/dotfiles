@@ -10,7 +10,7 @@
 
      To bootstrap, put the packer plugin here,
      "~/.local/share/nvim/site/pack/packer/start/packer.nvim",
-     where nvim will be able to find it.  
+     where nvim will be able to find it.
 
      To keep plugin repos up to date, periodically run
 
@@ -60,7 +60,8 @@ return packer.startup(
       use { 'folke/which-key.nvim' }
 
       -- General purpose text editing plugins
-      use { 'numToStr/Comment.nvim',
+      use {
+            'numToStr/Comment.nvim',
             'justinmk/vim-sneak',
             'tpope/vim-surround',
             'tpope/vim-repeat' }
@@ -111,7 +112,5 @@ return packer.startup(
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }
 
-      -- File detection/syntax highlighting for zig
-      use { 'ziglang/zig.vim' }
    end
 )

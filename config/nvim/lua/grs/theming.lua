@@ -1,7 +1,10 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local kb = vim.keymap.set
-local msg = require('grs.util.utils').msg_hit_return_to_continue
+local utils = require('grs.util.utils')
+local keymaps = require('grs.util.keybindings')
+
+local kb = keymaps.kb
+local msg = utils.msg_hit_return_to_continue
 
 local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 
@@ -12,7 +15,6 @@ local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
      Gruvbox, and the art of Kanagawa.
 
 --]]
-
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
    local my_colors = {
@@ -161,8 +163,10 @@ else
    msg('Problem in theming.lua: zen-mode failed to load')
 end
 
--- WebDevicons needs a patched font like Noto Mono Nerd Font.
---    see https://github.com/ryanoasis/nerd-fonts
+--[[
+     WebDevicons needs a patched font like Noto Mono Nerd Font.
+        see https://github.com/ryanoasis/nerd-fonts
+--]]
 ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
