@@ -1,8 +1,5 @@
 --[[ Software Devel Tooling and LSP Configuration ]]
 
-local cmd = vim.api.nvim_command
-local msg = require('grs.util.utils').msg_hit_return_to_continue
-
 --[[
      Nvim LSP Configuration
 
@@ -12,26 +9,46 @@ local msg = require('grs.util.utils').msg_hit_return_to_continue
           https://github.com/williamboman/mason-lspconfig.nvim
           https://github.com/jayp0521/mason-nvim-dap.nvim
 
+     Overiding principle is to configure what I actually
+     use, not what I might like to use someday.
+
 --]]
 
-local lspconfig, cmp_nvim_lsp, mason_lspconfig
+local cmd = vim.api.nvim_command
+local msg = require('grs.util.utils').msg_hit_return_to_continue
 
-local ok, mason
--- williamboman/mason.nvim
-ok, mason = pcall(require, "mason")
+local ok, mason, lspconf, cmp_nvim_lsp, mason_lspconf
+
+ok, mason = pcall(require, "mason") -- williamboman/mason.nvim
 if ok then
-   mason.setup()
+   mason.setup {
+      ui = {
+         icons = {
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗'
+         }
+      }
+   }
 else
    msg('Problem in tooling.lua with neovim package manager mason')
 end
 
-ok, lspconfig = pcall(require, 'lspconfig') -- neovim/nvim-lspconfig
+ok, lspconf = pcall(require, 'lspconfig') -- neovim/nvim-lspconfig
 if ok then
-   -- williamboman/mason-lspconfig.nvim
-   ok, mason_lspconfig = pcall(require, "mason-lspconfig")
+   ok, mason_lspconf =
+      pcall(require, "mason-lspconfig") -- williamboman/mason-lspconfig.nvim
    if ok then
-      mason_lspconfig.setup {
-         ensure_installed = { 'zls' },
+      mason_lspconf.setup {
+         ensure_installed = {
+            'cssls',
+            'html',
+            'jsonls',
+            'sumneko_lua',
+            'taplo',
+            'yamlls',
+            'zls'
+         },
          automatic_installation = false
       }
    else
@@ -45,11 +62,11 @@ end
 local dap, dap_ui_widgets, mason_nvim_dap
 ok, dap = pcall(require, 'dap') -- mfussenegger/nvim-dap
 if ok then
-   -- jayp0521/mason-nvim-dap.nvim
-   ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+   ok, mason_nvim_dap =
+      pcall(require, "mason-nvim-dap") -- jayp0521/mason-nvim-dap.nvim
    if ok then
       mason_nvim_dap.setup {
-         ensure_installed = { 'zls' },
+         ensure_installed = {},
          automatic_installation = false,
          automatic_setup = false
       }
@@ -69,23 +86,23 @@ if not ok then
 end
 
    local lsp_servers = {
-      'bashls',   -- bash lang server (pacman or npm)
-      'clangd',   -- C and C++ - both clang and gcc (pacman clang)
-      'cssls',    -- vscode-css-languageserver (pacman)
+      'bashls',   -- bash lang server (pacman)
+      'clangd',   -- C and C++ - for clang & gcc (pacman clang)
+      'cssls',    -- vscode-css-languageserver (mason with npm)
       'gopls',    -- go language server (pacman gopls)
-      'html',     -- vscode-html-languageserver (pacman)
-      'jsonls',   -- vscode-json-languageserver (pacman)
-      'pyright',  -- Pyright for Python (pacman or npm)
-      'tsserver', -- typescript-language-server (pacman)
-      'yamlls',   -- yaml-language-server (pacman)
-      'zls'       -- zig language server (packer ziglang/zig.vim)
+      'html',     -- vscode-html-languageserver (mason with npm)
+      'jsonls',   -- vscode-json-languageserver (maso with npmn)
+      'pyright',  -- Pyright for Python (pacman)
+      'taplo',    -- toml (mason)
+      'yamlls',   -- Redhat yaml (mason with npm)
+      'zls'       -- zig (mason)
    }
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
 
 for _, lsp_server in ipairs(lsp_servers) do
-   lspconfig[lsp_server].setup {
+   lspconf[lsp_server].setup {
       capabilities = capabilities,
       on_attach = keybindings.lsp_kb
    }
@@ -94,7 +111,7 @@ end
 --[[ Haskell configuration - Lua auto-indent configuration ]]
 cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
-lspconfig['hls'].setup {
+lspconf['hls'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
@@ -105,7 +122,7 @@ lspconfig['hls'].setup {
 --[[ Lua configuration - geared towards editing Neovim configs ]]
 cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
-lspconfig['sumneko_lua'].setup {
+lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = keybindings.lsp_kb,
    settings = {

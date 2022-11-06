@@ -60,17 +60,16 @@ return packer.startup(
       use { 'folke/which-key.nvim' }
 
       -- General purpose text editing plugins
-      use {
-            'numToStr/Comment.nvim',
+      use { 'numToStr/Comment.nvim',
             'justinmk/vim-sneak',
             'tpope/vim-surround',
             'tpope/vim-repeat' }
 
       -- Colorscheme, statusline & zen-mode
-      use { 'norcalli/nvim-colorizer.lua',
-            'rebelot/kanagawa.nvim',
+      use { 'rebelot/kanagawa.nvim',
             'nvim-lualine/lualine.nvim',
             'kyazdani42/nvim-web-devicons',
+            'norcalli/nvim-colorizer.lua',
             'folke/zen-mode.nvim',
             'folke/twilight.nvim' }
 
@@ -111,6 +110,5 @@ return packer.startup(
             "jayp0521/mason-nvim-dap.nvim",
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }
-
    end
 )
