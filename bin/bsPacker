@@ -29,7 +29,11 @@ test -f "$PackerCompiled" && {
 
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"
 then
-    nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    printf '\nUpdating Packer plugins...\n'
+    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    printf '\n\nUpdating Mason packages...\n'
+    nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+    printf '\n\nDone!!!\n'
 else
     printf 'Error: "git clone" failed for "%s"\n' $PackerGIT
 fi

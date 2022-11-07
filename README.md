@@ -36,8 +36,8 @@ Installs into system directories (Arch Linux Only!)
 ## Repo's purposes is to
 
 1. maintain my own personal configuration files
-2. preserve this information for myself
-3. help quickly configure new systems for myself
+2. help quickly configure new systems for myself
+3. preserve this information for myself
 4. provide others useful examples for their own configuration files
 5. allow others to use as a starting point for their own version of this repo
 

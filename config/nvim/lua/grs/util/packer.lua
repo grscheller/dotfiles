@@ -46,6 +46,13 @@ packer.init {
    }
 }
 
+vim.api.nvim_create_autocmd('User', {
+   pattern = 'PackerComplete',
+   callback = function()
+      print('  Packer has finished!')
+   end
+})
+
 local use = packer.use
 
 return packer.startup(
@@ -103,11 +110,12 @@ return packer.startup(
             'saadparwaiz1/cmp_luasnip' } }
 
       -- LSP & DAP support
-      use { "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-            "neovim/nvim-lspconfig",
-            "mfussenegger/nvim-dap",
-            "jayp0521/mason-nvim-dap.nvim",
+      use { 'williamboman/mason.nvim',
+            'RubixDev/mason-update-all',
+            'williamboman/mason-lspconfig.nvim',
+            'neovim/nvim-lspconfig',
+            'mfussenegger/nvim-dap',
+            'jayp0521/mason-nvim-dap.nvim',
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }
    end

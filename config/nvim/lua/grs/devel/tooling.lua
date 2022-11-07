@@ -6,6 +6,7 @@
      see: https://github.com/neovim/nvim-lspconfig
           https://github.com/mfussenegger/nvim-dap
           https://github.com/williamboman/mason.nvim
+          https://github.com/RubixDev/mason-update-all
           https://github.com/williamboman/mason-lspconfig.nvim
           https://github.com/jayp0521/mason-nvim-dap.nvim
 
@@ -17,10 +18,16 @@
 local cmd = vim.api.nvim_command
 local msg = require('grs.util.utils').msg_hit_return_to_continue
 
-local ok, mason, lspconf, cmp_nvim_lsp, mason_lspconf
+local ok
+local ok_mason = false
+local lspconf, cmp_nvim_lsp
+local dap, dap_ui_widgets
+local mason, mason_update_all, mason_lspconf, mason_nvim_dap
 
-ok, mason = pcall(require, "mason") -- williamboman/mason.nvim
+-- williamboman/mason.nvim
+ok, mason = pcall(require, "mason")
 if ok then
+   ok_mason = true
    mason.setup {
       ui = {
          icons = {
@@ -30,20 +37,35 @@ if ok then
          }
       }
    }
+   -- RubixDev/mason-update-all
+   ok, mason_update_all = pcall(require, "mason-update-all")
+   if ok then
+      mason_update_all.setup()
+      vim.api.nvim_create_autocmd('User', {
+         pattern = 'MasonUpdateAllComplete',
+         callback = function()
+            print('  Mason-Update-All has finished!')
+         end
+      })
+   else
+      msg('Problem in tooling.lua with mason-update-all')
+   end
 else
    msg('Problem in tooling.lua with neovim package manager mason')
 end
 
-ok, lspconf = pcall(require, 'lspconfig') -- neovim/nvim-lspconfig
+-- neovim/nvim-lspconfig
+ok, lspconf = pcall(require, 'lspconfig')
 if ok then
-   ok, mason_lspconf =
-      pcall(require, "mason-lspconfig") -- williamboman/mason-lspconfig.nvim
-   if ok then
+   -- williamboman/mason-lspconfig.nvim
+   ok, mason_lspconf = pcall(require, "mason-lspconfig")
+   if ok and ok_mason then
       mason_lspconf.setup {
          ensure_installed = {
             'cssls',
             'html',
             'jsonls',
+            'marksman',
             'sumneko_lua',
             'taplo',
             'yamlls',
@@ -59,12 +81,12 @@ else
    return
 end
 
-local dap, dap_ui_widgets, mason_nvim_dap
-ok, dap = pcall(require, 'dap') -- mfussenegger/nvim-dap
+-- mfussenegger/nvim-dap
+ok, dap = pcall(require, 'dap')
 if ok then
-   ok, mason_nvim_dap =
-      pcall(require, "mason-nvim-dap") -- jayp0521/mason-nvim-dap.nvim
-   if ok then
+   -- jayp0521/mason-nvim-dap.nvim
+   ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+   if ok and ok_mason then
       mason_nvim_dap.setup {
          ensure_installed = {},
          automatic_installation = false,
@@ -79,23 +101,25 @@ else
    return
 end
 
-ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp') -- hrsh7th/cmp-nvim-lsp
+-- hrsh7th/cmp-nvim-lsp to integrate LSP with completions
+ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
    msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
    return
 end
 
    local lsp_servers = {
-      'bashls',   -- bash lang server (pacman)
-      'clangd',   -- C and C++ - for clang & gcc (pacman clang)
-      'cssls',    -- vscode-css-languageserver (mason with npm)
-      'gopls',    -- go language server (pacman gopls)
-      'html',     -- vscode-html-languageserver (mason with npm)
-      'jsonls',   -- vscode-json-languageserver (maso with npmn)
-      'pyright',  -- Pyright for Python (pacman)
-      'taplo',    -- toml (mason)
-      'yamlls',   -- Redhat yaml (mason with npm)
-      'zls'       -- zig (mason)
+      'bashls',    -- bash lang server (pacman)
+      'clangd',    -- C and C++ - for clang & gcc (pacman clang)
+      'cssls',     -- vscode-css-languageserver (mason with npm)
+      'gopls',     -- go language server (pacman gopls)
+      'html',      -- vscode-html-languageserver (mason with npm)
+      'jsonls',    -- vscode-json-languageserver (mason with npm)
+      'marksman',  -- markdown language server (mason)
+      'pyright',   -- pyright for Python (pacman)
+      'taplo',     -- toml (mason)
+      'yamlls',    -- Redhat yaml (mason with npm)
+      'zls'        -- zig (mason)
    }
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
