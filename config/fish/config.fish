@@ -99,7 +99,7 @@ and begin
     # Python configuration (see also below at end)
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.local/share/pyenv
-    set -gx PYTHONPATH lib ../lib  # Very old method, frowned upon?
+    set -gx PYTHONPATH lib ../lib  # Very old method, now frowned upon???
 end
 
 # Python Pyenv function and environment configuration

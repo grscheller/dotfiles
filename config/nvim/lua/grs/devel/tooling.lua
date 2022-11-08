@@ -170,7 +170,8 @@ lspconf['sumneko_lua'].setup {
            environment or each virtual environment?
 
 --]]
-vim.g.python3_host_prog = os.getenv('HOME') .. '/.pyenv/shims/python'
+vim.g.python3_host_prog =
+   os.getenv('HOME') .. '/.local/share/pyenv/shims/python'
 
 --[[
      Rust Lang Configuration - rust_tools & lldb
