@@ -139,12 +139,13 @@ ok, zen = pcall(require, 'zen-mode')
 if ok then
    zen.setup {
       window = {
-         backdrop = 0.4, -- shade backdrop, 1 to keep normal
+         backdrop = 1.0, -- shade backdrop, 1 to keep normal
          width = 0.85, -- abs num of cells when > 1, % of width when <= 1
          height = 1, -- abs num of cells when > 1, % of height when <= 1
          options = {
             number = false,
-            relativenumber = false
+            relativenumber = false,
+            colorcolumn = ''
          }
       },
       plugins = {
