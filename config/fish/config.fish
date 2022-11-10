@@ -62,7 +62,23 @@ and begin
     #   Neovim syntax:      $ gem install neovim
     #   Markdown linter:    $ gem install mdl
     #   Markdown converter: $ gem install kramdown
-    fish_add_path -gpP ~/.local/share/gem/ruby/*/bin
+    set -l RubyDir ~/.local/share/gem/ruby/*/bin
+    set -l cnt (count $RubyDir)
+    set -l idx
+    switch $cnt
+        case '0'
+        case '1'
+            fish_add_path -gpP $RubyDir
+        case '*'
+            fish_add_path -gpP $RubyDir[1]
+            printf '\n[fish.config] Warning: Multiple Ruby directories found'
+            for idx in (seq 1 $cnt)
+                printf '\n  %s' $RubyDir[$idx]
+                test $idx -eq 1; and printf '  <- this one used'
+                test $idx -eq $cnt; and printf '\n'
+            end
+    end
+    set -e RubyDirs cnt idx
 
     # Rust toolchain
     fish_add_path -gpP ~/.cargo/bin
