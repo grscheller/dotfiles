@@ -343,15 +343,11 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     # If there is a ~/bin directory, put near end
     PATH="$PATH":~/bin
 
-    # Put relative directories at end of PATH, this is for projects
-    # where the user takes up residence in the project's root directory.
-    PATH="$PATH":bin:../bin:.
-
     # Initial Python configuration
     export PIP_REQUIRE_VIRTUALENV=true
-    export PYENV_ROOT=~/.pyenv
-    PATH=$PYENV_ROOT/shims:"$PATH"
+    export PYENV_ROOT=~/.local/share/pyenv
     export PYTHONPATH=lib:../lib
+    digpath -q pyenv; and set -gx has_pyenv_installed
 
     # Configure Java for Sway/Wayland on ARCH
     if uname -r | grep -q arch
@@ -442,4 +438,4 @@ fi
 
 ### Python Pyenv function configuration
 
-test -d "$PYENV_ROOT" && eval "$(pyenv init -)"
+[[ -v has_pyenv_installed ]] && eval "$(pyenv init -)"

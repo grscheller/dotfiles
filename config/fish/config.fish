@@ -115,11 +115,14 @@ and begin
     # Python configuration (see also below at end)
     set -gx PIP_REQUIRE_VIRTUALENV true
     set -gx PYENV_ROOT ~/.local/share/pyenv
-    set -gx PYTHONPATH lib ../lib  # Very old method, now frowned upon???
+    set -gx PYTHONPATH lib ../lib
+    digpath -q pyenv; and set -gx has_pyenv_installed
 end
 
-# Python Pyenv function and environment configuration
-test -d $PYENV_ROOT; and pyenv init - | source
+# Python pyenv function and environment configuration
+set -q has_pyenv_installed; and begin
+    pyenv init - | source
+end
 
 # For non-Systemd systems
 if set -q make_phoney_hostnamectl

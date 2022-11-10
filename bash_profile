@@ -14,11 +14,6 @@
 # This is due to certain display managers invoking entire desktop
 # environments without ever going through a login shell.
 # 
-# Also note, if .profile exists, gdm will non-interactively source
-# it via /bin/sh.  Technically, only POSIX login shells should
-# ever source .profile, as only Bash login shells should ever
-# source .bash_profile.
-#
 
 # shellcheck disable=SC1090
 [[ -f ~/.bashrc ]] && source ~/.bashrc
