@@ -13,17 +13,21 @@
 #    Probably just fighting against someone else's
 #    beloved configuration paradigm.
 
-## Setup initial environment if it has not been done so yet
-set -q VIRGINPATH
+## Flag to setup an initial environment if not done so yet
+set -q FISHVIRGINPATH
 or begin
-    set -gx VIRGINPATH $PATH
-    set -g UPDATE_ENV
+    if set -q BASHVIRGINPATH
+        set -gx FISHVIRGINPATH $BASHVIRGINPATH
+    else
+        set -gx FISHVIRGINPATH $PATH
+        set -g UPDATE_ENV
+    end
 end
 
 set -q REDO_ENV
 and begin
     set -g UPDATE_ENV
-    set PATH $VIRGINPATH
+    set PATH $FISHVIRGINPATH
 end
 
 set -q UPDATE_ENV
@@ -51,7 +55,7 @@ and begin
     # Set up paging
     set -gx EDITOR nvim
     set -gx VISUAL nvim
-    set -gx PAGER less
+    set -gx PAGER 'nvim -R'
     set -gx MANPAGER 'nvim +Man!'
     set -gx DIFFPROG 'nvim -d'
 
@@ -62,23 +66,23 @@ and begin
     #   Neovim syntax:      $ gem install neovim
     #   Markdown linter:    $ gem install mdl
     #   Markdown converter: $ gem install kramdown
-    set -l RubyDir ~/.local/share/gem/ruby/*/bin
-    set -l cnt (count $RubyDir)
+    set -l gemDirs ~/.local/share/gem/ruby/*/bin
+    set -l cnt (count $gemDirs)
     set -l idx
     switch $cnt
-        case '0'
-        case '1'
-            fish_add_path -gpP $RubyDir
-        case '*'
-            fish_add_path -gpP $RubyDir[1]
-            printf '\n[fish.config] Warning: Multiple Ruby directories found'
-            for idx in (seq 1 $cnt)
-                printf '\n  %s' $RubyDir[$idx]
-                test $idx -eq 1; and printf '  <- this one used'
-                test $idx -eq $cnt; and printf '\n'
-            end
+      case '0'
+      case '1'
+        fish_add_path -gpP $gemDirs
+      case '*'
+        fish_add_path -gpP $gemDirs[1]
+        printf '\n[fish.config] Warning: Multiple Ruby Gem directories found'
+        for idx in (seq 1 $cnt)
+            printf '\n  %s' $gemDirs[$idx]
+            test $idx -eq 1; and printf '  <- using this one'
+            test $idx -eq $cnt; and printf '\n'
+        end
     end
-    set -e RubyDirs cnt idx
+    set -e gemDirs cnt idx
 
     # Rust toolchain
     fish_add_path -gpP ~/.cargo/bin
@@ -130,6 +134,9 @@ if set -q make_phoney_hostnamectl
         hostname
     end
 end
+
+# Have git asks for passwords on the command line
+set -e SSH_ASKPASS
 
 # Convert between various bases (use capital A-F for hex-digits)
 function h2h; printf 'ibase=16\nobase=10\n%s\n'   "$argv" | /usr/bin/bc; end

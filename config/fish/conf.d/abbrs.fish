@@ -30,6 +30,9 @@ if not set -q fish_abbr_initialized
     abbr -a gh git push
     abbr -a gs git status  # gs steps on ghostscript
 
+    # Restart SSH key-agent adding your private key: ~/.ssh/id_rsa
+    abbr -a addkey 'eval (ssh-agent -c); and ssh-add'
+
     # Shell environment cmds
     abbr -a re 'cd; unguard_universals; REDO_ENV=yes fish -l'
     abbr -a ue UPDATE_ENV=yes fish

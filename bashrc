@@ -6,18 +6,18 @@
 #  more or or less, POSIX complient systems.
 #
 
-### If not interactive, don't do anything.
-
+## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
-### System wide configurations - Debian & Arch source /etc/bash.bashrc before ~/.bashrc
-
+## System wide Bash configurations
+#
+#   Used on Redhat & Fedora,
+#   Debian & Arch source /etc/bash.bashrc before ~/.bashrc
+#
 # shellcheck disable=SC1091
-[[ -f /etc/bashrc ]] && source /etc/bashrc  # Used on Redhat & Fedora
+[[ -f /etc/bashrc ]] && source /etc/bashrc
 
-### Shell functions
-
-## Command line utility functions
+## Shell functions
 
 #  Jump up multiple directories
 ud () {
@@ -92,10 +92,10 @@ digpath () (
 
   for File in "$@"
   do
-     [[ -z "$File" ]] && continue
+     [[ -z $File ]] && continue
      for Dir in $PATH
      do
-        [[ ! -d "$Dir" ]] && continue
+        [[ ! -d $Dir ]] && continue
         for Target in $Dir/$File
         do
             if [[ -f $Target ]]
@@ -176,8 +176,6 @@ b2d () { printf 'ibase=2\nobase=1010\n%s\n'  "$*" | /usr/bin/bc; }
 b2o () { printf 'ibase=2\nobase=1000\n%s\n'  "$*" | /usr/bin/bc; }
 b2b () { printf 'ibase=2\nobase=10\n%s\n'    "$*" | /usr/bin/bc; }
 
-## Launch Desktop GUI Apps from command line
-
 #  Open Desktop file manager
 fm () {
   local DiR="$1"
@@ -202,30 +200,8 @@ tm () {
   fi
 }
 
-## GUI-land apps
-
 #  PDF Reader
 ev () ( /usr/bin/evince "$@" >/dev/null 2>&1 & )
-
-# LBRY AppImage
-lbry () {
-  local LBRY_Dir=~/opt/AppImages
-  # shellcheck disable=SC2206
-  local LBRY_App=(${LBRY_Dir}/LBRY_*.AppImage)
-
-  (( ${#LBRY_App[@]} > 1  )) && {
-      printf "  Error: Multiple LBRY apps found in :\n"
-      printf "\t%s\n" "${LBRY_App[@]}"
-      return 1
-  }
-
-  [[ ${LBRY_App[0]} == ${LBRY_Dir}/LBRY_/*.AppImage ]] && {
-      printf '  Error: LBRY app not found in %s\n' "$LBRY_Dir"
-      return 1
-  }
-
-  ( ${LBRY_App[0]} >/dev/null 2>&1 & )
-}
 
 # Firefox Browser
 ff () {
@@ -241,14 +217,11 @@ ff () {
 lo () ( /usr/bin/libreoffice & )
 low () ( /usr/bin/libreoffice --writer "$@" & )
 
-## For non-Systemd systems - supply phony hostnamectl command
-
+# For non-Systemd systems - supply phony hostnamectl command
 if ! digpath -q hostnamectl
 then
     function hostnamectl { hostname; }
 fi
-
-## Software development related functions
 
 #  Setup JDK on Arch
 archJDK () {
@@ -291,16 +264,21 @@ archJDK () {
   fi
 }
 
-### Make sure an initial shell environment is well defined.
+## Make sure the initial shell environment is sane
+if ! [[ -v BASHVIRGINPATH ]] && [[ -v FISHVIRGINPATH ]]
+then
+    export BASHVIRGINPATH=$FISHVIRGINPATH
+fi
 
-export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
-((_ENV_INITIALIZED < 1)) && {
-    _ENV_INITIALIZED=$(( _ENV_INITIALIZED + 1 ))
+if ! [[ -v BASHVIRGINPATH ]]
+then
+    # Save original PATH
+    export BASHVIRGINPATH="$PATH"
 
-    ## Set locale so commandline tools & other programs default to unicode
+    # Set locale so commandline tools & other programs default to unicode
     export LANG=en_US.utf8
 
-    ## Setup editors/pagers
+    # Setup editors/pagers
     if digpath -q nvim
     then
         export EDITOR=nvim
@@ -317,18 +295,33 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
         export VISUAL=vi
     fi
 
-    ## Construct the shell's PATH for all my different computers,
-    ## non-existent and duplicate path elements dealt with at end.
-
-    # Save original PATH
-    [ -z "$VIRGIN_PATH" ] && export VIRGIN_PATH="$PATH"
+    # Construct the shell's PATH for all my different computers,
+    # non-existent and duplicate path elements dealt with at end.
 
     # Ruby tool chain
     #   Mostly for the Ruby Markdown linter,
     #   to install linter: $ gem install mdl
-    if [ -d ~/.local/share/gem/ruby ]
+    if [[ -d ~/.local/share/gem/ruby ]]
     then
-        eval PATH=~/.local/share/gem/ruby/*/bin:"$PATH"
+        ((ii = 0, jj = 0))
+        for gemDir in ~/.local/share/gem/ruby/*/bin
+        do
+            gemDirs[((ii++))]="$gemDir"
+        done
+
+        case $ii in
+          0) ;;
+          1) PATH="${gemDirs[0]}:$PATH" ;;
+          *) PATH="${gemDirs[0]}:$PATH"
+             printf '\n[bashrc] Warning: Multiple Ruby Gem directories found'
+             while ((jj < ii))
+             do
+                 printf '\n  %s' "${gemDirs[$((jj++))]}"
+                 ((jj == 1)) && printf '  <- using this one'
+                 ((jj == ii)) && printf '\n'
+             done ;;
+        esac
+        unset ii, jj, gemDirs
     fi
 
     # Location Rust Toolchain
@@ -347,7 +340,7 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
     export PIP_REQUIRE_VIRTUALENV=true
     export PYENV_ROOT=~/.local/share/pyenv
     export PYTHONPATH=lib:../lib
-    digpath -q pyenv; and set -gx has_pyenv_installed
+    digpath -q pyenv && export has_pyenv_installed
 
     # Configure Java for Sway/Wayland on ARCH
     if uname -r | grep -q arch
@@ -358,9 +351,11 @@ export _ENV_INITIALIZED=${_ENV_INITIALIZED:=0}
 
     ## Clean up PATH
     PATH="$(pathtrim)"
-}
+fi
 
-### Aliases remove "helpful" aliases
+## Aliases
+
+# Remove "helpful" aliases
 unalias rm 2>&-
 unalias ls 2>&-
 unalias grep 2>&-
@@ -384,15 +379,16 @@ alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
 # Pull down more -- Not good for large websites
 alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
-## SSH related variables and aliases
-# Restart SSH key-agent and add your private
-# key, which is located here: ~/.ssh/id_rsa
+# SSH related variables and aliases
+#   Restart SSH key-agent and add your private
+#   key, which is located here: ~/.ssh/id_rsa
 alias addkey='eval $(ssh-agent) && ssh-add'
-# Make sure git asks for passwords on the command line
+
+# Have git asks for passwords on the command line
 unset SSH_ASKPASS
 
-### Setup behaviors - make BASH more Korn Shell like
-set -o pipefail  # Return right most nonzero error, otherwise 0
+## Make BASH more Korn Shell like
+set -o pipefail
 shopt -s extglob
 shopt -s checkwinsize
 shopt -s checkhash
@@ -404,17 +400,18 @@ HISTSIZE=5000
 HISTFILESIZE=5000
 HISTCONTROL=ignoredups
 
-### Prompt and window construction
-## Adjust hostname - change cattle names to pet names
+## Prompt and window decorations
+
+# Adjust displayed hostnames - change cattle names to pet names
 MyHostName=$(hostnamectl hostname); MyHostName=${MyHostName%%.*}
 case $MyHostName in
   rvsllschellerg2) MyHostName=voltron ;;
       SpaceCAMP31) MyHostName=sc31    ;;
 esac
 
-## Terminal window title prompt string
+# Terminal window title prompt string
 case $TERM in
-  xterm*|rxvt*|urxvt*|kterm*|gnome*|alacritty)
+  alacritty|xterm*|rxvt*|urxvt*|kterm*|gnome*)
       TERM_TITLE=$'\e]0;'"$(id -un)@${MyHostName}"$'\007' ;;
   *)
       TERM_TITLE='' ;;
@@ -422,20 +419,18 @@ esac
 
 unset MyHostName
 
-## Setup up 3 line prompt
+# Setup up 3 line prompt
 PS1="\n[\s: \w]\n\$ ${TERM_TITLE}"
 PS2='> '
 PS3='#? '
 PS4='++ '
 
-### Configure Haskell Stack completion
-
+## Configure Haskell Stack completion
 if digpath -q stack
 then
     # Bash completion for stack (Haskell)
     eval "$(stack --bash-completion-script stack)"
 fi
 
-### Python Pyenv function configuration
-
+## Python Pyenv function configuration
 [[ -v has_pyenv_installed ]] && eval "$(pyenv init -)"
