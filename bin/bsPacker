@@ -11,29 +11,54 @@
 #  and then restart Neovim.
 #
 
-PackerCloneDir="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/packer/start/packer.nvim/
-PackerCompiled="${XDG_CONFIG_HOME:-$HOME/.config}"/nvim/plugin/packer_compiled.lua
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+PackerStartDir="$XDG_DATA_HOME"/nvim/site/pack/packer/start
+PackerCloneDir="$PackerStartDir"/packer.nvim
+PackerCompiledDir="$XDG_CONFIG_HOME"/nvim/plugin
+PackerCompiledLua="$PackerCompiledDir"/packer_compiled.lua
 PackerGIT=https://github.com/wbthomason/packer.nvim
 
+test -d "$PackerStartDir" || {
+    mkdir -p "$PackerStartDir" || {
+        printf '\nWarning: Failed to make packer start directory'
+        printf '\n         "%s"\n' "$PackerStartDir"
+    }
+}
 test -d "$PackerCloneDir" && {
-    chmod -R u+rw "$PackerCloneDir"
-    rm -r "$PackerCloneDir" ||
-        printf 'Failed to removed existing "%s" directory.\n' "$PackerCloneDir"
+    chmod -R u+rw "$PackerCloneDir" || {
+        printf '\nWarning: Failed to open up permissions on'
+        printf '\n         "%s"\n' "$PackerCloneDir"
+    }
+    rm -rf "$PackerCloneDir"
+    test -d "$PackerCloneDir" && {
+        printf '\nWarning: Failed to remove old packer plugin'
+        printf '\n         "%s"\n' "$PackerCloneDir"
+    }
 }
 
-test -f "$PackerCompiled" && {
-    chmod u+rw "$PackerCompiled"
-    rm -r "$PackerCompiled" ||
-        printf 'Failed to removed existing "%s" file.\n' "$PackerCompiled"
+test -f "$PackerCompiledLua" && {
+    chmod u+rw "$PackerCompiledLua" || {
+        printf '\nWarning: Failed to open up permissions on'
+        printf '\n         "%s"\n' "$PackerCompiledLua"
+    }
+    rm "$PackerCompiledLua" || {
+        printf '\nWarning: Failed to remove old packer_compiled.lua file'
+        printf '\n         "%s"\n' "$PackerCompiledLua"
+    }
 }
 
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"
 then
     printf '\nUpdating Packer plugins...\n'
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim --headless \
+        -c 'autocmd User PackerComplete quitall' \
+        -c 'PackerSync'
     printf '\n\nUpdating Mason packages...\n'
-    nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+    nvim --headless -c \
+        'autocmd User MasonUpdateAllComplete quitall' \
+        -c 'MasonUpdateAll'
     printf '\n\nDone!!!\n'
 else
-    printf 'Error: "git clone" failed for "%s"\n' $PackerGIT
+    printf '\nError: "git clone" failed for "%s"\n' $PackerGIT
 fi
