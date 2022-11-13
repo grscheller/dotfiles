@@ -30,6 +30,7 @@ test -d "$PackerCloneDir" && {
         printf '\nWarning: Failed to open up permissions on'
         printf '\n         "%s"\n' "$PackerCloneDir"
     }
+
     rm -rf "$PackerCloneDir"
     test -d "$PackerCloneDir" && {
         printf '\nWarning: Failed to remove old packer plugin'
@@ -42,6 +43,7 @@ test -f "$PackerCompiledLua" && {
         printf '\nWarning: Failed to open up permissions on'
         printf '\n         "%s"\n' "$PackerCompiledLua"
     }
+
     rm "$PackerCompiledLua" || {
         printf '\nWarning: Failed to remove old packer_compiled.lua file'
         printf '\n         "%s"\n' "$PackerCompiledLua"
@@ -51,13 +53,11 @@ test -f "$PackerCompiledLua" && {
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"
 then
     printf '\nUpdating Packer plugins...\n'
-    nvim --headless \
-        -c 'autocmd User PackerComplete quitall' \
-        -c 'PackerSync'
+    nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
     printf '\n\nUpdating Mason packages...\n'
-    nvim --headless -c \
-        'autocmd User MasonUpdateAllComplete quitall' \
-        -c 'MasonUpdateAll'
+    nvim -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+
     printf '\n\nDone!!!\n'
 else
     printf '\nError: "git clone" failed for "%s"\n' $PackerGIT
