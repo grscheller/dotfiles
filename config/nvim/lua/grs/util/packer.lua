@@ -114,6 +114,8 @@ return packer.startup(
             'RubixDev/mason-update-all',
             'williamboman/mason-lspconfig.nvim',
             'neovim/nvim-lspconfig',
+            'jose-elias-alvarez/null-ls.nvim',
+            'jayp0521/mason-null-ls.nvim',
             'mfussenegger/nvim-dap',
             'jayp0521/mason-nvim-dap.nvim',
             'simrat39/rust-tools.nvim',

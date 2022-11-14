@@ -21,16 +21,20 @@ Installs into home directory
 
 * [dotfilesInstall](dotfilesInstall)
   * From the base of the cloned repo run
-    ```
+
+    ```sh
        $ ./dotfilesInstall
+       ...
     ```
 
 Installs into system directories (Arch Linux Only!)
 
 * [systemfilesInstall](systemfilesInstall)
   * From the base of the cloned repo run
-    ```
+
+    ```sh
        $ sudo ./systemfilesInstall
+       ...
     ```
 
 ## Repo's purposes is to

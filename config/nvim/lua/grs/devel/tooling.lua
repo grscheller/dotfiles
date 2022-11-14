@@ -9,6 +9,7 @@
           https://github.com/RubixDev/mason-update-all
           https://github.com/williamboman/mason-lspconfig.nvim
           https://github.com/jayp0521/mason-nvim-dap.nvim
+          https://github.com/jayp0521/mason-null-ls.nvim
 
      Overiding principle is to configure what I actually
      use, not what I might like to use someday.
@@ -22,9 +23,11 @@ local ok
 local ok_mason = false
 local lspconf, cmp_nvim_lsp
 local dap, dap_ui_widgets
-local mason, mason_update_all, mason_lspconf, mason_nvim_dap
+local null_ls
+local mason, mason_update_all, mason_lspconf, mason_nvim_dap, mason_null_ls
 
 -- williamboman/mason.nvim
+--   package manager for LSP & DAP servers, linters, and formatters
 ok, mason = pcall(require, "mason")
 if ok then
    ok_mason = true
@@ -54,10 +57,10 @@ else
    msg('Problem in tooling.lua with neovim package manager mason')
 end
 
--- neovim/nvim-lspconfig
+-- neovim/nvim-lspconfig to configure LSP servers
 ok, lspconf = pcall(require, 'lspconfig')
 if ok then
-   -- williamboman/mason-lspconfig.nvim
+   -- williamboman/mason-lspconfig.nvim for Mason lspconfig integration
    ok, mason_lspconf = pcall(require, "mason-lspconfig")
    if ok and ok_mason then
       mason_lspconf.setup {
@@ -81,10 +84,10 @@ else
    return
 end
 
--- mfussenegger/nvim-dap
+-- mfussenegger/nvim-dap for debugging tools
 ok, dap = pcall(require, 'dap')
 if ok then
-   -- jayp0521/mason-nvim-dap.nvim
+   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
    ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
    if ok and ok_mason then
       mason_nvim_dap.setup {
@@ -101,6 +104,31 @@ else
    return
 end
 
+-- jose-elias-alvarez/null-ls.nvim for linters & formatters
+ok, null_ls = pcall(require, 'null-ls')
+if ok then
+   -- jayp0521/mason-null-ls.nvim for Mason integration
+   ok, mason_null_ls = pcall(require, 'mason-null-ls')
+   if ok and ok_mason then
+      mason_null_ls.setup {
+         ensure_installed = {
+            'markdownlint'
+         },
+         automatic_installation = false,
+         automatic_setup = true
+      }
+      null_ls.setup {
+         sources = {
+            null_ls.builtins.diagnostics.markdownlint
+         }
+      }
+   else
+      msg('Problem in tooling.lua with mason-null-ls')
+   end
+else
+   msg('Problem in tooling.lua with null-ls')
+end
+
 -- hrsh7th/cmp-nvim-lsp to integrate LSP with completions
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
@@ -108,19 +136,19 @@ if not ok then
    return
 end
 
-   local lsp_servers = {
-      'bashls',    -- bash lang server (pacman)
-      'clangd',    -- C and C++ - for clang & gcc (pacman clang)
-      'cssls',     -- vscode-css-languageserver (mason with npm)
-      'gopls',     -- go language server (pacman gopls)
-      'html',      -- vscode-html-languageserver (mason with npm)
-      'jsonls',    -- vscode-json-languageserver (mason with npm)
-      'marksman',  -- markdown language server (mason)
-      'pyright',   -- pyright for Python (pacman)
-      'taplo',     -- toml (mason)
-      'yamlls',    -- Redhat yaml (mason with npm)
-      'zls'        -- zig (mason)
-   }
+local lsp_servers = {
+   'bashls',    -- bash lang server (pacman)
+   'clangd',    -- C and C++ - for clang & gcc (pacman clang)
+   'cssls',     -- vscode-css-languageserver (mason with npm)
+   'gopls',     -- go language server (pacman gopls)
+   'html',      -- vscode-html-languageserver (mason with npm)
+   'jsonls',    -- vscode-json-languageserver (mason with npm)
+   'marksman',  -- markdown language server (mason)
+   'pyright',   -- pyright for Python (pacman)
+   'taplo',     -- toml (mason)
+   'yamlls',    -- Redhat yaml (mason with npm)
+   'zls'        -- zig (mason)
+}
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
