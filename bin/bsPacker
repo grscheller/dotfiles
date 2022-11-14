@@ -53,10 +53,16 @@ test -f "$PackerCompiledLua" && {
 if git clone --depth 1 $PackerGIT "$PackerCloneDir"
 then
     printf '\nUpdating Packer plugins...\n'
-    nvim -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim --headless \
+        --cmd 'let g:grs_skip_msg_reply = 1' \
+        -c 'autocmd User PackerComplete quitall' \
+        -c 'PackerSync'
 
     printf '\n\nUpdating Mason packages...\n'
-    nvim -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+    nvim --headless \
+        --cmd 'let g:grs_skip_msg_reply = 1' \
+        -c 'autocmd User MasonUpdateAllComplete quitall' \
+        -c 'MasonUpdateAll'
 
     printf '\n\nDone!!!\n'
 else

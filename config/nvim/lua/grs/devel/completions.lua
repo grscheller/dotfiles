@@ -1,11 +1,11 @@
 --[[ Completions & Snippets ]]
 
-local grs_utils = require('grs.util.utils')
+local utils = require('grs.util.utils')
 
 local ok
 local cmp_under_comparator
 local cmp, luasnip, lspkind
-local msg = grs_utils.msg_hit_return_to_continue
+local msg = utils.msg_hit_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -122,7 +122,7 @@ cmp.setup {
          function(fallback)
             if cmp.visible() then
                cmp.select_next_item()
-            elseif grs_utils.cursor_has_words_before_it() then
+            elseif utils.cursor_has_words_before_it() then
                cmp.complete()
             else
                fallback()

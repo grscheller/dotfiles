@@ -10,8 +10,8 @@
 
 local M = {}
 
-local grs_utils = require('grs.util.utils')
-local msg = grs_utils.msg_hit_return_to_continue
+local utils = require('grs.util.utils')
+local msg = utils.msg_hit_return_to_continue
 local kb = vim.keymap.set
 
 M.kb = kb
@@ -104,7 +104,7 @@ function M.general_kb()
    })
 
    -- toggle line numberings schemes
-   kb('n', ' n', grs_utils.toggle_line_numbering, {
+   kb('n', ' n', utils.toggle_line_numbering, {
       desc = 'toggle line numbering'
    })
 

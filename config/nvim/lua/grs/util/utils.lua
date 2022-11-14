@@ -6,7 +6,9 @@ local M = {}
 function M.msg_hit_return_to_continue(message)
    local reply = 'Hit RETURN to continue...\n'
    vim.notify(message, vim.log.levels.WARN)
-   vim.ui.input({ prompt = reply }, function(_) end)
+   if vim.g.grs_skip_msg_reply ~= 1 then
+      vim.ui.input({ prompt = reply }, function(_) end)
+   end
 end
 
 -- Cursor inquery functions
