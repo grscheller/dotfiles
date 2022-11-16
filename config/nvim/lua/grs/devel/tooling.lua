@@ -211,8 +211,8 @@ vim.g.python3_host_prog =
      Arch Linux, install the lldb pacman package from extra.
 
 --]]
-local rt
-ok, rt = pcall(require, 'rust-tools')
+local rust_tools
+ok, rust_tools = pcall(require, 'rust-tools')
 if ok then
    dap.configurations.rust = {
       {
@@ -221,7 +221,7 @@ if ok then
          name = 'rt_lldb';
       }
    }
-   rt.setup {
+   rust_tools.setup {
       runnables = {
          use_telescope = true
       },

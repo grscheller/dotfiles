@@ -34,8 +34,6 @@ end
 
 --[[ General key mappings/bindings ]]
 function M.general_kb()
-   -- Remove normal mode motions, confusing when part of failed keybinding
-   kb('n', '  ',   '<Nop>', { desc = 'punt on <Space> Keymap' })
 
    -- Navigating windows
    kb('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
@@ -89,6 +87,14 @@ function M.general_kb()
    kb('x', '<', '<gv', { desc = 'shift left & reselect' })
    kb('x', '>', '>gv', { desc = 'shift right & reselect' })
 
+   -- For <Space> based keymaps
+   if M.wk then
+      wk.register({ name = 'system clipboard' },
+                  { mode = {'n', 'x'}, prefix = ' s' })
+   end
+
+   kb('n', '  ',   '<Nop>', { desc = 'punt on <Space> Keymap' })
+
    -- Yank, delete, change & paste with system clipboard
    kb({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
    kb({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
@@ -122,15 +128,14 @@ function M.general_kb()
       desc = 'trim trailing whitespace'
    })
 
-   if M.wk then
-      wk.register({ name = 'system clipboard' },
-                  { mode = {'n', 'x'}, prefix = ' s' })
-   end
-
 end
 
 --[[ Telescope related keybindings ]]
 function M.telescope_kb(ts, tb)
+
+   if M.wk then
+      wk.register({ name = 'telescope' }, { prefix = ' t' })
+   end
 
    -- Telescope built-ins
    local tb_td = tb.grep_string
@@ -158,19 +163,31 @@ function M.telescope_kb(ts, tb)
    -- Telescope commands
    kb('n', ' tt', '<Cmd>Telescope<CR>', { desc = 'telescope command' })
 
-   if M.wk then
-      wk.register({ name = 'telescope' }, { prefix = ' t' })
-   end
-
 end
 
---[[
-     LSP related keybindings
-
-     Using g and z as "leader keys" for LSP, stepping
-     on some folding keybindings which I never use.
---]]
+--[[ LSP related keybindings ]]
 function M.lsp_kb(_, bufnr)
+
+   kb('n', 'K',  vim.lsp.buf.hover, {
+      buffer = bufnr,
+      desc = 'hover'
+   })
+   kb('n', '<C-k>',  vim.lsp.buf.signature_help, {
+      buffer = bufnr,
+      desc = 'signature help'
+   })
+   kb('n', 'zd',  vim.diagnostic.setloclist, {
+      buffer = bufnr,
+      desc = 'buffer diagnostics'
+   })
+   kb('n', 'g[',  vim.diagnostic.goto_prev, {
+      buffer = bufnr,
+      desc = 'goto prev diagostic'
+   })
+   kb('n', 'g]',  vim.diagnostic.goto_next, {
+      buffer = bufnr,
+      desc = 'goto next diagostic'
+   })
    kb('n', 'gd',  vim.lsp.buf.definition, {
       buffer = bufnr,
       desc = 'goto definition'
@@ -187,89 +204,74 @@ function M.lsp_kb(_, bufnr)
       buffer = bufnr,
       desc = 'goto references'
    })
-   kb('n', 'gsd', vim.lsp.buf.document_symbol, {
-      buffer = bufnr,
-      desc = 'document symbol'
-   })
-   kb('n', 'gsw', vim.lsp.buf.workspace_symbol, {
-      buffer = bufnr,
-      desc = 'workspace symbol'
-   })
    kb('n', 'gt',  vim.lsp.buf.type_definition, {
       buffer = bufnr,
       desc = 'goto type definition'
+   })
+   kb('n', 'gW', vim.lsp.buf.workspace_symbol, {
+      buffer = bufnr,
+      desc = 'workspace symbol'
+   })
+   kb('n', 'g0', vim.lsp.buf.document_symbol, {
+      buffer = bufnr,
+      desc = 'document symbol'
    })
    kb('n', 'za',  vim.lsp.buf.code_action, {
       buffer = bufnr,
       desc = 'code action'
    })
-   kb('n', 'zll', vim.lsp.codelens.refresh, {
+   kb('n', 'zh', vim.lsp.codelens.refresh, {
      buffer = bufnr,
       desc = 'code lens refresh'
    })
-   kb('n', 'zlr', vim.lsp.codelens.run, {
+   kb('n', 'zl', vim.lsp.codelens.run, {
       buffer = bufnr,
       desc = 'code lens run'
    })
-   kb('n', 'zd',  vim.diagnostic.setloclist, {
-      buffer = bufnr,
-      desc = 'buffer diagnostics'
-   })
-   kb('n', 'zFf', vim.lsp.buf.format, {
+   kb({'n', 'x'}, 'zF', vim.lsp.buf.format, {
       buffer = bufnr,
       desc = 'lsp format'
-   })
-   kb('n', 'zh',  vim.lsp.buf.hover, {
-      buffer = bufnr,
-      desc = 'hover'
    })
    kb('n', 'zr',  vim.lsp.buf.rename, {
       buffer = bufnr,
       desc = 'rename'
    })
-   kb('n', 'zWa', vim.lsp.buf.add_workspace_folder, {
+   kb('n', 'zA', vim.lsp.buf.add_workspace_folder, {
       buffer = bufnr,
       desc = 'add workspace folder'
    })
-   kb('n', 'zWr', vim.lsp.buf.remove_workspace_folder, {
+   kb('n', 'zR', vim.lsp.buf.remove_workspace_folder, {
       buffer = bufnr,
       desc = 'remove workspace folder',
    })
-
-   if M.wk then
-      wk.register({
-         s = { name = 'symbol' }
-      }, { prefix = 'g', buffer = bufnr })
-      wk.register({
-         F = { name = 'format' },
-         l = { name = 'code lens' },
-         W = { name = 'workspace folder' }
-      }, { prefix = 'z', buffer = bufnr })
-   end
 
 end
 
 --[[ Haskell related keybindings ]]
 function M.haskell_kb(bufnr)
-   kb('n', 'zFh', '<Cmd>%!stylish-haskell<CR>', {
+
+   kb({'n', 'x'}, 'zH', '<Cmd>%!stylish-haskell<CR>', {
       desc = 'stylish haskell format', buffer = bufnr
    })
+
 end
 
 --[[ Scala Metals related keybindings ]]
 function M.metals_kb(bufnr, metals)
-   kb('n', 'mh', metals.hover_worksheet, {
+
+   kb('n', 'H', metals.hover_worksheet, {
       desc = 'metals hover worksheet', buffer = bufnr
    })
-
-   if M.wk then
-      wk.register({ name = 'metals' }, { prefix = 'm', buffer = bufnr })
-   end
 
 end
 
 --[[ DAP (Debug Adapter Protocol) related keybindings ]]
 function M.dap_kb(bufnr, dap, dap_ui_widgets)
+
+   if M.wk then
+      wk.register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
+   end
+
    kb('n', '\\c', dap.continue, {
       buffer = bufnr,
       desc = 'dap continue'
@@ -298,10 +300,6 @@ function M.dap_kb(bufnr, dap, dap_ui_widgets)
       buffer = bufnr,
       desc = 'dap repl toggle'
    })
-
-   if M.wk then
-      wk.register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
-   end
 
 end
 
