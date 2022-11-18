@@ -168,11 +168,11 @@ end
 --[[ LSP related keybindings ]]
 function M.lsp_kb(_, bufnr)
 
-   kb('n', 'K',  vim.lsp.buf.hover, {
+   kb('n', 'H',  vim.lsp.buf.hover, {
       buffer = bufnr,
       desc = 'hover'
    })
-   kb('n', '<C-k>',  vim.lsp.buf.signature_help, {
+   kb('n', 'K',  vim.lsp.buf.signature_help, {
       buffer = bufnr,
       desc = 'signature help'
    })
@@ -228,10 +228,6 @@ function M.lsp_kb(_, bufnr)
       buffer = bufnr,
       desc = 'code lens run'
    })
-   kb({'n', 'x'}, 'zF', vim.lsp.buf.format, {
-      buffer = bufnr,
-      desc = 'lsp format'
-   })
    kb('n', 'zr',  vim.lsp.buf.rename, {
       buffer = bufnr,
       desc = 'rename'
@@ -243,6 +239,10 @@ function M.lsp_kb(_, bufnr)
    kb('n', 'zR', vim.lsp.buf.remove_workspace_folder, {
       buffer = bufnr,
       desc = 'remove workspace folder',
+   })
+   kb({'n', 'x'}, 'zF', vim.lsp.buf.format, {
+      buffer = bufnr,
+      desc = 'lsp format'
    })
 
 end
@@ -259,7 +259,7 @@ end
 --[[ Scala Metals related keybindings ]]
 function M.metals_kb(bufnr, metals)
 
-   kb('n', 'H', metals.hover_worksheet, {
+   kb('n', 'M', metals.hover_worksheet, {
       desc = 'metals hover worksheet', buffer = bufnr
    })
 

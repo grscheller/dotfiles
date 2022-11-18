@@ -85,22 +85,60 @@ cmp.setup {
       }
    },
    mapping = {
-      ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
+      ['<Up>']   = cmp.mapping.select_prev_item(select_opts),
       ['<Down>'] = cmp.mapping.select_next_item(select_opts),
 
       ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
       ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
 
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
       ['<C- >'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
       ['<C-h>'] = cmp.mapping.close(),
-      ['<CR>'] = cmp.mapping.confirm(confirm_opts),
+      ['<CR>']  = cmp.mapping.confirm(confirm_opts),
       ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
 
-      --[[ ['<c-d>'] = cmp.mapping(
+      ['<Tab>'] = cmp.mapping(
+         function(fallback)
+            if cmp.visible() then
+               cmp.select_next_item()
+            elseif luasnip.expand_or_locally_jumpable() then
+               luasnip.expand_or_jump()
+            elseif utils.cursor_has_words_before_it() then
+               cmp.complete()
+            else
+               fallback()
+            end
+         end, { 'i', 's' }),
+
+      ['<S-Tab>'] = cmp.mapping(
+         function(fallback)
+            if cmp.visible() then
+               cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+               luasnip.jump(-1)
+            else
+               fallback()
+            end
+         end, { 'i', 's' }),
+
+      ['<C-s>'] = cmp.mapping.complete {
+         config = {
+            sources = {{ name = 'luasnip' }}
+         }
+      },
+      -- ['<C-f>'] = cmp.mapping.complete {
+      --    config = {
+      --       sources = {{ name = 'luasnip' }}
+      --    }
+      -- },
+   },
+
+
+--[[
+      ['<c-d>'] = cmp.mapping(
          function(fallback)
             if luasnip.jumpable(1) then
                luasnip.jump(1)
@@ -117,33 +155,8 @@ cmp.setup {
                fallback()
             end
          end),
-]]
-      ['<Tab>'] = cmp.mapping(
-         function(fallback)
-            if cmp.visible() then
-               cmp.select_next_item()
-            elseif utils.cursor_has_words_before_it() then
-               cmp.complete()
-            else
-               fallback()
-            end
-         end),
+--]]
 
-      ['<S-Tab>'] = cmp.mapping(
-         function(fallback)
-            if cmp.visible() then
-               cmp.select_prev_item()
-            else
-               fallback()
-            end
-         end),
-
-      ['<C-s>'] = cmp.mapping.complete {
-         config = {
-            sources = {{ name = 'luasnip' }}
-         }
-      }
-   },
    sources = cmp.config.sources(
       {
          { name = 'nvim_lsp_signature_help' },
@@ -155,7 +168,7 @@ cmp.setup {
            name = 'path',
            option = {
               label_trailing_slash = true,
-              trailing_slash = true
+              trailing_slash = false
            }
          },
          {
