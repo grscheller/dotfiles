@@ -100,7 +100,7 @@ cmp.setup {
       ['<CR>'] = cmp.mapping.confirm(confirm_opts),
       ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
 
-      ['<c-d>'] = cmp.mapping(
+      --[[ ['<c-d>'] = cmp.mapping(
          function(fallback)
             if luasnip.jumpable(1) then
                luasnip.jump(1)
@@ -117,7 +117,7 @@ cmp.setup {
                fallback()
             end
          end),
-
+]]
       ['<Tab>'] = cmp.mapping(
          function(fallback)
             if cmp.visible() then
@@ -148,8 +148,7 @@ cmp.setup {
       {
          { name = 'nvim_lsp_signature_help' },
          { name = 'nvim_lua' },
-         { name = 'nvim_lsp' },
-         { name = 'luasnip' }
+         { name = 'nvim_lsp' }
       },
       {
          {
