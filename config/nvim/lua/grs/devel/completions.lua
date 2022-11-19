@@ -3,47 +3,15 @@
 local utils = require('grs.util.utils')
 
 local ok
-local cmp_under_comparator
+local cmp_under_comparator, cmp_comparators
 local cmp, luasnip, lspkind
 local msg = utils.msg_hit_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
    ok, cmp_under_comparator = pcall(require, 'cmp-under-comparator')
-   if not ok then
-      msg('Problem in completions.lua: cmp_under_comparator failed to load')
-      return
-   end
-else
-   msg('Problem in completions.lua: cmp failed to load')
-   return
-end
-
-ok, luasnip = pcall(require, 'luasnip')
-if ok then
-   require('luasnip.loaders.from_vscode').lazy_load()
-else
-   msg('Problem in completions.lua: luasnip failed to load')
-   return
-end
-
-ok, lspkind = pcall(require, 'lspkind')
-if ok then
-   lspkind.init()
-else
-   msg('Problem in completions.lua: lspkind failed to load')
-   return
-end
-
-local select_opts = { behavior = cmp.SelectBehavior.Select }
-local confirm_opts = {
-   select = true,
-   behavior = cmp.ConfirmBehavior.Replace
-}
-
-cmp.setup {
-   sorting = {
-      comparators = {
+   if ok then
+      cmp_comparators = {
          cmp.config.compare.offset,
          cmp.config.compare.exact,
          cmp.config.compare.score,
@@ -55,16 +23,63 @@ cmp.setup {
          cmp.config.compare.length,
          cmp.config.compare.order
       }
+   else
+      cmp_comparators = {
+         cmp.config.compare.offset,
+         cmp.config.compare.exact,
+         cmp.config.compare.score,
+         cmp.config.compare.recently_used,
+         cmp.config.compare.locality,
+         cmp.config.compare.kind,
+         cmp.config.compare.sort_text,
+         cmp.config.compare.length,
+         cmp.config.compare.order
+      }
+      msg('Problem in completions.lua: cmp_under_comparator failed to load')
+   end
+else
+   msg('Problem in completions.lua: cmp failed to load, PUNTING!!!')
+   return
+end
+
+ok, luasnip = pcall(require, 'luasnip')
+if ok then
+   require('luasnip.loaders.from_vscode').lazy_load()
+else
+   msg('Problem in completions.lua: luasnip failed to load, PUNTING!!!')
+   return
+end
+
+ok, lspkind = pcall(require, 'lspkind')
+if ok then
+   lspkind.init()
+else
+   msg('Problem in completions.lua: lspkind failed to load, PUNTING!!!')
+   return
+end
+
+local select_opts = { behavior = cmp.SelectBehavior.Select }
+local confirm_opts = {
+   select = true,
+   behavior = cmp.ConfirmBehavior.Replace
+}
+
+cmp.setup {
+   sorting = {
+      comparators = cmp_comparators
    },
+
    snippet = {
       expand = function(args)
          luasnip.lsp_expand(args.body)
       end
    },
+
    window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered()
    },
+
    formatting = {
       expandable_indicator = true,
       fields = { 'abbr', 'kind', 'menu' },
@@ -84,6 +99,7 @@ cmp.setup {
          }
       }
    },
+
    mapping = {
       ['<Up>']   = cmp.mapping.select_prev_item(select_opts),
       ['<Down>'] = cmp.mapping.select_next_item(select_opts),
@@ -112,7 +128,6 @@ cmp.setup {
                fallback()
             end
          end, { 'i', 's' }),
-
       ['<S-Tab>'] = cmp.mapping(
          function(fallback)
             if cmp.visible() then
@@ -129,16 +144,7 @@ cmp.setup {
             sources = {{ name = 'luasnip' }}
          }
       },
-      -- ['<C-f>'] = cmp.mapping.complete {
-      --    config = {
-      --       sources = {{ name = 'luasnip' }}
-      --    }
-      -- },
-   },
-
-
---[[
-      ['<c-d>'] = cmp.mapping(
+      ['<c-f>'] = cmp.mapping(
          function(fallback)
             if luasnip.jumpable(1) then
                luasnip.jump(1)
@@ -146,8 +152,7 @@ cmp.setup {
                fallback()
             end
          end),
-
-      ['<c-u>'] = cmp.mapping(
+      ['<c-b>'] = cmp.mapping(
          function(fallback)
             if luasnip.jumpable(-1) then
                luasnip.jump(-1)
@@ -155,17 +160,14 @@ cmp.setup {
                fallback()
             end
          end),
---]]
+   },
 
    sources = cmp.config.sources(
-      {
-         { name = 'nvim_lsp_signature_help' },
+      {  { name = 'nvim_lsp_signature_help' },
          { name = 'nvim_lua' },
          { name = 'nvim_lsp' }
       },
-      {
-         {
-           name = 'path',
+      {  { name = 'path',
            option = {
               label_trailing_slash = true,
               trailing_slash = false
@@ -187,6 +189,9 @@ cmp.setup {
            keyword_length = 3,
            max_item_count = 12
          }
+      },
+      {
+         { name = 'luasnip' }
       })
 }
 
