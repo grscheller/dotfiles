@@ -1,4 +1,4 @@
---[[ Mason Utility Tables ]]
+--[[ Mason Utility Tables & Functions ]]
 
 local M = {}
 
@@ -37,16 +37,16 @@ M.lspconfig_to_package = {
    ['zls']                    = 'zls'
 }
 
-M.linter_to_package = {
+M.lint_to_package = {
    ['eslint']        = 'eslint-lsp',
    ['quick_lint_js'] = 'quick-lint-js',
 }
 
-M.formatter_to_package = {
+M.format_to_package = {
    ['eslint'] = 'eslint-lsp'
 }
 
-M.nvim_dap_to_package = {
+M.dap_to_package = {
    ['bash']     = 'bash-debug-adapter',
    ['chrome']   = 'chrome-debug-adapter',
    ['cppdbg']   = 'cpptools',
@@ -64,5 +64,13 @@ M.nvim_dap_to_package = {
    ['puppet']   = 'puppet-editor-services',
    ['python']   = 'debugpy'
 }
+
+M.dap2mason = function(dap_names)
+   local mason_names = {}
+   for i,v in ipairs(dap_names) do
+      mason_names[i] = M.dap_to_package[v]
+   end
+   return mason_names
+end
 
 return M

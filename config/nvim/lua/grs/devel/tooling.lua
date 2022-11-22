@@ -31,9 +31,10 @@ local lspconfig_names = {
    'zls'        -- zig
 }
 
-local dap_debuggers_pacman = {}
-local dap_debuggers_mason = {
-   'bash-debug-adapter'
+local dapSystem = {}
+local dapMason = {
+   'bash',
+   'cppdbg'
 }
 
 local null_ls_mason = {
@@ -43,11 +44,15 @@ local null_ls_mason = {
    'stylua'
 }
 
+local grsMason = require('grs.util.mason')
+local dapWithMasonNames = grsMason.dap2mason(dapMason)
+
+   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
 local cmd = vim.api.nvim_command
 local msg = require('grs.util.utils').msg_hit_return_to_continue
 
-local ok, mason, mason_update_all
-local lspconf, cmp_nvim_lsp, mason_lspconf
+local ok, mason, mason_update_all, mason_tool_installer
+local lspconf, cmp_nvim_lsp
 local dap, dap_ui_widgets, mason_nvim_dap
 local null_ls, mason_null_ls
 
@@ -82,17 +87,25 @@ else
    msg('Problem in tooling.lua with mason-update-all')
 end
 
+-- WhoIsSethDaniel/mason-tool-installer.nvim
+-- used to install/upgrade 3rd party tools.
+ok, mason_tool_installer = pcall(require, "mason-tool-installer")
+if ok then
+   mason_tool_installer.setup {
+      ensure_installed = dapWithMasonNames,  -- TODO: fix to include rest
+      auto_update = false,
+      start_delay = 3000 -- millisecondss
+   }
+else
+   msg('Problem in tooling.lua with mason-update-all')
+end
+
 -- mfussenegger/nvim-dap for debugging tools
 ok, dap = pcall(require, 'dap')
 if ok then
-   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
    ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
    if ok then
-      mason_nvim_dap.setup {
-         ensure_installed = dap_debuggers_mason,
-         automatic_installation =  { exclude = dap_debuggers_pacman },
-         automatic_setup = true
-      }
+      mason_nvim_dap.setup()
    else
       msg('Problem in tooling.lua with mason-nvim-dap')
    end
@@ -108,10 +121,7 @@ if ok then
    -- jayp0521/mason-null-ls.nvim for Mason integration
    ok, mason_null_ls = pcall(require, 'mason-null-ls')
    if ok then
-      mason_null_ls.setup {
-         ensure_installed = null_ls_mason,
-         automatic_setup = true
-      }
+      mason_null_ls.setup()
    else
       msg('Problem in tooling.lua with mason-null-ls')
    end
