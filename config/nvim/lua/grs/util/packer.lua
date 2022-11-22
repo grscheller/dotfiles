@@ -110,13 +110,14 @@ return packer.startup(
             'saadparwaiz1/cmp_luasnip' } }
 
       -- LSP & DAP support
-      use { 'williamboman/mason.nvim',
-            'RubixDev/mason-update-all',
-            'williamboman/mason-lspconfig.nvim',
+      use {
             'neovim/nvim-lspconfig',
-            'jose-elias-alvarez/null-ls.nvim',
-            'jayp0521/mason-null-ls.nvim',
             'mfussenegger/nvim-dap',
+            'jose-elias-alvarez/null-ls.nvim',
+            'williamboman/mason.nvim',
+            'WhoIsSethDaniel/mason-tool-installer.nvim',
+            'jayp0521/mason-null-ls.nvim',
+            'RubixDev/mason-update-all',
             'jayp0521/mason-nvim-dap.nvim',
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }

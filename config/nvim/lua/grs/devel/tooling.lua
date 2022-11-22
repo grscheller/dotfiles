@@ -6,29 +6,26 @@
         https://github.com/mfussenegger/nvim-dap
         https://github.com/jose-elias-alvarez/null-ls.nvim
         https://github.com/williamboman/mason.nvim
-        https://github.com/williamboman/mason-lspconfig.nvim
-        https://github.com/jayp0521/mason-nvim-dap.nvim
+        https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
         https://github.com/jayp0521/mason-null-ls.nvim
         https://github.com/RubixDev/mason-update-all
+        https://github.com/jayp0521/mason-nvim-dap.nvim
 
      The overiding principle is to configure what I actually have 
      used and not everything that someday I might potentially use.
 --]]
 
-local lsp_servers_pacman = {
+local lspconfig_names = {
    'bashls',        -- bash lang server
    'clangd',        -- C and C++ - for clang & gcc
+   'cssls',     -- vscode-css-languageserver (mason uses npm)
    'gopls',         -- go language server
    'hls',           -- haskell language server
-   'pyright',       -- pyright for Python
-   'rust-analyzer'  -- needed by rust-tools
-}
-local lsp_servers_mason = {
-   'cssls',     -- vscode-css-languageserver (mason uses npm)
    'html',      -- vscode-html-languageserver (mason uses npm)
    'jsonls',    -- vscode-json-languageserver (mason uses npm)
    'marksman',  -- markdown language server
-   'sumneko_lua',  -- TODO: fix this hack/experiment
+   'pyright',       -- pyright for Python
+   'sumneko_lua',   -- lua-language-server???
    'taplo',     -- toml
    'yamlls',    -- Redhat yaml (mason uses npm)
    'zls'        -- zig
@@ -39,13 +36,11 @@ local dap_debuggers_mason = {
    'bash-debug-adapter'
 }
 
--- local null_ls_pacman = {
---    'cpplint',
---    'selene',
---    'stylua'
--- }
 local null_ls_mason = {
-   'markdownlint'
+   'cpplint',
+   'markdownlint',
+   'selene',
+   'stylua'
 }
 
 local cmd = vim.api.nvim_command
@@ -114,28 +109,13 @@ if ok then
    ok, mason_null_ls = pcall(require, 'mason-null-ls')
    if ok then
       mason_null_ls.setup {
-         ensure_installed = null_ls_mason
-      }
-      mason_null_ls.setup_handlers {
-         function(source, methods)
-            require('mason-null-ls.automatic_setup')(source, methods)
-         end,
-         markdownlint = function(_, _)
-            null_ls.register(null_ls.builtins.diagnostics.markdownlint)
-            null_ls.register(null_ls.builtins.formatting.markdownlint)
-         end
+         ensure_installed = null_ls_mason,
+         automatic_setup = true
       }
    else
       msg('Problem in tooling.lua with mason-null-ls')
    end
 
-   null_ls.setup {
-      sources = {
-         null_ls.builtins.diagnostics.cpplint,
-         null_ls.builtins.diagnostics.selene,
-         null_ls.builtins.formatting.stylua
-      }
-   }
 else
    msg('Problem in tooling.lua with null-ls, PUNTING!!!')
    return
@@ -148,18 +128,6 @@ if not ok then
    return
 end
 
--- williamboman/mason-lspconfig.nvim for Mason lspconfig integration
-ok, mason_lspconf = pcall(require, "mason-lspconfig")
-if ok then
-   mason_lspconf.setup {
-      ensure_installed = lsp_servers_mason,
-      automatic_installation = { exclude = lsp_servers_pacman },
-      automatic_setup = true
-   }
-else
-   msg('Problem in tooling.lua with mason-lspconfig, PUNTING!!!')
-end
-
 -- hrsh7th/cmp-nvim-lsp integrates LSP with completions
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
@@ -170,42 +138,23 @@ end
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.util.keybindings')
 
--- Setup Mason lspconfig handlers
-mason_lspconf.setup_handlers {
-   function(server)
-      lspconf[server].setup {
-         capabilities = capabilities,
-         on_attach = keybindings.lsp_kb
+--[[ Lua LSP Configuration ]]
+lspconf['sumneko_lua'].setup {
+   capabilities = capabilities,
+   on_attach = keybindings.lsp_kb,
+   settings = {
+      Lua = {
+         runtime = { version = 'LuaJIT' },
+         diagnostics = { globals = { 'vim' } },
+         workspace = {
+            library = vim.api.nvim_get_runtime_file('', true)
+         },
+         telemetry = { enable = false }
       }
-   end,
-   ['hls'] = function()
-      lspconf['hls'].setup {
-         capabilities = capabilities,
-         on_attach = function(client, bufnr)
-            keybindings.lsp_kb(client, bufnr)
-            keybindings.haskell_kb(bufnr)
-         end
-      }
-   end,
-   ['sumneko_lua'] = function()
-      lspconf['sumneko_lua'].setup {
-         capabilities = capabilities,
-         on_attach = keybindings.lsp_kb,
-         settings = {
-            Lua = {
-               runtime = { version = 'LuaJIT' },
-               diagnostics = { globals = { 'vim' } },
-               workspace = {
-                  library = vim.api.nvim_get_runtime_file('', true)
-               },
-               telemetry = { enable = false }
-            }
-         }
-      }
-   end
+   }
 }
 
--- TODO: Do I need to use lspconfig directly fot Arch managed lang servers?
+--[[ Haskell LSP Configuration ]]
 lspconf['hls'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
@@ -213,6 +162,7 @@ lspconf['hls'].setup {
       keybindings.haskell_kb(bufnr)
    end
 }
+
 --[[ Scala Metals & Rust-Tools directly configure lspconfig themselves ]]
 
 -- Rust Lang Tooling - rust_tools & lldb
