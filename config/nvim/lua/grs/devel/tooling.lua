@@ -44,7 +44,7 @@ local null_ls_mason = {
    'stylua'
 }
 
-local grsMason = require('grs.utilities.mason')
+local grsMason = require('grs.devel.core.mason')
 local dapWithMasonNames = grsMason.dap2mason(dapMason)
 
 local cmd = vim.api.nvim_command
