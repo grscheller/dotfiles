@@ -44,12 +44,11 @@ local null_ls_mason = {
    'stylua'
 }
 
-local grsMason = require('grs.util.mason')
+local grsMason = require('grs.utilities.mason')
 local dapWithMasonNames = grsMason.dap2mason(dapMason)
 
-   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
 local cmd = vim.api.nvim_command
-local msg = require('grs.util.utils').msg_hit_return_to_continue
+local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
 
 local ok, mason, mason_update_all, mason_tool_installer
 local lspconf, cmp_nvim_lsp
@@ -103,6 +102,7 @@ end
 -- mfussenegger/nvim-dap for debugging tools
 ok, dap = pcall(require, 'dap')
 if ok then
+   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
    ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
    if ok then
       mason_nvim_dap.setup()
@@ -146,7 +146,7 @@ if not ok then
 end
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
-local keybindings = require('grs.util.keybindings')
+local keybindings = require('grs.utilities.keybindings')
 
 --[[ Lua LSP Configuration ]]
 lspconf['sumneko_lua'].setup {

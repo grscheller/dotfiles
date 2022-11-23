@@ -1,4 +1,4 @@
---[[ Utility Functions & Tables ]]
+--[[ Utility Functions ]]
 
 local M = {}
 

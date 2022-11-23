@@ -1,7 +1,7 @@
 --[[ Telescope - search, filter, find & pick items with Lua ]]
 
 local ok, ts, tb
-local msg = require('grs.util.utils').msg_hit_return_to_continue
+local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
 
 ok, ts = pcall(require, 'telescope')
 if ok then
@@ -27,4 +27,4 @@ ts.load_extension('fzf')
 ts.load_extension('ui-select')
 
 -- Set Telescope key mappings/bindings
-require('grs.util.keybindings').telescope_kb(ts, tb)
+require('grs.utilities.keybindings').telescope_kb(ts, tb)

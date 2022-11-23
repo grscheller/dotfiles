@@ -1,7 +1,7 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local utils = require('grs.util.utils')
-local keymaps = require('grs.util.keybindings')
+local utils = require('grs.utilities.grsUtils')
+local keymaps = require('grs.utilities.keybindings')
 
 local kb = keymaps.kb
 local msg = utils.msg_hit_return_to_continue

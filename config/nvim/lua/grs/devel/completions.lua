@@ -1,6 +1,6 @@
 --[[ Completions & Snippets ]]
 
-local utils = require('grs.util.utils')
+local utils = require('grs.utilities.grsUtils')
 
 local ok
 local cmp_under_comparator, cmp_comparators
