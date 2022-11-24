@@ -57,13 +57,6 @@ then
         --cmd 'let g:grs_skip_msg_reply = 1' \
         -c 'autocmd User PackerComplete quitall' \
         -c 'PackerSync'
-
-    printf '\n\nUpdating Mason packages...\n'
-    nvim --headless \
-        --cmd 'let g:grs_skip_msg_reply = 1' \
-        -c 'autocmd User MasonUpdateAllComplete quitall' \
-        -c 'MasonUpdateAll'
-
     printf '\n\nDone!!!\n'
 else
     printf '\nError: "git clone" failed for "%s"\n' $PackerGIT

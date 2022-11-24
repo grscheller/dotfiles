@@ -1,64 +1,75 @@
 --[[ Software Devel Tooling ]]
 
---[[ LSP, DAP, Null-ls configuration & package management infrastructure
+--[[ The overiding principle is to configure only what I
+     currently use, not everything I might like to use someday. ]]
 
-        https://github.com/neovim/nvim-lspconfig
-        https://github.com/mfussenegger/nvim-dap
-        https://github.com/jose-elias-alvarez/null-ls.nvim
-        https://github.com/williamboman/mason.nvim
-        https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-        https://github.com/jayp0521/mason-null-ls.nvim
-        https://github.com/RubixDev/mason-update-all
-        https://github.com/jayp0521/mason-nvim-dap.nvim
-
-     The overiding principle is to configure what I actually have 
-     used and not everything that someday I might potentially use.
---]]
-
-local lspconfig_names = {
-   'bashls',        -- bash lang server
-   'clangd',        -- C and C++ - for clang & gcc
-   'cssls',     -- vscode-css-languageserver (mason uses npm)
-   'gopls',         -- go language server
-   'hls',           -- haskell language server
-   'html',      -- vscode-html-languageserver (mason uses npm)
-   'jsonls',    -- vscode-json-languageserver (mason uses npm)
-   'marksman',  -- markdown language server
-   'pyright',       -- pyright for Python
-   'sumneko_lua',   -- lua-language-server???
-   'taplo',     -- toml
-   'yamlls',    -- Redhat yaml (mason uses npm)
-   'zls'        -- zig
+local lspconfig_servers = {
+   'bashls',       -- bash-language-server
+   'clangd',       -- C and C++ - for clang & gcc
+   'cssls',        -- vscode-css-languageserver (mason uses npm)
+   'gopls',        -- go language server
+   'html',         -- vscode-html-languageserver (mason uses npm)
+   'jsonls',       -- vscode-json-languageserver (mason uses npm)
+   'marksman',     -- markdown language server
+   'pyright',      -- pyright for Python
+   'taplo',        -- toml
+   'yamlls',       -- Redhat yaml-language-server
+   'zls'           -- zig
+}
+local mason_lspconfig_servers = {
+   'cssls',
+   'html',
+   'jsonls',
+   'marksman',
+   'zls'
 }
 
-local dapSystem = {}
-local dapMason = {
+local dap_servers = {
+   'bash',
+   'cppdbg'
+}
+local mason_dap_servers = {
    'bash',
    'cppdbg'
 }
 
-local null_ls_mason = {
+local null_ls_builtins = {
+   'cppcheck',
    'cpplint',
    'markdownlint',
+   'mdl',
    'selene',
    'stylua'
 }
+local mason_null_ls_builtins = {
+   'markdownlint'
+}
 
-local grsMason = require('grs.devel.core.mason')
-local dapWithMasonNames = grsMason.dap2mason(dapMason)
-
-local cmd = vim.api.nvim_command
 local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
 
-local ok, mason, mason_update_all, mason_tool_installer
-local lspconf, cmp_nvim_lsp
-local dap, dap_ui_widgets, mason_nvim_dap
-local null_ls, mason_null_ls
+-- jose-elias-alvarez/null-ls.nvim for linters & formatters
+-- TODO: Create sources table from above info.
+local ok_null, null_ls = pcall(require, 'null-ls')
+if ok_null then
+   null_ls.setup {
+      sources = {
+         null_ls.builtins.diagnostics.cppcheck,
+         null_ls.builtins.diagnostics.cpplint,
+         null_ls.builtins.diagnostics.markdownlint,
+         null_ls.builtins.diagnostics.mdl,
+         null_ls.builtins.diagnostics.selene,
+         null_ls.builtins.formatting.stylua
+      }
+   }
+else
+   msg('Problem in tooling.lua with null-ls, PUNTING!!!')
+   return
+end
 
 -- williamboman/mason.nvim a package manager for LSP & DAP servers,
 -- linters, and formatters
-ok, mason = pcall(require, "mason")
-if ok then
+local ok_mason, mason = pcall(require, "mason")
+if ok_mason then
    mason.setup {
       ui = {
          icons = {
@@ -72,73 +83,48 @@ else
    msg('Problem in tooling.lua with nvim package manager mason, PUNTING!!!')
 end
 
--- RubixDev/mason-update-all used by my bsPacker shell script
-ok, mason_update_all = pcall(require, "mason-update-all")
-if ok then
-   mason_update_all.setup()
-   vim.api.nvim_create_autocmd('User', {
-      pattern = 'MasonUpdateAllComplete',
-      callback = function()
-         print('ﮊ  Mason-Update-All has finished!')
-      end
-   })
-else
-   msg('Problem in tooling.lua with mason-update-all')
-end
-
 -- WhoIsSethDaniel/mason-tool-installer.nvim
 -- used to install/upgrade 3rd party tools.
-ok, mason_tool_installer = pcall(require, "mason-tool-installer")
-if ok then
+local ok_mti, mason_tool_installer = pcall(require, "mason-tool-installer")
+if ok_mti then
+   local grsMason = require('grs.devel.core.mason')
+   local dapWithMasonNames = grsMason.dap2mason(mason_dap_servers)
    mason_tool_installer.setup {
-      ensure_installed = dapWithMasonNames,  -- TODO: fix to include rest
+      ensure_installed = dapWithMasonNames,
       auto_update = false,
       start_delay = 3000 -- millisecondss
    }
+   vim.api.nvim_create_autocmd('User', {
+      pattern = 'MasonToolsUpdateCompleted',
+      callback = function()
+         vim.schedule(function()
+            print('ﮊ  mason-tool-installer has finished!')
+         end)
+      end
+   })
 else
-   msg('Problem in tooling.lua with mason-update-all')
+   msg('Problem in tooling.lua with mason-tool-installer')
 end
 
 -- mfussenegger/nvim-dap for debugging tools
-ok, dap = pcall(require, 'dap')
-if ok then
-   -- jayp0521/mason-nvim-dap.nvim for Mason DAP integration
-   ok, mason_nvim_dap = pcall(require, "mason-nvim-dap")
-   if ok then
-      mason_nvim_dap.setup()
-   else
-      msg('Problem in tooling.lua with mason-nvim-dap')
-   end
+local dap_ui_widgets
+local ok_dap, dap = pcall(require, 'dap')
+if ok_dap then
    dap_ui_widgets = require('dap.ui.widgets')
 else
    msg('Problem in tooling.lua with nvim_dap, PUNTING!!!')
    return
 end
 
--- jose-elias-alvarez/null-ls.nvim for linters & formatters
-ok, null_ls = pcall(require, 'null-ls')
-if ok then
-   -- jayp0521/mason-null-ls.nvim for Mason integration
-   ok, mason_null_ls = pcall(require, 'mason-null-ls')
-   if ok then
-      mason_null_ls.setup()
-   else
-      msg('Problem in tooling.lua with mason-null-ls')
-   end
-
-else
-   msg('Problem in tooling.lua with null-ls, PUNTING!!!')
-   return
-end
-
 -- setup neovim/nvim-lspconfig to configure LSP servers
-ok, lspconf = pcall(require, 'lspconfig')
+local ok, lspconf = pcall(require, 'lspconfig')
 if not ok then
    msg('Problem in tooling.lua with nvim-lspconfig, PUNTING!!!')
    return
 end
 
 -- hrsh7th/cmp-nvim-lsp integrates LSP with completions
+local cmp_nvim_lsp
 ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok then
    msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
@@ -274,6 +260,7 @@ vim.g.python3_host_prog =
    os.getenv('HOME') .. '/.local/share/pyenv/shims/python'
 
 -- Adjust auto-indent for different filetypes
+local cmd = vim.api.nvim_command
 cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 cmd [[au FileType scala setlocal shiftwidth=2 softtabstop=2 expandtab]]

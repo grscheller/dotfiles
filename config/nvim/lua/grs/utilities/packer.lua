@@ -116,9 +116,6 @@ return packer.startup(
             'jose-elias-alvarez/null-ls.nvim',
             'williamboman/mason.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
-            'jayp0521/mason-null-ls.nvim',
-            'RubixDev/mason-update-all',
-            'jayp0521/mason-nvim-dap.nvim',
             'simrat39/rust-tools.nvim',
             'scalameta/nvim-metals' }
    end

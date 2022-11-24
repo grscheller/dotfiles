@@ -1,24 +1,18 @@
 --[[ Mason Core Functions & Associated Tables ]]
 
---[[
-
-  Chore: periodically update these tables from these sources
-
-  lsp_to_package:
-    williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
-  null_ls_to_package:
-    jayp0521/mason-null-ls.nvim/lua/mason-null-ls/mappings/source.lua
-  dap_to_package:
-    jayp0521/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/source.lua      
-
-  These 3 Mason "add on" configuration plugins don't seem to play nice
-  with LSP/DAP/Null-LS packages not installed by Mason.
-
---]]
-
 local M = {}
 
--- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
+--[[ Chore: Periodically update these next three tables (lsp_to_package,
+            null_ls_to_package, dap_to_package) from these three GitHub
+            sources respectively:
+
+  williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
+  jayp0521/mason-null-ls.nvim/lua/mason-null-ls/mappings/source.lua
+  jayp0521/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/source.lua
+
+     These 3 Mason "add-on" configuration plugins only seem to work
+     for LSP & DAP servers and Null-ls sources installed by Mason. ]]
+
 local lsp_to_package = {
    ['als'] = 'ada-language-server',
    ['angularls'] = 'angular-language-server',
