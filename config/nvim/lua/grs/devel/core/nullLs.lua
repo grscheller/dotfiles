@@ -5,13 +5,13 @@ local M = {}
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
 
-M.setup = function(NullLsBuiltins)
+M.setup = function(NullLsBuiltinTbl)
 
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
       msg('Problem null-ls, PUNTING!!!')
-      if not NullLsBuiltins then
-         msg('never print this - hack to gag')
+      if not NullLsBuiltinTbl then
+         msg('never print this - hack to gag LSP')
       end
       return
    end

@@ -3,50 +3,45 @@
 --[[ The overiding principle is to configure only what I
      currently use, not everything I might like to use someday. ]]
 
-local LspServers = {
-   'bashls',       -- bash-language-server
-   'clangd',       -- C and C++ - for clang & gcc
-   'cssls',        -- vscode-css-languageserver (mason uses npm)
-   'gopls',        -- go language server
-   'html',         -- vscode-html-languageserver (mason uses npm)
-   'jsonls',       -- vscode-json-languageserver (mason uses npm)
-   'marksman',     -- markdown language server
-   'pyright',      -- pyright for Python
-   'taplo',        -- toml
-   'yamlls',       -- Redhat yaml-language-server
-   'zls'           -- zig
-}
-local MasonLspServers = {
-   'cssls',
-   'html',
-   'jsonls',
-   'marksman',
-   'zls'
+local grsDevel = require('grs.devel.core')
+local pm = grsDevel.pm
+
+local mason = pm.mason   -- use mason as 3rd party tool package manager
+local system = pm.system -- pacman, nix, brew, cocolately, msys2, ...
+
+local LspServerTbl = {
+   bashls =   system,
+   clangd =   system,
+   cssls =    mason,
+   gopls =    system,
+   html =     mason,
+   jsonls =   mason,
+   marksman = mason,
+   pyright =  system,
+   taplo =    system,
+   yamlls =   system,
+   zls =      mason
 }
 
-local DapServers = {
-   'bash',
-   'cppdbg'
-}
-local MasonDapServers = {
-   'bash',
-   'cppdbg'
+local DapServerTbl = {
+   bash =   mason,
+   cppdbg = mason
 }
 
-local NullLsBuiltins = {
+local NullLsBuiltinTbl = {
+   code_actions = {},
+   completions = {},
    diagnostics = {
-      'cppcheck',
-      'cpplint',
-      'markdownlint',
-      'mdl',
-      'selene'
+      cppcheck =     system,
+      cpplint =      system,
+      markdownlint = mason,
+      mdl =          system,
+      selene =       system
    },
    formatting = {
-      'stylua'
-   }
-}
-local MasonNullLsBuiltins = {
-   'markdownlint'
+      stylua = system
+   },
+   hover = {}
 }
 
 local grsUtils = require('grs.utilities.grsUtils')
@@ -54,9 +49,9 @@ local grsMason = require('grs.devel.core.mason')
 local grsNullLs = require('grs.devel.core.nullLs')
 local grsDap = require('grs.devel.core.dap')
 
-grsMason.setup(MasonLspServers, MasonDapServers, MasonNullLsBuiltins)
-grsNullLs.setup(NullLsBuiltins)
-local dap, dap_ui_widgets = grsDap.setup(DapServers)
+grsMason.setup(LspServerTbl, DapServerTbl, NullLsBuiltinTbl)
+grsNullLs.setup(NullLsBuiltinTbl)
+local dap, dap_ui_widgets = grsDap.setup(DapServerTbl)
 
 local msg = grsUtils.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
