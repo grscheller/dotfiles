@@ -3,7 +3,7 @@
 --[[ The overiding principle is to configure only what I
      currently use, not everything I might like to use someday. ]]
 
-local lspconfig_servers = {
+local LspServers = {
    'bashls',       -- bash-language-server
    'clangd',       -- C and C++ - for clang & gcc
    'cssls',        -- vscode-css-languageserver (mason uses npm)
@@ -16,7 +16,7 @@ local lspconfig_servers = {
    'yamlls',       -- Redhat yaml-language-server
    'zls'           -- zig
 }
-local mason_lspconfig_servers = {
+local MasonLspServers = {
    'cssls',
    'html',
    'jsonls',
@@ -24,97 +24,42 @@ local mason_lspconfig_servers = {
    'zls'
 }
 
-local dap_servers = {
+local DapServers = {
    'bash',
    'cppdbg'
 }
-local mason_dap_servers = {
+local MasonDapServers = {
    'bash',
    'cppdbg'
 }
 
-local null_ls_builtins = {
-   'cppcheck',
-   'cpplint',
-   'markdownlint',
-   'mdl',
-   'selene',
-   'stylua'
+local NullLsBuiltins = {
+   diagnostics = {
+      'cppcheck',
+      'cpplint',
+      'markdownlint',
+      'mdl',
+      'selene'
+   },
+   formatting = {
+      'stylua'
+   }
 }
-local mason_null_ls_builtins = {
+local MasonNullLsBuiltins = {
    'markdownlint'
 }
 
-local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
+local grsUtils = require('grs.utilities.grsUtils')
+local grsMason = require('grs.devel.core.mason')
+local grsNullLs = require('grs.devel.core.nullLs')
+local grsDap = require('grs.devel.core.dap')
 
--- jose-elias-alvarez/null-ls.nvim for linters & formatters
--- TODO: Create sources table from above info.
-local ok_null, null_ls = pcall(require, 'null-ls')
-if ok_null then
-   null_ls.setup {
-      sources = {
-         null_ls.builtins.diagnostics.cppcheck,
-         null_ls.builtins.diagnostics.cpplint,
-         null_ls.builtins.diagnostics.markdownlint,
-         null_ls.builtins.diagnostics.mdl,
-         null_ls.builtins.diagnostics.selene,
-         null_ls.builtins.formatting.stylua
-      }
-   }
-else
-   msg('Problem in tooling.lua with null-ls, PUNTING!!!')
-   return
-end
+grsMason.setup(MasonLspServers, MasonDapServers, MasonNullLsBuiltins)
+grsNullLs.setup(NullLsBuiltins)
+local dap, dap_ui_widgets = grsDap.setup(DapServers)
 
--- williamboman/mason.nvim a package manager for LSP & DAP servers,
--- linters, and formatters
-local ok_mason, mason = pcall(require, "mason")
-if ok_mason then
-   mason.setup {
-      ui = {
-         icons = {
-            package_installed = ' ',
-            package_pending = ' ',
-            package_uninstalled = ' ﮊ'
-         }
-      }
-   }
-else
-   msg('Problem in tooling.lua with nvim package manager mason, PUNTING!!!')
-end
-
--- WhoIsSethDaniel/mason-tool-installer.nvim
--- used to install/upgrade 3rd party tools.
-local ok_mti, mason_tool_installer = pcall(require, "mason-tool-installer")
-if ok_mti then
-   local grsMason = require('grs.devel.core.mason')
-   local dapWithMasonNames = grsMason.dap2mason(mason_dap_servers)
-   mason_tool_installer.setup {
-      ensure_installed = dapWithMasonNames,
-      auto_update = false,
-      start_delay = 3000 -- millisecondss
-   }
-   vim.api.nvim_create_autocmd('User', {
-      pattern = 'MasonToolsUpdateCompleted',
-      callback = function()
-         vim.schedule(function()
-            print('ﮊ  mason-tool-installer has finished!')
-         end)
-      end
-   })
-else
-   msg('Problem in tooling.lua with mason-tool-installer')
-end
-
--- mfussenegger/nvim-dap for debugging tools
-local dap_ui_widgets
-local ok_dap, dap = pcall(require, 'dap')
-if ok_dap then
-   dap_ui_widgets = require('dap.ui.widgets')
-else
-   msg('Problem in tooling.lua with nvim_dap, PUNTING!!!')
-   return
-end
+local msg = grsUtils.msg_hit_return_to_continue
+local cmd = vim.api.nvim_command
 
 -- setup neovim/nvim-lspconfig to configure LSP servers
 local ok, lspconf = pcall(require, 'lspconfig')
@@ -149,6 +94,7 @@ lspconf['sumneko_lua'].setup {
       }
    }
 }
+cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
 --[[ Haskell LSP Configuration ]]
 lspconf['hls'].setup {
@@ -158,6 +104,7 @@ lspconf['hls'].setup {
       keybindings.haskell_kb(bufnr)
    end
 }
+cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
 --[[ Scala Metals & Rust-Tools directly configure lspconfig themselves ]]
 
@@ -166,7 +113,7 @@ lspconf['hls'].setup {
    --            https://github.com/sharksforarms/neovim-rust
 local rust_tools
 ok, rust_tools = pcall(require, 'rust-tools')
-if ok then
+if ok and dap then
    dap.configurations.rust = {
       {
          type = 'rust';
@@ -203,7 +150,7 @@ end
    -- Latest Metals Server: https://scalameta.org/metals/docs
 local metals
 ok, metals = pcall(require, 'metals')
-if ok then
+if ok and dap then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
@@ -251,6 +198,8 @@ if ok then
 else
    msg('Problem in tooling.lua with scala metals')
 end
+cmd [[au FileType scala setlocal shiftwidth=2 softtabstop=2 expandtab]]
+cmd [[au FileType sbt setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
 --[[ Additional  Tooling Configurations ]]
 
@@ -258,10 +207,3 @@ end
 -- in that environment.  Both pipenv and pynvim need to be installed.
 vim.g.python3_host_prog =
    os.getenv('HOME') .. '/.local/share/pyenv/shims/python'
-
--- Adjust auto-indent for different filetypes
-local cmd = vim.api.nvim_command
-cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
-cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
-cmd [[au FileType scala setlocal shiftwidth=2 softtabstop=2 expandtab]]
-cmd [[au FileType sbt setlocal shiftwidth=2 softtabstop=2 expandtab]]

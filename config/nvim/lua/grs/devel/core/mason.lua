@@ -1,19 +1,19 @@
---[[ Mason Core Functions & Associated Tables ]]
+--[[ Mason Core Infrastructure & Boilerplate ]]
 
 local M = {}
 
---[[ Chore: Periodically update these next three tables (lsp_to_package,
-            null_ls_to_package, dap_to_package) from these three GitHub
+--[[ Chore: Periodically update these next three tables (LspToPackage,
+            NullLsToPackage, DapToPackage) from these three GitHub
             sources respectively:
 
   williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
   jayp0521/mason-null-ls.nvim/lua/mason-null-ls/mappings/source.lua
   jayp0521/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/source.lua
 
-     These 3 Mason "add-on" configuration plugins only seem to work
-     for LSP & DAP servers and Null-ls sources installed by Mason. ]]
+     These 3 Mason "add-on" configuration plugins seem only to work
+     for Null-ls sources and LSP & DAP servers installed by Mason. ]]
 
-local lsp_to_package = {
+local LspToPackage = {
    ['als'] = 'ada-language-server',
    ['angularls'] = 'angular-language-server',
    ['ansiblels'] = 'ansible-language-server',
@@ -144,7 +144,7 @@ local lsp_to_package = {
    ['zls'] = 'zls'
 }
 
-local null_ls_to_package = {
+local NullLsToPackage = {
    ['actionlint'] = 'actionlint',
    ['alex'] = 'alex',
    ['autopep8'] = 'autopep8',
@@ -227,7 +227,7 @@ local null_ls_to_package = {
    ['yapf'] = 'yapf'
 }
 
-local dap_to_package = {
+local DapToPackage = {
    ['cppdbg'] = 'cpptools',
    ['delve'] = 'delve',
    ['node2'] = 'node-debug2-adapter',
@@ -262,16 +262,60 @@ local convert_to_mason_names = function(names, package_names)
    return mason_names
 end
 
-M.lsp2mason = function(lsp_names)
-   return convert_to_mason_names(lsp_names, lsp_to_package)
+local lsp2mason = function(lsp_names)
+   return convert_to_mason_names(lsp_names, LspToPackage)
 end
 
-M.linter2mason = function(null_ls_names)
-   return convert_to_mason_names(null_ls_names, null_ls_to_package)
+local linter2mason = function(null_ls_names)
+   return convert_to_mason_names(null_ls_names, NullLsToPackage)
 end
 
-M.dap2mason = function(dap_names)
-   return convert_to_mason_names(dap_names, dap_to_package)
+local dap2mason = function(dap_names)
+   return convert_to_mason_names(dap_names, DapToPackage)
+end
+
+M.setup = function(lspServers, dapServers, nullLsServers)
+
+   --[[ Mason package manager infrastructer used to install/upgrade
+        3rd party tools like LSP & DAP servers, linters and formatters. ]]
+   local ok, mason, mason_tool_installer
+   ok, mason = pcall(require, "mason")
+   if not ok then
+      msg('Problem setting up Mason: grs.devel.core.mason')
+      return
+   end
+
+   ok, mason_tool_installer = pcall(require, "mason-tool-installer")
+   if not ok then
+      msg('Problem setting up Mason Tool Installer: grs.devel.core.mason')
+      return
+   end
+
+   mason.setup {
+      ui = {
+         icons = {
+            package_installed = ' ',
+            package_pending = ' ',
+            package_uninstalled = ' ﮊ'
+         }
+      }
+   }
+
+   -- Mason-tool-installer used to automate Mason tool installation.
+   mason_tool_installer.setup {
+      ensure_installed = dap2mason(dapServers),
+      auto_update = false,
+      start_delay = 3000 -- milliseconds
+   }
+   vim.api.nvim_create_autocmd('User', {
+      pattern = 'MasonToolsUpdateCompleted',
+      callback = function()
+         vim.schedule(function()
+            print('ﮊ  mason-tool-installer has finished!')
+         end)
+      end
+   })
+
 end
 
 return M
