@@ -1,8 +1,8 @@
 --[[ Devel Core Infrastructure ]]
 
---[[ Chore: Periodically update these next three tables (LspToPackage,
-            NullLsToPackage, DapToPackage) from these three GitHub
-            sources respectively:
+--[[ Chore: Periodically update these next three tables,
+     LspconfigToMasonPackage, NullLsToMasonPackage, and DapToMasonPackage,
+     from these next three GitHub sources respectively:
 
   williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
   jayp0521/mason-null-ls.nvim/lua/mason-null-ls/mappings/source.lua
@@ -11,7 +11,7 @@
      These 3 Mason "add-on" configuration plugins seem only to work
      for Null-ls sources and LSP & DAP servers installed by Mason. ]]
 
-local LspToPackage = {
+local LspconfigToMasonPackage = {
    ['als'] = 'ada-language-server',
    ['angularls'] = 'angular-language-server',
    ['ansiblels'] = 'ansible-language-server',
@@ -142,7 +142,7 @@ local LspToPackage = {
    ['zls'] = 'zls'
 }
 
-local NullLsToPackage = {
+local NullLsToMasonPackage = {
    ['actionlint'] = 'actionlint',
    ['alex'] = 'alex',
    ['autopep8'] = 'autopep8',
@@ -225,7 +225,7 @@ local NullLsToPackage = {
    ['yapf'] = 'yapf'
 }
 
-local DapToPackage = {
+local DapToMasonPackage = {
    ['cppdbg'] = 'cpptools',
    ['delve'] = 'delve',
    ['node2'] = 'node-debug2-adapter',
@@ -258,49 +258,25 @@ local both = M.pm.both
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
 
-local function extractBuiltinTbl(NullLsTbl, builtin)
-   local message = 'Error[extractBuiltinTbl]: '
-
-   if type(NullLsTbl) ~= 'table' then
-      message = message ..'Invalid first argument, something may be wrong '
-      msg(message .. 'with the "grs.devel.tooling.BuiltinTbl" table.')
-      return {}
-   end
-   if type(builtin) ~= 'string' then
-      message = message .. 'Second argument, must be a valid BuiltinTbl key.'
-      msg(message)
-      return {}
-   end
-
-   local ToolTbl = NullLsTbl[builtin]
-   if ToolTbl then
-      return ToolTbl
-   else
-      message = message .. 'An invalid null-ls builtin type "'
-      msg(message .. builtin .. '" was given!')
-      return {}
-   end
-end
-
 local function extractTools(serverTbl, pm)
    local message = 'Error[extractTools]: '
 
    local servers = {}
    local cnt = 0
    if pm == both then
-      for k, _ in pairs(serverTbl) do
+      for k,_ in pairs(serverTbl) do
          cnt = cnt + 1
          servers[cnt] = k
       end
    elseif pm == mason then
-      for k, v in pairs(serverTbl) do
+      for k,v in pairs(serverTbl) do
          if v == mason then
             cnt = cnt + 1
             servers[cnt] = k
          end
       end
    elseif pm == system then
-      for k, v in pairs(serverTbl) do
+      for k,v in pairs(serverTbl) do
          if v == system then
             cnt = cnt + 1
             servers[cnt] = k
@@ -317,7 +293,7 @@ end
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
    local cnt = 0
-   for _, v in ipairs(names) do
+   for _,v in ipairs(names) do
       if package_names[v] then
          cnt = cnt + 1
          mason_names[cnt] = package_names[v]
@@ -329,18 +305,30 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
-M.lsp2mason = function(LspTbl)
-   return convertToMasonPkgs(extractTools(LspTbl, mason), LspToPackage)
+-- Flatten an array of arrays - no error check (should JIT compile well)
+M.concat = function(ArrayOfArrays)
+   local ConcatenatedList = {}
+   for _,v in ipairs(ArrayOfArrays) do
+      for _,w in ipairs(v) do
+         table.insert(ConcatenatedList, w)
+      end
+   end
+   return ConcatenatedList
 end
 
-M.dap2mason = function(DapTbl)
-   return convertToMasonPkgs(extractTools(DapTbl, mason), DapToPackage)
-end
-
-M.nullLs2mason = function(NullLsTbl, builtin)
+M.lspconfig2mason = function(LspconfigServers)
    return convertToMasonPkgs(
-      extractTools(extractBuiltinTbl(NullLsTbl, builtin), mason),
-      NullLsToPackage)
+      extractTools(LspconfigServers, mason), LspconfigToMasonPackage)
+end
+
+M.nullLs2mason = function(NullLsBuiltinTools)
+   return convertToMasonPkgs(
+      extractTools(NullLsBuiltinTools, mason), NullLsToMasonPackage)
+end
+
+M.dap2mason = function(DapServers)
+   return convertToMasonPkgs(
+      extractTools(DapServers, mason), DapToMasonPackage)
 end
 
 return M

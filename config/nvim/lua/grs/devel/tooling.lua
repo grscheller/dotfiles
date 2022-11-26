@@ -6,10 +6,10 @@
 local grsDevel = require('grs.devel.core')
 local pm = grsDevel.pm
 
-local mason = pm.mason   -- use mason as 3rd party tool package manager
-local system = pm.system -- pacman, nix, brew, cocolately, msys2, ...
+local mason = pm.mason   -- Using mason as 3rd party tool package manager.
+local system = pm.system -- Pacman, Apt, Nix, Brew, Cocolately, MSYS2, ...
 
-local LspServerTbl = {
+local LspconfigServers = {
    bashls =   system,
    clangd =   system,
    cssls =    mason,
@@ -23,12 +23,12 @@ local LspServerTbl = {
    zls =      mason
 }
 
-local DapServerTbl = {
+local DapServers = {
    bash =   mason,
    cppdbg = mason
 }
 
-local NullLsBuiltinTbl = {
+local NullLsBuiltinTools = {
    code_actions = {},
    completions = {},
    diagnostics = {
@@ -49,9 +49,9 @@ local grsMason = require('grs.devel.core.mason')
 local grsNullLs = require('grs.devel.core.nullLs')
 local grsDap = require('grs.devel.core.dap')
 
-grsMason.setup(LspServerTbl, DapServerTbl, NullLsBuiltinTbl)
-grsNullLs.setup(NullLsBuiltinTbl)
-local dap, dap_ui_widgets = grsDap.setup(DapServerTbl)
+grsMason.setup(LspconfigServers, DapServers, NullLsBuiltinTools)
+grsNullLs.setup(NullLsBuiltinTools)
+local dap, dap_ui_widgets = grsDap.setup(DapServers)
 
 local msg = grsUtils.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command

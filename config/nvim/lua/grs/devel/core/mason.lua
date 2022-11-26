@@ -1,5 +1,8 @@
 --[[ Mason Core Infrastructure & Boilerplate ]]
 
+--[[ Mason package manager infrastructer used to install/upgrade
+     3rd party tools like LSP & DAP servers, linters and formatters. ]]
+
 local M = {}
 
 local grsDevel = require('grs.devel.core')
@@ -7,11 +10,10 @@ local grsUtils = require('grs.utilities.grsUtils')
 
 local msg = grsUtils.msg_hit_return_to_continue
 
-M.setup = function(lspServerTbl, dapServerTbl, nullLsBuitinTbl)
+M.setup = function(LspconfigServers, DapServers, NullLsBuiltinTools)
 
-   --[[ Mason package manager infrastructer used to install/upgrade
-        3rd party tools like LSP & DAP servers, linters and formatters. ]]
    local ok, mason, mason_tool_installer
+
    ok, mason = pcall(require, "mason")
    if not ok then
       msg('Problem setting up Mason: grs.devel.core.mason')
@@ -35,9 +37,20 @@ M.setup = function(lspServerTbl, dapServerTbl, nullLsBuitinTbl)
    }
 
    -- Mason-tool-installer used to automate Mason tool installation.
+   local masonPackages = grsDevel.concat {
+      grsDevel.lspconfig2mason(LspconfigServers),
+      grsDevel.dap2mason(DapServers),
+      grsDevel.nullLs2mason(NullLsBuiltinTools['code_actions']),
+      grsDevel.nullLs2mason(NullLsBuiltinTools['completions']),
+      grsDevel.nullLs2mason(NullLsBuiltinTools['diagnostics']),
+      grsDevel.nullLs2mason(NullLsBuiltinTools['formatting']),
+      grsDevel.nullLs2mason(NullLsBuiltinTools['hover'])
+   }
+
    mason_tool_installer.setup {
-      ensure_installed = grsDevel.lsp2mason(lspServerTbl),
-      auto_update = false,
+      ensure_installed = masonPackages,
+      auto_update = true,
+      run_on_start = true,
       start_delay = 3000 -- milliseconds
    }
    vim.api.nvim_create_autocmd('User', {
