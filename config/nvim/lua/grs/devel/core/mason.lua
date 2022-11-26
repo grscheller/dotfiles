@@ -53,6 +53,7 @@ M.setup = function(LspconfigServers, DapServers, NullLsBuiltinTools)
       run_on_start = true,
       start_delay = 3000 -- milliseconds
    }
+
    vim.api.nvim_create_autocmd('User', {
       pattern = 'MasonToolsUpdateCompleted',
       callback = function()

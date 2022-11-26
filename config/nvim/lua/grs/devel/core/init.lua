@@ -305,7 +305,7 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
--- Flatten an array of arrays - no error check (should JIT compile well)
+-- Flatten an array of arrays - no error checks (should JIT compile well)
 M.concat = function(ArrayOfArrays)
    local ConcatenatedList = {}
    for _,v in ipairs(ArrayOfArrays) do

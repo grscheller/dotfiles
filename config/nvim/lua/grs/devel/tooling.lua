@@ -1,13 +1,25 @@
 --[[ Software Devel Tooling ]]
 
 --[[ The overiding principle is to configure only what I
-     currently use, not everything I might like to use someday. ]]
+      currently use, not everything I might someday like
+      to use.
 
+     Using Mason as 3rd party tool package manager.
+     Pacman, Apt, Nix, Brew, Cocolately, MSYS2, ...      ]]
+
+local grsUtils = require('grs.utilities.grsUtils')
 local grsDevel = require('grs.devel.core')
-local pm = grsDevel.pm
+local grsMason = require('grs.devel.core.mason')
+local grsNullLs = require('grs.devel.core.nullLs')
+local grsDap = require('grs.devel.core.dap')
 
-local mason = pm.mason   -- Using mason as 3rd party tool package manager.
-local system = pm.system -- Pacman, Apt, Nix, Brew, Cocolately, MSYS2, ...
+local msg = grsUtils.msg_hit_return_to_continue
+local cmd = vim.api.nvim_command
+
+local mason = grsDevel.pm.mason
+local system = grsDevel.pm.system
+
+--[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
 local LspconfigServers = {
    bashls =   system,
@@ -44,29 +56,22 @@ local NullLsBuiltinTools = {
    hover = {}
 }
 
-local grsUtils = require('grs.utilities.grsUtils')
-local grsMason = require('grs.devel.core.mason')
-local grsNullLs = require('grs.devel.core.nullLs')
-local grsDap = require('grs.devel.core.dap')
-
 grsMason.setup(LspconfigServers, DapServers, NullLsBuiltinTools)
 grsNullLs.setup(NullLsBuiltinTools)
 local dap, dap_ui_widgets = grsDap.setup(DapServers)
 
-local msg = grsUtils.msg_hit_return_to_continue
-local cmd = vim.api.nvim_command
+--[[ setup neovim/nvim-lspconfig to configure LSP servers ]]
 
--- setup neovim/nvim-lspconfig to configure LSP servers
-local ok, lspconf = pcall(require, 'lspconfig')
-if not ok then
+local ok_lsp, lspconf = pcall(require, 'lspconfig')
+if not ok_lsp then
    msg('Problem in tooling.lua with nvim-lspconfig, PUNTING!!!')
    return
 end
 
--- hrsh7th/cmp-nvim-lsp integrates LSP with completions
-local cmp_nvim_lsp
-ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not ok then
+--[[ hrsh7th/cmp-nvim-lsp integrates LSP for completions ]]
+
+local ok_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if not ok_cmp then
    msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
    return
 end
@@ -74,7 +79,8 @@ end
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local keybindings = require('grs.utilities.keybindings')
 
---[[ Lua LSP Configuration ]]
+--[[ Lua Configuration ]]
+
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = keybindings.lsp_kb,
@@ -91,7 +97,8 @@ lspconf['sumneko_lua'].setup {
 }
 cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
---[[ Haskell LSP Configuration ]]
+--[[ Haskell Configuration ]]
+
 lspconf['hls'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
@@ -101,14 +108,18 @@ lspconf['hls'].setup {
 }
 cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
---[[ Scala Metals & Rust-Tools directly configure lspconfig themselves ]]
+--[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
 
--- Rust Lang Tooling - rust_tools & lldb
-   -- Following: https://github.com/simrat39/rust-tools.nvim
-   --            https://github.com/sharksforarms/neovim-rust
-local rust_tools
-ok, rust_tools = pcall(require, 'rust-tools')
-if ok and dap then
+vim.g.python3_host_prog =
+   os.getenv('HOME') .. '/.local/share/pyenv/shims/python'
+
+--[[ Rust-Tools directly configure lspconfig itselves
+
+     Following: https://github.com/simrat39/rust-tools.nvim
+                https://github.com/sharksforarms/neovim-rust ]]
+
+local ok_rust, rust_tools = pcall(require, 'rust-tools')
+if ok_rust and dap then
    dap.configurations.rust = {
       {
          type = 'rust';
@@ -140,12 +151,13 @@ else
    msg('Problem in tooling.lua with rust-tools')
 end
 
--- Scala Lang Tooling - Scala Metals
-   -- Following: https://github.com/scalameta/nvim-metals/discussions/39
-   -- Latest Metals Server: https://scalameta.org/metals/docs
-local metals
-ok, metals = pcall(require, 'metals')
-if ok and dap then
+--[[ Scala Metals directly configure lspconfig
+
+     Latest Metals Server: https://scalameta.org/metals/docs
+     Following: https://github.com/scalameta/nvim-metals/discussions/39 ]]
+
+local ok_metals, metals = pcall(require, 'metals')
+if ok_metals and dap then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
@@ -195,10 +207,3 @@ else
 end
 cmd [[au FileType scala setlocal shiftwidth=2 softtabstop=2 expandtab]]
 cmd [[au FileType sbt setlocal shiftwidth=2 softtabstop=2 expandtab]]
-
---[[ Additional  Tooling Configurations ]]
-
--- Pointing python3_host_prog to the pyenv shim and running nvim
--- in that environment.  Both pipenv and pynvim need to be installed.
-vim.g.python3_host_prog =
-   os.getenv('HOME') .. '/.local/share/pyenv/shims/python'

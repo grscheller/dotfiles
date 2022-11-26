@@ -10,13 +10,10 @@ M.setup = function(NullLsBuiltinTbl)
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
       msg('Problem null-ls, PUNTING!!!')
-      if not NullLsBuiltinTbl then
-         msg('never print this - hack to gag LSP')
-      end
       return
    end
 
-   -- Temporary hack - need to create sources table from NullLsBuiltins
+   -- Temporary hack - need to create sources table from NullLsBuiltinTools
    null_ls.setup {
       sources = {
          null_ls.builtins.diagnostics['cppcheck'],
