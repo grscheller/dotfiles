@@ -20,7 +20,6 @@ M.setup = function(NullLsBuiltinTbl)
          null_ls.builtins.diagnostics['cpplint'],
          null_ls.builtins.diagnostics['markdownlint'],
          null_ls.builtins.diagnostics['mdl'],
-         null_ls.builtins.diagnostics['selene'],
          null_ls.builtins.formatting['stylua']
       }
    }

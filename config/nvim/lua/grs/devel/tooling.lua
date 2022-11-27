@@ -4,14 +4,15 @@
       currently use, not everything I might someday like
       to use.
 
-     Using Mason as 3rd party tool package manager.
-     Pacman, Apt, Nix, Brew, Cocolately, MSYS2, ...      ]]
+     Using Mason as a 3rd party package manager (pm) when a server/tool
+     is not provided by a package manager from the underlying environment,
+     such as Pacman, Apt, Nix, Brew, SDKMAN, Cocolately, MSYS2, ...       ]]
 
-local grsUtils = require('grs.utilities.grsUtils')
-local grsDevel = require('grs.devel.core')
-local grsMason = require('grs.devel.core.mason')
-local grsNullLs = require('grs.devel.core.nullLs')
-local grsDap = require('grs.devel.core.dap')
+local grsUtils = require 'grs.utilities.grsUtils'
+local grsDevel = require 'grs.devel.core'
+local grsMason = require 'grs.devel.core.mason'
+local grsNullLs = require 'grs.devel.core.nullLs'
+local grsDap = require 'grs.devel.core.dap'
 
 local msg = grsUtils.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
@@ -22,38 +23,37 @@ local system = grsDevel.pm.system
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
 local LspconfigServers = {
-   bashls =   system,
-   clangd =   system,
-   cssls =    mason,
-   gopls =    system,
-   html =     mason,
-   jsonls =   mason,
+   bashls = system,
+   clangd = system,
+   cssls = mason,
+   gopls = system,
+   html = mason,
+   jsonls = mason,
    marksman = mason,
-   pyright =  system,
-   taplo =    system,
-   yamlls =   system,
-   zls =      mason
+   pyright = system,
+   taplo = system,
+   yamlls = system,
+   zls = mason,
 }
 
 local DapServers = {
-   bash =   mason,
-   cppdbg = mason
+   bash = mason,
+   cppdbg = mason,
 }
 
 local NullLsBuiltinTools = {
    code_actions = {},
    completions = {},
    diagnostics = {
-      cppcheck =     system,
-      cpplint =      system,
+      cppcheck = system,
+      cpplint = system,
       markdownlint = mason,
-      mdl =          system,
-      selene =       system
+      mdl = system,
    },
    formatting = {
-      stylua = system
+      stylua = system,
    },
-   hover = {}
+   hover = {},
 }
 
 grsMason.setup(LspconfigServers, DapServers, NullLsBuiltinTools)
@@ -64,7 +64,7 @@ local dap, dap_ui_widgets = grsDap.setup(DapServers)
 
 local ok_lsp, lspconf = pcall(require, 'lspconfig')
 if not ok_lsp then
-   msg('Problem in tooling.lua with nvim-lspconfig, PUNTING!!!')
+   msg 'Problem in tooling.lua with nvim-lspconfig, PUNTING!!!'
    return
 end
 
@@ -72,30 +72,41 @@ end
 
 local ok_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
 if not ok_cmp then
-   msg('Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!')
+   msg 'Problem in tooling.lua with cmp_nvim_lsp, PUNTING!!!'
    return
 end
 
 local capabilities = cmp_nvim_lsp.default_capabilities()
-local keybindings = require('grs.utilities.keybindings')
+local keybindings = require 'grs.utilities.keybindings'
 
---[[ Lua Configuration ]]
+--[[ Lua Configuration - geared to Neovim configs ]]
+
+-- Make runtime files discoverable by sumneko_lua
+local sumneko_runtime_path = vim.split(package.path, ';')
+table.insert(sumneko_runtime_path, 'lua/?.lua')
+table.insert(sumneko_runtime_path, 'lua/?/init.lua')
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
-   on_attach = keybindings.lsp_kb,
+   on_attach = function(client, bufnr)
+      keybindings.lsp_kb(client, bufnr)
+      cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
+   end,
    settings = {
       Lua = {
-         runtime = { version = 'LuaJIT' },
+         runtime = {
+            version = 'LuaJIT',
+            path = sumneko_runtime_path,
+         },
          diagnostics = { globals = { 'vim' } },
          workspace = {
-            library = vim.api.nvim_get_runtime_file('', true)
+            library = vim.api.nvim_get_runtime_file('', true),
+            checkThirdParty = false,
          },
-         telemetry = { enable = false }
-      }
-   }
+         telemetry = { enable = false },
+      },
+   },
 }
-cmd [[au FileType lua setlocal shiftwidth=3 softtabstop=3 expandtab]]
 
 --[[ Haskell Configuration ]]
 
@@ -104,14 +115,13 @@ lspconf['hls'].setup {
    on_attach = function(client, bufnr)
       keybindings.lsp_kb(client, bufnr)
       keybindings.haskell_kb(bufnr)
-   end
+      cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
+   end,
 }
-cmd [[au FileType haskell setlocal shiftwidth=2 softtabstop=2 expandtab]]
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
 
-vim.g.python3_host_prog =
-   os.getenv('HOME') .. '/.local/share/pyenv/shims/python'
+vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
 
 --[[ Rust-Tools directly configure lspconfig itselves
 
@@ -122,14 +132,14 @@ local ok_rust, rust_tools = pcall(require, 'rust-tools')
 if ok_rust and dap then
    dap.configurations.rust = {
       {
-         type = 'rust';
-         request = 'launch';
-         name = 'rt_lldb';
-      }
+         type = 'rust',
+         request = 'launch',
+         name = 'rt_lldb',
+      },
    }
    rust_tools.setup {
       runnables = {
-         use_telescope = true
+         use_telescope = true,
       },
       server = {
          capabilities = capabilities,
@@ -137,24 +147,25 @@ if ok_rust and dap then
             keybindings.lsp_kb(client, bufnr)
             keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
          end,
-         standalone = true
+         standalone = true,
       },
       dap = {
          adapter = {
             type = 'executable',
             command = 'lldb-vscode',
-            name = 'rt_lldb'
-         }
-      }
+            name = 'rt_lldb',
+         },
+      },
    }
 else
-   msg('Problem in tooling.lua with rust-tools')
+   msg 'Problem in tooling.lua with rust-tools'
 end
 
 --[[ Scala Metals directly configure lspconfig
 
      Latest Metals Server: https://scalameta.org/metals/docs
-     Following: https://github.com/scalameta/nvim-metals/discussions/39 ]]
+     Following: https://github.com/scalameta/nvim-metals/discussions/39
+                https://github.com/scalameta/nvim-metals/discussions/279 ]]
 
 local ok_metals, metals = pcall(require, 'metals')
 if ok_metals and dap then
@@ -162,48 +173,47 @@ if ok_metals and dap then
 
    metals_config.settings = {
       showImplicitArguments = true,
-      serverVersion = '0.11.9'
+      serverVersion = '0.11.9',
    }
    metals_config.capabilities = capabilities
    metals_config.init_options.statusBarProvider = 'on'
 
    function metals_config.on_attach(client, bufnr)
-      keybindings.lsp_kb(client, bufnr)
-      keybindings.metals_kb(bufnr, metals)
       dap.configurations.scala = {
          {
             type = 'scala',
             request = 'launch',
             name = 'RunOrTest',
             metals = {
-               runType = 'runOrTestFile'
+               runType = 'runOrTestFile',
                --args = { 'firstArg', 'secondArg, ...' }
-            }
-         }, {
+            },
+         },
+         {
             type = 'scala',
             request = 'launch',
             name = 'Test Target',
             metals = {
-               runType = 'testTarget'
-            }
-         }
+               runType = 'testTarget',
+            },
+         },
       }
       metals.setup_dap()
+      keybindings.lsp_kb(client, bufnr)
+      keybindings.metals_kb(bufnr, metals)
       keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
+      cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
+      cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
    end
 
    local scala_metals_group =
-      vim.api.nvim_create_augroup('scala-metals', { clear = true })
+   vim.api.nvim_create_augroup('scala-metals', { clear = true })
 
    vim.api.nvim_create_autocmd('FileType', {
       pattern = { 'scala', 'sbt' },
-      callback = function()
-         metals.initialize_or_attach(metals_config)
-      end,
-      group = scala_metals_group
+      callback = function() metals.initialize_or_attach(metals_config) end,
+      group = scala_metals_group,
    })
 else
-   msg('Problem in tooling.lua with scala metals')
+   msg 'Problem in tooling.lua with scala metals'
 end
-cmd [[au FileType scala setlocal shiftwidth=2 softtabstop=2 expandtab]]
-cmd [[au FileType sbt setlocal shiftwidth=2 softtabstop=2 expandtab]]
