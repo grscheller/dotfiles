@@ -142,7 +142,25 @@ local LspconfigToMasonPackage = {
    ['zls'] = 'zls'
 }
 
-local NullLsToMasonPackage = {
+local DapToMasonPackage = {
+   ['cppdbg'] = 'cpptools',
+   ['delve'] = 'delve',
+   ['node2'] = 'node-debug2-adapter',
+   ['chrome'] = 'chrome-debug-adapter',
+   ['firefox'] = 'firefox-debug-adapter',
+   ['php'] = 'php-debug-adapter',
+   ['coreclr'] = 'netcoredbg',
+   ['js'] = 'js-debug-adapter',
+   ['lldb'] = 'codelldb',
+   ['bash'] = 'bash-debug-adapter',
+   ['javadbg'] = 'java-debug-adapter',
+   ['javatest'] = 'java-test',
+   ['mock'] = 'mockdebug',
+   ['puppet'] = 'puppet-editor-services',
+   ['elixir'] = 'elixir-ls'
+}
+
+local NullLsBuiltinsToMasonPackage = {
    ['actionlint'] = 'actionlint',
    ['alex'] = 'alex',
    ['autopep8'] = 'autopep8',
@@ -225,25 +243,13 @@ local NullLsToMasonPackage = {
    ['yapf'] = 'yapf'
 }
 
-local DapToMasonPackage = {
-   ['cppdbg'] = 'cpptools',
-   ['delve'] = 'delve',
-   ['node2'] = 'node-debug2-adapter',
-   ['chrome'] = 'chrome-debug-adapter',
-   ['firefox'] = 'firefox-debug-adapter',
-   ['php'] = 'php-debug-adapter',
-   ['coreclr'] = 'netcoredbg',
-   ['js'] = 'js-debug-adapter',
-   ['lldb'] = 'codelldb',
-   ['bash'] = 'bash-debug-adapter',
-   ['javadbg'] = 'java-debug-adapter',
-   ['javatest'] = 'java-test',
-   ['mock'] = 'mockdebug',
-   ['puppet'] = 'puppet-editor-services',
-   ['elixir'] = 'elixir-ls'
-}
-
 local M = {}
+
+M.tableMap = {
+   LspServers = LspconfigToMasonPackage,
+   DapServers = DapToMasonPackage,
+   NullLsBuiltinTools = NullLsBuiltinsToMasonPackage,
+}
 
 M.pm = {
    install_using_mason = 1,
@@ -253,12 +259,12 @@ local mason = M.pm.install_using_mason
 local system = M.pm.install_outside_of_neovim
 
 M.conf = {
-   configure_with_lspconfig_automatically = 1,
-   configure_with_lspconfig_manually = 2,
-   do_not_configure = 3,
+   default_configuration = 1,
+   manual_configuration = 2,
+   do_not_directly_configure = 3,
 }
-local auto = M.conf.configure_with_lspconfig_automatically
-local man = M.conf.configure_with_lspconfig_manually
+local default = M.conf.default_configuration
+local manual = M.conf.manual_configuration
 
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
@@ -326,14 +332,20 @@ M.lspconfig2mason = function(LspconfigServers)
       extractTools(LspconfigServers, mason), LspconfigToMasonPackage)
 end
 
-M.nullLs2mason = function(NullLsBuiltinTools)
-   return convertToMasonPkgs(
-      extractTools(NullLsBuiltinTools, mason), NullLsToMasonPackage)
-end
-
 M.dap2mason = function(DapServers)
    return convertToMasonPkgs(
       extractTools(DapServers, mason), DapToMasonPackage)
+end
+
+M.nullLs2mason = function(NullLsBuiltinTools)
+   return convertToMasonPkgs(
+      extractTools(NullLsBuiltinTools, mason), NullLsBuiltinsToMasonPackage)
+end
+
+M.setup = function(LspServers, DapServers, NullLsBuiltinTools)
+   msg(vim.inspect(LspServers))
+   msg(vim.inspect(DapServers))
+   msg(vim.inspect(NullLsBuiltinTools))
 end
 
 return M

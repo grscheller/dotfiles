@@ -19,49 +19,62 @@ local msg = grsUtils.msg_hit_return_to_continue
 local keybindings = require 'grs.utilities.keybindings'
 local cmd = vim.api.nvim_command
 
-local mason = grsDevel.pm.install_using_mason
-local system = grsDevel.pm.install_outside_of_neovim
-local auto = grsDevel.conf.configure_with_lspconfig_automatically
-local man = grsDevel.conf.configure_with_lspconfig_manually
-local no = grsDevel.conf.do_not_configure
+local default = grsDevel.conf.default_configuration
+local manual = grsDevel.conf.manual_configuration
+local noconfig = grsDevel.conf.do_not_directly_configure
 
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
 local LspServers = {
-   bashls = { pm = system, conf = auto },
-   clangd = { pm = system, conf = auto },
-   cssls = { pm = mason, conf = auto },
-   gopls = { pm = system, conf = auto },
-   hls = { pm = system, conf = man },
-   html = { pm = mason, conf = auto },
-   jsonls = { pm = mason, conf = auto },
-   marksman = { pm = mason, conf = auto },
-   pyright = { pm = system, conf = no }, -- turned off for now, need to read docs
-   rust_analyzer = { pm = system, conf = no }, -- configured by rust_tools
-   rust_tools = { pm = system, conf = man }, -- calls lspconfig itself
-   scala_metals = { pm = system, conf = man }, -- calls lspconfig itself
-   sumneko_lua = { pm = system, conf = man },
-   taplo = { pm = system, conf = auto },
-   yamlls = { pm = system, conf = auto },
-   zls = { pm = mason, conf = auto },
+   mason = {
+      cssls = default,
+      html = default,
+      jsonls = default,
+      marksman = default,
+      zls = default,
+   },
+   system = {
+      bashls = default,
+      clangd = default,
+      gopls = default,
+      hls = default,
+      pyright = noconfig,
+      rust_analyzer = noconfig,
+      rust_tools = manual,
+      scala_metals = manual,
+      sumneko_lua = manual,
+      taplo = default,
+      yamlls = default,
+      zls = default,
+   }
 }
 
 local DapServers = {
-   bash = { pm = mason, conf = auto, },
-   cppdbg = { pm = mason, conf = auto, },
+   mason = {
+      bash = default,
+      cppdbg = default,
+   },
+   system = {},
 }
 
 local NullLsBuiltinTools = {
    code_actions = {},
    completions = {},
    diagnostics = {
-      cppcheck = { pm = system, conf = man, },
-      cpplint = { pm = system, conf = man, },
-      markdownlint = { pm = mason, conf = man, },
-      mdl = { pm = system, conf = man, },
+      mason = {
+         markdownlint = manual,
+      },
+      system = {
+         cppcheck = manual,
+         cpplint = manual,
+         mdl = manual,
+      },
    },
    formatting = {
-      stylua = { pm = system, conf = man, },
+      mason = {},
+      system = {
+         stylua = manual,
+      },
    },
    hover = {},
 }
@@ -88,8 +101,8 @@ end
 
 --[[ Haskell Configuration ]]
 
-if LspServers.hls.config == man then
-   if LspServers.hls.config == man then
+if LspServers.hls.config == manual then
+   if LspServers.hls.config == manual then
       lspconf['hls'].setup {
          capabilities = capabilities,
          on_attach = function(client, bufnr)
@@ -108,7 +121,7 @@ local sumneko_runtime_path = vim.split(package.path, ';')
 table.insert(sumneko_runtime_path, 'lua/?.lua')
 table.insert(sumneko_runtime_path, 'lua/?/init.lua')
 
-if LspServers.sumneko_lua.config == man then
+if LspServers.sumneko_lua.config == manual then
    lspconf['sumneko_lua'].setup {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
@@ -142,7 +155,7 @@ vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
                 https://github.com/sharksforarms/neovim-rust ]]
 
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
-if ok_rust and dap and LspServers.rust_tools.config == man then
+if ok_rust and dap and LspServers.rust_tools.config == manual then
    dap.configurations.rust = {
       {
          type = 'rust',
@@ -171,7 +184,7 @@ if ok_rust and dap and LspServers.rust_tools.config == man then
       },
    }
 else
-   if LspServers.rust_tools.config ~= man then
+   if LspServers.rust_tools.config ~= manual then
       msg 'Problem in tooling.lua with rust-tools'
    end
 end
@@ -183,7 +196,7 @@ end
                 https://github.com/scalameta/nvim-metals/discussions/279 ]]
 
 local ok_metals, metals = pcall(require, 'metals')
-if ok_metals and dap and LspServers.scala_metals.config == man then
+if ok_metals and dap and LspServers.scala_metals.config == manual then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
@@ -230,7 +243,7 @@ if ok_metals and dap and LspServers.scala_metals.config == man then
       group = scala_metals_group,
    })
 else
-   if LspServers.scala_metals.config ~= man then
+   if LspServers.scala_metals.config ~= manual then
       msg 'Problem in tooling.lua with scala metals'
    end
 end
