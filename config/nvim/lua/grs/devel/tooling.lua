@@ -8,20 +8,12 @@
      is not provided by a package manager from the underlying environment,
      such as Pacman, Apt, Nix, Brew, SDKMAN, Cocolately, MSYS2, ...       ]]
 
-local grsUtils = require 'grs.utilities.grsUtils'
 local grsDevel = require 'grs.devel.core'
-local grsLspconf = require 'grs.devel.core.lspconfig'
-local grsMason = require 'grs.devel.core.mason'
-local grsDap = require 'grs.devel.core.dap'
-local grsNullLs = require 'grs.devel.core.nullLs'
 
-local msg = grsUtils.msg_hit_return_to_continue
-local keybindings = require 'grs.utilities.keybindings'
-local cmd = vim.api.nvim_command
-
-local default = grsDevel.conf.default_configuration
-local manual = grsDevel.conf.manual_configuration
-local noconfig = grsDevel.conf.do_not_directly_configure
+local default = grsDevel.conf.use_default_configuration
+local manual = grsDevel.conf.manually_configure
+local no_config = grsDevel.conf.do_not_directly_configure
+local ignore = grsDevel.conf.neither_install_nor_configure
 
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
@@ -38,7 +30,7 @@ local LspServers = {
       clangd = default,
       gopls = default,
       hls = default,
-      pyright = noconfig,
+      pyright = ignore,
       rust_analyzer = noconfig,
       rust_tools = manual,
       scala_metals = manual,
@@ -57,9 +49,15 @@ local DapServers = {
    system = {},
 }
 
-local NullLsBuiltinTools = {
-   code_actions = {},
-   completions = {},
+local BuiltinTools = {
+   code_actions = {
+      mason = {},
+      system = {},
+   },
+   completions = {
+      mason = {},
+      system = {},
+   },
    diagnostics = {
       mason = {
          markdownlint = manual,
@@ -76,11 +74,24 @@ local NullLsBuiltinTools = {
          stylua = manual,
       },
    },
-   hover = {},
+   hover = {
+      mason = {},
+      system = {},
+   },
 }
 
-grsMason.setup(LspServers, DapServers, NullLsBuiltinTools)
-grsNullLs.setup(NullLsBuiltinTools)
+local grsUtils = require 'grs.utilities.grsUtils'
+local grsLspconf = require 'grs.devel.core.lspconfig'
+local grsMason = require 'grs.devel.core.mason'
+local grsDap = require 'grs.devel.core.dap'
+local grsNullLs = require 'grs.devel.core.nullLs'
+
+local msg = grsUtils.msg_hit_return_to_continue
+local keybindings = require 'grs.utilities.keybindings'
+local cmd = vim.api.nvim_command
+
+grsMason.setup(LspServers, DapServers, BuiltinTools)
+grsNullLs.setup(BuiltinTools)
 local dap, dap_ui_widgets = grsDap.setup(DapServers)
 
 --[[ setup neovim/nvim-lspconfig to configure LSP servers ]]
@@ -101,17 +112,15 @@ end
 
 --[[ Haskell Configuration ]]
 
-if LspServers.hls.config == manual then
-   if LspServers.hls.config == manual then
-      lspconf['hls'].setup {
-         capabilities = capabilities,
-         on_attach = function(client, bufnr)
-            keybindings.lsp_kb(client, bufnr)
-            keybindings.haskell_kb(bufnr)
-            cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
-         end,
-      }
-   end
+if LspServers.hls == manual then
+   lspconf['hls'].setup {
+      capabilities = capabilities,
+      on_attach = function(client, bufnr)
+         keybindings.lsp_kb(client, bufnr)
+         keybindings.haskell_kb(bufnr)
+         cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
+      end,
+   }
 end
 
 --[[ Lua Configuration - geared to Neovim configs ]]
@@ -121,7 +130,7 @@ local sumneko_runtime_path = vim.split(package.path, ';')
 table.insert(sumneko_runtime_path, 'lua/?.lua')
 table.insert(sumneko_runtime_path, 'lua/?/init.lua')
 
-if LspServers.sumneko_lua.config == manual then
+if LspServers.sumneko_lua == manual then
    lspconf['sumneko_lua'].setup {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
@@ -149,13 +158,13 @@ end
 
 vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
 
---[[ Rust-Tools directly configure lspconfig itselves
+--[[ Rust-Tools directly configures lspconfig
 
      Following: https://github.com/simrat39/rust-tools.nvim
                 https://github.com/sharksforarms/neovim-rust ]]
 
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
-if ok_rust and dap and LspServers.rust_tools.config == manual then
+if ok_rust and dap and LspServers.rust_tools == manual then
    dap.configurations.rust = {
       {
          type = 'rust',
@@ -184,12 +193,12 @@ if ok_rust and dap and LspServers.rust_tools.config == manual then
       },
    }
 else
-   if LspServers.rust_tools.config ~= manual then
+   if LspServers.rust_tools ~= manual then
       msg 'Problem in tooling.lua with rust-tools'
    end
 end
 
---[[ Scala Metals directly configure lspconfig
+--[[ Scala Metals directly configures lspconfig
 
      Latest Metals Server: https://scalameta.org/metals/docs
      Following: https://github.com/scalameta/nvim-metals/discussions/39
@@ -243,7 +252,7 @@ if ok_metals and dap and LspServers.scala_metals.config == manual then
       group = scala_metals_group,
    })
 else
-   if LspServers.scala_metals.config ~= manual then
+   if LspServers.scala_metals ~= manual then
       msg 'Problem in tooling.lua with scala metals'
    end
 end

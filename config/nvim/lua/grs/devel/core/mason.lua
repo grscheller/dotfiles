@@ -10,18 +10,12 @@ local grsUtils = require 'grs.utilities.grsUtils'
 
 local msg = grsUtils.msg_hit_return_to_continue
 
-M.setup = function(LspconfigServers, DapServers, NullLsBuiltinTools)
+M.setup = function(LspServers, DapServers, BuiltinTools)
    local ok, mason, mason_tool_installer
 
    ok, mason = pcall(require, 'mason')
    if not ok then
       msg 'Problem setting up Mason: grs.devel.core.mason'
-      return
-   end
-
-   ok, mason_tool_installer = pcall(require, 'mason-tool-installer')
-   if not ok then
-      msg 'Problem setting up Mason Tool Installer: grs.devel.core.mason'
       return
    end
 
@@ -35,15 +29,24 @@ M.setup = function(LspconfigServers, DapServers, NullLsBuiltinTools)
       },
    }
 
+   ok, mason_tool_installer = pcall(require, 'mason-tool-installer')
+   if not ok then
+      msg 'Problem setting up Mason Tool Installer: grs.devel.core.mason'
+      return
+   end
+
+   pred = function(_, v) return v ~= grsDevel.conf.ignore end
+
    -- Mason-tool-installer, automates Mason tool installation.
+
    local masonPackages = grsDevel.concat {
-      grsDevel.lspconfig2mason(LspconfigServers),
-      grsDevel.dap2mason(DapServers),
-      grsDevel.nullLs2mason(NullLsBuiltinTools['code_actions']),
-      grsDevel.nullLs2mason(NullLsBuiltinTools['completions']),
-      grsDevel.nullLs2mason(NullLsBuiltinTools['diagnostics']),
-      grsDevel.nullLs2mason(NullLsBuiltinTools['formatting']),
-      grsDevel.nullLs2mason(NullLsBuiltinTools['hover']),
+      grsDevel.lspconfig2mason(LspServers, pred),
+      grsDevel.dap2mason(DapServers, pred),
+      grsDevel.nullLs2mason(BuiltinTools.code_actions, pred),
+      grsDevel.nullLs2mason(BuiltinTools.completions, pred),
+      grsDevel.nullLs2mason(BuiltinTools.diagnostics, pred),
+      grsDevel.nullLs2mason(BuiltinTools.formatting, pred),
+      grsDevel.nullLs2mason(BuiltinTools.hover, pred),
    }
 
    mason_tool_installer.setup {

@@ -1,7 +1,7 @@
 --[[ Devel Core Infrastructure ]]
 
 --[[ Chore: Periodically update these next three tables,
-     LspconfigToMasonPackage, NullLsToMasonPackage, and DapToMasonPackage,
+     LspconfigToMasonPackage, DapToMasonPackage, and NullLsToMasonPackage,
      from these next three GitHub sources respectively:
 
   williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
@@ -245,11 +245,11 @@ local NullLsBuiltinsToMasonPackage = {
 
 local M = {}
 
-M.tableMap = {
-   LspServers = LspconfigToMasonPackage,
-   DapServers = DapToMasonPackage,
-   NullLsBuiltinTools = NullLsBuiltinsToMasonPackage,
-}
+--M.tableMap = {
+--   LspServers = LspconfigToMasonPackage,
+--   DapServers = DapToMasonPackage,
+--   NullLsBuiltinTools = NullLsBuiltinsToMasonPackage,
+--}
 
 M.pm = {
    install_using_mason = 1,
@@ -259,9 +259,14 @@ local mason = M.pm.install_using_mason
 local system = M.pm.install_outside_of_neovim
 
 M.conf = {
-   default_configuration = 1,
-   manual_configuration = 2,
-   do_not_directly_configure = 3,
+   use_default_configuration = 1,      -- default
+   manually_configure = 2,             -- manual
+   do_not_directly_configure = 3,      -- no_config
+   neither_install_nor_configure = 4,  -- ignore
+   default = 1,
+   manual = 2,
+   no_config = 3,
+   ignore = 4,
 }
 local default = M.conf.default_configuration
 local manual = M.conf.manual_configuration
@@ -269,42 +274,11 @@ local manual = M.conf.manual_configuration
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
 
-local function extractTools(serverTbl, pm)
-   local message = 'Error[extractTools]: '
-
-   local servers = {}
-   local cnt = 0
-   if pm == system or pm == mason then
-      for k,_ in pairs(serverTbl) do
-         cnt = cnt + 1
-         servers[cnt] = k
-      end
-   elseif pm == mason then
-      for k,v in pairs(serverTbl) do
-         if v.pm == mason then
-            cnt = cnt + 1
-            servers[cnt] = k
-         end
-      end
-   elseif pm == system then
-      for k,v in pairs(serverTbl) do
-         if v.pm == system then
-            cnt = cnt + 1
-            servers[cnt] = k
-         end
-      end
-   else
-      message = message .. 'Invalid package manager type given for server extraction'
-      msg(message)
-      return
-   end
-   return servers
-end
-
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
    local cnt = 0
-   for _,v in ipairs(names) do
+      msg("p_names = " .. vim.inspect(package_names))
+   for _,v in pairs(names) do
       if package_names[v] then
          cnt = cnt + 1
          mason_names[cnt] = package_names[v]
@@ -327,25 +301,39 @@ M.concat = function(ArrayOfArrays)
    return ConcatenatedList
 end
 
-M.lspconfig2mason = function(LspconfigServers)
-   return convertToMasonPkgs(
-      extractTools(LspconfigServers, mason), LspconfigToMasonPackage)
+-- get keys filtered by predicate
+M.getFilteredKeys = function(t, p)
+    filteredKeys = {}
+    for k,v in pairs(t) do
+       if p(k,v) then
+          table.insert(filteredKeys, k)
+       end
+    end
+    return filteredKeys
 end
 
-M.dap2mason = function(DapServers)
+M.lspconfig2mason = function(LspServers, pred)
    return convertToMasonPkgs(
-      extractTools(DapServers, mason), DapToMasonPackage)
+      M.getFilteredKeys(LspServers.mason, pred),
+      LspconfigToMasonPackage)
 end
 
-M.nullLs2mason = function(NullLsBuiltinTools)
+M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
-      extractTools(NullLsBuiltinTools, mason), NullLsBuiltinsToMasonPackage)
+      M.getFilteredKeys(DapServers.mason, pred),
+      DapToMasonPackage)
 end
 
-M.setup = function(LspServers, DapServers, NullLsBuiltinTools)
+M.nullLs2mason = function(BuiltinTools)
+   return convertToMasonPkgs(
+      M.getFilteredKeys(BuiltinTools.mason, pred),
+      BuiltinsToMasonPackage)
+end
+
+M.setup = function(LspServers, DapServers, BuiltinTools)
    msg(vim.inspect(LspServers))
    msg(vim.inspect(DapServers))
-   msg(vim.inspect(NullLsBuiltinTools))
+   msg(vim.inspect(BuiltinTools))
 end
 
 return M
