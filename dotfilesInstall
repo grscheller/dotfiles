@@ -96,7 +96,6 @@ CONFIG_FILES='
    nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/devel/core/dap.lua
    nvim/lua/grs/devel/core/init.lua
-   nvim/lua/grs/devel/core/lspconfig.lua
    nvim/lua/grs/devel/core/mason.lua
    nvim/lua/grs/devel/core/nullLs.lua
    nvim/lua/grs/theming.lua

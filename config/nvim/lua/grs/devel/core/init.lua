@@ -246,19 +246,14 @@ local DapToMasonPackage = {
 local M = {}
 
 M.pm = {
-   install_using_mason = 1,
-   install_outside_of_neovim = 2,
+   mason = 1,
+   system = 2,
+   both = 3
 }
-local mason = M.pm.install_using_mason
-local system = M.pm.install_outside_of_neovim
 
-M.conf = {
-   configure_with_lspconfig_automatically = 1,
-   configure_with_lspconfig_manually = 2,
-   do_not_configure = 3,
-}
-local auto = M.conf.configure_with_lspconfig_automatically
-local man = M.conf.configure_with_lspconfig_manually
+local mason = M.pm.mason
+local system = M.pm.system
+local both = M.pm.both
 
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
@@ -268,21 +263,21 @@ local function extractTools(serverTbl, pm)
 
    local servers = {}
    local cnt = 0
-   if pm == system or pm == mason then
+   if pm == both then
       for k,_ in pairs(serverTbl) do
          cnt = cnt + 1
          servers[cnt] = k
       end
    elseif pm == mason then
       for k,v in pairs(serverTbl) do
-         if v.pm == mason then
+         if v == mason then
             cnt = cnt + 1
             servers[cnt] = k
          end
       end
    elseif pm == system then
       for k,v in pairs(serverTbl) do
-         if v.pm == system then
+         if v == system then
             cnt = cnt + 1
             servers[cnt] = k
          end
