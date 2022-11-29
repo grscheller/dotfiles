@@ -35,7 +35,7 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
       return
    end
 
-   pred = function(_, v) return v ~= grsDevel.conf.ignore end
+   local pred = function(_, v) return v ~= grsDevel.conf.ignore end
 
    -- Mason-tool-installer, automates Mason tool installation.
 

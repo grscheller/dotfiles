@@ -31,14 +31,14 @@ local LspServers = {
       gopls = default,
       hls = default,
       pyright = ignore,
-      rust_analyzer = noconfig,
+      rust_analyzer = no_config,
       rust_tools = manual,
       scala_metals = manual,
       sumneko_lua = manual,
       taplo = default,
       yamlls = default,
       zls = default,
-   }
+   },
 }
 
 local DapServers = {
@@ -50,14 +50,8 @@ local DapServers = {
 }
 
 local BuiltinTools = {
-   code_actions = {
-      mason = {},
-      system = {},
-   },
-   completions = {
-      mason = {},
-      system = {},
-   },
+   code_actions = { mason = {}, system = {} },
+   completions = { mason = {}, system = {} },
    diagnostics = {
       mason = {
          markdownlint = manual,
@@ -74,10 +68,7 @@ local BuiltinTools = {
          stylua = manual,
       },
    },
-   hover = {
-      mason = {},
-      system = {},
-   },
+   hover = { mason = {}, system = {} },
 }
 
 local grsUtils = require 'grs.utilities.grsUtils'

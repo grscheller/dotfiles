@@ -160,7 +160,7 @@ local DapToMasonPackage = {
    ['elixir'] = 'elixir-ls'
 }
 
-local NullLsBuiltinsToMasonPackage = {
+local BuiltinsToMasonPackage = {
    ['actionlint'] = 'actionlint',
    ['alex'] = 'alex',
    ['autopep8'] = 'autopep8',
@@ -255,8 +255,6 @@ M.pm = {
    install_using_mason = 1,
    install_outside_of_neovim = 2,
 }
-local mason = M.pm.install_using_mason
-local system = M.pm.install_outside_of_neovim
 
 M.conf = {
    use_default_configuration = 1,      -- default
@@ -268,8 +266,6 @@ M.conf = {
    no_config = 3,
    ignore = 4,
 }
-local default = M.conf.default_configuration
-local manual = M.conf.manual_configuration
 
 local grsUtils = require('grs.utilities.grsUtils')
 local msg = grsUtils.msg_hit_return_to_continue
@@ -303,7 +299,7 @@ end
 
 -- get keys filtered by predicate
 M.getFilteredKeys = function(t, p)
-    filteredKeys = {}
+    local filteredKeys = {}
     for k,v in pairs(t) do
        if p(k,v) then
           table.insert(filteredKeys, k)
@@ -324,7 +320,7 @@ M.dap2mason = function(DapServers, pred)
       DapToMasonPackage)
 end
 
-M.nullLs2mason = function(BuiltinTools)
+M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
       M.getFilteredKeys(BuiltinTools.mason, pred),
       BuiltinsToMasonPackage)
