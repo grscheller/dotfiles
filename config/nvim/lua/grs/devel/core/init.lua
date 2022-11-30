@@ -285,49 +285,29 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
--- Flatten an array of arrays - no error checks (should JIT compile well)
-M.concat = function(ArrayOfArrays)
-   local ConcatenatedList = {}
-   for _, v in ipairs(ArrayOfArrays) do
-      for _, w in ipairs(v) do
-         table.insert(ConcatenatedList, w)
-      end
-   end
-   return ConcatenatedList
-end
-
--- get keys filtered by predicate
-M.getFilteredKeys = function(t, p)
-   local filteredKeys = {}
-   for k, v in pairs(t) do
-      if p(k, v) then table.insert(filteredKeys, k) end
-   end
-   return filteredKeys
-end
-
 M.lspconfig2mason = function(LspServers, pred)
    return convertToMasonPkgs(
-      M.getFilteredKeys(LspServers.mason, pred),
+      grsUtils.getFilteredKeys(LspServers.mason, pred),
       LspconfigToMasonPackage
    )
 end
 
 M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
-      M.getFilteredKeys(DapServers.mason, pred),
+      grsUtils.getFilteredKeys(DapServers.mason, pred),
       DapToMasonPackage
    )
 end
 
 M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
-      M.getFilteredKeys(BuiltinTools.mason, pred),
+      grsUtils.getFilteredKeys(BuiltinTools.mason, pred),
       BuiltinsToMasonPackage
    )
 end
 
-M.setup = function(LspServers, DapServers, BuiltinTools)
-   print('LSP', LspServers, ' DAP', DapServers, ' Builtins', BuiltinTools)
-end
+--M.setup = function(LspServers, DapServers, BuiltinTools)
+--   print('LSP', LspServers, ' DAP', DapServers, ' Builtins', BuiltinTools)
+--end
 
 return M

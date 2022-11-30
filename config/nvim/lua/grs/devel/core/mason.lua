@@ -39,7 +39,7 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
 
    -- Mason-tool-installer, automates Mason tool installation.
 
-   local masonPackages = grsDevel.concat {
+   local masonPackages = grsUtils.iFlatten {
       grsDevel.lspconfig2mason(LspServers, pred),
       grsDevel.dap2mason(DapServers, pred),
       grsDevel.nullLs2mason(BuiltinTools.code_actions, pred),

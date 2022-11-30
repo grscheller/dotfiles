@@ -7,7 +7,7 @@ local kb = keymaps.kb
 local msg = utils.msg_hit_return_to_continue
 
 --[[ Keybindings not related to any specific plugins ]]
-keymaps.general_kb()
+keymaps.textedit_kb()
 
 --[[ Configure specific text editing relaed plugins ]]
 

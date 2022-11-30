@@ -32,76 +32,63 @@ else
    msg 'Problem in keybindings.lua: which-key failed to load'
 end
 
---[[ General key mappings/bindings ]]
-function M.general_kb()
-   -- Navigating windows
-   kb('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
-   kb('n', '<M-j>', '<C-w>j', { desc = 'goto window below' })
-   kb('n', '<M-k>', '<C-w>k', { desc = 'goto window above' })
-   kb('n', '<M-l>', '<C-w>l', { desc = 'goto window right' })
-   kb('n', '<M-p>', '<C-w>p', { desc = 'goto previous window' })
+-- remove redundant keymappings
+kb('n', '-', '<Nop>', {})
+kb('n', '+', '<Nop>', {})
+kb('n', '  ', '<Nop>', {})
 
-   -- Creating new windows
-   kb('n', '<M-s>', '<C-w>s', { desc = 'split current window' })
-   kb('n', '<M-d>', '<C-w>v', { desc = 'vsplit current window' })
-   kb('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {
-      desc = 'fish term in split',
-   })
-   kb('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {
-      desc = 'fish term in vsplit',
-   })
+--[[ Window/Tab related mappings/bindings ]]
 
-   -- Changing window layout
-   kb('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })
-   kb('n', '<M-S-j>', '<C-w>J', { desc = 'move window bottom' })
-   kb('n', '<M-S-k>', '<C-w>K', { desc = 'move window top' })
-   kb('n', '<M-S-l>', '<C-w>L', { desc = 'move window rhs' })
-   kb('n', '<M-x>', '<C-w>x', { desc = 'exchange window next' })
-   kb('n', '<M-r>', '<C-w>r', { desc = 'rotate inner split' })
-   kb('n', '<M-e>', '<C-w>=', { desc = 'equalize windows' })
+-- Navigating windows
+kb('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
+kb('n', '<M-j>', '<C-w>j', { desc = 'goto window below' })
+kb('n', '<M-k>', '<C-w>k', { desc = 'goto window above' })
+kb('n', '<M-l>', '<C-w>l', { desc = 'goto window right' })
+kb('n', '<M-p>', '<C-w>p', { desc = 'goto previous window' })
 
-   -- Resizing windows
-   -- Think: Alt+Minus Alt+Plus Alt+Shift+Minus Alt+Shift+Plus
-   kb('n', '<M-->', '2<C-w><', { desc = 'make window narrower' })
-   kb('n', '<M-=>', '2<C-w>>', { desc = 'make window wider' })
-   kb('n', '<M-_>', '2<C-w>-', { desc = 'make window shorter' })
-   kb('n', '<M-+>', '2<C-w>+', { desc = 'make window taller' })
+-- Creating new windows
+kb('n', '<M-s>', '<C-w>s', { desc = 'split current window' })
+kb('n', '<M-d>', '<C-w>v', { desc = 'vsplit current window' })
+kb('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {
+   desc = 'fish term in split',
+})
+kb('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {
+   desc = 'fish term in vsplit',
+})
 
-   -- Move view in window, only move cursor to keep on screen
-   kb('n', '<C-h>', 'z4h', { desc = 'move view left 4 columns' })
-   kb('n', '<C-j>', '3<C-e>', { desc = 'move view down 3 lines' })
-   kb('n', '<C-k>', '3<C-y>', { desc = 'move view up 3 lines' })
-   kb('n', '<C-l>', 'z4l', { desc = 'move view right 4 columns' })
+-- Changing window layout
+kb('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })
+kb('n', '<M-S-j>', '<C-w>J', { desc = 'move window bottom' })
+kb('n', '<M-S-k>', '<C-w>K', { desc = 'move window top' })
+kb('n', '<M-S-l>', '<C-w>L', { desc = 'move window rhs' })
+kb('n', '<M-x>', '<C-w>x', { desc = 'exchange window next' })
+kb('n', '<M-r>', '<C-w>r', { desc = 'rotate inner split' })
+kb('n', '<M-e>', '<C-w>=', { desc = 'equalize windows' })
 
-   -- Managing tabpages
-   kb('n', '<M-Left>', '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
+-- Resizing windows
+-- Think: Alt+Minus Alt+Plus Alt+Shift+Minus Alt+Shift+Plus
+kb('n', '<M-->', '2<C-w><', { desc = 'make window narrower' })
+kb('n', '<M-=>', '2<C-w>>', { desc = 'make window wider' })
+kb('n', '<M-_>', '2<C-w>-', { desc = 'make window shorter' })
+kb('n', '<M-+>', '2<C-w>+', { desc = 'make window taller' })
 
-   kb('n', '<M-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
-   kb('n', '<M-n>', '<Cmd>tabnew<CR>', { desc = 'create new tab' })
-   kb('n', '<M-t>', '<C-w>T', { desc = 'breakout window new tab' })
-   kb('n', '<M-c>', '<C-w>c', { desc = 'close current window' })
-   kb('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
+-- Move view in window, only move cursor to keep on screen
+kb('n', '<C-h>', 'z4h', { desc = 'move view left 4 columns' })
+kb('n', '<C-j>', '3<C-e>', { desc = 'move view down 3 lines' })
+kb('n', '<C-k>', '3<C-y>', { desc = 'move view up 3 lines' })
+kb('n', '<C-l>', 'z4l', { desc = 'move view right 4 columns' })
 
-   -- Shift text and reselect
-   kb('x', '<', '<gv', { desc = 'shift left & reselect' })
-   kb('x', '>', '>gv', { desc = 'shift right & reselect' })
+-- Managing tabpages
+kb('n', '<M-Left>', '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
 
-   -- For <Space> based keymaps
-   if M.wk then
-      wk.register(
-         { name = 'system clipboard' },
-         { mode = { 'n', 'x' }, prefix = ' s' }
-      )
-   end
+kb('n', '<M-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
+kb('n', '<M-n>', '<Cmd>tabnew<CR>', { desc = 'create new tab' })
+kb('n', '<M-t>', '<C-w>T', { desc = 'breakout window new tab' })
+kb('n', '<M-c>', '<C-w>c', { desc = 'close current window' })
+kb('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
 
-   kb('n', '  ', '<Nop>', { desc = 'punt on <Space> Keymap' })
-
-   -- Yank, delete, change & paste with system clipboard
-   kb({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
-   kb({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
-   kb({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
-   kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
-
+--[[ Text editing related keybindings ]]
+function M.textedit_kb()
    -- Delete & change text without affecting default register
    kb({ 'n', 'x' }, ' d', '"_d', {
       desc = 'delete text to blackhole register',
@@ -109,6 +96,16 @@ function M.general_kb()
    kb({ 'n', 'x' }, ' c', '"_c', {
       desc = 'change text to blackhole register',
    })
+
+   -- Yank, delete, change & paste with system clipboard
+   kb({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
+   kb({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
+   kb({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
+   kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
+
+   -- Shift text and reselect
+   kb('x', '<', '<gv', { desc = 'shift left & reselect' })
+   kb('x', '>', '>gv', { desc = 'shift right & reselect' })
 
    -- toggle line numberings schemes
    kb('n', ' n', utils.toggle_line_numbering, {
@@ -128,6 +125,15 @@ function M.general_kb()
    kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
       desc = 'trim trailing whitespace',
    })
+
+   -- For <Space> based keymaps
+   if M.wk then
+      wk.register(
+         { name = 'system clipboard' },
+         { mode = { 'n', 'x' }, prefix = ' s' }
+      )
+   end
+
 end
 
 --[[ Telescope related keybindings ]]

@@ -74,8 +74,6 @@ local BuiltinTools = {
    },
 }
 
-grsDevel.setup(LspServers, DapServers, BuiltinTools)
-
 local grsUtils = require 'grs.utilities.grsUtils'
 local grsLspconf = require 'grs.devel.core.lspconfig'
 local grsMason = require 'grs.devel.core.mason'
