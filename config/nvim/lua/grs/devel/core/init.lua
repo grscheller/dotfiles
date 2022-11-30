@@ -273,7 +273,6 @@ local msg = grsUtils.msg_hit_return_to_continue
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
    local cnt = 0
-      msg("p_names = " .. vim.inspect(package_names))
    for _,v in pairs(names) do
       if package_names[v] then
          cnt = cnt + 1
@@ -327,9 +326,7 @@ M.nullLs2mason = function(BuiltinTools, pred)
 end
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
-   msg(vim.inspect(LspServers))
-   msg(vim.inspect(DapServers))
-   msg(vim.inspect(BuiltinTools))
+    print("LSP", LspServers, " DAP", DapServers, " Builtins", BuiltinTools)
 end
 
 return M

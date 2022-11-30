@@ -71,6 +71,8 @@ local BuiltinTools = {
    hover = { mason = {}, system = {} },
 }
 
+grsDevel.setup(LspServers, DapServers, BuiltinTools)
+
 local grsUtils = require 'grs.utilities.grsUtils'
 local grsLspconf = require 'grs.devel.core.lspconfig'
 local grsMason = require 'grs.devel.core.mason'
@@ -95,11 +97,44 @@ if not ok_cmp then
 end
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-lspconf = grsLspconf.setup(LspServers)
+local lspconf = grsLspconf.setup(LspServers)
 if not lspconf then
    msg 'Problem in tooling.lua with nvim-lspconfig, PUNTING!!!'
    return
 end
+
+--[[ Lua Configuration - geared to Neovim configs ]]
+
+-- Tweak sumneko_lua's notion of runtimepath to help it find runtime files in
+-- the repo you are editing, before locations like ~/.config/nvim or random
+-- plugins.  When editing the repo containing your neovim dotfiles, make sure
+-- you start nvim in the directory containing init.lua.
+cmd [[set rtp^=lua rtp^=.]]
+local sumneko_runtime_path = vim.api.nvim_get_runtime_file('', true)
+--table.insert(sumneko_runtime_path, 1, 'lua/?.lua')
+--table.insert(sumneko_runtime_path, 1, './init.lua')
+
+lspconf['sumneko_lua'].setup {
+   capabilities = capabilities,
+   on_attach = function(client, bufnr)
+      keybindings.lsp_kb(client, bufnr)
+      cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
+   end,
+   settings = {
+      Lua = {
+         runtime = {
+            version = 'LuaJIT',
+            path = sumneko_runtime_path,
+         },
+         diagnostics = { globals = { 'vim' } },
+         workspace = {
+            library = sumneko_runtime_path,
+            checkThirdParty = false,
+         },
+         telemetry = { enable = false },
+      },
+   },
+}
 
 --[[ Haskell Configuration ]]
 
@@ -114,37 +149,6 @@ if LspServers.hls == manual then
    }
 end
 
---[[ Lua Configuration - geared to Neovim configs ]]
-
--- Make runtime files discoverable by sumneko_lua
-local sumneko_runtime_path = vim.split(package.path, ';')
-table.insert(sumneko_runtime_path, 'lua/?.lua')
-table.insert(sumneko_runtime_path, 'lua/?/init.lua')
-
-if LspServers.sumneko_lua == manual then
-   lspconf['sumneko_lua'].setup {
-      capabilities = capabilities,
-      on_attach = function(client, bufnr)
-         keybindings.lsp_kb(client, bufnr)
-         cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
-      end,
-      settings = {
-         Lua = {
-            runtime = {
-               version = 'LuaJIT',
-               path = sumneko_runtime_path,
-            },
-            diagnostics = { globals = { 'vim' } },
-            workspace = {
-               library = vim.api.nvim_get_runtime_file('', true),
-               checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-         },
-      },
-   }
-end
-
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
 
 vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
@@ -155,7 +159,7 @@ vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
                 https://github.com/sharksforarms/neovim-rust ]]
 
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
-if ok_rust and dap and LspServers.rust_tools == manual then
+if ok_rust and dap then
    dap.configurations.rust = {
       {
          type = 'rust',
@@ -184,9 +188,7 @@ if ok_rust and dap and LspServers.rust_tools == manual then
       },
    }
 else
-   if LspServers.rust_tools ~= manual then
-      msg 'Problem in tooling.lua with rust-tools'
-   end
+   msg 'Problem in tooling.lua with rust-tools'
 end
 
 --[[ Scala Metals directly configures lspconfig
@@ -196,7 +198,7 @@ end
                 https://github.com/scalameta/nvim-metals/discussions/279 ]]
 
 local ok_metals, metals = pcall(require, 'metals')
-if ok_metals and dap and LspServers.scala_metals.config == manual then
+if ok_metals and dap then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
