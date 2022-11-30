@@ -29,94 +29,96 @@ local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
-   local message =
-      'Warning: Packer not installed/configured - no plugins,\n' ..
-      '         to bootstrap, exit Neovim and run: ~/bin/bsPacker'
+   local message = 'Warning: Packer not installed/configured - no plugins,\n'
+       .. '         to bootstrap, exit Neovim and run: ~/bin/bsPacker'
    msg(message)
    return
 end
 
-local packer_util = require('packer.util')
+local packer_util = require 'packer.util'
 
 packer.init {
    display = {
-      open_fn = function()
-         return packer_util.float { border = 'rounded' }
-      end
-   }
+      open_fn = function() return packer_util.float { border = 'rounded' } end,
+   },
 }
 
 vim.api.nvim_create_autocmd('User', {
    pattern = 'PackerComplete',
-   callback = function()
-      print('  Packer has finished!')
-   end
+   callback = function() print '  Packer has finished!' end,
 })
 
 local use = packer.use
 
-return packer.startup(
-   function()
-      -- Packer manages itself
-      use { 'wbthomason/packer.nvim' }
+return packer.startup(function()
+   -- Packer manages itself
+   use { 'wbthomason/packer.nvim' }
 
-      -- Library used by other plugins
-      use { 'nvim-lua/plenary.nvim' }
+   -- Library used by other plugins
+   use { 'nvim-lua/plenary.nvim' }
 
-      -- Make keybindings discoverable with Whick-Key
-      use { 'folke/which-key.nvim' }
+   -- Make keybindings discoverable with Whick-Key
+   use { 'folke/which-key.nvim' }
 
-      -- General purpose text editing plugins
-      use { 'numToStr/Comment.nvim',
-            'justinmk/vim-sneak',
-            'tpope/vim-surround',
-            'tpope/vim-repeat' }
+   -- General purpose text editing plugins
+   use {
+      'numToStr/Comment.nvim',
+      'justinmk/vim-sneak',
+      'tpope/vim-surround',
+      'tpope/vim-repeat',
+   }
 
-      -- Colorscheme, statusline & zen-mode
-      use { 'rebelot/kanagawa.nvim',
-            'nvim-lualine/lualine.nvim',
-            'kyazdani42/nvim-web-devicons',
-            'norcalli/nvim-colorizer.lua',
-            'folke/zen-mode.nvim',
-            'folke/twilight.nvim' }
+   -- Colorscheme, statusline & zen-mode
+   use {
+      'rebelot/kanagawa.nvim',
+      'nvim-lualine/lualine.nvim',
+      'kyazdani42/nvim-web-devicons',
+      'norcalli/nvim-colorizer.lua',
+      'folke/zen-mode.nvim',
+      'folke/twilight.nvim',
+   }
 
-      -- Install language modules for built-in treesitter
-      use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
+   -- Install language modules for built-in treesitter
+   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
 
-      -- Telescope - highly extendable fuzzy finder over lists
-      use { 'nvim-telescope/telescope.nvim',
-            'nvim-telescope/telescope-ui-select.nvim',
-            'nvim-telescope/telescope-file-browser.nvim',
-            { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-            'nvim-telescope/telescope-frecency.nvim',
-            'kkharji/sqlite.lua' }
+   -- Telescope - highly extendable fuzzy finder over lists
+   use {
+      'nvim-telescope/telescope.nvim',
+      'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-file-browser.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      'nvim-telescope/telescope-frecency.nvim',
+      'kkharji/sqlite.lua',
+   }
 
-      -- Snippet support
-      use { 'L3MON4D3/LuaSnip',
-            'rafamadriz/friendly-snippets' }
+   -- Snippet support
+   use { 'L3MON4D3/LuaSnip', 'rafamadriz/friendly-snippets' }
 
-      -- Completion support
-      use { 'hrsh7th/nvim-cmp',
-         requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-cmdline',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
-            'hrsh7th/cmp-nvim-lua',
-            'hrsh7th/cmp-path',
-            'onsails/lspkind.nvim',
-            'lukas-reineke/cmp-rg',
-            'lukas-reineke/cmp-under-comparator',
-            'saadparwaiz1/cmp_luasnip' } }
+   -- Completion support
+   use {
+      'hrsh7th/nvim-cmp',
+      requires = {
+         'hrsh7th/cmp-buffer',
+         'hrsh7th/cmp-cmdline',
+         'hrsh7th/cmp-nvim-lsp',
+         'hrsh7th/cmp-nvim-lsp-signature-help',
+         'hrsh7th/cmp-nvim-lua',
+         'hrsh7th/cmp-path',
+         'onsails/lspkind.nvim',
+         'lukas-reineke/cmp-rg',
+         'lukas-reineke/cmp-under-comparator',
+         'saadparwaiz1/cmp_luasnip',
+      },
+   }
 
-      -- LSP & DAP support
-      use {
-            'neovim/nvim-lspconfig',
-            'mfussenegger/nvim-dap',
-            'jose-elias-alvarez/null-ls.nvim',
-            'williamboman/mason.nvim',
-            'WhoIsSethDaniel/mason-tool-installer.nvim',
-            'simrat39/rust-tools.nvim',
-            'scalameta/nvim-metals' }
-   end
-)
+   -- LSP & DAP support
+   use {
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      'jose-elias-alvarez/null-ls.nvim',
+      'williamboman/mason.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'simrat39/rust-tools.nvim',
+      'scalameta/nvim-metals',
+   }
+end)

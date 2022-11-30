@@ -1,7 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local utils = require('grs.utilities.grsUtils')
-local keymaps = require('grs.utilities.keybindings')
+local utils = require 'grs.utilities.grsUtils'
+local keymaps = require 'grs.utilities.keybindings'
 
 local kb = keymaps.kb
 local msg = utils.msg_hit_return_to_continue
@@ -17,9 +17,7 @@ local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 --]]
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
-   local my_colors = {
-      bg = '#090618'
-   }
+   local my_colors = { bg = '#090618' }
    kanagawa.setup { colors = my_colors }
    vim.cmd [[colorscheme kanagawa]]
 else
@@ -30,14 +28,14 @@ end
 ok, lualine = pcall(require, 'lualine')
 if ok then
    local colors = {
-      gray    = '#33467C',
+      gray = '#33467C',
       magenta = '#957FB8',
-      blue    = '#7E9CD8',
-      yellow  = '#E0AF68',
-      black   = '#1F1F28',
-      white   = '#DCD7BA',
-      green   = '#76946A',
-      cyan    = '#7AA89F',
+      blue = '#7E9CD8',
+      yellow = '#E0AF68',
+      black = '#1F1F28',
+      white = '#DCD7BA',
+      green = '#76946A',
+      cyan = '#7AA89F',
    }
 
    lualine.setup {
@@ -47,7 +45,7 @@ if ok then
             normal = {
                a = { fg = colors.black, bg = colors.green, gui = 'bold' },
                b = { fg = colors.green, bg = colors.black },
-               c = { fg = colors.white, bg = colors.black }
+               c = { fg = colors.white, bg = colors.black },
             },
             visual = {
                a = { fg = colors.black, bg = colors.yellow, gui = 'bold' },
@@ -60,28 +58,28 @@ if ok then
             replace = {
                a = { fg = colors.black, bg = colors.magenta, gui = 'bold' },
                b = { fg = colors.magenta, bg = colors.black },
-               c = { fg = colors.white, bg = colors.black }
+               c = { fg = colors.white, bg = colors.black },
             },
             insert = {
                a = { fg = colors.black, bg = colors.blue, gui = 'bold' },
                b = { fg = colors.blue, bg = colors.black },
-               c = { fg = colors.white, bg = colors.black }
+               c = { fg = colors.white, bg = colors.black },
             },
             command = {
                a = { fg = colors.black, bg = colors.cyan, gui = 'bold' },
                b = { fg = colors.cyan, bg = colors.black },
-               c = { fg = colors.white, bg = colors.black }
-            }
+               c = { fg = colors.white, bg = colors.black },
+            },
          },
          component_separators = { left = '', right = '' },
          section_separators = { left = '', right = '' },
          disabled_filetypes = {
             statusline = { 'help' },
-            winbar = { 'help' }
+            winbar = { 'help' },
          },
          ignore_focus = {},
          always_divide_middle = true,
-         globalstatus = true
+         globalstatus = true,
       },
       sections = {
          lualine_a = { 'mode' },
@@ -90,17 +88,17 @@ if ok then
             'diff',
             {
                'diagnostics',
-               sources = { 'nvim_diagnostic' }
-            }
+               sources = { 'nvim_diagnostic' },
+            },
          },
-         lualine_c = {'filename'},
+         lualine_c = { 'filename' },
          lualine_x = {
             'encoding',
             'fileformat',
-            'filetype'
+            'filetype',
          },
          lualine_y = { 'location' },
-         lualine_z = { 'progress' }
+         lualine_z = { 'progress' },
       },
       tabline = {},
       winbar = {
@@ -109,7 +107,7 @@ if ok then
          lualine_c = { 'filename' },
          lualine_x = { 'branch' },
          lualine_y = {},
-         lualine_z = {}
+         lualine_z = {},
       },
       inactive_winbar = {
          lualine_a = {},
@@ -117,12 +115,12 @@ if ok then
          lualine_c = { 'filename' },
          lualine_x = { 'branch' },
          lualine_y = {},
-         lualine_z = {}
+         lualine_z = {},
       },
-      extensions = {}
+      extensions = {},
    }
 else
-   msg('Problem in theming.lua: lualine failed to load')
+   msg 'Problem in theming.lua: lualine failed to load'
 end
 
 --- Setup folke/twilight.nvim
@@ -131,7 +129,7 @@ if ok then
    twilight.setup { context = 20 }
    kb('n', 'zT', '<Cmd>Twilight<CR>', { desc = 'twilight toggle' })
 else
-   msg('Problem in theming.lua: twilight failed to load')
+   msg 'Problem in theming.lua: twilight failed to load'
 end
 
 -- Setup folke/zen-mode.nvim
@@ -145,23 +143,22 @@ if ok then
          options = {
             number = false,
             relativenumber = false,
-            colorcolumn = ''
-         }
+            colorcolumn = '',
+         },
       },
       plugins = {
          options = {},
-         twilght = { enable = true }
+         twilght = { enable = true },
       },
       on_open = function(win)
          vim.api.nvim_win_set_option(win, 'scrolloff', 10)
          vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
       end,
-      on_close = function()
-      end
+      on_close = function() end,
    }
    kb('n', 'zZ', '<Cmd>ZenMode<CR>', { desc = 'zen-mode toggle' })
 else
-   msg('Problem in theming.lua: zen-mode failed to load')
+   msg 'Problem in theming.lua: zen-mode failed to load'
 end
 
 --[[
@@ -172,7 +169,7 @@ ok, webDevicons = pcall(require, 'nvim-web-devicons')
 if ok then
    webDevicons.setup { default = true }
 else
-   msg('Problem in theming.lua: nvim-web-devicons failed to load')
+   msg 'Problem in theming.lua: nvim-web-devicons failed to load'
 end
 
 -- Colorize color names, hexcodes, and other color formats
@@ -182,8 +179,8 @@ if ok then
       '*',
       '!vim',
       css = { rgb_fn = true },
-      html = { names = false }
+      html = { names = false },
    }
 else
-   msg('Problem in theming.lua: colorizer failed to load')
+   msg 'Problem in theming.lua: colorizer failed to load'
 end

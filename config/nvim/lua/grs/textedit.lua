@@ -1,7 +1,7 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local utils = require('grs.utilities.grsUtils')
-local keymaps = require('grs.utilities.keybindings')
+local utils = require 'grs.utilities.grsUtils'
+local keymaps = require 'grs.utilities.keybindings'
 
 local kb = keymaps.kb
 local msg = utils.msg_hit_return_to_continue
@@ -18,20 +18,20 @@ if ok then
       ignore = '^$',
       mappings = {
          basic = true,
-         extra = true
-      }
+         extra = true,
+      },
    }
 else
-   msg('Problem in textedit.lua: Comment failed to load')
+   msg 'Problem in textedit.lua: Comment failed to load'
 end
 
 -- Configure justtinmk/vim-sneak plugin
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-kb({'n', 'x'}, 'f', '<Plug>Sneak_f')
-kb({'n', 'x'}, 'F', '<Plug>Sneak_F')
-kb({'n', 'x'}, 't', '<Plug>Sneak_t')
-kb({'n', 'x'}, 'T', '<Plug>Sneak_T')
+kb({ 'n', 'x' }, 'f', '<Plug>Sneak_f')
+kb({ 'n', 'x' }, 'F', '<Plug>Sneak_F')
+kb({ 'n', 'x' }, 't', '<Plug>Sneak_t')
+kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
 local augroup = vim.api.nvim_create_augroup
@@ -49,14 +49,14 @@ autocmd('CmdLineEnter', {
    pattern = '*',
    command = 'set nosmartcase noignorecase',
    group = grs_text_group,
-   desc = "Don't ignore case when in Command Mode"
+   desc = 'Don\'t ignore case when in Command Mode',
 })
 
 autocmd('CmdLineLeave', {
    pattern = '*',
    command = 'set ignorecase smartcase',
    group = grs_text_group,
-   desc = "Use smartcase when not in Command Mode"
+   desc = 'Use smartcase when not in Command Mode',
 })
 
 -- Give visual feedback when yanking text
@@ -65,9 +65,9 @@ autocmd('TextYankPost', {
    callback = function()
       vim.highlight.on_yank {
          timeout = 500,
-         higroup = 'Visual'
+         higroup = 'Visual',
       }
    end,
    group = grs_text_group,
-   desc = 'Give visual feedback when yanking text'
+   desc = 'Give visual feedback when yanking text',
 })

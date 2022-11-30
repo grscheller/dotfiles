@@ -6,8 +6,8 @@ local ok, ntree = pcall(require, 'nvim-treesitter.configs')
 if ok then
    ntree.setup {
       ensure_installed = 'all',
-      highlight = { enable = true }
+      highlight = { enable = true },
    }
 else
-   msg('Problem in treesitter.lua with nvim-treesitter')
+   msg 'Problem in treesitter.lua with nvim-treesitter'
 end
