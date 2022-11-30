@@ -3,7 +3,6 @@
 local M = {}
 
 M.setup = function(LspServers)
-
    local ok, lspconf = pcall(require, 'lspconfig')
    if ok then
       return lspconf
@@ -12,7 +11,6 @@ M.setup = function(LspServers)
    end
 
    -- TODO: Do lspconfig auto-config setup here
-
 end
 
 return M

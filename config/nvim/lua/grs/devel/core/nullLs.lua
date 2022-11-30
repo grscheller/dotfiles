@@ -2,14 +2,13 @@
 
 local M = {}
 
-local grsUtils = require('grs.utilities.grsUtils')
+local grsUtils = require 'grs.utilities.grsUtils'
 local msg = grsUtils.msg_hit_return_to_continue
 
 M.setup = function(NullLsBuiltinTbl)
-
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
-      msg('Problem null-ls, PUNTING!!!')
+      msg 'Problem null-ls, PUNTING!!!'
       return
    end
 
@@ -20,8 +19,8 @@ M.setup = function(NullLsBuiltinTbl)
          null_ls.builtins.diagnostics['cpplint'],
          null_ls.builtins.diagnostics['markdownlint'],
          null_ls.builtins.diagnostics['mdl'],
-         null_ls.builtins.formatting['stylua']
-      }
+         null_ls.builtins.formatting['stylua'],
+      },
    }
 end
 

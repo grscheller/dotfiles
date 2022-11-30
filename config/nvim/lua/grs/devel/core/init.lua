@@ -139,7 +139,7 @@ local LspconfigToMasonPackage = {
    ['wgsl_analyzer'] = 'wgsl-analyzer',
    ['yamlls'] = 'yaml-language-server',
    ['zk'] = 'zk',
-   ['zls'] = 'zls'
+   ['zls'] = 'zls',
 }
 
 local DapToMasonPackage = {
@@ -157,7 +157,7 @@ local DapToMasonPackage = {
    ['javatest'] = 'java-test',
    ['mock'] = 'mockdebug',
    ['puppet'] = 'puppet-editor-services',
-   ['elixir'] = 'elixir-ls'
+   ['elixir'] = 'elixir-ls',
 }
 
 local BuiltinsToMasonPackage = {
@@ -240,7 +240,7 @@ local BuiltinsToMasonPackage = {
    ['xo'] = 'xo',
    ['yamlfmt'] = 'yamlfmt',
    ['yamllint'] = 'yamllint',
-   ['yapf'] = 'yapf'
+   ['yapf'] = 'yapf',
 }
 
 local M = {}
@@ -257,23 +257,23 @@ M.pm = {
 }
 
 M.conf = {
-   use_default_configuration = 1,      -- default
-   manually_configure = 2,             -- manual
-   do_not_directly_configure = 3,      -- no_config
-   neither_install_nor_configure = 4,  -- ignore
+   use_default_configuration = 1, -- default
+   manually_configure = 2, -- manual
+   do_not_directly_configure = 3, -- no_config
+   neither_install_nor_configure = 4, -- ignore
    default = 1,
    manual = 2,
    no_config = 3,
    ignore = 4,
 }
 
-local grsUtils = require('grs.utilities.grsUtils')
+local grsUtils = require 'grs.utilities.grsUtils'
 local msg = grsUtils.msg_hit_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
    local cnt = 0
-   for _,v in pairs(names) do
+   for _, v in pairs(names) do
       if package_names[v] then
          cnt = cnt + 1
          mason_names[cnt] = package_names[v]
@@ -288,8 +288,8 @@ end
 -- Flatten an array of arrays - no error checks (should JIT compile well)
 M.concat = function(ArrayOfArrays)
    local ConcatenatedList = {}
-   for _,v in ipairs(ArrayOfArrays) do
-      for _,w in ipairs(v) do
+   for _, v in ipairs(ArrayOfArrays) do
+      for _, w in ipairs(v) do
          table.insert(ConcatenatedList, w)
       end
    end
@@ -298,35 +298,36 @@ end
 
 -- get keys filtered by predicate
 M.getFilteredKeys = function(t, p)
-    local filteredKeys = {}
-    for k,v in pairs(t) do
-       if p(k,v) then
-          table.insert(filteredKeys, k)
-       end
-    end
-    return filteredKeys
+   local filteredKeys = {}
+   for k, v in pairs(t) do
+      if p(k, v) then table.insert(filteredKeys, k) end
+   end
+   return filteredKeys
 end
 
 M.lspconfig2mason = function(LspServers, pred)
    return convertToMasonPkgs(
       M.getFilteredKeys(LspServers.mason, pred),
-      LspconfigToMasonPackage)
+      LspconfigToMasonPackage
+   )
 end
 
 M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
       M.getFilteredKeys(DapServers.mason, pred),
-      DapToMasonPackage)
+      DapToMasonPackage
+   )
 end
 
 M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
       M.getFilteredKeys(BuiltinTools.mason, pred),
-      BuiltinsToMasonPackage)
+      BuiltinsToMasonPackage
+   )
 end
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
-    print("LSP", LspServers, " DAP", DapServers, " Builtins", BuiltinTools)
+   print('LSP', LspServers, ' DAP', DapServers, ' Builtins', BuiltinTools)
 end
 
 return M

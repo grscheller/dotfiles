@@ -68,7 +68,10 @@ local BuiltinTools = {
          stylua = manual,
       },
    },
-   hover = { mason = {}, system = {} },
+   hover = {
+      mason = {},
+      system = {},
+   },
 }
 
 grsDevel.setup(LspServers, DapServers, BuiltinTools)
