@@ -74,14 +74,14 @@ local BuiltinTools = {
    },
 }
 
-local grsUtils = require 'grs.utilities.grsUtils'
+local grsUtils = require 'grs.lib.libVim'
 local grsLspconf = require 'grs.devel.core.lspconfig'
 local grsMason = require 'grs.devel.core.mason'
 local grsDap = require 'grs.devel.core.dap'
 local grsNullLs = require 'grs.devel.core.nullLs'
 
 local msg = grsUtils.msg_hit_return_to_continue
-local keybindings = require 'grs.utilities.keybindings'
+local keybindings = require 'grs.core.keybindings'
 local cmd = vim.api.nvim_command
 
 grsMason.setup(LspServers, DapServers, BuiltinTools)
@@ -110,10 +110,11 @@ end
 -- the repo you are editing, before locations like ~/.config/nvim or random
 -- plugins.  When editing the repo containing your neovim dotfiles, make sure
 -- you start nvim in the directory containing init.lua.
-cmd [[set rtp^=lua rtp^=.]]
+--cmd [[set rtp^=lua rtp^=.]]
 local sumneko_runtime_path = vim.api.nvim_get_runtime_file('', true)
---table.insert(sumneko_runtime_path, 1, 'lua/?.lua')
---table.insert(sumneko_runtime_path, 1, './init.lua')
+--table.insert(sumneko_runtime_path, 1, '?/?.lua')
+--table.insert(sumneko_runtime_path, 1, '?/init.lua')
+--table.insert(sumneko_runtime_path, 1, '?/?.lua')
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,

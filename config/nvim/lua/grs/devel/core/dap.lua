@@ -2,7 +2,7 @@
 
 local M = {}
 
-local grsUtils = require 'grs.utilities.grsUtils'
+local grsUtils = require 'grs.lib.libVim'
 local msg = grsUtils.msg_hit_return_to_continue
 
 M.setup = function(DapServers)

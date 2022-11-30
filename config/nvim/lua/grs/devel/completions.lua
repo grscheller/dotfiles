@@ -1,6 +1,6 @@
 --[[ Completions & Snippets ]]
 
-local utils = require 'grs.utilities.grsUtils'
+local utils = require 'grs.lib.libVim'
 
 local ok
 local cmp_under_comparator, cmp_comparators

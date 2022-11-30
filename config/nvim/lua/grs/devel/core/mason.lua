@@ -6,9 +6,9 @@
 local M = {}
 
 local grsDevel = require 'grs.devel.core'
-local grsUtils = require 'grs.utilities.grsUtils'
+local grsFunc = require 'grs.lib.libFunc'
 
-local msg = grsUtils.msg_hit_return_to_continue
+local msg = grsFunc.msg_hit_return_to_continue
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
    local ok, mason, mason_tool_installer
@@ -39,7 +39,7 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
 
    -- Mason-tool-installer, automates Mason tool installation.
 
-   local masonPackages = grsUtils.iFlatten {
+   local masonPackages = grsFunc.iFlatten {
       grsDevel.lspconfig2mason(LspServers, pred),
       grsDevel.dap2mason(DapServers, pred),
       grsDevel.nullLs2mason(BuiltinTools.code_actions, pred),

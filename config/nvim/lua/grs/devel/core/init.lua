@@ -267,8 +267,8 @@ M.conf = {
    ignore = 4,
 }
 
-local grsUtils = require 'grs.utilities.grsUtils'
-local msg = grsUtils.msg_hit_return_to_continue
+local grsFunc = require 'grs.lib.libFunc'
+local msg = grsFunc.msg_hit_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
@@ -287,21 +287,21 @@ end
 
 M.lspconfig2mason = function(LspServers, pred)
    return convertToMasonPkgs(
-      grsUtils.getFilteredKeys(LspServers.mason, pred),
+      grsFunc.getFilteredKeys(LspServers.mason, pred),
       LspconfigToMasonPackage
    )
 end
 
 M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
-      grsUtils.getFilteredKeys(DapServers.mason, pred),
+      grsFunc.getFilteredKeys(DapServers.mason, pred),
       DapToMasonPackage
    )
 end
 
 M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
-      grsUtils.getFilteredKeys(BuiltinTools.mason, pred),
+      grsFunc.getFilteredKeys(BuiltinTools.mason, pred),
       BuiltinsToMasonPackage
    )
 end

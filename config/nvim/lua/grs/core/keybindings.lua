@@ -10,7 +10,7 @@
 
 local M = {}
 
-local utils = require 'grs.utilities.grsUtils'
+local utils = require 'grs.lib.libVim'
 local msg = utils.msg_hit_return_to_continue
 local kb = vim.keymap.set
 
