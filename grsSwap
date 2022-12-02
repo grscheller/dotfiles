@@ -1,15 +1,21 @@
 #!/usr/bin/fish
 #
-#  Toggle in a symlink ~/.config/nvim/lua -> .../dotfiles/config/nvim/lua
+#  Toggle between a symlink, from ~/.config/nvim/lua/grs to the dotfiles
+#  repo's config/nvim/lua/grs directory, and the installed version of the
+#  nvim configs.
 #
-#  Sumneko_lua, at least when configured with the Neovim runtime
-#  path, will put ~/.config/nvim files into its "workspace" in ways
-#  which override the corresponding source repo source files.
+#  Sumneko_lua LSP server,when editing the dotfiles repo's Neovim configs
+#  themselves, will conflate Lua libraries of the nvim configs being edited
+#  with those of the configs of the nvim currently being used to do the
+#  editing.  This is probably due to using the nvim runtimepath to get access
+#  to plugin Lua source files.  To overcome this, this script uses the repo's
+#  own nvim itself to do the editing.
 #
-#  This script is a "temporary" hack until I better understand
-#  how to configure sumneko_lua not to do this.
+#  This way you toggle back and forth between editing with the nvim version
+#  you are currently editing and a potentially more stable older version.
+#  When using the symlink, one should edit thru the symlink, when using the
+#  installed nvim, edit the repo itself.
 #
-
 set -q XDG_CONFIG_HOME; or set -lx XDG_CONFIG_HOME ~/.config
 set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
 
