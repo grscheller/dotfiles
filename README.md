@@ -20,30 +20,44 @@ Also, contains my Arch Linux system configuration modifications.
 Installs into home directory
 
 * [dotfilesInstall](dotfilesInstall)
-  * From the base of the cloned repo run
+* From the base of the cloned repo run
 
-    ```sh
-       $ ./dotfilesInstall
-       ...
-    ```
+  ```sh
+     $ ./dotfilesInstall
+     ...
+  ```
 
 Installs into system directories (Arch Linux Only!)
 
 * [systemfilesInstall](systemfilesInstall)
-  * From the base of the cloned repo run
+* From the base of the cloned repo run
 
-    ```sh
-       $ sudo ./systemfilesInstall
-       ...
-    ```
+  ```sh
+     $ sudo ./systemfilesInstall
+     ...
+  ```
+
+Toggle a symlink `~/.config/nvim/lua/grs/`->`config/nvime/lua/grs/` with
+the installed code bases.  Makes Sumneko_lua LSP much happier when editing
+your Neovim configuration.
+
+* [grsSwap](grsSwap)
+* Fish abriviation exists so you don't actually have to be in the repo
+* Running `.dotfilesInstall` will fail if symlink is in place
+* From the base of the cloned repo run
+
+  ```sh
+     $ sudo ./grsSwap
+     ...
+  ```
 
 ## Repo's purposes is to
 
 1. maintain my own personal configuration files
-2. help quickly configure new systems for myself
-3. preserve this information for myself
-4. provide others useful examples for their own configuration files
-5. allow others to use as a starting point for their own version of this repo
+1. help quickly configure new systems for myself
+1. preserve this information for myself
+1. provide others useful examples for their own configuration files
+1. allow others to use as a starting point for their own version of this repo
 
 ## License Information
 

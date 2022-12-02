@@ -74,19 +74,19 @@ local BuiltinTools = {
    },
 }
 
-local grsVim = require 'grs.lib.libVim'
-local grsLspconf = require 'grs.devel.core.lspconfig'
-local grsMason = require 'grs.devel.core.mason'
-local grsDap = require 'grs.devel.core.dap'
-local grsNullLs = require 'grs.devel.core.nullLs'
+local libVim = require 'grs.lib.libVim'
+local coreLspconf = require 'grs.devel.core.lspconfig'
+local coreMason = require 'grs.devel.core.mason'
+local coreDap = require 'grs.devel.core.dap'
+local coreNullLs = require 'grs.devel.core.nullLs'
 
-local msg = grsVim.msg_hit_return_to_continue
-local keybindings = require 'grs.core.keybindings'
+local msg = libVim.msg_hit_return_to_continue
+local kb = require 'grs.core.keybindings'
 local cmd = vim.api.nvim_command
 
-grsMason.setup(LspServers, DapServers, BuiltinTools)
-grsNullLs.setup(BuiltinTools)
-local dap, dap_ui_widgets = grsDap.setup(DapServers)
+coreMason.setup(LspServers, DapServers, BuiltinTools)
+coreNullLs.setup(BuiltinTools)
+local dap, dap_ui_widgets = coreDap.setup(DapServers)
 
 --[[ setup neovim/nvim-lspconfig to configure LSP servers ]]
 
@@ -98,7 +98,7 @@ if not ok_cmp then
 end
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-local lspconf = grsLspconf.setup(LspServers)
+local lspconf = coreLspconf.setup(LspServers)
 if not lspconf then
    msg 'Problem in tooling.lua with nvim-lspconfig, PUNTING!!!'
    return
@@ -106,26 +106,66 @@ end
 
 --[[ Lua Configuration - geared to Neovim configs ]]
 
-local sumneko_runtime_path = vim.api.nvim_get_runtime_file('', true)
-table.insert(sumneko_runtime_path, 1, '?.lua')
-table.insert(sumneko_runtime_path, 1, '?/init.lua')
-table.insert(sumneko_runtime_path, 1, '?/?.lua')
+local runtime_path = vim.split(package.path, ';')
+--[[
+     The above produces a template of the right form,
+     but containing many non-existing directories.
+     I think it is some sort of "default" to find
+     Lua and Luarocks infrastructure.
+
+  local runtime_path = vim.api.nvim_get_runtime_file('', true)
+
+     Above produces a list of the runtime directories in search order.
+
+  local runtime_path = vim.api.nvim_get_runtime_file('*.lua', true)
+
+     Produces a fairly short list of Lua files on runtime path:
+
+  { "/home/grs/.config/nvim/init.lua",
+    "/home/grs/.local/share/nvim/site/pack/packer/start/nvim-lspconfig/gleam.lua",
+    "/usr/share/nvim/runtime/filetype.lua" }
+
+  local runtime_path = vim.api.nvim_get_runtime_file('*.lua', true)
+  local runtime_path = vim.api.nvim_get_runtime_file('*/*.lua', true)
+
+      Above produce alot of hits, mostly in the plugin directories.
+
+  local runtime_path = vim.api.nvim_get_runtime_file('lua/*/*.lua', true)
+
+      In particular, above produces a masaive amount of Lua files.
+
+      TODO: Figure out the appropriate commands to find all the Lua
+            entry points into the plugins (and luarocks?) and
+            generate a template.
+
+      TODO: Explore use of .luarc.json file to control sumneko_lua
+            lsp server.  One got generated a while back an I don't
+            how.
+
+      Below either an attempt to configure an nvim_get_runtime_file
+      generated table or locally be able to overide code in a plugin,
+      or local standalone code (especially for latter is put at end
+      of table instead of beginning).
+--]]
+table.insert(runtime_path, 1, '?.lua')
+table.insert(runtime_path, 1, '?/init.lua')
+table.insert(runtime_path, 1, '?/?.lua')
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
-      keybindings.lsp_kb(client, bufnr)
+      kb.lsp_kb(client, bufnr)
       cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
    end,
    settings = {
       Lua = {
          runtime = {
             version = 'LuaJIT',
-            path = sumneko_runtime_path,
+            path = runtime_path,
          },
          diagnostics = { globals = { 'vim' } },
          workspace = {
-            library = sumneko_runtime_path,
+            library = runtime_path,
             checkThirdParty = false,
          },
          telemetry = { enable = false },
@@ -139,8 +179,8 @@ if LspServers.hls == manual then
    lspconf['hls'].setup {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-         keybindings.lsp_kb(client, bufnr)
-         keybindings.haskell_kb(bufnr)
+         kb.lsp_kb(client, bufnr)
+         kb.haskell_kb(bufnr)
          cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
       end,
    }
@@ -171,8 +211,8 @@ if ok_rust and dap then
       server = {
          capabilities = capabilities,
          on_attach = function(client, bufnr)
-            keybindings.lsp_kb(client, bufnr)
-            keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
+            kb.lsp_kb(client, bufnr)
+            kb.dap_kb(bufnr, dap, dap_ui_widgets)
          end,
          standalone = true,
       },
@@ -226,9 +266,9 @@ if ok_metals and dap then
          },
       }
       metals.setup_dap()
-      keybindings.lsp_kb(client, bufnr)
-      keybindings.metals_kb(bufnr, metals)
-      keybindings.dap_kb(bufnr, dap, dap_ui_widgets)
+      kb.lsp_kb(client, bufnr)
+      kb.metals_kb(bufnr, metals)
+      kb.dap_kb(bufnr, dap, dap_ui_widgets)
       cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
       cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
    end
