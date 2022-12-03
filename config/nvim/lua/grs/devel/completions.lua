@@ -96,6 +96,36 @@ cmp.setup {
       },
    },
 
+   sources = cmp.config.sources({
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lua' },
+      { name = 'nvim_lsp' },
+   }, {
+      {
+         name = 'path',
+         option = {
+            label_trailing_slash = true,
+            trailing_slash = false,
+         },
+      },
+      {
+         name = 'buffer',
+         option = {
+            get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+         },
+      },
+      {
+         name = 'rg',
+         option = {
+            additional_arguments = '--smart-case --hidden',
+         },
+         keyword_length = 3,
+         max_item_count = 12,
+      },
+   }, {
+      { name = 'luasnip' },
+   }),
+
    mapping = {
       ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
       ['<Down>'] = cmp.mapping.select_next_item(select_opts),
@@ -106,9 +136,8 @@ cmp.setup {
       ['<C-u>'] = cmp.mapping.scroll_docs(-4),
       ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
-      ['<C- >'] = cmp.mapping.complete(),
+      ['<C- >'] = cmp.mapping.close(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<C-h>'] = cmp.mapping.close(),
       ['<CR>'] = cmp.mapping.confirm(confirm_opts),
       ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
 
@@ -153,40 +182,6 @@ cmp.setup {
          end
       end),
    },
-
-   sources = cmp.config.sources(
-      {
-         { name = 'nvim_lsp_signature_help' },
-         { name = 'nvim_lua' },
-         { name = 'nvim_lsp' },
-      },
-      {
-         {
-            name = 'path',
-            option = {
-               label_trailing_slash = true,
-               trailing_slash = false,
-            },
-         },
-         {
-            name = 'buffer',
-            option = {
-               get_bufnrs = function() return vim.api.nvim_list_bufs() end,
-            },
-         },
-         {
-            name = 'rg',
-            option = {
-               additional_arguments = '--smart-case --hidden',
-            },
-            keyword_length = 3,
-            max_item_count = 12,
-         },
-      },
-      {
-         { name = 'luasnip' },
-      }
-   ),
 }
 
 cmp.setup.cmdline(':', {

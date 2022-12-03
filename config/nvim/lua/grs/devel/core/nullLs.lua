@@ -2,17 +2,17 @@
 
 local M = {}
 
-local grsUtils = require 'grs.lib.libVim'
-local msg = grsUtils.msg_hit_return_to_continue
+local libVim = require 'grs.lib.libVim'
+local msg = libVim.msg_hit_return_to_continue
 
-M.setup = function(NullLsBuiltinTbl)
+M.setup = function(BuiltinTools)
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
       msg 'Problem null-ls, PUNTING!!!'
       return
    end
 
-   -- Temporary hack - need to create sources table from NullLsBuiltinTools
+   -- Temporary hack - need to create sources table from BuiltinTools
    null_ls.setup {
       sources = {
          null_ls.builtins.diagnostics['cppcheck'],

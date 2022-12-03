@@ -90,23 +90,24 @@ CONFIG_FILES='
    git/config
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/options.lua
-   nvim/lua/grs/textedit.lua
-   nvim/lua/grs/theming.lua
    nvim/lua/grs/core/keybindings.lua
+   nvim/lua/grs/core/options.lua
    nvim/lua/grs/core/packer.lua
-   nvim/lua/grs/devel/core/dap.lua
-   nvim/lua/grs/devel/core/init.lua
-   nvim/lua/grs/devel/core/lspconfig.lua
-   nvim/lua/grs/devel/core/mason.lua
-   nvim/lua/grs/devel/core/nullLs.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
+   nvim/lua/grs/devel/core/dap.lua
+   nvim/lua/grs/devel/core/lspconfig.lua
+   nvim/lua/grs/devel/core/mason.lua
+   nvim/lua/grs/devel/core/nullLs.lua
+   nvim/lua/grs/devel/core/tooling.lua
    nvim/lua/grs/lib/libFunc.lua
    nvim/lua/grs/lib/libVim.lua
+   nvim/lua/grs/textedit/init.lua
+   nvim/lua/grs/textedit/lib/libText.lua
+   nvim/lua/grs/theming/init.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -120,6 +121,10 @@ SSH_CONFIGS='
 RM_ITEMS="
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/theming.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/options.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/init.lua
 "
 
 ### functions

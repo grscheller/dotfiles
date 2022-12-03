@@ -8,12 +8,12 @@
      is not provided by a package manager from the underlying environment,
      such as Pacman, Apt, Nix, Brew, SDKMAN, Cocolately, MSYS2, ...       ]]
 
-local grsDevel = require 'grs.devel.core'
+local coreTooling = require 'grs.devel.core.tooling'
 
-local default = grsDevel.conf.use_default_configuration
-local manual = grsDevel.conf.manually_configure
-local no_config = grsDevel.conf.do_not_directly_configure
-local ignore = grsDevel.conf.neither_install_nor_configure
+local default = coreTooling.conf.use_default_configuration
+local manual = coreTooling.conf.manually_configure
+local no_config = coreTooling.conf.do_not_directly_configure
+local ignore = coreTooling.conf.neither_install_nor_configure
 
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
@@ -106,12 +106,21 @@ end
 
 --[[ Lua Configuration - geared to Neovim configs ]]
 
+-- This produces a template of the right form,
+-- but containing many non-existing directories.
+-- I think it is some sort of "default" to find
+-- Lua and Luarocks infrastructure.
 local runtime_path = vim.split(package.path, ';')
---[[
-     The above produces a template of the right form,
-     but containing many non-existing directories.
-     I think it is some sort of "default" to find
-     Lua and Luarocks infrastructure.
+
+-- Below either an attempt to configure an nvim_get_runtime_file
+-- generated table or locally be able to overide code in a plugin,
+-- or local standalone code (especially for latter is put at end
+-- of table instead of beginning).
+table.insert(runtime_path, 1, '?.lua')
+table.insert(runtime_path, 1, '?/init.lua')
+table.insert(runtime_path, 1, '?/?.lua')
+
+--[[ Grokking:
 
   local runtime_path = vim.api.nvim_get_runtime_file('', true)
 
@@ -132,7 +141,7 @@ local runtime_path = vim.split(package.path, ';')
 
   local runtime_path = vim.api.nvim_get_runtime_file('lua/*/*.lua', true)
 
-      In particular, above produces a masaive amount of Lua files.
+      In particular, above produces a massive amount of Lua files.
 
       TODO: Figure out the appropriate commands to find all the Lua
             entry points into the plugins (and luarocks?) and
@@ -140,16 +149,8 @@ local runtime_path = vim.split(package.path, ';')
 
       TODO: Explore use of .luarc.json file to control sumneko_lua
             lsp server.  One got generated a while back an I don't
-            how.
-
-      Below either an attempt to configure an nvim_get_runtime_file
-      generated table or locally be able to overide code in a plugin,
-      or local standalone code (especially for latter is put at end
-      of table instead of beginning).
+            how or why.
 --]]
-table.insert(runtime_path, 1, '?.lua')
-table.insert(runtime_path, 1, '?/init.lua')
-table.insert(runtime_path, 1, '?/?.lua')
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
