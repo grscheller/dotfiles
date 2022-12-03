@@ -1,13 +1,13 @@
 --[[ Telescope - search, filter, find & pick items with Lua ]]
 
 local ok, ts, tb
-local msg = require('grs.utilities.grsUtils').msg_hit_return_to_continue
+local msg = require('grs.lib.libVim').msg_hit_return_to_continue
 
 ok, ts = pcall(require, 'telescope')
 if ok then
-   tb = require('telescope.builtin')
+   tb = require 'telescope.builtin'
 else
-   msg('Problem in telescope.lua: telescope failed to load')
+   msg 'Problem in telescope.lua: telescope failed to load'
    return
 end
 
@@ -17,14 +17,14 @@ ts.setup {
       frecency = {},
       fzf = {},
       ['ui-select'] = {
-         require('telescope.themes').get_dropdown {}
-      }
-   }
+         require('telescope.themes').get_dropdown {},
+      },
+   },
 }
-ts.load_extension('file_browser')
-ts.load_extension('frecency')
-ts.load_extension('fzf')
-ts.load_extension('ui-select')
+ts.load_extension 'file_browser'
+ts.load_extension 'frecency'
+ts.load_extension 'fzf'
+ts.load_extension 'ui-select'
 
 -- Set Telescope key mappings/bindings
-require('grs.utilities.keybindings').telescope_kb(ts, tb)
+require('grs.core.keybindings').telescope_kb(ts, tb)

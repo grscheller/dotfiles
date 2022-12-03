@@ -21,7 +21,7 @@ local options = {
    nrformats = 'bin,hex,octal,alpha', -- for <C-A> & <C-X>
    undofile = true, -- save undo history in ~/.local/share/nvim/undo/
    ignorecase = true, -- Case insensitive search when given
-   smartcase = true,  -- just lower case search patterns.
+   smartcase = true, -- just lower case search patterns.
    colorcolumn = '80', -- indicate column 80, as a guide to keep source code
 
    -- Windowing preferences
@@ -45,7 +45,7 @@ local options = {
    completeopt = 'menu,menuone,noselect', -- for nvim-cmp
    termguicolors = true, -- enable 24-bit RGB color for ISO-8613-3 terminals
    complete = '.,w,b,u,kspell', -- no "t,i" - redundant with LSP
-   shortmess = 'atToOc' -- shorten statusline - removed F for Scala Metals
+   shortmess = 'atToOc', -- shorten statusline - removed F for Scala Metals
 }
 
 for k, v in pairs(options) do

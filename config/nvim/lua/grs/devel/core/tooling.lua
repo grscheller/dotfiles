@@ -1,16 +1,18 @@
 --[[ Devel Core Infrastructure ]]
 
---[[ Chore: Periodically update these next three tables,
-     LspconfigToMasonPackage, NullLsToMasonPackage, and DapToMasonPackage,
-     from these next three GitHub sources respectively:
+--[[
+     Chore: Periodically update these next three tables,
+     LspconfigToMasonPackage, DapToMasonPackage, and NullLsToMasonPackage,
+     from these next three GitHub repos respectively:
 
   williamboman/mason-lspconfig.nvim/lua/mason-lspconfig/mappings/server.lua
   jayp0521/mason-null-ls.nvim/lua/mason-null-ls/mappings/source.lua
   jayp0521/mason-nvim-dap.nvim/lua/mason-nvim-dap/mappings/source.lua
 
-     These 3 Mason "add-on" configuration plugins seem only to work
-     for Null-ls sources and LSP & DAP servers installed by Mason. ]]
+     These Mason "add-on" configuration plugins seem only to work
+     for LSP & DAP servers and Null-ls builtins installed by Mason.
 
+--]]
 local LspconfigToMasonPackage = {
    ['als'] = 'ada-language-server',
    ['angularls'] = 'angular-language-server',
@@ -139,10 +141,28 @@ local LspconfigToMasonPackage = {
    ['wgsl_analyzer'] = 'wgsl-analyzer',
    ['yamlls'] = 'yaml-language-server',
    ['zk'] = 'zk',
-   ['zls'] = 'zls'
+   ['zls'] = 'zls',
 }
 
-local NullLsToMasonPackage = {
+local DapToMasonPackage = {
+   ['cppdbg'] = 'cpptools',
+   ['delve'] = 'delve',
+   ['node2'] = 'node-debug2-adapter',
+   ['chrome'] = 'chrome-debug-adapter',
+   ['firefox'] = 'firefox-debug-adapter',
+   ['php'] = 'php-debug-adapter',
+   ['coreclr'] = 'netcoredbg',
+   ['js'] = 'js-debug-adapter',
+   ['lldb'] = 'codelldb',
+   ['bash'] = 'bash-debug-adapter',
+   ['javadbg'] = 'java-debug-adapter',
+   ['javatest'] = 'java-test',
+   ['mock'] = 'mockdebug',
+   ['puppet'] = 'puppet-editor-services',
+   ['elixir'] = 'elixir-ls',
+}
+
+local BuiltinsToMasonPackage = {
    ['actionlint'] = 'actionlint',
    ['alex'] = 'alex',
    ['autopep8'] = 'autopep8',
@@ -222,25 +242,7 @@ local NullLsToMasonPackage = {
    ['xo'] = 'xo',
    ['yamlfmt'] = 'yamlfmt',
    ['yamllint'] = 'yamllint',
-   ['yapf'] = 'yapf'
-}
-
-local DapToMasonPackage = {
-   ['cppdbg'] = 'cpptools',
-   ['delve'] = 'delve',
-   ['node2'] = 'node-debug2-adapter',
-   ['chrome'] = 'chrome-debug-adapter',
-   ['firefox'] = 'firefox-debug-adapter',
-   ['php'] = 'php-debug-adapter',
-   ['coreclr'] = 'netcoredbg',
-   ['js'] = 'js-debug-adapter',
-   ['lldb'] = 'codelldb',
-   ['bash'] = 'bash-debug-adapter',
-   ['javadbg'] = 'java-debug-adapter',
-   ['javatest'] = 'java-test',
-   ['mock'] = 'mockdebug',
-   ['puppet'] = 'puppet-editor-services',
-   ['elixir'] = 'elixir-ls'
+   ['yapf'] = 'yapf',
 }
 
 local M = {}
@@ -251,49 +253,24 @@ M.pm = {
    both = 3
 }
 
-local mason = M.pm.mason
-local system = M.pm.system
-local both = M.pm.both
+M.conf = {
+   use_default_configuration = 1, -- default
+   manually_configure = 2, -- manual
+   do_not_directly_configure = 3, -- no_config
+   neither_install_nor_configure = 4, -- ignore
+   default = 1,
+   manual = 2,
+   no_config = 3,
+   ignore = 4,
+}
 
-local grsUtils = require('grs.utilities.grsUtils')
-local msg = grsUtils.msg_hit_return_to_continue
-
-local function extractTools(serverTbl, pm)
-   local message = 'Error[extractTools]: '
-
-   local servers = {}
-   local cnt = 0
-   if pm == both then
-      for k,_ in pairs(serverTbl) do
-         cnt = cnt + 1
-         servers[cnt] = k
-      end
-   elseif pm == mason then
-      for k,v in pairs(serverTbl) do
-         if v == mason then
-            cnt = cnt + 1
-            servers[cnt] = k
-         end
-      end
-   elseif pm == system then
-      for k,v in pairs(serverTbl) do
-         if v == system then
-            cnt = cnt + 1
-            servers[cnt] = k
-         end
-      end
-   else
-      message = message .. 'Invalid package manager type given for server extraction'
-      msg(message)
-      return
-   end
-   return servers
-end
+local grsFunc = require 'grs.lib.libFunc'
+local msg = grsFunc.msg_hit_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
    local cnt = 0
-   for _,v in ipairs(names) do
+   for _, v in pairs(names) do
       if package_names[v] then
          cnt = cnt + 1
          mason_names[cnt] = package_names[v]
@@ -305,30 +282,29 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
--- Flatten an array of arrays - no error checks (should JIT compile well)
-M.concat = function(ArrayOfArrays)
-   local ConcatenatedList = {}
-   for _,v in ipairs(ArrayOfArrays) do
-      for _,w in ipairs(v) do
-         table.insert(ConcatenatedList, w)
-      end
-   end
-   return ConcatenatedList
+M.lspconfig2mason = function(LspServers, pred)
+   return convertToMasonPkgs(
+      grsFunc.getFilteredKeys(LspServers.mason, pred),
+      LspconfigToMasonPackage
+   )
 end
 
-M.lspconfig2mason = function(LspconfigServers)
+M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
-      extractTools(LspconfigServers, mason), LspconfigToMasonPackage)
+      grsFunc.getFilteredKeys(DapServers.mason, pred),
+      DapToMasonPackage
+   )
 end
 
-M.nullLs2mason = function(NullLsBuiltinTools)
+M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
-      extractTools(NullLsBuiltinTools, mason), NullLsToMasonPackage)
+      grsFunc.getFilteredKeys(BuiltinTools.mason, pred),
+      BuiltinsToMasonPackage
+   )
 end
 
-M.dap2mason = function(DapServers)
-   return convertToMasonPkgs(
-      extractTools(DapServers, mason), DapToMasonPackage)
-end
+--M.setup = function(LspServers, DapServers, BuiltinTools)
+--   print('LSP', LspServers, ' DAP', DapServers, ' Builtins', BuiltinTools)
+--end
 
 return M

@@ -2,48 +2,65 @@
 
 Contains my user configuation files.
 
-* Neovim config
-* Fish and Bash configs
-* Sway config
-  * Waybar config
-  * Wofi config
-  * Alacritty config
-* GIT config
-* Haskell Cabal & Bloop configs
-* Minimal SSH config
+* Neovim configuration
+* Fish and Bash configurations
+* Sway and Allacritty configurations
+* GIT configuration
+* Haskell Cabal & Bloop configurations
+* Minimal SSH configuration
 * $HOME/bin scripts
 
-Also, contains my Arch Linux system configuration modifications.
+Also, contains my Arch Linux system configuration tweaks.
 
 ## Installation Scripts
 
-Installs into home directory
+Installs my dotfiles into home directory.
 
 * [dotfilesInstall](dotfilesInstall)
-  * From the base of the cloned repo run
+* From the base of the cloned repo run
 
-    ```sh
-       $ ./dotfilesInstall
-       ...
-    ```
+  ```sh
+     $ ./dotfilesInstall
 
-Installs into system directories (Arch Linux Only!)
+     Make sure fish & nvim environments get properly updated.
+
+     $
+  ```
+
+Installs system tweaks into system directories (Arch Linux Only!).
 
 * [systemfilesInstall](systemfilesInstall)
-  * From the base of the cloned repo run
+* From the base of the cloned repo run
 
-    ```sh
-       $ sudo ./systemfilesInstall
-       ...
-    ```
+  ```sh
+     $ sudo ./systemfilesInstall
+     $
+  ```
+
+## Editing Neovim Config with LSP
+
+To edit one version of Neovim using nvim running another version of the
+configuration can be tricky.  To get around this, the `grsSwap` script toggles
+a symlink `~/.config/nvim/lua/grs/`->`dotfiles/config/nvime/lua/grs/` with
+a directory in the installed code base.
+
+* [grsSwap](grsSwap)
+* Running `.dotfilesInstall` will fail if symlink is in place
+* Fish abriviation exists so you don't actually have to be in the repo
+* From the base of the cloned repo run
+
+  ```sh
+     $ ./grsSwap
+     ...
+  ```
 
 ## Repo's purposes is to
 
 1. maintain my own personal configuration files
-2. help quickly configure new systems for myself
-3. preserve this information for myself
-4. provide others useful examples for their own configuration files
-5. allow others to use as a starting point for their own version of this repo
+1. help quickly configure new systems for myself
+1. preserve this information for myself
+1. provide others useful examples for their own configuration files
+1. allow others to use as a starting point for their own version of this repo
 
 ## License Information
 

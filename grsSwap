@@ -1,0 +1,38 @@
+#!/usr/bin/fish
+#
+#  Toggles, between the installed directory ~/.config/nvim/lua/grs/
+#  and a symlink to the corresponding directory in the dotfiles repo.
+#
+#  Sumneko_lua LSP server, when editing the Neovim configs in the dotfiles
+#  repo, will conflate the Lua libraries being used by the running nvim
+#  editor with the configs in the repo being edited.  This is due to using
+#  the running nvim's runtimepath to access the order & locations for plugin
+#  Lua source files.
+#
+#  This Fish script allows one to easily toggle back and forth between using
+#  the configs currently being edited and the configs installed into the home
+#  directory.  The former allows LSP to work correctly, the later allows for
+#  the use of a potentially more stable older nvim configuration.
+#
+#  For safety, when the symlink is in place, and I am using LSP features,
+#  I use ~/.config/nvim/lua/ as the working directory and edit thru the
+#  symlink.  Otherwise, I navigate and edit the repo directly.
+#
+set -q XDG_CONFIG_HOME; or set -lx XDG_CONFIG_HOME ~/.config
+set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+
+if test -d ~/.config/nvim_lua_grs_backup
+   rm $XDG_CONFIG_HOME/nvim/lua/grs
+   mv $XDG_CONFIG_HOME/nvim_lua_grs_backup $XDG_CONFIG_HOME/nvim/lua/grs
+   printf '\nEdit nvim config files directly in %s' $DOTFILE_GIT_REPO
+   printf '\nIssue git commands from dotfiles repo, %s' $DOTFILE_GIT_REPO
+   printf '\nThe dotfileInstall script will now work\n'
+   cd $DOTFILE_GIT_REPO
+else
+   mv ~/.config/nvim/lua/grs ~/.config/nvim_lua_grs_backup
+   ln -s $DOTFILE_GIT_REPO/config/nvim/lua/grs $XDG_CONFIG_HOME/nvim/lua/grs
+   printf '\nEdit nvim config files thru %s/nvim/lua/grs' $XDG_CONFIG_HOME
+   printf '\nStill issue git commands from %s' $DOTFILE_GIT_REPO
+   printf '\nThe dotfileInstall script will fail!!!\n'
+   cd $XDG_CONFIG_HOME/nvim
+end
