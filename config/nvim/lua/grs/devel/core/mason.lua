@@ -11,6 +11,7 @@ local coreTooling = require 'grs.devel.core.tooling'
 local libFunc = require 'grs.lib.libFunc'
 
 local msg = libFunc.msg_hit_return_to_continue
+local m = coreTooling.configure_choices
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
    local ok, mason, mason_tool_installer
@@ -37,18 +38,18 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
       return
    end
 
-   local pred = function(_, v) return v ~= coreTooling.conf.ignore end
-
    -- Mason-tool-installer, automates Mason tool installation.
 
+   local install = function(_, v) return v == m.auto or v == m.install end
+
    local masonPackages = libFunc.iFlatten {
-      coreTooling.lspconfig2mason(LspServers, pred),
-      coreTooling.dap2mason(DapServers, pred),
-      coreTooling.nullLs2mason(BuiltinTools.code_actions, pred),
-      coreTooling.nullLs2mason(BuiltinTools.completions, pred),
-      coreTooling.nullLs2mason(BuiltinTools.diagnostics, pred),
-      coreTooling.nullLs2mason(BuiltinTools.formatting, pred),
-      coreTooling.nullLs2mason(BuiltinTools.hover, pred),
+      coreTooling.lspconfig2mason(LspServers, install),
+      coreTooling.dap2mason(DapServers, install),
+      coreTooling.nullLs2mason(BuiltinTools.code_actions, install),
+      coreTooling.nullLs2mason(BuiltinTools.completions, install),
+      coreTooling.nullLs2mason(BuiltinTools.diagnostics, install),
+      coreTooling.nullLs2mason(BuiltinTools.formatting, install),
+      coreTooling.nullLs2mason(BuiltinTools.hover, install),
    }
 
    mason_tool_installer.setup {

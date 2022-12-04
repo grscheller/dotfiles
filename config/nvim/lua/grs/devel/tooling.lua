@@ -15,62 +15,66 @@
 
 local coreTooling = require 'grs.devel.core.tooling'
 
-local default = coreTooling.conf.use_default_configuration
-local manual = coreTooling.conf.manually_configure
-local no_config = coreTooling.conf.do_not_directly_configure
-local ignore = coreTooling.conf.neither_install_nor_configure
+local m = coreTooling.configure_choices -- (auto, manual, install, ignore)
 
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
 local LspServers = {
    mason = {
-      cssls = default,
-      html = default,
-      jsonls = default,
-      marksman = default,
-      zls = default,
+      cssls = m.auto,
+      groovyls = m.auto,
+      html = m.auto,
+      jsonls = m.auto,
+      marksman = m.auto,
+      zls = m.auto,
    },
    system = {
-      bashls = default,
-      clangd = default,
-      gopls = default,
-      hls = default,
-      pyright = ignore,
-      rust_analyzer = no_config,
-      rust_tools = manual,
-      scala_metals = manual,
-      sumneko_lua = manual,
-      taplo = default,
-      yamlls = default,
-      zls = default,
+      bashls = m.auto,
+      clangd = m.auto,
+      gopls = m.auto,
+      hls = m.manual,
+      pyright = m.ignore,
+      rust_analyzer = m.install,
+      rust_tools = m.manual,
+      scala_metals = m.manual,
+      sumneko_lua = m.manual,
+      taplo = m.auto,
+      yamlls = m.auto,
+      zls = m.auto,
    },
 }
 
 local DapServers = {
    mason = {
-      bash = default,
-      cppdbg = default,
+      bash = m.auto,
+      cppdbg = m.auto,
    },
    system = {},
 }
 
 local BuiltinTools = {
-   code_actions = { mason = {}, system = {} },
-   completions = { mason = {}, system = {} },
+   code_actions = {
+      mason = {},
+      system = {}
+   },
+   completions = {
+      mason = {},
+      system = {}
+   },
    diagnostics = {
       mason = {
-         markdownlint = manual,
+         markdownlint = m.auto,
+         commitlint = m.auto,
       },
       system = {
-         cppcheck = manual,
-         cpplint = manual,
-         mdl = manual,
+         cppcheck = m.auto,
+         cpplint = m.auto,
       },
    },
    formatting = {
       mason = {},
       system = {
-         stylua = manual,
+         stylua = m.auto,
       },
    },
    hover = {
@@ -209,7 +213,7 @@ vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
                 https://github.com/sharksforarms/neovim-rust ]]
 
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
-if ok_rust and dap then
+if ok_rust and dap and LspServers.rust_tools == manual then
    dap.configurations.rust = {
       {
          type = 'rust',
@@ -238,7 +242,9 @@ if ok_rust and dap then
       },
    }
 else
-   msg 'Problem in tooling.lua with rust-tools'
+   if LspServers.rust_tools == manual then
+      msg 'Problem in tooling.lua with rust-tools'
+   end
 end
 
 --[[ Scala Metals directly configures lspconfig
@@ -249,7 +255,7 @@ end
 
 --]]
 local ok_metals, metals = pcall(require, 'metals')
-if ok_metals and dap then
+if ok_metals and dap and LspServers.scala_metals == manual then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
@@ -296,7 +302,7 @@ if ok_metals and dap then
       group = scala_metals_group,
    })
 else
-   if LspServers.scala_metals ~= manual then
+   if LspServers.scala_metals == manual then
       msg 'Problem in tooling.lua with scala metals'
    end
 end

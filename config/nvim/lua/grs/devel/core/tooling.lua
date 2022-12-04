@@ -247,25 +247,17 @@ local BuiltinsToMasonPackage = {
 
 local M = {}
 
-M.pm = {
-   mason = 1,
-   system = 2,
-   both = 3
+M.configure_choices = {
+   auto = 1,    -- auto configue
+   manual = 2,  -- manually configure
+   install = 3, -- install but don't configure
+   ignore = 4,  -- don't install nor configure
 }
 
-M.conf = {
-   use_default_configuration = 1, -- default
-   manually_configure = 2, -- manual
-   do_not_directly_configure = 3, -- no_config
-   neither_install_nor_configure = 4, -- ignore
-   default = 1,
-   manual = 2,
-   no_config = 3,
-   ignore = 4,
-}
+local libFunc = require 'grs.lib.libFunc'
+local libVim = require 'grs.lib.libVim'
 
-local grsFunc = require 'grs.lib.libFunc'
-local msg = grsFunc.msg_hit_return_to_continue
+local msg = libVim.msg_hit_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
@@ -284,21 +276,21 @@ end
 
 M.lspconfig2mason = function(LspServers, pred)
    return convertToMasonPkgs(
-      grsFunc.getFilteredKeys(LspServers.mason, pred),
+      libFunc.getFilteredKeys(LspServers.mason, pred),
       LspconfigToMasonPackage
    )
 end
 
 M.dap2mason = function(DapServers, pred)
    return convertToMasonPkgs(
-      grsFunc.getFilteredKeys(DapServers.mason, pred),
+      libFunc.getFilteredKeys(DapServers.mason, pred),
       DapToMasonPackage
    )
 end
 
 M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
-      grsFunc.getFilteredKeys(BuiltinTools.mason, pred),
+      libFunc.getFilteredKeys(BuiltinTools.mason, pred),
       BuiltinsToMasonPackage
    )
 end
