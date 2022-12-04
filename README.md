@@ -4,17 +4,14 @@ Contains my user configuation files.
 
 * Neovim configuration
 * Fish and Bash configurations
-* Sway and Allacritty configurations
-* GIT configuration
-* Haskell Cabal & Bloop configurations
-* Minimal SSH configuration
-* $HOME/bin scripts
+* Sway and Alacritty configurations
+* Other miscellaneous configurations
 
 Also, contains my Arch Linux system configuration tweaks.
 
 ## Installation Scripts
 
-Installs my dotfiles into home directory.
+Installs dotfiles into home directory.
 
 * [dotfilesInstall](dotfilesInstall)
 * From the base of the cloned repo run
@@ -27,6 +24,8 @@ Installs my dotfiles into home directory.
      $
   ```
 
+* Above needs to be done from the root of the dotfiles repo
+
 Installs system tweaks into system directories (Arch Linux Only!).
 
 * [systemfilesInstall](systemfilesInstall)
@@ -37,22 +36,25 @@ Installs system tweaks into system directories (Arch Linux Only!).
      $
   ```
 
+* Above needs to be done from the root of the dotfiles repo
+
 ## Editing Neovim Config with LSP
 
 To edit one version of Neovim using nvim running another version of the
-configuration can be tricky.  To get around this, the `grsSwap` script toggles
+configuration can be tricky.  To help with this, the `grsSwap` script toggles
 a symlink `~/.config/nvim/lua/grs/`->`dotfiles/config/nvime/lua/grs/` with
 a directory in the installed code base.
 
 * [grsSwap](grsSwap)
-* Running `.dotfilesInstall` will fail if symlink is in place
-* Fish abriviation exists so you don't actually have to be in the repo
 * From the base of the cloned repo run
 
   ```sh
      $ ./grsSwap
      ...
   ```
+
+* Fish abriviation `grsSway` exists, so you don't have to this from the repo
+* Running `.dotfilesInstall` will fail if symlink is toggled in place
 
 ## Repo's purposes is to
 
@@ -62,7 +64,7 @@ a directory in the installed code base.
 1. provide others useful examples for their own configuration files
 1. allow others to use as a starting point for their own version of this repo
 
-## License Information
+## License information
 
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
   <a rel="license"
@@ -82,7 +84,7 @@ This work is published from:
   United States</span>.
 </p>
 
-### Patent Information
+### Patent claims clarification regarding licence
 
 * To the best of my knowledge, there is nothing patentable in this repo
 * I have no intention to attempt to patent anything from this repo
