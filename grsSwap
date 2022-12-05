@@ -14,7 +14,7 @@
 #  directory.  The former allows LSP to work correctly, the later allows for
 #  the use of a potentially more stable older nvim configuration.
 #
-#  For safety, when the symlink is in place, and I am using LSP features,
+#  For safety, when the symlink is in place, especially using LSP features,
 #  I use ~/.config/nvim/lua/ as the working directory and edit thru the
 #  symlink.  Otherwise, I navigate and edit the repo directly.
 #

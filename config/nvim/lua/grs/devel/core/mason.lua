@@ -40,7 +40,7 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
 
    -- Mason-tool-installer, automates Mason tool installation.
 
-   local install = function(_, v) return v == m.auto or v == m.install end
+   local install = function(_, v) return v ~= m.ignore end
 
    local masonPackages = libFunc.iFlatten {
       coreTooling.lspconfig2mason(LspServers, install),

@@ -6,6 +6,7 @@
      When a server/tool is not provided in the underlying
      os/environment by some package manager such as
      Pacman, Apt, Nix, Brew, SDKMAN, Cocolately, MSYS2, ...
+     or by Packer (packer.nvim).
 
      The overiding principle is to configure only what I
      actually use, not to install and configure everything
@@ -19,40 +20,54 @@ local m = coreTooling.configure_choices -- (auto, manual, install, ignore)
 
 --[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
 
-local LspServers = {
+local LspServerTbl = {
+   -- Lspconfig uses default configurations for items marked m.auto. 
+   -- Mason installs packages in the mason tables not marked m.ignore.
+   -- Both lists use the LSP module (lspconfig) names, not Mason package names.
    mason = {
       cssls = m.auto,
-      groovyls = m.auto,
+      groovyls = m.ignore,
       html = m.auto,
       jsonls = m.auto,
       marksman = m.auto,
+      rust_analyzer = m.manual,
       zls = m.auto,
    },
+   -- For system table, anything not m.auto is really just informational only.
    system = {
       bashls = m.auto,
       clangd = m.auto,
       gopls = m.auto,
       hls = m.manual,
       pyright = m.ignore,
-      rust_analyzer = m.install,
-      rust_tools = m.manual,
-      scala_metals = m.manual,
-      sumneko_lua = m.manual,
+      rust_tools = m.manual,   -- uses lspconfig and dap
+      scala_metals = m.manual, -- uses lspconfig and dap
+      sumneko_lua = m.manual,  -- right now geared to editing Neovim configs
       taplo = m.auto,
       yamlls = m.auto,
-      zls = m.auto,
    },
 }
 
-local DapServers = {
+local DapServerTbl = {
+   -- TODO: Nvim-dap uses default configurations for items marked m.auto. 
+   -- Mason installs packages in the mason tables not marked m.ignore.
+   -- Lists use DAP (nvim-dap) names, not Mason package names.
    mason = {
       bash = m.auto,
       cppdbg = m.auto,
    },
-   system = {},
+   -- For system table, anything not m.auto is really just informational only.
+   system = {
+      rust_tools = m.manual,
+      scala_metals = m.manual,
+   },
 }
 
-local BuiltinTools = {
+local BuiltinToolTbls = {
+   -- Null-ls uses default configurations for items marked m.auto. 
+   -- Mason installs packages in the mason tables not marked m.ignore.
+   -- For system tables, anything not m.auto is really just informational only.
+   -- Lists use Null-ls (null-ls.nvim) names, not Mason package names.
    code_actions = {
       mason = {},
       system = {}
@@ -87,35 +102,33 @@ local coreLspconf = require 'grs.devel.core.lspconfig'
 local coreMason = require 'grs.devel.core.mason'
 local coreDap = require 'grs.devel.core.dap'
 local coreNullLs = require 'grs.devel.core.nullLs'
-local kb = require 'grs.core.keybindings'
+local keymaps = require 'grs.core.keybindings'
 local libVim = require 'grs.lib.libVim'
 
 local msg = libVim.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
 
 -- Fetch select LSP & DAP Servers and Null-ls Builtins using Mason
-coreMason.setup(LspServers, DapServers, BuiltinTools)
+coreMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
 
 -- Auto-configure select LSP & DAP Servers and Null-ls Builtins
-local lspconf, capabilities = coreLspconf.setup(LspServers)
-local dap, dap_ui_widgets = coreDap.setup(DapServers)
-local nullLs = coreNullLs.setup(BuiltinTools)
+local lspconf, capabilities = coreLspconf.setup(LspServerTbl)
+local dap, dap_ui_widgets = coreDap.setup(DapServerTbl)
+local nullLs = coreNullLs.setup(BuiltinToolTbls)
 
 if not lspconf then
-   msg 'Problem in tooling.lua setting up LSP servers, PUNTING!!!'
+   msg 'Problem in tooling.lua setting up nvim-lspconfig servers, PUNTING!!!'
    return
 elseif not dap then
-   msg 'Problem in tooling.lua setting up DAP servers, PUNTING!!!'
+   msg 'Problem in tooling.lua setting up nvim-dap servers, PUNTING!!!'
    return
 elseif not nullLs then
-   msg 'Problem in tooling.lua setting up Null-ls builtins, PUNTING!!!'
+   msg 'Problem in tooling.lua setting up null-ls builtins, PUNTING!!!'
+   return
+elseif not capabilities then
+   msg 'Problem in tooling.lua setting up cmp-nvim-lsp builtins, PUNTING!!!'
    return
 end
-
--- Setup sumneko_lua server - this one special since it may or may not
--- have to integrate itself into the running Neovim instance.  For now
--- just integrate itself in since current use case is to edit Neovim
--- configuration files.
 
 --[[ Lua Configuration - geared to Neovim configs ]]
 
@@ -127,8 +140,7 @@ local runtime_path = vim.split(package.path, ';')
 
 -- Below either an attempt to configure an nvim_get_runtime_file
 -- generated table or locally be able to overide code in a plugin,
--- or local standalone code (especially for latter is put at end
--- of table instead of beginning).
+-- or local standalone code.
 table.insert(runtime_path, 1, '?.lua')
 table.insert(runtime_path, 1, '?/init.lua')
 table.insert(runtime_path, 1, '?/?.lua')
@@ -171,7 +183,7 @@ table.insert(runtime_path, 1, '?/?.lua')
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
-      kb.lsp_kb(client, bufnr)
+      keymaps.lsp_kb(client, bufnr)
       cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
    end,
    settings = {
@@ -192,12 +204,12 @@ lspconf['sumneko_lua'].setup {
 
 --[[ Haskell Configuration ]]
 
-if LspServers.hls == manual then
+if LspServerTbl.hls == m.manual then
    lspconf['hls'].setup {
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-         kb.lsp_kb(client, bufnr)
-         kb.haskell_kb(bufnr)
+         keymaps.lsp_kb(client, bufnr)
+         keymaps.haskell_kb(bufnr)
          cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
       end,
    }
@@ -213,7 +225,7 @@ vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
                 https://github.com/sharksforarms/neovim-rust ]]
 
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
-if ok_rust and dap and LspServers.rust_tools == manual then
+if ok_rust and dap and LspServerTbl.rust_tools == m.manual then
    dap.configurations.rust = {
       {
          type = 'rust',
@@ -228,8 +240,8 @@ if ok_rust and dap and LspServers.rust_tools == manual then
       server = {
          capabilities = capabilities,
          on_attach = function(client, bufnr)
-            kb.lsp_kb(client, bufnr)
-            kb.dap_kb(bufnr, dap, dap_ui_widgets)
+            keymaps.lsp_kb(client, bufnr)
+            keymaps.dap_kb(bufnr, dap, dap_ui_widgets)
          end,
          standalone = true,
       },
@@ -242,7 +254,7 @@ if ok_rust and dap and LspServers.rust_tools == manual then
       },
    }
 else
-   if LspServers.rust_tools == manual then
+   if LspServerTbl.rust_tools == m.manual then
       msg 'Problem in tooling.lua with rust-tools'
    end
 end
@@ -255,7 +267,7 @@ end
 
 --]]
 local ok_metals, metals = pcall(require, 'metals')
-if ok_metals and dap and LspServers.scala_metals == manual then
+if ok_metals and dap and LspServerTbl.scala_metals == m.manual then
    local metals_config = metals.bare_config()
 
    metals_config.settings = {
@@ -286,9 +298,9 @@ if ok_metals and dap and LspServers.scala_metals == manual then
          },
       }
       metals.setup_dap()
-      kb.lsp_kb(client, bufnr)
-      kb.metals_kb(bufnr, metals)
-      kb.dap_kb(bufnr, dap, dap_ui_widgets)
+      keymaps.lsp_kb(client, bufnr)
+      keymaps.metals_kb(bufnr, metals)
+      keymaps.dap_kb(bufnr, dap, dap_ui_widgets)
       cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
       cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
    end
@@ -302,7 +314,7 @@ if ok_metals and dap and LspServers.scala_metals == manual then
       group = scala_metals_group,
    })
 else
-   if LspServers.scala_metals == manual then
+   if LspServerTbl.scala_metals == m.manual then
       msg 'Problem in tooling.lua with scala metals'
    end
 end

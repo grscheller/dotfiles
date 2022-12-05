@@ -258,6 +258,8 @@ local libFunc = require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
 local msg = libVim.msg_hit_return_to_continue
+local iFlatten = libFunc.iFlatten
+local getFilteredKeys = libFunc.getFilteredKeys
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}
@@ -274,29 +276,35 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
-M.lspconfig2mason = function(LspServers, pred)
+M.lspconfig2mason = function(LspServerTbl, pred)
    return convertToMasonPkgs(
-      libFunc.getFilteredKeys(LspServers.mason, pred),
+      getFilteredKeys(LspServerTbl.mason, pred),
       LspconfigToMasonPackage
    )
 end
 
-M.dap2mason = function(DapServers, pred)
+M.dap2mason = function(DapServerTbl, pred)
    return convertToMasonPkgs(
-      libFunc.getFilteredKeys(DapServers.mason, pred),
+      getFilteredKeys(DapServerTbl.mason, pred),
       DapToMasonPackage
    )
 end
 
 M.nullLs2mason = function(BuiltinTools, pred)
    return convertToMasonPkgs(
-      libFunc.getFilteredKeys(BuiltinTools.mason, pred),
+      getFilteredKeys(BuiltinTools.mason, pred),
       BuiltinsToMasonPackage
    )
 end
 
---M.setup = function(LspServers, DapServers, BuiltinTools)
---   print('LSP', LspServers, ' DAP', DapServers, ' Builtins', BuiltinTools)
---end
+M.serverList = function(ServerTbl, configure_choice)
+   local pred = function(_, v)
+      return v == configure_choice
+   end
+   return libFunc.iFlatten {
+      getFilteredKeys(ServerTbl.mason, pred),
+      getFilteredKeys(ServerTbl.system, pred),
+   }
+end
 
 return M
