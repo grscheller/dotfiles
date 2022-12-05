@@ -18,12 +18,13 @@ local coreTooling = require 'grs.devel.core.tooling'
 
 local m = coreTooling.configure_choices -- (auto, manual, install, ignore)
 
---[[ The next 3 tables are the main auto lspconfig, dap, null-ls drivers ]]
+--[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
 
+-- Lspconfig uses a default configurations for items marked m.auto. 
+-- Mason installs packages in the mason tables not marked m.ignore.
+-- Both lists use the LSP module (lspconfig) names, not Mason package names.
+-- For system table, anything not m.auto is really just informational.
 local LspServerTbl = {
-   -- Lspconfig uses default configurations for items marked m.auto. 
-   -- Mason installs packages in the mason tables not marked m.ignore.
-   -- Both lists use the LSP module (lspconfig) names, not Mason package names.
    mason = {
       cssls = m.auto,
       groovyls = m.ignore,
@@ -33,7 +34,6 @@ local LspServerTbl = {
       rust_analyzer = m.manual,
       zls = m.auto,
    },
-   -- For system table, anything not m.auto is really just informational only.
    system = {
       bashls = m.auto,
       clangd = m.auto,
@@ -48,15 +48,16 @@ local LspServerTbl = {
    },
 }
 
+-- Nvim-dap itself does not have any "default" or "builtin" configurations.
+-- There is no reason marking anything as m.auto. 
+-- Mason installs packages from the mason tables not marked m.ignore.
+-- Names used are DAP (nvim-dap) names, not Mason package names.
+-- For system table, m.manual will turn on a manual config if it exists.
 local DapServerTbl = {
-   -- TODO: Nvim-dap uses default configurations for items marked m.auto. 
-   -- Mason installs packages in the mason tables not marked m.ignore.
-   -- Lists use DAP (nvim-dap) names, not Mason package names.
    mason = {
-      bash = m.auto,
-      cppdbg = m.auto,
+      bash = m.install,
+      cppdbg = m.install,
    },
-   -- For system table, anything not m.auto is really just informational only.
    system = {
       rust_tools = m.manual,
       scala_metals = m.manual,
@@ -64,10 +65,11 @@ local DapServerTbl = {
 }
 
 local BuiltinToolTbls = {
-   -- Null-ls uses default configurations for items marked m.auto. 
-   -- Mason installs packages in the mason tables not marked m.ignore.
-   -- For system tables, anything not m.auto is really just informational only.
-   -- Lists use Null-ls (null-ls.nvim) names, not Mason package names.
+   -- Null-ls uses default "builtin" configurations for certain tools,
+   -- items marked m.auto will be configured with these builtin configs. 
+   -- Mason will installs packages in the mason tables not marked m.ignore.
+   -- Names used are Null-ls (null-ls.nvim) names, not Mason package names.
+   -- For system tables, anything not m.auto is just informational.
    code_actions = {
       mason = {},
       system = {}
@@ -111,11 +113,13 @@ local cmd = vim.api.nvim_command
 -- Fetch select LSP & DAP Servers and Null-ls Builtins using Mason
 coreMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
 
--- Auto-configure select LSP & DAP Servers and Null-ls Builtins
+-- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
 local lspconf, capabilities = coreLspconf.setup(LspServerTbl)
-local dap, dap_ui_widgets = coreDap.setup(DapServerTbl)
+local dap, dap_ui_widgets = coreDap.setup()
 local nullLs = coreNullLs.setup(BuiltinToolTbls)
 
+-- Manual LSP, DAP, and Null-ls configurations as well as other
+-- development environment tweaks.
 if not lspconf then
    msg 'Problem in tooling.lua setting up nvim-lspconfig servers, PUNTING!!!'
    return
