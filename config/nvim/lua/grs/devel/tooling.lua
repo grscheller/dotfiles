@@ -81,7 +81,6 @@ local BuiltinToolTbls = {
    diagnostics = {
       mason = {
          markdownlint = m.auto,
-         commitlint = m.auto,
       },
       system = {
          cppcheck = m.auto,
@@ -120,69 +119,27 @@ local nullLs = coreNullLs.setup(BuiltinToolTbls)
 
 -- Manual LSP, DAP, and Null-ls configurations as well as other
 -- development environment tweaks.
-if not lspconf then
-   msg 'Problem in tooling.lua setting up nvim-lspconfig servers, PUNTING!!!'
-   return
-elseif not dap then
-   msg 'Problem in tooling.lua setting up nvim-dap servers, PUNTING!!!'
-   return
-elseif not nullLs then
-   msg 'Problem in tooling.lua setting up null-ls builtins, PUNTING!!!'
-   return
-elseif not capabilities then
-   msg 'Problem in tooling.lua setting up cmp-nvim-lsp builtins, PUNTING!!!'
+if not (lspconf and dap and nullLs and capabilities) then
+   if not lspconf then msg 'Setup LSP servers failed!' end
+   if not dap then msg 'Setup DAP servers failed!' end
+   if not nullLs then msg 'Setup null-ls builtins failed!' end
+   if not capabilities then msg 'Setup LSP complitions failed!' end
    return
 end
 
 --[[ Lua Configuration - geared to Neovim configs ]]
 
--- This produces a template of the right form,
--- but containing many non-existing directories.
--- I think it is some sort of "default" to find
--- Lua and Luarocks infrastructure.
+-- Next command I got from JDHao's blog, maybe other places too.
+-- Not what Folke does here:
+--   https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
+-- See also:
+--   https://github.com/folke/neodev.nvim
+--
 local runtime_path = vim.split(package.path, ';')
 
--- Below either an attempt to configure an nvim_get_runtime_file
--- generated table or locally be able to overide code in a plugin,
--- or local standalone code.
-table.insert(runtime_path, 1, '?.lua')
-table.insert(runtime_path, 1, '?/init.lua')
-table.insert(runtime_path, 1, '?/?.lua')
-
---[[ Grokking:
-
-  local runtime_path = vim.api.nvim_get_runtime_file('', true)
-
-     Above produces a list of the runtime directories in search order.
-
-  local runtime_path = vim.api.nvim_get_runtime_file('*.lua', true)
-
-     Produces a fairly short list of Lua files on runtime path:
-
-  { "/home/grs/.config/nvim/init.lua",
-    "/home/grs/.local/share/nvim/site/pack/packer/start/nvim-lspconfig/gleam.lua",
-    "/usr/share/nvim/runtime/filetype.lua" }
-
-  local runtime_path = vim.api.nvim_get_runtime_file('*.lua', true)
-  local runtime_path = vim.api.nvim_get_runtime_file('*/*.lua', true)
-
-      Above produce alot of hits, mostly in the plugin directories.
-
-  local runtime_path = vim.api.nvim_get_runtime_file('lua/*/*.lua', true)
-
-      In particular, above produces a massive amount of Lua files.
-
-      TODO: Figure out the appropriate commands to find all the Lua
-            entry points into the plugins (and luarocks?) and
-            generate a template.
-
-      TODO: Explore use of .luarc.json file to control sumneko_lua
-            lsp server.  One got generated a while back an I don't
-            how or why.
-
-      TODO: May have to figure out how to configure for multiple Lua
-            versons.
---]]
+-- Acording to Folke, "this is the ONLY correct way to setup your path"
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
@@ -196,10 +153,11 @@ lspconf['sumneko_lua'].setup {
             version = 'LuaJIT',
             path = runtime_path,
          },
-         diagnostics = { globals = { 'vim' } },
+         diagnostics = {
+            globals = { 'vim' }
+         },
          workspace = {
             library = runtime_path,
-            checkThirdParty = false,
          },
          telemetry = { enable = false },
       },
