@@ -128,8 +128,7 @@ if not (lspconf and dap and nullLs and capabilities) then
    return
 end
 
---[[ Lua Configuration - using neodev.nvim ]]
-
+--[[ Lua Configuration - affected by neodev.nvim ]]
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
    on_attach = function(client, bufnr)
@@ -144,7 +143,6 @@ lspconf['sumneko_lua'].setup {
 }
 
 --[[ Haskell Configuration ]]
-
 if LspServerTbl.hls == m.manual then
    lspconf['hls'].setup {
       capabilities = capabilities,
@@ -157,14 +155,13 @@ if LspServerTbl.hls == m.manual then
 end
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
-
 vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
 
 --[[ Rust-Tools directly configures lspconfig
 
      Following: https://github.com/simrat39/rust-tools.nvim
-                https://github.com/sharksforarms/neovim-rust ]]
-
+                https://github.com/sharksforarms/neovim-rust
+--]]
 local ok_rust, rust_tools = pcall(require, 'rust-tools')
 if ok_rust and dap and LspServerTbl.rust_tools == m.manual then
    dap.configurations.rust = {

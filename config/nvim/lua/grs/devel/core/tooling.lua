@@ -301,7 +301,7 @@ M.serverList = function(ServerTbl, configure_choice)
    local pred = function(_, v)
       return v == configure_choice
    end
-   return libFunc.iFlatten {
+   return iFlatten {
       getFilteredKeys(ServerTbl.mason, pred),
       getFilteredKeys(ServerTbl.system, pred),
    }
