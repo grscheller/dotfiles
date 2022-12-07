@@ -14,9 +14,9 @@
 
 --]]
 
-local coreTooling = require 'grs.devel.core.tooling'
+local libTooling = require 'grs.devel.lib.libTooling'
 
-local m = coreTooling.configEnum -- (auto, manual, install, ignore)
+local m = libTooling.configEnum -- (auto, manual, install, ignore)
 
 --[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
 
@@ -99,23 +99,23 @@ local BuiltinToolTbls = {
    },
 }
 
-local coreLsp = require 'grs.devel.core.lsp'
-local coreMason = require 'grs.devel.core.mason'
-local coreDap = require 'grs.devel.core.dap'
-local coreNullLs = require 'grs.devel.core.nullLs'
 local keymaps = require 'grs.core.keybindings'
 local libVim = require 'grs.lib.libVim'
+local libLsp = require 'grs.devel.lib.libLsp'
+local libMason = require 'grs.devel.lib.libMason'
+local libDap = require 'grs.devel.lib.libDap'
+local libNullLs = require 'grs.devel.lib.libNullLs'
 
 local msg = libVim.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
 
 -- Fetch select LSP & DAP Servers and Null-ls Builtins using Mason
-coreMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
+libMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
 
 -- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
-local neodev, lspconf, capabilities = coreLsp.setup(LspServerTbl)
-local dap, dap_ui_widgets = coreDap.setup()
-local nullLs = coreNullLs.setup(BuiltinToolTbls)
+local neodev, lspconf, capabilities = libLsp.setup(LspServerTbl)
+local dap, dap_ui_widgets = libDap.setup()
+local nullLs = libNullLs.setup(BuiltinToolTbls)
 
 -- Manual LSP, DAP, and Null-ls configurations as well as other
 -- development environment tweaks.

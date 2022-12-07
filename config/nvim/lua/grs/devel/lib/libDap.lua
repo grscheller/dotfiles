@@ -1,9 +1,8 @@
---[[ DAP Core Debugging Infrastructure & Boilerplate ]]
+--[[ DAP Debugging Infrastructure & Boilerplate ]]
 
 local M = {}
 
-local grsUtils = require 'grs.lib.libVim'
-local msg = grsUtils.msg_hit_return_to_continue
+local msg = require('grs.lib.libVim').msg_hit_return_to_continue
 
 M.setup = function()
    local ok, dap = pcall(require, 'dap')

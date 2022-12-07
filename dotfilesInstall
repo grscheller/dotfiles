@@ -98,11 +98,11 @@ CONFIG_FILES='
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
-   nvim/lua/grs/devel/core/dap.lua
-   nvim/lua/grs/devel/core/lsp.lua
-   nvim/lua/grs/devel/core/mason.lua
-   nvim/lua/grs/devel/core/nullLs.lua
-   nvim/lua/grs/devel/core/tooling.lua
+   nvim/lua/grs/devel/lib/libDap.lua
+   nvim/lua/grs/devel/lib/libLsp.lua
+   nvim/lua/grs/devel/lib/libMason.lua
+   nvim/lua/grs/devel/lib/libNullLs.lua
+   nvim/lua/grs/devel/lib/libTooling.lua
    nvim/lua/grs/lib/libFunc.lua
    nvim/lua/grs/lib/libVim.lua
    nvim/lua/grs/textedit/init.lua
@@ -124,8 +124,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/theming.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/options.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/init.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/lspconfig.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core
 "
 
 ### functions

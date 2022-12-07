@@ -2,9 +2,9 @@
 
 local M = {}
 
-local coreTooling = require 'grs.devel.core.tooling'
+local libTooling = require 'grs.devel.lib.libTooling'
 local keymaps = require 'grs.core.keybindings'
-local m = coreTooling.configEnum
+local m = libTooling.configEnum
 local ok, neodev, lspconf, cmp_nvim_lsp, capabilities
 
 -- More ppowerful Lua editing for Neovim configurations 
@@ -26,7 +26,7 @@ M.setup = function(LspServerTbl)
       return lspconf, capabilities
    end
 
-   local lspServers = coreTooling.serverList(LspServerTbl, m.auto)
+   local lspServers = libTooling.serverList(LspServerTbl, m.auto)
 
    -- Add LSP servers we are not manually configuring
    for _, lspServer in ipairs(lspServers) do

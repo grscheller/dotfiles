@@ -1,4 +1,4 @@
---[[ Devel Core Infrastructure ]]
+--[[ Tooling Related Libraries ]]
 
 --[[
      Chore: Periodically update these next three tables,
@@ -297,9 +297,9 @@ M.nullLs2mason = function(BuiltinTools, pred)
    )
 end
 
-M.serverList = function(ServerTbl, configure_choice)
+M.serverList = function(ServerTbl, configEnum)
    local pred = function(_, v)
-      return v == configure_choice
+      return v == configEnum
    end
    return iFlatten {
       getFilteredKeys(ServerTbl.mason, pred),

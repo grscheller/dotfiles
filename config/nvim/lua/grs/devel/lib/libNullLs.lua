@@ -1,13 +1,13 @@
---[[ Null-ls Core Infrastructure & Boilerplate ]]
+--[[ Null-ls Infrastructure & Boilerplate ]]
 
 local M = {}
 
-local coreTooling = require 'grs.devel.core.tooling'
+local libTooling = require 'grs.devel.lib.libTooling'
 local libFunc= require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
 local msg = libVim.msg_hit_return_to_continue
-local m = coreTooling.configEnum
+local m = libTooling.configEnum
 
 M.setup = function(BuiltinTools)
    local ok, null_ls = pcall(require, 'null-ls')

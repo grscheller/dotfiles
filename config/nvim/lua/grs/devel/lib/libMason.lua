@@ -1,4 +1,4 @@
---[[ Mason Core Infrastructure & Boilerplate ]]
+--[[ Mason Infrastructure & Boilerplate ]]
 
 --[[
      Mason package manager infrastructure used to install/upgrade
@@ -7,18 +7,18 @@
 
 local M = {}
 
-local coreTooling = require 'grs.devel.core.tooling'
+local libTooling = require 'grs.devel.lib.libTooling'
 local libFunc = require 'grs.lib.libFunc'
 
 local msg = libFunc.msg_hit_return_to_continue
-local m = coreTooling.configEnum
+local m = libTooling.configEnum
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
    local ok, mason, mason_tool_installer
 
    ok, mason = pcall(require, "mason")
    if not ok then
-      msg('Problem setting up Mason: grs.devel.core.mason')
+      msg('Problem setting up Mason: grs.devel.lib.mason')
       return
    end
 
@@ -34,7 +34,7 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
 
    ok, mason_tool_installer = pcall(require, 'mason-tool-installer')
    if not ok then
-      msg 'Problem setting up Mason Tool Installer: grs.devel.core.mason'
+      msg 'Problem setting up Mason Tool Installer: grs.devel.lib.mason'
       return
    end
 
@@ -43,13 +43,13 @@ M.setup = function(LspServers, DapServers, BuiltinTools)
    local install = function(_, v) return v ~= m.ignore end
 
    local masonPackages = libFunc.iFlatten {
-      coreTooling.lspconfig2mason(LspServers, install),
-      coreTooling.dap2mason(DapServers, install),
-      coreTooling.nullLs2mason(BuiltinTools.code_actions, install),
-      coreTooling.nullLs2mason(BuiltinTools.completions, install),
-      coreTooling.nullLs2mason(BuiltinTools.diagnostics, install),
-      coreTooling.nullLs2mason(BuiltinTools.formatting, install),
-      coreTooling.nullLs2mason(BuiltinTools.hover, install),
+      libTooling.lspconfig2mason(LspServers, install),
+      libTooling.dap2mason(DapServers, install),
+      libTooling.nullLs2mason(BuiltinTools.code_actions, install),
+      libTooling.nullLs2mason(BuiltinTools.completions, install),
+      libTooling.nullLs2mason(BuiltinTools.diagnostics, install),
+      libTooling.nullLs2mason(BuiltinTools.formatting, install),
+      libTooling.nullLs2mason(BuiltinTools.hover, install),
    }
 
    mason_tool_installer.setup {
