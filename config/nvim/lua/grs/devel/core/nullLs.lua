@@ -7,7 +7,7 @@ local libFunc= require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
 local msg = libVim.msg_hit_return_to_continue
-local m = coreTooling.configure_choices
+local m = coreTooling.configEnum
 
 M.setup = function(BuiltinTools)
    local ok, null_ls = pcall(require, 'null-ls')

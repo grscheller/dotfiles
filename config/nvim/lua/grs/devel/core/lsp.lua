@@ -4,9 +4,12 @@ local M = {}
 
 local coreTooling = require 'grs.devel.core.tooling'
 local keymaps = require 'grs.core.keybindings'
+local m = coreTooling.configEnum
+local ok, neodev, lspconf, cmp_nvim_lsp, capabilities
 
-local ok, lspconf, cmp_nvim_lsp, capabilities
-local m = coreTooling.configure_choices
+-- More ppowerful Lua editing for Neovim configurations 
+ok, neodev = pcall(require, 'neodev')
+if ok then neodev.setup {} else neodev = nil end
 
 ok, lspconf = pcall(require, 'lspconfig')
 if not ok then lspconf = nil end
@@ -33,7 +36,7 @@ M.setup = function(LspServerTbl)
       }
    end
 
-   return lspconf, capabilities
+   return neodev, lspconf, capabilities
 end
 
 return M

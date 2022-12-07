@@ -113,6 +113,7 @@ return packer.startup(function()
 
    -- LSP & DAP support
    use {
+      'folke/neodev.nvim',
       'neovim/nvim-lspconfig',
       'mfussenegger/nvim-dap',
       'jose-elias-alvarez/null-ls.nvim',

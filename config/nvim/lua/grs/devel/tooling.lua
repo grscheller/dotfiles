@@ -16,7 +16,7 @@
 
 local coreTooling = require 'grs.devel.core.tooling'
 
-local m = coreTooling.configure_choices -- (auto, manual, install, ignore)
+local m = coreTooling.configEnum -- (auto, manual, install, ignore)
 
 --[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
 
@@ -99,7 +99,7 @@ local BuiltinToolTbls = {
    },
 }
 
-local coreLspconf = require 'grs.devel.core.lspconfig'
+local coreLsp = require 'grs.devel.core.lsp'
 local coreMason = require 'grs.devel.core.mason'
 local coreDap = require 'grs.devel.core.dap'
 local coreNullLs = require 'grs.devel.core.nullLs'
@@ -113,33 +113,22 @@ local cmd = vim.api.nvim_command
 coreMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
 
 -- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
-local lspconf, capabilities = coreLspconf.setup(LspServerTbl)
+local neodev, lspconf, capabilities = coreLsp.setup(LspServerTbl)
 local dap, dap_ui_widgets = coreDap.setup()
 local nullLs = coreNullLs.setup(BuiltinToolTbls)
 
 -- Manual LSP, DAP, and Null-ls configurations as well as other
 -- development environment tweaks.
+if not neodev then msg 'Warning: Neodev setup failed.' end
 if not (lspconf and dap and nullLs and capabilities) then
-   if not lspconf then msg 'Setup LSP servers failed!' end
-   if not dap then msg 'Setup DAP servers failed!' end
-   if not nullLs then msg 'Setup null-ls builtins failed!' end
-   if not capabilities then msg 'Setup LSP complitions failed!' end
+   if not lspconf then msg 'Error: Setup LSP servers failed!' end
+   if not dap then msg 'Error: Setup DAP servers failed!' end
+   if not nullLs then msg 'Error: Setup null-ls builtins failed!' end
+   if not capabilities then msg 'Error: Setup LSP complitions failed!' end
    return
 end
 
---[[ Lua Configuration - geared to Neovim configs ]]
-
--- Next command I got from JDHao's blog, maybe other places too.
--- Not what Folke does here:
---   https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
--- See also:
---   https://github.com/folke/neodev.nvim
---
-local runtime_path = vim.split(package.path, ';')
-
--- Acording to Folke, "this is the ONLY correct way to setup your path"
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+--[[ Lua Configuration - using neodev.nvim ]]
 
 lspconf['sumneko_lua'].setup {
    capabilities = capabilities,
@@ -149,17 +138,7 @@ lspconf['sumneko_lua'].setup {
    end,
    settings = {
       Lua = {
-         runtime = {
-            version = 'LuaJIT',
-            path = runtime_path,
-         },
-         diagnostics = {
-            globals = { 'vim' }
-         },
-         workspace = {
-            library = runtime_path,
-         },
-         telemetry = { enable = false },
+         completion = { callSnippet = 'Replace' },
       },
    },
 }

@@ -247,7 +247,7 @@ local BuiltinsToMasonPackage = {
 
 local M = {}
 
-M.configure_choices = {
+M.configEnum = {
    auto = 1,    -- auto configue
    manual = 2,  -- manually configure
    install = 3, -- install but don't configure

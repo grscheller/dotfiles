@@ -11,7 +11,7 @@ local coreTooling = require 'grs.devel.core.tooling'
 local libFunc = require 'grs.lib.libFunc'
 
 local msg = libFunc.msg_hit_return_to_continue
-local m = coreTooling.configure_choices
+local m = coreTooling.configEnum
 
 M.setup = function(LspServers, DapServers, BuiltinTools)
    local ok, mason, mason_tool_installer
