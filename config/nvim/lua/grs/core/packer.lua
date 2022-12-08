@@ -111,9 +111,14 @@ return packer.startup(function()
       },
    }
 
+   -- Folke neoconf.nvim & neodev.nvim
+   use {
+      'folke/neoconf.nvim', -- manage global & project level settings
+      'folke/neodev.nvim',  -- auto-configs Sumneko_lua for plugin development
+   }
+
    -- LSP & DAP support
    use {
-      'folke/neodev.nvim',
       'neovim/nvim-lspconfig',
       'mfussenegger/nvim-dap',
       'jose-elias-alvarez/null-ls.nvim',
@@ -122,4 +127,5 @@ return packer.startup(function()
       'simrat39/rust-tools.nvim',
       'scalameta/nvim-metals',
    }
+
 end)

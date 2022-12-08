@@ -113,13 +113,12 @@ local cmd = vim.api.nvim_command
 libMason.setup(LspServerTbl, DapServerTbl, BuiltinToolTbls)
 
 -- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
-local neodev, lspconf, capabilities = libLsp.setup(LspServerTbl)
+local lspconf, capabilities = libLsp.setup(LspServerTbl)
 local dap, dap_ui_widgets = libDap.setup()
 local nullLs = libNullLs.setup(BuiltinToolTbls)
 
 -- Manual LSP, DAP, and Null-ls configurations as well as other
 -- development environment tweaks.
-if not neodev then msg 'Warning: Neodev setup failed.' end
 if not (lspconf and dap and nullLs and capabilities) then
    if not lspconf then msg 'Error: Setup LSP servers failed!' end
    if not dap then msg 'Error: Setup DAP servers failed!' end

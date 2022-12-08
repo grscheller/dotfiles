@@ -88,12 +88,15 @@ CONFIG_FILES='
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    git/config
+   nvim/.neoconf.json
+   nvim/.stylua.toml
    nvim/init.lua
    nvim/lua/grs/init.lua
    nvim/lua/grs/core/keybindings.lua
    nvim/lua/grs/core/options.lua
    nvim/lua/grs/core/packer.lua
    nvim/lua/grs/devel/completions.lua
+   nvim/lua/grs/devel/config.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
