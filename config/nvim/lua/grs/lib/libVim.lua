@@ -24,4 +24,21 @@ function M.cursor_has_words_before_it()
        == nil
 end
 
+--[[ Neovim version information ]]
+
+function M.nvim_version_str()
+   local version = vim.version()
+   if not version then
+      return 'unknown'
+   end
+
+   local prerelease = ''
+   if version.prerelease then
+      prerelease = '-prerelease'
+   end
+
+   return string.format('%d.%d.%d%s',
+      version.major, version.minor, version.patch, prerelease)
+end
+
 return M

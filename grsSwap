@@ -31,7 +31,7 @@ if test -d ~/.config/nvim_lua_grs_backup
 else
    mv ~/.config/nvim/lua/grs ~/.config/nvim_lua_grs_backup
    ln -s $DOTFILE_GIT_REPO/config/nvim/lua/grs $XDG_CONFIG_HOME/nvim/lua/grs
-   printf '\nEdit nvim config files thru %s/nvim/lua/grs' $XDG_CONFIG_HOME
+   printf '\nEdit nvim config files from %s/nvim/' $XDG_CONFIG_HOME
    printf '\nStill issue git commands from %s' $DOTFILE_GIT_REPO
    printf '\nThe dotfileInstall script will fail!!!\n'
    cd $XDG_CONFIG_HOME/nvim
