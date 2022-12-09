@@ -38,6 +38,7 @@ HOME_FILES='
    .inputrc
 '
 
+# Do not install dotfilesInstall, systemfilesInstall, grsSwap
 BIN_SCRIPTS='
    bsPacker
    buArch
@@ -221,11 +222,11 @@ do
 done
 
 # Keep alacritty from rereading its config file mid-copy
-mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
+mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
+   "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
-# Swap in a Sway background image if present
-# Picture obtained from here:
-#   https://www.facebook.com/alittleofmeinyou/photos/325964185818238
+# Swap in a Sway background image if present, the picture I personally use
+# is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
 Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
 if [ -f "$Picture" ]
 then
