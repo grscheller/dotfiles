@@ -6,8 +6,6 @@
 #
 #  Usage: ./dotfilesInstall
 #
-#         run from the root of the cloned dotfiles repo
-#
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.
 #
@@ -20,12 +18,19 @@
 #        is needed.
 #
 #        Probably just fighting against someone else's
-#        beloved configuration paradigm.
+#        beloved manual configuration paradigm.
 #
 
 ### Setup
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
+
+cd "$DOTFILE_GIT_REPO" || {
+   printf '\n'
+   printf "Error: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO" >&2
+   return 1
+}
 
 HOME_FILES='
    .bash_profile
@@ -137,7 +142,7 @@ remove_item () {
    rm_item="$1"
 
    test ! -e "$rm_item" ||
-      rm -r "$rmItem" 2>&- || {
+      rm -r "$rm_item" 2>&- || {
          printf '\n'
          printf "Error: Failed to remove item '%s'\\n" "$rm_item" >&2
          return 1

@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/bin/fish
 #
 #  Toggles between the installed directory ~/.config/nvim/lua/grs/
 #  and a symlink to the corresponding directory in the dotfiles repo.

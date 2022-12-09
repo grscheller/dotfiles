@@ -1,4 +1,4 @@
-#!/usr/bin/fish
+#!/bin/fish
 #
 #  Install system files into my Arch Linux Systems
 #
@@ -6,6 +6,15 @@
 #
 #         run from the cloned dotfiles directory
 #
+
+set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+
+cd $DOTFILE_GIT_REPO
+or begin
+    printf '\nFailed to cd into the dotfile repo\'s'
+    printf '\nhome directory \'%s\'' "$DOTFILE_GIT_REPO"
+    return 1
+end
 
 set -l Files (string sub --start=5 (find root/etc -type f))
 

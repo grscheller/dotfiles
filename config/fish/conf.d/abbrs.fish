@@ -33,8 +33,10 @@ if not set -q fish_abbr_initialized
     # Restart SSH key-agent adding your private key: ~/.ssh/id_rsa
     abbr -a addkey 'eval (ssh-agent -c); and ssh-add'
 
-    # For dotfiles repo
-    abbr -a grsSwap '~/devel/dotfiles/grsSwap'
+    # So I can run these outside the dotfiles repo
+    abbr -a dotfilesInstall '~/devel/dotfiles/bin/dotfilesInstall'
+    abbr -a systemsfilesInstall '~/devel/dotfiles/bin/systemfilesInstall'
+    abbr -a grsSwap '~/devel/dotfiles/bin/grsSwap'
 
     # Shell environment cmds
     abbr -a re 'cd; unguard_universals; REDO_ENV=yes fish -l'
