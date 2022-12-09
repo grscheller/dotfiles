@@ -28,9 +28,9 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 umask 0022
 
 HOME_FILES='
-   bash_profile
-   bashrc
-   inputrc
+   .bash_profile
+   .bashrc
+   .inputrc
 '
 
 BIN_SCRIPTS='
@@ -127,19 +127,19 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/theming.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/options.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/
 "
 
 ### functions
 
 ## Function to removes files
 remove_item () {
-   rmItem="$1"
+   rm_item="$1"
 
-   test ! -e "$rmItem" ||
+   test ! -e "$rm_item" ||
       rm -r "$rmItem" 2>&- || {
          printf '\n'
-         printf "Error: Failed to remove item '%s'\\n" "$rmItem" >&2
+         printf "Error: Failed to remove item '%s'\\n" "$rm_item" >&2
          return 1
       }
    return 0
@@ -162,7 +162,7 @@ install_file () {
       return 1
    }
 
-   # Install file
+   # Install the file
    if cp "$src" "$trgt"
    then
       chmod "$file_perm" "$trgt" || {
@@ -180,17 +180,16 @@ install_file () {
 
 ### Install files
 
-## Install home directory dotfiles
-for Home_File in $HOME_FILES
+## Install home directory files
+for home_file in $HOME_FILES
 do
-   install_file "$HOME" "$Home_File" . 0644 || exit 1
-   mv "${HOME}/${Home_File}" "${HOME}/.${Home_File}" || exit 1
+   install_file "$HOME" "$home_file" ./home 0644 || exit 1
 done
 
 ## Install  ~/bin  scripts
-for File in $BIN_SCRIPTS
+for bin_file in $BIN_SCRIPTS
 do
-   install_file "$HOME/bin" "$File" ./bin 0755 || exit 1
+   install_file "$HOME/bin" "$bin_file" ./bin 0755 || exit 1
 done
 chmod 0755 "$HOME/bin"
 
@@ -256,9 +255,9 @@ test -d "$HOME/.cabal/bin" || mkdir "$HOME/.cabal/bin" || {
 }
 
 ## Remove no longer needed files and directories.
-for Item in $RM_ITEMS
+for item in $RM_ITEMS
 do
-    remove_item "$Item" || exit 1
+    remove_item "$item" || exit 1
 done
 
 ## Warning message

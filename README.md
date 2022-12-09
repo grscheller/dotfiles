@@ -6,55 +6,23 @@ Contains my user configuation files.
 * Fish and Bash configurations
 * Sway and Alacritty configurations
 * Other miscellaneous configurations
+* Arch Linux system configuration tweaks
 
-Also, contains my Arch Linux system configuration tweaks.
+## Scripts
 
-## Installation Scripts
+### Install Into Home Directory
 
-Installs dotfiles into home directory.
+Run [dotfilesInstall](dotfilesInstall) from the root of cloned repo.
 
-* [dotfilesInstall](dotfilesInstall)
-* From the base of the cloned repo run
+### Install System Configurations (Arch Linux Only!)
 
-  ```sh
-     $ ./dotfilesInstall
+Run [systemfilesInstall](systemfilesInstall) from the root of cloned repo.
 
-     Make sure fish & nvim environments get properly updated.
+### Toggle Installed/Repo Neovim Configs
 
-     $
-  ```
-
-* Above needs to be done from the root of the dotfiles repo
-
-Installs system tweaks into system directories (Arch Linux Only!).
-
-* [systemfilesInstall](systemfilesInstall)
-* From the base of the cloned repo run
-
-  ```sh
-     $ sudo ./systemfilesInstall
-     $
-  ```
-
-* Above needs to be done from the root of the dotfiles repo
-
-## Editing Neovim Config with LSP
-
-To edit one version of Neovim using nvim running another version of the
-configuration can be tricky.  To help with this, the `grsSwap` script toggles
-a symlink `~/.config/nvim/lua/grs/`->`dotfiles/config/nvime/lua/grs/` with
-a directory in the installed code base.
-
-* [grsSwap](grsSwap)
-* From the base of the cloned repo run
-
-  ```sh
-     $ ./grsSwap
-     ...
-  ```
-
-* Fish abriviation `grsSway` exists, so you don't have to this from the repo
-* Running `.dotfilesInstall` will fail if symlink is toggled in place
+Run [grsSwap](grsSwap) to toggle between the installed
+~/.config/nvim/lua/grs/ directory and a symlink to the
+corresponding directory in the dotfiles repo.
 
 ## Repo's purposes is to
 
@@ -83,10 +51,3 @@ This work is published from:
       content="US" about="https://github.com/grscheller">
   United States</span>.
 </p>
-
-### Patent claims clarification regarding licence
-
-* To the best of my knowledge, there is nothing patentable in this repo
-* I have no intention to attempt to patent anything from this repo
-* I do not support the concept of software patents
-* I do support software being copyrightable

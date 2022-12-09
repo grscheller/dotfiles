@@ -114,10 +114,10 @@ return packer.startup(function()
    -- Folke neoconf.nvim & neodev.nvim
    use {
       'folke/neoconf.nvim', -- manage global & project level settings
-      'folke/neodev.nvim',  -- auto-configs Sumneko_lua for plugin development
+      'folke/neodev.nvim',  -- auto-config Sumneko_lua for plugin development
    }
 
-   -- LSP & DAP support
+   -- LSP, DAP, & NullLS support
    use {
       'neovim/nvim-lspconfig',
       'mfussenegger/nvim-dap',
