@@ -35,4 +35,4 @@ corresponding directory in the dotfiles repo.
 
 ## License information
 
-![license info](license.html)
+[license info](license.html)
