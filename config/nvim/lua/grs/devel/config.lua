@@ -1,4 +1,4 @@
---[[ Software Devel ??? ]]
+--[[ Plugin Development & Lua Configuration ]]
 
 --[[
      neoconf.nvim: Manage global & project level settings via JSON files.
