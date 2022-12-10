@@ -5,7 +5,7 @@ Contains my user configuation files.
 * Neovim configuration
 * Fish and Bash configurations
 * Sway and Alacritty configurations
-* Arch Linux system configuration tweaks
+* Arch Linux system configuration
 
 ## Scripts
 
@@ -28,7 +28,7 @@ corresponding directory in the dotfiles repo.
 * maintain my own personal configuration files
 * preserve this information for myself
 * help quickly configure new systems for myself
-* provide others useful configuration example
+* provide others useful configuration examples
 
 ## License Information
 

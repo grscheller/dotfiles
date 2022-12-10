@@ -73,6 +73,7 @@ CONFIG_FILES='
    fish/functions/disable_touch_pad.fish
    fish/functions/enable_touch_pad.fish
    fish/functions/ev.fish
+   fish/functions/fdot.fish
    fish/functions/ff.fish
    fish/functions/fields.fish
    fish/functions/fishterm.fish
