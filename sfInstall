@@ -1,15 +1,14 @@
 #!/bin/fish
 #
-#  Install system files into my Arch Linux Systems
+#  Install system files into my Wayland/Systemd based Arch Linux systems.
 #
-#  Usage: sudo ./systemsfilesInstall
-#
-#         run from the cloned dotfiles directory
+#  Usage: sudo ./sfInstall
+#  Usage: sudo DOTFILE_GIT_REPO=$HOME/devel/dotfiles ./sfInstall
 #
 
-set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~grs/devel/dotfiles
 
-cd $DOTFILE_GIT_REPO
+cd $DOTFILE_GIT_REPO 2>/dev/null
 or begin
     printf '\nFailed to cd into the dotfile repo\'s'
     printf '\nhome directory \'%s\'' "$DOTFILE_GIT_REPO"

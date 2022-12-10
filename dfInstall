@@ -1,10 +1,9 @@
 #!/bin/sh
 #
-#  Installs a Fish, Sway. Neovim, Git, SSH and Bash based
-#  software development environment into the $HOME directory
-#  of my Wayland/Systemd based Arch Linux systems.
+#  Installs my Fish, Sway. Neovim, Git, SSH and Bash based
+#  software development environment into my $HOME directory.
 #
-#  Usage: ./dotfilesInstall
+#  Usage: ./dfInstall
 #
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
 #        contain whitespace.  Due to $RM_ITEMS.
@@ -13,12 +12,15 @@
 #        regenerating ~/.config/fish/fish_variables, especially
 #        when there are lots of fish configuration changes.
 #
-#        Usually just using the "re" abbreviation is
-#        enough, but sometimes more of a manual "kick"
-#        is needed.
+#        Usually just using my "re" abbreviation is
+#        enough, but sometimes a bigger "kick" is needed,
+#        like doing
 #
-#        Probably just fighting against someone else's
-#        beloved manual configuration paradigm.
+#          $ rm .config/fish/fish_variables
+#          $ re
+#
+#        This might be a bit too heavy handed if one likes
+#        to manually configure Fish from the command line.
 #
 
 ### Setup

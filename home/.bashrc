@@ -379,9 +379,9 @@ alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
 # Pull down more -- Not good for large websites
 alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
-alias dotfilesInstall=~/devel/dotfiles/bin/dotfilesInstall
-alias systemsfilesInstall=~/devel/dotfiles/bin/systemfilesInstall
-alias grsSwap=~/devel/dotfiles/bin/grsSwap
+# grscheller/dotfiles aliases
+alias dfInstall=~/devel/dotfiles/dfInstall
+alias grsSwap=~/devel/dotfiles/grsSwap
 
 # SSH related variables and aliases
 #   Restart SSH key-agent and add your private

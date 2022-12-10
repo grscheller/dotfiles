@@ -9,21 +9,21 @@
 #  repo being edited.
 #
 
-set -q XDG_CONFIG_HOME; or set -lx XDG_CONFIG_HOME ~/.config
-set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+set -q XDG_CONFIG_HOME; or set -x XDG_CONFIG_HOME ~/.config
+set -q DOTFILE_GIT_REPO; or set -x DOTFILE_GIT_REPO ~/devel/dotfiles
 
 if test -d ~/.config/nvim_lua_grs_backup
    rm $XDG_CONFIG_HOME/nvim/lua/grs
    mv $XDG_CONFIG_HOME/nvim_lua_grs_backup $XDG_CONFIG_HOME/nvim/lua/grs
    printf '\nEdit nvim config files directly in %s' $DOTFILE_GIT_REPO
    printf '\nIssue git commands from dotfiles repo, %s' $DOTFILE_GIT_REPO
-   printf '\nThe dotfileInstall script will now work\n'
+   printf '\nThe dfInstall script will now work\n'
    cd $DOTFILE_GIT_REPO
 else
    mv ~/.config/nvim/lua/grs ~/.config/nvim_lua_grs_backup
    ln -s $DOTFILE_GIT_REPO/config/nvim/lua/grs $XDG_CONFIG_HOME/nvim/lua/grs
    printf '\nEdit nvim config files from %s/nvim/' $XDG_CONFIG_HOME
    printf '\nStill issue git commands from %s' $DOTFILE_GIT_REPO
-   printf '\nThe dotfileInstall script will fail!!!\n'
+   printf '\nThe dfInstall script will fail!!!\n'
    cd $XDG_CONFIG_HOME/nvim
 end

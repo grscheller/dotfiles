@@ -25,7 +25,6 @@ if not set -q fish_abbr_initialized
     abbr -a gd git diff
     abbr -a gf git fetch
     abbr -a gl git log
-    abbr -a gm git mv
     abbr -a gp git pull
     abbr -a gh git push
     abbr -a gs git status  # gs steps on ghostscript
@@ -34,9 +33,8 @@ if not set -q fish_abbr_initialized
     abbr -a addkey 'eval (ssh-agent -c); and ssh-add'
 
     # So I can run these outside the dotfiles repo
-    abbr -a dotfilesInstall '~/devel/dotfiles/bin/dotfilesInstall'
-    abbr -a systemsfilesInstall '~/devel/dotfiles/bin/systemfilesInstall'
-    abbr -a grsSwap '~/devel/dotfiles/bin/grsSwap'
+    abbr -a dfInstall '~/devel/dotfiles/dfInstall'
+    abbr -a grsSwap '~/devel/dotfiles/grsSwap'
 
     # Shell environment cmds
     abbr -a re 'cd; unguard_universals; REDO_ENV=yes fish -l'
