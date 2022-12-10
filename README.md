@@ -10,18 +10,18 @@ Contains my user configuation files.
 
 ## Scripts
 
-### Install Into Home Directory
+### Install into home directory
 
-Run the [dotfilesInstall](bin/dotfilesInstall) POSIX shell script.
+Run the [dfInstall](dfInstall) POSIX shell script.
 
 ### Install System Configurations (Arch Linux Only!)
 
-Run the [systemfilesInstall](bin/systemfilesInstall) Fish shell script
+Run the [sfInstall](sfInstall) Fish shell script
 as root.
 
-### Toggle Installed/Repo Neovim Configs
+### Toggle installed/repo Neovim configs
 
-Run the [grsSwap](bin/grsSwap) Fish shell script to toggle between
+Run the [grsSwap](grsSwap) Fish shell script to toggle between
 the installed ~/.config/nvim/lua/grs/ directory and a symlink to the
 corresponding directory in the dotfiles repo.
 
