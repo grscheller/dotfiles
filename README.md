@@ -5,7 +5,6 @@ Contains my user configuation files.
 * Neovim configuration
 * Fish and Bash configurations
 * Sway and Alacritty configurations
-* Other miscellaneous configurations
 * Arch Linux system configuration tweaks
 
 ## Scripts
@@ -26,11 +25,10 @@ corresponding directory in the dotfiles repo.
 
 ## Repo's Purpose
 
-1. maintain my own personal configuration files
-1. help quickly configure new systems for myself
-1. preserve this information for myself
-1. provide others useful examples for their own configuration files
-1. allow others to use as a starting point for their own version of this repo
+* maintain my own personal configuration files
+* preserve this information for myself
+* help quickly configure new systems for myself
+* provide others useful configuration example
 
 ## License Information
 
