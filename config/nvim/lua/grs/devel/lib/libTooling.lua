@@ -248,8 +248,8 @@ local BuiltinsToMasonPackage = {
 local M = {}
 
 M.configEnum = {
-   auto = 1,    -- auto configue
-   manual = 2,  -- manually configure
+   auto = 1,    -- automatically configue with lspconf
+   man = 2,     -- manually configure
    install = 3, -- install but don't configure
    ignore = 4,  -- don't install nor configure
 }
@@ -276,23 +276,23 @@ local function convertToMasonPkgs(names, package_names)
    return mason_names
 end
 
-M.lspconfig2mason = function(LspServerTbl, pred)
+M.lspconfig2mason = function(LspSvrTbl, pred)
    return convertToMasonPkgs(
-      getFilteredKeys(LspServerTbl.mason, pred),
+      getFilteredKeys(LspSvrTbl.mason, pred),
       LspconfigToMasonPackage
    )
 end
 
-M.dap2mason = function(DapServerTbl, pred)
+M.dap2mason = function(DapSrvrTbl, pred)
    return convertToMasonPkgs(
-      getFilteredKeys(DapServerTbl.mason, pred),
+      getFilteredKeys(DapSrvrTbl.mason, pred),
       DapToMasonPackage
    )
 end
 
-M.nullLs2mason = function(BuiltinTools, pred)
+M.nullLs2mason = function(BuiltinToolsTbl, pred)
    return convertToMasonPkgs(
-      getFilteredKeys(BuiltinTools.mason, pred),
+      getFilteredKeys(BuiltinToolsTbl.mason, pred),
       BuiltinsToMasonPackage
    )
 end

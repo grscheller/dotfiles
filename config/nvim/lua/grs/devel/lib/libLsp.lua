@@ -22,10 +22,8 @@ M.setup = function(LspServerTbl)
       return lspconf, capabilities
    end
 
-   local lspServers = libTooling.serverList(LspServerTbl, m.auto)
-
-   -- Add LSP servers we are not manually configuring
-   for _, lspServer in ipairs(lspServers) do
+   -- Add LSP serve we are letting lspconfig automatically configure
+   for _, lspServer in ipairs(libTooling.serverList(LspServerTbl, m.auto)) do
       lspconf[lspServer].setup {
          capabilities = capabilities,
          on_attach = keymaps.lsp_kb
