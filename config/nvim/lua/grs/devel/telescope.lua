@@ -27,4 +27,4 @@ ts.load_extension 'fzf'
 ts.load_extension 'ui-select'
 
 -- Set Telescope key mappings/bindings
-require('grs.core.keybindings').telescope_kb(ts, tb)
+require('grs.util.keybindings').telescope_kb(ts, tb)

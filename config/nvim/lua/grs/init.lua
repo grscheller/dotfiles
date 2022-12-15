@@ -12,8 +12,8 @@ if version ~= tested_version then
    msg(message)
 end
 
-require 'grs.core.options' -- set options
-require 'grs.core.packer'  -- plugin manager
-require 'grs.theming'      -- colorscheme, statusline & zen-mode
-require 'grs.textedit'     -- general text editing
-require 'grs.devel'        -- LSP based software development environment
+require 'grs.config.options' -- set options
+require 'grs.util.packer'    -- plugin manager
+require 'grs.theming'        -- colorscheme, statusline & zen-mode
+require 'grs.textedit'       -- general text editing
+require 'grs.devel'          -- LSP based software development environment

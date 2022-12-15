@@ -3,7 +3,7 @@
 local M = {}
 
 local libTooling = require 'grs.devel.lib.libTooling'
-local keymaps = require 'grs.core.keybindings'
+local keymaps = require 'grs.util.keybindings'
 local m = libTooling.configEnum
 local ok, lspconf, cmp_nvim_lsp, capabilities
 

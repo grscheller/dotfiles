@@ -117,9 +117,7 @@ CONFIG_FILES='
    nvim/.stylua.toml
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/core/keybindings.lua
-   nvim/lua/grs/core/options.lua
-   nvim/lua/grs/core/packer.lua
+   nvim/lua/grs/config/options.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/config.lua
    nvim/lua/grs/devel/init.lua
@@ -136,6 +134,8 @@ CONFIG_FILES='
    nvim/lua/grs/textedit/init.lua
    nvim/lua/grs/textedit/lib/libText.lua
    nvim/lua/grs/theming/init.lua
+   nvim/lua/grs/util/keybindings.lua
+   nvim/lua/grs/util/packer.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -148,11 +148,7 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/theming.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/options.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/core/
 "
 
 ### functions

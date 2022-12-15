@@ -99,7 +99,7 @@ local BuiltinToolTbls = {
    },
 }
 
-local keymaps = require 'grs.core.keybindings'
+local keymaps = require 'grs.util.keybindings'
 local libVim = require 'grs.lib.libVim'
 local libLsp = require 'grs.devel.lib.libLsp'
 local libMason = require 'grs.devel.lib.libMason'
