@@ -247,13 +247,6 @@ local BuiltinsToMasonPackage = {
 
 local M = {}
 
-M.configEnum = {
-   auto = 1,    -- automatically configue with lspconf
-   man = 2,     -- manually configure
-   install = 3, -- install but don't configure
-   ignore = 4,  -- don't install nor configure
-}
-
 local libFunc = require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
@@ -297,9 +290,9 @@ M.nullLs2mason = function(BuiltinToolsTbl, pred)
    )
 end
 
-M.serverList = function(ServerTbl, configEnum)
+M.serverList = function(ServerTbl, masonEnum)
    local pred = function(_, v)
-      return v == configEnum
+      return v == masonEnum
    end
    return iFlatten {
       getFilteredKeys(ServerTbl.mason, pred),

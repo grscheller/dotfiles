@@ -3,8 +3,9 @@
 local M = {}
 
 local libTooling = require 'grs.devel.lib.libTooling'
+local confMason = require 'grs.config.confMason'
 local keymaps = require 'grs.util.keybindings'
-local m = libTooling.configEnum
+local m = confMason.MasonEnum
 local ok, lspconf, cmp_nvim_lsp, capabilities
 
 ok, lspconf = pcall(require, 'lspconfig')

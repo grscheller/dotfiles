@@ -2,12 +2,12 @@
 
 local M = {}
 
-local libTooling = require 'grs.devel.lib.libTooling'
-local libFunc= require 'grs.lib.libFunc'
+local confMason = require 'grs.config.confMason'
+local libFunc = require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
 local msg = libVim.msg_hit_return_to_continue
-local m = libTooling.configEnum
+local m = confMason.MasonEnum
 
 M.setup = function(BuiltinTools)
    local ok, null_ls = pcall(require, 'null-ls')
