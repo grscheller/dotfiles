@@ -148,11 +148,8 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/theming.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/options.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/core/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/
 "
 
 ### functions
