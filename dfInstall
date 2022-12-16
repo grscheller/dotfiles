@@ -117,8 +117,10 @@ CONFIG_FILES='
    nvim/.stylua.toml
    nvim/init.lua
    nvim/lua/grs/init.lua
+   nvim/lua/grs/conf/keybindings.lua
    nvim/lua/grs/conf/mason.lua
    nvim/lua/grs/conf/options.lua
+   nvim/lua/grs/conf/packer.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/luaConfig.lua
@@ -131,11 +133,9 @@ CONFIG_FILES='
    nvim/lua/grs/textedit/init.lua
    nvim/lua/grs/theming/init.lua
    nvim/lua/grs/util/dap.lua
-   nvim/lua/grs/util/keybindings.lua
    nvim/lua/grs/util/lspconf.lua
    nvim/lua/grs/util/mason.lua
    nvim/lua/grs/util/nullLs.lua
-   nvim/lua/grs/util/packer.lua
    nvim/lua/grs/util/textedit.lua
    sway/config
    waybar/config
@@ -157,6 +157,8 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keybindings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/packer.lua
 "
 
 ### Functions

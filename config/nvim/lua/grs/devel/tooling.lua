@@ -1,6 +1,6 @@
 --[[ Software Devel Tooling ]]
 
-local keymaps = require 'grs.util.keybindings'
+local keymaps = require 'grs.conf.keybindings'
 local confMason = require 'grs.conf.mason'
 local libVim = require 'grs.lib.Vim'
 local utilLspconf = require 'grs.util.lspconf'

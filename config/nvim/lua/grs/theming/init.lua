@@ -1,7 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
 local libVim = require 'grs.lib.Vim'
-local keymaps = require 'grs.util.keybindings'
+local keymaps = require 'grs.conf.keybindings'
 
 local kb = keymaps.kb
 local msg = libVim.msg_hit_return_to_continue

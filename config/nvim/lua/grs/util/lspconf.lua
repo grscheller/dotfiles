@@ -4,7 +4,7 @@ local M = {}
 
 local confMason = require 'grs.conf.mason'
 local utilMason = require 'grs.util.mason'
-local keymaps = require 'grs.util.keybindings'
+local keymaps = require 'grs.conf.keybindings'
 
 
 local LspTbl = confMason.LspSrvTbl
