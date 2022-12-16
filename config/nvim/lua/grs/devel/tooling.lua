@@ -3,21 +3,20 @@
 local keymaps = require 'grs.util.keybindings'
 local confMason = require 'grs.config.confMason'
 local libVim = require 'grs.lib.libVim'
-local libLsp = require 'grs.devel.lib.libLsp'
-local libDap = require 'grs.devel.lib.libDap'
-local libNullLs = require 'grs.devel.lib.libNullLs'
+local utilLspconf = require 'grs.util.lspconf'
+local utilDap = require 'grs.util.dap'
+local utilNullLs = require 'grs.util.nullLs'
 
 local msg = libVim.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspSrvTbl
 local DapTbl = confMason.DapSrvTbl
-local BuiltinTbls = confMason.BuiltinToolTbls
 
 -- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
-local lspconf, capabilities = libLsp.setup(LspTbl)
-local dap, dap_ui_widgets = libDap.setup()
-local nullLs = libNullLs.setup(BuiltinTbls)
+local lspconf, capabilities = utilLspconf.setup()
+local dap, dap_ui_widgets = utilDap.setup()
+local nullLs = utilNullLs.setup()
 
 -- Manual LSP, DAP, and Null-ls configurations as well as other
 -- development environment tweaks.

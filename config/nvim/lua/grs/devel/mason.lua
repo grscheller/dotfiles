@@ -1,5 +1,4 @@
---[[ Mason Infrastructure & Boilerplate ]]
--- Fetch remaining LSP & DAP Servers and Null-ls Builtins using Mason
+--[[ Mason Setup - Infrastructure & Boilerplate ]]
 
 --[[
      Mason package manager infrastructure used to install/upgrade
@@ -9,7 +8,7 @@
 local M = {}
 
 local confMason = require 'grs.config.confMason'
-local libTooling = require 'grs.devel.lib.libTooling'
+local utilMason = require 'grs.util.mason'
 local libFunc = require 'grs.lib.libFunc'
 
 local msg = libFunc.msg_hit_return_to_continue
@@ -38,7 +37,7 @@ mason.setup {
 
 ok, mason_tool_installer = pcall(require, 'mason-tool-installer')
 if not ok then
-   msg 'Problem setting up Mason Tool Installer: grs.devel.lib.mason'
+   msg 'Problem setting up Mason Tool Installer: grs.devel.mason'
    return
 end
 
@@ -47,13 +46,13 @@ end
 local install = function(_, v) return v ~= m.ignore end
 
 local masonPackages = libFunc.iFlatten {
-   libTooling.lspconfig2mason(LspTbl, install),
-   libTooling.dap2mason(DapTbl, install),
-   libTooling.nullLs2mason(BuiltinTbls.code_actions, install),
-   libTooling.nullLs2mason(BuiltinTbls.completions, install),
-   libTooling.nullLs2mason(BuiltinTbls.diagnostics, install),
-   libTooling.nullLs2mason(BuiltinTbls.formatting, install),
-   libTooling.nullLs2mason(BuiltinTbls.hover, install),
+   utilMason.lspconfig2mason(LspTbl, install),
+   utilMason.dap2mason(DapTbl, install),
+   utilMason.nullLs2mason(BuiltinTbls.code_actions, install),
+   utilMason.nullLs2mason(BuiltinTbls.completions, install),
+   utilMason.nullLs2mason(BuiltinTbls.diagnostics, install),
+   utilMason.nullLs2mason(BuiltinTbls.formatting, install),
+   utilMason.nullLs2mason(BuiltinTbls.hover, install),
 }
 
 mason_tool_installer.setup {

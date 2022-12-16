@@ -1,3 +1,5 @@
+--[[ Mason Related Configurations ]]
+
 --[[
      Using Mason as a 3rd party package manager (pm).
 

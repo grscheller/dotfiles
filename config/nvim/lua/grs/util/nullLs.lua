@@ -6,10 +6,11 @@ local confMason = require 'grs.config.confMason'
 local libFunc = require 'grs.lib.libFunc'
 local libVim = require 'grs.lib.libVim'
 
+local BuiltinTbl = confMason.BuiltinToolTbls
 local msg = libVim.msg_hit_return_to_continue
 local m = confMason.MasonEnum
 
-M.setup = function(BuiltinTools)
+M.setup = function()
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
       msg 'Problem null-ls, PUNTING!!!'
@@ -20,24 +21,24 @@ M.setup = function(BuiltinTools)
 
    local builtins = {}
    builtins['code_actions'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTools.code_actions.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTools.code_actions.system, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.code_actions.mason, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.code_actions.system, configure),
    }
    builtins['completions'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTools.completions.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTools.completions.system, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.completions.mason, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.completions.system, configure),
    }
    builtins['diagnostics'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTools.diagnostics.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTools.diagnostics.system, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.diagnostics.mason, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.diagnostics.system, configure),
    }
    builtins['formatting'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTools.formatting.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTools.formatting.system, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.formatting.mason, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.formatting.system, configure),
    }
    builtins['hover'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTools.hover.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTools.hover.system, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.hover.mason, configure),
+      libFunc.getFilteredKeys(BuiltinTbl.hover.system, configure),
    }
 
    local sources = {}

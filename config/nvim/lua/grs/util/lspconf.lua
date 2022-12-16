@@ -2,9 +2,12 @@
 
 local M = {}
 
-local libTooling = require 'grs.devel.lib.libTooling'
-local confMason = require 'grs.config.confMason'
+local confMason = require 'grs.config.mason'
+local utilMason = require 'grs.util.mason'
 local keymaps = require 'grs.util.keybindings'
+
+
+local LspTbl = confMason.LspSrvTbl
 local m = confMason.MasonEnum
 local ok, lspconf, cmp_nvim_lsp, capabilities
 
@@ -18,13 +21,13 @@ else
    capabilities = nil
 end
 
-M.setup = function(LspServerTbl)
+M.setup = function()
    if not lspconf or not capabilities then
       return lspconf, capabilities
    end
 
    -- Add LSP serve we are letting lspconfig automatically configure
-   for _, lspServer in ipairs(libTooling.serverList(LspServerTbl, m.auto)) do
+   for _, lspServer in ipairs(utilMason.serverList(LspTbl, m.auto)) do
       lspconf[lspServer].setup {
          capabilities = capabilities,
          on_attach = keymaps.lsp_kb
