@@ -9,7 +9,7 @@ local M = {}
 
 local confMason = require 'grs.config.confMason'
 local utilMason = require 'grs.util.mason'
-local libFunc = require 'grs.lib.libFunc'
+local libFunc = require 'grs.lib.Functional'
 
 local msg = libFunc.msg_hit_return_to_continue
 local m = confMason.MasonEnum

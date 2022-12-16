@@ -45,8 +45,8 @@ M.LspSrvTbl = {
       hls = m.man,
       pyright = m.ignore,
       rust_analyzer = m.install,
-      rust_tools = m.man,   -- uses lspconfig and dap
-      scala_metals = m.man, -- uses lspconfig and dap
+      rust_tools = m.man,   -- directly uses lspconfig and dap
+      scala_metals = m.man, -- directly uses lspconfig and dap
       sumneko_lua = m.man,  -- right now geared to editing Neovim configs
       taplo = m.auto,
       yamlls = m.auto,
@@ -57,7 +57,7 @@ M.LspSrvTbl = {
 -- There is no reason marking anything as m.auto.
 -- Mason installs packages from the mason tables not marked m.ignore.
 -- Names used are DAP (nvim-dap) names, not Mason package names.
--- For system table, m.manual will turn on a manual config if it exists.
+-- For system table, m.man will turn on a manual config if it exists.
 M.DapSrvTbl = {
    mason = {
       bash = m.install,

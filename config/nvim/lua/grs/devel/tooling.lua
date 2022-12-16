@@ -2,7 +2,7 @@
 
 local keymaps = require 'grs.util.keybindings'
 local confMason = require 'grs.config.confMason'
-local libVim = require 'grs.lib.libVim'
+local libVim = require 'grs.lib.Vim'
 local utilLspconf = require 'grs.util.lspconf'
 local utilDap = require 'grs.util.dap'
 local utilNullLs = require 'grs.util.nullLs'

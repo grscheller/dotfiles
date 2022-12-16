@@ -126,8 +126,8 @@ CONFIG_FILES='
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
-   nvim/lua/grs/lib/libFunc.lua
-   nvim/lua/grs/lib/libVim.lua
+   nvim/lua/grs/lib/Functional.lua
+   nvim/lua/grs/lib/Vim.lua
    nvim/lua/grs/textedit/init.lua
    nvim/lua/grs/theming/init.lua
    nvim/lua/grs/util/dap.lua
@@ -154,6 +154,8 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/lib/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/lib/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/util/lsp.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
 "
 
 ### Functions

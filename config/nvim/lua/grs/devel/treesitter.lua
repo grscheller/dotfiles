@@ -1,6 +1,6 @@
 --[[ Install Language Modules for Built-in Treesitter ]]
 
-local msg = require('grs.lib.libVim').msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_hit_return_to_continue
 
 local ok, ntree = pcall(require, 'nvim-treesitter.configs')
 if ok then

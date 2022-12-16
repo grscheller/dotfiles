@@ -1,7 +1,7 @@
 --[[ Telescope - search, filter, find & pick items with Lua ]]
 
 local ok, ts, tb
-local msg = require('grs.lib.libVim').msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_hit_return_to_continue
 
 ok, ts = pcall(require, 'telescope')
 if ok then

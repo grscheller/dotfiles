@@ -247,8 +247,8 @@ local BuiltinsToMasonPackage = {
 
 local M = {}
 
-local libFunc = require 'grs.lib.libFunc'
-local libVim = require 'grs.lib.libVim'
+local libFunc = require 'grs.lib.Functional'
+local libVim = require 'grs.lib.Vim'
 
 local msg = libVim.msg_hit_return_to_continue
 local iFlatten = libFunc.iFlatten

@@ -25,7 +25,7 @@
      running either of the above commands.
 --]]
 
-local msg = require('grs.lib.libVim').msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_hit_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then

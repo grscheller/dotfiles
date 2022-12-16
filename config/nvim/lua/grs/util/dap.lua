@@ -2,7 +2,7 @@
 
 local M = {}
 
-local libVim = require('grs.lib.libVim')
+local libVim = require('grs.lib.Vim')
 local confMason = require 'grs.config.confMason'
 
 local LspTbl = confMason.LspSrvTbl
