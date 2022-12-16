@@ -11,22 +11,18 @@ local msg = libVim.msg_hit_return_to_continue
 local cmd = vim.api.nvim_command
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspSrvTbl
-local DapTbl = confMason.DapSrvTbl
 
--- Initialize LSP, DAP & Null-ls, also auto-configure.servers & builtins.
+-- Initialize LSP, DAP & Null-ls, also auto-configure servers & builtins.
+
 local lspconf, capabilities = utilLspconf.setup()
 local dap, dap_ui_widgets = utilDap.setup()
 local nullLs = utilNullLs.setup()
-
--- Manual LSP, DAP, and Null-ls configurations as well as other
--- development environment tweaks.
 if not (lspconf and dap and nullLs and capabilities) then
-   if not lspconf then msg 'Error: Setup LSP servers failed!' end
-   if not dap then msg 'Error: Setup DAP servers failed!' end
-   if not nullLs then msg 'Error: Setup null-ls builtins failed!' end
-   if not capabilities then msg 'Error: Setup LSP complitions failed!' end
    return
 end
+
+-- Manual LSP, DAP, and Null-ls configurations as well as
+-- other development environment configurations.
 
 --[[ Lua Configuration - affected by neodev.nvim ]]
 if LspTbl.system.sumneko_lua == m.man or LspTbl.mason.sumneko_lua == m.man then

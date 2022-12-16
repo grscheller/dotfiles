@@ -5,8 +5,9 @@ local M = {}
 local confMason = require 'grs.conf.mason'
 local utilMason = require 'grs.util.mason'
 local keymaps = require 'grs.conf.keybindings'
+local libVim = require 'grs.lib.Vim'
 
-
+local msg = libVim.msg_hit_return_to_continue
 local LspTbl = confMason.LspSrvTbl
 local m = confMason.MasonEnum
 local ok, lspconf, cmp_nvim_lsp, capabilities
@@ -23,6 +24,8 @@ end
 
 M.setup = function()
    if not lspconf or not capabilities then
+      if not lspconf then msg 'Error: Setup LSP servers failed, PUNTING!!!' end
+      if not capabilities then msg 'Error: Setup LSP complitions failed, PUNTING!!!' end
       return lspconf, capabilities
    end
 

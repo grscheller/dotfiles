@@ -6,39 +6,41 @@ local confMason = require 'grs.conf.mason'
 local libFunc = require 'grs.lib.Functional'
 local libVim = require 'grs.lib.Vim'
 
-local BuiltinTbl = confMason.BuiltinToolTbls
 local msg = libVim.msg_hit_return_to_continue
+local iFlatten = libFunc.iFlatten
+local getFilteredKeys = libFunc.getFilteredKeys
+local BuiltinTbls = confMason.BuiltinToolTbls
 local m = confMason.MasonEnum
 
 M.setup = function()
    local ok, null_ls = pcall(require, 'null-ls')
    if not ok then
-      msg 'Problem null-ls, PUNTING!!!'
+      msg 'Error: Problem null-ls, PUNTING!!!'
       return
    end
 
    local configure = function(_, v) return v == m.auto end
 
    local builtins = {}
-   builtins['code_actions'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTbl.code_actions.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTbl.code_actions.system, configure),
+   builtins['code_actions'] = iFlatten {
+      getFilteredKeys(BuiltinTbls.code_actions.mason, configure),
+      getFilteredKeys(BuiltinTbls.code_actions.system, configure),
    }
-   builtins['completions'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTbl.completions.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTbl.completions.system, configure),
+   builtins['completions'] = iFlatten {
+      getFilteredKeys(BuiltinTbls.completions.mason, configure),
+      getFilteredKeys(BuiltinTbls.completions.system, configure),
    }
-   builtins['diagnostics'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTbl.diagnostics.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTbl.diagnostics.system, configure),
+   builtins['diagnostics'] = iFlatten {
+      getFilteredKeys(BuiltinTbls.diagnostics.mason, configure),
+      getFilteredKeys(BuiltinTbls.diagnostics.system, configure),
    }
-   builtins['formatting'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTbl.formatting.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTbl.formatting.system, configure),
+   builtins['formatting'] = iFlatten {
+      getFilteredKeys(BuiltinTbls.formatting.mason, configure),
+      getFilteredKeys(BuiltinTbls.formatting.system, configure),
    }
-   builtins['hover'] = libFunc.iFlatten {
-      libFunc.getFilteredKeys(BuiltinTbl.hover.mason, configure),
-      libFunc.getFilteredKeys(BuiltinTbl.hover.system, configure),
+   builtins['hover'] = iFlatten {
+      getFilteredKeys(BuiltinTbls.hover.mason, configure),
+      getFilteredKeys(BuiltinTbls.hover.system, configure),
    }
 
    local sources = {}
