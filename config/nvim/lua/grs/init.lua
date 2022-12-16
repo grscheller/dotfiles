@@ -1,6 +1,6 @@
 --[[ Flow of Neovim Configuration ]]
 
-local libVim = require 'grs.lib.libVim'
+local libVim = require 'grs.lib.Vim'
 local msg = libVim.msg_hit_return_to_continue
 local version = libVim.nvim_version_str()
 
@@ -12,8 +12,8 @@ if version ~= tested_version then
    msg(message)
 end
 
-require 'grs.core.options' -- set options
-require 'grs.core.packer'  -- plugin manager
+require 'grs.conf.options' -- set options
+require 'grs.conf.packer'  -- plugin manager
 require 'grs.theming'      -- colorscheme, statusline & zen-mode
 require 'grs.textedit'     -- general text editing
 require 'grs.devel'        -- LSP based software development environment

@@ -10,7 +10,7 @@
 
 local M = {}
 
-local libVim = require 'grs.lib.libVim'
+local libVim = require 'grs.lib.Vim'
 local msg = libVim.msg_hit_return_to_continue
 local kb = vim.keymap.set
 
@@ -90,7 +90,7 @@ kb('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
 --[[ Text editing related keybindings ]]
 function M.textedit_kb()
 
-   local libText = require 'grs.textedit.lib.libText'
+   local utilTextedit = require 'grs.util.textedit'
 
    -- Delete & change text without affecting default register
    kb({ 'n', 'x' }, ' d', '"_d', {
@@ -111,7 +111,7 @@ function M.textedit_kb()
    kb('x', '>', '>gv', { desc = 'shift right & reselect' })
 
    -- toggle line numberings schemes
-   kb('n', ' n', libText.toggle_line_numbering, {
+   kb('n', ' n', utilTextedit.toggle_line_numbering, {
       desc = 'toggle line numbering',
    })
 

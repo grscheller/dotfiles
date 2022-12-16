@@ -117,25 +117,26 @@ CONFIG_FILES='
    nvim/.stylua.toml
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/core/keybindings.lua
-   nvim/lua/grs/core/options.lua
-   nvim/lua/grs/core/packer.lua
+   nvim/lua/grs/conf/keybindings.lua
+   nvim/lua/grs/conf/mason.lua
+   nvim/lua/grs/conf/options.lua
+   nvim/lua/grs/conf/packer.lua
    nvim/lua/grs/devel/completions.lua
-   nvim/lua/grs/devel/config.lua
    nvim/lua/grs/devel/init.lua
+   nvim/lua/grs/devel/luaConfig.lua
+   nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
-   nvim/lua/grs/devel/lib/libDap.lua
-   nvim/lua/grs/devel/lib/libLsp.lua
-   nvim/lua/grs/devel/lib/libMason.lua
-   nvim/lua/grs/devel/lib/libNullLs.lua
-   nvim/lua/grs/devel/lib/libTooling.lua
-   nvim/lua/grs/lib/libFunc.lua
-   nvim/lua/grs/lib/libVim.lua
+   nvim/lua/grs/lib/Functional.lua
+   nvim/lua/grs/lib/Vim.lua
    nvim/lua/grs/textedit/init.lua
-   nvim/lua/grs/textedit/lib/libText.lua
    nvim/lua/grs/theming/init.lua
+   nvim/lua/grs/util/dap.lua
+   nvim/lua/grs/util/lspconf.lua
+   nvim/lua/grs/util/mason.lua
+   nvim/lua/grs/util/nullLs.lua
+   nvim/lua/grs/util/textedit.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -148,11 +149,20 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/core/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/config.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/lib/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/lib/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/lsp.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keybindings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/packer.lua
 "
 
-### functions
+### Functions
 
 ## Function to removes files
 remove_item () {

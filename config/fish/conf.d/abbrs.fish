@@ -22,6 +22,7 @@ if not set -q fish_abbr_initialized
     # Git related cmds - anything more complicated, I want to think about
     abbr -a ga git add .
     abbr -a gc git commit
+    abbr -a gco git checkout
     abbr -a gd git diff
     abbr -a gf git fetch
     abbr -a gl git log
