@@ -117,8 +117,8 @@ CONFIG_FILES='
    nvim/.stylua.toml
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/config/mason.lua
-   nvim/lua/grs/config/options.lua
+   nvim/lua/grs/conf/mason.lua
+   nvim/lua/grs/conf/options.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/luaConfig.lua
@@ -156,6 +156,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/util/lsp.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
 "
 
 ### Functions

@@ -7,7 +7,7 @@
 
 local M = {}
 
-local confMason = require 'grs.config.confMason'
+local confMason = require 'grs.conf.mason'
 local utilMason = require 'grs.util.mason'
 local libFunc = require 'grs.lib.Functional'
 

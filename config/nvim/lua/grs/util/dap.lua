@@ -2,8 +2,8 @@
 
 local M = {}
 
-local libVim = require('grs.lib.Vim')
-local confMason = require 'grs.config.confMason'
+local libVim = require 'grs.lib.Vim'
+local confMason = require 'grs.conf.mason'
 
 local LspTbl = confMason.LspSrvTbl
 local msg = libVim.msg_hit_return_to_continue
