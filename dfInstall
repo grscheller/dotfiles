@@ -96,22 +96,22 @@ CONFIG_FILES='
    fish/functions/unguard_universals.fish
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
-   fish/functions/bases/b2b.fish
-   fish/functions/bases/b2d.fish
-   fish/functions/bases/b2h.fish
-   fish/functions/bases/b2o.fish
-   fish/functions/bases/d2b.fish
-   fish/functions/bases/d2d.fish
-   fish/functions/bases/d2h.fish
-   fish/functions/bases/d2o.fish
-   fish/functions/bases/h2b.fish
-   fish/functions/bases/h2d.fish
-   fish/functions/bases/h2h.fish
-   fish/functions/bases/h2o.fish
-   fish/functions/bases/o2b.fish
-   fish/functions/bases/o2d.fish
-   fish/functions/bases/o2h.fish
-   fish/functions/bases/o2o.fish
+   fish/functions/b2b.fish
+   fish/functions/b2d.fish
+   fish/functions/b2h.fish
+   fish/functions/b2o.fish
+   fish/functions/d2b.fish
+   fish/functions/d2d.fish
+   fish/functions/d2h.fish
+   fish/functions/d2o.fish
+   fish/functions/h2b.fish
+   fish/functions/h2d.fish
+   fish/functions/h2h.fish
+   fish/functions/h2o.fish
+   fish/functions/o2b.fish
+   fish/functions/o2d.fish
+   fish/functions/o2h.fish
+   fish/functions/o2o.fish
    git/config
    nvim/.neoconf.json
    nvim/.stylua.toml
@@ -160,6 +160,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keybindings.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/util/packer.lua
+   ${XDG_CONFIG_HOME}/fish/functions/bases/
 "
 
 ### Functions
