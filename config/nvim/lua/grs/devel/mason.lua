@@ -10,6 +10,7 @@ local M = {}
 local confMason = require 'grs.conf.mason'
 local utilMason = require 'grs.util.mason'
 local libFunc = require 'grs.lib.Functional'
+local Vim = require 'grs.lib.Vim'
 
 local msg = libFunc.msg_hit_return_to_continue
 local m = confMason.MasonEnum
@@ -43,7 +44,9 @@ end
 
 -- Mason-tool-installer, automates Mason tool installation.
 
-local install = function(_, v) return v ~= m.ignore end
+local install = function(_, v)
+   return v ~= m.ignore
+end
 
 local masonPackages = libFunc.iFlatten {
    utilMason.lspconfig2mason(LspTbl, install),
@@ -62,10 +65,10 @@ mason_tool_installer.setup {
    start_delay = 3000 -- milliseconds
 }
 
-vim.api.nvim_create_autocmd('User', {
+Vim.api.nvim_create_autocmd('User', {
    pattern = 'MasonToolsUpdateCompleted',
    callback = function()
-      vim.schedule(function()
+      Vim.schedule(function()
          print('ﮊ  mason-tool-installer has finished!')
       end)
    end

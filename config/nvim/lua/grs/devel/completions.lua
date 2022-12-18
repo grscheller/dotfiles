@@ -1,11 +1,11 @@
 --[[ Completions & Snippets ]]
 
-local libVim = require 'grs.lib.Vim'
+local Vim = require 'grs.lib.Vim'
 
 local ok
 local cmp_under_comparator, cmp_comparators
 local cmp, luasnip, lspkind
-local msg = libVim.msg_hit_return_to_continue
+local msg = Vim.msg_hit_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -111,7 +111,9 @@ cmp.setup {
       {
          name = 'buffer',
          option = {
-            get_bufnrs = function() return vim.api.nvim_list_bufs() end,
+            get_bufnrs = function()
+               return Vim.api.nvim_list_bufs()
+            end,
          },
       },
       {
@@ -146,7 +148,7 @@ cmp.setup {
             cmp.select_next_item()
          elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-         elseif libVim.cursor_has_words_before_it() then
+         elseif Vim.cursor_has_words_before_it() then
             cmp.complete()
          else
             fallback()

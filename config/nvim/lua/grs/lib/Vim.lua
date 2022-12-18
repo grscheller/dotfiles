@@ -2,6 +2,14 @@
 
 local M = {}
 
+--[[ Vim API (until Selene or Neovim is fixed ]]
+
+M.api = vim.api
+M.cmd = vim.cmd
+M.g = vim.g
+M.highlight = vim.highlight
+M.schedule = vim.schedule
+
 --[[ User messaging ]]
 
 function M.msg_hit_return_to_continue(message)

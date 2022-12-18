@@ -1,10 +1,10 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local libVim = require 'grs.lib.Vim'
+local Vim = require 'grs.lib.Vim'
 local keymaps = require 'grs.conf.keybindings'
 
 local kb = keymaps.kb
-local msg = libVim.msg_hit_return_to_continue
+local msg = Vim.msg_hit_return_to_continue
 
 --[[ Keybindings not related to any specific plugins ]]
 keymaps.textedit_kb()
@@ -26,7 +26,7 @@ else
 end
 
 -- Configure justtinmk/vim-sneak plugin
-vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
+Vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
 kb({ 'n', 'x' }, 'f', '<Plug>Sneak_f')
 kb({ 'n', 'x' }, 'F', '<Plug>Sneak_F')
@@ -34,9 +34,9 @@ kb({ 'n', 'x' }, 't', '<Plug>Sneak_t')
 kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local usercmd = vim.api.nvim_create_user_command
+local augroup = Vim.api.nvim_create_augroup
+local autocmd = Vim.api.nvim_create_autocmd
+local usercmd = Vim.api.nvim_create_user_command
 
 local grs_text_group = augroup('grs_text', {})
 
@@ -63,7 +63,7 @@ autocmd('CmdLineLeave', {
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
-      vim.highlight.on_yank {
+      Vim.highlight.on_yank {
          timeout = 500,
          higroup = 'Visual',
       }

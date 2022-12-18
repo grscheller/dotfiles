@@ -90,6 +90,7 @@ M.BuiltinToolTbls = {
       system = {
          cppcheck = m.auto,
          cpplint = m.auto,
+         selene = m.auto,
       },
    },
    formatting = {

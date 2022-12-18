@@ -2,13 +2,13 @@
 
 local keymaps = require 'grs.conf.keybindings'
 local confMason = require 'grs.conf.mason'
-local libVim = require 'grs.lib.Vim'
+local Vim = require 'grs.lib.Vim'
 local utilLspconf = require 'grs.util.lspconf'
 local utilDap = require 'grs.util.dap'
 local utilNullLs = require 'grs.util.nullLs'
 
-local msg = libVim.msg_hit_return_to_continue
-local cmd = vim.api.nvim_command
+local msg = Vim.msg_hit_return_to_continue
+local cmd = Vim.api.nvim_command
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspSrvTbl
 
@@ -53,7 +53,7 @@ if LspTbl.system.hls == m.man or LspTbl.mason.hls == m.man then
 end
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
-vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
+Vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
 
 --[[ Rust-Tools directly configures lspconfig
 
@@ -143,9 +143,9 @@ if LspTbl.system.scala_metals == m.man then
       end
 
       local scala_metals_group =
-      vim.api.nvim_create_augroup('scala-metals', { clear = true })
+      Vim.api.nvim_create_augroup('scala-metals', { clear = true })
 
-      vim.api.nvim_create_autocmd('FileType', {
+      Vim.api.nvim_create_autocmd('FileType', {
          pattern = { 'scala', 'sbt' },
          callback = function() metals.initialize_or_attach(metals_config) end,
          group = scala_metals_group,

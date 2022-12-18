@@ -25,7 +25,9 @@
      running either of the above commands.
 --]]
 
-local msg = require('grs.lib.Vim').msg_hit_return_to_continue
+local Vim = require('grs.lib.Vim')
+
+local msg = Vim.msg_hit_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
@@ -43,7 +45,7 @@ packer.init {
    },
 }
 
-vim.api.nvim_create_autocmd('User', {
+Vim.api.nvim_create_autocmd('User', {
    pattern = 'PackerComplete',
    callback = function() print '  Packer has finished!' end,
 })

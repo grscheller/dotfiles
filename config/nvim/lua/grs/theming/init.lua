@@ -1,10 +1,10 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local libVim = require 'grs.lib.Vim'
+local Vim = require 'grs.lib.Vim'
 local keymaps = require 'grs.conf.keybindings'
 
 local kb = keymaps.kb
-local msg = libVim.msg_hit_return_to_continue
+local msg = Vim.msg_hit_return_to_continue
 
 local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 
@@ -23,9 +23,9 @@ if ok then
       colors = my_colors,
       overrides = my_overrides,
    }
-   vim.cmd [[colorscheme kanagawa]]
+   Vim.cmd [[colorscheme kanagawa]]
 else
-   vim.cmd [[colorscheme elflord]]
+   Vim.cmd [[colorscheme elflord]]
 end
 
 -- Setup Lualine with Kanagawa theme based colors
@@ -155,8 +155,8 @@ if ok then
          twilght = { enable = true },
       },
       on_open = function(win)
-         vim.api.nvim_win_set_option(win, 'scrolloff', 10)
-         vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
+         Vim.api.nvim_win_set_option(win, 'scrolloff', 10)
+         Vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
       end,
       on_close = function() end,
    }
