@@ -18,7 +18,11 @@ local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then
    local my_colors = { bg = '#090618' }
-   kanagawa.setup { colors = my_colors }
+   local my_overrides = { ColorColumn = { bg = '#16161D' } }
+   kanagawa.setup {
+      colors = my_colors,
+      overrides = my_overrides,
+   }
    vim.cmd [[colorscheme kanagawa]]
 else
    vim.cmd [[colorscheme elflord]]

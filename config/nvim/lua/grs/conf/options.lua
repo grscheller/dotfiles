@@ -22,7 +22,8 @@ local options = {
    undofile = true, -- save undo history in ~/.local/share/nvim/undo/
    ignorecase = true, -- Case insensitive search when given
    smartcase = true, -- just lower case search patterns.
-   colorcolumn = '80', -- indicate column 80, as a guide to keep source code
+   textwidth = 80, -- good for text files and Markdown
+   colorcolumn = '+1,+21,+41', -- guide to keep source code horz. under control
 
    -- Windowing preferences
    mouse = 'a', -- enable mouse for all modes
