@@ -1,4 +1,4 @@
---[[ Software Devel Tooling ]]
+--[[ Software Development Tooling ]]
 
 local keymaps = require 'grs.conf.keybindings'
 local confMason = require 'grs.conf.mason'
