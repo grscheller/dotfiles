@@ -8,6 +8,7 @@ M.api = vim.api
 M.cmd = vim.cmd
 M.g = vim.g
 M.highlight = vim.highlight
+M.keymap = vim.keymap
 M.schedule = vim.schedule
 
 --[[ User messaging ]]

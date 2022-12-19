@@ -9,10 +9,10 @@ local M = {}
 
 local confMason = require 'grs.conf.mason'
 local utilMason = require 'grs.util.mason'
-local libFunc = require 'grs.lib.Functional'
+local func = require 'grs.lib.functional'
 local Vim = require 'grs.lib.Vim'
 
-local msg = libFunc.msg_hit_return_to_continue
+local msg = func.msg_hit_return_to_continue
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspSrvTbl
 local DapTbl = confMason.DapSrvTbl
@@ -48,7 +48,7 @@ local install = function(_, v)
    return v ~= m.ignore
 end
 
-local masonPackages = libFunc.iFlatten {
+local masonPackages = func.iFlatten {
    utilMason.lspconfig2mason(LspTbl, install),
    utilMason.dap2mason(DapTbl, install),
    utilMason.nullLs2mason(BuiltinTbls.code_actions, install),

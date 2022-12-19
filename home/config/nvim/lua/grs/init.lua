@@ -1,8 +1,8 @@
 --[[ Flow of Neovim Configuration ]]
 
-local libVim = require 'grs.lib.Vim'
-local msg = libVim.msg_hit_return_to_continue
-local version = libVim.nvim_version_str()
+local Vim = require 'grs.lib.Vim'
+local msg = Vim.msg_hit_return_to_continue
+local version = Vim.nvim_version_str()
 
 local tested_version = '0.8.1'
 if version ~= tested_version then

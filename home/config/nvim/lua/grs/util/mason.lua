@@ -247,12 +247,12 @@ local BuiltinsToMasonPackage = {
 
 local M = {}
 
-local libFunc = require 'grs.lib.Functional'
-local libVim = require 'grs.lib.Vim'
+local func = require 'grs.lib.functional'
+local Vim = require 'grs.lib.Vim'
 
-local msg = libVim.msg_hit_return_to_continue
-local iFlatten = libFunc.iFlatten
-local getFilteredKeys = libFunc.getFilteredKeys
+local iFlatten = func.iFlatten
+local getFilteredKeys = func.getFilteredKeys
+local msg = Vim.msg_hit_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}

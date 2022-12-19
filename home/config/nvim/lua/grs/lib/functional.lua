@@ -17,7 +17,9 @@ end
 M.getFilteredKeys = function(t, p)
    local filteredKeys = {}
    for k, v in pairs(t) do
-      if p(k, v) then table.insert(filteredKeys, k) end
+      if p(k, v) then
+         table.insert(filteredKeys, k)
+      end
    end
    return filteredKeys
 end

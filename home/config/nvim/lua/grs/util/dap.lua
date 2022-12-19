@@ -2,11 +2,7 @@
 
 local M = {}
 
-local libVim = require 'grs.lib.Vim'
-local confMason = require 'grs.conf.mason'
-
-local LspTbl = confMason.LspSrvTbl
-local msg = libVim.msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_hit_return_to_continue
 
 M.setup = function()
    local ok, dap = pcall(require, 'dap')

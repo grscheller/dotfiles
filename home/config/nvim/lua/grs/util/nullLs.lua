@@ -3,12 +3,12 @@
 local M = {}
 
 local confMason = require 'grs.conf.mason'
-local libFunc = require 'grs.lib.Functional'
-local libVim = require 'grs.lib.Vim'
+local func = require 'grs.lib.functional'
+local Vim = require 'grs.lib.Vim'
 
-local msg = libVim.msg_hit_return_to_continue
-local iFlatten = libFunc.iFlatten
-local getFilteredKeys = libFunc.getFilteredKeys
+local msg = Vim.msg_hit_return_to_continue
+local iFlatten = func.iFlatten
+local getFilteredKeys = func.getFilteredKeys
 local BuiltinTbls = confMason.BuiltinToolTbls
 local m = confMason.MasonEnum
 
@@ -19,7 +19,9 @@ M.setup = function()
       return
    end
 
-   local configure = function(_, v) return v == m.auto end
+   local configure = function(_, v)
+      return v == m.auto
+   end
 
    local builtins = {}
    builtins['code_actions'] = iFlatten {
