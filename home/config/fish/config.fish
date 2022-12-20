@@ -43,14 +43,6 @@ and begin
     ## Configure fish itself
     set -U fish_features all
 
-    # Create additonal places for autoload functions
-    if not set -q origFuncPath
-        set -g origFuncPath $fish_function_path
-        set -g fish_function_path = \
-            $origFuncPath[1]{,/bases} \
-            $origFuncPath[2..]
-    end
-
     # Enable vi keybindings
     fish_vi_key_bindings
 
@@ -62,7 +54,8 @@ and begin
 
     # Set up paging
     set -gx EDITOR nvim
-    set -gx VISUAL nvim
+    set -gx VISUAL $EDITOR
+    set -gx SUDO_EDITOR $EDITOR
     set -gx PAGER 'nvim -R'
     set -gx MANPAGER 'nvim +Man!'
     set -gx DIFFPROG 'nvim -d'
@@ -108,12 +101,11 @@ and begin
     if string match -qr 'arch' (uname -r)
         # For a functional tray in Waybar
         set -gx XDG_CURRENT_DESKTOP sway
-        set -gx XDG_SESSION_DESKTOP sway
         # Tell Firefox to use Wayland if available
         set -gx MOZ_ENABLE_WAYLAND 1
         # Get QT clients to play nice with Wayland
         set -gx QT_QPA_PLATFORM wayland
-        # Use /usr/bin/qt5ct utility to adjust QT
+        # Use /usr/bin/qt6ct utility to adjust QT
         set -gx QT_QPA_PLATFORMTHEME qt6ct
         # Set Dark Mode for GTK apps
         set -gx GTK_THEME 'Adwaita:dark'
