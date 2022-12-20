@@ -2,17 +2,19 @@
 
 local M = {}
 
+local Vim = require 'grs.lib.Vim'
+
 --[[ Line numbering related functions ]]
 
 function M.toggle_line_numbering()
-   if not vim.wo.number and not vim.wo.relativenumber then
-      vim.wo.number = true
-      vim.wo.relativenumber = true
-   elseif vim.wo.number and vim.wo.relativenumber then
-      vim.wo.relativenumber = false
+   if not Vim.wo.number and not Vim.wo.relativenumber then
+      Vim.wo.number = true
+      Vim.wo.relativenumber = true
+   elseif Vim.wo.number and Vim.wo.relativenumber then
+      Vim.wo.relativenumber = false
    else
-      vim.wo.number = false
-      vim.wo.relativenumber = false
+      Vim.wo.number = false
+      Vim.wo.relativenumber = false
    end
 end
 

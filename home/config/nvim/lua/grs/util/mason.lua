@@ -262,7 +262,8 @@ local function convertToMasonPkgs(names, package_names)
          cnt = cnt + 1
          mason_names[cnt] = package_names[v]
       else
-         local message = 'Warning: No Mason package for "' .. v .. '" found!'
+         local message = string.format(
+            'Warning: No Mason package for %s found!"', v)
          msg(message)
       end
    end

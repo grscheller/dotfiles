@@ -53,7 +53,9 @@ if LspTbl.system.hls == m.man or LspTbl.mason.hls == m.man then
 end
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
-Vim.g.python3_host_prog = os.getenv 'HOME' .. '/.local/share/pyenv/shims/python'
+Vim.g.python3_host_prog = string.format('%s%s',
+   os.getenv('HOME'),
+   '/.local/share/pyenv/shims/python')
 
 --[[ Rust-Tools directly configures lspconfig
 

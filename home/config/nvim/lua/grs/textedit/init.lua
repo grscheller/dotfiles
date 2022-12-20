@@ -1,7 +1,7 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local Vim = require 'grs.lib.Vim'
 local keymaps = require 'grs.conf.keybindings'
+local Vim = require 'grs.lib.Vim'
 
 local kb = keymaps.kb
 local msg = Vim.msg_hit_return_to_continue

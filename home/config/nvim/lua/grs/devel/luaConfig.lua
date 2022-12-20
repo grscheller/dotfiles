@@ -12,8 +12,12 @@ local ok_conf, neoconf = pcall(require, 'neoconf')
 local ok_dev, neodev = pcall(require, 'neodev')
 
 if not ok_conf or not ok_dev then
-   if not ok_conf then msg 'Warning: Neoconf.nvim setup failed.' end
-   if not ok_dev then msg 'Warning: Neodev.conf setup failed.' end
+   if not ok_conf then
+      msg 'Warning: Neoconf.nvim setup failed.'
+   end
+   if not ok_dev then
+      msg 'Warning: Neodev.conf setup failed.'
+   end
    return
 end
 

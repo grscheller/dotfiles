@@ -1,7 +1,7 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local Vim = require 'grs.lib.Vim'
 local keymaps = require 'grs.conf.keybindings'
+local Vim = require 'grs.lib.Vim'
 
 local kb = keymaps.kb
 local msg = Vim.msg_hit_return_to_continue
@@ -12,8 +12,7 @@ local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
      Setup Kanagawa colorscheme
 
      A colorschemen inspired by TokyoNight,
-     Gruvbox, and the art of Kanagawa.
-
+     Gruvbox, and the artwork of Kanagawa.
 --]]
 ok, kanagawa = pcall(require, 'kanagawa')
 if ok then

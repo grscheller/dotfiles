@@ -31,8 +31,11 @@ local msg = Vim.msg_hit_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
-   local message = 'Warning: Packer not installed/configured - no plugins,\n'
-       .. '         to bootstrap, exit Neovim and run: ~/bin/bsPacker'
+   local message = string.format('%s%s,\n%s%s',
+      'Warning: ',
+      'Packer not installed and/or not configured, no plugins!',
+      '         ',
+      'To bootstrap Packer, exit Neovim and run: ~/bin/bsPacker')
    msg(message)
    return
 end

@@ -49,10 +49,12 @@ local options = {
    shortmess = 'atToOc', -- shorten statusline - removed F for Scala Metals
 }
 
+local Vim = require 'grs.lib.Vim' -- used to make Selene happy
+
 for k, v in pairs(options) do
-   vim.opt[k] = v
+   Vim.opt[k] = v
 end
 
 -- Modified existing nvim options
-vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
-vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions
+Vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
+Vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions

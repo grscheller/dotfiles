@@ -2,11 +2,17 @@
 
 local M = {}
 
---[[ Vim API (until Selene or Neovim is fixed ]]
+--[[ Vim API (until Selene or Neovim get fixed ]]
 
 M.api = vim.api
 M.cmd = vim.cmd
 M.g = vim.g
+M.o = vim.o
+M.bo = vim.bo
+M.wo = vim.wo
+M.opt = vim.opt
+M.opt_global = vim.opt_global
+M.opt_local = vim.opt_local
 M.highlight = vim.highlight
 M.keymap = vim.keymap
 M.schedule = vim.schedule
@@ -25,12 +31,10 @@ end
 
 function M.cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-   return col ~= 0
-       and vim.api
-       .nvim_buf_get_lines(0, line - 1, line, true)[1]
-       :sub(col, col)
-       :match '%s'
-       == nil
+   return col ~= 0 and
+      vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]
+      :sub(col, col)
+      :match '%s' == nil
 end
 
 --[[ Neovim version information ]]
