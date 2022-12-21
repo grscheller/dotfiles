@@ -107,9 +107,13 @@ function M.textedit_kb()
    kb({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
    kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
 
-   -- Shift text and reselect
+   -- Shift line and reselect
    kb('x', '<', '<gv', { desc = 'shift left & reselect' })
-   kb('x', '>', '>gv', { desc = 'shift right & reselect' })
+   kb('x', '>', '<gv', { desc = 'shift right & reselect' })
+
+   -- Move visual selection up & down
+   kb('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
+   kb('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
 
    -- toggle line numberings schemes
    kb('n', ' n', utilTextedit.toggle_line_numbering, {
