@@ -23,7 +23,7 @@ local options = {
    ignorecase = true, -- Case insensitive search when given
    smartcase = true, -- just lower case search patterns.
    textwidth = 80, -- good for text files and Markdown
-   colorcolumn = '+1,+21,+41', -- guide to keep source code horz. under control
+   colorcolumn = '+1,+41', -- guide to keep source code horz. under control
 
    -- Windowing preferences
    mouse = 'a', -- enable mouse for all modes
@@ -55,6 +55,12 @@ for k, v in pairs(options) do
    Vim.opt[k] = v
 end
 
--- Modified existing nvim options
 Vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
-Vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions
+Vim.opt.iskeyword:append { '-' }    -- adds snake-case to word motions
+Vim.opt.listchars = {               -- for :list and :set list
+   space = '_',
+   trail = '*',
+   nbsp = '+',
+   tab = '<->',
+   eol = '$',
+}
