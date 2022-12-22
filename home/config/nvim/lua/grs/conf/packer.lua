@@ -44,26 +44,30 @@ local packer_util = require 'packer.util'
 
 packer.init {
    display = {
-      open_fn = function() return packer_util.float { border = 'rounded' } end,
+      open_fn = function()
+         return packer_util.float { border = 'rounded' }
+      end,
    },
 }
 
 Vim.api.nvim_create_autocmd('User', {
    pattern = 'PackerComplete',
-   callback = function() print '  Packer has finished!' end,
+   callback = function()
+      print '  Packer has finished!'
+   end,
 })
 
 local use = packer.use
 
 return packer.startup(function()
    -- Packer manages itself
-   use { 'wbthomason/packer.nvim' }
+   use 'wbthomason/packer.nvim'
 
    -- Library used by other plugins
-   use { 'nvim-lua/plenary.nvim' }
+   use 'nvim-lua/plenary.nvim'
 
    -- Make keybindings discoverable with Whick-Key
-   use { 'folke/which-key.nvim' }
+   use 'folke/which-key.nvim'
 
    -- General purpose text editing plugins
    use {
@@ -84,20 +88,31 @@ return packer.startup(function()
    }
 
    -- Install language modules for built-in treesitter
-   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdateSync' }
+   use {
+      'nvim-treesitter/nvim-treesitter',
+      run = ':TSUpdateSync',
+   }
 
    -- Telescope - highly extendable fuzzy finder over lists
    use {
       'nvim-telescope/telescope.nvim',
-      'nvim-telescope/telescope-ui-select.nvim',
-      'nvim-telescope/telescope-file-browser.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      'nvim-telescope/telescope-frecency.nvim',
-      'kkharji/sqlite.lua',
+      requires = {
+         'nvim-telescope/telescope-ui-select.nvim',
+         'nvim-telescope/telescope-file-browser.nvim',
+         {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            run = 'make',
+         },
+         'nvim-telescope/telescope-frecency.nvim',
+         'kkharji/sqlite.lua',
+      },
    }
 
    -- Snippet support
-   use { 'L3MON4D3/LuaSnip', 'rafamadriz/friendly-snippets' }
+   use {
+      'L3MON4D3/LuaSnip',
+      'rafamadriz/friendly-snippets',
+   }
 
    -- Completion support
    use {

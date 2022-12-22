@@ -5,7 +5,7 @@ local M = {}
 local confMason = require 'grs.conf.mason'
 local keymaps = require 'grs.conf.keybindings'
 local Vim = require 'grs.lib.Vim'
-local utilMason = require 'grs.util.mason'
+local utilMason = require 'grs.devel.util.mason'
 
 local msg = Vim.msg_hit_return_to_continue
 local LspTbl = confMason.LspSrvTbl

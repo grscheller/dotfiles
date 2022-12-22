@@ -91,8 +91,6 @@ kb('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
 --[[ Text editing related keybindings ]]
 function M.textedit_kb()
 
-   local utilTextedit = require 'grs.util.textedit'
-
    -- Delete & change text without affecting default register
    kb({ 'n', 'x' }, ' d', '"_d', {
       desc = 'delete text to blackhole register',
@@ -111,12 +109,12 @@ function M.textedit_kb()
    kb('x', '<', '<gv', { desc = 'shift left & reselect' })
    kb('x', '>', '<gv', { desc = 'shift right & reselect' })
 
-   -- Move visual selection up & down
+   -- Move visual selection up or down a line
    kb('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
    kb('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
 
    -- toggle line numberings schemes
-   kb('n', ' n', utilTextedit.toggle_line_numbering, {
+   kb('n', ' n', Vim.toggle_line_numbering, {
       desc = 'toggle line numbering',
    })
 

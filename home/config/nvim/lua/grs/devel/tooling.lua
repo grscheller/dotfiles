@@ -3,9 +3,9 @@
 local keymaps = require 'grs.conf.keybindings'
 local confMason = require 'grs.conf.mason'
 local Vim = require 'grs.lib.Vim'
-local utilLspconf = require 'grs.util.lspconf'
-local utilDap = require 'grs.util.dap'
-local utilNullLs = require 'grs.util.nullLs'
+local utilLspconf = require 'grs.devel.util.lspconf'
+local utilDap = require 'grs.devel.util.dap'
+local utilNullLs = require 'grs.devel.util.nullLs'
 
 local msg = Vim.msg_hit_return_to_continue
 local cmd = Vim.api.nvim_command

@@ -96,37 +96,41 @@ cmp.setup {
       },
    },
 
-   sources = cmp.config.sources({
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'nvim_lua' },
-      { name = 'nvim_lsp' },
-   }, {
+   sources = cmp.config.sources(
       {
-         name = 'path',
-         option = {
-            label_trailing_slash = true,
-            trailing_slash = false,
+         { name = 'nvim_lsp_signature_help' },
+         { name = 'nvim_lua' },
+         { name = 'nvim_lsp' },
+      },
+      {
+         {
+            name = 'path',
+            option = {
+               label_trailing_slash = true,
+               trailing_slash = false,
+            },
+         },
+         {
+            name = 'buffer',
+            option = {
+               get_bufnrs = function()
+                  return Vim.api.nvim_list_bufs()
+               end,
+            },
+         },
+         {
+            name = 'rg',
+            option = {
+               additional_arguments = '--smart-case --hidden',
+            },
+            keyword_length = 3,
+            max_item_count = 12,
          },
       },
       {
-         name = 'buffer',
-         option = {
-            get_bufnrs = function()
-               return Vim.api.nvim_list_bufs()
-            end,
-         },
-      },
-      {
-         name = 'rg',
-         option = {
-            additional_arguments = '--smart-case --hidden',
-         },
-         keyword_length = 3,
-         max_item_count = 12,
-      },
-   }, {
-      { name = 'luasnip' },
-   }),
+         { name = 'luasnip' },
+      }
+   ),
 
    mapping = {
       ['<Up>'] = cmp.mapping.select_prev_item(select_opts),

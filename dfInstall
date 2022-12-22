@@ -125,7 +125,7 @@ CONFIG_FILES='
    nvim/lua/grs/conf/packer.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
-   nvim/lua/grs/devel/luaConfig.lua
+   nvim/lua/grs/devel/luaconf.lua
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
@@ -134,11 +134,10 @@ CONFIG_FILES='
    nvim/lua/grs/lib/Vim.lua
    nvim/lua/grs/textedit/init.lua
    nvim/lua/grs/theming/init.lua
-   nvim/lua/grs/util/dap.lua
-   nvim/lua/grs/util/lspconf.lua
-   nvim/lua/grs/util/mason.lua
-   nvim/lua/grs/util/nullLs.lua
-   nvim/lua/grs/util/textedit.lua
+   nvim/lua/grs/devel/util/dap.lua
+   nvim/lua/grs/devel/util/lspconf.lua
+   nvim/lua/grs/devel/util/mason.lua
+   nvim/lua/grs/devel/util/nullLs.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -155,16 +154,15 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/config.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/lib/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/lib/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/lsp.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/Functional.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/keybindings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/packer.lua
    ${XDG_CONFIG_HOME}/fish/functions/bases/
    ${XDG_CONFIG_HOME}/nvim/.stylua.toml
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaConfig.lua
 "
 
 ### Functions
