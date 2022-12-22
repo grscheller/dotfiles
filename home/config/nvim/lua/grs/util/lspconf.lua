@@ -30,7 +30,7 @@ M.setup = function()
          msg 'Error: Setup LSP servers failed, PUNTING!!!'
       end
       if not capabilities then
-         msg 'Error: Setup LSP complitions failed, PUNTING!!!'
+         msg 'Error: Setup LSP completions failed, PUNTING!!!'
       end
       return lspconf, capabilities
    end

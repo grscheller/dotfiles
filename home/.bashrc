@@ -3,7 +3,7 @@
 #  ~/.bashrc
 #
 #  Bash configuration across multiple,
-#  more or or less, POSIX complient systems.
+#  more or or less, POSIX compliant systems.
 #
 
 ## If not interactive, don't do anything.

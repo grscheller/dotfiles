@@ -4,8 +4,6 @@ local M = {}
 
 --[[ Vim API (until Selene or Neovim get fixed ]]
 
-M.api = vim.api
-M.cmd = vim.cmd
 M.g = vim.g
 M.o = vim.o
 M.bo = vim.bo
@@ -13,8 +11,12 @@ M.wo = vim.wo
 M.opt = vim.opt
 M.opt_global = vim.opt_global
 M.opt_local = vim.opt_local
+M.api = vim.api
+M.cmd = vim.cmd
+M.diagnostic = vim.diagnostic
 M.highlight = vim.highlight
 M.keymap = vim.keymap
+M.lsp = vim.lsp
 M.schedule = vim.schedule
 
 --[[ User messaging ]]

@@ -1,5 +1,8 @@
 --[[ Options - reflecting my personal preferences ]]
 
+local Vim = require 'grs.lib.Vim' -- used to make Selene happy
+
+-- string, numeric  & boolean options
 local options = {
    -- POSIX compatible shells are needed by some plugins
    shell = '/bin/sh',
@@ -49,12 +52,11 @@ local options = {
    shortmess = 'atToOc', -- shorten statusline - removed F for Scala Metals
 }
 
-local Vim = require 'grs.lib.Vim' -- used to make Selene happy
-
 for k, v in pairs(options) do
    Vim.opt[k] = v
 end
 
+-- list & dictionary options
 Vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
 Vim.opt.iskeyword:append { '-' }    -- adds snake-case to word motions
 Vim.opt.listchars = {               -- for :list and :set list
