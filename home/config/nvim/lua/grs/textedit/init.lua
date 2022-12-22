@@ -4,10 +4,8 @@ local keymaps = require 'grs.conf.keybindings'
 local Vim = require 'grs.lib.Vim'
 
 local kb = keymaps.kb
+local wk = keymaps.wk
 local msg = Vim.msg_hit_return_to_continue
-
---[[ Keybindings not related to any specific plugins ]]
-keymaps.textedit_kb()
 
 --[[ Configure specific text editing relaed plugins ]]
 
@@ -34,6 +32,7 @@ kb({ 'n', 'x' }, 't', '<Plug>Sneak_t')
 kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
+
 local augroup = Vim.api.nvim_create_augroup
 local autocmd = Vim.api.nvim_create_autocmd
 local usercmd = Vim.api.nvim_create_user_command
@@ -71,3 +70,54 @@ autocmd('TextYankPost', {
    group = grs_text_group,
    desc = 'Give visual feedback when yanking text',
 })
+
+--[[ Text editing keymaps not related to any specific plugins ]]
+
+-- Delete & change text without affecting default register
+kb({ 'n', 'x' }, ' d', '"_d', {
+   desc = 'delete text to blackhole register',
+})
+kb({ 'n', 'x' }, ' c', '"_c', {
+   desc = 'change text to blackhole register',
+})
+
+-- Yank, delete, change & paste with system clipboard
+kb({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
+kb({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
+kb({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
+kb({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
+
+-- Shift line and reselect
+kb('x', '<', '<gv', { desc = 'shift left & reselect' })
+kb('x', '>', '<gv', { desc = 'shift right & reselect' })
+
+-- Move visual selection up or down a line
+kb('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
+kb('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
+
+-- toggle line numberings schemes
+kb('n', ' n', Vim.toggle_line_numbering, {
+   desc = 'toggle line numbering',
+})
+
+-- Misc keybindings
+kb('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
+kb('n', ' b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
+kb('n', ' k', '<Cmd>dig<CR>a<C-k>', { desc = 'pick & enter diagraph' })
+kb('n', ' h', '<Cmd>TSBufToggle highlight<CR>', {
+   desc = 'toggle treesitter',
+})
+kb('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
+   desc = 'clear & redraw window',
+})
+kb('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
+   desc = 'trim trailing whitespace',
+})
+
+-- For <Space> based keymaps
+if wk then
+   wk.register(
+      { name = 'system clipboard' },
+      { mode = { 'n', 'x' }, prefix = ' s' }
+   )
+end
