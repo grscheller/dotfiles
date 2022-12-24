@@ -8,3 +8,5 @@
 	pager = no
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main

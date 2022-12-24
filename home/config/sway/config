@@ -27,11 +27,11 @@ set $menu wofi
 # 
 #    swaymsg -t get_outputs
 # 
-#  The dotfilesInstall script swaps in a Sway background image
+#  The dfInstall script swaps in a Sway background image
 #
 #    ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
 #
-#  when present to the output cmd below.  See dotfilesInstall
+#  when present to the output cmd below.  See dfInstall script
 #  for the details of where to obtained the picture.
 output * bg #33467c solid_color
 
