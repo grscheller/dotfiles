@@ -13,7 +13,7 @@ if not set -q fish_abbr_initialized
     abbr -a -- pst ps -ejH
 
     # Exec sway if not already running
-    abbr -a sw 'set -qx SWAYSOCK; or cd && exec sway'
+    abbr -a sw 'set -qx SWAYSOCK; or cd && exec sway --unsupported-gpu'
 
     # enable/disable touchpad
     abbr -a tpd disable_touch_pad
