@@ -27,7 +27,7 @@
 
 local Vim = require('grs.lib.Vim')
 
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
@@ -64,7 +64,16 @@ return packer.startup(function()
    use 'wbthomason/packer.nvim'
 
    -- Library used by other plugins
-   use 'nvim-lua/plenary.nvim'
+   use {
+      'nvim-lua/plenary.nvim',
+      'nvim-lua/popup.nvim',
+   }
+
+   -- Folke neoconf.nvim & neodev.nvim
+   use {
+      'folke/neoconf.nvim', -- manage global & project level settings
+      'folke/neodev.nvim',  -- auto-config Sumneko_lua for plugin development
+   }
 
    -- Make keybindings discoverable with Whick-Key
    use 'folke/which-key.nvim'
@@ -97,13 +106,14 @@ return packer.startup(function()
    use {
       'nvim-telescope/telescope.nvim',
       requires = {
-         'nvim-telescope/telescope-ui-select.nvim',
          'nvim-telescope/telescope-file-browser.nvim',
          {
             'nvim-telescope/telescope-fzf-native.nvim',
             run = 'make',
          },
          'nvim-telescope/telescope-frecency.nvim',
+         'nvim-telescope/telescope-ui-select.nvim',
+         'rcarriga/nvim-notify',
          'kkharji/sqlite.lua',
       },
    }
@@ -129,12 +139,6 @@ return packer.startup(function()
          'lukas-reineke/cmp-under-comparator',
          'saadparwaiz1/cmp_luasnip',
       },
-   }
-
-   -- Folke neoconf.nvim & neodev.nvim
-   use {
-      'folke/neoconf.nvim', -- manage global & project level settings
-      'folke/neodev.nvim',  -- auto-config Sumneko_lua for plugin development
    }
 
    -- LSP, DAP, & NullLS support

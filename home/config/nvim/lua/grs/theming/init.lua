@@ -4,7 +4,7 @@ local keymaps = require 'grs.conf.keybindings'
 local Vim = require 'grs.lib.Vim'
 
 local kb = keymaps.kb
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 
 local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer
 

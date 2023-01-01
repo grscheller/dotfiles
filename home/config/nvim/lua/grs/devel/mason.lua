@@ -12,7 +12,7 @@ local func = require 'grs.lib.functional'
 local Vim = require 'grs.lib.Vim'
 local utilMason = require 'grs.devel.util.mason'
 
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspSrvTbl
 local DapTbl = confMason.DapSrvTbl

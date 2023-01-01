@@ -1,6 +1,6 @@
 --[[ Telescope - search, filter, find & pick items with Lua ]]
 
-local msg = require('grs.lib.Vim').msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_return_to_continue
 local ok, telescope, tb
 
 ok, telescope = pcall(require, 'telescope')
@@ -16,6 +16,7 @@ telescope.setup {
       file_browser = {},
       frecency = {},
       fzf = {},
+      notify = {},
       ['ui-select'] = {
          require('telescope.themes').get_dropdown {},
       },
@@ -24,6 +25,7 @@ telescope.setup {
 telescope.load_extension 'file_browser'
 telescope.load_extension 'frecency'
 telescope.load_extension 'fzf'
+telescope.load_extension 'notify'
 telescope.load_extension 'ui-select'
 
 -- Telescope related keybindings

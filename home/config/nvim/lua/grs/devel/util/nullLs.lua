@@ -6,7 +6,7 @@ local confMason = require 'grs.conf.mason'
 local func = require 'grs.lib.functional'
 local Vim = require 'grs.lib.Vim'
 
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 local iFlatten = func.iFlatten
 local getFilteredKeys = func.getFilteredKeys
 local BuiltinTbls = confMason.BuiltinToolTbls

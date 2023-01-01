@@ -2,13 +2,13 @@
 
 local Vim = require 'grs.lib.Vim'
 
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 
 local tested = '0.8.2'
 local version = Vim.nvim_version_str()
 if version ~= tested then
    local message = string.format(
-      'Not current tested nvim version: expected %s, got %s', tested, version)
+      'Neovim version %s, currently testing on %s', version, tested)
    msg(message)
 end
 

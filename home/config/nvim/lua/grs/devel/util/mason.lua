@@ -252,7 +252,7 @@ local Vim = require 'grs.lib.Vim'
 
 local iFlatten = func.iFlatten
 local getFilteredKeys = func.getFilteredKeys
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}

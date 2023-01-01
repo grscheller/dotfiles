@@ -5,7 +5,7 @@ local Vim = require 'grs.lib.Vim'
 local ok
 local cmp_under_comparator, cmp_comparators
 local cmp, luasnip, lspkind
-local msg = Vim.msg_hit_return_to_continue
+local msg = Vim.msg_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then

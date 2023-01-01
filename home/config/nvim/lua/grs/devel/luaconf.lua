@@ -6,7 +6,7 @@
                   lua-language-server (sumneko_lua) via lspconfig.
 --]]
 
-local msg = require('grs.lib.Vim').msg_hit_return_to_continue
+local msg = require('grs.lib.Vim').msg_return_to_continue
 
 local ok_conf, neoconf = pcall(require, 'neoconf')
 local ok_dev, neodev = pcall(require, 'neodev')
