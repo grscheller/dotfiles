@@ -125,8 +125,8 @@ CONFIG_FILES='
    nvim/lua/grs/conf/packer.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
-   nvim/lua/grs/devel/luaconf.lua
    nvim/lua/grs/devel/mason.lua
+   nvim/lua/grs/devel/neoconf.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
@@ -164,6 +164,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/.neoconf.json
    ${XDG_CONFIG_HOME}/nvim/.stylua.toml
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaConfig.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaconf.lua
 "
 
 ### Functions
