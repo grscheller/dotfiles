@@ -1,6 +1,6 @@
 # Dotfiles
 
-Contains my user configuation files.
+Contains my configuation files for
 
 * Neovim configuration
 * Fish and Bash configurations
@@ -9,28 +9,22 @@ Contains my user configuation files.
 
 ## Scripts
 
-### Install into home directory
+### Install home directory configs
 
-Run the [dfInstall](dfInstall) POSIX shell script.
+Run [dfInstall](dfInstall) POSIX shell script.
 
-### Install system configurations (Arch Linux Only!)
+### Install system configs (Arch Linux Only!)
 
-Run the [sfInstall](sfInstall) Fish shell script with sudo.
-
-### Toggle installed/repo Neovim configs
-
-Run the [grsSwap](grsSwap) Fish shell script to toggle between
-the installed ~/.config/nvim/lua/grs/ directory and a symlink to the
-corresponding directory in the dotfiles repo.
+Run sudo [sfInstall](sfInstall) Fish shell script.
 
 ## Repo's Purpose
 
-* maintain my own personal configuration files
+* provide others useful configuration examples
+* maintain my own personal configuration files for myself
 * preserve this information for myself
 * help quickly configure new systems for myself
-* provide others useful configuration examples
 
-## License Information
+## License Summary
 
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
   <a rel="license"
@@ -49,3 +43,5 @@ This work is published from:
       content="US" about="https://github.com/grscheller">
   United States</span>.
 </p>
+
+See [LICENSE](LICENSE) for details.
