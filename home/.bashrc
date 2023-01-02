@@ -102,7 +102,7 @@ digpath () (
             then
                 if [[ -z $executable_flag ]] || [[ -x $Target ]]
                 then
-                    FileList[((ii++))]="$Target"
+                    FileList[ii++]="$Target"
                 fi
             fi
         done
@@ -306,7 +306,7 @@ then
         ((ii = 0, jj = 0))
         for gemDir in ~/.local/share/gem/ruby/*/bin
         do
-            gemDirs[((ii++))]="$gemDir"
+            gemDirs[ii++]="$gemDir"
         done
 
         case $ii in
