@@ -114,7 +114,7 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    nvim/init.lua
-   nvim/.neoconf.json
+   nvim/neoconf.json
    nvim/selene.toml
    nvim/stylua.toml
    nvim/vim.toml
@@ -161,6 +161,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
    ${XDG_CONFIG_HOME}/fish/functions/bases/
+   ${XDG_CONFIG_HOME}/nvim/.neoconf.json
    ${XDG_CONFIG_HOME}/nvim/.stylua.toml
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaConfig.lua
 "

@@ -35,7 +35,7 @@ M.setup = function()
       return lspconf, capabilities
    end
 
-   -- Add LSP serve we are letting lspconfig automatically configure
+   -- Add LSP serves we are letting lspconfig automatically configure
    for _, lspServer in ipairs(utilMason.serverList(LspTbl, m.auto)) do
       lspconf[lspServer].setup {
          capabilities = capabilities,
