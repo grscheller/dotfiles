@@ -9,11 +9,8 @@ Contains my configuration files for
 
 ## Scripts
 
-The "[dfInstall](dfInstall)" POSIX shell script installs
-mu home directory configuration files.
-
-The "sudo [sfInstall](sfInstall)" Fish shell script installs
-my Arch Linux system configuration files.
+* [dfInstall](dfInstall): installs home directory configuration files
+* [sudo sfInstall](sfInstall): installs Arch Linux system configuration files
 
 ## Repo's Purpose
 
