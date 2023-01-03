@@ -6,7 +6,3 @@ if version ~= tested then
    local message = string.format('Neovim version %s, currently testing on %s', version, tested)
    Vim.msg_return_to_continue(message)
 end
-
-require 'grs.theming' -- colorscheme, statusline & zen-mode
-require 'grs.textedit' -- general text editing
-require 'grs.devel' -- LSP based software development environment

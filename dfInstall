@@ -115,25 +115,26 @@ CONFIG_FILES='
    git/config
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/config/keybindings.lua
-   nvim/lua/grs/config/mason.lua
-   nvim/lua/grs/config/options.lua
+   nvim/lua/lazyvim/config/keybindings.lua
+   nvim/lua/lazyvim/config/lazy.lua
+   nvim/lua/lazyvim/config/mason.lua
+   nvim/lua/lazyvim/config/options.lua
+   nvim/lua/lazyvim/init.lua
+   nvim/lua/grs/devel/util/dap.lua
+   nvim/lua/grs/devel/util/lspconf.lua
+   nvim/lua/grs/devel/util/mason.lua
+   nvim/lua/grs/devel/util/nullLs.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/neoconf.lua
-   nvim/lua/grs/plugins/packer.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/Vim.lua
+   nvim/lua/lazyvim/plugins/theming.lua
    nvim/lua/grs/textedit/init.lua
-   nvim/lua/grs/theming/init.lua
-   nvim/lua/grs/devel/util/dap.lua
-   nvim/lua/grs/devel/util/lspconf.lua
-   nvim/lua/grs/devel/util/mason.lua
-   nvim/lua/grs/devel/util/nullLs.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -146,22 +147,14 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/core/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/config.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/lib/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/lib/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/util/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/Functional.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
    ${XDG_CONFIG_HOME}/fish/functions/bases/
    ${XDG_CONFIG_HOME}/nvim/.neoconf.json
    ${XDG_CONFIG_HOME}/nvim/.stylua.toml
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaConfig.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaconf.lua
    ${XDG_CONFIG_HOME}/nvim/neoconf.json
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/conf/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/
+   ${XDG_CONFIG_HOME}/nvim/plugin/
+   ${XDG_CONFIG_HOME}/nvim/lua/config/
+   ${XDG_CONFIG_HOME}/nvim/lua/plugins/
 "
 
 ### Functions
