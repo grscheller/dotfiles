@@ -2,21 +2,20 @@
 
 local keymaps = require 'grs.conf.keybindings'
 local confMason = require 'grs.conf.mason'
-local Vim = require 'grs.lib.Vim'
-local utilLspconf = require 'grs.devel.util.lspconf'
-local utilDap = require 'grs.devel.util.dap'
-local utilNullLs = require 'grs.devel.util.nullLs'
+local develLspconf = require 'grs.devel.util.lspconf'
+local develDap = require 'grs.devel.util.dap'
+local develNullLs = require 'grs.devel.util.nullLs'
 
-local msg = Vim.msg_return_to_continue
-local cmd = Vim.api.nvim_command
+local msg = require('grs.lib.Vim').msg_return_to_continue
+local cmd = vim.api.nvim_command
 local m = confMason.MasonEnum
-local LspTbl = confMason.LspSrvTbl
+local LspTbl = confMason.LspTbl
 
 -- Initialize LSP, DAP & Null-ls, also auto-configure servers & builtins.
 
-local lspconf, capabilities = utilLspconf.setup()
-local dap, dap_ui_widgets = utilDap.setup()
-local nullLs = utilNullLs.setup()
+local lspconf, capabilities = develLspconf.setup()
+local dap, dap_ui_widgets = develDap.setup()
+local nullLs = develNullLs.setup()
 if not (lspconf and dap and nullLs and capabilities) then
    return
 end
@@ -53,9 +52,7 @@ if LspTbl.system.hls == m.man or LspTbl.mason.hls == m.man then
 end
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
-Vim.g.python3_host_prog = string.format('%s%s',
-   os.getenv('HOME'),
-   '/.local/share/pyenv/shims/python')
+vim.g.python3_host_prog = string.format('%s%s', os.getenv 'HOME', '/.local/share/pyenv/shims/python')
 
 --[[ Rust-Tools directly configures lspconfig
 
@@ -144,12 +141,13 @@ if LspTbl.system.scala_metals == m.man then
          cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
       end
 
-      local scala_metals_group =
-      Vim.api.nvim_create_augroup('scala-metals', { clear = true })
+      local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', { clear = true })
 
-      Vim.api.nvim_create_autocmd('FileType', {
+      vim.api.nvim_create_autocmd('FileType', {
          pattern = { 'scala', 'sbt' },
-         callback = function() metals.initialize_or_attach(metals_config) end,
+         callback = function()
+            metals.initialize_or_attach(metals_config)
+         end,
          group = scala_metals_group,
       })
    else

@@ -1,11 +1,8 @@
 --[[ Completions & Snippets ]]
 
-local Vim = require 'grs.lib.Vim'
-
-local ok
+local ok, cmp, luasnip, lspkind
 local cmp_under_comparator, cmp_comparators
-local cmp, luasnip, lspkind
-local msg = Vim.msg_return_to_continue
+local msg = require('grs.lib.Vim').msg_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -68,7 +65,9 @@ cmp.setup {
    sorting = { comparators = cmp_comparators },
 
    snippet = {
-      expand = function(args) luasnip.lsp_expand(args.body) end,
+      expand = function(args)
+         luasnip.lsp_expand(args.body)
+      end,
    },
 
    window = {
@@ -96,41 +95,37 @@ cmp.setup {
       },
    },
 
-   sources = cmp.config.sources(
+   sources = cmp.config.sources({
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'nvim_lua' },
+      { name = 'nvim_lsp' },
+   }, {
       {
-         { name = 'nvim_lsp_signature_help' },
-         { name = 'nvim_lua' },
-         { name = 'nvim_lsp' },
-      },
-      {
-         {
-            name = 'path',
-            option = {
-               label_trailing_slash = true,
-               trailing_slash = false,
-            },
-         },
-         {
-            name = 'buffer',
-            option = {
-               get_bufnrs = function()
-                  return Vim.api.nvim_list_bufs()
-               end,
-            },
-         },
-         {
-            name = 'rg',
-            option = {
-               additional_arguments = '--smart-case --hidden',
-            },
-            keyword_length = 3,
-            max_item_count = 12,
+         name = 'path',
+         option = {
+            label_trailing_slash = true,
+            trailing_slash = false,
          },
       },
       {
-         { name = 'luasnip' },
-      }
-   ),
+         name = 'buffer',
+         option = {
+            get_bufnrs = function()
+               return vim.api.nvim_list_bufs()
+            end,
+         },
+      },
+      {
+         name = 'rg',
+         option = {
+            additional_arguments = '--smart-case --hidden',
+         },
+         keyword_length = 3,
+         max_item_count = 12,
+      },
+   }, {
+      { name = 'luasnip' },
+   }),
 
    mapping = {
       ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
@@ -152,7 +147,7 @@ cmp.setup {
             cmp.select_next_item()
          elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-         elseif Vim.cursor_has_words_before_it() then
+         elseif vim.cursor_has_words_before_it() then
             cmp.complete()
          else
             fallback()

@@ -1,6 +1,6 @@
 # Dotfiles
 
-Contains my configuation files for
+Contains my configuration files for
 
 * Neovim configuration
 * Fish and Bash configurations
@@ -9,13 +9,11 @@ Contains my configuation files for
 
 ## Scripts
 
-### Install home directory configs
+The "[dfInstall](dfInstall)" POSIX shell script installs
+mu home directory configuration files.
 
-Run [dfInstall](dfInstall) POSIX shell script.
-
-### Install system configs (Arch Linux Only!)
-
-Run sudo [sfInstall](sfInstall) Fish shell script.
+The "sudo [sfInstall](sfInstall)" Fish shell script installs
+my Arch Linux system configuration files.
 
 ## Repo's Purpose
 

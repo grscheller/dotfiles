@@ -16,10 +16,10 @@
 local M = {}
 
 M.MasonEnum = {
-   auto = 1,    -- automatically configue with lspconf
-   man = 2,     -- manually configure
+   auto = 1, -- automatically configue with lspconf
+   man = 2, -- manually configure
    install = 3, -- install but don't configure
-   ignore = 4,  -- don't install nor configure
+   ignore = 4, -- don't install nor configure
 }
 
 local m = M.MasonEnum
@@ -30,7 +30,7 @@ local m = M.MasonEnum
 -- Mason installs packages in the mason tables not marked m.ignore.
 -- Both lists use the LSP module (lspconfig) names, not Mason package names.
 -- In system table, anything not either m.auto or m.man is just informational.
-M.LspSrvTbl = {
+M.LspTbl = {
    mason = {
       groovyls = m.ignore,
       html = m.auto,
@@ -45,9 +45,9 @@ M.LspSrvTbl = {
       hls = m.man,
       pyright = m.ignore,
       rust_analyzer = m.install,
-      rust_tools = m.man,   -- directly uses lspconfig and dap
+      rust_tools = m.man, -- directly uses lspconfig and dap
       scala_metals = m.man, -- directly uses lspconfig and dap
-      sumneko_lua = m.man,  -- right now geared to editing Neovim configs
+      sumneko_lua = m.man,
       taplo = m.auto,
       yamlls = m.auto,
    },
@@ -58,7 +58,7 @@ M.LspSrvTbl = {
 -- Mason installs packages from the mason tables not marked m.ignore.
 -- Names used are DAP (nvim-dap) names, not Mason package names.
 -- For system table, m.man will turn on a manual config if it exists.
-M.DapSrvTbl = {
+M.DapTbl = {
    mason = {
       bash = m.install,
       cppdbg = m.install,
@@ -69,7 +69,7 @@ M.DapSrvTbl = {
    },
 }
 
-M.BuiltinToolTbls = {
+M.BuiltinTbls = {
    -- Null-ls uses default "builtin" configurations for certain tools,
    -- items marked m.auto will be configured with these builtin configs.
    -- Mason will installs packages in the mason tables not marked m.ignore.
@@ -77,11 +77,11 @@ M.BuiltinToolTbls = {
    -- For system tables, anything not m.auto is just informational.
    code_actions = {
       mason = {},
-      system = {}
+      system = {},
    },
    completions = {
       mason = {},
-      system = {}
+      system = {},
    },
    diagnostics = {
       mason = {

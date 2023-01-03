@@ -10,10 +10,8 @@
 
 local M = {}
 
-local Vim = require 'grs.lib.Vim'
-
-local msg = Vim.msg_return_to_continue
-local kb = Vim.keymap.set
+local kb = vim.keymap.set
+local msg = require('grs.lib.Vim').msg_return_to_continue
 
 M.kb = kb
 
@@ -90,79 +88,79 @@ kb('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
 
 --[[ LSP related keybindings ]]
 function M.lsp_kb(_, bufnr)
-   kb('n', 'H', Vim.lsp.buf.hover, {
+   kb('n', 'H', vim.lsp.buf.hover, {
       buffer = bufnr,
       desc = 'hover',
    })
-   kb('n', 'K', Vim.lsp.buf.signature_help, {
+   kb('n', 'K', vim.lsp.buf.signature_help, {
       buffer = bufnr,
       desc = 'signature help',
    })
-   kb('n', 'zd', Vim.diagnostic.setloclist, {
+   kb('n', 'zd', vim.diagnostic.setloclist, {
       buffer = bufnr,
       desc = 'buffer diagnostics',
    })
-   kb('n', 'g[', Vim.diagnostic.goto_prev, {
+   kb('n', 'g[', vim.diagnostic.goto_prev, {
       buffer = bufnr,
       desc = 'goto prev diagostic',
    })
-   kb('n', 'g]', Vim.diagnostic.goto_next, {
+   kb('n', 'g]', vim.diagnostic.goto_next, {
       buffer = bufnr,
       desc = 'goto next diagostic',
    })
-   kb('n', 'gd', Vim.lsp.buf.definition, {
+   kb('n', 'gd', vim.lsp.buf.definition, {
       buffer = bufnr,
       desc = 'goto definition',
    })
-   kb('n', 'gD', Vim.lsp.buf.declaration, {
+   kb('n', 'gD', vim.lsp.buf.declaration, {
       buffer = bufnr,
       desc = 'goto declaration',
    })
-   kb('n', 'gI', Vim.lsp.buf.implementation, {
+   kb('n', 'gI', vim.lsp.buf.implementation, {
       buffer = bufnr,
       desc = 'goto implementation',
    })
-   kb('n', 'gr', Vim.lsp.buf.references, {
+   kb('n', 'gr', vim.lsp.buf.references, {
       buffer = bufnr,
       desc = 'goto references',
    })
-   kb('n', 'gt', Vim.lsp.buf.type_definition, {
+   kb('n', 'gt', vim.lsp.buf.type_definition, {
       buffer = bufnr,
       desc = 'goto type definition',
    })
-   kb('n', 'gW', Vim.lsp.buf.workspace_symbol, {
+   kb('n', 'gW', vim.lsp.buf.workspace_symbol, {
       buffer = bufnr,
       desc = 'workspace symbol',
    })
-   kb('n', 'g0', Vim.lsp.buf.document_symbol, {
+   kb('n', 'g0', vim.lsp.buf.document_symbol, {
       buffer = bufnr,
       desc = 'document symbol',
    })
-   kb('n', 'za', Vim.lsp.buf.code_action, {
+   kb('n', 'za', vim.lsp.buf.code_action, {
       buffer = bufnr,
       desc = 'code action',
    })
-   kb('n', 'zh', Vim.lsp.codelens.refresh, {
+   kb('n', 'zh', vim.lsp.codelens.refresh, {
       buffer = bufnr,
       desc = 'code lens refresh',
    })
-   kb('n', 'zl', Vim.lsp.codelens.run, {
+   kb('n', 'zl', vim.lsp.codelens.run, {
       buffer = bufnr,
       desc = 'code lens run',
    })
-   kb('n', 'zr', Vim.lsp.buf.rename, {
+   kb('n', 'zr', vim.lsp.buf.rename, {
       buffer = bufnr,
       desc = 'rename',
    })
-   kb('n', 'zA', Vim.lsp.buf.add_workspace_folder, {
+   kb('n', 'zA', vim.lsp.buf.add_workspace_folder, {
       buffer = bufnr,
       desc = 'add workspace folder',
    })
-   kb('n', 'zR', Vim.lsp.buf.remove_workspace_folder, {
+   kb('n', 'zR', vim.lsp.buf.remove_workspace_folder, {
       buffer = bufnr,
       desc = 'remove workspace folder',
    })
-   kb({ 'n', 'x' }, 'zF', Vim.lsp.buf.format, {
+   kb({ 'n', 'x' }, 'zF', vim.lsp.buf.format, {
       buffer = bufnr,
       desc = 'lsp format',
    })

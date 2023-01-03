@@ -25,32 +25,30 @@
      running either of the above commands.
 --]]
 
-local Vim = require('grs.lib.Vim')
-
-local msg = Vim.msg_return_to_continue
+local msg = require('grs.lib.Vim').msg_return_to_continue
 
 local ok, packer = pcall(require, 'packer')
 if not ok or not packer then
-   local message = string.format('%s%s,\n%s%s',
+   local message = string.format(
+      '%s%s,\n%s%s',
       'Warning: ',
       'Packer not installed and/or not configured, no plugins!',
       '         ',
-      'To bootstrap Packer, exit Neovim and run: ~/bin/bsPacker')
+      'To bootstrap Packer, exit Neovim and run: ~/bin/bsPacker'
+   )
    msg(message)
    return
 end
 
-local packer_util = require 'packer.util'
-
 packer.init {
    display = {
       open_fn = function()
-         return packer_util.float { border = 'rounded' }
+         return require('packer.util').float { border = 'rounded' }
       end,
    },
 }
 
-Vim.api.nvim_create_autocmd('User', {
+vim.api.nvim_create_autocmd('User', {
    pattern = 'PackerComplete',
    callback = function()
       print '  Packer has finished!'
@@ -72,7 +70,7 @@ return packer.startup(function()
    -- Folke neoconf.nvim & neodev.nvim
    use {
       'folke/neoconf.nvim', -- manage global & project level settings
-      'folke/neodev.nvim',  -- auto-config Sumneko_lua for plugin development
+      'folke/neodev.nvim', -- auto-config Sumneko_lua for plugin development
    }
 
    -- Make keybindings discoverable with Whick-Key
@@ -151,5 +149,4 @@ return packer.startup(function()
       'simrat39/rust-tools.nvim',
       'scalameta/nvim-metals',
    }
-
 end)

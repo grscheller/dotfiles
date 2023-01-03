@@ -3,13 +3,13 @@
 local M = {}
 
 local confMason = require 'grs.conf.mason'
-local keymaps = require 'grs.conf.keybindings'
-local Vim = require 'grs.lib.Vim'
-local utilMason = require 'grs.devel.util.mason'
+local develMason = require 'grs.devel.util.mason'
 
-local msg = Vim.msg_return_to_continue
-local LspTbl = confMason.LspSrvTbl
+local msg = require('grs.lib.Vim').msg_return_to_continue
+local lsp_kb = require('grs.conf.keybindings').lsp_kb
+local LspTbl = confMason.LspTbl
 local m = confMason.MasonEnum
+
 local ok, lspconf, cmp_nvim_lsp, capabilities
 
 ok, lspconf = pcall(require, 'lspconfig')
@@ -36,10 +36,10 @@ M.setup = function()
    end
 
    -- Add LSP serves we are letting lspconfig automatically configure
-   for _, lspServer in ipairs(utilMason.serverList(LspTbl, m.auto)) do
+   for _, lspServer in ipairs(develMason.serverList(LspTbl, m.auto)) do
       lspconf[lspServer].setup {
          capabilities = capabilities,
-         on_attach = keymaps.lsp_kb
+         on_attach = lsp_kb,
       }
    end
 

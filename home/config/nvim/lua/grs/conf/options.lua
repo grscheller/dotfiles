@@ -1,7 +1,5 @@
 --[[ Options - reflecting my personal preferences ]]
 
-local Vim = require 'grs.lib.Vim' -- used to make Selene happy
-
 -- string, numeric  & boolean options
 local options = {
    -- POSIX compatible shells are needed by some plugins
@@ -53,13 +51,13 @@ local options = {
 }
 
 for k, v in pairs(options) do
-   Vim.opt[k] = v
+   vim.opt[k] = v
 end
 
 -- list & dictionary options
-Vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
-Vim.opt.iskeyword:append { '-' }    -- adds snake-case to word motions
-Vim.opt.listchars = {               -- for :list and :set list
+vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
+vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions
+vim.opt.listchars = { -- for :list and :set list
    space = '_',
    trail = '*',
    nbsp = '+',

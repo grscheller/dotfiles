@@ -3,14 +3,14 @@
 local M = {}
 
 local confMason = require 'grs.conf.mason'
-local func = require 'grs.lib.functional'
-local Vim = require 'grs.lib.Vim'
+local BuiltinTbls = confMason.BuiltinTbls
+local m = confMason.MasonEnum
 
-local msg = Vim.msg_return_to_continue
+local func = require 'grs.lib.functional'
 local iFlatten = func.iFlatten
 local getFilteredKeys = func.getFilteredKeys
-local BuiltinTbls = confMason.BuiltinToolTbls
-local m = confMason.MasonEnum
+
+local msg = require('grs.lib.Vim').msg_return_to_continue
 
 M.setup = function()
    local ok, null_ls = pcall(require, 'null-ls')

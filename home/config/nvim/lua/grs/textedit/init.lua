@@ -1,11 +1,10 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
 local keymaps = require 'grs.conf.keybindings'
-local Vim = require 'grs.lib.Vim'
-
 local kb = keymaps.kb
 local wk = keymaps.wk
-local msg = Vim.msg_return_to_continue
+
+local Vim = require 'grs.lib.Vim'
 
 --[[ Configure specific text editing relaed plugins ]]
 
@@ -20,11 +19,11 @@ if ok then
       },
    }
 else
-   msg 'Problem in textedit.lua: Comment failed to load'
+   Vim.msg_return_to_continue 'Problem in textedit.lua, Comment failed to load'
 end
 
 -- Configure justtinmk/vim-sneak plugin
-Vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
+vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
 kb({ 'n', 'x' }, 'f', '<Plug>Sneak_f')
 kb({ 'n', 'x' }, 'F', '<Plug>Sneak_F')
@@ -33,9 +32,9 @@ kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
 
-local augroup = Vim.api.nvim_create_augroup
-local autocmd = Vim.api.nvim_create_autocmd
-local usercmd = Vim.api.nvim_create_user_command
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local usercmd = vim.api.nvim_create_user_command
 
 local grs_text_group = augroup('grs_text', {})
 
@@ -62,7 +61,7 @@ autocmd('CmdLineLeave', {
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
-      Vim.highlight.on_yank {
+      vim.highlight.on_yank {
          timeout = 500,
          higroup = 'Visual',
       }
@@ -71,7 +70,7 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
---[[ Text editing keymaps not related to any specific plugins ]]
+--[[ Text editting keymaps not related to any specific plugins ]]
 
 -- Delete & change text without affecting default register
 kb({ 'n', 'x' }, ' d', '"_d', {
