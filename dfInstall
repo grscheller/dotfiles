@@ -115,14 +115,14 @@ CONFIG_FILES='
    git/config
    nvim/init.lua
    nvim/lua/grs/init.lua
-   nvim/lua/grs/conf/keybindings.lua
-   nvim/lua/grs/conf/mason.lua
-   nvim/lua/grs/conf/options.lua
-   nvim/lua/grs/conf/packer.lua
+   nvim/lua/grs/config/keybindings.lua
+   nvim/lua/grs/config/mason.lua
+   nvim/lua/grs/config/options.lua
    nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/neoconf.lua
+   nvim/lua/grs/plugins/packer.lua
    nvim/lua/grs/devel/telescope.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/devel/treesitter.lua
@@ -154,7 +154,6 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libFunc.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/Functional.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/libVim.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/utilities/
    ${XDG_CONFIG_HOME}/fish/functions/bases/
    ${XDG_CONFIG_HOME}/nvim/.neoconf.json
@@ -162,6 +161,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaConfig.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/luaconf.lua
    ${XDG_CONFIG_HOME}/nvim/neoconf.json
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/conf/
 "
 
 ### Functions

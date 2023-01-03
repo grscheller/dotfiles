@@ -2,11 +2,11 @@
 
 local M = {}
 
-local confMason = require 'grs.conf.mason'
+local confMason = require 'grs.config.mason'
 local develMason = require 'grs.devel.util.mason'
 
 local msg = require('grs.lib.Vim').msg_return_to_continue
-local lsp_kb = require('grs.conf.keybindings').lsp_kb
+local lsp_kb = require('grs.config.keybindings').lsp_kb
 local LspTbl = confMason.LspTbl
 local m = confMason.MasonEnum
 

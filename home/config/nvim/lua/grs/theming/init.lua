@@ -1,6 +1,6 @@
 --[[ Setup colorizier, colorscheme & statusline ]]
 
-local kb = require('grs.conf.keybindings').kb
+local kb = require('grs.config.keybindings').kb
 local msg = require('grs.lib.Vim').msg_return_to_continue
 
 local ok, kanagawa, lualine, twilight, zen, webDevicons, colorizer

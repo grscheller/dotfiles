@@ -1,6 +1,6 @@
 --[[ Plugins & General Text Editing Related Autocmds & Keybindings ]]
 
-local keymaps = require 'grs.conf.keybindings'
+local keymaps = require 'grs.config.keybindings'
 local kb = keymaps.kb
 local wk = keymaps.wk
 

@@ -9,8 +9,8 @@ if version ~= tested then
    Vim.msg_return_to_continue(message)
 end
 
-require 'grs.conf.options' -- set options
-require 'grs.conf.packer' -- plugin manager
+require 'grs.config.options' -- set options
+require 'grs.plugins.packer' -- plugin manager
 require 'grs.theming' -- colorscheme, statusline & zen-mode
 require 'grs.textedit' -- general text editing
 require 'grs.devel' -- LSP based software development environment

@@ -7,7 +7,7 @@
 
 local M = {}
 
-local confMason = require 'grs.conf.mason'
+local confMason = require 'grs.config.mason'
 local m = confMason.MasonEnum
 local LspTbl = confMason.LspTbl
 local DapTbl = confMason.DapTbl

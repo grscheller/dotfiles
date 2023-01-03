@@ -30,7 +30,7 @@ telescope.load_extension 'ui-select'
 
 -- Telescope related keybindings
 
-local keymaps = require 'grs.conf.keybindings'
+local keymaps = require 'grs.config.keybindings'
 local wk = keymaps.wk
 local kb = keymaps.kb
 

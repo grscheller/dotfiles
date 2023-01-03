@@ -1,8 +1,10 @@
 --[[ Completions & Snippets ]]
 
+local Vim = require('grs.lib.Vim')
+local msg = Vim.msg_return_to_continue
+
 local ok, cmp, luasnip, lspkind
 local cmp_under_comparator, cmp_comparators
-local msg = require('grs.lib.Vim').msg_return_to_continue
 
 ok, cmp = pcall(require, 'cmp')
 if ok and cmp then
@@ -147,7 +149,7 @@ cmp.setup {
             cmp.select_next_item()
          elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-         elseif vim.cursor_has_words_before_it() then
+         elseif Vim.cursor_has_words_before_it() then
             cmp.complete()
          else
             fallback()

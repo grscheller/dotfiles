@@ -1,7 +1,7 @@
 --[[ Software Development Tooling ]]
 
-local keymaps = require 'grs.conf.keybindings'
-local confMason = require 'grs.conf.mason'
+local keymaps = require 'grs.config.keybindings'
+local confMason = require 'grs.config.mason'
 local develLspconf = require 'grs.devel.util.lspconf'
 local develDap = require 'grs.devel.util.dap'
 local develNullLs = require 'grs.devel.util.nullLs'
@@ -52,7 +52,8 @@ if LspTbl.system.hls == m.man or LspTbl.mason.hls == m.man then
 end
 
 --[[ Python Configuration - both pipenv and pynvim need to be installed. ]]
-vim.g.python3_host_prog = string.format('%s%s', os.getenv 'HOME', '/.local/share/pyenv/shims/python')
+vim.g.python3_host_prog =
+   string.format('%s/.local/share/pyenv/shims/python', os.getenv 'HOME')
 
 --[[ Rust-Tools directly configures lspconfig
 
