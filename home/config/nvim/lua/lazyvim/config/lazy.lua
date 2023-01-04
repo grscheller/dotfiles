@@ -1,6 +1,6 @@
 --[[ Lazy Lua Plugin Manager ]]
 
--- Install it if it is ot already present
+-- Install it if it is not already present
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
 if not vim.loop.fs_stat(lazypath) then
    vim.fn.system {
@@ -17,7 +17,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require('lazy').setup {
    spec = 'lazyvim.plugins',
    defaults = { lazy = true, version = '*' },
-   install = { colorscheme = { 'tokyonight', 'habamax' } },
+   install = { colorscheme = { 'kanagawa' } },
    checker = { enabled = true },
    performance = {
       rtp = {
@@ -34,4 +34,5 @@ require('lazy').setup {
       },
    },
 }
-vim.keymap.set('n', ' L', '<Cmd>Lazy<CR>')
+
+vim.keymap.set('n', ' L', '<Cmd>Lazy<CR>', { desc = 'lazy gui' })

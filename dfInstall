@@ -119,7 +119,7 @@ CONFIG_FILES='
    nvim/lua/lazyvim/config/lazy.lua
    nvim/lua/lazyvim/config/mason.lua
    nvim/lua/lazyvim/config/options.lua
-   nvim/lua/lazyvim/init.lua
+   nvim/lua/lazyvim/config/settings.lua
    nvim/lua/grs/devel/util/dap.lua
    nvim/lua/grs/devel/util/lspconf.lua
    nvim/lua/grs/devel/util/mason.lua
@@ -155,6 +155,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/plugin/
    ${XDG_CONFIG_HOME}/nvim/lua/config/
    ${XDG_CONFIG_HOME}/nvim/lua/plugins/
+   ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/init.lua
 "
 
 ### Functions
