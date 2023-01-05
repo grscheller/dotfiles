@@ -16,8 +16,7 @@
 #        enough, but sometimes a bigger "kick" is needed,
 #        like doing
 #
-#          $ rm .config/fish/fish_variables
-#          $ re
+#          $ rm .config/fish/fish_variables; re
 #
 #        This might be a bit too heavy handed if one likes
 #        to manually configure Fish from the command line.
@@ -114,12 +113,11 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/init.lua
-   nvim/lua/lazyvim/config/keybindings.lua
-   nvim/lua/lazyvim/config/lazy.lua
-   nvim/lua/lazyvim/config/mason.lua
-   nvim/lua/lazyvim/config/options.lua
-   nvim/lua/lazyvim/config/settings.lua
+   nvim/lua/grs/config/keybindings.lua
+   nvim/lua/grs/config/lazy.lua
+   nvim/lua/grs/config/mason.lua
+   nvim/lua/grs/config/options.lua
+   nvim/lua/grs/config/settings.lua
    nvim/lua/grs/devel/util/dap.lua
    nvim/lua/grs/devel/util/lspconf.lua
    nvim/lua/grs/devel/util/mason.lua
@@ -133,7 +131,8 @@ CONFIG_FILES='
    nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/Vim.lua
-   nvim/lua/lazyvim/plugins/theming.lua
+   nvim/lua/grs/plugin/after/checkversion.lua
+   nvim/lua/grs/plugin/theming.lua
    nvim/lua/grs/textedit/init.lua
    sway/config
    waybar/config
@@ -151,11 +150,10 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/.neoconf.json
    ${XDG_CONFIG_HOME}/nvim/.stylua.toml
    ${XDG_CONFIG_HOME}/nvim/neoconf.json
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/
    ${XDG_CONFIG_HOME}/nvim/plugin/
    ${XDG_CONFIG_HOME}/nvim/lua/config/
    ${XDG_CONFIG_HOME}/nvim/lua/plugins/
-   ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/init.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/
 "
 
 ### Functions

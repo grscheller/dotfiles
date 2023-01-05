@@ -12,10 +12,11 @@ if not vim.loop.fs_stat(lazypath) then
       lazypath,
    }
 end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
+
+vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-   spec = 'lazyvim.plugins',
+   spec = 'grs.plugin',
    defaults = { lazy = true, version = '*' },
    install = { colorscheme = { 'kanagawa' } },
    checker = { enabled = true },

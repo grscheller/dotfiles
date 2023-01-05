@@ -1,3 +1,5 @@
+--[[ Check if nvim version is same as one currently tested against ]]
+
 local Vim = require 'grs.lib.Vim'
 
 local tested = '0.8.2'
