@@ -113,7 +113,7 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    nvim/init.lua
-   nvim/lua/grs/config/keybindings.lua
+   nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/lazy.lua
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
@@ -131,8 +131,9 @@ CONFIG_FILES='
    nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/Vim.lua
-   nvim/lua/grs/plugin/after/checkversion.lua
+   nvim/lua/grs/plugin/config.lua
    nvim/lua/grs/plugin/theming.lua
+   nvim/lua/grs/plugin/whichkey.lua
    nvim/lua/grs/textedit/init.lua
    sway/config
    waybar/config
@@ -154,6 +155,8 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/config/
    ${XDG_CONFIG_HOME}/nvim/lua/plugins/
    ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/keybindings.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugin/after/
 "
 
 ### Functions

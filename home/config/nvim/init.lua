@@ -1,7 +1,9 @@
 --[[ GRS Neovim Configuration - transitioning to lazy.nvim ]]
 
--- I don't use these, so set them to something I don't use much
-vim.g.mapleader = "^"
-vim.g.maplocalleader = "^"
+-- These are just redundant navigation keys, so if some plugin
+-- unexpectently sets leader or localleader keymappingd, they
+-- are less likely to collide with my keymappings.
+vim.g.mapleader = "-"
+vim.g.maplocalleader = "+"
 
 require('grs.config.lazy')

@@ -65,3 +65,5 @@ vim.opt.listchars = { -- for :list and :set list
    tab = '<->',
    eol = '$',
 }
+
+return {}

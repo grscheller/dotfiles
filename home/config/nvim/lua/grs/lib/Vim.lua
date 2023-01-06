@@ -2,8 +2,6 @@
 
 local M = {}
 
-M.notify = require('notify')
-
 --[[ User messaging ]]
 
 function M.msg_return_to_continue(message)
@@ -25,37 +23,6 @@ function M.cursor_has_words_before_it()
       :sub(col, col)
       :match '%s'
       == nil
-end
-
---[[ Neovim version information ]]
-
-function M.nvim_version_str()
-   local version = vim.version()
-   if not version then
-      return 'unknown'
-   end
-
-   local prerelease = ''
-   if version.prerelease then
-      prerelease = '-prerelease'
-   end
-
-   return string.format('%d.%d.%d%s',
-      version.major, version.minor, version.patch, prerelease)
-end
-
---[[ Line numbering related functions ]]
-
-function M.toggle_line_numbering()
-   if not vim.wo.number and not vim.wo.relativenumber then
-      vim.wo.number = true
-      vim.wo.relativenumber = true
-   elseif vim.wo.number and vim.wo.relativenumber then
-      vim.wo.relativenumber = false
-   else
-      vim.wo.number = false
-      vim.wo.relativenumber = false
-   end
 end
 
 return M
