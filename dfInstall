@@ -132,9 +132,9 @@ CONFIG_FILES='
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/Vim.lua
    nvim/lua/grs/plugin/config.lua
+   nvim/lua/grs/plugin/textedit.lua
    nvim/lua/grs/plugin/theming.lua
    nvim/lua/grs/plugin/whichkey.lua
-   nvim/lua/grs/textedit/init.lua
    sway/config
    waybar/config
    waybar/style.css
@@ -157,6 +157,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/keybindings.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugin/after/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/
 "
 
 ### Functions

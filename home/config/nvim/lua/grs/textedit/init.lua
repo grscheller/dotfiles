@@ -9,26 +9,24 @@ local Vim = require 'grs.lib.Vim'
 --[[ Configure specific text editing relaed plugins ]]
 
 -- Configure numToStr/Comment.nvim
-local ok, comment = pcall(require, 'Comment')
-if ok then
-   comment.setup {
-      ignore = '^$',
-      mappings = {
-         basic = true,
-         extra = true,
-      },
-   }
-else
-   Vim.msg_return_to_continue 'Problem in textedit.lua, Comment failed to load'
-end
+
+-- local ok, comment = pcall(require, 'Comment') if ok then --
+-- comment.setup { 
+-- ignore = '^$', mappings = { basic = true,-
+-- extra = true, 
+-- }, 
+-- }
+--else 
+--Vim.msg_return_to_continue 'Problem in textedit.lua, Comment failed to load'
+--end
 
 -- Configure justtinmk/vim-sneak plugin
-vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
+--vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
-kb({ 'n', 'x' }, 'f', '<Plug>Sneak_f')
-kb({ 'n', 'x' }, 'F', '<Plug>Sneak_F')
-kb({ 'n', 'x' }, 't', '<Plug>Sneak_t')
-kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
+--kb({ 'n', 'x' }, 'f', '<Plug>Sneak_f')
+--kb({ 'n', 'x' }, 'F', '<Plug>Sneak_F')
+--kb({ 'n', 'x' }, 't', '<Plug>Sneak_t')
+--kb({ 'n', 'x' }, 'T', '<Plug>Sneak_T')
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
 
