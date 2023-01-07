@@ -25,7 +25,7 @@ local options = {
    smartcase = true, -- just lower case search patterns.
    textwidth = 80, -- good for text files and Markdown
    colorcolumn = '+1,+41', -- keep source code horizontally under control
-   formatoptions = 'jcanlM1p', -- mostly for joining and breaking lines
+   formatoptions = 'tcqjpl', -- mostly for joining and breaking lines
 
    -- Windowing preferences
    mouse = 'a', -- enable mouse for all modes

@@ -3,8 +3,7 @@
 local function load(mod)
    local Util = require("lazy.core.util")
    -- always load lazyvim, then user file
-   Util.try(
-      function()
+   Util.try(function()
          require(mod)
       end, {
 	 msg = 'Failed loading ' .. mod,
@@ -21,7 +20,14 @@ end
 -- this is needed to make sure options will be correctly applied
 -- after installing missing plugins.
 load('grs.config.options')
-load('grs.config.keymaps')
-load('grs.foobar.keymaps')
+
+-- autocmds and keymaps can wait to load
+vim.api.nvim_create_autocmd("User", {
+   pattern = "VeryLazy",
+   callback = function()
+      load('grs.config.autocmds')
+      load('grs.config.keymaps')
+   end,
+})
 
 return {}

@@ -113,6 +113,7 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    nvim/init.lua
+   nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/lazy.lua
    nvim/lua/grs/config/mason.lua

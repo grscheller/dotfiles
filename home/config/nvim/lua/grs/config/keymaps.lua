@@ -87,7 +87,7 @@ kmap({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
 
 -- Shift line and reselect
 kmap('x', '<', '<gv', { desc = 'shift left & reselect' })
-kmap('x', '>', '<gv', { desc = 'shift right & reselect' })
+kmap('x', '>', '>gv', { desc = 'shift right & reselect' })
 
 -- Move visual selection up or down a line
 kmap('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
