@@ -1,6 +1,8 @@
---[[ Functional Programming for Lua ]]
+--[[ Utility functions ]]
 
 local M = {}
+
+--[[ Functional Programming for Lua ]]
 
 -- Flatten an array of arrays - no error checks (should JIT compile well)
 M.iFlatten = function(ArrayOfArrays)
@@ -19,6 +21,17 @@ M.getFilteredKeys = function(t, p)
    for k, v in pairs(t) do
       if p(k, v) then
          table.insert(filteredKeys, k)
+      end
+   end
+   return filteredKeys
+end
+
+-- get values filtered by predicate
+M.getFilteredValues = function(t, p)
+   local filteredValues = {}
+   for k, v in pairs(t) do
+      if p(k, v) then
+         table.insert(filteredKeys, v)
       end
    end
    return filteredKeys

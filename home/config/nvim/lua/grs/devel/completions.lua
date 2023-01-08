@@ -1,14 +1,17 @@
 --[[ Completions & Snippets ]]
 
-local Vim = require('grs.lib.Vim')
-local msg = Vim.msg_return_to_continue
+function cursor_has_words_before_it()
+   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+   return col ~= 0
+      and vim.api
+      .nvim_buf_get_lines(0, line - 1, line, true)[1]
+      :sub(col, col)
+      :match '%s'
+      == nil
+end
 
-local ok, cmp, luasnip, lspkind
-local cmp_under_comparator, cmp_comparators
-
-ok, cmp = pcall(require, 'cmp')
-if ok and cmp then
-   ok, cmp_under_comparator = pcall(require, 'cmp-under-comparator')
+cmp = require 'cmp'
+cmp_under_comparator = require 'cmp-under-comparator'
    if ok then
       cmp_comparators = {
          cmp.config.compare.offset,
@@ -34,28 +37,14 @@ if ok and cmp then
          cmp.config.compare.length,
          cmp.config.compare.order,
       }
-      msg 'Problem in completions.lua: cmp_under_comparator failed to load'
    end
-else
-   msg 'Problem in completions.lua: cmp failed to load, PUNTING!!!'
-   return
-end
 
-ok, luasnip = pcall(require, 'luasnip')
-if ok then
-   require('luasnip.loaders.from_vscode').lazy_load()
-else
-   msg 'Problem in completions.lua: luasnip failed to load, PUNTING!!!'
-   return
-end
+luasnip = pcall(require, 'luasnip')
+luasnip = require 'luasnip'
+require('luasnip.loaders.from_vscode').lazy_load()
 
-ok, lspkind = pcall(require, 'lspkind')
-if ok then
-   lspkind.init()
-else
-   msg 'Problem in completions.lua: lspkind failed to load, PUNTING!!!'
-   return
-end
+lspkind = require 'lspkind'
+lspkind.init()
 
 local select_opts = { behavior = cmp.SelectBehavior.Select }
 local confirm_opts = {
@@ -149,7 +138,7 @@ cmp.setup {
             cmp.select_next_item()
          elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
-         elseif Vim.cursor_has_words_before_it() then
+         elseif cursor_has_words_before_it() then
             cmp.complete()
          else
             fallback()
