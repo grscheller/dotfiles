@@ -128,12 +128,12 @@ CONFIG_FILES='
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/neoconf.lua
    nvim/lua/grs/devel/tooling.lua
-   nvim/lua/grs/devel/treesitter.lua
    nvim/lua/grs/plugin/config.lua
    nvim/lua/grs/plugin/lazy.lua
    nvim/lua/grs/plugin/telescope.lua
    nvim/lua/grs/plugin/textedit.lua
    nvim/lua/grs/plugin/theming.lua
+   nvim/lua/grs/plugin/treesitter.lua
    nvim/lua/grs/plugin/whichkey.lua
    nvim/lua/grs/util.lua
    sway/config

@@ -32,7 +32,7 @@ return {
    {
       'nvim-lualine/lualine.nvim',
       event = "VeryLazy",
-      config = {
+      opts = {
          options = {
             icons_enabled = true,
             theme = {
@@ -120,7 +120,7 @@ return {
    -- see https://github.com/ryanoasis/nerd-fonts
    {
       'kyazdani42/nvim-web-devicons',
-      config = {
+      opts = {
          default = true
       }
    },

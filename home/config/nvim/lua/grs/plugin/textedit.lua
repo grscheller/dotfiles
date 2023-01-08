@@ -8,7 +8,7 @@ return {
    {
       'numToStr/Comment.nvim',
       event = 'VeryLazy',
-      config = {
+      opts = {
          ignore = '^$',
          mappings = {
             basic = true,
@@ -17,6 +17,7 @@ return {
       },
    },
 
+   -- Quickly jump around window - like easy-motion
    {
       'justinmk/vim-sneak',
       keys = {
@@ -36,47 +37,41 @@ return {
    -- Colorize color names, hexcodes, and other color formats
    {
       'norcalli/nvim-colorizer.lua',
-      config = function()
-         require('colorizer').setup {
-            '*',
-            '!vim',
-            css = { rgb_fn = true },
-            html = { names = false },
-         }
-      end,
+      opts = {
+         '*',
+         '!vim',
+         css = { rgb_fn = true },
+         html = { names = false },
+      },
    },
-
-   -- Setup folke/twilight.nvim
-   'folke/twilight.nvim',
 
    -- Folke Zen Mode
    {
       'folke/zen-mode.nvim',
       dependencies = {
+         'folke/twilight.nvim',
       },
-      config = function()
-         require('zen-mode').setup {
-            window = {
-               backdrop = 1.0, -- shade backdrop, 1 to keep normal
-               width = 0.85, -- abs num of cells when > 1, % of width when <= 1
-               height = 1, -- abs num of cells when > 1, % of height when <= 1
-               options = {
-                  number = false,
-                  relativenumber = false,
-                  colorcolumn = '',
-               },
+      opts = {
+         window = {
+            backdrop = 1.0, -- shade backdrop, 1 to keep normal
+            width = 0.85, -- abs num of cells when > 1, % of width when <= 1
+            height = 1, -- abs num of cells when > 1, % of height when <= 1
+            options = {
+               number = false,
+               relativenumber = false,
+               colorcolumn = '',
             },
-            plugins = {
-               options = {},
-               twilght = { enable = true },
-            },
-            on_open = function(win)
-               vim.api.nvim_win_set_option(win, 'scrolloff', 10)
-               vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
-            end,
-            on_close = function() end,
-         }
-      end,
+         },
+         plugins = {
+            options = {},
+            twilght = { enable = true },
+         },
+         on_open = function(win)
+            vim.api.nvim_win_set_option(win, 'scrolloff', 10)
+            vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
+         end,
+         on_close = function() end,
+      },
       keys = {
          { 'zZ', '<Cmd>ZenMode<CR>', desc = 'zen-mode toggle' },
       },

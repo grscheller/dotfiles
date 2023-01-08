@@ -1,6 +1,6 @@
 --[[ Lazy Lua Plugin Manager ]]
 
--- Install it if it is not already present
+-- Install if not already installed
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
 if not vim.loop.fs_stat(lazypath) then
    vim.fn.system {
@@ -19,7 +19,7 @@ require('lazy').setup {
    spec = 'grs.plugin',
    defaults = { lazy = true, version = '*' },
    install = { colorscheme = { 'kanagawa' } },
-   checker = { enabled = true },
+   checker = { enabled = true }, -- check for plugin updates
    performance = {
       rtp = {
          disabled_plugins = {
