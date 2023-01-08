@@ -4,7 +4,8 @@ return {
    'folke/which-key.nvim',
    event = 'VeryLazy',
    config = function()
-      require('which-key').setup {
+      local wk = require('which-key')
+      wk.setup {
          plugins = {
             spelling = {
                enabled = true,
@@ -12,5 +13,10 @@ return {
             },
          }
       }
+      wk.register(
+         { name = 'system clipboard' },
+         { mode = { 'n', 'x'}, prefix = ' s' }
+      )
+      wk.register({ name = 'telescope' }, { prefix = ' t' })
    end,
 }
