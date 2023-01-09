@@ -128,13 +128,13 @@ CONFIG_FILES='
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/neoconf.lua
    nvim/lua/grs/devel/tooling.lua
-   nvim/lua/grs/plugin/config.lua
-   nvim/lua/grs/plugin/lazy.lua
-   nvim/lua/grs/plugin/telescope.lua
-   nvim/lua/grs/plugin/textedit.lua
-   nvim/lua/grs/plugin/theming.lua
-   nvim/lua/grs/plugin/treesitter.lua
-   nvim/lua/grs/plugin/whichkey.lua
+   nvim/lua/grs/plugins/config.lua
+   nvim/lua/grs/plugins/lazy.lua
+   nvim/lua/grs/plugins/telescope.lua
+   nvim/lua/grs/plugins/textedit.lua
+   nvim/lua/grs/plugins/theming.lua
+   nvim/lua/grs/plugins/treesitter.lua
+   nvim/lua/grs/plugins/whichkey.lua
    nvim/lua/grs/util.lua
    sway/config
    waybar/config
@@ -161,6 +161,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/
    ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugin/
 "
 
 ### Functions

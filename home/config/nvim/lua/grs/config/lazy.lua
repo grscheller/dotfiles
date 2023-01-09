@@ -16,7 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-   spec = 'grs.plugin',
+   spec = 'grs.plugins',
    defaults = { lazy = true, version = '*' },
    install = { colorscheme = { 'kanagawa' } },
    checker = { enabled = true }, -- check for plugin updates
