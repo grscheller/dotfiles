@@ -123,12 +123,12 @@ CONFIG_FILES='
    nvim/lua/grs/devel/util/lspconf.lua
    nvim/lua/grs/devel/util/mason.lua
    nvim/lua/grs/devel/util/nullLs.lua
-   nvim/lua/grs/devel/completions.lua
    nvim/lua/grs/devel/init.lua
    nvim/lua/grs/devel/mason.lua
    nvim/lua/grs/devel/neoconf.lua
    nvim/lua/grs/devel/tooling.lua
    nvim/lua/grs/plugins/config.lua
+   nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/lua/grs/plugins/telescope.lua
    nvim/lua/grs/plugins/textedit.lua

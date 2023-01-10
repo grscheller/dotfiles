@@ -4,7 +4,18 @@ return {
    -- Telescope - highly extendable fuzzy finder over lists
    {
       'nvim-telescope/telescope.nvim',
-      event = 'VeryLazy',
+      dependencies = {
+         'nvim-lua/plenary.nvim',
+         'nvim-telescope/telescope-file-browser.nvim',
+         'nvim-telescope/telescope-frecency.nvim',
+         {
+            'nvim-telescope/telescope-fzf-native.nvim',
+            build = 'make',
+         },
+         'nvim-telescope/telescope-ui-select.nvim',
+         'rcarriga/nvim-notify',
+         'kkharji/sqlite.lua',
+      },
       config = function()
          ts = require 'telescope'
          ts.setup {
@@ -59,14 +70,6 @@ return {
          -- Telescope commands
          kmap('n', ' tt', '<Cmd>Telescope<CR>', { desc = 'telescope command' })
       end,
-      dependencies = {
-         'nvim-lua/plenary.nvim',
-         'nvim-telescope/telescope-file-browser.nvim',
-         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', },
-         'nvim-telescope/telescope-frecency.nvim',
-         'nvim-telescope/telescope-ui-select.nvim',
-         'rcarriga/nvim-notify',
-         'kkharji/sqlite.lua',
-      },
+      event = 'VeryLazy',
    },
 }
