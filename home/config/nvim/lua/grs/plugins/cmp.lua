@@ -31,10 +31,14 @@ return {
          'saadparwaiz1/cmp_luasnip',
       },
       config = function()
-         cmp = require 'cmp'
-         luasnip = require 'luasnip'
-         require('luasnip.loaders.from_vscode').lazy_load()
-         require('lspkind').init()
+         local cmp = require 'cmp'
+         local lspkind = require 'lspkind'
+         local luasnip = require 'luasnip'
+         local vscode_loaders = require 'luasnip.loaders.from_vscode'
+         local cmp_config_compare_under = require('cmp-under-comparator').under
+
+         vscode_loaders.lazy_load()
+         lspkind.init()
 
          local select_opts = {
             behavior = cmp.SelectBehavior.Select
@@ -52,7 +56,7 @@ return {
                   cmp.config.compare.score,
                   cmp.config.compare.recently_used,
                   cmp.config.compare.locality,
-                  require('cmp-under-comparator').under,
+                  cmp_config_compare_under,
                   cmp.config.compare.kind,
                   cmp.config.compare.sort_text,
                   cmp.config.compare.length,
