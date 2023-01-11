@@ -31,6 +31,9 @@ return {
    -- Lualine statusline
    {
       'nvim-lualine/lualine.nvim',
+      dependencies = {
+         'kyazdani42/nvim-web-devicons',
+      },
       event = "VeryLazy",
       opts = {
          options = {
@@ -123,6 +126,15 @@ return {
       opts = {
          default = true
       }
+   },
+
+   -- Replace vim.notify - TODO: replace default colors
+   {
+      'rcarriga/nvim-notify',
+      opts = {},
+      config = function()
+         vim.notify = require 'notify'
+      end,
    },
 
 }
