@@ -23,10 +23,10 @@ return {
          'rcarriga/nvim-notify',
       },
       config = function()
-         ts = require 'telescope'
-         tb = require 'telescope.builtin'
-         te = ts.extensions
-         km = vim.keymap.set
+         local ts = require 'telescope'
+         local tb = require 'telescope.builtin'
+         local te = ts.extensions
+         local km = vim.keymap.set
 
          ts.setup {
             extensions = {
@@ -44,18 +44,43 @@ return {
          ts.load_extension 'fzf'
          ts.load_extension 'notify'
          ts.load_extension 'ui-select'
-
-         km('n', ' tb', tb.buffers, { desc = 'list buffers' })
-         km('n', ' td', tb.grep_string, { desc = 'grep files in dir' })
-         km('n', ' tf', tb.find_files, { desc = 'find files' })
-         km('n', ' tg', tb.live_grep, { desc = 'live grep' })
-         km('n', ' th', tb.help_tags, { desc = 'help tags' })
-         km('n', ' tr', tb.oldfiles, { desc = 'recent files' })
-         km('n', ' tz', tb.current_buffer_fuzzy_find, { desc = 'fuzzy find buffer' })
-         km('n', ' tq', te.frecency.frecency, { desc = 'frecency' })
-         km('n', ' tB', te.file_browser.file_browser, { desc = 'file browser' })
       end,
-      event = 'VeryLazy',
+      keys = {
+         { ' tb', function()
+               require 'telescope'
+               require('telescope.builtin').buffers()
+            end, desc = 'list buffers' },
+         { ' td', function()
+               require 'telescope'
+               require('telescope.builtin').grep_string()
+            end, desc = 'grep files in dir' },
+         { ' tf', function()
+               require 'telescope'
+               require('telescope.builtin').find_files()
+            end, desc = 'find files' },
+         { ' tg', function()
+               require 'telescope'
+               require('telescope.builtin').live_grep()
+            end, desc = 'live grep' },
+         { ' th', function()
+               require 'telescope'
+               require('telescope.builtin').help_tags()
+            end, desc = 'help tags' },
+         { ' tr', function()
+               require 'telescope'
+               require('telescope.builtin').oldfiles()
+            end, desc = 'recent files' },
+         { ' tz', function()
+               require 'telescope'
+               require('telescope.builtin').current_buffer_fuzzy_find()
+            end, desc = 'fzy find buffer' },
+         { ' tq', function()
+               require('telescope').extensions.frecency.frecency()
+            end, desc = 'frecency' },
+         { ' tB', function()
+               require('telescope').extensions.file_browser.file_browser()
+            end, desc = 'file browser' },
+      }
    },
 
 }
