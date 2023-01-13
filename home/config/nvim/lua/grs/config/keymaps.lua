@@ -67,23 +67,23 @@ local function toggle_line_numbering()
    end
 end
 
-kmap('n', ' n', toggle_line_numbering, {
+kmap('n', '<leader>n', toggle_line_numbering, {
    desc = 'toggle line numbering',
 })
 
 -- Delete & change text without affecting default register
-kmap({ 'n', 'x' }, ' d', '"_d', {
+kmap({ 'n', 'x' }, '<leader>d', '"_d', {
    desc = 'delete text to blackhole register',
 })
-kmap({ 'n', 'x' }, ' c', '"_c', {
+kmap({ 'n', 'x' }, '<leader>c', '"_c', {
    desc = 'change text to blackhole register',
 })
 
 -- Yank, delete, change & paste with system clipboard
-kmap({ 'n', 'x' }, ' sy', '"+y', { desc = 'yank to system clipboard' })
-kmap({ 'n', 'x' }, ' sd', '"+d', { desc = 'delete to system clipboard' })
-kmap({ 'n', 'x' }, ' sc', '"+c', { desc = 'change text to system clipboard' })
-kmap({ 'n', 'x' }, ' sp', '"+p', { desc = 'paste from system clipboard' })
+kmap({ 'n', 'x' }, '<leader>sy', '"+y', { desc = 'yank to system clipboard' })
+kmap({ 'n', 'x' }, '<leader>sd', '"+d', { desc = 'delete to system clipboard' })
+kmap({ 'n', 'x' }, '<leader>sc', '"+c', { desc = 'change text to system clipboard' })
+kmap({ 'n', 'x' }, '<leader>sp', '"+p', { desc = 'paste from system clipboard' })
 
 -- Shift line and reselect
 kmap('x', '<', '<gv', { desc = 'shift left & reselect' })
@@ -95,15 +95,15 @@ kmap('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
 
 -- Misc keybindings
 kmap('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
-kmap('n', ' b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
-kmap('n', ' k', '<Cmd>dig<CR>a<C-k>', { desc = 'pick & enter diagraph' })
-kmap('n', ' h', '<Cmd>TSBufToggle highlight<CR>', {
+kmap('n', '<leader>b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
+kmap('n', '<leader>k', '<Cmd>dig<CR>a<C-k>', { desc = 'pick & enter diagraph' })
+kmap('n', '<leader>h', '<Cmd>TSBufToggle highlight<CR>', {
    desc = 'toggle treesitter',
 })
-kmap('n', ' l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
+kmap('n', '<leader>l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
    desc = 'clear & redraw window',
 })
-kmap('n', ' w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
+kmap('n', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
    desc = 'trim trailing whitespace',
 })
 

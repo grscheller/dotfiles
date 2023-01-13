@@ -4,6 +4,8 @@ return {
 
    {
       'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdateSync',
+      event = 'BufReadPost',
       opts = {
          ensure_installed = {
             'awk',
@@ -52,10 +54,17 @@ return {
             'zig',
          },
          sync_install = false,
+         auto_install = true,
          highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
          },
+         indent = { enable = true },
+         context_commentstring = {
+             enable =true,
+             enable_autocmd = false,
+         },
       },
    },
+
 }
