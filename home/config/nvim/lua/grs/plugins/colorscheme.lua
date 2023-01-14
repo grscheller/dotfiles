@@ -28,6 +28,20 @@ return {
       end,
    },
 
+   -- Colorize color names, hexcodes, and other color formats
+   {
+      'norcalli/nvim-colorizer.lua',
+      lazy = false,
+      opts = {
+         '*',
+         css = { rgb_fn = true },
+         html = { names = false },
+      },
+      keys = {
+         { '<leader>C', '<Cmd>ColorizerToggle<CR>', desc = 'toggle colorizer' },
+      },
+   },
+
    -- Lualine statusline
    {
       'nvim-lualine/lualine.nvim',
@@ -125,7 +139,7 @@ return {
       'kyazdani42/nvim-web-devicons',
       opts = {
          default = true
-      }
+      },
    },
 
    -- Replace vim.notify - TODO: replace default colors

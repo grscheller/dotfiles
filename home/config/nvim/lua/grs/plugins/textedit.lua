@@ -38,17 +38,6 @@ return {
    -- Repeat commands from supported plugins
    'tpope/vim-repeat',
 
-   -- Colorize color names, hexcodes, and other color formats
-   {
-      'norcalli/nvim-colorizer.lua',
-      opts = {
-         '*',
-         '!vim',
-         css = { rgb_fn = true },
-         html = { names = false },
-      },
-   },
-
    -- Folke Zen Mode
    {
       'folke/zen-mode.nvim',
