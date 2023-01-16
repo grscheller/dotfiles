@@ -1,4 +1,4 @@
---[[ Define keybindings/keymappings ]]
+--[[ Define keymappings/keybindings ]]
 
 local kmap = vim.keymap.set
 
@@ -93,7 +93,7 @@ kmap('x', '>', '>gv', { desc = 'shift right & reselect' })
 kmap('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
 kmap('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
 
--- Misc keybindings
+-- Misc keymaps
 kmap('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
 kmap('n', '<leader>b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
 kmap('n', '<leader>k', '<Cmd>dig<CR>a<C-k>', { desc = 'pick & enter diagraph' })
@@ -107,11 +107,10 @@ kmap('n', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
    desc = 'trim trailing whitespace',
 })
 
-return {}
+local M = {}
 
---[[
---LSP related keybindings
-function M.lsp_kb(_, bufnr)
+--LSP related keymaps
+function M.lsp_km(_, bufnr)
    kmap('n', 'H', vim.lsp.buf.hover, {
       buffer = bufnr,
       desc = 'hover',
@@ -190,24 +189,24 @@ function M.lsp_kb(_, bufnr)
    })
 end
 
--- Haskell related keybindings
-function M.haskell_kb(bufnr)
+-- Haskell related keymaps
+function M.haskell_km(bufnr)
    kmap({ 'n', 'x' }, 'zH', '<Cmd>%!stylish-haskell<CR>', {
       desc = 'stylish haskell format',
       buffer = bufnr,
    })
 end
 
--- Scala Metals related keybindings
-function M.metals_kb(bufnr, metals)
+-- Scala Metals related keymaps
+function M.metals_km(bufnr, metals)
    kmap('n', 'M', metals.hover_worksheet, {
       desc = 'metals hover worksheet',
       buffer = bufnr,
    })
 end
 
--- DAP (Debug Adapter Protocol) related keybindings
-function M.dap_kb(bufnr, dap, dap_ui_widgets)
+-- DAP (Debug Adapter Protocol) related kemaps
+function M.dap_km(bufnr, dap, dap_ui_widgets)
    if M.wk then
       wk.register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
    end
@@ -241,4 +240,5 @@ function M.dap_kb(bufnr, dap, dap_ui_widgets)
       desc = 'dap repl toggle',
    })
 end
---]]
+
+return M

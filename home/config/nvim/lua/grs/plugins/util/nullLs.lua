@@ -6,19 +6,11 @@ local confMason = require 'grs.config.mason'
 local BuiltinTbls = confMason.BuiltinTbls
 local m = confMason.MasonEnum
 
-local func = require 'grs.lib.functional'
-local iFlatten = func.iFlatten
-local getFilteredKeys = func.getFilteredKeys
-
-local msg = require('grs.lib.Vim').msg_return_to_continue
+local util = require 'grs.util'
+local iFlatten = util.iFlatten
+local getFilteredKeys = util.getFilteredKeys
 
 M.setup = function()
-   local ok, null_ls = pcall(require, 'null-ls')
-   if not ok then
-      msg 'Error: Problem null-ls, PUNTING!!!'
-      return
-   end
-
    local configure = function(_, v)
       return v == m.auto
    end
@@ -45,6 +37,7 @@ M.setup = function()
       getFilteredKeys(BuiltinTbls.hover.system, configure),
    }
 
+   local null_ls = require 'null-ls'
    local sources = {}
    for key, list in pairs(builtins) do
       for _, builtin in ipairs(list) do
@@ -55,8 +48,6 @@ M.setup = function()
    null_ls.setup {
       sources = sources,
    }
-
-   return null_ls
 end
 
 return M

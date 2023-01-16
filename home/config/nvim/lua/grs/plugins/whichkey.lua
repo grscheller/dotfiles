@@ -1,4 +1,4 @@
---[[ Which-Key - helps make keybindings user discoverable ]]
+--[[ Which-Key - helps make keymaps user discoverable ]]
 
 return {
    'folke/which-key.nvim',

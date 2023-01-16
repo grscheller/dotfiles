@@ -2,8 +2,8 @@
 
 -- string, numeric  & boolean options
 local options = {
-   -- POSIX compatible shells are needed by some plugins
-   shell = '/bin/sh',
+
+   shell = '/bin/sh', -- POSIX compatible shells are needed by some plugins
 
    -- Set default fileencoding, localizations, and file formats
    fileencoding = 'utf-8',

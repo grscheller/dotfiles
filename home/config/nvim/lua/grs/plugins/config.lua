@@ -16,9 +16,10 @@ local function load(mod)
       })
 end
 
--- Load options here, before lazy init while sourcing plugin modules
--- this is needed to make sure options will be correctly applied
--- after installing missing plugins.
+-- Load globals & options here, before lazy init while sourcing
+-- plugin modules this is needed to make sure options will be
+-- correctly applied after installing missing plugins.
+load('grs.config.globals')
 load('grs.config.options')
 
 -- autocmds and keymaps can wait to load
