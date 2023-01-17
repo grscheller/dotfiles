@@ -261,7 +261,7 @@ local function convertToMasonPkgs(names, package_names)
       else
          local message = string.format(
             'Warning: No Mason package for %s found!"', v)
-         msg(message)
+         vim.notify(message)
       end
    end
    return mason_names

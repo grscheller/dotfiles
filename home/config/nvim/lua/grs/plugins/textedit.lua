@@ -7,7 +7,7 @@ return {
    -- Comment/uncomment blocks of code
    {
       'numToStr/Comment.nvim',
-      event = 'VeryLazy',
+      event = 'BufReadPost',
       opts = {
          ignore = '^$',
          mappings = {
@@ -33,10 +33,16 @@ return {
    },
 
    -- Surround text objects with matching symbols
-   'tpope/vim-surround',
+   {
+      'tpope/vim-surround',
+      event = 'BufReadPost',
+   },
 
    -- Repeat commands from supported plugins
-   'tpope/vim-repeat',
+   {
+      'tpope/vim-repeat',
+      event = 'BufReadPost',
+   },
 
    -- Folke Zen Mode
    {

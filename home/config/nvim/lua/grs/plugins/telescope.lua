@@ -23,12 +23,9 @@ return {
          'rcarriga/nvim-notify',
       },
       config = function()
-         local ts = require 'telescope'
-         local tb = require 'telescope.builtin'
-         local te = ts.extensions
-         local km = vim.keymap.set
+         local tele = require 'telescope'
 
-         ts.setup {
+         tele.setup {
             extensions = {
                file_browser = {},
                frecency = {},
@@ -40,10 +37,10 @@ return {
             },
          }
 
-         ts.load_extension 'frecency'
-         ts.load_extension 'fzf'
-         ts.load_extension 'notify'
-         ts.load_extension 'ui-select'
+         tele.load_extension 'frecency'
+         tele.load_extension 'fzf'
+         tele.load_extension 'notify'
+         tele.load_extension 'ui-select'
       end,
       keys = {
          { ' tb', function()

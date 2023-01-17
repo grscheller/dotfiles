@@ -123,9 +123,9 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/util/lspconfig.lua
    nvim/lua/grs/plugins/util/mason.lua
    nvim/lua/grs/plugins/util/nullLs.lua
-   nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/config.lua
    nvim/lua/grs/plugins/cmp.lua
+   nvim/lua/grs/plugins/early.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/lua/grs/plugins/lspconfig.lua
    nvim/lua/grs/plugins/telescope.lua
@@ -163,6 +163,7 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/theming.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/util/lspconf.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/neoconf.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/colorscheme.lua
 "
 
 ### Functions

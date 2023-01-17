@@ -1,6 +1,6 @@
 --[[ Completions & Snippets ]]
 
-function cursor_has_words_before_it()
+local function cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
       and vim.api
@@ -11,6 +11,7 @@ function cursor_has_words_before_it()
 end
 
 return {
+
    {
       'hrsh7th/nvim-cmp',
       dependencies = {
@@ -198,4 +199,5 @@ return {
       cmd = 'Telescope',
       event = 'InsertEnter',
    },
+
 }

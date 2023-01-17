@@ -1,4 +1,4 @@
---[[zF Setup colorizier, colorscheme & statusline ]]
+--[[ Colorschemes & other plugins needing to be loaded early ]]
 
 -- For Lualine, Kanagawa based colorscheme
 local colors = {
@@ -137,6 +137,8 @@ return {
    -- see https://github.com/ryanoasis/nerd-fonts
    {
       'kyazdani42/nvim-web-devicons',
+      lazy = false,
+      priority = 1000,
       opts = {
          default = true
       },
@@ -145,6 +147,8 @@ return {
    -- Replace vim.notify - TODO: replace default colors
    {
       'rcarriga/nvim-notify',
+      lazy = false,
+      priority = 1000,
       opts = {},
       config = function()
          vim.notify = require 'notify'
