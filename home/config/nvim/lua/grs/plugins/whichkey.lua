@@ -16,10 +16,13 @@ return {
             }
          }
          wk.register(
-            { name = 'system clipboard' },
+            { name = 'system clipboard'},
             { mode = { 'n', 'x'}, prefix = ' s' }
          )
-         wk.register({ name = 'telescope' }, { prefix = ' t' })
+         wk.register(
+            { name = 'telescope' },
+            { prefix = ' t' }
+         )
       end,
    }
 
