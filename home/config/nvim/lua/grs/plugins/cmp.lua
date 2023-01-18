@@ -127,21 +127,21 @@ return {
                   { name = 'luasnip' },
                }),
             mapping = {
-               ['<Up>'] = cmp.mapping.select_prev_item(select_opts),
-               ['<Down>'] = cmp.mapping.select_next_item(select_opts),
+               ['<up>'] = cmp.mapping.select_prev_item(select_opts),
+               ['<down>'] = cmp.mapping.select_next_item(select_opts),
 
-               ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
-               ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+               ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
+               ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
 
-               ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-               ['<C-d>'] = cmp.mapping.scroll_docs(4),
+               ['<c-u>'] = cmp.mapping.scroll_docs(-4),
+               ['<c-d>'] = cmp.mapping.scroll_docs(4),
 
-               ['<C- >'] = cmp.mapping.close(),
-               ['<C-e>'] = cmp.mapping.abort(),
-               ['<CR>'] = cmp.mapping.confirm(confirm_opts),
-               ['<C-y>'] = cmp.mapping.confirm(confirm_opts),
+               ['<c- >'] = cmp.mapping.close(),
+               ['<c-e>'] = cmp.mapping.abort(),
+               ['<cr>'] = cmp.mapping.confirm(confirm_opts),
+               ['<c-y>'] = cmp.mapping.confirm(confirm_opts),
 
-               ['<Tab>'] = cmp.mapping(function(fallback)
+               ['<tab>'] = cmp.mapping(function(fallback)
                   if cmp.visible() then
                      cmp.select_next_item()
                   elseif luasnip.expand_or_locally_jumpable() then
@@ -152,7 +152,7 @@ return {
                      fallback()
                   end
                end, { 'i', 's' }),
-               ['<S-Tab>'] = cmp.mapping(function(fallback)
+               ['<s-tab>'] = cmp.mapping(function(fallback)
                   if cmp.visible() then
                      cmp.select_prev_item()
                   elseif luasnip.jumpable(-1) then
@@ -162,7 +162,7 @@ return {
                   end
                end, { 'i', 's' }),
 
-               ['<C-s>'] = cmp.mapping.complete {
+               ['<c-s>'] = cmp.mapping.complete {
                   config = {
                      sources = { { name = 'luasnip' } },
                   },
@@ -196,7 +196,6 @@ return {
             sources = { { name = 'buffer' } },
          })
       end,
-      cmd = 'Telescope',
       event = 'InsertEnter',
    },
 

@@ -21,14 +21,14 @@ return {
    {
       'justinmk/vim-sneak',
       keys = {
-         { 's', '<Plug>Sneak_s', mode = { 'n', 'x' }, desc = 'sneak forward' },
-         { 'z', '<Plug>Sneak_s', mode = { 'o' },      desc = 'sneak forward' },
-         { 'S', '<Plug>Sneak_S', mode = { 'n' },      desc = 'sneak backward' },
-         { 'Z', '<Plug>Sneak_S', mode = { 'x', 'o' }, desc = 'sneak backward' },
-         { 'f', '<Plug>Sneak_f', mode = { 'n', 'x', 'o' }, desc = 'move to next char' },
-         { 't', '<Plug>Sneak_t', mode = { 'n', 'x', 'o' }, desc = 'move before next char' },
-         { 'F', '<Plug>Sneak_F', mode = { 'n', 'x', 'o' }, desc = 'move to prev char' },
-         { 'T', '<Plug>Sneak_T', mode = { 'n', 'x', 'o' }, desc = 'move before prev char' },
+         { 's', '<plug>Sneak_s', mode = { 'n', 'x' }, desc = 'sneak forward' },
+         { 'z', '<plug>Sneak_s', mode = { 'o' },      desc = 'sneak forward' },
+         { 'S', '<plug>Sneak_S', mode = { 'n' },      desc = 'sneak backward' },
+         { 'Z', '<plug>Sneak_S', mode = { 'x', 'o' }, desc = 'sneak backward' },
+         { 'f', '<plug>Sneak_f', mode = { 'n', 'x', 'o' }, desc = 'move to next char' },
+         { 't', '<plug>Sneak_t', mode = { 'n', 'x', 'o' }, desc = 'move before next char' },
+         { 'F', '<plug>Sneak_F', mode = { 'n', 'x', 'o' }, desc = 'move to prev char' },
+         { 'T', '<plug>Sneak_T', mode = { 'n', 'x', 'o' }, desc = 'move before prev char' },
       },
    },
 
@@ -72,7 +72,7 @@ return {
          on_close = function() end,
       },
       keys = {
-         { 'zZ', '<Cmd>ZenMode<CR>', desc = 'zen-mode toggle' },
+         { 'zZ', '<cmd>ZenMode<cr>', desc = 'zen-mode toggle' },
       },
    },
 

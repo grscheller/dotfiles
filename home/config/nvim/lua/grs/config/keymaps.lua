@@ -5,52 +5,53 @@ local km = vim.keymap.set
 --[[ Window/Tab related mappings/bindings ]]
 
 -- Navigating windows
-km('n', '<M-h>', '<C-w>h', { desc = 'goto window left' })
-km('n', '<M-j>', '<C-w>j', { desc = 'goto window below' })
-km('n', '<M-k>', '<C-w>k', { desc = 'goto window above' })
-km('n', '<M-l>', '<C-w>l', { desc = 'goto window right' })
-km('n', '<M-p>', '<C-w>p', { desc = 'goto previous window' })
+km('n', '<m-h>', '<c-w>h', { desc = 'goto window left' })
+km('n', '<m-j>', '<c-w>j', { desc = 'goto window below' })
+km('n', '<m-k>', '<c-w>k', { desc = 'goto window above' })
+km('n', '<m-l>', '<c-w>l', { desc = 'goto window right' })
+km('n', '<m-p>', '<c-w>p', { desc = 'goto previous window' })
 
 -- Creating new windows
-km('n', '<M-s>', '<C-w>s', { desc = 'split current window' })
-km('n', '<M-d>', '<C-w>v', { desc = 'vsplit current window' })
-km('n', '<M-f>', '<Cmd>split<Bar>term fish<CR>i', {
+km('n', '<m-s>', '<c-w>s', { desc = 'split current window' })
+km('n', '<m-d>', '<c-w>v', { desc = 'vsplit current window' })
+km('n', '<m-f>', '<cmd>split<bar>term fish<cr>i', {
    desc = 'fish term in split',
 })
-km('n', '<M-g>', '<Cmd>vsplit<Bar>term fish<CR>i', {
+km('n', '<m-g>', '<cmd>vsplit<bar>term fish<cr>i', {
    desc = 'fish term in vsplit',
 })
 
 -- Changing window layout
-km('n', '<M-S-h>', '<C-w>H', { desc = 'move window lhs' })
-km('n', '<M-S-j>', '<C-w>J', { desc = 'move window bottom' })
-km('n', '<M-S-k>', '<C-w>K', { desc = 'move window top' })
-km('n', '<M-S-l>', '<C-w>L', { desc = 'move window rhs' })
-km('n', '<M-x>', '<C-w>x', { desc = 'exchange window next' })
-km('n', '<M-r>', '<C-w>r', { desc = 'rotate inner split' })
-km('n', '<M-e>', '<C-w>=', { desc = 'equalize windows' })
+km('n', '<m-s-h>', '<c-w>H', { desc = 'move window lhs' })
+km('n', '<m-s-j>', '<c-w>J', { desc = 'move window bottom' })
+km('n', '<m-s-k>', '<c-w>K', { desc = 'move window top' })
+km('n', '<m-s-l>', '<c-w>L', { desc = 'move window rhs' })
+km('n', '<m-x>', '<c-w>x', { desc = 'exchange window next' })
+km('n', '<m-r>', '<c-w>r', { desc = 'rotate inner split' })
+km('n', '<m-e>', '<c-w>=', { desc = 'equalize windows' })
 
 -- Resizing windows
 -- Think: Alt+Minus Alt+Plus Alt+Shift+Minus Alt+Shift+Plus
-km('n', '<M-->', '2<C-w><', { desc = 'make window narrower' })
-km('n', '<M-=>', '2<C-w>>', { desc = 'make window wider' })
-km('n', '<M-_>', '2<C-w>-', { desc = 'make window shorter' })
-km('n', '<M-+>', '2<C-w>+', { desc = 'make window taller' })
+km('n', '<m-->', '2<c-w><', { desc = 'make window narrower' })
+km('n', '<m-=>', '2<c-w>>', { desc = 'make window wider' })
+km('n', '<m-_>', '2<c-w>-', { desc = 'make window shorter' })
+km('n', '<m-+>', '2<c-w>+', { desc = 'make window taller' })
 
 -- Move view in window, only move cursor to keep on screen
-km('n', '<C-h>', 'z4h', { desc = 'move view left 4 columns' })
-km('n', '<C-j>', '3<C-e>', { desc = 'move view down 3 lines' })
-km('n', '<C-k>', '3<C-y>', { desc = 'move view up 3 lines' })
-km('n', '<C-l>', 'z4l', { desc = 'move view right 4 columns' })
+km('n', '<c-h>', 'z4h', { desc = 'move view left 4 columns' })
+km('n', '<c-j>', '3<c-e>', { desc = 'move view down 3 lines' })
+km('n', '<c-k>', '3<c-y>', { desc = 'move view up 3 lines' })
+km('n', '<c-l>', 'z4l', { desc = 'move view right 4 columns' })
 
 -- Managing tabpages
-km('n', '<M-Left>', '<Cmd>tabprev<CR>', { desc = 'goto tab left' })
-
-km('n', '<M-Right>', '<Cmd>tabnext<CR>', { desc = 'goto tab right' })
-km('n', '<M-n>', '<Cmd>tabnew<CR>', { desc = 'create new tab' })
-km('n', '<M-t>', '<C-w>T', { desc = 'breakout window new tab' })
-km('n', '<M-c>', '<C-w>c', { desc = 'close current window' })
-km('n', '<M-o>', '<C-w>o', { desc = 'close other tab windows' })
+km('n', '<tab><right>', '<cmd>tabnext<cr>', { desc = 'goto next tab' })
+km('n', '<tab><left>', '<cmd>tabprev<cr>', { desc = 'goto prev tab' })
+km('n', '<tab><up>', '<cmd>tabfirst<cr>', { desc = 'goto first tab' })
+km('n', '<tab><down>', '<cmd>tablast<cr>', { desc = 'goto last tab' })
+km('n', '<tab>n', '<cmd>tabnew<cr>', { desc = 'create new tab' })
+km('n', '<tab>b', '<c-w>T', { desc = 'breakout window new tab' })
+km('n', '<tab>c', '<c-w>c', { desc = 'close current window' })
+km('n', '<tab>o', '<c-w>o', { desc = 'close other tab windows' })
 
 --[[ Text editting keymaps not related to any specific plugins ]]
 
@@ -90,22 +91,25 @@ km('x', '<', '<gv', { desc = 'shift left & reselect' })
 km('x', '>', '>gv', { desc = 'shift right & reselect' })
 
 -- Move visual selection up or down a line
-km('x', 'J', ":m '>+1<CR>gv=gv", { desc = 'move selection down a line' })
-km('x', 'K', ":m '<-2<CR>gv=gv", { desc = 'move selection up a line' })
+km('x', 'J', ":m '>+1<cr>gv=gv", { desc = 'move selection down a line' })
+km('x', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
 
--- Misc keymaps
-km('n', 'z ', '<Cmd>set invspell<CR>', { desc = 'toggle spelling' })
-km('n', '<leader>b', '<Cmd>enew<CR>', { desc = 'new unnamed buffer' })
-km('n', '<leader>k', '<Cmd>dig<CR>a<C-k>', { desc = 'pick & enter diagraph' })
-km('n', '<leader>h', '<Cmd>TSBufToggle highlight<CR>', {
-   desc = 'toggle treesitter',
-})
-km('n', '<leader>l', '<Cmd>nohlsearch<Bar>diffupdate<bar>mode<CR>', {
-   desc = 'clear & redraw window',
-})
-km('n', '<leader>w', '<Cmd>%s/\\s\\+$//<CR><C-o>', {
-   desc = 'trim trailing whitespace',
-})
+-- Cleanup related keymaps
+km('n', '<leader>w', '<cmd>%s/\\s\\+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
+km('n', "<esc>", "<cmd>noh<bar>mode<cr><esc>", { desc = "rm hlsearch & redraw on ESC" })
+
+-- Buffer related keymaps
+km('n', '<leader>b', '<cmd>enew<cr>', { desc = 'new unnamed buffer' })
+
+-- treesitter related keymaps
+km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', { desc = 'toggle treesitter', })
+
+-- spelling related keymaps
+km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
+
+-- character related keymaps
+km('n', '<leader>K', '<cmd>dig<cr>a<c-k>', { desc = 'pick & enter diagraph' })
+km('n', '<leader>u', 'a<c-v>u', { desc = 'enter unicode code point in hex' })
 
 local M = {}
 
@@ -191,7 +195,7 @@ end
 
 -- Haskell related keymaps
 function M.haskell_km(bufnr)
-   km({ 'n', 'x' }, 'zH', '<Cmd>%!stylish-haskell<CR>', {
+   km({ 'n', 'x' }, 'zH', '<cmd>%!stylish-haskell<cr>', {
       desc = 'stylish haskell format',
       buffer = bufnr,
    })

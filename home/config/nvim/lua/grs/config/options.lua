@@ -19,7 +19,7 @@ local options = {
    -- Buffer/Editing preferences
    hidden = true, -- my expectations are that buffers don't get abandoned
    joinspaces = true, -- use 2 spaces when joinig sentances
-   nrformats = 'bin,hex,octal,alpha', -- for <C-A> & <C-X>
+   nrformats = 'bin,hex,octal,alpha', -- for <c-a> & <c-x>
    undofile = true, -- save undo history in ~/.local/share/nvim/undo/
    ignorecase = true, -- Case insensitive search when given
    smartcase = true, -- just lower case search patterns.

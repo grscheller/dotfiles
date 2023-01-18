@@ -38,7 +38,7 @@ return {
          html = { names = false },
       },
       keys = {
-         { '<leader>C', '<Cmd>ColorizerToggle<CR>', desc = 'toggle colorizer' },
+         { '<leader>C', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
       },
    },
 
