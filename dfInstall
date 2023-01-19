@@ -92,7 +92,6 @@ CONFIG_FILES='
    fish/functions/pathtrim.fish
    fish/functions/rc.fish
    fish/functions/ud.fish
-   fish/functions/unguard_universals.fish
    fish/functions/Wget.fish
    fish/functions/WgetM.fish
    fish/functions/b2b.fish
@@ -164,6 +163,10 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/util/lspconf.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/neoconf.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/colorscheme.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/theming/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/core/
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/init.lua
+   ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
 "
 
 ### Functions
