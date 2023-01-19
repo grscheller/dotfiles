@@ -1,4 +1,4 @@
---[[ Mason Setup - Infrastructure & Boilerplate ]]
+--[[ Mason Setup ]]
 
 local confMason = require 'grs.config.mason'
 local m = confMason.MasonEnum

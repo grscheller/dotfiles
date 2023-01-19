@@ -13,9 +13,9 @@ return {
             }
          },
          'hrsh7th/cmp-nvim-lsp',
+         'WhoIsSethDaniel/mason-tool-installer.nvim',
          'mfussenegger/nvim-dap',
          'jose-elias-alvarez/null-ls.nvim',
-         'williamboman/mason.nvim',
          'simrat39/rust-tools.nvim',
          'scalameta/nvim-metals',
       },
