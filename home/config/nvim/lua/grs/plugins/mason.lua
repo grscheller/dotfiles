@@ -34,19 +34,4 @@ return {
        opts = { ensure_installed = masonPackages, },
    },
 
-   -- Mason-tool-installer, automates Mason tool installation.
-   {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      dependencies = {
-         'williamboman/mason.nvim',
-      },
-      opts = {
-         ensure_installed = masonPackages,
-         auto_update = false,
-         run_on_start = true,
-         start_delay = 3000, -- milliseconds
-      },
-      event = 'VeryLazy',
-   },
-
 }
