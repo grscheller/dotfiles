@@ -2,7 +2,7 @@
 
 local km = vim.keymap.set
 
---[[ Window/Tab related mappings/bindings ]]
+--[[ Window/Tabpage related mappings/bindings ]]
 
 -- Navigating windows
 km('n', '<m-h>', '<c-w>h', { desc = 'goto window left' })
@@ -14,12 +14,8 @@ km('n', '<m-p>', '<c-w>p', { desc = 'goto previous window' })
 -- Creating new windows
 km('n', '<m-s>', '<c-w>s', { desc = 'split current window' })
 km('n', '<m-d>', '<c-w>v', { desc = 'vsplit current window' })
-km('n', '<m-f>', '<cmd>split<bar>term fish<cr>i', {
-   desc = 'fish term in split',
-})
-km('n', '<m-g>', '<cmd>vsplit<bar>term fish<cr>i', {
-   desc = 'fish term in vsplit',
-})
+km('n', '<m-f>', '<cmd>split<bar>term fish<cr>i', { desc = 'split fish term' })
+km('n', '<m-g>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'vsplit fish term' })
 
 -- Changing window layout
 km('n', '<m-s-h>', '<c-w>H', { desc = 'move window lhs' })
@@ -44,14 +40,14 @@ km('n', '<c-k>', '3<c-y>', { desc = 'move view up 3 lines' })
 km('n', '<c-l>', 'z4l', { desc = 'move view right 4 columns' })
 
 -- Managing tabpages
-km('n', '<tab><right>', '<cmd>tabnext<cr>', { desc = 'goto next tab' })
-km('n', '<tab><left>', '<cmd>tabprev<cr>', { desc = 'goto prev tab' })
-km('n', '<tab><up>', '<cmd>tabfirst<cr>', { desc = 'goto first tab' })
-km('n', '<tab><down>', '<cmd>tablast<cr>', { desc = 'goto last tab' })
-km('n', '<tab>n', '<cmd>tabnew<cr>', { desc = 'create new tab' })
-km('n', '<tab>b', '<c-w>T', { desc = 'breakout window new tab' })
-km('n', '<tab>c', '<c-w>c', { desc = 'close current window' })
-km('n', '<tab>o', '<c-w>o', { desc = 'close other tab windows' })
+km('n', '<c-right>', '<cmd>tabnext<cr>', { desc = 'goto next tab' })
+km('n', '<c-left>', '<cmd>tabprev<cr>', { desc = 'goto prev tab' })
+km('n', '<c-up>', '<cmd>tabfirst<cr>', { desc = 'goto first tab' })
+km('n', '<c-down>', '<cmd>tablast<cr>', { desc = 'goto last tab' })
+km('n', '<m-n>', '<cmd>tabnew<cr>', { desc = 'create new tab' })
+km('n', '<m-b>', '<c-w>T', { desc = 'breakout window new tab' })
+km('n', '<m-c>', '<c-w>c', { desc = 'close current window' })
+km('n', '<m-o>', '<c-w>o', { desc = 'close other tab windows' })
 
 --[[ Text editting keymaps not related to any specific plugins ]]
 
