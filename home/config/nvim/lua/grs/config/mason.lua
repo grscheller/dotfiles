@@ -1,12 +1,9 @@
 --[[ Mason Related Configurations ]]
 
 --[[
-     Using Mason as a 3rd party package manager (pm).
-
-     When a server/tool is not provided in the underlying
-     os/environment by some package manager such as
-     Pacman, Apt, Nix, Brew, SDKMAN, Cocolately, MSYS2, ...
-     or by Packer (packer.nvim).
+     Using Mason as a 3rd party package manager (pm) when
+     a server/linter/formatter is not provided in the
+     underlying os/environment.
 
      The overiding principle is to configure only what I
      actually use, not to install and configure everything
@@ -16,7 +13,7 @@
 local M = {}
 
 M.MasonEnum = {
-   auto = 1, -- automatically configue with lspconf
+   auto = 1, -- automatically configure with lspconf or null-ls
    man = 2, -- manually configure
    install = 3, -- install but don't configure
    ignore = 4, -- don't install nor configure
@@ -26,7 +23,7 @@ local m = M.MasonEnum
 
 --[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
 
--- Lspconfig uses a default configurations for items marked m.auto.
+-- Lspconfig uses default configurations for items marked m.auto.
 -- Mason installs packages in the mason tables not marked m.ignore.
 -- Both lists use the LSP module (lspconfig) names, not Mason package names.
 -- In system table, anything not either m.auto or m.man is just informational.
@@ -45,19 +42,19 @@ M.LspTbl = {
       hls = m.man,
       pyright = m.ignore,
       rust_analyzer = m.install,
-      rust_tools = m.man, -- directly uses lspconfig and dap
-      scala_metals = m.man, -- directly uses lspconfig and dap
+      rust_tools = m.man, -- will directly use lspconfig and dap itself
+      scala_metals = m.man, -- will directly use lspconfig and dap itself
       sumneko_lua = m.man,
       taplo = m.auto,
       yamlls = m.auto,
    },
 }
 
--- Nvim-dap itself does not have any "default" or "builtin" configurations.
--- There is no reason marking anything as m.auto.
--- Mason installs packages from the mason tables not marked m.ignore.
--- Names used are DAP (nvim-dap) names, not Mason package names.
--- For system table, m.man will turn on a manual config if it exists.
+-- Nvim-dap itself does not have any "default" or "builtin" configurations,
+-- hence there is no reason to mark anything as m.auto.  Mason installs
+-- packages from the mason tables not marked m.ignore.  Names used are
+-- DAP (nvim-dap) names, not Mason package names.  For system table, m.man
+-- will turn on a manual config if it exists.
 M.DapTbl = {
    mason = {
       bash = m.install,

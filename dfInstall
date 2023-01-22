@@ -114,7 +114,6 @@ CONFIG_FILES='
    nvim/init.lua
    nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/keymaps.lua
-   nvim/lua/grs/config/lazy.lua
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
    nvim/lua/grs/config/settings.lua
@@ -145,28 +144,8 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${XDG_CONFIG_HOME}/fish/functions/bases/
-   ${XDG_CONFIG_HOME}/nvim/.neoconf.json
-   ${XDG_CONFIG_HOME}/nvim/.stylua.toml
-   ${XDG_CONFIG_HOME}/nvim/neoconf.json
-   ${XDG_CONFIG_HOME}/nvim/plugin/
-   ${XDG_CONFIG_HOME}/nvim/lua/config/
-   ${XDG_CONFIG_HOME}/nvim/lua/plugins/
-   ${XDG_CONFIG_HOME}/nvim/lua/lazyvim/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/keybindings.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugin/after/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/textedit/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/devel/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/lib/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugin/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/theming.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/util/lspconf.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/neoconf.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/plugins/colorscheme.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/theming/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/core/
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/init.lua
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
 "
 
 ### Functions

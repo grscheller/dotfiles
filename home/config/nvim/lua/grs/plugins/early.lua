@@ -28,6 +28,29 @@ return {
       end,
    },
 
+   -- Replace vim.notify - TODO: replace default colors
+   {
+      'rcarriga/nvim-notify',
+      lazy = false,
+      priority = 900,
+      opts = {},
+      config = function()
+         vim.notify = require 'notify'
+      end,
+   },
+
+   -- WebDevicons needs patched font,
+   -- like Noto Mono Nerd Font,
+   -- see https://github.com/ryanoasis/nerd-fonts
+   {
+      'kyazdani42/nvim-web-devicons',
+      lazy = false,
+      priority = 800,
+      opts = {
+         default = true
+      },
+   },
+
    -- Colorize color names, hexcodes, and other color formats
    {
       'norcalli/nvim-colorizer.lua',
@@ -130,29 +153,6 @@ return {
          },
          extensions = {},
       },
-   },
-
-   -- WebDevicons needs patched font,
-   -- like Noto Mono Nerd Font,
-   -- see https://github.com/ryanoasis/nerd-fonts
-   {
-      'kyazdani42/nvim-web-devicons',
-      lazy = false,
-      priority = 1000,
-      opts = {
-         default = true
-      },
-   },
-
-   -- Replace vim.notify - TODO: replace default colors
-   {
-      'rcarriga/nvim-notify',
-      lazy = false,
-      priority = 1000,
-      opts = {},
-      config = function()
-         vim.notify = require 'notify'
-      end,
    },
 
 }

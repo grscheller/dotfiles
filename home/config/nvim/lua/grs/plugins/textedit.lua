@@ -63,7 +63,7 @@ return {
          },
          plugins = {
             options = {},
-            twilght = { enable = true },
+            twilight = { enable = true },
          },
          on_open = function(win)
             vim.api.nvim_win_set_option(win, 'scrolloff', 10)
