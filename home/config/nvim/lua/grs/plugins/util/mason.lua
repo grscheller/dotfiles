@@ -172,101 +172,20 @@ local DapToMasonPackage = {
 }
 
 local BuiltinsToMasonPackage = {
-   ['actionlint'] = 'actionlint',
-   ['alex'] = 'alex',
-   ['autopep8'] = 'autopep8',
-   ['beautysh'] = 'beautysh',
-   ['black'] = 'black',
-   ['blade_formatter'] = 'blade-formatter',
-   ['blue'] = 'blue',
-   ['buf'] = 'buf',
-   ['buildifier'] = 'buildifier',
-   ['cbfmt'] = 'cbfmt',
-   ['cfn_lint'] = 'cfn-lint',
-   ['clang_format'] = 'clang-format',
    ['cmake_format'] = 'cmakelang',
-   ['codespell'] = 'codespell',
-   ['commitlint'] = 'commitlint',
-   ['cpplint'] = 'cpplint',
-   ['csharpier'] = 'csharpier',
-   ['cspell'] = 'cspell',
-   ['curlylint'] = 'curlylint',
-   ['djlint'] = 'djlint',
-   ['dprint'] = 'dprint',
-   ['editorconfig_checker'] = 'editorconfig-checker',
-   ['elm_format'] = 'elm-format',
-   ['erb_lint'] = 'erb-lint',
    ['eslint_d'] = 'eslint_d',
-   ['fixjson'] = 'fixjson',
-   ['flake8'] = 'flake8',
-   ['gersemi'] = 'gersemi',
-   ['gitlint'] = 'gitlint',
-   ['gofumpt'] = 'gofumpt',
-   ['goimports'] = 'goimports',
    ['goimports_reviser'] = 'goimports_reviser',
-   ['golangci_lint'] = 'golangci-lint',
-   ['golines'] = 'golines',
-   ['hadolint'] = 'hadolint',
-   ['haml_lint'] = 'haml-lint',
-   ['isort'] = 'isort',
-   ['joker'] = 'joker',
-   ['jq'] = 'jq',
-   ['jsonlint'] = 'jsonlint',
-   ['ktlint'] = 'ktlint',
-   ['luacheck'] = 'luacheck',
-   ['markdownlint'] = 'markdownlint',
-   ['misspell'] = 'misspell',
-   ['mypy'] = 'mypy',
-   ['phpcbf'] = 'phpcbf',
    ['phpcsfixer'] = 'php-cs-fixer',
-   ['prettier'] = 'prettier',
-   ['prettierd'] = 'prettierd',
-   ['proselint'] = 'proselint',
-   ['protolint'] = 'protolint',
-   ['psalm'] = 'psalm',
-   ['pylama'] = 'pylama',
-   ['pylint'] = 'pylint',
-   ['pyproject_flake8'] = 'pyproject-flake8',
-   ['revive'] = 'revive',
-   ['rome'] = 'rome',
-   ['rubocop'] = 'rubocop',
-   ['rustfmt'] = 'rustfmt',
-   ['selene'] = 'selene',
-   ['shellcheck'] = 'shellcheck',
-   ['shellharden'] = 'shellharden',
-   ['shfmt'] = 'shfmt',
-   ['solhint'] = 'solhint',
-   ['sql_formatter'] = 'sql-formatter',
-   ['sqlfluff'] = 'sqlfluff',
-   ['standardrb'] = 'standardrb',
-   ['staticcheck'] = 'staticcheck',
-   ['stylelint'] = 'stylelint-lsp',
-   ['stylua'] = 'stylua',
-   ['taplo'] = 'taplo',
-   ['textlint'] = 'textlint',
-   ['vale'] = 'vale',
-   ['vint'] = 'vint',
-   ['vulture'] = 'vulture',
-   ['write_good'] = 'write-good',
-   ['xo'] = 'xo',
-   ['yamlfmt'] = 'yamlfmt',
-   ['yamllint'] = 'yamllint',
-   ['yapf'] = 'yapf',
-   ['verible_verilog_format'] = 'verible',  -- added from below
-   ['lua_format'] = 'luaformatter',  -- added from below
-
-   -- ['cmake_format'] = 'cmakelang',
-   -- ['eslint_d'] = 'eslint_d',
-   -- ['goimports_reviser'] = 'goimports_reviser',
-   -- ['phpcsfixer'] = 'php-cs-fixer',
-   -- ['verible_verilog_format'] = 'verible',
-   -- ['lua_format'] = 'luaformatter',
-   -- TODO: These are the oddballs, need to replace table with a function which
-   -- replace _ with -
-   -- see https://github.com/jay-babu/mason-null-ls.nvim/blob/main/lua/mason-null-ls/mappings/source.lua
+   ['verible_verilog_format'] = 'verible',
+   ['lua_format'] = 'luaformatter',
 }
 
-local M = {}
+local BuiltinsToMasonPackageMT = {}
+BuiltinsToMasonPackageMT.__index = function(_, builtin_name)
+   return builtin_name:gsub('_', '-')
+end
+
+setmetatable(BuiltinsToMasonPackage,BuiltinsToMasonPackageMT)
 
 local util = require 'grs.util'
 local iFlatten = util.iFlatten
@@ -287,6 +206,8 @@ local function convertToMasonPkgs(names, package_names)
    end
    return mason_names
 end
+
+local M = {}
 
 M.lspconfig2mason = function(LspSvrTbl, pred)
    return convertToMasonPkgs(

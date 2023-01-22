@@ -26,12 +26,12 @@ local masonPackages = require('grs.util').iFlatten {
 return {
 
    --  Mason package manager infrastructure used to install/upgrade
-   --  3rd party tools like LSP & DAP servers, linters and formatters.
+   --  3rd party tools like LSP & DAP servers and Null-ls builtins.
    {
        'williamboman/mason.nvim',
        cmd = "Mason",
        keys = { { "<leader>M", "<cmd>Mason<cr>", desc = "Mason" } },
-       opts = { ensure_installed = masonPackages, },
+       opts = { ensure_installed = masonPackages },
    },
 
 }
