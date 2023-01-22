@@ -1,4 +1,4 @@
---[[ Load options early, setup common keymaps & autocmds - before plugins ]]
+--[[ Load globals & options before pligins. Load autocmds & keymaps later. ]]
 
 local function load(mod)
    local Util = require('lazy.core.util')
@@ -16,18 +16,16 @@ local function load(mod)
       })
 end
 
--- Load globals & options here, before lazy init while sourcing
--- plugin modules this is needed to make sure options will be
--- correctly applied after installing missing plugins.
-load('grs.config.globals')
-load('grs.config.options')
+-- Load globals & options here, before lazy init, while sourcing plugin modules.
+load 'grs.config.globals'
+load 'grs.config.options'
 
 -- autocmds and keymaps can wait to load
 vim.api.nvim_create_autocmd('User', {
    pattern = 'VeryLazy',
    callback = function()
-      load('grs.config.autocmds')
-      load('grs.config.keymaps')
+      load 'grs.config.autocmds'
+      load 'grs.config.keymaps'
    end,
 })
 

@@ -1,4 +1,4 @@
---[[ Telescope - search, filter, find & pick items with Lua ]]
+--[[ Telescope - search, filter, find & pick items ]]
 
 return {
 

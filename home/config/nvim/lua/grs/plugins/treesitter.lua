@@ -21,7 +21,7 @@ return {
                'c',
                'clojure',
                'cmake',
-               'comment',
+               --'comment', -- slows TS bigtime, as per Folke dot repo
                'cpp',
                'css',
                'diff',
