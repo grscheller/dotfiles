@@ -31,10 +31,10 @@ M.getFilteredValues = function(t, p)
    local filteredValues = {}
    for k, v in pairs(t) do
       if p(k, v) then
-         table.insert(filteredKeys, v)
+         table.insert(filteredValues, v)
       end
    end
-   return filteredKeys
+   return filteredValues
 end
 
 return M
