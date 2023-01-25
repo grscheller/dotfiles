@@ -199,11 +199,10 @@ draw_bold_text_with_bright_colors: true
 # Colors
 schemes:
   # Tokyo Night Theme - Past theme, kept here for reference.
-  tokyo-night: &tokyo-night
+  tokyonight: &tokyonight
     # Default colors
     primary:
-      #background: '#1a1b26'
-      background: '#000000'  # So background wallpaper just dims
+      background: '#090618' # original #1a1b26
       foreground: '#c0caf5'
 
     # Cursor colors
@@ -218,18 +217,18 @@ schemes:
 
     # Normal colors
     normal:
-      black:   '#15161e'
+      black:   '#090618' # original #15161e
       red:     '#f7768e'
       green:   '#9ece6a'
       yellow:  '#e0af68'
       blue:    '#7aa2f7'
       magenta: '#bb9af7'
-      cyan:    '#0cb4c0'  # original (folke) #7dcfff
+      cyan:    '#0cb4c0' # original #7dcfff
       white:   '#a9b1d6'
 
     # Bright colors
     bright:
-      black:   '#414868'
+      black:   '#15161e' # original #414868
       red:     '#f7768e'
       green:   '#9ece6a'
       yellow:  '#e0af68'
@@ -247,11 +246,9 @@ schemes:
   kanagawa: &kanagawa
     # Default colors
     primary:
-      #background: '#1f1f28'  # Theme default
-      #background: '#090618'  # Used when I set opacity = 1.0
-      background: '#000000'  # So background wallpaper just dims
-      foreground: '#a0b1d6'
- 
+      background: '#090618' # Original #1f1f28'
+      foreground: '#dcd7ba'
+
     # Cursor colors
     cursor:
       text: CellBackground
@@ -264,7 +261,7 @@ schemes:
 
     selection:
       background: '#33467c'
-      foreground: '#c8c093'
+      foreground: '#dcd7ba'
 
     # Normal colors
     normal:
@@ -275,18 +272,18 @@ schemes:
       blue:    '#7e9cd8'
       magenta: '#957fb8'
       cyan:    '#6a9589'
-      white:   '#c8c093'
+      white:   '#dcd7ba' # original #c8c093
 
     # Bright colors
     bright:
-      black:   '#727169'
+      black:   '#1f1f28'
       red:     '#e82424'
       green:   '#98bb6c'
       yellow:  '#e6c384'
-      blue:    '#7dcfff'  # original #7fb4ca'
-      magenta: '#e6b4e4'  # original #938aa9
+      blue:    '#7fb4ca'
+      magenta: '#938aa9'
       cyan:    '#7aa89f'
-      white:   '#dcd7ba'
+      white:   '#ede8cb'
 
     indexed_colors:
       - { index: 16, color: '#ff9e64' }

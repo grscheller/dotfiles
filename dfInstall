@@ -113,10 +113,11 @@ CONFIG_FILES='
    git/config
    nvim/init.lua
    nvim/lua/grs/config/autocmds.lua
+   nvim/lua/grs/config/colors.lua
+   nvim/lua/grs/config/icons.lua
    nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
-   nvim/lua/grs/config/settings.lua
    nvim/lua/grs/plugins/util/dap.lua
    nvim/lua/grs/plugins/util/lspconfig.lua
    nvim/lua/grs/plugins/util/mason.lua
@@ -146,6 +147,7 @@ RM_ITEMS="
    ${HOME}/.gitconfig
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
+   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
 "
 
 ### Functions
