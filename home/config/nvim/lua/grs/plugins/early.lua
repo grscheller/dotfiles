@@ -20,7 +20,7 @@ return {
       end,
    },
 
-   -- Replace vim.notify - TODO: replace default colors
+   -- Replace vim.notify
    {
       'rcarriga/nvim-notify',
       lazy = false,
@@ -117,7 +117,14 @@ return {
                   sources = { 'nvim_diagnostic' },
                },
             },
-            lualine_c = { 'filename' },
+            lualine_c = {
+               {
+                  'filename',
+                  path = 1,
+                  file_status = true,
+                  newfile_status = true,
+               },
+            },
             lualine_x = {
                'encoding',
                'fileformat',
