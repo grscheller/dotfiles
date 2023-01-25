@@ -1,0 +1,53 @@
+--[[ Treesitter related configurations ]]
+
+local M = {}
+
+M.ensure_installed = {
+   'awk',
+   'bash',
+   'c',
+   'clojure',
+   'cmake',
+   --'comment', -- slows TS bigtime, as per Folke dot repo
+   'cpp',
+   'css',
+   'diff',
+   'fish',
+   'fortran',
+   'git_rebase',
+   'gitattributes',
+   'gitcommit',
+   'gitignore',
+   'go',
+   'haskell',
+   'help',
+   'html',
+   'java',
+   'javascript',
+   'json',
+   'jsonc',
+   'julia',
+   'kotlin',
+   'latex',
+   'llvm',
+   'lua',
+   'make',
+   'markdown',
+   'markdown_inline',
+   'norg',
+   'python',
+   'query',
+   'r',
+   'racket',
+   'regex',
+   'rust',
+   'scala',
+   'toml',
+   'tsx',
+   'typescript',
+   'vim',
+   'yaml',
+   'zig',
+}
+
+return M

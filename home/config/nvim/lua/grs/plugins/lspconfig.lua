@@ -115,7 +115,7 @@ return {
 
             metals_config.settings = {
                showImplicitArguments = true,
-               serverVersion = '0.11.9',
+               serverVersion = '0.11.10',
             }
             metals_config.capabilities = capabilities
             metals_config.init_options.statusBarProvider = 'on'

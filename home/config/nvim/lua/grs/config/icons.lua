@@ -1,6 +1,8 @@
 --[[ Icons - not yet used ]]
 
-local icons = {
+local M = {}
+
+M.icons = {
    diagnostics = {
       Error = " ",
       Warn = " ",
@@ -31,4 +33,4 @@ local icons = {
    },
 }
 
-return icons
+return M

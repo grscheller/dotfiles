@@ -118,6 +118,7 @@ CONFIG_FILES='
    nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
+   nvim/lua/grs/config/treesitter.lua
    nvim/lua/grs/plugins/util/dap.lua
    nvim/lua/grs/plugins/util/lspconfig.lua
    nvim/lua/grs/plugins/util/mason.lua
