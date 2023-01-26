@@ -4,10 +4,6 @@
      Using Mason as a 3rd party package manager (pm) when
      a server/linter/formatter is not provided in the
      underlying os/environment.
-
-     The overiding principle is to configure only what I
-     actually use, not to install and configure everything
-     I might possibly like to use someday.
 --]]
 
 local M = {}
@@ -40,7 +36,7 @@ M.LspTbl = {
       clangd = m.auto,
       gopls = m.auto,
       hls = m.man,
-      pyright = m.ignore,
+      pyright = m.auto,
       rust_analyzer = m.install,
       rust_tools = m.man, -- will directly use lspconfig and dap
       scala_metals = m.man, -- will directly use lspconfig and dap

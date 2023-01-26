@@ -1,4 +1,6 @@
---[[ Options - reflecting my personal preferences ]]
+--[[ Options - loaded via plugins/config.lua ]]
+
+-- loaded very early
 
 -- string, numeric  & boolean options
 local options = {
@@ -58,7 +60,7 @@ end
 -- list & dictionary options
 vim.opt.matchpairs:append { '<:>' } -- additional symbols for '%' matching
 vim.opt.iskeyword:append { '-' } -- adds snake-case to word motions
-vim.opt.listchars = { -- for :list and :set list
+vim.opt.listchars = { -- for :list, :set list, :set nolist
    space = '_',
    trail = '*',
    nbsp = '+',

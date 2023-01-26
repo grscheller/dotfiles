@@ -1,4 +1,6 @@
---[[ Define keymappings/keybindings ]]
+--[[ Define keymappings/keybindings - loaded via plugins/config.lua ]]
+
+-- loaded on "VeryLazy" event
 
 local km = vim.keymap.set
 

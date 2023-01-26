@@ -1,4 +1,6 @@
---[[ Autocmds & Usercmds loaded on "VeryLazy" event ]]
+--[[ Autocmds & Usercmds - loaded via plugins/config.lua ]]
+
+-- loaded on "VeryLazy" event
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -44,7 +46,7 @@ autocmd('User', {
    pattern = 'MasonToolsUpdateCompleted',
    callback = function()
       vim.schedule(function()
-         print '  mason-tool-installer has finished!'
+         vim.notify '  mason-tool-installer has finished!'
       end)
    end,
 })

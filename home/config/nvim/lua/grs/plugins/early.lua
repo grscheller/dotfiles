@@ -1,6 +1,6 @@
 --[[ Colorschemes & other plugins needing to be loaded early ]]
 
-local colors = require('grs.config.colors').tokyonight
+local colors = require('grs.config.colors').kanagawa
 
 return {
 
