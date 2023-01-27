@@ -234,7 +234,7 @@ chmod 0755 "$HOME/.cabal"
 # Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
 do
-   install_file "$XDG_CONFIG_HOME" "$conf_file" ./home/config 0644 || exit 1
+   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
 done
 
 # Keep alacritty from rereading its config file mid-copy
