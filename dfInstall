@@ -111,7 +111,7 @@ CONFIG_FILES='
    fish/functions/o2h.fish
    fish/functions/o2o.fish
    git/config
-   nvim/init.lua
+   nvim/ftplugin/html.lua
    nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/colors.lua
    nvim/lua/grs/config/icons.lua
@@ -134,6 +134,7 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/whichkey.lua
    nvim/lua/grs/util.lua
+   nvim/init.lua
    sway/config
    waybar/config
    waybar/style.css
