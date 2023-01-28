@@ -3,23 +3,10 @@
 #  Installs my Fish, Sway. Neovim, Git, SSH and Bash based
 #  software development environment into my $HOME directory.
 #
-#  Usage: ./dfInstall
+#  Usage: dfInstall [-c {install|repo|target}]
 #
-#  Note: Assuming $XDG_CONFIG_HOME & $HOME do not
-#        contain whitespace.  Due to $RM_ITEMS.
-#
-#  Note: Found no good way to bulletproof automatically
-#        regenerating ~/.config/fish/fish_variables, especially
-#        when there are lots of fish configuration changes.
-#
-#        Usually just using my "re" abbreviation is
-#        enough, but sometimes a bigger "kick" is needed,
-#        like doing
-#
-#          $ rm .config/fish/fish_variables; re
-#
-#        This might be a bit too heavy handed if one likes
-#        to manually configure Fish from the command line.
+#  Note: Assuming $XDG_CONFIG_HOME & $HOME do not contain
+#        whitespace.  Due to their use in $RM_ITEMS.
 #
 
 ### Setup
@@ -30,9 +17,11 @@ umask 0022
 
 cd "$DOTFILE_GIT_REPO" || {
    printf '\n'
-   printf "Error: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO" >&2
+   printf "Error: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
    return 1
 }
+
+### Configuration
 
 HOME_FILES='
    .bash_profile
@@ -69,6 +58,7 @@ CONFIG_FILES='
    fish/config.fish
    fish/functions/archJDK.fish
    fish/functions/ax.fish
+   fish/functions/cu.fish
    fish/functions/digpath.fish
    fish/functions/disable_touch_pad.fish
    fish/functions/enable_touch_pad.fish
@@ -151,28 +141,27 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
-   ${XDG_CONFIG_HOME}/wofi/junk
 "
 
-### Argument processing
+### Argument parsing, last -c option wins, default is to install
 
-usage='Usage: dfInstall [-c {repo|installed}]'
-check=
+usage='Usage: dfInstall [-c {install|repo|target}]'
+check=install
 while getopts c: opt
 do
    case "$opt" in
-      c)    test -z "OPTARG" || check="$OPTARG";;
+      c)    check="$OPTARG";;
       \?)   printf '%s\n' "$usage"; exit 2;;
    esac
 done
 shift $((OPTIND - 1))
 
-if [ "$check"x = repox ] || [ "$check"x = installedx ] || [ "$check"x = x ]
+if [ "$check"x = installx ] || [ "$check"x = repox ] || [ "$check"x = targetx ]
 then
    :
 else
-   printf '%s\n' "$usage"
-   exit 2
+   printf '\n%s\n' "$usage"
+   return 2
 fi
 
 ### Functions
@@ -181,22 +170,19 @@ fi
 remove_item () {
    rm_item="$1"
 
-   if [ "$check"x = repox ] 
+   if [ "$check"x = installx ]
    then
-      echo debug: called with repo: "$rm_item"
-   elif [ "$check"x = installedx ]
-   then
-      echo debug: called with installed: "$rm_item"
-   else
+      # Remove the item
       test ! -e "$rm_item" ||
          rm -r "$rm_item" 2>&- || {
             printf '\n'
-            printf "Error: Failed to remove item '%s'\\n" "$rm_item" >&2
-            return 1
+            printf "Warning: Failed to remove item '%s'\\n" "$rm_item"
          }
+   elif [ "$check"x = targetx ]
+   then
+      # Check if item needs removing
+      test -e "$rm_item" && printf '%s needs removing' "$rm_item"
    fi
-
-   return 0
 }
 
 ## Function to install files
@@ -209,112 +195,130 @@ install_file () {
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
-   test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
-      printf '\n'
-      printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir" >&2
-      printf "       punting on installing '%s' config file\\n" "$trgt" >&2
-      return 1
-   }
-
-   # Install the file
-   if cp "$src" "$trgt"
+   if [ "$check"x = installx ]
    then
-      chmod "$file_perm" "$trgt" || {
+      # Make sure target directory exists
+      test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
          printf '\n'
-         printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm" >&2
-         return 1
+         printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir"
       }
-   else
-      printf "Error: Failed to install '%s'\\n" "$trgt" >&2
-      return 1
+
+      # Install the file
+      if cp "$src" "$trgt"
+      then
+         chmod "$file_perm" "$trgt" || {
+            printf '\n'
+            printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
+         }
+      else
+         printf "Error: Failed to install '%s'\\n" "$trgt"
+      fi
+   elif [ "$check"x = repox ]
+   then
+      # Compare config (this script) with dotfile repo working directory
+      test -e "$src" || printf '%s not in git working directory\n' "$src"
+   elif [ "$check"x = targetx ]
+   then
+      # Compare config (this script) with install target
+      diff -q "$src" "$trgt" 2>&1 | sed 's/^diff: //'
    fi
-
-   return 0
 }
 
-final_tweaks () {
-   test -d "$HOME/catch" || mkdir "$HOME/catch" || {
-      printf '\n'
-      printf "Warning: Failed to create '~/catch'.\\n" >&2
-   }
-   test -d "$HOME/.local/bin" || mkdir "$HOME/.local/bin" || {
-      printf '\n'
-      printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
-   }
-   test -d "$HOME/.cabal/bin" || mkdir "$HOME/.cabal/bin" || {
-      printf '\n'
-      printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
-   }
-}
-
-### Install dotfiles
+### Install or check dotfiles
 
 ## Install home directory files
 for home_file in $HOME_FILES
 do
-   install_file "$HOME" "$home_file" ./home 0644 || exit 1
+   install_file "$HOME" "$home_file" ./home 0644
 done
 
 ## Install  ~/bin  scripts
 for bin_file in $BIN_SCRIPTS
 do
-   install_file "$HOME/bin" "$bin_file" ./home/bin 0755 || exit 1
+   install_file "$HOME/bin" "$bin_file" ./home/bin 0755
 done
 chmod 0755 "$HOME/bin"
 
 ## Install configuration files
 
-# Install SSH Configs
+# Install Bloop Configs for Scala
 for conf_file in $BLOOP_FILES
 do
-   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600 || exit 1
+   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600
 done
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal Configs for Haskell
 for conf_file in $CABAL_CONFIGS
 do
-   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644 || exit 1
+   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644
 done
 chmod 0755 "$HOME/.cabal"
 
 # Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
 do
-   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 || exit 1
+   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644
 done
-
-# Keep alacritty from rereading its config file mid-copy
-mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
-   "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
-
-# Swap in a Sway background image if present, the picture I personally use
-# is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
-Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
-if [ -f "$Picture" ]
-then
-    mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
-    sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
-        "${XDG_CONFIG_HOME}"/sway/config_orig > \
-        "${XDG_CONFIG_HOME}"/sway/config
-    rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
-fi
+chmod 0700 "$HOME/.config"
 
 # Install SSH Configs
 for conf_file in $SSH_CONFIGS
 do
-   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600 || exit 1
+   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600
 done
 chmod 0700 "$HOME/.ssh"
 
-## Some final tweaks and clean up
-final_tweaks
+### Some final tweaks, checks & cleanup
 
-## Remove no longer needed files and directories.
-for item in $RM_ITEMS
-do
-    remove_item "$item" || exit 1
-done
+if [ "$check"x = installx ]
+then
+   # Remove no longer needed files and directories
+   for item in $RM_ITEMS
+   do
+       remove_item "$item"
+   done
 
-## Warning message
-printf '\nMake sure fish & nvim environments get properly updated.\n'
+   # Create needed missing directories
+   test -d "$HOME/catch" || mkdir "$HOME/catch" || {
+      printf "\\nWarning: Failed to create '~/catch'.\\n"
+   }
+   test -d "$HOME/.local/bin" || mkdir -p "$HOME/.local/bin" || {
+      printf "\\nWarning: Failed to create '~/.local/bin'.\\n"
+   }
+   test -d "$HOME/.cabal/bin" || mkdir -p "$HOME/.cabal/bin" || {
+      printf "\\nWarning: Failed to create '~/.cabal/bin'.\\n"
+   }
+
+   # Keep alacritty from rereading its config file mid-copy
+   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
+      "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
+   
+   # Swap in a Sway background image if present, the picture I personally use
+   # is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
+   Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
+   if [ -f "$Picture" ]
+   then
+      mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
+      sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
+         "${XDG_CONFIG_HOME}"/sway/config_orig > "${XDG_CONFIG_HOME}"/sway/config
+      rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
+   fi
+elif [ "$check"x = repox ]
+then
+   # Get some git status info on repo
+   printf '\nGit Status:\n'
+   git status -s
+elif [ "$check"x = targetx ]
+then
+   # Check for missing directories
+   test -d "$HOME/catch" || printf '%s does not exist\n' "$HOME/catch/"
+   test -d "$HOME/.local/bin" || printf '%s does not exist\n' "$HOME/.local/bin/"
+   test -d "$HOME/.cabal/bin" || printf '%s does not exist\n' "$HOME/.cabal/bin/"
+
+   # Check for no longer needed target files and directories
+   for item in $RM_ITEMS
+   do
+      test -e "$item" && printf '%s needs to be deleted\n' "$item"
+   done
+fi

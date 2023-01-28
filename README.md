@@ -9,8 +9,10 @@ Contains my configuration files for
 
 ## Scripts
 
-* [dfInstall](dfInstall): installs home directory configuration files
-* [sudo sfInstall](sfInstall): installs Arch Linux system configuration files
+* [dfInstall](dfInstall) installs home directory configuration files
+  * `dfInstall -c repo` check if items to install are in repo  
+  * `dfInstall -c target` check if installed files differ from repo
+* [sudo sfInstall](sfInstall) installs Arch Linux system configuration files
 
 ## Repo's Purpose
 
