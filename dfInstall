@@ -23,6 +23,7 @@
 #
 
 ### Setup
+
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
@@ -150,7 +151,29 @@ RM_ITEMS="
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
+   ${XDG_CONFIG_HOME}/wofi/junk
 "
+
+### Argument processing
+
+usage='Usage: dfInstall [-c {repo|installed}]'
+check=
+while getopts c: opt
+do
+   case "$opt" in
+      c)    test -z "OPTARG" || check="$OPTARG";;
+      \?)   printf '%s\n' "$usage"; exit 2;;
+   esac
+done
+shift $((OPTIND - 1))
+
+if [ "$check"x = repox ] || [ "$check"x = installedx ] || [ "$check"x = x ]
+then
+   :
+else
+   printf '%s\n' "$usage"
+   exit 2
+fi
 
 ### Functions
 
@@ -158,12 +181,21 @@ RM_ITEMS="
 remove_item () {
    rm_item="$1"
 
-   test ! -e "$rm_item" ||
-      rm -r "$rm_item" 2>&- || {
-         printf '\n'
-         printf "Error: Failed to remove item '%s'\\n" "$rm_item" >&2
-         return 1
-      }
+   if [ "$check"x = repox ] 
+   then
+      echo debug: called with repo: "$rm_item"
+   elif [ "$check"x = installedx ]
+   then
+      echo debug: called with installed: "$rm_item"
+   else
+      test ! -e "$rm_item" ||
+         rm -r "$rm_item" 2>&- || {
+            printf '\n'
+            printf "Error: Failed to remove item '%s'\\n" "$rm_item" >&2
+            return 1
+         }
+   fi
+
    return 0
 }
 
@@ -200,7 +232,22 @@ install_file () {
    return 0
 }
 
-### Install files
+final_tweaks () {
+   test -d "$HOME/catch" || mkdir "$HOME/catch" || {
+      printf '\n'
+      printf "Warning: Failed to create '~/catch'.\\n" >&2
+   }
+   test -d "$HOME/.local/bin" || mkdir "$HOME/.local/bin" || {
+      printf '\n'
+      printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
+   }
+   test -d "$HOME/.cabal/bin" || mkdir "$HOME/.cabal/bin" || {
+      printf '\n'
+      printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
+   }
+}
+
+### Install dotfiles
 
 ## Install home directory files
 for home_file in $HOME_FILES
@@ -260,21 +307,8 @@ do
 done
 chmod 0700 "$HOME/.ssh"
 
-### Some final tweaks and clean up
-
-## Create ~/catch, for scp and downloads
-test -d "$HOME/catch" || mkdir "$HOME/catch" || {
-    printf '\n'
-    printf "Warning: Failed to create '~/catch'.\\n" >&2
-}
-test -d "$HOME/.local/bin" || mkdir "$HOME/.local/bin" || {
-    printf '\n'
-    printf "Warning: Failed to create '~/.local/bin'.\\n" >&2
-}
-test -d "$HOME/.cabal/bin" || mkdir "$HOME/.cabal/bin" || {
-    printf '\n'
-    printf "Warning: Failed to create '~/.cabal/bin'.\\n" >&2
-}
+## Some final tweaks and clean up
+final_tweaks
 
 ## Remove no longer needed files and directories.
 for item in $RM_ITEMS
