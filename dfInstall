@@ -102,7 +102,18 @@ CONFIG_FILES='
    fish/functions/o2h.fish
    fish/functions/o2o.fish
    git/config
+   nvim/ftplugin/c.lua
+   nvim/ftplugin/c8.lua
+   nvim/ftplugin/cpp.lua
+   nvim/ftplugin/fish.lua
+   nvim/ftplugin/haskell.lua
    nvim/ftplugin/html.lua
+   nvim/ftplugin/lua.lua
+   nvim/ftplugin/markdown.lua
+   nvim/ftplugin/rust.lua
+   nvim/ftplugin/sbt.lua
+   nvim/ftplugin/scala.lua
+   nvim/ftplugin/sh.lua
    nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/colors.lua
    nvim/lua/grs/config/icons.lua

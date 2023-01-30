@@ -44,7 +44,6 @@ return {
                capabilities = capabilities,
                on_attach = function(client, bufnr)
                   keymaps.lsp_km(client, bufnr)
-                  cmd [[setlocal shiftwidth=3 softtabstop=3 expandtab]]
                end,
                settings = {
                   Lua = {
@@ -61,7 +60,6 @@ return {
                on_attach = function(client, bufnr)
                   keymaps.lsp_km(client, bufnr)
                   keymaps.haskell_km(bufnr)
-                  cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
                end,
             }
          end
@@ -144,8 +142,6 @@ return {
                keymaps.lsp_km(client, bufnr)
                keymaps.metals_km(bufnr, metals)
                keymaps.dap_km(bufnr, dap, dap_ui_widgets)
-               cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
-               cmd [[setlocal shiftwidth=2 softtabstop=2 expandtab]]
             end
 
             local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', { clear = true })
