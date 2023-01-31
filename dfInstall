@@ -1,13 +1,21 @@
 #!/bin/sh
 #
-#  Installs my Fish, Sway. Neovim, Git, SSH and Bash based
+#  Installs my Neovim, Fish, Sway, Git, SSH and Bash based
 #  software development environment into my $HOME directory.
 #
-#  Usage: dfInstall [-c {install|repo|target}]
-#
 #  Note: Assuming $XDG_CONFIG_HOME & $HOME do not contain
-#        whitespace.  Due to their use in $RM_ITEMS.
+#        whitespace.  Due to their use in $RM_ITEMS and
+#        me wanting to keep the shell scripting simple.
 #
+#  Note: To the best of my knowledge this is a fully POSIX compliant
+#        shell script.  Tested regularly against dash, where on my
+#        Arch Linux systems I set /usr/bin/sh -> /usr/bin/dash and
+#        Arch sets /bin -> /usr/bin for POSIX compliance.
+#
+
+### Usage
+
+usage='Usage: dfInstall [-c {install|repo|target}]'
 
 ### Setup
 
@@ -28,7 +36,6 @@ HOME_FILES='
    .inputrc
 '
 
-# Do not install dotfilesInstall, systemfilesInstall, grsSwap
 BIN_SCRIPTS='
    bsPacker
    buArch
@@ -147,6 +154,7 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
+   ${HOME}/junk2
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
@@ -154,42 +162,54 @@ RM_ITEMS="
 
 ### Argument parsing, last -c option wins, default is to install
 
-usage='Usage: dfInstall [-c {install|repo|target}]'
 check=install
 while getopts c: opt 2>&1
 do
    case "$opt" in
-      c)    check="$OPTARG";;
-      \?)   printf '\n%s\n' "$usage"; exit 2;;
+      c)
+         check="$OPTARG"
+         ;;
+      \?)
+         printf '\n%s\n' "$usage"
+         return 1
+         ;;
    esac
 done
 shift $((OPTIND - 1))
 
-if [ "$check"x = installx ] || [ "$check"x = repox ] || [ "$check"x = targetx ]
+if [ $# -gt 0 ]
 then
-   :
-else
+   printf '\nError: dfInstall takes no arguments, just an option\n'
    printf '\n%s\n' "$usage"
-   return 2
+   return 1
+fi
+
+if [ "$check" != install ] && \
+   [ "$check" != repo ] && \
+   [ "$check" != target ]
+then
+   printf '\n%s\n' "$usage"
+   return 1
 fi
 
 ### Functions
 
 ## Function to removes files
 remove_item () {
-   rm_item="$1"
-
-   if [ "$check"x = installx ]
+   item="$1"
+   if [ -e "$item" ]
    then
-      # Remove the item
-      test ! -e "$rm_item" ||
-         rm -rf "$rm_item" || {
-            printf "\\nWarning: Failed to remove item '%s'\\n" "$rm_item"
-         }
-   elif [ "$check"x = targetx ]
-   then
-      # Check if item needs removing
-      test -e "$rm_item" && printf "\\n Target '%s' needs removing.\\n" "$rm_item"
+      case "$check" in
+         install)
+            # Remove the item
+            rm -rf "$item"
+            test -e "$item" && printf "\\nWarning: Failed to remove item '%s'\\n" "$item"
+            ;;
+         target)
+            # Item needs removing
+            printf "\\nTarget '%s' needs removing.\\n" "$item"
+            ;;
+      esac
    fi
 }
 
@@ -204,46 +224,44 @@ install_file () {
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
-   if [ "$check"x = installx ]
-   then
-      # Make sure target directory exists
-      test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
-         printf "\\nWarning: Failed to create '%s' directory\\n" "$trgt_dir"
-      }
+   case "$check" in
+      install)
+         # Make sure target directory exists
+         test -d "$trgt_dir" || mkdir -p "$trgt_dir" || \
+            printf "\\nWarning: Failed to create '%s' directory\\n" "$trgt_dir"
 
-      # Install the file
-      if cp "$src" "$trgt" >/dev/null 2>&1
-      then
-         chmod --quiet "$file_perm" "$trgt" || {
-            printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
-         }
-      else
-         printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
-      fi
-   elif [ "$check"x = repox ]
-   then
-      # Compare config (this script) with dotfile repo working directory
-      test -e "$src" || printf "\\n'%s' not in git working directory.\\n" "$src_abs"
-   elif [ "$check"x = targetx ]
-   then
-      # Compare config (this script) with install target
-      if [ ! -e "$src" ] 
-      then
-         if [ ! -e "$trgt" ]
+         # Install the file
+         if cp "$src" "$trgt" >/dev/null 2>&1
          then
-            printf "\\nBoth target '%s'\n and source '%s' don't exist.\\n" "$trgt" "$src_abs"
+            chmod --quiet "$file_perm" "$trgt" || \
+               printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
          else
-            printf "\\nSource '%s' doesn't exist.\\n" "$src_abs"
+            printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
          fi
-      elif [ ! -e "$trgt" ]
-      then
-         printf "\\nTarget '%s' doesn't exist.\\n" "$trgt"
-      else
-         diff "$src" "$trgt" >/dev/null 2>&1 || {
-            printf "\\nTarget '%s' differs from\\nSource '%s'.\\n" "$trgt" "$src_abs"
-         }
-      fi
-   fi
+         ;;
+      repo)
+         # Compare config (this script) with dotfile repo working directory
+         test -e "$src" || printf "\\n'%s' not in git working directory.\\n" "$src_abs"
+         ;;
+      target)
+         # Compare config (this script) with install target
+         if [ ! -e "$src" ] && [ ! -e "$trgt" ]
+         then
+            printf "\\nBoth Target: '%s'\n and Source: '%s' don't exist.\\n" \
+            "$trgt" "$src_abs"
+         elif [ ! -e "$trgt" ]
+         then
+            printf "\\nTarget: '%s' doesn't exist.\\n" "$trgt"
+         elif [ ! -e "$src" ]
+         then
+            printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
+         else
+            diff "$src" "$trgt" >/dev/null 2>&1 || \
+               printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" \
+               "$trgt" "$src_abs"
+         fi
+         ;;
+   esac
 }
 
 ### Install or check dotfiles
@@ -293,54 +311,65 @@ chmod 0700 "$HOME/.ssh"
 
 ### Some final tweaks, checks & cleanup
 
-if [ "$check"x = installx ]
-then
-   # Remove no longer needed files and directories
-   for item in $RM_ITEMS
-   do
-       remove_item "$item"
-   done
+case "$check" in
+   install)
+      # Remove no longer needed files and directories
+      for item in $RM_ITEMS
+      do
+          remove_item "$item"
+      done
 
-   # Create needed missing directories
-   test -d "$HOME/catch" || mkdir "$HOME/catch" || {
-      printf "\\nWarning: Failed to create '~/catch'.\\n"
-   }
-   test -d "$HOME/.local/bin" || mkdir -p "$HOME/.local/bin" || {
-      printf "\\nWarning: Failed to create '~/.local/bin'.\\n"
-   }
-   test -d "$HOME/.cabal/bin" || mkdir -p "$HOME/.cabal/bin" || {
-      printf "\\nWarning: Failed to create '~/.cabal/bin'.\\n"
-   }
+      # Create needed missing directories
+      test -d "$HOME/catch" || mkdir "$HOME/catch" || {
+         printf "\\nWarning: Failed to create '~/catch'.\\n"
+      }
+      test -d "$HOME/.local/bin" || mkdir -p "$HOME/.local/bin" || {
+         printf "\\nWarning: Failed to create '~/.local/bin'.\\n"
+      }
+      test -d "$HOME/.cabal/bin" || mkdir -p "$HOME/.cabal/bin" || {
+         printf "\\nWarning: Failed to create '~/.cabal/bin'.\\n"
+      }
 
-   # Keep alacritty from rereading its config file mid-copy
-   mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
-      "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
-   
-   # Swap in a Sway background image if present, the picture I personally use
-   # is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
-   Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
-   if [ -f "$Picture" ]
-   then
-      mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
-      sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
-         "${XDG_CONFIG_HOME}"/sway/config_orig > "${XDG_CONFIG_HOME}"/sway/config
-      rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
-   fi
-elif [ "$check"x = repox ]
-then
-   # Get some git status info on repo
-   printf '\nGit Status:\n'
-   git status -s
-elif [ "$check"x = targetx ]
-then
-   # Check for missing directories
-   test -d "$HOME/catch" || printf '\n%s does not exist.\n' "$HOME/catch/"
-   test -d "$HOME/.local/bin" || printf '\n%s does not exist.\n' "$HOME/.local/bin/"
-   test -d "$HOME/.cabal/bin" || printf '\n%s does not exist.\n' "$HOME/.cabal/bin/"
+      # Keep alacritty from rereading its config file mid-copy
+      mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
+         "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
-   # Check for no longer needed target files and directories
-   for item in $RM_ITEMS
-   do
-      test -e "$item" && printf "\\nFile '%s' needs to be deleted.\\n" "$item"
-   done
-fi
+      # Swap in a Sway background image if present, the picture I personally use
+      # is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
+      Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
+      if [ -f "$Picture" ]
+      then
+         mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
+         sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
+            "${XDG_CONFIG_HOME}"/sway/config_orig > "${XDG_CONFIG_HOME}"/sway/config
+         rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
+      fi
+      ;;
+   repo)
+      # Get some git status info on repo
+      printf '\nGit Status:\n'
+      git status -s
+      ;;
+   target)
+      # Check for missing directories
+      test -d "$HOME/catch" || printf '\n%s does not exist.\n' "$HOME/catch/"
+      test -d "$HOME/.local/bin" || printf '\n%s does not exist.\n' "$HOME/.local/bin/"
+      test -d "$HOME/.cabal/bin" || printf '\n%s does not exist.\n' "$HOME/.cabal/bin/"
+
+      # Check for no longer needed target files and directories
+      for item in $RM_ITEMS
+      do
+         test -e "$item" && {
+            if [ -h "$item" ]; then
+               printf "\\nLink '%s' needs to be removed.\\n" "$item"
+            elif [ -f "$item" ]; then
+               printf "\\nFile '%s' needs to be removed.\\n" "$item"
+            elif [ -d "$item" ]; then
+               printf "\\nDir '%s' needs to be removed.\\n" "$item"
+            else
+               printf "\\nItem '%s' needs to be removed.\\n" "$item"
+            fi
+         }
+      done
+      ;;
+esac
