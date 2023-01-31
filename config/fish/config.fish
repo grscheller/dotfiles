@@ -126,6 +126,10 @@ and begin
    digpath -q pyenv; and set -gx has_pyenv_installed
 end
 
+# opam OCaml configuration
+test -f ~/.opam/opam-init/init.fish
+and source ~/.opam/opam-init/init.fish >/dev/null 2>&1
+
 # Python pyenv function and environment configuration
 set -q has_pyenv_installed; and begin
    pyenv init - | source
