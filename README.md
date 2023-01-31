@@ -5,40 +5,38 @@ Contains my configuration files for
 * Neovim configuration
 * Fish and Bash configurations
 * Sway and Alacritty configurations
+* Other software development environment configurations
 * Arch Linux system configuration
 
 ## Scripts
 
 * [dfInstall](dfInstall) installs home directory configuration files
-  * `dfInstall -c repo` check if items to install are in repo  
-  * `dfInstall -c target` check if installed files differ from repo
+  * Usage: `dfInstall [-c {install|repo|target}]`
+    * Install configs to user's home directory: `dfInstall`
+    * Check config against git working directory: `dfInstall -c repo`
+    * Check installed files against git working directory: `dfInstall -c target`
+  * POSIX compliant shell scpript
 * [sudo sfInstall](sfInstall) installs Arch Linux system configuration files
-
-## Repo's Purpose
-
-* provide others useful configuration examples
-* maintain my own personal configuration files for myself
-* preserve this information for myself
-* help quickly configure new systems for myself
+  * Usage: `sudo sfInstall`
+    * No configuraion needed
+    * Parses `root/` directory strucucture and installs into `/`
+  * Fish shell script
 
 ## License Summary
 
-<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+<p xmlns:dct="http://purl.org/dc/terms/"
+   xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
   <a rel="license"
      href="http://creativecommons.org/publicdomain/zero/1.0/">
-    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
-  </a>
-  <br />
+     <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png"
+          style="border-style: none;"
+          alt="CC0"></a>
+
   To the extent possible under law,
-  <a rel="dct:publisher"
-     href="https://github.com/grscheller">
-    <span property="dct:title">Geoffrey R. Scheller</span></a>
-  has waived all copyright and related or neighboring rights to
-  <span property="dct:title">dotfiles</span>.
-This work is published from:
-<span property="vcard:Country" datatype="dct:ISO3166"
-      content="US" about="https://github.com/grscheller">
-  United States</span>.
+  [Geoffrey R. Scheller](https://github.com/grscheller)
+  has waived all copyright and related or neighboring rights
+  to [dotfiles](https://github.com/grscheller).
+  This work is published from the United States of America.
 </p>
 
 See [LICENSE](LICENSE) for details.
