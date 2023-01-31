@@ -35,7 +35,7 @@ Contains my configuration files for
   To the extent possible under law,
   [Geoffrey R. Scheller](https://github.com/grscheller)
   has waived all copyright and related or neighboring rights
-  to [dotfiles](https://github.com/grscheller).
+  to [dotfiles](https://github.com/grscheller/dotfiles).
   This work is published from the United States of America.
 </p>
 
