@@ -16,8 +16,7 @@ DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
 
 cd "$DOTFILE_GIT_REPO" || {
-   printf '\n'
-   printf "Error: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
+   printf "\\nError: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
    return 1
 }
 
@@ -103,7 +102,6 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    nvim/ftplugin/c.lua
-   nvim/ftplugin/c8.lua
    nvim/ftplugin/cpp.lua
    nvim/ftplugin/fish.lua
    nvim/ftplugin/haskell.lua
@@ -158,11 +156,11 @@ RM_ITEMS="
 
 usage='Usage: dfInstall [-c {install|repo|target}]'
 check=install
-while getopts c: opt
+while getopts c: opt 2>&1
 do
    case "$opt" in
       c)    check="$OPTARG";;
-      \?)   printf '%s\n' "$usage"; exit 2;;
+      \?)   printf '\n%s\n' "$usage"; exit 2;;
    esac
 done
 shift $((OPTIND - 1))
@@ -185,14 +183,13 @@ remove_item () {
    then
       # Remove the item
       test ! -e "$rm_item" ||
-         rm -r "$rm_item" 2>&- || {
-            printf '\n'
-            printf "Warning: Failed to remove item '%s'\\n" "$rm_item"
+         rm -rf "$rm_item" || {
+            printf "\\nWarning: Failed to remove item '%s'\\n" "$rm_item"
          }
    elif [ "$check"x = targetx ]
    then
       # Check if item needs removing
-      test -e "$rm_item" && printf '%s needs removing' "$rm_item"
+      test -e "$rm_item" && printf "\\n Target '%s' needs removing.\\n" "$rm_item"
    fi
 }
 
@@ -203,6 +200,7 @@ install_file () {
    src_dir="$3"
    file_perm="$4"
    src="$src_dir/$file_path"
+   src_abs="${DOTFILE_GIT_REPO}${src#.}"
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
@@ -210,28 +208,41 @@ install_file () {
    then
       # Make sure target directory exists
       test -d "$trgt_dir" || mkdir -p "$trgt_dir" || {
-         printf '\n'
-         printf "Error: Failed to create '%s' directory,\\n" "$trgt_dir"
+         printf "\\nWarning: Failed to create '%s' directory\\n" "$trgt_dir"
       }
 
       # Install the file
-      if cp "$src" "$trgt"
+      if cp "$src" "$trgt" >/dev/null 2>&1
       then
-         chmod "$file_perm" "$trgt" || {
-            printf '\n'
-            printf "Error: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
+         chmod --quiet "$file_perm" "$trgt" || {
+            printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
          }
       else
-         printf "Error: Failed to install '%s'\\n" "$trgt"
+         printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
       fi
    elif [ "$check"x = repox ]
    then
       # Compare config (this script) with dotfile repo working directory
-      test -e "$src" || printf '%s not in git working directory\n' "$src"
+      test -e "$src" || printf "\\n'%s' not in git working directory.\\n" "$src_abs"
    elif [ "$check"x = targetx ]
    then
       # Compare config (this script) with install target
-      diff -q "$src" "$trgt" 2>&1 | sed 's/^diff: //'
+      if [ ! -e "$src" ] 
+      then
+         if [ ! -e "$trgt" ]
+         then
+            printf "\\nBoth target '%s'\n and source '%s' don't exist.\\n" "$trgt" "$src_abs"
+         else
+            printf "\\nSource '%s' doesn't exist.\\n" "$src_abs"
+         fi
+      elif [ ! -e "$trgt" ]
+      then
+         printf "\\nTarget '%s' doesn't exist.\\n" "$trgt"
+      else
+         diff "$src" "$trgt" >/dev/null 2>&1 || {
+            printf "\\nTarget '%s' differs from\\nSource '%s'.\\n" "$trgt" "$src_abs"
+         }
+      fi
    fi
 }
 
@@ -323,13 +334,13 @@ then
 elif [ "$check"x = targetx ]
 then
    # Check for missing directories
-   test -d "$HOME/catch" || printf '%s does not exist\n' "$HOME/catch/"
-   test -d "$HOME/.local/bin" || printf '%s does not exist\n' "$HOME/.local/bin/"
-   test -d "$HOME/.cabal/bin" || printf '%s does not exist\n' "$HOME/.cabal/bin/"
+   test -d "$HOME/catch" || printf '\n%s does not exist.\n' "$HOME/catch/"
+   test -d "$HOME/.local/bin" || printf '\n%s does not exist.\n' "$HOME/.local/bin/"
+   test -d "$HOME/.cabal/bin" || printf '\n%s does not exist.\n' "$HOME/.cabal/bin/"
 
    # Check for no longer needed target files and directories
    for item in $RM_ITEMS
    do
-      test -e "$item" && printf '%s needs to be deleted\n' "$item"
+      test -e "$item" && printf "\\nFile '%s' needs to be deleted.\\n" "$item"
    done
 fi
