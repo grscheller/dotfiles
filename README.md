@@ -1,4 +1,4 @@
-# Dotfiles
+# dotfiles
 
 Contains my configuration files for
 
