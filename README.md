@@ -2,10 +2,10 @@
 
 Contains my configuration files for
 
-* Neovim configuration
-* Fish and Bash configurations
-* Sway and Alacritty configurations
-* Other software development environment configurations
+* Neovim
+* Fish and Bash
+* Sway and Alacritty
+* Software development
 * Arch Linux system configuration
 
 ## Scripts
