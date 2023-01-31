@@ -295,6 +295,10 @@ then
         export VISUAL=vi
     fi
 
+
+    # Set up path to dotfiles repo
+    export DOTFILE_GIT_REPO=~/devel/dotfiles
+
     # Construct the shell's PATH for all my different computers,
     # non-existent and duplicate path elements dealt with at end.
 
@@ -380,8 +384,8 @@ alias Wget='/usr/bin/wget -p --convert-links -e robots=off'
 alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 
 # grscheller/dotfiles aliases
-alias dfInstall=~/devel/dotfiles/dfInstall
-alias grsSwap=~/devel/dotfiles/grsSwap
+alias dfInstall='$DOTFILE_GIT_REPO/dfInstall'
+alias sfInstall='$DOTFILE_GIT_REPO/sfInstall'
 
 # SSH related variables and aliases
 #   Restart SSH key-agent and add your private

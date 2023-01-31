@@ -10,33 +10,33 @@ set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~grs/devel/dotfiles
 
 cd $DOTFILE_GIT_REPO 2>/dev/null
 or begin
-    printf '\nFailed to cd into the dotfile repo\'s'
-    printf '\nhome directory \'%s\'' "$DOTFILE_GIT_REPO"
-    return 1
+   printf '\nFailed to cd into the dotfile repo\'s'
+   printf '\nhome directory \'%s\'' "$DOTFILE_GIT_REPO"
+   return 1
 end
 
 set -l Files (string sub --start=5 (find root/etc -type f))
 
 for File in $Files
-    test -e $File
-    or begin
-        set -l Dir (string replace -r '/[^/]*$' '' $File)
-        test -d $Dir
-        or mkdir -p $Dir
-        touch $File
-    end
-    cp root$File $File
+   test -e $File
+   or begin
+      set -l Dir (string replace -r '/[^/]*$' '' $File)
+      test -d $Dir
+      or mkdir -p $Dir
+      touch $File
+   end
+   cp root$File $File
 end
 
 ## Services using these configuration files
 #
-#    avahi-daemon.service
-#    dhcpcd.service
-#    iwd.service
-#    systemd-resolved,service
+#  avahi-daemon.service
+#  dhcpcd.service
+#  iwd.service
+#  systemd-resolved,service
 #   
 
 ## Timers needing enabling
 #
-#    reflector.timer
+#  reflector.timer
 #

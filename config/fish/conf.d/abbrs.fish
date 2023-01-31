@@ -33,7 +33,8 @@ abbr -a gs git status  # gs steps on ghostscript
 abbr -a addkey 'eval (ssh-agent -c); and ssh-add'
 
 # So I can run these outside the dotfiles repo
-abbr -a dfInstall '~/devel/dotfiles/dfInstall'
+abbr -a dfInstall '$DOTFILE_GIT_REPO/dfInstall'
+abbr -a sfInstall 'sudo $DOTFILE_GIT_REPO/sfInstall'
 
 # Shell environment cmds
 abbr -a re 'cd; REDO_ENV=yes fish -l'
