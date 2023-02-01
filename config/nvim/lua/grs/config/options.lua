@@ -13,7 +13,7 @@ local options = {
    fileformats = 'unix,mac,dos',
 
    -- Set default tab/indenting behavior
-   tabstop = 8, -- set tab stops every 8 columns, makes tab chars easy to spot
+   tabstop = 4, -- tab stops every 4 spaces, not size of tab character
    shiftwidth = 4, -- number of columns used for auto-indentation
    softtabstop = 4, -- insert/delete 4 columns of ws when tabbing/backspacing
    expandtab = true, -- use only spaces when tabbing or auto-indenting
