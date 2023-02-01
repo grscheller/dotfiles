@@ -10,12 +10,12 @@
 #
 unset LINE SPINNER jj
 
-SPINNER=($'\b-' $'\b\\' $'\b|' $'\b/')
+SPINNER=($'\b-' $'\b\\' $'\b\x7C' $'\b/')
 LINE=
 printf '-'
 ((jj = 0)); while [[ "$LINE" == "" ]]
 do
-    (( jj = (++jj % 4) ))
-    read -s -r -t 1 -n 1 LINE
-    printf '%s' "${SPINNER[$jj]}"
+   (( jj = (++jj % 4) ))
+   read -s -r -t 1 -n 1 LINE
+   printf '%s' "${SPINNER[$jj]}"
 done
