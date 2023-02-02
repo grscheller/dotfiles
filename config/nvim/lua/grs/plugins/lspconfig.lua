@@ -26,7 +26,6 @@ return {
          local utilDap = require 'grs.plugins.util.dap'
          local utilNullLs = require 'grs.plugins.util.nullLs'
 
-         local cmd = vim.api.nvim_command
          local m = confMason.MasonEnum
          local LspTbl = confMason.LspTbl
 
@@ -57,6 +56,7 @@ return {
          if LspTbl.system.hls == m.man or LspTbl.mason.hls == m.man then
             lspconf['hls'].setup {
                capabilities = capabilities,
+               filetypes = { 'haskell', 'lhaskell', 'cabal' },
                on_attach = function(client, bufnr)
                   keymaps.lsp_km(client, bufnr)
                   keymaps.haskell_km(bufnr)

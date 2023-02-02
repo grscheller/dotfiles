@@ -35,6 +35,7 @@ M.ensure_installed = {
    'markdown',
    'markdown_inline',
    'norg',
+   'ocaml',
    'python',
    'query',
    'r',

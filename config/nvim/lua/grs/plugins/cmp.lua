@@ -39,7 +39,6 @@ return {
          local cmp_config_compare_under = require('cmp-under-comparator').under
 
          vscode_loaders.lazy_load()
-         lspkind.init()
 
          local select_opts = {
             behavior = cmp.SelectBehavior.Select
@@ -47,6 +46,84 @@ return {
          local confirm_opts = {
             select = true,
             behavior = cmp.ConfirmBehavior.Replace,
+         }
+
+         local mappings = {
+            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
+            ['<down>'] = cmp.mapping.select_next_item(select_opts),
+
+            ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
+            ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
+
+            ['<c-u>'] = cmp.mapping.scroll_docs(-4),
+            ['<c-d>'] = cmp.mapping.scroll_docs(4),
+
+            ['<c- >'] = cmp.mapping.close(),
+            ['<c-a>'] = cmp.mapping.abort(),
+            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
+            ['<c-y>'] = cmp.mapping.confirm(confirm_opts),
+
+            ['<tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.select_next_item()
+               elseif luasnip.expand_or_locally_jumpable() then
+                  luasnip.expand_or_jump()
+               elseif cursor_has_words_before_it() then
+                  cmp.complete()
+               else
+                  fallback()
+               end
+            end),
+            ['<s-tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.select_prev_item()
+               elseif luasnip.jumpable(-1) then
+                  luasnip.jump(-1)
+               else
+                  fallback()
+               end
+            end),
+
+            ['<c-s>'] = cmp.mapping.complete {
+               config = {
+                  sources = { { name = 'luasnip' } },
+               },
+            },
+            ['<c-f>'] = cmp.mapping(function(fallback)
+               if luasnip.jumpable(1) then
+                  luasnip.jump(1)
+               else
+                  fallback()
+               end
+            end),
+            ['<c-b>'] = cmp.mapping(function(fallback)
+               if luasnip.jumpable(-1) then
+                  luasnip.jump(-1)
+               else
+                  fallback()
+               end
+            end),
+         }
+
+         local cmd_mappings = {
+            ['<c- >'] = cmp.mapping.close(),
+            ['<c-a>'] = cmp.mapping.abort(),
+            ['<tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.select_next_item()
+               elseif cursor_has_words_before_it() then
+                  cmp.complete()
+               else
+                  fallback()
+               end
+            end),
+            ['<s-tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.select_prev_item()
+               else
+                  fallback()
+               end
+            end),
          }
 
          cmp.setup {
@@ -76,8 +153,8 @@ return {
             formatting = {
                expandable_indicator = true,
                fields = { 'abbr', 'kind', 'menu' },
-               format = require('lspkind').cmp_format {
-                  mode = 'symbol',
+               format = lspkind.cmp_format {
+                  mode = 'symbol_text',
                   maxwidth = 50,
                   ellipsis = '…',
                   menu = {
@@ -92,17 +169,19 @@ return {
                   },
                },
             },
+            mapping = mappings,
             sources = cmp.config.sources(
                {
                   { name = 'nvim_lsp_signature_help' },
-                  { name = 'nvim_lua' },
                   { name = 'nvim_lsp' },
+                  { name = 'nvim_lua' },
+                  { name = 'luasnip' },
                },
                {
                   {
                      name = 'path',
                      option = {
-                        label_trailing_slash = true,
+                        label_trailing_slash = false,
                         trailing_slash = false,
                      },
                   },
@@ -122,77 +201,24 @@ return {
                      keyword_length = 3,
                      max_item_count = 12,
                   },
-               },
-               {
-                  { name = 'luasnip' },
                }),
-            mapping = {
-               ['<up>'] = cmp.mapping.select_prev_item(select_opts),
-               ['<down>'] = cmp.mapping.select_next_item(select_opts),
 
-               ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
-               ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
-
-               ['<c-u>'] = cmp.mapping.scroll_docs(-4),
-               ['<c-d>'] = cmp.mapping.scroll_docs(4),
-
-               ['<c- >'] = cmp.mapping.close(),
-               ['<c-e>'] = cmp.mapping.abort(),
-               ['<cr>'] = cmp.mapping.confirm(confirm_opts),
-               ['<c-y>'] = cmp.mapping.confirm(confirm_opts),
-
-               ['<tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     cmp.select_next_item()
-                  elseif luasnip.expand_or_locally_jumpable() then
-                     luasnip.expand_or_jump()
-                  elseif cursor_has_words_before_it() then
-                     cmp.complete()
-                  else
-                     fallback()
-                  end
-               end, { 'i', 's' }),
-               ['<s-tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     cmp.select_prev_item()
-                  elseif luasnip.jumpable(-1) then
-                     luasnip.jump(-1)
-                  else
-                     fallback()
-                  end
-               end, { 'i', 's' }),
-
-               ['<c-s>'] = cmp.mapping.complete {
-                  config = {
-                     sources = { { name = 'luasnip' } },
-                  },
-               },
-               ['<c-f>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(1) then
-                     luasnip.jump(1)
-                  else
-                     fallback()
-                  end
-               end),
-               ['<c-b>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(-1) then
-                     luasnip.jump(-1)
-                  else
-                     fallback()
-                  end
-               end),
-            },
          }
          cmp.setup.cmdline(':', {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = { { name = 'cmdline' } },
+            mapping = cmd_mappings,
+            sources = {
+               { name = 'path' }
+            },
+            {
+               { name = 'cmdline' }
+            },
          })
          cmp.setup.cmdline('/', {
-            mapping = cmp.mapping.preset.cmdline(),
+            mapping = cmd_mappings,
             sources = { { name = 'buffer' } },
          })
          cmp.setup.cmdline('?', {
-            mapping = cmp.mapping.preset.cmdline(),
+            mapping = cmd_mappings,
             sources = { { name = 'buffer' } },
          })
       end,
