@@ -121,6 +121,7 @@ CONFIG_FILES='
    nvim/ftplugin/sh.lua
    nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/colors.lua
+   nvim/lua/grs/config/globals.lua
    nvim/lua/grs/config/icons.lua
    nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/mason.lua

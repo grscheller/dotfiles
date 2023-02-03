@@ -22,11 +22,10 @@ local colors = {
       -- overrides
       bg = '#090618', -- original #1A1B26
       ColorColumnBG = '#16161D',
-      black =  '#090618', -- original #15161E
-      cyan =   '#0CB4C0', -- original #7DCFFF
-      -- TokyoNight pallet
+      black =  '#090618',  -- original #15161E
+      cyan =   '#0CB4C0',  -- original #7DCFFF
       white =  '#A9B1D6',
-      gray =   '#545c7e', -- original dark3
+      gray =   '#545c7e',  -- original dark3
       blue =   '#7AA2F7',
       red =    '#F7768E',
       orange = '#FF9E64',

@@ -18,20 +18,49 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- Setup lazy.nvim, see :h lazy.nvim-configuration
 require('lazy').setup {
+   defaults = { lazy = true, version = '' },
    spec = 'grs.plugins',
-   defaults = { lazy = true, version = '*' },
-   install = { colorscheme = { 'kanagawa' } },
-   checker = { enabled = true }, -- check for plugin updates
+   git = {
+      log = { '--since=5 days ago' },
+      timeout = 120,  -- seconds
+      url_format = 'https://github.com/%s.git',
+      filter = true,
+   },
+   dev = {
+      path = '~/devel/scheller-linux-archive/plugins',
+      patterns = { 'grscheller' },
+      fallback = false,
+   },
+   install = {
+      missing = true,
+      colorscheme = { 'kanagawa' },
+   },
+   ui = { browser = '/usr/bin/firefox' },
+   diff = { cmd = 'git' },
+   checker = { enabled = true },
    performance = {
       rtp = {
          disabled_plugins = {
+            '2html_plugin',
+            'getscript',
+            'getscriptPlugin',
             'gzip',
+            'logiPat',
             'matchit',
             'matchparen',
+            'netrw',
+            'netrwFileHandlers',
             'netrwPlugin',
+            'netrwSettings',
+            'rrhelper',
+            'tar',
             'tarPlugin',
             'tutor',
+            'vimball',
+            'vimballPlugin',
+            'zip',
             'zipPlugin',
          },
       },
