@@ -40,6 +40,7 @@ BIN_SCRIPTS='
    bsPacker
    buArch
    chkcolor
+   codepoint
    digpath
    monitor
    pathtrim

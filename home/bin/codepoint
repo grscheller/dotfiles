@@ -1,0 +1,83 @@
+#!/bin/python
+
+from fontTools.ttLib import TTFont
+import sys
+
+usage = """
+usage: codepoint [-h|-q] ucp [font_file ...]
+  where: font_file assumed to be TrueType (*.ttf} or OpenType (*.otf) font
+         ucp is a unicode Codepoint, assumed to be decimal
+           prepend with: 0x for hex
+                         0o for octal
+                         0b for binary
+         -h: print help
+         -q: quiet, suppress error messages, also
+             if no font files given, just print glyph using current font,
+             if font files given, don't print initial ucp/glyph info.
+"""
+
+# Set flags
+nl_Flag = False  # If true, an extra newline was printed on last output
+quiet_Flag = False  # If true, suppress error messages and simplify output
+
+# Parse and process arguments
+arg1 = sys.argv[1]
+
+if arg1 == "-h":
+    print(usage)
+    sys.exit(0)
+elif arg1 == "-q":
+    quiet_Flag = True
+    ucp_str = sys.argv[2]
+    font_files = sys.argv[3:]
+else:
+    ucp_str = sys.argv[1]
+    font_files = sys.argv[2:]
+
+try:
+    ucp = int(ucp_str, base=0)
+except:
+    print("Error: First argument must be Unicode codepoint")
+    print("\nFor help: codepoint -h")
+    sys.exit(1)
+
+# Display code point
+if not quiet_Flag:
+    print("\nCodepoint ( U+%X ) is ( %c )\n" % (ucp, chr(ucp)))
+    nl_Flag = True
+elif len(font_files) == 0:
+    print("%c" % chr(ucp))
+    sys.exit(0)
+
+# Display which fonts contain the code point
+for font_file in font_files:
+    try:
+        font = TTFont(font_file)
+
+    except Exception as e:
+        if not quiet_Flag:
+            if not nl_Flag: print()
+            print("Failed trying:", font_file)
+            print("Error:", e)
+            print()
+            nl_Flag = True
+        continue
+
+    try:
+        for cmap in font['cmap'].tables:
+            if cmap.isUnicode():
+                if ucp in cmap.cmap:
+                    if not quiet_Flag:
+                        print("Found in %s" % font_file)
+                    else:
+                        print(font_file)
+                    nl_Flag = False
+                    break
+
+    except Exception as e:
+        if not quiet_Flag:
+            if not nl_Flag: print()
+            print("Failed using:", font_file)
+            print("Error:", e)
+            print()
+            nl_Flag = True
