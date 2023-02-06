@@ -1,6 +1,6 @@
 ## GRScheller Sway Config
-#  - modified from: /etc/sway/config
-#  - for a complete reference: "man -s5 sway" 
+#    - modified from /etc/sway/config
+#    - for a complete reference "man -s5 sway" 
 
 ## Use Super key used as the mod key
 set $mod Mod4
@@ -17,67 +17,8 @@ set $term alacritty
 ## Application launcher, configured in ~/.config/wofi/config
 set $menu wofi
 
-## Output configuration
-#
-#  Example configuration:
-# 
-#    output HDMI-A-1 resolution 1920x1080 position 1920,0
-# 
-#  You can get the names of your outputs by running:
-# 
-#    swaymsg -t get_outputs
-#
-
-# Bind workspaces to specific monitors
-workspace 0 output eDP-1
-workspace 1 output HDMI-A-1
-workspace 2 output HDMI-A-1
-workspace 3 output HDMI-A-1
-workspace 4 output HDMI-A-1
-workspace 5 output HDMI-A-1
-workspace 6 output HDMI-A-1
-workspace 7 output HDMI-A-1
-workspace 8 output HDMI-A-1
-workspace 9 output HDMI-A-1
-
-#  The dfInstall script swaps in a Sway background image
-#
-#    ${HOME}/Pictures/Desktops/TokyoNightSwayBG_1920x1080.jpg
-#
-#  when present to the output cmd below.  See dfInstall script
-#  for the details of where to obtained the picture.
-output * bg #33467c solid_color
-
-## Screen locking and idle configuration
-bindsym $mod+Escape exec swaylock -f -F -e -c 002222
-exec swayidle -w \
-  timeout 1200 'swaylock -f -F -e -c 220022' \
-  timeout 1500 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock -f -F -e -c 220022'
-
-## Input configuration
-#
-#  Example configuration:
-#
-#     input "2:14:SynPS/2_Synaptics_TouchPad" {
-#         dwt enabled
-#         tap enabled
-#         natural_scroll enabled
-#         middle_emulation enabled
-#     }
-#
-#  You can get the names of your inputs by running: swaymsg -t get_inputs
-#  For more information on this section, read: man 5 sway-input
-#
-#  Swap Capslock and Escape 
-input "type:keyboard" {
-    xkb_options caps:swapescape
-}
-
-## Polkit Daemon
-#  - Allows apps requiring permissions to ask "mother may I?"
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+## Status Bar - Set to Waybar
+bar swaybar_command waybar
 
 ## Gaps & Borders
 gaps inner 4
@@ -90,25 +31,28 @@ client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
 client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
 client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
-## Status Bar
-#  - Set to Waybar, see ~/.config/waybar/config/ for configuration
-bar swaybar_command waybar
-
 ## Some basic keybindings
-#  Start a terminal
+
+# Start a terminal
 bindsym $mod+Return exec $term
-#  Kill focused window
+
+# Kill focused window
 bindsym $mod+q kill
-#  Start your launcher
+
+# Start your launcher
 bindsym $mod+Tab exec $menu
-#  Reload sway configuration file
+
+# Reload sway configuration file
 bindsym $mod+Shift+c reload
-#  Exit sway
+
+# Exit sway
 bindsym $mod+Shift+e exit
 
-## Move focus with $mod+[h|j|k|l] or $mod+[up|down|left|right]
-#  - navigates splits, tabs, and stacked windows
-#  - focus can cross monitors and enter another workspace
+## Moving focus
+
+# Move focus with $mod+[h|j|k|l] or $mod+[up|down|left|right]
+#   - navigates splits, tabs, and stacked windows
+#   - focus can cross monitors and enter another workspace
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -117,43 +61,13 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-#  Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
-#  Move focus to the parent container
+
+# Move focus to the parent container
 bindsym $mod+a focus parent
 
-## Move focused item around workspace
-#  - items can be windows or containers
-#  - moves items into and through containers
-#  - item can cross monitors and enter another workspace
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-#  Toggle the current focused item between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
-#  Toggle the current focused item fullscreen
-bindsym $mod+f fullscreen
+# Swap focus between the tiling area and the floating area
+bindsym $mod+space focus mode_toggle
 
-## Split current window into its own container
-#  - opposite to the vim conventions
-bindsym $mod+b split horizontal
-bindsym $mod+v split vertical
-
-## Switch the current container between different layout styles
-#  - focus must be on one of the container's child items
-bindsym $mod+d layout default
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-## Move ficus beteen workspaces
-#  - workspaces can have any name you want, not just numbers the numbers.
-#
 #  Switch focus to another workspace
 bindsym $mod+0 workspace number 0
 bindsym $mod+1 workspace number 1
@@ -165,11 +79,27 @@ bindsym $mod+6 workspace number 6
 bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
-#  Move to next/prev numeric workspace
+
+#  Move focus to next/prev numeric workspace
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
 
-##  Move focused item to ianother workspace
+## Move focused item
+
+# Move focused item around workspace
+#   - items can be windows or containers
+#   - moves items into and through containers
+#   - item can cross monitors and enter another workspace
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Move focused item to another workspace
 bindsym $mod+Shift+0 move container to workspace number 0
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -181,56 +111,99 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 
-## Resizing containers
-mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+# Toggle the current focused item between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
 
-    # Ditto, with arrow keys
+# Toggle the current focused item fullscreen
+bindsym $mod+f fullscreen
+
+## Sway containers
+
+# Split current window into its own container - opposite vim conventions
+bindsym $mod+b split horizontal
+bindsym $mod+v split vertical
+
+# Switch layout styles current container - focus must be on a child item
+bindsym $mod+d layout default
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+## Resizing containers
+
+# Switch to resize mode
+bindsym $mod+r mode "resize"
+
+# Resizing container
+mode "resize" {
+    # [$left|Left] shrinks container width
+    bindsym $left resize shrink width 10px
     bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
+    # [$right|Right] grows container width
+    bindsym $right resize grow width 10px
     bindsym Right resize grow width 10px
+    # [$up|Up] shrinks container height
+    bindsym $up resize shrink height 10px
+    bindsym Up resize shrink height 10px
+    # [$down|Down] grows container height
+    bindsym $down resize grow height 10px
+    bindsym Down resize grow height 10px
 
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-#  Switch to resize mode
-bindsym $mod+r mode "resize"
 
 ## Mouse settings
-#
-#  Setting I find best duplicates sloppy mouse focus
+
+# Sloppy mouse focus
 focus_follows_mouse yes
-#  Drag & resize floating windows with mouse
-#  - to drag: $mod+<left mouse>
-#  - to resize: $mod+<right-mouse>
-#  - despite name
-#    - works ok to resize non-floating windows
-#    - works submarginally to move non-floating windows
+
+# Drag & resize floating windows with mouse
+#   - to drag: $mod+<left mouse>
+#   - to resize: $mod+<right-mouse>
+#   - despite name
+#     - works ok to resize non-floating windows
+#     - works submarginally to move non-floating windows
 floating_modifier $mod normal
 
 ## Scratchpad
-#
-#  Sway has a "scratchpad", which is a hidden workspace
-#  for holding floating windows.  You can send windows
-#  there and get them back later.
-#
-#  Move the currently focused window to the scratchpad
+#    Sway has a "scratchpad", which is a hidden workspace
+#    for holding floating windows.  You can send windows
+#    there and get them back later.
+
+# Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
-#  Show the next scratchpad window or hide the focused scratchpad window.
-#  - if there are multiple scratchpad windows, cycle through them
-#  - move displayed scratchpad window to current workspace
-#  - tiling scratchpad window to a workspace remove it from scratchpad 
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+#   - if there are multiple scratchpad windows, cycle through them
+#   - move displayed scratchpad window to current workspace
+#   - tiling scratchpad window to a workspace remove it from scratchpad 
 bindsym $mod+minus scratchpad show
 
+## Output configuration
+include config_output
+include config_bg
+
+## Input configuration
+
+# Swap Capslock and Escape 
+input "type:keyboard" {
+    xkb_options caps:swapescape
+}
+
+## Screen locking and idle configuration
+bindsym $mod+Escape exec swaylock -f -F -e -c 002222
+exec swayidle -w \
+  timeout 1200 'swaylock -f -F -e -c 220022' \
+  timeout 1500 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -F -e -c 220022'
+
+## Polkit Daemon - Allows apps requiring permissions to ask "mother may I?"
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
 ## OS Distibution Tweaks
-#  - On Arch this will do some Wayland related configurations
+
+# On Arch this will do some Wayland related configurations
 include /etc/sway/config.d/*

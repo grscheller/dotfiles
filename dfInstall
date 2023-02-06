@@ -145,6 +145,9 @@ CONFIG_FILES='
    nvim/lua/grs/util.lua
    nvim/init.lua
    sway/config
+   sway/config_bg_color
+   sway/config_bg_picture
+   sway/config_output_laptop_hdmi
    waybar/config
    waybar/style.css
    wofi/config
@@ -336,16 +339,11 @@ case "$check" in
       mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
          "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
-      # Swap in a Sway background image if present, the picture I personally use
-      # is from 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
-      Picture="${HOME}/Pictures/Desktops/SwayBG.jpg"
-      if [ -f "$Picture" ]
-      then
-         mv "${XDG_CONFIG_HOME}"/sway/config "${XDG_CONFIG_HOME}"/sway/config_orig
-         sed -e "s|^\( *output \* bg \).* solid_color$|\1$Picture fill|" \
-            "${XDG_CONFIG_HOME}"/sway/config_orig > "${XDG_CONFIG_HOME}"/sway/config
-         rm -f "${XDG_CONFIG_HOME}"/sway/config_orig
-      fi
+      # Link sway output configuration
+      ln -s "${XDG_CONFIG_HOME}"/sway/config_bg_picture \
+            "${XDG_CONFIG_HOME}"/sway/config_bg
+      ln -s "${XDG_CONFIG_HOME}"/sway/config_output_laptop_hdmi \
+            "${XDG_CONFIG_HOME}"/sway/config_output
       ;;
    repo)
       # Get some git status info on repo
