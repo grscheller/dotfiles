@@ -2,25 +2,25 @@
 #    - modified from /etc/sway/config
 #    - for a complete reference "man -s5 sway" 
 
-## Use Super key used as the mod key
+## Variables
+
+# Use Super key used as the mod key
 set $mod Mod4
 
-## Home row direction keys, like vim
+# Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 
-## My preferred terminal emulator
+# Terminal emulator
 set $term alacritty
 
-## Application launcher, configured in ~/.config/wofi/config
+# Application launcher, configured in ~/.config/wofi/config
 set $menu wofi
 
-## Status Bar - Set to Waybar
-bar swaybar_command waybar
-
 ## Gaps & Borders
+
 gaps inner 4
 gaps outer 2
 default_border pixel 2
@@ -31,24 +31,29 @@ client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
 client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
 client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
-## Some basic keybindings
+## Output configuration
 
-# Start a terminal
-bindsym $mod+Return exec $term
+# these ipoint to system dependent symlinks
+include config_bg
+include config_output
+
+## Input configuration
+
+# Swap Capslock and Escape 
+input "type:keyboard" {
+    xkb_options caps:swapescape
+}
+
+## Keybindings
 
 # Kill focused window
 bindsym $mod+q kill
-
-# Start your launcher
-bindsym $mod+Tab exec $menu
 
 # Reload sway configuration file
 bindsym $mod+Shift+c reload
 
 # Exit sway
 bindsym $mod+Shift+e exit
-
-## Moving focus
 
 # Move focus with $mod+[h|j|k|l] or $mod+[up|down|left|right]
 #   - navigates splits, tabs, and stacked windows
@@ -68,7 +73,7 @@ bindsym $mod+a focus parent
 # Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
 
-#  Switch focus to another workspace
+# Switch focus to another workspace
 bindsym $mod+0 workspace number 0
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
@@ -80,23 +85,21 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 
-#  Move focus to next/prev numeric workspace
+# Move focus to next/prev numeric workspace
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
-
-## Move focused item
 
 # Move focused item around workspace
 #   - items can be windows or containers
 #   - moves items into and through containers
 #   - item can cross monitors and enter another workspace
 bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
 bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+$right move right
 bindsym $mod+Shift+Right move right
 
 # Move focused item to another workspace
@@ -129,8 +132,6 @@ bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-## Resizing containers
-
 # Switch to resize mode
 bindsym $mod+r mode "resize"
 
@@ -154,56 +155,50 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 
-## Mouse settings
-
-# Sloppy mouse focus
-focus_follows_mouse yes
-
-# Drag & resize floating windows with mouse
-#   - to drag: $mod+<left mouse>
-#   - to resize: $mod+<right-mouse>
-#   - despite name
-#     - works ok to resize non-floating windows
-#     - works submarginally to move non-floating windows
-floating_modifier $mod normal
-
 ## Scratchpad
-#    Sway has a "scratchpad", which is a hidden workspace
-#    for holding floating windows.  You can send windows
-#    there and get them back later.
 
-# Move the currently focused window to the scratchpad
+# Move focused CONTAINER to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 #   - if there are multiple scratchpad windows, cycle through them
 #   - move displayed scratchpad window to current workspace
-#   - tiling scratchpad window to a workspace remove it from scratchpad 
+#   - tiling a scratchpad container to a workspace remove it from scratchpad 
 bindsym $mod+minus scratchpad show
 
-## Output configuration
-include config_output
-include config_bg
+## Mouse settings
 
-## Input configuration
+# Drag & resize floating & tiling windows with mouse
+#   - $mod+<left mouse> to drag
+#   - $mod+<right-mouse> to resize
+floating_modifier $mod normal
 
-# Swap Capslock and Escape 
-input "type:keyboard" {
-    xkb_options caps:swapescape
-}
+# Sloppy mouse
+focus_follows_mouse yes
 
-## Screen locking and idle configuration
+## Launch programs
+
+# Manuel sceen locking
 bindsym $mod+Escape exec swaylock -f -F -e -c 002222
+
+# Idle configuration
 exec swayidle -w \
   timeout 1200 'swaylock -f -F -e -c 220022' \
   timeout 1500 'swaymsg "output * dpms off"' \
   resume 'swaymsg "output * dpms on"' \
   before-sleep 'swaylock -f -F -e -c 220022'
 
-## Polkit Daemon - Allows apps requiring permissions to ask "mother may I?"
+# Polkit Daemon - Allows apps requiring permissions to ask "mother may I?"
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-## OS Distibution Tweaks
+# Start a terminal
+bindsym $mod+Return exec $term
 
-# On Arch this will do some Wayland related configurations
+# Start your launcher
+bindsym $mod+Tab exec $menu
+
+# Status Bar (Waybar)
+bar swaybar_command waybar
+
+## OS distibution environment tweaks
 include /etc/sway/config.d/*

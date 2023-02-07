@@ -9,14 +9,6 @@
 ## If not interactive, don't do anything.
 [[ $- != *i* ]] && return
 
-## System wide Bash configurations
-#
-#   Used on Redhat & Fedora,
-#   Debian & Arch source /etc/bash.bashrc before ~/.bashrc
-#
-# shellcheck disable=SC1091
-[[ -f /etc/bashrc ]] && source /etc/bashrc
-
 ## Shell functions
 
 #  Jump up multiple directories
@@ -395,7 +387,7 @@ alias addkey='eval $(ssh-agent) && ssh-add'
 # Have git asks for passwords on the command line
 unset SSH_ASKPASS
 
-## Make BASH more Korn Shell like
+## Make Bash more Korn Shell like
 set -o pipefail
 shopt -s extglob
 shopt -s checkwinsize

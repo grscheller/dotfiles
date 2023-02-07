@@ -1,4 +1,4 @@
-# Bind workspaces to specific monitors
+## Bind workspaces to specific monitors
 workspace 0 output eDP-1
 workspace 1 output HDMI-A-1
 workspace 2 output HDMI-A-1

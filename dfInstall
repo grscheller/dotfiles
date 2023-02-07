@@ -37,7 +37,6 @@ HOME_FILES='
 '
 
 BIN_SCRIPTS='
-   bsPacker
    buArch
    chkcolor
    codepoint
@@ -147,6 +146,8 @@ CONFIG_FILES='
    sway/config
    sway/config_bg_color
    sway/config_bg_picture
+   sway/config_output_laptop
+   sway/config_output_laptop_dp
    sway/config_output_laptop_hdmi
    waybar/config
    waybar/style.css
@@ -159,7 +160,7 @@ SSH_CONFIGS='
 
 RM_ITEMS="
    ${HOME}/.gitconfig
-   ${HOME}/junk2
+   ${HOME}/bin/bsPacker
    ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
    ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
@@ -340,9 +341,11 @@ case "$check" in
          "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
       # Link sway output configuration
+      rm "${XDG_CONFIG_HOME}"/sway/config_bg \
+         "${XDG_CONFIG_HOME}"/sway/config_output
       ln -s "${XDG_CONFIG_HOME}"/sway/config_bg_picture \
             "${XDG_CONFIG_HOME}"/sway/config_bg
-      ln -s "${XDG_CONFIG_HOME}"/sway/config_output_laptop_hdmi \
+      ln -s "${XDG_CONFIG_HOME}"/sway/config_output_laptop_dp \
             "${XDG_CONFIG_HOME}"/sway/config_output
       ;;
    repo)
