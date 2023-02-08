@@ -340,13 +340,25 @@ case "$check" in
       mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
          "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
 
+      ## Setup sway output configuration
+
+      # The background picture I personally use is from
+      # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
+      picture="$HOME/Pictures/Desktops/SwayBG.jpg"
+      if test -f "$picture"
+      then
+         bg="${XDG_CONFIG_HOME}"/sway/config_bg_picture
+      else
+         bg="${XDG_CONFIG_HOME}"/sway/config_bg_color
+      fi
+
+      # hardcode for now, will need a script
+      output="${XDG_CONFIG_HOME}"/sway/config_output_laptop_hdmi
+
       # Link sway output configuration
-      rm "${XDG_CONFIG_HOME}"/sway/config_bg \
-         "${XDG_CONFIG_HOME}"/sway/config_output
-      ln -s "${XDG_CONFIG_HOME}"/sway/config_bg_picture \
-            "${XDG_CONFIG_HOME}"/sway/config_bg
-      ln -s "${XDG_CONFIG_HOME}"/sway/config_output_laptop_dp \
-            "${XDG_CONFIG_HOME}"/sway/config_output
+      rm "${XDG_CONFIG_HOME}"/sway/config_bg "${XDG_CONFIG_HOME}"/sway/config_output
+      ln -s "$bg" "${XDG_CONFIG_HOME}"/sway/config_bg
+      ln -s "$output" "${XDG_CONFIG_HOME}"/sway/config_output
       ;;
    repo)
       # Get some git status info on repo
