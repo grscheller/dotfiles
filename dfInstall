@@ -149,6 +149,8 @@ CONFIG_FILES='
    sway/config_output_laptop
    sway/config_output_laptop_dp
    sway/config_output_laptop_hdmi
+   systemd/user/kanshi.service
+   systemd/user/sway-session.target
    waybar/config
    waybar/style.css
    wofi/config
@@ -351,14 +353,12 @@ case "$check" in
       else
          bg="${XDG_CONFIG_HOME}"/sway/config_bg_color
       fi
-
-      # hardcode for now, will need a script
-      output="${XDG_CONFIG_HOME}"/sway/config_output_laptop_hdmi
-
-      # Link sway output configuration
       rm "${XDG_CONFIG_HOME}"/sway/config_bg "${XDG_CONFIG_HOME}"/sway/config_output
       ln -s "$bg" "${XDG_CONFIG_HOME}"/sway/config_bg
-      ln -s "$output" "${XDG_CONFIG_HOME}"/sway/config_output
+
+      # Ensure a Kanshi config file exists, even if empty
+      test -d "${XDG_CONFIG_HOME}"/kanshi || mkdir -p "${XDG_CONFIG_HOME}"/kanshi
+      touch "${XDG_CONFIG_HOME}"/kanshi/config
       ;;
    repo)
       # Get some git status info on repo

@@ -33,9 +33,11 @@ client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
 ## Output configuration
 
-# these point to system dependent symlinks
+# Used for Kanshi integration
+exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+
+# symlink to background picture or solid color background configuration file
 include config_bg
-include config_output
 
 ## Input configuration
 
