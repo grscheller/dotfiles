@@ -1,5 +1,5 @@
 [Unit]
-Description=Dynamic output configuratin for Wayland compositors
+Description=Dynamic output configuration for Wayland compositors
 Documentation=https://sr.ht/~emerson/kanshi
 BindsTo=sway-session.target
 

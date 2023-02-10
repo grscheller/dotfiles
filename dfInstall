@@ -146,9 +146,6 @@ CONFIG_FILES='
    sway/config
    sway/config_bg_color
    sway/config_bg_picture
-   sway/config_output_laptop
-   sway/config_output_laptop_dp
-   sway/config_output_laptop_hdmi
    systemd/user/kanshi.service
    systemd/user/sway-session.target
    waybar/config
@@ -161,11 +158,11 @@ SSH_CONFIGS='
 '
 
 RM_ITEMS="
-   ${HOME}/.gitconfig
-   ${HOME}/bin/bsPacker
-   ${XDG_CONFIG_HOME}/fish/functions/unguard_universals.fish
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/lazy.lua
-   ${XDG_CONFIG_HOME}/nvim/lua/grs/config/settings.lua
+   $HOME/.gitconfig
+   $HOME/.sway
+   $XDG_CONFIG_HOME/sway/config_output_laptop
+   $XDG_CONFIG_HOME/sway/config_output_laptop_dp
+   $XDG_CONFIG_HOME/sway/config_output_laptop_hdmi
 "
 
 ### Argument parsing, last -c option wins, default is to install
@@ -228,7 +225,7 @@ install_file () {
    src_dir="$3"
    file_perm="$4"
    src="$src_dir/$file_path"
-   src_abs="${DOTFILE_GIT_REPO}${src#.}"
+   src_abs="$DOTFILE_GIT_REPO${src#.}"
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
@@ -339,26 +336,28 @@ case "$check" in
       }
 
       # Keep alacritty from rereading its config file mid-copy
-      mv "${XDG_CONFIG_HOME}"/alacritty/alacritty_arch.yml \
-         "${XDG_CONFIG_HOME}"/alacritty/alacritty.yml
+      mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml \
+         "$XDG_CONFIG_HOME"/alacritty/alacritty.yml
 
       ## Setup sway output configuration
 
       # The background picture I personally use is from
       # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
       picture="$HOME/Pictures/Desktops/SwayBG.jpg"
+      bg_link="$XDG_CONFIG_HOME"/sway/config_bg 
       if test -f "$picture"
       then
-         bg="${XDG_CONFIG_HOME}"/sway/config_bg_picture
+         bg="$XDG_CONFIG_HOME"/sway/config_bg_picture
       else
-         bg="${XDG_CONFIG_HOME}"/sway/config_bg_color
+         bg="$XDG_CONFIG_HOME"/sway/config_bg_color
       fi
-      rm "${XDG_CONFIG_HOME}"/sway/config_bg "${XDG_CONFIG_HOME}"/sway/config_output
-      ln -s "$bg" "${XDG_CONFIG_HOME}"/sway/config_bg
+      test -L "$bg_link" && rm "$bg_link"
+      ln -s "$bg" "$bg_link"
 
       # Ensure a Kanshi config file exists, even if empty
-      test -d "${XDG_CONFIG_HOME}"/kanshi || mkdir -p "${XDG_CONFIG_HOME}"/kanshi
-      touch "${XDG_CONFIG_HOME}"/kanshi/config
+      Kanshi="$XDG_CONFIG_HOME"/kanshi
+      test -d "$Kanshi" || mkdir -p "$Kanshi"
+      touch "$Kanshi"/config
       ;;
    repo)
       # Get some git status info on repo
