@@ -46,18 +46,6 @@ input "type:keyboard" {
     xkb_numlock enabled
 }
 
-### Gaps & Borders
-#
-gaps inner 4
-gaps outer 2
-default_border pixel 2
-smart_borders off
-smart_gaps off
-default_floating_border pixel 2
-client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
-client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
-client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
-
 ### Key bindings
 #
 # Basics:
@@ -187,6 +175,18 @@ client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
     #  - move displayed scratchpad window to current workspace
     #  - tiling a scratchpad container to a workspace remove it from scratchpad
     bindsym $mod+minus scratchpad show
+
+### Gaps & Borders
+#
+gaps inner 4
+gaps outer 2
+default_border pixel 2
+smart_borders off
+smart_gaps off
+default_floating_border pixel 2
+client.focused "#5f75a2" "#5f75a2" "#c8c093" "#7e9cd8" "#5f75a2"
+client.focused_inactive "#33467c" "#33467c" "#c8c093" "#33467c" "#33467c"
+client.unfocused "#33467c" "#33467c" "#c0a36e" "#33467c" "#33467c"
 
 ### Mouse settings
 #

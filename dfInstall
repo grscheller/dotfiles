@@ -108,6 +108,7 @@ CONFIG_FILES='
    fish/functions/o2h.fish
    fish/functions/o2o.fish
    git/config
+   kanshi/config
    nvim/ftplugin/c.lua
    nvim/ftplugin/cpp.lua
    nvim/ftplugin/fish.lua
@@ -353,11 +354,6 @@ case "$check" in
       fi
       test -L "$bg_link" && rm "$bg_link"
       ln -s "$bg" "$bg_link"
-
-      # Ensure a Kanshi config file exists, even if empty
-      Kanshi="$XDG_CONFIG_HOME"/kanshi
-      test -d "$Kanshi" || mkdir -p "$Kanshi"
-      touch "$Kanshi"/config
       ;;
    repo)
       # Get some git status info on repo
