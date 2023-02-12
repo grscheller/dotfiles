@@ -1,0 +1,15 @@
+font=Roboto Mono Bold Nerd Font Complete Mono
+background-color=#4A3F5CBB
+text-color=#E6C384FF
+border-radius=4
+border-size=3
+icons=1
+
+[urgency=low]
+border-color=#957FB8FF
+
+[urgency=normal]
+border-color=#7e9cd8FF
+
+[urgency=critical]
+border-color=#C34043FF

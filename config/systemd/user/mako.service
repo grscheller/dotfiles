@@ -1,0 +1,12 @@
+[Unit]
+Description=Graphical notifcation daemon for Wayland compositors
+Documentation=man:mako(1)
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mako
+Restart=always
+
+[Install]
+WantedBy=sway-session.target

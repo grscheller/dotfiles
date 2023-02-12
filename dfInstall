@@ -109,6 +109,7 @@ CONFIG_FILES='
    fish/functions/o2o.fish
    git/config
    kanshi/config
+   mako/config
    nvim/ftplugin/c.lua
    nvim/ftplugin/cpp.lua
    nvim/ftplugin/fish.lua
@@ -148,6 +149,7 @@ CONFIG_FILES='
    sway/config_bg_color
    sway/config_bg_picture
    systemd/user/kanshi.service
+   systemd/user/mako.service
    systemd/user/sway-session.target
    waybar/config
    waybar/style.css
