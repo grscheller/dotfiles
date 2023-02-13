@@ -29,9 +29,6 @@ abbr -a gp git pull
 abbr -a gh git push
 abbr -a gs git status  # gs steps on ghostscript
 
-# Restart SSH key-agent adding your private key: ~/.ssh/id_rsa
-abbr -a addkey 'eval (ssh-agent -c); and ssh-add'
-
 # So I can run these outside the dotfiles repo
 abbr -a dfInstall '$DOTFILE_GIT_REPO/dfInstall'
 abbr -a sfInstall 'sudo $DOTFILE_GIT_REPO/sfInstall'

@@ -351,13 +351,6 @@ fi
 
 ## Aliases
 
-# Remove "helpful" aliases
-unalias rm 2>&-
-unalias ls 2>&-
-unalias grep 2>&-
-unalias egrep 2>&-
-unalias fgrep 2>&-
-
 # ls alias family
 alias ls='ls --color=auto'
 alias la='ls -a'
@@ -378,14 +371,6 @@ alias WgetM='/usr/bin/wget --mirror -p --convert-links -e robots=off'
 # grscheller/dotfiles aliases
 alias dfInstall='$DOTFILE_GIT_REPO/dfInstall'
 alias sfInstall='$DOTFILE_GIT_REPO/sfInstall'
-
-# SSH related variables and aliases
-#   Restart SSH key-agent and add your private
-#   key, which is located here: ~/.ssh/id_rsa
-alias addkey='eval $(ssh-agent) && ssh-add'
-
-# Have git asks for passwords on the command line
-unset SSH_ASKPASS
 
 ## Make Bash more Korn Shell like
 set -o pipefail

@@ -59,9 +59,10 @@ CABAL_CONFIGS='
 CONFIG_FILES='
    alacritty/alacritty_arch.yml
    fish/completions/alacritty.fish
+   fish/config.fish
+   fish/conf.d/00-ensure-or-redo-init-env.fish
    fish/conf.d/abbrs.fish
    fish/conf.d/colors.fish
-   fish/config.fish
    fish/functions/archJDK.fish
    fish/functions/ax.fish
    fish/functions/cu.fish
@@ -163,6 +164,7 @@ SSH_CONFIGS='
 RM_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
+   $HOME/.mako
    $XDG_CONFIG_HOME/sway/config_output_laptop
    $XDG_CONFIG_HOME/sway/config_output_laptop_dp
    $XDG_CONFIG_HOME/sway/config_output_laptop_hdmi
@@ -341,6 +343,9 @@ case "$check" in
       # Keep alacritty from rereading its config file mid-copy
       mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml \
          "$XDG_CONFIG_HOME"/alacritty/alacritty.yml
+
+      cp "$XDG_CONFIG_HOME"/alacritty/alacritty.yml \
+         "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml
 
       ## Setup sway output configuration
 

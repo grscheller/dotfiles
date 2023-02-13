@@ -41,13 +41,14 @@ M.icons = {
       Value = ' ',
       Variable = ' ',
    },
-   ui = {
+   misc = {
       cmd = '⌘',
       config = ' ',
       event = '📅',
       ft = '📂',
       init = '⚙ ',
       keys = '🗝',
+      lazy = '󰒲 ',
       plugin = '🔌',
       runtime = '💻',
       source = '📄',
