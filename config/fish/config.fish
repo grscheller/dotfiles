@@ -7,10 +7,10 @@
 
 # opam OCaml configuration
 test -f ~/.opam/opam-init/init.fish
-and source ~/.opam/opam-init/init.fish >/dev/null 2>&1
+and source ~/.opam/opam-init/init.fish >/dev/null
 
-# Python pyenv function and environment configuration
-digpath -q pyenv
+# Define Python pyenv function and set environment variables
+type -P pyenv > /dev/null
 and begin
    pyenv init - | source
 end

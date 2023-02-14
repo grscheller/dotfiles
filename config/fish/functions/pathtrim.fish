@@ -35,7 +35,7 @@ function pathtrim --description 'Canonicalize $PATH'
     # Make sure we have a proper readlink shell utility,
     # iMac shell utilities are old and crusty.
     set -l READLINK readlink
-    digpath -q greadlink && set READLINK greadlink
+    type -q greadlink && set READLINK greadlink
 
     # Check if absolute path component exist and are dirctories,
     # also get real locations of these components.

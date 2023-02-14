@@ -127,7 +127,7 @@ and begin
    set -gx PYTHONPATH lib ../lib
 
    # For non-Systemd systems
-   if not digpath -q hostnamectl
+   if not type -q hostnamectl
       set -gx make_phoney_hostnamectl
    end
 end

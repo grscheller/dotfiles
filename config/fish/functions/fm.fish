@@ -1,9 +1,9 @@
 function fm --description 'Launch desktop\'s file manager app'
     set -l open_cmd
-    if digpath -q xdg-open
+    if type -q xdg-open
         # Probably on a Unix
         set open_cmd xdg-open
-    else if digpath -q open
+    else if type -q open
         # Maybe on a Mac
         set open_cmd open
     else
