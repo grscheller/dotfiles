@@ -34,5 +34,5 @@ abbr -a dfInstall '$DOTFILE_GIT_REPO/dfInstall'
 abbr -a sfInstall 'sudo $DOTFILE_GIT_REPO/sfInstall'
 
 # Shell environment cmds
-abbr -a re 'cd; REDO_ENV=yes fish -l'
+abbr -a re 'cd; REDO_ENV=yes fish'
 abbr -a ue UPDATE_ENV=yes fish

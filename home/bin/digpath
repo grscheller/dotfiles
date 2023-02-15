@@ -7,16 +7,23 @@
 # are supported.
 
 usage () {
-  printf 'Usage: digpath [-q] [-x] file1 file2 ...\n'       >&2
-  printf '       digpath [-q] [-x] shell_pattern\n'         >&2
-  printf '       digpath [-h]\n\n'                          >&2
-  printf 'Output: print any matches on $PATH to stdout,\n'  >&2
-  printf '        suppresses output if -q given,\n'         >&2
-  printf '        suppresses nonexecutables if -x given,\n' >&2
-  printf '        print help to stderr if -h given\n\n'     >&2
-  printf 'Exit Status: 0 (true) if match found on $PATH\n'  >&2
-  printf '             1 (false) if no match found\n'       >&2
-  printf '             2 -h or --help option was given\n'   >&2
+  printf 'Description:\n'                                 >&2
+  printf "  Look for files on \$PATH, do not stop\\n"     >&2
+  printf '  after finding the first one, files do not \n' >&2
+  printf '  necessarily have to be executable.\n\n'       >&2
+  printf '  Usage:\n'                                     >&2
+  printf '    digpath [-q] [-x] file1 file2 ...\n'        >&2
+  printf "    digpath [-q] [-x] 'shell_pattern'\\n"       >&2
+  printf '    digpath [-h]\n\n'                           >&2
+  printf '  Output:\n'                                    >&2
+  printf "    print any matches on \$PATH to stdout,\\n"  >&2
+  printf '      suppresses output if -q given,\n'         >&2
+  printf '      suppresses nonexecutables if -x given.\n' >&2
+  printf '    print help to stderr if -h given\n\n'       >&2
+  printf '  Exit Status:\n'                               >&2
+  printf "    0 (true) if a match found on \$PATH\\n"     >&2
+  printf '    1 (false) if no match found\n'              >&2
+  printf '    2 error or -h option was given\n'           >&2
 }
 
 quite_flag=
@@ -29,11 +36,11 @@ do
     x) executable_flag=1
        ;;
     h) usage
-       exit 2
+       return 2
        ;;
-    ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
-       usage
-       exit 2
+    ?) printf 'digpath: -%s: unknown option\n' "$OPTARG" >&2
+       printf '  for help type: digpath -h\n' >&2
+       return 2
        ;;
   esac
 done
@@ -49,7 +56,7 @@ do
       test ! -d "$Dir" && continue
       for target in $Dir/$File
       do
-          if test -f "$target"
+          if test -e "$target" -o -e "$target"
           then
               if test -z "$executable_flag" -o -x "$target"
               then
@@ -74,7 +81,7 @@ fi
 
 if test $ii -gt 0
 then
-    exit 0
+    return 0
 else
-    exit 1
+    return 1
 fi

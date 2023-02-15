@@ -45,16 +45,23 @@ path () {
 # are supported.
 digpath () (
   usage_digpath () {
-    printf 'Usage: digpath [-q] [-x] file1 file2 ...\n'       >&2
-    printf '       digpath [-q] [-x] shell_pattern\n'         >&2
-    printf '       digpath [-h]\n\n'                          >&2
-    printf 'Output: print any matches on PATH to stdout,\n'   >&2
-    printf '        suppresses output if -q given,\n'         >&2
-    printf '        suppresses nonexecutables if -x given,\n' >&2
-    printf '        print help to stderr if -h given\n\n'     >&2
-    printf 'Exit Status: 0 (true) if match found on PATH\n'   >&2
-    printf '             1 (false) if no match found\n'       >&2
-    printf '             2 -h or --help option was given\n'   >&2
+    printf 'Description:\n'                                           >&2
+    printf "  Look for files on \$PATH, like \"type -P\" builtin,\\n" >&2
+    printf '  but do not stop after finding the first one, also\n'    >&2
+    printf '  files do not necessarily have to be executable.\n\n'    >&2
+    printf '  Usage:\n'                                               >&2
+    printf '    digpath [-q] [-x] file1 file2 ...\n'                  >&2
+    printf "    digpath [-q] [-x] 'shell_pattern'\\n"                 >&2
+    printf '    digpath [-h]\n\n'                                     >&2
+    printf '  Output:\n'                                              >&2
+    printf '    print any matches on PATH to stdout,\n'               >&2
+    printf '      suppresses output if -q given,\n'                   >&2
+    printf '      suppresses nonexecutables if -x given.\n'           >&2
+    printf '    print help to stderr if -h given\n\n'                 >&2
+    printf '  Exit Status:\n'                                         >&2
+    printf "    0 (true) if match found on \$PATH\\n"                 >&2
+    printf '    1 (false) if no match found\n'                        >&2
+    printf '    2 an unknown option or -h was given\n'                >&2
   }
 
   local OPTIND opt
@@ -69,8 +76,8 @@ digpath () (
       h) usage_digpath
          return 2
          ;;
-      ?) printf 'Error: invalid option %s\n' "$OPTARG"  >&2
-         usage_digpath
+      ?) printf 'digpath: -%s: unknown option\n' "$OPTARG" >&2
+         printf '  for help type: digpath -h\n' >&2
          return 2
          ;;
     esac
@@ -90,7 +97,7 @@ digpath () (
         [[ ! -d $Dir ]] && continue
         for Target in $Dir/$File
         do
-            if [[ -f $Target ]]
+            if [[ -e $Target ]] || [[ -L $Target ]]
             then
                 if [[ -z $executable_flag ]] || [[ -x $Target ]]
                 then
