@@ -9,28 +9,30 @@ function digpath --description 'Look for files on $PATH'
 
    # Print help message and quit
    if set -q _flag_help
-      printf 'Description:'                                          >&2
-      printf '  Look for files on $PATH, like "type -P" builtin,\n'  >&2
-      printf '  but do not stop after finding the first one, also\n' >&2
-      printf '  files do not necessarily have to be executable.\n\n' >&2
-      printf 'Usage: \n'                                             >&2
-      printf '  digpath [-q] [-x] file1 file2 ... [ -p $MY_PATH ]\n' >&2
-      printf '  digpath \'glob1*.pat\' glob2\\\*.pat ...\n'          >&2
-      printf '  digpath [-h]\n\n'                                    >&2
-      printf '  Options:\n'                                          >&2
-      printf '    -q or --quiet\n'                                   >&2
-      printf '    -x or --executable\n'                              >&2
-      printf '    -p or --path\n'                                    >&2
-      printf '    -h or --help\n\n'                                  >&2
-      printf '  Output:\n'                                           >&2
-      printf '    print any matches on $PATH to stdout,\n'           >&2
-      printf '      suppresses output if -q given,\n'                >&2
-      printf '      suppresses nonexecutables if -x given,\n'        >&2
-      printf '    print help message to stderr if -h given\n\n'      >&2
-      printf '  Exit Status:\n'                                      >&2
-      printf '    0 (true) if match found on $PATH\n'                >&2
-      printf '    1 (false) if no match found\n'                     >&2
-      printf '    2 invalid arguments or -h option given\n'          >&2
+      printf 'Description:'                                             >&2
+      printf '  Look for files on $PATH, like "type -P" builtin,\n'     >&2
+      printf '  but do not stop after finding the first one, also\n'    >&2
+      printf '  files do not necessarily have to be executable.\n\n'    >&2
+      printf 'Usage: \n'                                                >&2
+      printf '  digpath [-q] [-x] file1 file2 ... [ -p $MY_PATH ]\n'    >&2
+      printf '  digpath \'nm*\' gc\\* \'../.bashrc\'\n'                 >&2
+      printf '  digpath \'**/README*\' -p /usr/share/ ~/.local/share\n' >&2
+      printf '  digpath \'**/\\ \\ fred\' -p $HOME\n'                   >&2
+      printf '  digpath [-h]\n\n'                                       >&2
+      printf '  Options:\n'                                             >&2
+      printf '    -q or --quiet\n'                                      >&2
+      printf '    -x or --executable\n'                                 >&2
+      printf '    -p or --path\n'                                       >&2
+      printf '    -h or --help\n\n'                                     >&2
+      printf '  Output:\n'                                              >&2
+      printf '    print any matches on $PATH to stdout,\n'              >&2
+      printf '      suppresses output if -q given,\n'                   >&2
+      printf '      suppresses nonexecutables if -x given,\n'           >&2
+      printf '    print help message to stderr if -h given\n\n'         >&2
+      printf '  Exit Status:\n'                                         >&2
+      printf '    0 (true) if match found on $PATH\n'                   >&2
+      printf '    1 (false) if no match found\n'                        >&2
+      printf '    2 invalid arguments or -h option given\n'             >&2
       return 2
    end
 
@@ -67,7 +69,6 @@ function digpath --description 'Look for files on $PATH'
    end
 
    # Ignore non-existent directories
-   set -l Dir
    set -l Dirs
    for Dir in $Path
       test -d $Dir
@@ -76,10 +77,7 @@ function digpath --description 'Look for files on $PATH'
 
    # See which directories contain which files
    set -l Found
-   set -l Target
-   set -l Targets $Dirs/$Files
-   set Targets (path normalize $Targets)
-   eval set Targets $Targets
+   eval set -l Targets (path normalize $Dirs/$Files)
    for Target in $Targets
       test -e $Target -o -L $Target
       and begin
