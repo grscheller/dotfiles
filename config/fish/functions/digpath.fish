@@ -1,6 +1,6 @@
 function digpath --description 'Look for files on $PATH'
 
-   # Parse cmdline options - stop at firdt argument
+   # Parse cmdline options - stop at first non-option argument
    argparse -s q/quiet h/help x/executable p/path -- $argv
    or begin
       printf '  for help type: digpath -h\n' >&2
@@ -41,16 +41,16 @@ function digpath --description 'Look for files on $PATH'
       return 2
    end
 
-   set -l Choice Files
+   set -l Switch Files
    set -l Files
    set -l Path
    set -l arg
    for arg in $argv
       if [ $arg = -p ] || [ $arg = --path ]
-         set Choice Path
+         set Switch Path
       else
-         test -n (string trim $arg)
-         and set -a $Choice $arg
+         test -n $arg
+         and set -a $Switch $arg
       end
    end
 
@@ -77,8 +77,9 @@ function digpath --description 'Look for files on $PATH'
    # See which directories contain which files
    set -l Found
    set -l Target
-   set -l Targets
-   eval set Targets (path normalize $Dirs/$Files)
+   set -l Targets $Dirs/$Files
+   set Targets (path normalize $Targets)
+   eval set Targets $Targets
    for Target in $Targets
       test -e $Target -o -L $Target
       and begin
