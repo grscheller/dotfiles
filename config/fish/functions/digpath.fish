@@ -49,13 +49,14 @@ function digpath --description 'Look for files on $PATH'
       if [ $arg = -p ] || [ $arg = --path ]
          set Choice Path
       else
-         set -a $Choice $arg
+         test -n (string trim $arg)
+         and set -a $Choice $arg
       end
    end
 
    test (count $Files) -eq 0
    and begin
-      printf 'digpath: Invalid number of arguments given,\n' >&2
+      printf 'digpath: Invalid arguments given,\n' >&2
       printf '  for usage: type "digpath -h"\n' >&2
       return 2
    end
@@ -63,13 +64,6 @@ function digpath --description 'Look for files on $PATH'
    test (count $Path) -eq 0
    and begin
       set Path $PATH
-   end
-
-   # If argument null, not interested in existence of containing directory.
-   set -l File
-   for File in $Files
-      test -n (string trim $File)
-      and set -a Files $File
    end
 
    # Ignore non-existent directories
@@ -84,7 +78,7 @@ function digpath --description 'Look for files on $PATH'
    set -l Found
    set -l Target
    set -l Targets
-   eval set Targets $Dirs/$Files
+   eval set Targets (path normalize $Dirs/$Files)
    for Target in $Targets
       test -e $Target -o -L $Target
       and begin
@@ -94,9 +88,16 @@ function digpath --description 'Look for files on $PATH'
    end
 
    # Report on anything found
+   set -l item
    if set -q Found[1]
       if not set -q _flag_quiet
-         printf %s\n $Found
+         for item in $Found
+            if test -d $item
+               printf %s/\n $item
+            else
+               printf %s\n $item
+            end
+         end
       end
       return 0
    else
