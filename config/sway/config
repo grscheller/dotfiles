@@ -39,7 +39,7 @@ exec swayidle -w \
 
 ### Input configuration
 #
-# Swap Capslock second Escape
+# Make Capslock second Escape
 # Numlock initially enabled
 input "type:keyboard" {
     xkb_options caps:escape_shifted_capslock
@@ -137,6 +137,7 @@ input "type:keyboard" {
     # Split current window into its own container - opposite vim conventions
     bindsym $mod+b split horizontal
     bindsym $mod+v split vertical
+    bindsym $mod+t split toggle
 
     # Switch layout styles current container - focus must be on a child item
     bindsym $mod+s layout stacking
