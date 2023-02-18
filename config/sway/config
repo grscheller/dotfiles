@@ -23,7 +23,7 @@ set $menu wofi
 ### Output configuration
 #
 # Systemd used for Kanshi & Mako integration
-exec "systemctl --user import-environment; systemctl --user start sway-session.target"
+exec "systemctl --user start sway-session.target"
 
 # Symlink to a wallpaper or solid color background config file
 include config_bg

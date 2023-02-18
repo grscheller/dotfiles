@@ -11,8 +11,7 @@ abbr -a nv nvim
 abbr -a pa 'string join \n $PATH'
 abbr -a -- pst ps -ejH
 
-# Exec sway if not already running
-abbr -a sw 'set -qx SWAYSOCK; or cd && exec sway --unsupported-gpu'
+abbr -a sw '$HOME/bin/startw'
 
 # enable/disable touchpad
 abbr -a tpd disable_touch_pad

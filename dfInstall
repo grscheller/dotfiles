@@ -45,6 +45,7 @@ BIN_SCRIPTS='
    pathtrim
    rt
    spin
+   startw
    viewJarManifest
 '
 
@@ -361,6 +362,9 @@ case "$check" in
       fi
       test -L "$bg_link" && rm "$bg_link"
       ln -s "$bg" "$bg_link"
+
+      # Reload Systemd services in case config files get updated
+      systemctl --user daemon-reload
       ;;
    repo)
       # Get some git status info on repo

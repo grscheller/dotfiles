@@ -1,0 +1,39 @@
+#!/usr/bin/sh
+#
+# Script used to launch SWAY
+#
+# SWAY itself is more than happy to run under multiple login
+# sessions on different virtual consoles.  Systemd --user
+# runs on a per user, not a per session, basis.  Systemd is
+# bring used to run Kanshi output daemon and Mako notification
+# daemon.  As such, I need to ensure that only one instance
+# of SWAY running per user.  Since I am the only user on my
+# computers, this scripts punts if is not launched from tty1.
+
+if export -p | grep -q '^export SWAYSOCK='
+then
+   printf 'Sway already running\n'
+   return 1
+fi
+
+if test "$(tty)" != /dev/tty1
+then
+   printf 'Run Sway only off of first virtual console (/dev/tty1)\n'
+   return 1
+fi
+
+# For a functional tray in Waybar
+export XDG_CURRENT_DESKTOP=sway
+# Tell Firefox to use Wayland if available
+export MOZ_ENABLE_WAYLAND=1
+# Get QT clients to play nice with Wayland
+export QT_QPA_PLATFORM=wayland
+# Use /usr/bin/qt6ct utility to adjust QT
+export QT_QPA_PLATFORMTHEME=qt6ct
+# Set Dark Mode for GTK=apps
+export GTK_THEME='Adwaita:dark'
+# Configure Java for Sway/Wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+# replace this shell with sway, keep login shell
+cd; exec /usr/bin/sway --unsupported-gpu

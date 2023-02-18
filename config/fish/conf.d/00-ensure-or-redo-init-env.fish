@@ -101,21 +101,8 @@ and begin
    # Haskell location used by Stack and Cabal
    fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
 
-   # Configure Arch Linux for Sway/Wayland
-   # TODO: move these to a sway startup script - maybe startw?
+   # Configure JDK on arch with fish function
    if string match -qr 'arch' (uname -r)
-      # For a functional tray in Waybar
-      set -gx XDG_CURRENT_DESKTOP sway
-      # Tell Firefox to use Wayland if available
-      set -gx MOZ_ENABLE_WAYLAND 1
-      # Get QT clients to play nice with Wayland
-      set -gx QT_QPA_PLATFORM wayland
-      # Use /usr/bin/qt6ct utility to adjust QT
-      set -gx QT_QPA_PLATFORMTHEME qt6ct
-      # Set Dark Mode for GTK apps
-      set -gx GTK_THEME 'Adwaita:dark'
-      # Configure Java for Arch Linux (Sway/Wayland)
-      set -gx _JAVA_AWT_WM_NONREPARENTING 1
       archJDK 17
    end
 
