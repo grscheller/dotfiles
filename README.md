@@ -10,17 +10,12 @@ Contains my configuration files for
 
 ## Scripts
 
-* [dfInstall](dfInstall) installs home directory configuration files
-  * Usage: `dfInstall [-c {install|repo|target}]`
-    * Install configs to user's home directory: `dfInstall`
-    * Check config against git working directory: `dfInstall -c repo`
-    * Check installed files against git working directory: `dfInstall -c target`
-  * POSIX compliant shell scpript
-* [sudo sfInstall](sfInstall) installs Arch Linux system configuration files
+* [dfInstall](dfInstall)
+  * Installs "dotfiles" to "$HOME" - POSIX Shell Script
+  * Usage: `dfInstall [-c {install|target|repo}]`
+* [sudo sfInstall](sfInstall)
+  * Installs "root/" files to "/" - Fish Shell Script
   * Usage: `sudo sfInstall`
-    * No configuraion needed
-    * Parses `root/` directory strucucture and installs into `/`
-  * Fish shell script
 
 ## License Summary
 
