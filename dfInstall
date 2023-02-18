@@ -3,14 +3,14 @@
 #  Installs my Neovim, Fish, Sway, Git, SSH and Bash based
 #  software development environment into my $HOME directory.
 #
-#  Note: Assuming $XDG_CONFIG_HOME & $HOME do not contain
-#        whitespace.  Due to their use in $RM_ITEMS and
-#        me wanting to keep the shell scripting simple.
-#
 #  Note: To the best of my knowledge this is a fully POSIX compliant
 #        shell script.  Tested regularly against dash, where on my
 #        Arch Linux systems I set /usr/bin/sh -> /usr/bin/dash and
 #        Arch sets /bin -> /usr/bin for POSIX compliance.
+#
+#  Systemd --user Services used
+#    - kanshi - Wayland daemon that automatically configures outputs
+#    - mako - Notification daemon for Wayland
 #
 
 ### Usage
@@ -353,7 +353,7 @@ case "$check" in
       # The background picture I personally use is from
       # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
       picture="$HOME/Pictures/Desktops/SwayBG.jpg"
-      bg_link="$XDG_CONFIG_HOME"/sway/config_bg 
+      bg_link="$XDG_CONFIG_HOME"/sway/config_bg
       if test -f "$picture"
       then
          bg="$XDG_CONFIG_HOME"/sway/config_bg_picture

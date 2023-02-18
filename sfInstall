@@ -2,11 +2,23 @@
 #
 #  Install system files into my Wayland/Systemd based Arch Linux systems.
 #
-#  Usage: sudo ./sfInstall
-#  Usage: sudo DOTFILE_GIT_REPO=$HOME/devel/dotfiles ./sfInstall
+#  Systemd Services & Timers used
+#    - avahi-daemon.service
+#    - dhcpcd.service
+#    - iwd.service
+#    - systemd-resolved,service
+#    - reflector.timer
 #
 
-set -q DOTFILE_GIT_REPO; or set -gx DOTFILE_GIT_REPO ~grs/devel/dotfiles
+test (count $argv) -gt 0 || not fish_is_root_user
+and begin
+   printf 'Usage: sudo ./sfInstall\n'
+   printf '       sudo $DOTFILE_GIT_REPO/sfInstall\n'
+   return 1
+end
+
+set -q DOTFILE_GIT_REPO
+or set -gx DOTFILE_GIT_REPO ~grs/devel/dotfiles
 
 cd $DOTFILE_GIT_REPO 2>/dev/null
 or begin
@@ -27,16 +39,3 @@ for File in $Files
    end
    cp root$File $File
 end
-
-## Services using these configuration files
-#
-#  avahi-daemon.service
-#  dhcpcd.service
-#  iwd.service
-#  systemd-resolved,service
-#   
-
-## Timers needing enabling
-#
-#  reflector.timer
-#

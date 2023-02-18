@@ -6,16 +6,16 @@ Contains my configuration files for
 * Fish and Bash
 * Sway and Alacritty
 * Software development
-* Arch Linux system configuration
+* Arch Linux system configuration tweaks
 
 ## Scripts
 
 * [dfInstall](dfInstall)
-  * Installs "dotfiles" to "$HOME" - POSIX Shell Script
+  * Installs "dotfiles" to "$HOME"
   * Usage: `dfInstall [-c {install|target|repo}]`
 * [sudo sfInstall](sfInstall)
-  * Installs "root/" files to "/" - Fish Shell Script
-  * Usage: `sudo sfInstall`
+  * Installs "root/" files to "/"
+  * Usage: `sudo ./sfInstall`
 
 ## License Summary
 
