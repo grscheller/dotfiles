@@ -158,6 +158,12 @@ CONFIG_FILES='
    wofi/config
 '
 
+NVIM_TOML='
+   selene.toml
+   .stylua.toml
+   vim.toml
+'
+
 SSH_CONFIGS='
    config
 '
@@ -169,6 +175,8 @@ RM_ITEMS="
    $XDG_CONFIG_HOME/sway/config_output_laptop
    $XDG_CONFIG_HOME/sway/config_output_laptop_dp
    $XDG_CONFIG_HOME/sway/config_output_laptop_hdmi
+   $XDG_CONFIG_HOME/nvim/.luarc.json
+   $XDG_CONFIG_HOME/nvim/stylua.json
 "
 
 ### Argument parsing, last -c option wins, default is to install
@@ -288,6 +296,7 @@ for bin_file in $BIN_SCRIPTS
 do
    install_file "$HOME/bin" "$bin_file" ./home/bin 0755
 done
+
 chmod 0755 "$HOME/bin"
 
 ## Install configuration files
@@ -297,6 +306,7 @@ for conf_file in $BLOOP_FILES
 do
    install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600
 done
+
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal Configs for Haskell
@@ -304,6 +314,7 @@ for conf_file in $CABAL_CONFIGS
 do
    install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644
 done
+
 chmod 0755 "$HOME/.cabal"
 
 # Install $XDG_CONFIG_HOME files
@@ -311,13 +322,21 @@ for conf_file in $CONFIG_FILES
 do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644
 done
-chmod 0700 "$HOME/.config"
+
+# Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
+for conf_file in $NVIM_TOML
+do
+   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644
+done
+
+chmod 0755 "$HOME/.config"
 
 # Install SSH Configs
 for conf_file in $SSH_CONFIGS
 do
    install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600
 done
+
 chmod 0700 "$HOME/.ssh"
 
 ### Some final tweaks, checks & cleanup
