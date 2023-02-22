@@ -5,7 +5,7 @@
 # SWAY itself is more than happy to run under multiple login
 # sessions on different virtual consoles.  Systemd --user
 # runs on a per user, not a per session, basis.  Systemd is
-# bring used to run Kanshi output daemon and Mako notification
+# being used to run Kanshi output daemon and Mako notification
 # daemon.  As such, I need to ensure that only one instance
 # of SWAY running per user.  Since I am the only user on my
 # computers, this scripts punts if is not launched from tty1.
