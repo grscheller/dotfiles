@@ -10,30 +10,35 @@
 BackupLocation='/buslink/grs/Backup'
 
 ExcludeDirs=(
-    devel
+    devel/dotfiles
+    devel/neovim-notes
+    devel/scheller-linux-archive
     Downloads
     node_modules
     Videos
     OneDrive
+    .bloop
+    .cabal
     .cache
     .cargo
     .config/chromium
-    .config/discord/blob_storage
+    .config/discord/blob_storage #
     .config/evolution
-    .config/google-chrome
-    .config/lbry/Cache
-    .config/skypeforlinux/Cache
-    .g8
-    .gem
+    .config/google-chrome #
+    .config/lbry/Cache #
+    .config/skypeforlinux/Cache #
+    .g8 #
+    .gem #
     .gradle
     .ivy2
     .local
     .mozilla
     .npm
+    .opam
     .rustup
-    .sane
-    .scalac
+    .sane #
     .sbt
+    .scalac
     .stack
 )
 
