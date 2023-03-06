@@ -18,7 +18,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim, see :h lazy.nvim-configuration
+-- Setup lazy.nvim, see :h lazy.nvim-lazy.nvim-configuration
 require('lazy').setup {
    defaults = { lazy = true, version = '' },
    spec = 'grs.plugins',
@@ -35,7 +35,7 @@ require('lazy').setup {
    },
    install = {
       missing = true,
-      colorscheme = { 'kanagawa' },
+      colorscheme = { 'habamax' },
    },
    ui = { browser = '/usr/bin/firefox' },
    diff = { cmd = 'git' },
@@ -50,10 +50,6 @@ require('lazy').setup {
             'logiPat',
             'matchit',
             'matchparen',
-            'netrw',
-            'netrwFileHandlers',
-            'netrwPlugin',
-            'netrwSettings',
             'rrhelper',
             'tar',
             'tarPlugin',
