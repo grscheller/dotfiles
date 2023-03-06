@@ -1,6 +1,6 @@
 --[[ Colorschemes & other plugins needing to be loaded early ]]
 
-local colors = require('grs.config.colors').kanagawa
+local grs_colors = require('grs.config.colors')
 
 return {
 
@@ -9,14 +9,31 @@ return {
       'rebelot/kanagawa.nvim',
       lazy = false,
       priority = 1000,
+      -- build = ':KanagawaCompile',
       config = function()
          require('kanagawa').setup {
-            colors = { bg = colors.bg },
-            overrides = {
-               ColorColumn = { bg = colors.ColorColumnBG },
+            colors = {
+               palette = {},
+               theme = {
+                  wave = {},
+                  lotus = {},
+                  dragon = {
+                     ui = {
+                        bg_dim = grs_colors.dragonBlack0,
+                        bg_gutter = grs_colors.dragonBlack0,
+                        bg = grs_colors.dragonBlack0,
+                     },
+                  },
+                  all = {},
+               },
             },
+            overrides = function(colors)
+               return {
+                  ColorColumn = { bg = colors.palette.dragonBlack1 },
+               }
+            end,
          }
-         vim.cmd [[colorscheme kanagawa]]
+         require('kanagawa').load('dragon')
       end,
    },
 
@@ -69,32 +86,32 @@ return {
             icons_enabled = true,
             theme = {
                normal = {
-                  a = { fg = colors.bg, bg = colors.green, gui = 'bold' },
-                  b = { fg = colors.green, bg = colors.bg },
-                  c = { fg = colors.white, bg = colors.bg },
+                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.autumnGreen, gui = 'bold' },
+                  b = { fg = grs_colors.autumnGreen, bg = grs_colors.dragonBlack1 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
                },
                visual = {
-                  a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' },
-                  b = { fg = colors.yellow, bg = colors.gray },
+                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.autumnYellow, gui = 'bold' },
+                  b = { fg = grs_colors.autumnYellow, bg = grs_colors.waveBlue1 },
                },
                inactive = {
-                  a = { fg = colors.white, bg = colors.gray, gui = 'bold' },
-                  b = { fg = colors.bg, bg = colors.blue },
+                  a = { fg = grs_colors.fujiWhite, bg = grs_colors.waveBlue1, gui = 'bold' },
+                  b = { fg = grs_colors.dragonBlack1, bg = grs_colors.crystalBlue },
                },
                replace = {
-                  a = { fg = colors.bg, bg = colors.purple, gui = 'bold' },
-                  b = { fg = colors.purple, bg = colors.bg },
-                  c = { fg = colors.white, bg = colors.bg },
+                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.oniViolet, gui = 'bold' },
+                  b = { fg = grs_colors.oniViolet, bg = grs_colors.dragonBlack1 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
                },
                insert = {
-                  a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
-                  b = { fg = colors.blue, bg = colors.bg },
-                  c = { fg = colors.white, bg = colors.bg },
+                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.crystalBlue, gui = 'bold' },
+                  b = { fg = grs_colors.crystalBlue, bg = grs_colors.dragonBlack1 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
                },
                command = {
-                  a = { fg = colors.bg, bg = colors.cyan, gui = 'bold' },
-                  b = { fg = colors.cyan, bg = colors.bg },
-                  c = { fg = colors.white, bg = colors.bg },
+                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.waveAqua1, gui = 'bold' },
+                  b = { fg = grs_colors.waveAqua1, bg = grs_colors.dragonBlack1 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
                },
             },
             component_separators = { left = '', right = '' },

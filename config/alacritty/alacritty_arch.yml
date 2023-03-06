@@ -193,10 +193,10 @@ draw_bold_text_with_bright_colors: true
 colors:
   # Default colors
   primary:
-    background: '#090618'
-    foreground: '#dcd7ba'
-    dim_foreground: '#c2bda0'
-    bright_foreground: '#f6f1d4'
+    background: '#0d0c0c'
+    foreground: '#c5c9c5'
+    dim_foreground: '#625e5a'
+    bright_foreground: '#dcd7ba'
 
   # Cursor colors
   cursor:
@@ -268,7 +268,7 @@ colors:
     black:   '#090618'
     red:     '#c34043'
     green:   '#76946a'
-    yellow:  '#c0a36e'
+    yellow:  '#dca561'
     blue:    '#7e9cd8'
     magenta: '#957fb8'
     cyan:    '#6a9589'
