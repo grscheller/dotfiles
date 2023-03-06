@@ -1,4 +1,4 @@
---[[ Colorschemes & other plugins needing to be loaded early ]]
+--[[ Colorschemes, also plugins needing to be loaded early ]]
 
 local grs_colors = require('grs.config.colors')
 
@@ -8,10 +8,10 @@ return {
    {
       'rebelot/kanagawa.nvim',
       lazy = false,
-      priority = 1000,
-      -- build = ':KanagawaCompile',
+      priority = 900,
       config = function()
          require('kanagawa').setup {
+            compile = true,
             colors = {
                palette = {},
                theme = {
@@ -34,17 +34,7 @@ return {
             end,
          }
          require('kanagawa').load('dragon')
-      end,
-   },
-
-   -- Replace vim.notify
-   {
-      'rcarriga/nvim-notify',
-      lazy = false,
-      priority = 900,
-      opts = {},
-      config = function()
-         vim.notify = require 'notify'
+         vim.cmd [[:KanagawaCompile]]
       end,
    },
 
@@ -54,10 +44,21 @@ return {
    {
       'kyazdani42/nvim-web-devicons',
       lazy = false,
-      priority = 800,
+      priority = 850,
       opts = {
          default = true
       },
+   },
+
+   -- Replace vim.notify
+   {
+      'rcarriga/nvim-notify',
+      lazy = false,
+      priority = 800,
+      opts = {},
+      config = function()
+         vim.notify = require 'notify'
+      end,
    },
 
    -- Colorize color names, hexcodes, and other color formats
