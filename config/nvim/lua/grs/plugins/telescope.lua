@@ -43,41 +43,75 @@ return {
          tele.load_extension 'ui-select'
       end,
       keys = {
-         { ' tb', function()
+         {
+            ' tb',
+            function()
                require 'telescope'
                require('telescope.builtin').buffers()
-            end, desc = 'list buffers' },
-         { ' td', function()
+            end,
+            desc = 'list buffers',
+         },
+         {
+            ' td',
+            function()
                require 'telescope'
                require('telescope.builtin').grep_string()
-            end, desc = 'grep files in dir' },
-         { ' tf', function()
+            end,
+            desc = 'grep files in dir',
+         },
+         {
+            ' tf', function()
                require 'telescope'
                require('telescope.builtin').find_files()
-            end, desc = 'find files' },
-         { ' tg', function()
+            end,
+            desc = 'find files',
+         },
+         {
+            ' tg',
+            function()
                require 'telescope'
                require('telescope.builtin').live_grep()
-            end, desc = 'live grep' },
-         { ' th', function()
+            end,
+            desc = 'live grep',
+         },
+         {
+            ' th',
+            function()
                require 'telescope'
                require('telescope.builtin').help_tags()
-            end, desc = 'help tags' },
-         { ' tr', function()
+            end,
+            desc = 'help tags',
+         },
+         {
+            ' tr',
+            function()
                require 'telescope'
                require('telescope.builtin').oldfiles()
-            end, desc = 'recent files' },
-         { ' tz', function()
+            end,
+            desc = 'recent files',
+         },
+         {
+            ' tz',
+            function()
                require 'telescope'
                require('telescope.builtin').current_buffer_fuzzy_find()
-            end, desc = 'fzy find buffer' },
-         { ' tq', function()
+            end,
+            desc = 'fzy find buffer',
+         },
+         { ' tq',
+            function()
                require('telescope').extensions.frecency.frecency()
-            end, desc = 'frecency' },
-         { ' tB', function()
+            end,
+            desc = 'frecency',
+         },
+         {
+            ' tB',
+            function()
                require('telescope').extensions.file_browser.file_browser()
-            end, desc = 'file browser' },
-      }
+            end,
+            desc = 'file browser',
+         },
+      },
    },
 
 }

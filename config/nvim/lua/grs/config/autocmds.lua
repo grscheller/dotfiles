@@ -41,7 +41,9 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
--- Mason-tool-installer
+--[[ Mason-tool-installer feedback ]]
+local grs_mason_group = augroup('grs_mason', {})
+
 autocmd('User', {
    pattern = 'MasonToolsUpdateCompleted',
    callback = function()
@@ -49,4 +51,6 @@ autocmd('User', {
          vim.notify '  mason-tool-installer has finished!'
       end)
    end,
+   group = grs_mason_group,
+   desc = 'Give feedback when Mason is finished updating',
 })

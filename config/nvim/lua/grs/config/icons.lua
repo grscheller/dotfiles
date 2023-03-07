@@ -1,9 +1,7 @@
 --[[ Icons - just a collection, not yet used ]]
 
---[[
-     Not sure how to use these to change LSP diagnostics and Info
-     displays.  There a plugin called Lspsaga that might do this for me?
---]]
+-- Not sure how to use these to change LSP diagnostics and Info displays.
+-- There a plugin called Lspsaga that might do this for me?
 
 local M = {}
 

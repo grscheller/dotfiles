@@ -1,4 +1,4 @@
---[[ Load globals & options before pligins. Load autocmds & keymaps later. ]]
+--[[ Load globals & options before plugins. Load autocmds & keymaps later. ]]
 
 local function load(mod)
    local Util = require('lazy.core.util')

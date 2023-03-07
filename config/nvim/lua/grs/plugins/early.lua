@@ -33,8 +33,8 @@ return {
                }
             end,
          }
-         require('kanagawa').load('dragon')
          vim.cmd("KanagawaCompile")
+         require('kanagawa').load('dragon')
       end,
    },
 

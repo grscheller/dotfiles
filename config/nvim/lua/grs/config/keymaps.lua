@@ -8,43 +8,15 @@ local km = vim.keymap.set
 --[[ Window/Tabpage related mappings/bindings ]]
 
 -- Navigating windows
-km('n', '<m-h>', '<c-w>h', {
-   noremap = true,
-   silent = true,
-   desc = 'goto window left',
-})
-km('n', '<m-j>', '<c-w>j', {
-   noremap = true,
-   silent = true,
-   desc = 'goto window below',
-})
-km('n', '<m-k>', '<c-w>k', {
-   noremap = true,
-   silent = true,
-   desc = 'goto window above',
-})
-km('n', '<m-l>', '<c-w>l', {
-   noremap = true,
-   silent = true,
-   desc = 'goto window right',
-})
-km('n', '<m-p>', '<c-w>p', {
-   noremap = true,
-   silent = true,
-   desc = 'goto previous window',
-})
+km('n', '<m-h>', '<c-w>h', { noremap = true, silent = true, desc = 'goto window left' })
+km('n', '<m-j>', '<c-w>j', { noremap = true, silent = true, desc = 'goto window below' })
+km('n', '<m-k>', '<c-w>k', { noremap = true, silent = true, desc = 'goto window above' })
+km('n', '<m-l>', '<c-w>l', { noremap = true, silent = true, desc = 'goto window right' })
+km('n', '<m-p>', '<c-w>p', { noremap = true, silent = true, desc = 'goto previous window' })
 
 -- Creating new windows
-km('n', '<m-s>', '<c-w>s', {
-   noremap = true,
-   silent = true,
-   desc = 'split current window',
-})
-km('n', '<m-d>', '<c-w>v', {
-   noremap = true,
-   silent = true,
-   desc = 'vsplit current window',
-})
+km('n', '<m-s>', '<c-w>s', { noremap = true, silent = true, desc = 'split current window' })
+km('n', '<m-d>', '<c-w>v', { noremap = true, silent = true, desc = 'vsplit current window' })
 km('n', '<m-f>', '<cmd>split<bar>term fish<cr>i', {
    noremap = true,
    silent = true,
@@ -57,128 +29,36 @@ km('n', '<m-g>', '<cmd>vsplit<bar>term fish<cr>i', {
 })
 
 -- Changing window layout
-km('n', '<m-s-h>', '<c-w>H', {
-   noremap = true,
-   silent = true,
-   desc = 'move window lhs',
-})
-km('n', '<m-s-j>', '<c-w>J', {
-   noremap = true,
-   silent = true,
-   desc = 'move window bottom',
-})
-km('n', '<m-s-k>', '<c-w>K', {
-   noremap = true,
-   silent = true,
-   desc = 'move window top',
-})
-km('n', '<m-s-l>', '<c-w>L', {
-   noremap = true,
-   silent = true,
-   desc = 'move window rhs',
-})
-km('n', '<m-x>', '<c-w>x', {
-   noremap = true,
-   silent = true,
-   desc = 'exchange window next',
-})
-km('n', '<m-r>', '<c-w>r', {
-   noremap = true,
-   silent = true,
-   desc = 'rotate inner split',
-})
-km('n', '<m-e>', '<c-w>=', {
-   noremap = true,
-   silent = true,
-   desc = 'equalize windows',
-})
+km('n', '<m-s-h>', '<c-w>H', { noremap = true, silent = true, desc = 'move window lhs' })
+km('n', '<m-s-j>', '<c-w>J', { noremap = true, silent = true, desc = 'move window bottom' })
+km('n', '<m-s-k>', '<c-w>K', { noremap = true, silent = true, desc = 'move window top' })
+km('n', '<m-s-l>', '<c-w>L', { noremap = true, silent = true, desc = 'move window rhs' })
+km('n', '<m-x>', '<c-w>x',   { noremap = true, silent = true, desc = 'exchange window next' })
+km('n', '<m-r>', '<c-w>r',   { noremap = true, silent = true, desc = 'rotate inner split' })
+km('n', '<m-e>', '<c-w>=',   { noremap = true, silent = true, desc = 'equalize windows' })
 
 -- Resizing windows
 -- Think: Alt+Minus Alt+Plus Alt+Shift+Minus Alt+Shift+Plus
-km('n', '<m-->', '2<c-w><', {
-   noremap = true,
-   silent = true,
-   desc = 'make window narrower',
-})
-km('n', '<m-=>', '2<c-w>>', {
-   noremap = true,
-   silent = true,
-   desc = 'make window wider',
-})
-km('n', '<m-_>', '2<c-w>-', {
-   noremap = true,
-   silent = true,
-   desc = 'make window shorter',
-})
-km('n', '<m-+>', '2<c-w>+', {
-   noremap = true,
-   silent = true,
-   desc = 'make window taller',
-})
+km('n', '<m-->', '2<c-w><', { noremap = true, silent = true, desc = 'make window narrower' })
+km('n', '<m-=>', '2<c-w>>', { noremap = true, silent = true, desc = 'make window wider' })
+km('n', '<m-_>', '2<c-w>-', { noremap = true, silent = true, desc = 'make window shorter' })
+km('n', '<m-+>', '2<c-w>+', { noremap = true, silent = true, desc = 'make window taller' })
 
 -- Move view in window, only move cursor to keep on screen
-km('n', '<c-h>', 'z4h', {
-   noremap = true,
-   silent = true,
-   desc = 'move view left 4 columns',
-})
-km('n', '<c-j>', '3<c-e>', {
-   noremap = true,
-   silent = true,
-   desc = 'move view down 3 lines',
-})
-km('n', '<c-k>', '3<c-y>', {
-   noremap = true,
-   silent = true,
-   desc = 'move view up 3 lines',
-})
-km('n', '<c-l>', 'z4l', {
-   noremap = true,
-   silent = true,
-   desc = 'move view right 4 columns',
-})
+km('n', '<c-h>', 'z4h', { noremap = true, silent = true, desc = 'move view left 4 columns' })
+km('n', '<c-j>', '3<c-e>', { noremap = true, silent = true, desc = 'move view down 3 lines' })
+km('n', '<c-k>', '3<c-y>', { noremap = true, silent = true, desc = 'move view up 3 lines' })
+km('n', '<c-l>', 'z4l', { noremap = true, silent = true, desc = 'move view right 4 columns' })
 
 -- Managing tabpages
-km('n', '<c-right>', '<cmd>tabnext<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'goto next tab',
-})
-km('n', '<c-left>', '<cmd>tabprev<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'goto prev tab',
-})
-km('n', '<c-up>', '<cmd>tabfirst<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'goto first tab',
-})
-km('n', '<c-down>', '<cmd>tablast<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'goto last tab',
-})
-km('n', '<m-n>', '<cmd>tabnew<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'create new tab',
-})
-km('n', '<m-b>', '<c-w>T', {
-   noremap = true,
-   silent = true,
-   desc = 'breakout window new tab',
-})
-km('n', '<m-c>', '<c-w>c', {
-   noremap = true,
-   silent = true,
-   desc = 'close current window',
-})
-km('n', '<m-o>', '<c-w>o', {
-   noremap = true,
-   silent = true,
-   desc = 'close other tab windows',
-})
+km('n', '<c-right>', '<cmd>tabnext<cr>', { noremap = true, silent = true, desc = 'goto next tab' })
+km('n', '<c-left>', '<cmd>tabprev<cr>', { noremap = true, silent = true, desc = 'goto prev tab' })
+km('n', '<c-up>', '<cmd>tabfirst<cr>', { noremap = true, silent = true, desc = 'goto first tab' })
+km('n', '<c-down>', '<cmd>tablast<cr>', { noremap = true, silent = true, desc = 'goto last tab' })
+km('n', '<m-n>', '<cmd>tabnew<cr>', { noremap = true, silent = true, desc = 'create new tab' })
+km('n', '<m-b>', '<c-w>T', { noremap = true, silent = true, desc = 'breakout window new tab' })
+km('n', '<m-c>', '<c-w>c', { noremap = true, silent = true, desc = 'close current window' })
+km('n', '<m-o>', '<c-w>o', { noremap = true, silent = true, desc = 'close other tab windows' })
 
 --[[ Text editting keymaps not related to any specific plugins ]]
 
@@ -236,16 +116,8 @@ km({ 'n', 'x' }, '<leader>sp', '"+p', {
 })
 
 -- Shift line and reselect
-km('x', '<', '<gv', {
-   noremap = true,
-   silent = true,
-   desc = 'shift left & reselect',
-})
-km('x', '>', '>gv', {
-   noremap = true,
-   silent = true,
-   desc = 'shift right & reselect',
-})
+km('x', '<', '<gv', { noremap = true, silent = true, desc = 'shift left & reselect' })
+km('x', '>', '>gv', { noremap = true, silent = true, desc = 'shift right & reselect' })
 
 -- Move visual selection up or down a line
 km('x', 'J', ":m '>+1<cr>gv=gv", {
