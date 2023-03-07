@@ -7,7 +7,7 @@ return {
    {
       'nvim-treesitter/nvim-treesitter',
       version = false,
-      event = 'BufReadPost',
+      event = { 'BufReadPre', 'FileReadPre' },
       config = function()
          require('nvim-treesitter.configs').setup {
             highlight = { enable = true },
@@ -18,7 +18,7 @@ return {
             },
             ensure_installed = ts.ensure_installed,
          }
-         vim.cmd("TSUpdateSync")
+         vim.cmd('TSUpdateSync')
       end,
    },
 
