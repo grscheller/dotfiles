@@ -19,9 +19,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim, see :h lazy.nvim-lazy.nvim-configuration
-require('lazy').setup {
+local opts = {
    defaults = { lazy = true, version = '*' },
-   spec = 'grs.plugins',
    git = {
       log = { '--since=5 days ago' },
       timeout = 120,  -- seconds
@@ -33,15 +32,13 @@ require('lazy').setup {
       patterns = { 'grscheller' },
       fallback = false,
    },
-   install = {
-      missing = true,
-      colorscheme = { 'habamax' },
-   },
    ui = { browser = '/usr/bin/firefox' },
-   diff = { cmd = 'git' },
    checker = { enabled = true },
    performance = {
+      cache = { enabled = true },
       rtp = {
+         reset_packpath = true,
+         paths = {},
          disabled_plugins = {
             '2html_plugin',
             'getscript',
@@ -62,5 +59,6 @@ require('lazy').setup {
       },
    },
 }
+require('lazy').setup('grs.plugins', opts)
 
 vim.keymap.set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'lazy gui' })

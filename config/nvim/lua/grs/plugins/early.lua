@@ -5,12 +5,14 @@ local grs_colors = require('grs.config.colors')
 return {
 
    -- Kanagawa colorscheme - with minor tweaks
+   -- Needs to be loaded early to provide highlight groups to other pluggins
    {
       'rebelot/kanagawa.nvim',
       lazy = false,
-      priority = 900,
+      priority = 1000,
       config = function()
-         require('kanagawa').setup {
+         local kanagawa = require('kanagawa')
+         kanagawa.setup {
             compile = true,
             colors = {
                palette = {},
@@ -33,8 +35,8 @@ return {
                }
             end,
          }
-         vim.cmd("KanagawaCompile")
-         require('kanagawa').load('dragon')
+         kanagawa.load('dragon')
+         kanagawa.compile()
       end,
    },
 
@@ -44,7 +46,7 @@ return {
    {
       'kyazdani42/nvim-web-devicons',
       lazy = false,
-      priority = 850,
+      priority = 900,
       opts = {
          default = true
       },
@@ -64,7 +66,7 @@ return {
    -- Colorize color names, hexcodes, and other color formats
    {
       'norcalli/nvim-colorizer.lua',
-      lazy = false,
+      event = "VeryLazy",
       opts = {
          '*',
          css = { rgb_fn = true },
