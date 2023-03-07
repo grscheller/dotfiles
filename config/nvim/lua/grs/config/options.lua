@@ -21,7 +21,7 @@ local options = {
 
    -- Buffer/Editing preferences
    hidden = true,                      -- my expectations are that buffers don't get abandoned
-   joinspaces = true,                  -- use 2 spaces when joinig sentances
+   joinspaces = true,                  -- use 2 spaces when joining sentences
    nrformats = 'bin,hex,octal,alpha',  -- for <c-a> & <c-x>
    undofile = true,                    -- save undo history in ~/.local/share/nvim/undo/
    ignorecase = true,                  -- Case insensitive search when given
@@ -29,6 +29,7 @@ local options = {
    textwidth = 100,                    -- 80 columns seems too narrow these days
    colorcolumn = '+1,+21',             -- keep source code horizontally under control
    formatoptions = 'tcqjpl',           -- mostly for joining and breaking lines
+   spelloptions = 'camel',             -- spellCheckCamelCaseComponents
 
    -- Windowing preferences
    mouse = 'a',              -- enable mouse for all modes
