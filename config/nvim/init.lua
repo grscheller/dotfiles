@@ -20,7 +20,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim, see :h lazy.nvim-lazy.nvim-configuration
 require('lazy').setup {
-   defaults = { lazy = true, version = '' },
+   defaults = { lazy = true, version = '*' },
    spec = 'grs.plugins',
    git = {
       log = { '--since=5 days ago' },
