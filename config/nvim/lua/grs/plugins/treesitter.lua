@@ -7,18 +7,19 @@ return {
    {
       'nvim-treesitter/nvim-treesitter',
       version = false,
-      event = { 'BufReadPre', 'FileReadPre' },
+      build = ':TSUpdateSync',
+      event = { 'BufReadPost', 'BufNewFile' },
       config = function()
          require('nvim-treesitter.configs').setup {
-            highlight = { enable = true },
-            indent = { enable = true },
-            context_commentstring = {
-               enable = true,
-               enable_autocmd = false,
-            },
             ensure_installed = ts.ensure_installed,
+            auto_install = true,
+            ignore_install = {},
+            highlight = {
+               enable = true,
+               disable = {},
+            },
+            indent = { enable = true },
          }
-         vim.cmd('TSUpdateSync')
       end,
    },
 

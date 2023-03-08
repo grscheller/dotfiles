@@ -8,7 +8,6 @@ M.ensure_installed = {
    'c',
    'clojure',
    'cmake',
-   --'comment', -- slows TS bigtime, as per Folke dot repo
    'cpp',
    'css',
    'diff',

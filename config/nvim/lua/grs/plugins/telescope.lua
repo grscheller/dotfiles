@@ -2,45 +2,38 @@
 
 return {
 
-   -- Telescope built-ins
+   --[[ Telescope ]]
+
    {
       'nvim-telescope/telescope.nvim',
+      version = false,
       dependencies = {
+         'kyazdani42/nvim-web-devicons',
          'nvim-lua/plenary.nvim',
-         'nvim-telescope/telescope-file-browser.nvim',
-         'nvim-telescope/telescope-frecency.nvim',
-         {
-            'nvim-telescope/telescope-frecency.nvim',
-            dependencies = {
-               'kkharji/sqlite.lua',
-            },
-         },
+         'nvim-treesitter/nvim-treesitter',
          {
             'nvim-telescope/telescope-fzf-native.nvim',
             build = 'make',
          },
          'nvim-telescope/telescope-ui-select.nvim',
-         'rcarriga/nvim-notify',
       },
       config = function()
-         local tele = require 'telescope'
-
-         tele.setup {
+         local telescope = require 'telescope'
+         telescope.setup {
             extensions = {
-               file_browser = {},
-               frecency = {},
-               fzf = {},
-               notify = {},
+               fzf = {
+                  fuzzy = true,
+                  override_generic_sorter = true,
+                  override_file_sorter = true,
+                  case_mode = 'respect_case',
+               },
                ['ui-select'] = {
                   require('telescope.themes').get_dropdown {},
                },
             },
          }
-
-         tele.load_extension 'frecency'
-         tele.load_extension 'fzf'
-         tele.load_extension 'notify'
-         tele.load_extension 'ui-select'
+         telescope.load_extension('fzf')
+         telescope.load_extension('ui-select')
       end,
       keys = {
          {
@@ -98,20 +91,65 @@ return {
             end,
             desc = 'fzy find buffer',
          },
+      },
+   },
+
+   --[[ Telescope built-ins ]]
+
+   {
+      'nvim-telescope/telescope-file-browser.nvim',
+      dependencies = {
+         'nvim-telescope/telescope.nvim',
+      },
+      config = function()
+         require('telescope').load_extension('file_browser')
+      end,
+      keys = {
+         {
+            ' tB',
+            function()
+               require('telescope').extensions.file_browser.file_browser {
+                  theme = 'ivy',
+                  hijack_netrw = true,
+               }
+            end,
+            desc = 'file browser',
+         },
+      },
+   },
+
+   {
+      'nvim-telescope/telescope-frecency.nvim',
+      dependencies = {
+         'nvim-telescope/telescope.nvim',
+         'kkharji/sqlite.lua',
+      },
+      config = function()
+         require('telescope').load_extension('frecency')
+      end,
+      keys = {
          { ' tq',
             function()
                require('telescope').extensions.frecency.frecency()
             end,
             desc = 'frecency',
          },
-         {
-            ' tB',
-            function()
-               require('telescope').extensions.file_browser.file_browser()
-            end,
-            desc = 'file browser',
-         },
       },
    },
+
+   --[[
+      {
+         'nvim-telescope/notify.nvim',
+         dependencies = {
+            'nvim-telescope/telescope.nvim',
+            'rcarriga/nvim-notify',
+         },
+         config = function()
+            local telescope = require 'telescope'
+            telescope.extensions.notify.notify {}
+            telescope.load_extension('notify')
+         end,
+      },
+   --]]
 
 }
