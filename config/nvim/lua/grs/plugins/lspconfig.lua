@@ -4,14 +4,10 @@ return {
 
    {
       'neovim/nvim-lspconfig',
-      event = "BufReadPre",
+      event = { "BufReadPre", "BufNewFile" },
       dependencies = {
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-         {
-            'folke/neodev.nvim', opts = {
-               experimental = { pathStrict = true }
-            }
-         },
+         { 'folke/neodev.nvim', opts = { experimental = { pathStrict = true } } },
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'mfussenegger/nvim-dap',
@@ -116,7 +112,7 @@ return {
 
             metals_config.settings = {
                showImplicitArguments = true,
-               serverVersion = '0.11.10',
+               serverVersion = '0.11.11',
             }
             metals_config.capabilities = capabilities
             metals_config.init_options.statusBarProvider = 'on'
