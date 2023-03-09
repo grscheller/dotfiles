@@ -2,34 +2,29 @@
 
 -- loaded on "VeryLazy" event
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-local usercmd = vim.api.nvim_create_user_command
-
 --[[ Text editing commands/autocmds not related to specific plugins ]]
-local grs_text_group = augroup('grs_text', {})
+local grs_text_group = vim.api.nvim_create_augroup('grs_text', {})
 
 -- Write file as root - works when sudo doesn't require a password
-usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
-usercmd('WR', 'WRF %', {})
+vim.api.nvim_create_user_command('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
+vim.api.nvim_create_user_command('WR', 'WRF %', {})
 
--- Case sensitive search while in command mode
-autocmd('CmdLineEnter', {
+vim.api.nvim_create_autocmd('CmdLineEnter', {
    pattern = '*',
    command = 'set nosmartcase noignorecase',
    group = grs_text_group,
-   desc = 'Don\'t ignore case when in Command Mode',
+   desc = 'Use case sensitive search in command mode',
 })
 
-autocmd('CmdLineLeave', {
+-- delete this comment
+vim.api.nvim_create_autocmd('CmdLineLeave', {
    pattern = '*',
    command = 'set ignorecase smartcase',
    group = grs_text_group,
    desc = 'Use smartcase when not in Command Mode',
 })
 
--- Give visual feedback when yanking text
-autocmd('TextYankPost', {
+vim.api.nvim_create_autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
       vim.highlight.on_yank {
@@ -41,10 +36,21 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
---[[ Mason-tool-installer feedback ]]
-local grs_mason_group = augroup('grs_mason', {})
+vim.api.nvim_create_autocmd('BufReadPost', {
+   pattern = '*',
+   callback = function()
+      if vim.fn.line('\'"') > 1 and vim.fn.line('\'"') <= vim.fn.line('$') then
+         vim.api.nvim_exec('normal! g\'"', false)
+      end
+   end,
+   group = grs_text_group,
+   desc = 'Open file at last cursor position',
+})
 
-autocmd('User', {
+--[[ Mason-tool-installer feedback ]]
+local grs_mason_group = vim.api.nvim_create_augroup('grs_mason', {})
+
+vim.api.nvim_create_autocmd('User', {
    pattern = 'MasonToolsUpdateCompleted',
    callback = function()
       vim.schedule(function()
