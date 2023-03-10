@@ -139,16 +139,29 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-### Scratchpad
+#
+# Scratchpad
 #
 # Move focused CONTAINER to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
 # Show the next scratchpad window or hide the focused scratchpad window.
-#  - if there are multiple scratchpad windows, cycle through them
-#  - move displayed scratchpad window to current workspace
-#  - tiling a scratchpad container to a workspace remove it from scratchpad
+#   - if there are multiple scratchpad windows, cycle through them
+#   - move displayed scratchpad window to current workspace
+#   - tiling a scratchpad container to a workspace remove it from scratchpad
 bindsym $mod+minus scratchpad show
+#
+# Special keys
+#
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86Search exec $menu
 
 ### Gaps & Borders
 #
@@ -187,6 +200,10 @@ floating_modifier $mod normal
 ### Status Bar (Waybar)
 #
 bar swaybar_command waybar
+
+### Launch certain apps in floating windows
+#
+for_window [app_id="galculator"] floating enable
 
 ### OS distibution environment tweaks
 #
