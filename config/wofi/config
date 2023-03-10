@@ -1,4 +1,4 @@
-show=drun
+show=drun,run
 lines=10
 allow_images=true
 allow_markup=true

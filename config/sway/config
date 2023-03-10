@@ -201,9 +201,9 @@ floating_modifier $mod normal
 #
 bar swaybar_command waybar
 
-### Launch certain apps in floating windows
+### Launch certain apps and app types in floating windows
 #
-for_window [app_id="galculator"] floating enable
+for_window [class="Tk"] floating enable
 
 ### OS distibution environment tweaks
 #
