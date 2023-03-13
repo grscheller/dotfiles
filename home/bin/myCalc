@@ -17,7 +17,7 @@ class Color(object):
     dragonBlack0  = '#0D0C0C'
     fujiWhite     = '#DCD7BA'
     oldWhite      = '#C8c093'
-    fujiGray      = '#717C7C'
+    lotusViolet3  = '#C9CBD1'
 
 # Refactored calculator app I found on internet
 class myCalc(tk.Frame):
@@ -27,7 +27,7 @@ class myCalc(tk.Frame):
             self,
             borderwidth=4,
             bd=2,
-            bg=Color.fujiGray,
+            bg=Color.lotusViolet3,
         )
         frame.pack(
             side=side,
@@ -41,11 +41,11 @@ class myCalc(tk.Frame):
             parent,
             text=text,
             command=command,
-            bg=Color.fujiGray,
+            bg=Color.lotusViolet3,
             fg=Color.dragonBlack0,
             activebackground=Color.oldWhite,
-            highlightcolor=Color.fujiGray,
-            highlightbackground=Color.fujiGray,
+            highlightcolor=Color.lotusViolet3,
+            highlightbackground=Color.lotusViolet3,
             highlightthickness=2
         )
         button.pack(
@@ -64,8 +64,8 @@ class myCalc(tk.Frame):
             bd=20,
             fg=Color.fujiWhite,
             bg=Color.winterBlue,
-            highlightcolor=Color.fujiGray,
-            highlightbackground=Color.fujiGray
+            highlightcolor=Color.lotusViolet3,
+            highlightbackground=Color.lotusViolet3
         ).pack(
             side=side,
             expand=tk.YES,
