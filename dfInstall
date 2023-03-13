@@ -42,6 +42,7 @@ BIN_SCRIPTS='
    codepoint
    digpath
    monitor
+   myCalc
    pathtrim
    rt
    spin
