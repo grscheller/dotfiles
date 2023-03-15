@@ -113,6 +113,7 @@ CONFIG_FILES='
    git/config
    kanshi/config
    mako/config
+   mpd/mpd.conf
    nvim/ftplugin/c.lua
    nvim/ftplugin/cpp.lua
    nvim/ftplugin/fish.lua
