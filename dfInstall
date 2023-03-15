@@ -82,12 +82,12 @@ CONFIG_FILES='
    fish/functions/fish_prompt.fish
    fish/functions/fish_title.fish
    fish/functions/la.fish
-   fish/functions/lbry.fish
    fish/functions/ldir.fish
    fish/functions/ldot.fish
    fish/functions/lf.fish
    fish/functions/lh.fish
    fish/functions/ll.fish
+   fish/functions/mc.fish
    fish/functions/nsort.fish
    fish/functions/pathtrim.fish
    fish/functions/rc.fish
@@ -173,9 +173,7 @@ RM_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/sway/config_output_laptop
-   $XDG_CONFIG_HOME/sway/config_output_laptop_dp
-   $XDG_CONFIG_HOME/sway/config_output_laptop_hdmi
+   $XDG_CONFIG_HOME/fish/functions/lbry.fish
    $XDG_CONFIG_HOME/nvim/.luarc.json
    $XDG_CONFIG_HOME/nvim/.stylua.toml
 "

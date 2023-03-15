@@ -5,6 +5,8 @@
 
 ### Variables
 #
+# Set user 
+set $user grs
 # Use Super key used as the mod key
 set $mod Mod4
 # Home row direction keys, like vi
@@ -15,8 +17,9 @@ set $right l
 # Terminal emulator
 set $term alacritty
 # Application launcher, configured in ~/.config/wofi/config
-set $menu wofi
-
+set $progs myCalc 'sudo etherape -Z $user'
+set $progs $progs qalculate-qt
+set $menu printf '%s\n' $progs | wofi | xargs swaymsg exec --
 ### Output configuration
 #
 # Systemd used for Kanshi & Mako integration

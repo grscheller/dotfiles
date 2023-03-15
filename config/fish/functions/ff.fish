@@ -1,7 +1,7 @@
 function ff --description 'Launch Firefox web browser'
    if type -q firefox
       firefox $argv >/dev/null 2>&1 &
-      and disown
+      disown
    else
       # Maybe we are on iMac
       set -l ff_exe /Applications/Firefox.app/Contents/MacOS/firefox 
