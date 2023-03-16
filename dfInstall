@@ -354,6 +354,9 @@ case "$check" in
       test -d "$HOME/.cabal/bin" || mkdir -p "$HOME/.cabal/bin" || {
          printf "\\nWarning: Failed to create '~/.cabal/bin'.\\n"
       }
+      test -d "$HOME/.config/mpd/playlists" || mkdir -p "$HOME/.config/mpd/playlists" || {
+         printf "\\nWarning: Failed to create '~/.config/mpd/playlists'.\\n"
+      }
 
       # Keep alacritty from rereading its config file mid-copy
       mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml \
