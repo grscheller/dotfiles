@@ -1,9 +1,6 @@
 * {
     border: none;
     border-radius: 4px;
-    /* For icons install /usr/local/share/fonts/roboto-nerd-fonts
-     * from https://www.nerdfonts.com/font-downloads
-     */
     font-family: "Roboto Mono Bold Nerd Font Complete Mono", Roboto, Helvetica, Arial, sans-serif;
     font-size: 18px;
     min-height: 0;
@@ -144,23 +141,6 @@ label:focus {
 #idle_inhibitor.activated {
     background-color: rgba(149, 127, 184, 0.7);
     color: rgba(160, 177, 214, 1.0);
-}
-
-#mpd {
-    background-color: rgba(122, 168, 159, 1.0);
-    color: rgba(200, 192, 147, 1.0);
-}
-
-#mpd.disconnected {
-    background-color: rgba(195, 64, 67, 1.0);
-}
-
-#mpd.stopped {
-    background-color: rgba(127, 180, 202, 1.0);
-}
-
-#mpd.paused {
-    background-color: rgba(106, 149, 137, 1.0);
 }
 
 #language {
