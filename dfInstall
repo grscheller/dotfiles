@@ -11,11 +11,12 @@
 #  Systemd --user Services used
 #    - kanshi - Wayland daemon that automatically configures outputs
 #    - mako - Notification daemon for Wayland
+#    - mpd - Music daemon for linux
 #
 
 ### Usage
 
-usage='Usage: dfInstall [-c {install|repo|target}]'
+usage='Usage: dfInstall [-s {install|repo|target}]'
 
 ### Setup
 
@@ -179,14 +180,21 @@ RM_ITEMS="
    $XDG_CONFIG_HOME/nvim/.stylua.toml
 "
 
-### Argument parsing, last -c option wins, default is to install
+DIRS_TO_CREATE="
+   $HOME/catch
+   $HOME/.local/bin
+   $HOME/.cabal/bin
+   $XDG_CONFIG_HOME/mpd/playlists
+"
 
-check=install
-while getopts c: opt 2>&1
+### Argument parsing, last -s option wins, default is to install
+
+switch=install
+while getopts s: opt 2>&1
 do
    case "$opt" in
-      c)
-         check="$OPTARG"
+      s)
+         switch="$OPTARG"
          ;;
       \?)
          printf '\n%s\n' "$usage"
@@ -198,34 +206,56 @@ shift $((OPTIND - 1))
 
 if [ $# -gt 0 ]
 then
-   printf '\nError: dfInstall takes no arguments, just an option\n'
+   printf '\nError: dfInstall takes no arguments\n'
    printf '\n%s\n' "$usage"
    return 1
 fi
 
-if [ "$check" != install ] && \
-   [ "$check" != repo ] && \
-   [ "$check" != target ]
+if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != target ]
 then
+   printf '\nError: dfInstall -s given an invalid option argument\n'
    printf '\n%s\n' "$usage"
    return 1
 fi
 
 ### Functions
 
-## Function to removes files
+## Function to ensure directory exists
+ensure_dir () {
+   target_dir="$1"
+   check="$2"
+   case "$check" in
+      install)
+         test -d "$target_dir" || mkdir -p "$target_dir" 2>/dev/null || {
+            printf "\\nWarning: Failed to create '%s' directory\\n" "$target_dir"
+         }
+         ;;
+      repo)
+         :
+         ;;
+      target)
+         test -d "$target_dir" || {
+            printf "\\nTarget directory '%s' needs to be created.\\n" "$target_dir"
+         }
+         ;;
+   esac
+}
+
+## Function to check or remove files or directories
 remove_item () {
    item="$1"
+   check="$2"
    if [ -e "$item" ]
    then
       case "$check" in
          install)
-            # Remove the item
             rm -rf "$item"
             test -e "$item" && printf "\\nWarning: Failed to remove item '%s'\\n" "$item"
             ;;
+         repo)
+            :
+            ;;
          target)
-            # Item needs removing
             printf "\\nTarget '%s' needs removing.\\n" "$item"
             ;;
       esac
@@ -238,36 +268,38 @@ install_file () {
    file_path="$2"
    src_dir="$3"
    file_perm="$4"
+   check="$5"
    src="$src_dir/$file_path"
    src_abs="$DOTFILE_GIT_REPO${src#.}"
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
+   # Make sure target directory exists
+   ensure_dir "$trgt_dir" $check
+
    case "$check" in
       install)
-         # Make sure target directory exists
-         test -d "$trgt_dir" || mkdir -p "$trgt_dir" || \
-            printf "\\nWarning: Failed to create '%s' directory\\n" "$trgt_dir"
-
          # Install the file
          if cp "$src" "$trgt" >/dev/null 2>&1
          then
-            chmod --quiet "$file_perm" "$trgt" || \
+            chmod --quiet "$file_perm" "$trgt" || {
                printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
+            }
          else
             printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
          fi
          ;;
       repo)
          # Compare config (this script) with dotfile repo working directory
-         test -e "$src" || printf "\\n'%s' not in git working directory.\\n" "$src_abs"
+         test -e "$src" || {
+            printf "\\n'%s' not in the git repo working directory.\\n" "$src_abs"
+         }
          ;;
       target)
          # Compare config (this script) with install target
          if [ ! -e "$src" ] && [ ! -e "$trgt" ]
          then
-            printf "\\nBoth Target: '%s'\n and Source: '%s' don't exist.\\n" \
-            "$trgt" "$src_abs"
+            printf "\\nBoth Target: '%s'\n and Source: '%s' don't exist.\\n" "$trgt" "$src_abs"
          elif [ ! -e "$trgt" ]
          then
             printf "\\nTarget: '%s' doesn't exist.\\n" "$trgt"
@@ -275,9 +307,9 @@ install_file () {
          then
             printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
          else
-            diff "$src" "$trgt" >/dev/null 2>&1 || \
-               printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" \
-               "$trgt" "$src_abs"
+            diff "$src" "$trgt" >/dev/null 2>&1 || {
+               printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" "$trgt" "$src_abs"
+            }
          fi
          ;;
    esac
@@ -288,13 +320,13 @@ install_file () {
 ## Install home directory files
 for home_file in $HOME_FILES
 do
-   install_file "$HOME" "$home_file" ./home 0644
+   install_file "$HOME" "$home_file" ./home 0644 "$switch"
 done
 
 ## Install  ~/bin  scripts
 for bin_file in $BIN_SCRIPTS
 do
-   install_file "$HOME/bin" "$bin_file" ./home/bin 0755
+   install_file "$HOME/bin" "$bin_file" ./home/bin 0755 "$switch"
 done
 chmod 0755 "$HOME/bin"
 
@@ -303,67 +335,56 @@ chmod 0755 "$HOME/bin"
 # Install Bloop Configs for Scala
 for conf_file in $BLOOP_FILES
 do
-   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600
+   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600 "$switch"
 done
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal Configs for Haskell
 for conf_file in $CABAL_CONFIGS
 do
-   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644
+   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644 "$switch"
 done
 chmod 0755 "$HOME/.cabal"
 
 # Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
 do
-   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644
+   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 "$switch"
 done
 chmod 0755 "$HOME/.config"
 
 # Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
 for conf_file in $NVIM_TOML
 do
-   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644
+   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644 "$switch"
 done
 
 # Install SSH Configs
 for conf_file in $SSH_CONFIGS
 do
-   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600
+   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600 "$switch"
 done
 chmod 0700 "$HOME/.ssh"
 
 ### Some final tweaks, checks & cleanup
 
-case "$check" in
+# Create or report on missing directories
+for DIR in $DIRS_TO_CREATE
+do
+   ensure_dir "$DIR" "$switch"
+done
+
+case "$switch" in
    install)
       # Remove no longer needed files and directories
       for item in $RM_ITEMS
       do
-          remove_item "$item"
+         remove_item "$item" install
       done
 
-      # Create needed missing directories
-      test -d "$HOME/catch" || mkdir "$HOME/catch" || {
-         printf "\\nWarning: Failed to create '~/catch'.\\n"
-      }
-      test -d "$HOME/.local/bin" || mkdir -p "$HOME/.local/bin" || {
-         printf "\\nWarning: Failed to create '~/.local/bin'.\\n"
-      }
-      test -d "$HOME/.cabal/bin" || mkdir -p "$HOME/.cabal/bin" || {
-         printf "\\nWarning: Failed to create '~/.cabal/bin'.\\n"
-      }
-      test -d "$HOME/.config/mpd/playlists" || mkdir -p "$HOME/.config/mpd/playlists" || {
-         printf "\\nWarning: Failed to create '~/.config/mpd/playlists'.\\n"
-      }
-
       # Keep alacritty from rereading its config file mid-copy
-      mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml \
-         "$XDG_CONFIG_HOME"/alacritty/alacritty.yml
-
-      cp "$XDG_CONFIG_HOME"/alacritty/alacritty.yml \
-         "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml
+      mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml "$XDG_CONFIG_HOME"/alacritty/alacritty.yml
+      cp "$XDG_CONFIG_HOME"/alacritty/alacritty.yml "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml
 
       ## Setup sway output configuration
 
@@ -389,11 +410,6 @@ case "$check" in
       git status -s
       ;;
    target)
-      # Check for missing directories
-      test -d "$HOME/catch" || printf '\n%s does not exist.\n' "$HOME/catch/"
-      test -d "$HOME/.local/bin" || printf '\n%s does not exist.\n' "$HOME/.local/bin/"
-      test -d "$HOME/.cabal/bin" || printf '\n%s does not exist.\n' "$HOME/.cabal/bin/"
-
       # Check for no longer needed target files and directories
       for item in $RM_ITEMS
       do
