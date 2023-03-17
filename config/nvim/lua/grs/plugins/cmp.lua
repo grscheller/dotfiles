@@ -1,5 +1,11 @@
 --[[ Completions & Snippets ]]
 
+--[[
+
+    03/17/2023
+
+==]]
+
 local function cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
@@ -66,8 +72,6 @@ return {
             ['<tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item()
-               elseif luasnip.expand_or_locally_jumpable() then
-                  luasnip.expand_or_jump()
                elseif cursor_has_words_before_it() then
                   cmp.complete()
                else
@@ -77,8 +81,6 @@ return {
             ['<s-tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item()
-               elseif luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
                else
                   fallback()
                end
@@ -92,13 +94,6 @@ return {
             ['<c-f>'] = cmp.mapping(function(fallback)
                if luasnip.jumpable(1) then
                   luasnip.jump(1)
-               else
-                  fallback()
-               end
-            end),
-            ['<c-b>'] = cmp.mapping(function(fallback)
-               if luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
                else
                   fallback()
                end
@@ -175,7 +170,6 @@ return {
                   { name = 'nvim_lsp_signature_help' },
                   { name = 'nvim_lsp' },
                   { name = 'nvim_lua' },
-                  { name = 'luasnip' },
                },
                {
                   {
