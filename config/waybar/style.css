@@ -9,7 +9,7 @@
 window#waybar {
     background-color: #090618;
     border-bottom: 2px solid #223249;
-    color: #a0b1d6;
+    color: #d7e3d8;
     transition-property: background-color;
     transition-duration: .5s;
     border-radius: 0;
@@ -26,19 +26,18 @@ window#waybar.hidden {
 #workspaces button {
     padding: 0.2em 0.4em;
     background-color: transparent;
-    color: #a0b1d6;
-    /* Use box-shadow instead of border so the text isn't offset */
+    color: #d7e3d8;
     box-shadow: inset 0 -2px transparent;
 }
 
 #workspaces button:hover {
-    background: #4a3f5b;
-    box-shadow: inset 0 -2px #7fb4ca;
+    background: #252535;
+    box-shadow: inset 0 -2px #2d4f67;
 }
 
 #workspaces button.focused {
-    background-color: #4a3f5b;
-    box-shadow: inset 0 -2px #7e9cd8;
+    background-color: #252535;
+    box-shadow: inset 0 -2px #2d4f67;
 }
 
 #workspaces button.urgent {
@@ -61,8 +60,8 @@ window#waybar.hidden {
 #mpd {
     padding: 0 10px;
     margin: 6px 3px;
-    color: #a0b1d6;
-    background-color: #4a3f5b;
+    color: #d7e3d8;
+    background-color: #252535;
 }
 
 #window,

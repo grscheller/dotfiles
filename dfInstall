@@ -159,6 +159,7 @@ CONFIG_FILES='
    waybar/config
    waybar/style.css
    wofi/config
+   wofi/style.css
 '
 
 NVIM_TOML='

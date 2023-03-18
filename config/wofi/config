@@ -4,3 +4,4 @@ allow_images=true
 allow_markup=true
 term=/usr/bin/alacritty
 gtk-dark=true
+columns=3

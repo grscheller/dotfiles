@@ -174,8 +174,8 @@ default_border pixel 2
 smart_borders off
 smart_gaps off
 default_floating_border pixel 2
-client.focused "#54546d" "#54546d" "#dcd7ba" "#658594" "#54546d"
-client.focused_inactive "#2d4f67" "#2d4f67" "#c8c083" "#2d4f67" "#2d4f67"
+client.focused "#2d4f67" "#2d4f67" "#dcd7ba" "#658594" "#54546d"
+client.focused_inactive "#54546d" "#54546d" "#c8c083" "#54546d" "#54546d"
 client.unfocused "#223249" "#223249" "#727169" "#223249" "#223249"
 
 ### Screen locking & idle configuration
