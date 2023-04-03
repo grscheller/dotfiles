@@ -23,6 +23,10 @@ return {
             { name = 'telescope' },
             { prefix = ' t' }
          )
+         wk.register(
+            { name = 'mason' },
+            { prefix = ' m' }
+         )
       end,
    }
 
