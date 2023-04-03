@@ -50,7 +50,7 @@ return {
          {
             '<leader>mu',
             '<cmd>MasonToolsUpdate<cr>',
-            desc = 'Mason Tools Installer',
+            desc = 'Mason Tools Update',
          },
       },
       config = function()

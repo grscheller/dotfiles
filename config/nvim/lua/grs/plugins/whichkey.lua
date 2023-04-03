@@ -16,16 +16,20 @@ return {
             }
          }
          wk.register(
+            { name = 'lazy' },
+            { prefix = ' l' }
+         )
+         wk.register(
             { name = 'system clipboard'},
             { mode = { 'n', 'x'}, prefix = ' s' }
          )
          wk.register(
-            { name = 'telescope' },
-            { prefix = ' t' }
-         )
-         wk.register(
             { name = 'mason' },
             { prefix = ' m' }
+         )
+         wk.register(
+            { name = 'telescope' },
+            { prefix = ' t' }
          )
       end,
    }

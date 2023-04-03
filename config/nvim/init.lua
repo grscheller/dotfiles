@@ -59,6 +59,6 @@ local opts = {
       },
    },
 }
-require('lazy').setup('grs.plugins', opts)
 
-vim.keymap.set('n', '<leader>L', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+require('lazy').setup('grs.plugins', opts)
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
