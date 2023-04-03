@@ -7,14 +7,23 @@ return {
       version = false,
       event = { "BufReadPre", "BufNewFile" },
       dependencies = {
-         { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-         { 'folke/neodev.nvim', opts = { experimental = { pathStrict = true } } },
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'mfussenegger/nvim-dap',
          'jose-elias-alvarez/null-ls.nvim',
          'simrat39/rust-tools.nvim',
          'scalameta/nvim-metals',
+         {
+            'folke/neoconf.nvim',
+            cmd = 'Neoconf',
+            config = true
+         },
+         {
+            'folke/neodev.nvim',
+            opts = {
+               experimental = { pathStrict = true }
+            }
+         },
       },
       config = function()
          local keymaps = require 'grs.config.keymaps'
@@ -155,6 +164,6 @@ return {
             })
          end
       end,
-   }
+   },
 
 }
