@@ -17,19 +17,19 @@ return {
          }
          wk.register(
             { name = 'lazy' },
-            { prefix = ' l' }
+            { prefix = '<leader>l' }
          )
          wk.register(
             { name = 'system clipboard'},
-            { mode = { 'n', 'x'}, prefix = ' s' }
+            { mode = { 'n', 'x'}, prefix = '<leader>s' }
          )
          wk.register(
             { name = 'mason' },
-            { prefix = ' m' }
+            { prefix = '<leader>m' }
          )
          wk.register(
             { name = 'telescope' },
-            { prefix = ' t' }
+            { prefix = '<leader>t' }
          )
       end,
    }

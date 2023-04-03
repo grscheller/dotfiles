@@ -1,5 +1,6 @@
 --[[ GRS Neovim Configuration - using lazy.nvim without LazyVim ]]
 
+-- Set leader keys once and for all
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -16,9 +17,9 @@ if not vim.loop.fs_stat(lazypath) then
    }
 end
 
+-- lazy.nvim configuration , see :h lazy.nvim-lazy.nvim-configuration
 vim.opt.rtp:prepend(lazypath)
 
--- Setup lazy.nvim, see :h lazy.nvim-lazy.nvim-configuration
 local opts = {
    defaults = { lazy = true, version = '*' },
    git = {
@@ -60,5 +61,5 @@ local opts = {
    },
 }
 
+-- Let lazy.nvim take control
 require('lazy').setup('grs.plugins', opts)
-vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })

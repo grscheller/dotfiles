@@ -5,6 +5,25 @@
 local M = {}
 local km = vim.keymap.set
 
+--[[ Plugin related keymaps ]]
+
+-- Lazy gui
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+
+-- Telescope related keymaps
+km('n', '<leader>tt', '<cmd>Telescope<cr>', {
+   noremap = true,
+   silent = true,
+   desc = 'Telescope',
+})
+
+-- Treesitter related keymaps
+km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
+   noremap = true,
+   silent = true,
+   desc = 'toggle treesitter',
+})
+
 --[[ Window/Tabpage related mappings/bindings ]]
 
 -- Navigating windows
@@ -150,20 +169,6 @@ km('n', '<leader>b', '<cmd>enew<cr>', {
    desc = 'new unnamed buffer',
 })
 
--- Treesitter related keymaps
-km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'toggle treesitter',
-})
-
--- Telescope related keymaps
-km('n', ' tt', '<cmd>Telescope<cr>', {
-   noremap = true,
-   silent = true,
-   desc = 'Telescope',
-})
-
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', {
    noremap = true,
@@ -183,7 +188,8 @@ km('n', '<leader>u', 'a<c-v>u', {
    desc = 'enter unicode code point in hex',
 })
 
--- LSP related keymaps
+--[[ LSP related keymaps ]]
+
 km('n', 'zd', vim.diagnostic.setloclist, {
    noremap = true,
    silent = true,
@@ -318,7 +324,8 @@ function M.metals_km(bufnr, metals)
    })
 end
 
--- DAP (Debug Adapter Protocol) related kemaps
+--[[ DAP (Debug Adapter Protocol) related kemaps ]]
+
 function M.dap_km(bufnr, dap, dap_ui_widgets)
    require('which-key').register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
 

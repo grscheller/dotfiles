@@ -90,7 +90,7 @@ return {
       cmd = 'Telescope',
       keys = {
          {
-            ' tb',
+            '<leader>tb',
             function()
                require 'telescope'
                require('telescope.builtin').buffers()
@@ -98,7 +98,7 @@ return {
             desc = 'list buffers',
          },
          {
-            ' td',
+            '<leader>td',
             function()
                require 'telescope'
                require('telescope.builtin').grep_string()
@@ -106,14 +106,14 @@ return {
             desc = 'grep files in dir',
          },
          {
-            ' tf', function()
+            '<leader>tf', function()
                require 'telescope'
                require('telescope.builtin').find_files()
             end,
             desc = 'find files',
          },
          {
-            ' tg',
+            '<leader>tg',
             function()
                require 'telescope'
                require('telescope.builtin').live_grep()
@@ -121,7 +121,7 @@ return {
             desc = 'live grep',
          },
          {
-            ' th',
+            '<leader>th',
             function()
                require 'telescope'
                require('telescope.builtin').help_tags()
@@ -129,14 +129,14 @@ return {
             desc = 'help tags',
          },
          {
-            ' tq',
+            '<leader>tq',
             function()
                require('telescope').extensions.frecency.frecency()
             end,
             desc = 'frecency',
          },
          {
-            ' tr',
+            '<leader>tr',
             function()
                require 'telescope'
                require('telescope.builtin').oldfiles()
@@ -144,7 +144,7 @@ return {
             desc = 'recent files',
          },
          {
-            ' tz',
+            '<leader>tz',
             function()
                require 'telescope'
                require('telescope.builtin').current_buffer_fuzzy_find()
@@ -161,7 +161,7 @@ return {
       },
       keys = {
          {
-            ' tB',
+            '<leader>tB',
             function()
                local telescope = require('telescope')
                telescope.load_extension 'file_browser'
@@ -180,7 +180,7 @@ return {
       },
       keys = {
          {
-            ' tl',
+            '<leader>tl',
             function()
                local telescope = require('telescope')
                telescope.load_extension 'lazy'
