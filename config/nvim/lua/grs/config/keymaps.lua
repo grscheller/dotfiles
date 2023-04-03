@@ -150,21 +150,28 @@ km('n', '<leader>b', '<cmd>enew<cr>', {
    desc = 'new unnamed buffer',
 })
 
--- treesitter related keymaps
+-- Treesitter related keymaps
 km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
    noremap = true,
    silent = true,
    desc = 'toggle treesitter',
 })
 
--- spelling related keymaps
+-- Telescope related keymaps
+km('n', ' tt', '<cmd>Telescope<cr>', {
+   noremap = true,
+   silent = true,
+   desc = 'Telescope',
+})
+
+-- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', {
    noremap = true,
    silent = true,
    desc = 'toggle spelling',
 })
 
--- character related keymaps
+-- Character related keymaps
 km('n', '<leader>K', '<cmd>dig<cr>a<c-k>', {
    noremap = true,
    silent = true,
@@ -176,7 +183,7 @@ km('n', '<leader>u', 'a<c-v>u', {
    desc = 'enter unicode code point in hex',
 })
 
---LSP related keymaps
+-- LSP related keymaps
 km('n', 'zd', vim.diagnostic.setloclist, {
    noremap = true,
    silent = true,

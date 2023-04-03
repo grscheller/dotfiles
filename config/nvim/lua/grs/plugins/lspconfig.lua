@@ -4,6 +4,7 @@ return {
 
    {
       'neovim/nvim-lspconfig',
+      version = false,
       event = { "BufReadPre", "BufNewFile" },
       dependencies = {
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
@@ -34,8 +35,8 @@ return {
          -- other development environment configurations.
 
          --[[ Lua Configuration - affected by neodev.nvim ]]
-         if LspTbl.system.sumneko_lua == m.man or LspTbl.mason.sumneko_lua == m.man then
-            lspconf['sumneko_lua'].setup {
+         if LspTbl.system.lua_ls == m.man or LspTbl.mason.lua_ls == m.man then
+            lspconf['lua_ls'].setup {
                capabilities = capabilities,
                on_attach = function(client, bufnr)
                   keymaps.lsp_km(client, bufnr)

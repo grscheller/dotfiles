@@ -1,22 +1,28 @@
---[[ Load globals & options before plugins. Load autocmds & keymaps later. ]]
+--[[ Initial configurations
+
+       Load globals & options before plugins.
+       Load autocmds & keymaps later.
+
+--]]
 
 local function load(mod)
-   local Util = require('lazy.core.util')
+   local Util = require 'lazy.core.util'
    -- always load lazyvim, then user file
    Util.try(function()
-         require(mod)
-      end, {
-	 msg = 'Failed loading ' .. mod,
-         on_error = function(msg)
-            local modpath = require('lazy.core.cache').find(mod)
-            if modpath then
-               Util.error(msg)
-            end
-         end,
-      })
+      require(mod)
+   end, {
+      msg = 'Failed loading ' .. mod,
+      on_error = function(msg)
+         local modpath = require('lazy.core.cache').find(mod)
+         if modpath then
+            Util.error(msg)
+         end
+      end,
+   })
 end
 
--- Load globals & options here, before lazy init, while sourcing plugin modules.
+-- Load globals & options here, before lazy init,
+-- while still sourcing plugin modules.
 load 'grs.config.globals'
 load 'grs.config.options'
 

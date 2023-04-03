@@ -21,7 +21,7 @@ local m = M.MasonEnum
 -- Mason package names.  In system table, anything not either m.auto or m.man is just informational.
 M.LspTbl = {
    mason = {
-      groovyls = m.ignore,
+      groovyls = m.auto,
       html = m.auto,
       jsonls = m.auto,
       marksman = m.auto,
@@ -36,7 +36,7 @@ M.LspTbl = {
       rust_analyzer = m.install,
       rust_tools = m.man,         -- will directly use lspconfig and dap
       scala_metals = m.man,       -- will directly use lspconfig and dap
-      sumneko_lua = m.man,
+      lua_ls = m.man,
       taplo = m.auto,
       yamlls = m.auto,
    },
@@ -81,7 +81,9 @@ M.BuiltinTbls = {
       },
    },
    formatting = {
-      mason = {},
+      mason = {
+         lua_format = m.auto,
+      },
       system = {
          stylua = m.auto,
       },
