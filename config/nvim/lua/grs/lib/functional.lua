@@ -1,8 +1,6 @@
---[[ Utility functions ]]
+--[[ Functional Programming for Lua ]]
 
 local M = {}
-
---[[ Functional Programming for Lua ]]
 
 -- Flatten an array of arrays - no error checks (should JIT compile well)
 M.iFlatten = function(ArrayOfArrays)

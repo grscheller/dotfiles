@@ -19,7 +19,6 @@ M.ensure_installed = {
    'gitignore',
    'go',
    'haskell',
-   'help',
    'html',
    'java',
    'javascript',
@@ -46,6 +45,7 @@ M.ensure_installed = {
    'tsx',
    'typescript',
    'vim',
+   'vimdoc',
    'yaml',
    'zig',
 }

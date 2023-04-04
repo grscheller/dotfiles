@@ -5,32 +5,30 @@ return {
    {
       'neovim/nvim-lspconfig',
       version = false,
-      event = { "BufReadPre", "BufNewFile" },
+      event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'mfussenegger/nvim-dap',
          'jose-elias-alvarez/null-ls.nvim',
-         'simrat39/rust-tools.nvim',
-         'scalameta/nvim-metals',
          {
             'folke/neoconf.nvim',
             cmd = 'Neoconf',
-            config = true
+            config = true,
          },
          {
             'folke/neodev.nvim',
             opts = {
-               experimental = { pathStrict = true }
-            }
+               experimental = { pathStrict = true },
+            },
          },
       },
       config = function()
          local keymaps = require 'grs.config.keymaps'
          local confMason = require 'grs.config.mason'
-         local utilLspconfig = require 'grs.plugins.util.lspconfig'
-         local utilDap = require 'grs.plugins.util.dap'
-         local utilNullLs = require 'grs.plugins.util.nullLs'
+         local utilLspconfig = require 'grs.util.lspconfig'
+         local utilDap = require 'grs.util.dap'
+         local utilNullLs = require 'grs.util.nullLs'
 
          local m = confMason.MasonEnum
          local LspTbl = confMason.LspTbl
@@ -166,4 +164,6 @@ return {
       end,
    },
 
+         'simrat39/rust-tools.nvim',
+         'scalameta/nvim-metals',
 }

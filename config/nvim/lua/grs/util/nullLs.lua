@@ -1,14 +1,13 @@
 --[[ Null-ls Infrastructure & Boilerplate ]]
-
 local M = {}
 
 local confMason = require 'grs.config.mason'
 local BuiltinTbls = confMason.BuiltinTbls
 local m = confMason.MasonEnum
 
-local util = require 'grs.util'
-local iFlatten = util.iFlatten
-local getFilteredKeys = util.getFilteredKeys
+local func = require 'grs.lib.functional'
+local iFlatten = func.iFlatten
+local getFilteredKeys = func.getFilteredKeys
 
 M.setup = function()
    local configure = function(_, v)
@@ -38,6 +37,7 @@ M.setup = function()
    }
 
    local null_ls = require 'null-ls'
+
    local sources = {}
    for key, list in pairs(builtins) do
       for _, builtin in ipairs(list) do
@@ -45,9 +45,7 @@ M.setup = function()
       end
    end
 
-   null_ls.setup {
-      sources = sources,
-   }
+   null_ls.setup { sources = sources }
 end
 
 return M

@@ -134,10 +134,7 @@ CONFIG_FILES='
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
    nvim/lua/grs/config/treesitter.lua
-   nvim/lua/grs/plugins/util/dap.lua
-   nvim/lua/grs/plugins/util/lspconfig.lua
-   nvim/lua/grs/plugins/util/mason.lua
-   nvim/lua/grs/plugins/util/nullLs.lua
+   nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/plugins/config.lua
    nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/early.lua
@@ -148,7 +145,10 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/treesitter.lua
    nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/whichkey.lua
-   nvim/lua/grs/util.lua
+   nvim/lua/grs/util/dap.lua
+   nvim/lua/grs/util/lspconfig.lua
+   nvim/lua/grs/util/mason.lua
+   nvim/lua/grs/util/nullLs.lua
    nvim/init.lua
    sway/config
    sway/config_bg_color
@@ -176,9 +176,8 @@ RM_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/fish/functions/lbry.fish
-   $XDG_CONFIG_HOME/nvim/.luarc.json
-   $XDG_CONFIG_HOME/nvim/.stylua.toml
+   $XDG_CONFIG_HOME/nvim/lua/grs/util.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/util
 "
 
 DIRS_TO_CREATE="

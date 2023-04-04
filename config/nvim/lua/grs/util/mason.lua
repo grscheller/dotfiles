@@ -2,7 +2,7 @@
 
      Chore: Periodically update these next three tables,
      LspconfigToMasonPackage, DapToMasonPackage, and NullLsToMasonPackage,
-     from these next three GitHub repos respectively:
+     from these GitHub repos respectively:
 
         williamboman/mason-lspconfig.nvim/blob/main/lua/mason-lspconfig/mappings/server.lua
         jay-babu/mason-nvim-dap.nvim/blob/main/lua/mason-nvim-dap/mappings/source.lua
@@ -197,9 +197,9 @@ end
 
 setmetatable(BuiltinsToMasonPackage, BuiltinsToMasonPackageMT)
 
-local util = require 'grs.util'
-local iFlatten = util.iFlatten
-local getFilteredKeys = util.getFilteredKeys
+local func = require 'grs.lib.functional'
+local iFlatten = func.iFlatten
+local getFilteredKeys = func.getFilteredKeys
 
 local function convertToMasonPkgs(names, package_names)
    local mason_names = {}

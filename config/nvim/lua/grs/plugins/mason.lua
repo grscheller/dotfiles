@@ -6,13 +6,15 @@ local LspTbl = confMason.LspTbl
 local DapTbl = confMason.DapTbl
 local BuiltinTbls = confMason.BuiltinTbls
 
-local utilMason = require 'grs.plugins.util.mason'
+local utilMason = require 'grs.util.mason'
+
+local iFlatten = require('grs.lib.functional').iFlatten
 
 local install = function(_, v)
    return v ~= m.ignore
 end
 
-local masonPackages = require('grs.util').iFlatten {
+local masonPackages = iFlatten {
    utilMason.lspconfig2mason(LspTbl, install),
    utilMason.dap2mason(DapTbl, install),
    utilMason.nullLs2mason(BuiltinTbls.code_actions, install),
@@ -54,7 +56,8 @@ return {
          },
       },
       config = function()
-         -- Give mason-tool-installer feedback
+
+         --[[ Give user some mason-tool-installer feedback ]]
          local grs_mason_group = vim.api.nvim_create_augroup('grs_mason', {})
 
          vim.api.nvim_create_autocmd('User', {
@@ -79,7 +82,7 @@ return {
             desc = 'Give feedback when Mason tools are finished updating',
          })
 
-         -- Configure mason-tool-installer
+         --[[ Configure mason-tool-installer ]]
          require('mason-tool-installer').setup {
             ensure_installed = masonPackages,
             auto_update = false,
@@ -87,6 +90,7 @@ return {
             start_delay = 3000, -- 3 second delay
             debounce_hours = 5, -- at least 5 hour between attemps
          }
+
       end,
    },
 }

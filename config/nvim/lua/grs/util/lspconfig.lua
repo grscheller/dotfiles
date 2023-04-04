@@ -3,7 +3,7 @@
 local M = {}
 
 local confMason = require 'grs.config.mason'
-local utilMason = require 'grs.plugins.util.mason'
+local utilMason = require 'grs.util.mason'
 local lsp_km = require('grs.config.keymaps').lsp_km
 local LspTbl = confMason.LspTbl
 local m = confMason.MasonEnum
