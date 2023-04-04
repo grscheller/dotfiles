@@ -33,8 +33,9 @@ return {
       cmd = 'Mason',
       keys = { { '<leader>mm', '<cmd>Mason<cr>', desc = 'Mason' } },
       opts = { ensure_installed = masonPackages },
-   }, -- Install & update Mason packages on neovim startup
+   },
 
+   -- Install & update Mason packages on neovim startup
    {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       event = 'VeryLazy',

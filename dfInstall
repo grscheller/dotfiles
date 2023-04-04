@@ -137,16 +137,16 @@ CONFIG_FILES='
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/plugins/config.lua
    nvim/lua/grs/plugins/cmp.lua
-   nvim/lua/grs/plugins/early.lua
+   nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/lazy.lua
-   nvim/lua/grs/plugins/lspconfig.lua
+   nvim/lua/grs/plugins/lsp.lua
    nvim/lua/grs/plugins/telescope.lua
    nvim/lua/grs/plugins/textedit.lua
    nvim/lua/grs/plugins/treesitter.lua
    nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/whichkey.lua
    nvim/lua/grs/util/dap.lua
-   nvim/lua/grs/util/lspconfig.lua
+   nvim/lua/grs/util/lsp.lua
    nvim/lua/grs/util/mason.lua
    nvim/lua/grs/util/nullLs.lua
    nvim/init.lua
@@ -178,6 +178,9 @@ RM_ITEMS="
    $HOME/.mako
    $XDG_CONFIG_HOME/nvim/lua/grs/util.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/util
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lspconfig.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/util/lspconfig.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/early.lua
 "
 
 DIRS_TO_CREATE="

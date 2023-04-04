@@ -66,7 +66,7 @@ return {
    -- Colorize color names, hexcodes, and other color formats
    {
       'norcalli/nvim-colorizer.lua',
-      event = "VeryLazy",
+      event = { 'BufReadPre', 'BufNewFile' },
       opts = {
          '*',
          css = { rgb_fn = true },

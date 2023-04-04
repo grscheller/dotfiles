@@ -26,7 +26,7 @@ return {
       config = function()
          local keymaps = require 'grs.config.keymaps'
          local confMason = require 'grs.config.mason'
-         local utilLspconfig = require 'grs.util.lspconfig'
+         local utilLsp = require 'grs.util.lsp'
          local utilDap = require 'grs.util.dap'
          local utilNullLs = require 'grs.util.nullLs'
 
@@ -34,7 +34,7 @@ return {
          local LspTbl = confMason.LspTbl
 
          -- Initialize LSP, DAP & Null-ls & auto-configure servers & builtins
-         local lspconf, capabilities = utilLspconfig.setup()
+         local lspconf, capabilities = utilLsp.setup()
          local dap, dap_ui_widgets = utilDap.setup()
          utilNullLs.setup()
 
