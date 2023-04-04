@@ -131,7 +131,12 @@ km({ 'n', 'x' }, '<leader>sc', '"+c', {
 km({ 'n', 'x' }, '<leader>sp', '"+p', {
    noremap = true,
    silent = true,
-   desc = 'paste from system clipboard',
+   desc = 'paste after cursor from system clipboard',
+})
+km({ 'n', 'x' }, '<leader>sP', '"+P', {
+   noremap = true,
+   silent = true,
+   desc = 'paste before cursor from system clipboard',
 })
 
 -- Shift line and reselect
