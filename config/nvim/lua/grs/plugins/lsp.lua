@@ -39,7 +39,9 @@ return {
          for _, lspServer in ipairs(utilMason.serverList(LspTbl, m.auto)) do
             lspconf[lspServer].setup {
                capabilities = capabilities,
-               on_attach = km.lsp_km,
+               on_attach = function(_, bufnr)
+                  km.lsp_km(bufnr)
+               end,
             }
          end
 
