@@ -1,5 +1,14 @@
 --[[ Software Development Tooling ]]
 
+local km = require 'grs.config.keymaps'
+local confMason = require 'grs.config.mason'
+local utilMason = require 'grs.util.mason'
+
+local LspTbl = confMason.LspTbl
+local m = confMason.MasonEnum
+
+local grs_metals = {}
+
 return {
 
    {
@@ -9,7 +18,6 @@ return {
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
-         'mfussenegger/nvim-dap',
          'jose-elias-alvarez/null-ls.nvim',
          {
             'folke/neoconf.nvim',
@@ -23,20 +31,20 @@ return {
             },
          },
       },
-      config = function()
-         local keymaps = require 'grs.config.keymaps'
-         local confMason = require 'grs.config.mason'
-         local utilLsp = require 'grs.util.lsp'
-         local utilDap = require 'grs.util.dap'
-         local utilNullLs = require 'grs.util.nullLs'
+      config = function()  -- Initialize LSP servers & Null-ls builtins
+         local lspconf = require 'lspconfig'
+         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-         local m = confMason.MasonEnum
-         local LspTbl = confMason.LspTbl
+         -- Add LSP serves we are letting lspconfig automatically configure
+         for _, lspServer in ipairs(utilMason.serverList(LspTbl, m.auto)) do
+            lspconf[lspServer].setup {
+               capabilities = capabilities,
+               on_attach = km.lsp_km,
+            }
+         end
 
-         -- Initialize LSP, DAP & Null-ls & auto-configure servers & builtins
-         local lspconf, capabilities = utilLsp.setup()
-         local dap, dap_ui_widgets = utilDap.setup()
-         utilNullLs.setup()
+         -- Initialize Null-ls builtins
+         require('grs.util.nullLs').setup()
 
          -- Manual LSP, DAP, and Null-ls configurations as well as
          -- other development environment configurations.
@@ -46,7 +54,7 @@ return {
             lspconf['lua_ls'].setup {
                capabilities = capabilities,
                on_attach = function(client, bufnr)
-                  keymaps.lsp_km(client, bufnr)
+                  km.lsp_km(client, bufnr)
                end,
                settings = {
                   Lua = {
@@ -65,105 +73,125 @@ return {
                capabilities = capabilities,
                filetypes = { 'haskell', 'lhaskell', 'cabal' },
                on_attach = function(client, bufnr)
-                  keymaps.lsp_km(client, bufnr)
-                  keymaps.haskell_km(bufnr)
+                  km.lsp_km(client, bufnr)
+                  km.haskell_km(bufnr)
                end,
             }
          end
 
-         --[[ Rust-Tools directly configures lspconfig
-
-              Following: https://github.com/simrat39/rust-tools.nvim
-                         https://github.com/sharksforarms/neovim-rust
-         --]]
-         if LspTbl.system.rust_tools == m.man then
-            local rust_tools = require 'rust-tools'
-            dap.configurations.rust = {
-               {
-                  type = 'rust',
-                  request = 'launch',
-                  name = 'rt_lldb',
-               },
-            }
-            rust_tools.setup {
-               runnables = {
-                  use_telescope = true,
-               },
-               server = {
-                  capabilities = capabilities,
-                  on_attach = function(client, bufnr)
-                     keymaps.lsp_km(client, bufnr)
-                     keymaps.dap_km(bufnr, dap, dap_ui_widgets)
-                  end,
-                  standalone = true,
-               },
-               dap = {
-                  adapter = {
-                     type = 'executable',
-                     command = 'lldb-vscode',
-                     name = 'rt_lldb',
-                  },
-               },
-            }
-         end
-
-         --[[ Scala Metals directly configures lspconfig
-
-              Latest Metals Server: https://scalameta.org/metals/docs
-              Following: https://github.com/scalameta/nvim-metals/discussions/39
-                         https://github.com/scalameta/nvim-metals/discussions/279
-
-         --]]
-         if LspTbl.system.scala_metals == m.man then
-            local metals = require 'metals'
-            local metals_config = metals.bare_config()
-
-            metals_config.settings = {
-               showImplicitArguments = true,
-               serverVersion = '0.11.11',
-            }
-            metals_config.capabilities = capabilities
-            metals_config.init_options.statusBarProvider = 'on'
-
-            function metals_config.on_attach(client, bufnr)
-               dap.configurations.scala = {
-                  {
-                     type = 'scala',
-                     request = 'launch',
-                     name = 'RunOrTest',
-                     metals = {
-                        runType = 'runOrTestFile',
-                        --args = { 'firstArg', 'secondArg, ...' }
-                     },
-                  },
-                  {
-                     type = 'scala',
-                     request = 'launch',
-                     name = 'Test Target',
-                     metals = {
-                        runType = 'testTarget',
-                     },
-                  },
-               }
-               metals.setup_dap()
-               keymaps.lsp_km(client, bufnr)
-               keymaps.metals_km(bufnr, metals)
-               keymaps.dap_km(bufnr, dap, dap_ui_widgets)
-            end
-
-            local scala_metals_group = vim.api.nvim_create_augroup('scala-metals', { clear = true })
-
-            vim.api.nvim_create_autocmd('FileType', {
-               pattern = { 'scala', 'sbt' },
-               callback = function()
-                  metals.initialize_or_attach(metals_config)
-               end,
-               group = scala_metals_group,
-            })
-         end
       end,
    },
 
-         'simrat39/rust-tools.nvim',
-         'scalameta/nvim-metals',
+   {
+      -- Rust-Tools directly configures lspconfig
+      --
+      --    Following: https://github.com/simrat39/rust-tools.nvim
+      --               https://github.com/sharksforarms/neovim-rust
+      --
+      'simrat39/rust-tools.nvim',
+      dependencies = {
+         'hrsh7th/cmp-nvim-lsp',
+         'mfussenegger/nvim-dap',
+         'neovim/nvim-lspconfig',
+         'nvim-lua/plenary.nvim',
+      },
+      enabled = LspTbl.system.rust_tools == m.man,
+      event = { 'BufReadPre', 'BufNewFile' },  -- TODO: change to FT
+      config = function()
+         local dap = require 'dap'
+         local dap_ui_widgets = require 'dap.ui.widgets'
+         dap.configurations.rust = {
+            {
+               type = 'rust',
+               request = 'launch',
+               name = 'rt_lldb',
+            },
+         }
+         require('rust-tools').setup {
+            runnables = {
+               use_telescope = true,
+            },
+            server = {
+               capabilities = require('cmp_nvim_lsp').default_capabilities(),
+               on_attach = function(client, bufnr)
+                  km.lsp_km(client, bufnr)
+                  km.dap_km(bufnr, dap, dap_ui_widgets)
+               end,
+               standalone = true,
+            },
+            dap = {
+               adapter = {
+                  type = 'executable',
+                  command = 'lldb-vscode',
+                  name = 'rt_lldb',
+               },
+            },
+         }
+      end
+   },
+
+   {
+      -- Scala Metals directly configures lspconfig
+      --    Latest Metals Server: https://scalameta.org/metals/docs
+      --    Following: https://github.com/scalameta/nvim-metals/discussions/39
+      --               https://github.com/scalameta/nvim-metals/discussions/279
+      'scalameta/nvim-metals',
+      dependencies = {
+         'hrsh7th/cmp-nvim-lsp',
+         'mfussenegger/nvim-dap',
+         'neovim/nvim-lspconfig',
+         'nvim-lua/plenary.nvim',
+      },
+      enabled = LspTbl.system.scala_metals == m.man,
+      ft = { 'scala', 'sbt' },
+      init = function()
+         vim.api.nvim_create_autocmd('FileType', {
+            pattern = { 'scala', 'sbt' },
+            callback = function()
+               grs_metals.metals.initialize_or_attach(grs_metals.config)
+            end,
+            group = vim.api.nvim_create_augroup('grs_scala_metals', {
+               clear = true
+            })
+         })
+      end,
+      config = function()
+         grs_metals.metals = require 'metals'
+         grs_metals.config = grs_metals.metals.bare_config()
+         grs_metals.config.settings = {
+            showImplicitArguments = true,
+            serverVersion = '0.11.11',
+         }
+         grs_metals.config.capabilities = require('cmp_nvim_lsp').default_capabilities()
+         grs_metals.config.init_options.statusBarProvider = 'on'
+
+         local dap = require 'dap'
+         local dap_ui_widgets = require 'dap.ui.widgets'
+         dap.configurations.scala = {
+            {
+               type = 'scala',
+               request = 'launch',
+               name = 'RunOrTest',
+               metals = {
+                  runType = 'runOrTestFile',
+                  --args = { 'firstArg', 'secondArg, ...' }
+               },
+            },
+            {
+               type = 'scala',
+               request = 'launch',
+               name = 'Test Target',
+               metals = {
+                  runType = 'testTarget',
+               },
+            },
+         }
+         function grs_metals.config.on_attach(client, bufnr)
+            grs_metals.metals.setup_dap()
+            km.lsp_km(client, bufnr)
+            km.metals_km(bufnr, grs_metals.metals)
+            km.dap_km(bufnr, dap, dap_ui_widgets)
+         end
+      end,
+   },
 }

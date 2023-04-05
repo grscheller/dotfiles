@@ -34,8 +34,8 @@ M.LspTbl = {
       hls = m.man,
       pyright = m.auto,
       rust_analyzer = m.install,
-      rust_tools = m.man,         -- will directly use lspconfig and dap
-      scala_metals = m.man,       -- will directly use lspconfig and dap
+      rust_tools = m.ignore,   -- will directly use lspconfig and dap
+      scala_metals = m.man,    -- will directly use lspconfig and dap
       lua_ls = m.man,
       taplo = m.auto,
       yamlls = m.auto,
@@ -51,10 +51,7 @@ M.DapTbl = {
       bash = m.install,
       cppdbg = m.install,
    },
-   system = {
-      rust_tools = m.man,
-      scala_metals = m.man,
-   },
+   system = {},
 }
 
 M.BuiltinTbls = {
