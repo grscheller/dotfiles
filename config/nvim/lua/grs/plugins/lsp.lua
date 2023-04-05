@@ -53,8 +53,8 @@ return {
          if LspTbl.system.lua_ls == m.man or LspTbl.mason.lua_ls == m.man then
             lspconf['lua_ls'].setup {
                capabilities = capabilities,
-               on_attach = function(client, bufnr)
-                  km.lsp_km(client, bufnr)
+               on_attach = function(_, bufnr)
+                  km.lsp_km(bufnr)
                end,
                settings = {
                   Lua = {
@@ -72,8 +72,8 @@ return {
             lspconf['hls'].setup {
                capabilities = capabilities,
                filetypes = { 'haskell', 'lhaskell', 'cabal' },
-               on_attach = function(client, bufnr)
-                  km.lsp_km(client, bufnr)
+               on_attach = function(_, bufnr)
+                  km.lsp_km(bufnr)
                   km.haskell_km(bufnr)
                end,
             }
@@ -108,23 +108,12 @@ return {
             },
          }
          require('rust-tools').setup {
-            runnables = {
-               use_telescope = true,
-            },
             server = {
                capabilities = require('cmp_nvim_lsp').default_capabilities(),
-               on_attach = function(client, bufnr)
-                  km.lsp_km(client, bufnr)
+               on_attach = function(_, bufnr)
+                  km.lsp_km(bufnr)
                   km.dap_km(bufnr, dap, dap_ui_widgets)
                end,
-               standalone = true,
-            },
-            dap = {
-               adapter = {
-                  type = 'executable',
-                  command = 'lldb-vscode',
-                  name = 'rt_lldb',
-               },
             },
          }
       end
@@ -186,9 +175,9 @@ return {
                },
             },
          }
-         function grs_metals.config.on_attach(client, bufnr)
+         function grs_metals.config.on_attach(_, bufnr)
             grs_metals.metals.setup_dap()
-            km.lsp_km(client, bufnr)
+            km.lsp_km(bufnr)
             km.metals_km(bufnr, grs_metals.metals)
             km.dap_km(bufnr, dap, dap_ui_widgets)
          end

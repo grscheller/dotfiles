@@ -210,7 +210,7 @@ km('n', 'g]', vim.diagnostic.goto_next, {
    silent = true,
    desc = 'goto next diagostic',
 })
-function M.lsp_km(_, bufnr)
+function M.lsp_km(bufnr)
    km('n', 'H', vim.lsp.buf.hover, {
       noremap = true,
       silent = true,
