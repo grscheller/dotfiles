@@ -145,8 +145,6 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/treesitter.lua
    nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/whichkey.lua
-   nvim/lua/grs/util/dap.lua
-   nvim/lua/grs/util/lsp.lua
    nvim/lua/grs/util/mason.lua
    nvim/lua/grs/util/nullLs.lua
    nvim/init.lua
@@ -181,6 +179,8 @@ RM_ITEMS="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lspconfig.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/util/lspconfig.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/early.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/util/dap.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/util/lsp.lua
 "
 
 DIRS_TO_CREATE="

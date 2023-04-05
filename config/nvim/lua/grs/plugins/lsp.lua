@@ -40,7 +40,7 @@ return {
             lspconf[lspServer].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)
-                  km.lsp_km(bufnr)
+                  km.lsp(bufnr)
                end,
             }
          end
@@ -56,7 +56,7 @@ return {
             lspconf['lua_ls'].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)
-                  km.lsp_km(bufnr)
+                  km.lsp(bufnr)
                end,
                settings = {
                   Lua = {
@@ -75,8 +75,8 @@ return {
                capabilities = capabilities,
                filetypes = { 'haskell', 'lhaskell', 'cabal' },
                on_attach = function(_, bufnr)
-                  km.lsp_km(bufnr)
-                  km.haskell_km(bufnr)
+                  km.lsp(bufnr)
+                  km.haskell(bufnr)
                end,
             }
          end
@@ -87,8 +87,11 @@ return {
    {
       -- Rust-Tools directly configures lspconfig
       --
-      --    Following: https://github.com/simrat39/rust-tools.nvim
-      --               https://github.com/sharksforarms/neovim-rust
+      -- Initially followed both https://github.com/simrat39/rust-tools.nvim
+      -- and https://github.com/sharksforarms/neovim-rust.
+      --
+      -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
+      --           :help dap-widgets
       --
       'simrat39/rust-tools.nvim',
       dependencies = {
@@ -98,7 +101,7 @@ return {
          'nvim-lua/plenary.nvim',
       },
       enabled = LspTbl.system.rust_tools == m.man,
-      event = { 'BufReadPre', 'BufNewFile' },  -- TODO: change to FT
+      ft = { 'rust' },
       config = function()
          local dap = require 'dap'
          local dap_ui_widgets = require 'dap.ui.widgets'
@@ -113,8 +116,8 @@ return {
             server = {
                capabilities = require('cmp_nvim_lsp').default_capabilities(),
                on_attach = function(_, bufnr)
-                  km.lsp_km(bufnr)
-                  km.dap_km(bufnr, dap, dap_ui_widgets)
+                  km.lsp(bufnr)
+                  km.dap(bufnr, dap, dap_ui_widgets)
                end,
             },
          }
@@ -179,9 +182,9 @@ return {
          }
          function grs_metals.config.on_attach(_, bufnr)
             grs_metals.metals.setup_dap()
-            km.lsp_km(bufnr)
-            km.metals_km(bufnr, grs_metals.metals)
-            km.dap_km(bufnr, dap, dap_ui_widgets)
+            km.lsp(bufnr)
+            km.metals(bufnr, grs_metals.metals)
+            km.dap(bufnr, dap, dap_ui_widgets)
          end
       end,
    },

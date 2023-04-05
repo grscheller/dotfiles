@@ -1,4 +1,4 @@
---[[ Define keymappings/keybindings - loaded via plugins/config.lua ]]
+--[[ Define keymappings/keybindings ]]
 
 -- loaded on "VeryLazy" event
 
@@ -8,7 +8,7 @@ local km = vim.keymap.set
 --[[ Plugin related keymaps ]]
 
 -- Lazy gui
-vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+km('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
 
 -- Telescope related keymaps
 km('n', '<leader>tt', '<cmd>Telescope<cr>', {
@@ -210,7 +210,7 @@ km('n', 'g]', vim.diagnostic.goto_next, {
    silent = true,
    desc = 'goto next diagostic',
 })
-function M.lsp_km(bufnr)
+function M.lsp(bufnr)
    km('n', 'H', vim.lsp.buf.hover, {
       noremap = true,
       silent = true,
@@ -310,7 +310,7 @@ function M.lsp_km(bufnr)
 end
 
 -- Haskell related keymaps
-function M.haskell_km(bufnr)
+function M.haskell(bufnr)
    km({ 'n', 'x' }, 'zH', '<cmd>%!stylish-haskell<cr>', {
       noremap = true,
       silent = true,
@@ -320,7 +320,7 @@ function M.haskell_km(bufnr)
 end
 
 -- Scala Metals related keymaps
-function M.metals_km(bufnr, metals)
+function M.metals(bufnr, metals)
    km('n', 'M', metals.hover_worksheet, {
       noremap = true,
       silent = true,
@@ -331,7 +331,7 @@ end
 
 --[[ DAP (Debug Adapter Protocol) related kemaps ]]
 
-function M.dap_km(bufnr, dap, dap_ui_widgets)
+function M.dap(bufnr, dap, dap_ui_widgets)
    require('which-key').register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
 
    km('n', '\\c', dap.continue, {
