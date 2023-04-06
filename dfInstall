@@ -135,7 +135,6 @@ CONFIG_FILES='
    nvim/lua/grs/config/options.lua
    nvim/lua/grs/config/treesitter.lua
    nvim/lua/grs/lib/functional.lua
-   nvim/lua/grs/plugins/config.lua
    nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/lazy.lua
@@ -181,6 +180,7 @@ RM_ITEMS="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/early.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/util/dap.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/util/lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/config.lua
 "
 
 DIRS_TO_CREATE="

@@ -1,8 +1,17 @@
 --[[ GRS Neovim Configuration - using lazy.nvim without LazyVim ]]
 
--- Set leader keys once and for all
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- load globals & options here, before lazy starts,
+require 'grs.config.globals'
+require 'grs.config.options'
+
+-- autocmds and keymaps can wait to load
+vim.api.nvim_create_autocmd('User', {
+   pattern = 'VeryLazy',
+   callback = function()
+      require 'grs.config.autocmds'
+      require 'grs.config.keymaps'
+   end,
+})
 
 -- Install folke/lazy.nvim if not already installed
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
@@ -20,7 +29,7 @@ end
 -- lazy.nvim configuration , see :h lazy.nvim-lazy.nvim-configuration
 vim.opt.rtp:prepend(lazypath)
 
-local opts = {
+local lazy_opts = {
    defaults = { lazy = true, version = '*' },
    git = {
       log = { '--since=5 days ago' },
@@ -61,5 +70,16 @@ local opts = {
    },
 }
 
--- Let lazy.nvim take control
-require('lazy').setup('grs.plugins', opts)
+local ok, lazy, keymaps
+ok, lazy = pcall(require, 'lazy')
+if ok then
+   -- Let lazy.nvim take control
+   lazy.setup('grs.plugins', lazy_opts)
+else
+   -- otherwise, at least load key mappings
+   print(string.format('lazy.nvim failed with error: %s', lazy))
+   ok, keymaps = pcall(require, 'grs.config.keymaps')
+   if not ok then
+      print(string.format('Keymaps failed to load with error: %s', keymaps))
+   end
+end
