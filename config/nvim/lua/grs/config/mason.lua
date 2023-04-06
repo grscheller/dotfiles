@@ -39,6 +39,7 @@ M.LspTbl = {
       lua_ls = m.man,
       taplo = m.auto,
       yamlls = m.auto,
+      zls = m.auto,
    },
 }
 
