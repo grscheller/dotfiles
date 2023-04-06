@@ -1,4 +1,4 @@
---[[ Colorschemes, also plugins needing to be loaded early ]]
+--[[ Colorschemes, also other plugins needing to be loaded early ]]
 
 local grs_colors = require('grs.config.colors')
 
@@ -89,32 +89,32 @@ return {
             icons_enabled = true,
             theme = {
                normal = {
-                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.autumnGreen, gui = 'bold' },
-                  b = { fg = grs_colors.autumnGreen, bg = grs_colors.dragonBlack1 },
-                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
+                  a = { fg = grs_colors.dragonBlack4, bg = grs_colors.autumnGreen, gui = 'bold' },
+                  b = { fg = grs_colors.autumnGreen, bg = grs_colors.dragonBlack4 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack4 },
                },
                visual = {
-                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.autumnYellow, gui = 'bold' },
+                  a = { fg = grs_colors.dragonBlack4, bg = grs_colors.autumnYellow, gui = 'bold' },
                   b = { fg = grs_colors.autumnYellow, bg = grs_colors.waveBlue1 },
                },
                inactive = {
                   a = { fg = grs_colors.fujiWhite, bg = grs_colors.waveBlue1, gui = 'bold' },
-                  b = { fg = grs_colors.dragonBlack1, bg = grs_colors.crystalBlue },
+                  b = { fg = grs_colors.dragonBlack4, bg = grs_colors.crystalBlue },
                },
                replace = {
-                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.oniViolet, gui = 'bold' },
-                  b = { fg = grs_colors.oniViolet, bg = grs_colors.dragonBlack1 },
-                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
+                  a = { fg = grs_colors.dragonBlack4, bg = grs_colors.oniViolet, gui = 'bold' },
+                  b = { fg = grs_colors.oniViolet, bg = grs_colors.dragonBlack4 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack4 },
                },
                insert = {
-                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.crystalBlue, gui = 'bold' },
-                  b = { fg = grs_colors.crystalBlue, bg = grs_colors.dragonBlack1 },
-                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
+                  a = { fg = grs_colors.dragonBlack4, bg = grs_colors.crystalBlue, gui = 'bold' },
+                  b = { fg = grs_colors.crystalBlue, bg = grs_colors.dragonBlack4 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack4 },
                },
                command = {
-                  a = { fg = grs_colors.dragonBlack1, bg = grs_colors.waveAqua1, gui = 'bold' },
-                  b = { fg = grs_colors.waveAqua1, bg = grs_colors.dragonBlack1 },
-                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack1 },
+                  a = { fg = grs_colors.dragonBlack4, bg = grs_colors.waveAqua1, gui = 'bold' },
+                  b = { fg = grs_colors.waveAqua1, bg = grs_colors.dragonBlack4 },
+                  c = { fg = grs_colors.fujiWhite, bg = grs_colors.dragonBlack4 },
                },
             },
             component_separators = { left = '', right = '' },
