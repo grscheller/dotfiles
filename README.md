@@ -15,4 +15,4 @@ Configuration files for my Arch Linux workstation/laptop systems.
 
 Apache License Version 2.0
 
-See [LICENSE](LICENSE) for details.
+See [LICENSE](LICENSE) for details on how to obtain a copy of license.
