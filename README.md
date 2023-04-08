@@ -24,7 +24,7 @@ Configuration files for my Arch Linux workstation/laptop systems.
   To the extent possible under law,
   [Geoffrey R. Scheller](https://github.com/grscheller)
   has waived all copyright and related or neighboring rights
-  to [neovim-notes](https://github.com/grscheller/neovim-notes).
+  to [dotfiles](https://github.com/grscheller/dotdiles).
   This work is published from the United States of America.
 </p>
 
