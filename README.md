@@ -11,7 +11,7 @@ Configuration files for my Arch Linux workstation/laptop systems.
   * Installs "root/" files to "/"
   * Usage: `sudo ./sfInstall`
 
-## License Summary
+## Public Domain Declaration
 
 <p xmlns:dct="http://purl.org/dc/terms/"
    xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
