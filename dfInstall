@@ -119,6 +119,7 @@ CONFIG_FILES='
    nvim/ftplugin/cpp.lua
    nvim/ftplugin/fish.lua
    nvim/ftplugin/haskell.lua
+   nvim/ftplugin/help.lua
    nvim/ftplugin/html.lua
    nvim/ftplugin/lua.lua
    nvim/ftplugin/markdown.lua
