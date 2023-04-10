@@ -13,8 +13,8 @@ all still very much welcomed.
 The primary purpose of this GitHub repo is to:
 
 * preserve the maintainer's Arch Linux configuration files
-* providing the infrastructure to install & upgrade these configs
-* provide configuration examples to the linux community
+* provide the infrastructure to install & upgrade these configs
+* provide configuration examples to the Linux community
   * without any sort of attribution expected
 * provide a starting point for others to fork their own versions
 
