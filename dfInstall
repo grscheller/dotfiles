@@ -123,6 +123,7 @@ CONFIG_FILES='
    nvim/ftplugin/html.lua
    nvim/ftplugin/lua.lua
    nvim/ftplugin/markdown.lua
+   nvim/ftplugin/ocaml.lua
    nvim/ftplugin/rust.lua
    nvim/ftplugin/sbt.lua
    nvim/ftplugin/scala.lua

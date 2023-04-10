@@ -28,7 +28,7 @@ local options = {
    smartcase = true,                   -- just lower case search patterns.
    textwidth = 100,                    -- 80 columns seems too narrow these days
    colorcolumn = '+1,+21',             -- keep source code horizontally under control
-   formatoptions = 'tcqjpl',           -- mostly for joining and breaking lines
+   formatoptions = 'cqjp1',            -- for joining and breaking comment lines
    spelloptions = 'camel',             -- spellCheckCamelCaseComponents
 
    -- Windowing preferences
