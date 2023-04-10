@@ -227,8 +227,8 @@ fi
 ## Function to ensure directory exists
 ensure_dir () {
    target_dir="$1"
-   check="$2"
-   case "$check" in
+   switch="$2"
+   case "$switch" in
       install)
          test -d "$target_dir" || mkdir -p "$target_dir" 2>/dev/null || {
             printf "\\nWarning: Failed to create '%s' directory\\n" "$target_dir"
@@ -248,10 +248,10 @@ ensure_dir () {
 ## Function to check or remove files or directories
 remove_item () {
    item="$1"
-   check="$2"
+   switch="$2"
    if [ -e "$item" ]
    then
-      case "$check" in
+      case "$switch" in
          install)
             rm -rf "$item"
             test -e "$item" && printf "\\nWarning: Failed to remove item '%s'\\n" "$item"
@@ -272,16 +272,16 @@ install_file () {
    file_path="$2"
    src_dir="$3"
    file_perm="$4"
-   check="$5"
+   switch="$5"
    src="$src_dir/$file_path"
    src_abs="$DOTFILE_GIT_REPO${src#.}"
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
    # Make sure target directory exists
-   ensure_dir "$trgt_dir" $check
+   ensure_dir "$trgt_dir" $switch
 
-   case "$check" in
+   case "$switch" in
       install)
          # Install the file
          if cp "$src" "$trgt" >/dev/null 2>&1
