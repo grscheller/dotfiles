@@ -18,7 +18,7 @@ local m = M.MasonEnum
 
 -- Lspconfig uses default configurations for items marked m.auto.  Mason installs packages in
 -- the Mason tables not marked m.ignore.  Both lists use the LSP module (lspconfig) names, not the
--- Mason package names.  In system table, anything not either m.auto or m.man is just informational.
+-- Mason package names.
 M.LspTbl = {
    mason = {
       groovyls = m.auto,
@@ -36,7 +36,7 @@ M.LspTbl = {
       rust_analyzer = m.install,
       rust_tools = m.man,      -- will directly use lspconfig and dap
       scala_metals = m.man,    -- will directly use lspconfig and dap
-      lua_ls = m.man,
+      lua_ls = m.ignore,
       taplo = m.auto,
       yamlls = m.auto,
       zls = m.auto,
