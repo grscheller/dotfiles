@@ -4,4 +4,4 @@ vim.opt_local.softtabstop = 2
 vim.opt_local.expandtab = true
 vim.opt_local.textwidth = 72
 vim.opt_local.colorcolumn = '+1,+21'
-vim.opt_local.formatoptions = 'tqjp1l' -- for lines
+vim.opt_local.formatoptions = 'tqjp1l'
