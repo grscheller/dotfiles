@@ -24,12 +24,12 @@ return {
             cmd = 'Neoconf',
             config = true,
          },
-         {
-            'folke/neodev.nvim',
-            opts = {
-               experimental = { pathStrict = true },
-            },
-         },
+         -- {
+         --    'folke/neodev.nvim',
+         --    opts = {
+         --       experimental = { pathStrict = true },
+         --    },
+         -- },
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
          local lspconf = require 'lspconfig'
