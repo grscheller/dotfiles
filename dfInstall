@@ -76,6 +76,7 @@ CONFIG_FILES='
    fish/functions/fdot.fish
    fish/functions/ff.fish
    fish/functions/fields.fish
+   fish/functions/fishcolors.fish
    fish/functions/fishterm.fish
    fish/functions/fm.fish
    fish/functions/fish_greeting.fish
