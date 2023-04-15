@@ -11,25 +11,34 @@ local grs_metals = {}
 
 return {
 
+   -- Neovim plugin to manage global & project-local settings
+   {
+      'folke/neoconf.nvim',
+      cmd = 'Neoconf',
+      config = true,
+   },
+
+   -- Neovim setup for init.lua and plugin development with
+   -- full signature help, docs and completion for the nvim lua API.
+   -- {
+   --    'folke/neodev.nvim',
+   --    dependencies = {
+   --    }
+   --    opts = {
+   --       experimental = { pathStrict = true },
+   --    },
+   -- },
+
    {
       'neovim/nvim-lspconfig',
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
+         'folke/neoconf.nvim',
+         -- 'folke/neodev.nvim',
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'jose-elias-alvarez/null-ls.nvim',
-         {
-            'folke/neoconf.nvim',
-            cmd = 'Neoconf',
-            config = true,
-         },
-         -- {
-         --    'folke/neodev.nvim',
-         --    opts = {
-         --       experimental = { pathStrict = true },
-         --    },
-         -- },
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
          local lspconf = require 'lspconfig'
@@ -58,14 +67,14 @@ return {
                on_attach = function(_, bufnr)
                   km.lsp(bufnr)
                end,
-               settings = {
-                  Lua = {
-                     completion = { callSnippet = 'Replace' },
-                     diagnostics = {
-                        globals = { 'vim' },
-                     },
-                  },
-               },
+               -- settings = {
+               --    Lua = {
+               --       completion = { callSnippet = 'Replace' },
+               --       diagnostics = {
+               --          globals = { 'vim' },
+               --       },
+               --    },
+               -- },
             }
          end
 
