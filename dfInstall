@@ -227,43 +227,49 @@ fi
 
 ## Function to ensure directory exists
 ensure_dir () {
-   target_dir="$1"
-   switch="$2"
-   case "$switch" in
-      install)
-         test -d "$target_dir" || mkdir -p "$target_dir" 2>/dev/null || {
-            printf "\\nWarning: Failed to create '%s' directory\\n" "$target_dir"
-         }
-         ;;
-      repo)
-         :
-         ;;
-      target)
-         test -d "$target_dir" || {
-            printf "\\nTarget directory '%s' needs to be created.\\n" "$target_dir"
-         }
-         ;;
-   esac
+   dir="$1"
+   if [ ! -d "$dir" ]
+   then
+      case "$switch" in
+         install)
+            mkdir -p "$target_dir" 2>/dev/null ||
+               printf "\\nWarning: Failed to create '%s' directory\\n" "$dir"
+            ;;
+         repo)
+            printf "\\nSource directory '%s' does not exist.\\n" "$dir"
+            ;;
+         target)
+            printf "\\nTarget directory '%s' needs to be created.\\n" "$dir"
+            ;;
+      esac
+   fi
 }
 
 ## Function to check or remove files or directories
 remove_item () {
    item="$1"
-   switch="$2"
-   location="$3"
-   if [ -e "$item" ]
+   flag="$2"
+   if test -e "$item"
    then
       case "$switch" in
          install)
             rm -rf "$item"
-            test -e "$item" &&
-               printf "\\nWarning: Failed to remove item '%s' from %s.\\n" "$item" "$location"
+            test -e "$item" && {
+               case "$flag" in
+                  target)
+                     printf "\\nWarning: Failed to remove '%s' from target.\\n" "$item"
+                     ;;
+                  repo)
+                     printf "\\nWarning: Failed to remove '%s' from repo.\\n" "$item"
+                     ;;
+               esac
+            }
             ;;
          repo)
-            printf "\\nSource '%s' needs removing.\\n" "$item"
+            printf "\\n'%s' needs removing from the repo.\\n" "$item"
             ;;
          target)
-            printf "\\nTarget '%s' needs removing.\\n" "$item"
+            printf "\\n'%s' needs removing from the target.\\n" "$item"
             ;;
       esac
    fi
@@ -282,7 +288,7 @@ install_file () {
    trgt_dir="${trgt%/*}"
 
    # Make sure target directory exists
-   ensure_dir "$trgt_dir" $switch
+   ensure_dir "$trgt_dir"
 
    case "$switch" in
       install)
@@ -299,7 +305,7 @@ install_file () {
       repo)
          # Compare config (this script) with dotfile repo working directory
          test -e "$src" || {
-            printf "\\n'%s' not in the git repo working directory.\\n" "$src_abs"
+            printf "\\nSource: '%s' not in git working directory.\\n" "$src_abs"
          }
          ;;
       target)
@@ -382,23 +388,23 @@ chmod 0700 "$HOME/.ssh"
 # Create or report on missing directories
 for DIR in $DIRS_TO_CREATE
 do
-   ensure_dir "$DIR" "$switch"
+   ensure_dir "$DIR"
+done
+
+# Remove/report no longer needed files and directories
+for item in $RM_TARGET_ITEMS
+do
+   remove_item "$item" target
+done
+
+# Remove/report no longer needed items, usually empty directories, from repo
+for item in $RM_REPO_ITEMS
+do
+   remove_item "$item" repo
 done
 
 case "$switch" in
    install)
-      # Remove no longer needed files and directories from target
-      for item in $RM_TARGET_ITEMS
-      do
-         remove_item "$item" install 'target'
-      done
-
-      # Remove no longer needed items, usually empty directories, from repo
-      for item in $RM_REPO_ITEMS
-      do
-         remove_item "$item" install 'repo'
-      done
-
       # Keep alacritty from rereading its config file mid-copy
       mv "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml "$XDG_CONFIG_HOME"/alacritty/alacritty.yml
       cp "$XDG_CONFIG_HOME"/alacritty/alacritty.yml "$XDG_CONFIG_HOME"/alacritty/alacritty_arch.yml
@@ -407,7 +413,7 @@ case "$switch" in
 
       # The background picture I personally use is from
       # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
-      picture="$HOME/Pictures/Desktops/SwayBG.jpg"
+      picture="$HOME"/Pictures/Desktops/SwayBG.jpg
       bg_link="$XDG_CONFIG_HOME"/sway/config_bg
       if test -f "$picture"
       then
@@ -422,41 +428,11 @@ case "$switch" in
       systemctl --user daemon-reload
       ;;
    repo)
-      # Remove no longer needed items, usually empty directories, from repo
-      for item in $RM_REPO_ITEMS
-      do
-         test -e "$item" && {
-            if [ -h "$item" ]; then
-               printf "\\nLink '%s' needs to be removed from the repo.\\n" "$item"
-            elif [ -f "$item" ]; then
-               printf "\\nFile '%s' needs to be removed from the repo.\\n" "$item"
-            elif [ -d "$item" ]; then
-               printf "\\nDirectory '%s' needs to be removed from the repo.\\n" "$item"
-            else
-               printf "\\nItem '%s' needs to be removed from the repo.\\n" "$item"
-            fi
-         }
-      done
-
-      # Get some git status info on repo
+      # Get git status info on repo
       printf '\nGit Status:\n'
       git status -s
       ;;
    target)
-      # Check for no longer needed target files and directories
-      for item in $RM_TARGET_ITEMS
-      do
-         test -e "$item" && {
-            if [ -h "$item" ]; then
-               printf "\\nLink '%s' needs to be removed from target.\\n" "$item"
-            elif [ -f "$item" ]; then
-               printf "\\nFile '%s' needs to be removed from target.\\n" "$item"
-            elif [ -d "$item" ]; then
-               printf "\\nDir '%s' needs to be removed from target.\\n" "$item"
-            else
-               printf "\\nItem '%s' needs to be removed from target.\\n" "$item"
-            fi
-         }
-      done
+      :
       ;;
 esac
