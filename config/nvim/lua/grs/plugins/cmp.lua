@@ -1,11 +1,5 @@
 --[[ Completions & Snippets ]]
 
---[[
-
-    03/17/2023
-
-==]]
-
 local function cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
@@ -39,12 +33,11 @@ return {
       },
       config = function()
          local cmp = require 'cmp'
+         local cmp_under_comparator = require 'cmp-under-comparator'
          local lspkind = require 'lspkind'
          local luasnip = require 'luasnip'
-         local vscode_loaders = require 'luasnip.loaders.from_vscode'
-         local cmp_config_compare_under = require('cmp-under-comparator').under
 
-         vscode_loaders.lazy_load()
+         require('luasnip.loaders.from_vscode').lazy_load()
 
          local select_opts = {
             behavior = cmp.SelectBehavior.Select
@@ -58,9 +51,6 @@ return {
             ['<up>'] = cmp.mapping.select_prev_item(select_opts),
             ['<down>'] = cmp.mapping.select_next_item(select_opts),
 
-            ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
-            ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
-
             ['<c-u>'] = cmp.mapping.scroll_docs(-4),
             ['<c-d>'] = cmp.mapping.scroll_docs(4),
 
@@ -69,7 +59,7 @@ return {
             ['<cr>'] = cmp.mapping.confirm(confirm_opts),
             ['<c-y>'] = cmp.mapping.confirm(confirm_opts),
 
-            ['<tab>'] = cmp.mapping(function(fallback)
+            ['<c-n>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item()
                elseif cursor_has_words_before_it() then
@@ -78,7 +68,7 @@ return {
                   fallback()
                end
             end),
-            ['<s-tab>'] = cmp.mapping(function(fallback)
+            ['<c-p>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item()
                else
@@ -129,7 +119,7 @@ return {
                   cmp.config.compare.score,
                   cmp.config.compare.recently_used,
                   cmp.config.compare.locality,
-                  cmp_config_compare_under,
+                  cmp_under_comparator.under,
                   cmp.config.compare.kind,
                   cmp.config.compare.sort_text,
                   cmp.config.compare.length,
@@ -157,7 +147,7 @@ return {
                      cmdline = '[cmd]',
                      luasnip = '[snip]',
                      nvim_lsp = '[lsp]',
-                     nvim_lsp_signature_help = '[lsp-sh]',
+                     nvim_lsp_signature_help = '[sh]',
                      nvim_lua = '[lua]',
                      path = '[path]',
                      rg = '[rg]',
