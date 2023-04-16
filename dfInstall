@@ -138,17 +138,17 @@ CONFIG_FILES='
    nvim/lua/grs/config/options.lua
    nvim/lua/grs/config/treesitter.lua
    nvim/lua/grs/lib/functional.lua
+   nvim/lua/grs/plugins/lsp/init.lua
+   nvim/lua/grs/plugins/lsp/nullLs.lua
+   nvim/lua/grs/plugins/mason/init.lua
+   nvim/lua/grs/plugins/mason/utils.lua
    nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/lazy.lua
-   nvim/lua/grs/plugins/lsp.lua
    nvim/lua/grs/plugins/telescope.lua
    nvim/lua/grs/plugins/textedit.lua
    nvim/lua/grs/plugins/treesitter.lua
-   nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/whichkey.lua
-   nvim/lua/grs/util/mason.lua
-   nvim/lua/grs/util/nullLs.lua
    nvim/init.lua
    sway/config
    sway/config_bg_color
@@ -172,18 +172,17 @@ SSH_CONFIGS='
    config
 '
 
-RM_ITEMS="
+RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/nvim/lua/grs/util.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/util
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lspconfig.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/util/lspconfig.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/early.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/util/dap.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/util/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/config.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/util
+"
+
+RM_REPO_ITEMS="
+   $DOTFILE_GIT_REPO/config/nvim/lua/grs/util
 "
 
 DIRS_TO_CREATE="
@@ -251,15 +250,17 @@ ensure_dir () {
 remove_item () {
    item="$1"
    switch="$2"
+   location="$3"
    if [ -e "$item" ]
    then
       case "$switch" in
          install)
             rm -rf "$item"
-            test -e "$item" && printf "\\nWarning: Failed to remove item '%s'\\n" "$item"
+            test -e "$item" &&
+               printf "\\nWarning: Failed to remove item '%s' from %s.\\n" "$item" "$location"
             ;;
          repo)
-            :
+            printf "\\nSource '%s' needs removing.\\n" "$item"
             ;;
          target)
             printf "\\nTarget '%s' needs removing.\\n" "$item"
@@ -386,10 +387,16 @@ done
 
 case "$switch" in
    install)
-      # Remove no longer needed files and directories
-      for item in $RM_ITEMS
+      # Remove no longer needed files and directories from target
+      for item in $RM_TARGET_ITEMS
       do
-         remove_item "$item" install
+         remove_item "$item" install 'target'
+      done
+
+      # Remove no longer needed items, usually empty directories, from repo
+      for item in $RM_REPO_ITEMS
+      do
+         remove_item "$item" install 'repo'
       done
 
       # Keep alacritty from rereading its config file mid-copy
@@ -415,23 +422,39 @@ case "$switch" in
       systemctl --user daemon-reload
       ;;
    repo)
+      # Remove no longer needed items, usually empty directories, from repo
+      for item in $RM_REPO_ITEMS
+      do
+         test -e "$item" && {
+            if [ -h "$item" ]; then
+               printf "\\nLink '%s' needs to be removed from the repo.\\n" "$item"
+            elif [ -f "$item" ]; then
+               printf "\\nFile '%s' needs to be removed from the repo.\\n" "$item"
+            elif [ -d "$item" ]; then
+               printf "\\nDirectory '%s' needs to be removed from the repo.\\n" "$item"
+            else
+               printf "\\nItem '%s' needs to be removed from the repo.\\n" "$item"
+            fi
+         }
+      done
+
       # Get some git status info on repo
       printf '\nGit Status:\n'
       git status -s
       ;;
    target)
       # Check for no longer needed target files and directories
-      for item in $RM_ITEMS
+      for item in $RM_TARGET_ITEMS
       do
          test -e "$item" && {
             if [ -h "$item" ]; then
-               printf "\\nLink '%s' needs to be removed.\\n" "$item"
+               printf "\\nLink '%s' needs to be removed from target.\\n" "$item"
             elif [ -f "$item" ]; then
-               printf "\\nFile '%s' needs to be removed.\\n" "$item"
+               printf "\\nFile '%s' needs to be removed from target.\\n" "$item"
             elif [ -d "$item" ]; then
-               printf "\\nDir '%s' needs to be removed.\\n" "$item"
+               printf "\\nDir '%s' needs to be removed from target.\\n" "$item"
             else
-               printf "\\nItem '%s' needs to be removed.\\n" "$item"
+               printf "\\nItem '%s' needs to be removed from target.\\n" "$item"
             fi
          }
       done

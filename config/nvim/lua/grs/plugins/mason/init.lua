@@ -1,12 +1,12 @@
 --[[ Mason Setup ]]
 
-local confMason = require 'grs.config.mason'
-local m = confMason.MasonEnum
-local LspTbl = confMason.LspTbl
-local DapTbl = confMason.DapTbl
-local BuiltinTbls = confMason.BuiltinTbls
+local configMason = require 'grs.config.mason'
+local m = configMason.MasonEnum
+local LspTbl = configMason.LspTbl
+local DapTbl = configMason.DapTbl
+local BuiltinTbls = configMason.BuiltinTbls
 
-local utilMason = require 'grs.util.mason'
+local masonUtils = require 'grs.plugins.mason.utils'
 
 local iFlatten = require('grs.lib.functional').iFlatten
 
@@ -15,13 +15,13 @@ local install = function(_, v)
 end
 
 local masonPackages = iFlatten {
-   utilMason.lspconfig2mason(LspTbl, install),
-   utilMason.dap2mason(DapTbl, install),
-   utilMason.nullLs2mason(BuiltinTbls.code_actions, install),
-   utilMason.nullLs2mason(BuiltinTbls.completions, install),
-   utilMason.nullLs2mason(BuiltinTbls.diagnostics, install),
-   utilMason.nullLs2mason(BuiltinTbls.formatting, install),
-   utilMason.nullLs2mason(BuiltinTbls.hover, install),
+   masonUtils.lspconfig2mason(LspTbl, install),
+   masonUtils.dap2mason(DapTbl, install),
+   masonUtils.nullLs2mason(BuiltinTbls.code_actions, install),
+   masonUtils.nullLs2mason(BuiltinTbls.completions, install),
+   masonUtils.nullLs2mason(BuiltinTbls.diagnostics, install),
+   masonUtils.nullLs2mason(BuiltinTbls.formatting, install),
+   masonUtils.nullLs2mason(BuiltinTbls.hover, install),
 }
 
 return {
