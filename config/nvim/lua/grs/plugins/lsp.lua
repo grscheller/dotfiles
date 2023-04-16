@@ -20,14 +20,12 @@ return {
 
    -- Neovim setup for init.lua and plugin development with
    -- full signature help, docs and completion for the nvim lua API.
-   -- {
-   --    'folke/neodev.nvim',
-   --    dependencies = {
-   --    }
-   --    opts = {
-   --       experimental = { pathStrict = true },
-   --    },
-   -- },
+   {
+      'folke/neodev.nvim',
+      opts = {
+         experimental = { pathStrict = true },
+      },
+   },
 
    {
       'neovim/nvim-lspconfig',
@@ -35,7 +33,7 @@ return {
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
          'folke/neoconf.nvim',
-         -- 'folke/neodev.nvim',
+         'folke/neodev.nvim',
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'jose-elias-alvarez/null-ls.nvim',
@@ -67,14 +65,13 @@ return {
                on_attach = function(_, bufnr)
                   km.lsp(bufnr)
                end,
-               -- settings = {
-               --    Lua = {
-               --       completion = { callSnippet = 'Replace' },
-               --       diagnostics = {
-               --          globals = { 'vim' },
-               --       },
-               --    },
-               -- },
+               settings = {
+                  Lua = {
+                     completion = {
+                        callSnippet = 'Replace'
+                     },
+                  },
+               },
             }
          end
 

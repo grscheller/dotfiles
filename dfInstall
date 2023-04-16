@@ -360,6 +360,10 @@ done
 chmod 0755 "$HOME/.config"
 
 # Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
+#
+#   Note: These don't seam to work in the repo
+#         unless located at repo's root.
+#
 for conf_file in $NVIM_TOML
 do
    install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644 "$switch"
