@@ -1,5 +1,4 @@
 --[[ Mason Setup ]]
-
 local configMason = require 'grs.config.mason'
 local m = configMason.MasonEnum
 local LspTbl = configMason.LspTbl
@@ -43,11 +42,14 @@ return {
          'williamboman/mason.nvim',
          'rcarriga/nvim-notify',
       },
-      cmd = { 'MasonToolsInstaller', 'MasonToolsUpdate' },
+      cmd = {
+         'MasonToolsInstall',
+         'MasonToolsUpdate',
+      },
       keys = {
          {
             '<leader>mi',
-            '<cmd>MasonToolsInstaller<cr>',
+            '<cmd>MasonToolsInstall<cr>',
             desc = 'Mason Tools Installer',
          },
          {
@@ -57,7 +59,6 @@ return {
          },
       },
       config = function()
-
          --[[ Give user some mason-tool-installer feedback ]]
          local grs_mason_group = vim.api.nvim_create_augroup('grs_mason', {})
 
@@ -89,9 +90,8 @@ return {
             auto_update = false,
             run_on_start = true,
             start_delay = 3000, -- 3 second delay
-            debounce_hours = 5, -- at least 5 hour between attemps
+            debounce_hours = 8, -- at least 8 hour between attemps
          }
-
       end,
    },
 }

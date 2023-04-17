@@ -51,6 +51,7 @@ M.DapTbl = {
    mason = {
       bash = m.install,
       cppdbg = m.install,
+      codelldb = m.install,
    },
    system = {},
 }
@@ -79,9 +80,7 @@ M.BuiltinTbls = {
       },
    },
    formatting = {
-      mason = {
-         lua_format = m.auto,
-      },
+      mason = {},
       system = {
          stylua = m.auto,
       },
