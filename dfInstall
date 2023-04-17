@@ -232,7 +232,7 @@ ensure_dir () {
    then
       case "$switch" in
          install)
-            mkdir -p "$target_dir" 2>/dev/null ||
+            mkdir -p "$dir" ||
                printf "\\nWarning: Failed to create '%s' directory\\n" "$dir"
             ;;
          repo)
@@ -293,7 +293,7 @@ install_file () {
    case "$switch" in
       install)
          # Install the file
-         if cp "$src" "$trgt" >/dev/null 2>&1
+         if cp "$src" "$trgt"
          then
             chmod --quiet "$file_perm" "$trgt" || {
                printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
@@ -320,7 +320,7 @@ install_file () {
          then
             printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
          else
-            diff "$src" "$trgt" >/dev/null 2>&1 || {
+            diff "$src" "$trgt" || {
                printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" "$trgt" "$src_abs"
             }
          fi
