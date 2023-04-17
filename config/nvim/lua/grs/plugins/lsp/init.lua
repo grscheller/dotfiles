@@ -11,32 +11,35 @@ local grs_metals = {}
 
 return {
 
-   -- Neovim plugin to manage global & project-local settings
-   {
-      'folke/neoconf.nvim',
-      cmd = 'Neoconf',
-      config = true,
-   },
-
-   -- Neovim setup for init.lua and plugin development with
-   -- full signature help, docs and completion for the nvim lua API.
-   {
-      'folke/neodev.nvim',
-      opts = {
-         experimental = { pathStrict = true },
-      },
-   },
-
    {
       'neovim/nvim-lspconfig',
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
+      {
+         -- Neovim plugin to manage global & project-local settings
          'folke/neoconf.nvim',
+         cmd = 'Neoconf',
+         config = true,
+      },
+      {
+         -- Neovim setup for init.lua and plugin development with full
+         -- signature help, docs and completion for the nvim lua API.
          'folke/neodev.nvim',
+         opts = {
+            experimental = { pathStrict = true },
+         },
+      },
          'hrsh7th/cmp-nvim-lsp',
-         'williamboman/mason.nvim',
          'jose-elias-alvarez/null-ls.nvim',
+         {
+            -- give feedback regarding LSP server progress
+            'j-hui/fidget.nvim',
+            config = function()
+               require('fidget').setup()
+            end,
+         },
+         'williamboman/mason.nvim',
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
          local lspconf = require 'lspconfig'
@@ -91,13 +94,13 @@ return {
    },
 
    {
-      -- Rust-Tools directly configures lspconfig
+      -- Rust-Tools directly configures lspconfig for rust-analyzer
       --
       -- Initially followed both https://github.com/simrat39/rust-tools.nvim
       -- and https://github.com/sharksforarms/neovim-rust.
       --
       -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
-      --           :help dap-widgets
+      --       and :help dap-widgets
       --
       'simrat39/rust-tools.nvim',
       dependencies = {
@@ -105,6 +108,7 @@ return {
          'mfussenegger/nvim-dap',
          'neovim/nvim-lspconfig',
          'nvim-lua/plenary.nvim',
+         'nvim-telescope/telescope.nvim',
       },
       enabled = LspTbl.system.rust_tools == m.man,
       ft = { 'rust' },
@@ -119,11 +123,37 @@ return {
             },
          }
          require('rust-tools').setup {
+            tools = {
+               runnables = {
+                  use_telescope = true,
+               },
+               inlay_hints = {
+                  auto = true,
+                  show_parameter_hints = false,
+                  parameter_hints_prefix = '',
+                  other_hints_prefix = '',
+               },
+            },
+            -- opts sent to nvim-lspconfig overriding
+            -- defaults set by rust-tools.nvim
             server = {
                capabilities = require('cmp_nvim_lsp').default_capabilities(),
                on_attach = function(_, bufnr)
+                  -- set up keymaps
                   km.lsp(bufnr)
                   km.dap(bufnr, dap, dap_ui_widgets)
+
+                  -- show diagnostic popup on cursor hover
+                  vim.api.nvim_create_autocmd('CursorHold', {
+                     callback = function()
+                        vim.diagnostic.open_float(nil, {
+                           focusable = false
+                        })
+                     end,
+                     group = vim.api.nvim_create_autocmd('DiagnosticFloat', {
+                        clear = true,
+                     })
+                  })
                end,
             },
          }
