@@ -1,6 +1,6 @@
 # dotfiles
 
-Configuration files for my Arch Linux workstation/laptop systems.
+Configuration files for my Arch Linux workstations & laptops.
 
 ## Scripts
 

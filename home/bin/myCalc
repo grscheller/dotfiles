@@ -5,7 +5,7 @@
 # I suspect Tk does not have working closurses, hence the
 # use of default parameters in the below lambda functions.
 #
-# Best if run in floating window.
+# On tiling window managers, best run in a floating window.
 
 import tkinter as tk
 import tkinter.font as tkfont

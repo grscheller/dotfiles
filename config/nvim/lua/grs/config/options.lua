@@ -45,7 +45,7 @@ local options = {
 
    -- Settings affecting LSP clients & plugins
    timeoutlen = 1500,                      -- ms to wait for key mapped sequence to complete
-   updatetime = 300,                       -- set update time for CursorHold event
+   updatetime = 200,                       -- ms of no cursor movement to trigger CursorHold event
    signcolumn = 'yes',                     -- fixes first column, reduces jitter
    showmode = false,                       -- redundant with Lualine
    showcmd = false,                        -- redundant with WhichKey
