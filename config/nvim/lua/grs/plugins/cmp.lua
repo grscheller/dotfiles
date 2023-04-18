@@ -43,17 +43,17 @@ return {
             behavior = cmp.SelectBehavior.Select,
          }
          local confirm_opts = {
-            select = false,
+            select = true,
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
          local mappings = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
-            ['<cr>'] = cmp.mapping.close(confirm_opts),
+            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
             ['<c-space>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
-            ['<c-n>'] = cmp.mapping(function(fallback)
+            ['<tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item(select_opts)
                elseif cursor_has_words_before_it() then
@@ -62,7 +62,7 @@ return {
                   fallback()
                end
             end),
-            ['<c-p>'] = cmp.mapping(function(fallback)
+            ['<s-tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item(select_opts)
                else
@@ -97,10 +97,10 @@ return {
          local cmd_mappings = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
-            ['<cr>'] = cmp.mapping.close(confirm_opts),
+            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
             ['<c-space>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
-            ['<c-n>'] = cmp.mapping(function(fallback)
+            ['<tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item(select_opts)
                elseif cursor_has_words_before_it() then
@@ -109,7 +109,7 @@ return {
                   fallback()
                end
             end),
-            ['<c-p>'] = cmp.mapping(function(fallback)
+            ['<s-tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item(select_opts)
                else
