@@ -18,7 +18,6 @@ return {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
          'hrsh7th/cmp-nvim-lsp',
-         'hrsh7th/cmp-nvim-lsp-signature-help',
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
          { 'L3MON4D3/LuaSnip',
@@ -30,6 +29,7 @@ return {
          'lukas-reineke/cmp-under-comparator',
          'onsails/lspkind.nvim',
          'saadparwaiz1/cmp_luasnip',
+         'saecki/crates.nvim',
       },
       config = function()
          local cmp = require 'cmp'
@@ -40,50 +40,54 @@ return {
          require('luasnip.loaders.from_vscode').lazy_load()
 
          local select_opts = {
-            behavior = cmp.SelectBehavior.Select
+            behavior = cmp.SelectBehavior.Select,
          }
          local confirm_opts = {
-            select = true,
+            select = false,
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
          local mappings = {
-            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
-            ['<down>'] = cmp.mapping.select_next_item(select_opts),
-
-            ['<c-u>'] = cmp.mapping.scroll_docs(-4),
-            ['<c-d>'] = cmp.mapping.scroll_docs(4),
-
-            ['<c- >'] = cmp.mapping.close(),
+            ['<c-d>'] = cmp.mapping.scroll_docs(-4),
+            ['<c-f>'] = cmp.mapping.scroll_docs(4),
+            ['<cr>'] = cmp.mapping.close(confirm_opts),
+            ['<c-space>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
-            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
-            ['<c-y>'] = cmp.mapping.confirm(confirm_opts),
-
             ['<c-n>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_next_item()
+                  cmp.select_next_item(select_opts)
                elseif cursor_has_words_before_it() then
-                  cmp.complete()
+                  cmp.complete(confirm_opts)
                else
                   fallback()
                end
             end),
             ['<c-p>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_prev_item()
+                  cmp.select_prev_item(select_opts)
                else
                   fallback()
                end
             end),
-
+            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
+            ['<down>'] = cmp.mapping.select_next_item(select_opts),
             ['<c-s>'] = cmp.mapping.complete {
                config = {
-                  sources = { { name = 'luasnip' } },
+                  sources = {
+                     { name = 'luasnip' },
+                  },
                },
             },
-            ['<c-f>'] = cmp.mapping(function(fallback)
+            ['<c-right>'] = cmp.mapping(function(fallback)
                if luasnip.jumpable(1) then
                   luasnip.jump(1)
+               else
+                  fallback()
+               end
+            end),
+            ['<c-left>'] = cmp.mapping(function(fallback)
+               if luasnip.jumpable(-1) then
+                  luasnip.jump(-1)
                else
                   fallback()
                end
@@ -91,24 +95,29 @@ return {
          }
 
          local cmd_mappings = {
-            ['<c- >'] = cmp.mapping.close(),
+            ['<c-d>'] = cmp.mapping.scroll_docs(-4),
+            ['<c-f>'] = cmp.mapping.scroll_docs(4),
+            ['<cr>'] = cmp.mapping.close(confirm_opts),
+            ['<c-space>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
-            ['<tab>'] = cmp.mapping(function(fallback)
+            ['<c-n>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_next_item()
+                  cmp.select_next_item(select_opts)
                elseif cursor_has_words_before_it() then
-                  cmp.complete()
+                  cmp.complete(confirm_opts)
                else
                   fallback()
                end
             end),
-            ['<s-tab>'] = cmp.mapping(function(fallback)
+            ['<c-p>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_prev_item()
+                  cmp.select_prev_item(select_opts)
                else
                   fallback()
                end
             end),
+            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
+            ['<down>'] = cmp.mapping.select_next_item(select_opts),
          }
 
          cmp.setup {
@@ -140,11 +149,13 @@ return {
                fields = { 'abbr', 'kind', 'menu' },
                format = lspkind.cmp_format {
                   mode = 'symbol_text',
+                  preset = 'default',
                   maxwidth = 50,
-                  ellipsis = '…',
+                  ellipsis_char = '…',
                   menu = {
                      buffer = '[buf]',
                      cmdline = '[cmd]',
+                     crates = '[crates]',
                      luasnip = '[snip]',
                      nvim_lsp = '[lsp]',
                      nvim_lsp_signature_help = '[sh]',
@@ -160,6 +171,7 @@ return {
                   { name = 'nvim_lsp_signature_help' },
                   { name = 'nvim_lsp' },
                   { name = 'nvim_lua' },
+                  { name = 'crates' },
                },
                {
                   {
@@ -190,20 +202,29 @@ return {
          }
          cmp.setup.cmdline(':', {
             mapping = cmd_mappings,
-            sources = {
-               { name = 'path' }
-            },
-            {
-               { name = 'cmdline' }
-            },
+            sources = cmp.config.sources(
+               {
+                  { name = 'path' }
+               },
+               {
+                  { name = 'cmdline' }
+               }),
          })
          cmp.setup.cmdline('/', {
             mapping = cmd_mappings,
-            sources = { { name = 'buffer' } },
+            sources = {
+               {
+                  name = 'buffer',
+               },
+            },
          })
          cmp.setup.cmdline('?', {
             mapping = cmd_mappings,
-            sources = { { name = 'buffer' } },
+            sources = {
+               {
+                  name = 'buffer',
+               },
+            },
          })
       end,
       event = 'InsertEnter',
