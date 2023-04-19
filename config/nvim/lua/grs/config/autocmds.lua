@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
+-- Return to last edit posistion - doesn't work for first file on cmdline
 vim.api.nvim_create_autocmd('BufReadPost', {
    pattern = '*',
    callback = function()

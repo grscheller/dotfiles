@@ -1,7 +1,5 @@
 --[[ Completions & Snippets ]]
 
-local iFlatten = require('grs.lib.functional').iFlatten
-
 local function cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
@@ -34,7 +32,7 @@ return {
          'saadparwaiz1/cmp_luasnip',
          'saecki/crates.nvim',
       },
-      event = 'InsertEnter',
+      event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
          local cmp = require 'cmp'
          local cmp_under_comparator = require 'cmp-under-comparator'
@@ -77,7 +75,7 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
-         local cmd_mappings = {
+         local basic_mappings = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
             ['<cr>'] = cmp.mapping.confirm(confirm_opts),
@@ -103,33 +101,31 @@ return {
             ['<down>'] = cmp.mapping.select_next_item(select_opts),
          }
 
-         local extended_mappings = {
-            {
-               ['<c-s>'] = cmp.mapping.complete {
-                  config = {
-                     sources = {
-                        { name = 'luasnip' },
-                     },
+         local snippet_mappings = {
+            ['<c-s>'] = cmp.mapping.complete {
+               config = {
+                  sources = {
+                     { name = 'luasnip' },
                   },
                },
-               ['<c-right>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(1) then
-                     luasnip.jump(1)
-                  else
-                     fallback()
-                  end
-               end),
-               ['<c-left>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(-1) then
-                     luasnip.jump(-1)
-                  else
-                     fallback()
-                  end
-               end),
             },
+            ['<c-right>'] = cmp.mapping(function(fallback)
+               if luasnip.jumpable(1) then
+                  luasnip.jump(1)
+               else
+                  fallback()
+               end
+            end),
+            ['<c-left>'] = cmp.mapping(function(fallback)
+               if luasnip.jumpable(-1) then
+                  luasnip.jump(-1)
+               else
+                  fallback()
+               end
+            end),
          }
 
-         local mappings = iFlatten { cmd_mappings, extended_mappings }
+         local insert_mappings = vim.tbl_extend("error", basic_mappings, snippet_mappings)
 
          local formatting = {
             expandable_indicator = true,
@@ -190,7 +186,7 @@ return {
                }
             ),
             formatting = formatting,
-            mapping = mappings,
+            mapping = insert_mappings,
 
          }
 
@@ -207,7 +203,7 @@ return {
                }),
             -- TODO: base next one on sources
             formatting = formatting,
-            mapping = cmd_mappings,
+            mapping = basic_mappings,
          })
 
          cmp.setup.cmdline('/', {
@@ -221,7 +217,7 @@ return {
             },
             -- TODO: base next one on sources
             formatting = formatting,
-            mapping = cmd_mappings,
+            mapping = basic_mappings,
          })
 
          cmp.setup.cmdline('?', {
@@ -235,7 +231,7 @@ return {
             },
             -- TODO: base next one on sources
             formatting = formatting,
-            mapping = cmd_mappings,
+            mapping = basic_mappings,
          })
       end,
    },
