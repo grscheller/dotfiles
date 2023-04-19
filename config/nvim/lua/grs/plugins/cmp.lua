@@ -1,5 +1,7 @@
 --[[ Completions & Snippets ]]
 
+local iFlatten = require('grs.lib.functional').iFlatten
+
 local function cursor_has_words_before_it()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
@@ -20,7 +22,8 @@ return {
          'hrsh7th/cmp-nvim-lsp',
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
-         { 'L3MON4D3/LuaSnip',
+         {
+            'L3MON4D3/LuaSnip',
             dependencies = {
                'rafamadriz/friendly-snippets',
             },
@@ -31,6 +34,7 @@ return {
          'saadparwaiz1/cmp_luasnip',
          'saecki/crates.nvim',
       },
+      event = 'InsertEnter',
       config = function()
          local cmp = require 'cmp'
          local cmp_under_comparator = require 'cmp-under-comparator'
@@ -39,59 +43,38 @@ return {
 
          require('luasnip.loaders.from_vscode').lazy_load()
 
+         local sorting = {
+            comparators = {
+               cmp.config.compare.offset,
+               cmp.config.compare.exact,
+               cmp.config.compare.score,
+               cmp.config.compare.recently_used,
+               cmp.config.compare.locality,
+               cmp_under_comparator.under,
+               cmp.config.compare.kind,
+               cmp.config.compare.sort_text,
+               cmp.config.compare.length,
+               cmp.config.compare.order,
+            },
+         }
+
+         local snippet = {
+            expand = function(args)
+               luasnip.lsp_expand(args.body)
+            end,
+         }
+
+         local window = {
+            completion = cmp.config.window.bordered(),
+            documentation = cmp.config.window.bordered(),
+         }
+
          local select_opts = {
             behavior = cmp.SelectBehavior.Select,
          }
          local confirm_opts = {
             select = true,
             behavior = cmp.ConfirmBehavior.Replace,
-         }
-
-         local mappings = {
-            ['<c-d>'] = cmp.mapping.scroll_docs(-4),
-            ['<c-f>'] = cmp.mapping.scroll_docs(4),
-            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
-            ['<c-space>'] = cmp.mapping.close(),
-            ['<c-a>'] = cmp.mapping.abort(),
-            ['<tab>'] = cmp.mapping(function(fallback)
-               if cmp.visible() then
-                  cmp.select_next_item(select_opts)
-               elseif cursor_has_words_before_it() then
-                  cmp.complete(confirm_opts)
-               else
-                  fallback()
-               end
-            end),
-            ['<s-tab>'] = cmp.mapping(function(fallback)
-               if cmp.visible() then
-                  cmp.select_prev_item(select_opts)
-               else
-                  fallback()
-               end
-            end),
-            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
-            ['<down>'] = cmp.mapping.select_next_item(select_opts),
-            ['<c-s>'] = cmp.mapping.complete {
-               config = {
-                  sources = {
-                     { name = 'luasnip' },
-                  },
-               },
-            },
-            ['<c-right>'] = cmp.mapping(function(fallback)
-               if luasnip.jumpable(1) then
-                  luasnip.jump(1)
-               else
-                  fallback()
-               end
-            end),
-            ['<c-left>'] = cmp.mapping(function(fallback)
-               if luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
-               else
-                  fallback()
-               end
-            end),
          }
 
          local cmd_mappings = {
@@ -120,52 +103,59 @@ return {
             ['<down>'] = cmp.mapping.select_next_item(select_opts),
          }
 
-         cmp.setup {
-            sorting = {
-               comparators = {
-                  cmp.config.compare.offset,
-                  cmp.config.compare.exact,
-                  cmp.config.compare.score,
-                  cmp.config.compare.recently_used,
-                  cmp.config.compare.locality,
-                  cmp_under_comparator.under,
-                  cmp.config.compare.kind,
-                  cmp.config.compare.sort_text,
-                  cmp.config.compare.length,
-                  cmp.config.compare.order,
-               },
-            },
-            snippet = {
-               expand = function(args)
-                  luasnip.lsp_expand(args.body)
-               end,
-            },
-            window = {
-               completion = cmp.config.window.bordered(),
-               documentation = cmp.config.window.bordered(),
-            },
-            formatting = {
-               expandable_indicator = true,
-               fields = { 'abbr', 'kind', 'menu' },
-               format = lspkind.cmp_format {
-                  mode = 'symbol_text',
-                  preset = 'default',
-                  maxwidth = 50,
-                  ellipsis_char = '…',
-                  menu = {
-                     buffer = '[buf]',
-                     cmdline = '[cmd]',
-                     crates = '[crates]',
-                     luasnip = '[snip]',
-                     nvim_lsp = '[lsp]',
-                     nvim_lsp_signature_help = '[sh]',
-                     nvim_lua = '[lua]',
-                     path = '[path]',
-                     rg = '[rg]',
+         local extended_mappings = {
+            {
+               ['<c-s>'] = cmp.mapping.complete {
+                  config = {
+                     sources = {
+                        { name = 'luasnip' },
+                     },
                   },
                },
+               ['<c-right>'] = cmp.mapping(function(fallback)
+                  if luasnip.jumpable(1) then
+                     luasnip.jump(1)
+                  else
+                     fallback()
+                  end
+               end),
+               ['<c-left>'] = cmp.mapping(function(fallback)
+                  if luasnip.jumpable(-1) then
+                     luasnip.jump(-1)
+                  else
+                     fallback()
+                  end
+               end),
             },
-            mapping = mappings,
+         }
+
+         local mappings = iFlatten { cmd_mappings, extended_mappings }
+
+         local formatting = {
+            expandable_indicator = true,
+            fields = { 'abbr', 'kind', 'menu' },
+            format = lspkind.cmp_format {
+               mode = 'symbol_text',
+               preset = 'default',
+               maxwidth = 50,
+               ellipsis_char = '…',
+               menu = {
+                  buffer = '[buf]',
+                  cmdline = '[cmd]',
+                  crates = '[crates]',
+                  nvim_lsp = '[lsp]',
+                  nvim_lsp_signature_help = '[sh]',
+                  nvim_lua = '[lua]',
+                  path = '[path]',
+                  rg = '[rg]',
+               },
+            },
+         }
+
+         cmp.setup {
+            sorting = sorting,
+            snippet = snippet,
+            window = window,
             sources = cmp.config.sources(
                {
                   { name = 'nvim_lsp_signature_help' },
@@ -197,11 +187,17 @@ return {
                      keyword_length = 3,
                      max_item_count = 12,
                   },
-               }),
+               }
+            ),
+            formatting = formatting,
+            mapping = mappings,
 
          }
+
          cmp.setup.cmdline(':', {
-            mapping = cmd_mappings,
+            sorting = sorting,
+            snippet = snippet,
+            window = window,
             sources = cmp.config.sources(
                {
                   { name = 'path' }
@@ -209,25 +205,39 @@ return {
                {
                   { name = 'cmdline' }
                }),
+            -- TODO: base next one on sources
+            formatting = formatting,
+            mapping = cmd_mappings,
          })
+
          cmp.setup.cmdline('/', {
-            mapping = cmd_mappings,
+            sorting = sorting,
+            snippet = snippet,
+            window = window,
             sources = {
                {
                   name = 'buffer',
                },
             },
+            -- TODO: base next one on sources
+            formatting = formatting,
+            mapping = cmd_mappings,
          })
+
          cmp.setup.cmdline('?', {
-            mapping = cmd_mappings,
+            sorting = sorting,
+            snippet = snippet,
+            window = window,
             sources = {
                {
                   name = 'buffer',
                },
             },
+            -- TODO: base next one on sources
+            formatting = formatting,
+            mapping = cmd_mappings,
          })
       end,
-      event = 'InsertEnter',
    },
 
 }
