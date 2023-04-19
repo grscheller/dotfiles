@@ -53,6 +53,7 @@ local options = {
    termguicolors = true,                   -- enable 24-bit RGB color for ISO-8613-3 terminals
    complete = '.,w,b,u,kspell',            -- no "t,i" - redundant with LSP
    shortmess = 'atToOc',                   -- shorten statusline - removed F for Scala Metals
+   wildmenu = false,                       -- using hrsh7th/cmp-cmdline for this
 }
 
 for k, v in pairs(options) do
