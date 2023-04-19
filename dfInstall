@@ -138,6 +138,7 @@ CONFIG_FILES='
    nvim/lua/grs/config/options.lua
    nvim/lua/grs/config/treesitter.lua
    nvim/lua/grs/lib/functional.lua
+   nvim/lua/grs/lib/text.lua
    nvim/lua/grs/plugins/lsp/init.lua
    nvim/lua/grs/plugins/lsp/nullLs.lua
    nvim/lua/grs/plugins/mason/init.lua

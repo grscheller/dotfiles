@@ -1,14 +1,6 @@
 --[[ Completions & Snippets ]]
 
-local function cursor_has_words_before_it()
-   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-   return col ~= 0
-      and vim.api
-      .nvim_buf_get_lines(0, line - 1, line, true)[1]
-      :sub(col, col)
-      :match '%s'
-      == nil
-end
+local text = require('grs.lib.text')
 
 return {
 
@@ -84,7 +76,7 @@ return {
             ['<tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item(select_opts)
-               elseif cursor_has_words_before_it() then
+               elseif text.cursor_has_words_before_it() then
                   cmp.complete(confirm_opts)
                else
                   fallback()
