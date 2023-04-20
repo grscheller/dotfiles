@@ -67,7 +67,7 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
-         local basic_mappings = {
+         local insert_mapping = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
             ['<cr>'] = cmp.mapping.confirm(confirm_opts),
@@ -89,11 +89,8 @@ return {
                   fallback()
                end
             end),
-            ['<up>'] = cmp.mapping.select_prev_item(select_opts),
-            ['<down>'] = cmp.mapping.select_next_item(select_opts),
-         }
-
-         local snippet_mappings = {
+            ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
+            ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
             ['<c-s>'] = cmp.mapping.complete {
                config = {
                   sources = {
@@ -116,8 +113,6 @@ return {
                end
             end),
          }
-
-         local insert_mappings = vim.tbl_extend("error", basic_mappings, snippet_mappings)
 
          local formatting = {
             expandable_indicator = true,
@@ -178,52 +173,30 @@ return {
                }
             ),
             formatting = formatting,
-            mapping = insert_mappings,
+            mapping = insert_mapping,
 
          }
 
          cmp.setup.cmdline(':', {
-            sorting = sorting,
-            snippet = snippet,
-            window = window,
+            mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources(
-               {
-                  { name = 'path' }
-               },
-               {
-                  { name = 'cmdline' }
-               }),
-            -- TODO: base next one on sources
-            formatting = formatting,
-            mapping = basic_mappings,
+               {{ name = 'path' }},
+               {{
+                  name = 'cmdline',
+                  option = {
+                     ignore_cmds = { 'Man', '!' },
+                  },
+               }}),
          })
 
          cmp.setup.cmdline('/', {
-            sorting = sorting,
-            snippet = snippet,
-            window = window,
-            sources = {
-               {
-                  name = 'buffer',
-               },
-            },
-            -- TODO: base next one on sources
-            formatting = formatting,
-            mapping = basic_mappings,
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {{ name = 'buffer' }},
          })
 
          cmp.setup.cmdline('?', {
-            sorting = sorting,
-            snippet = snippet,
-            window = window,
-            sources = {
-               {
-                  name = 'buffer',
-               },
-            },
-            -- TODO: base next one on sources
-            formatting = formatting,
-            mapping = basic_mappings,
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {{ name = 'buffer' }},
          })
       end,
    },

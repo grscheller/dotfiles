@@ -2,6 +2,8 @@
 
 local M = {}
 
+---Predicate to determine if there are non-whitespace characters before cursor.
+---@return boolean
 M.cursor_has_words_before_it = function ()
    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
    return col ~= 0
