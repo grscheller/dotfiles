@@ -16,29 +16,29 @@ return {
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
-      {
          -- Neovim plugin to manage global & project-local settings
-         'folke/neoconf.nvim',
-         cmd = 'Neoconf',
-         config = true,
-      },
-      {
+         {
+            'folke/neoconf.nvim',
+            cmd = 'Neoconf',
+            config = true,
+         },
          -- Neovim setup for init.lua and plugin development with full
          -- signature help, docs and completion for the nvim lua API.
-         'folke/neodev.nvim',
-         opts = {
-            experimental = { pathStrict = true },
-         },
-      },
-         'hrsh7th/cmp-nvim-lsp',
-         'jose-elias-alvarez/null-ls.nvim',
          {
-            -- give feedback regarding LSP server progress
+            'folke/neodev.nvim',
+            opts = {
+               experimental = { pathStrict = true },
+            },
+         },
+         -- give feedback regarding LSP server progress
+         {
             'j-hui/fidget.nvim',
             config = function()
                require('fidget').setup()
             end,
          },
+         'hrsh7th/cmp-nvim-lsp',
+         'jose-elias-alvarez/null-ls.nvim',
          'williamboman/mason.nvim',
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
@@ -116,17 +116,11 @@ return {
          local dap = require 'dap'
          local dap_ui_widgets = require 'dap.ui.widgets'
          dap.configurations.rust = {
-            {
-               type = 'rust',
-               request = 'launch',
-               name = 'rt_lldb',
-            },
+            { type = 'rust', request = 'launch', name = 'rt_lldb' },
          }
          require('rust-tools').setup {
             tools = {
-               runnables = {
-                  use_telescope = true,
-               },
+               runnables = { use_telescope = true },
                inlay_hints = {
                   auto = true,
                   show_parameter_hints = false,
@@ -134,25 +128,19 @@ return {
                   other_hints_prefix = '',
                },
             },
-            -- opts sent to nvim-lspconfig overriding
-            -- defaults set by rust-tools.nvim
+            -- The server table contains nvim-lspconfig opts overriding those set by rust-tools.nvim
             server = {
                capabilities = require('cmp_nvim_lsp').default_capabilities(),
                on_attach = function(_, bufnr)
                   -- set up keymaps
                   km.lsp(bufnr)
                   km.dap(bufnr, dap, dap_ui_widgets)
-
                   -- show diagnostic popup on cursor hover
                   vim.api.nvim_create_autocmd('CursorHold', {
                      callback = function()
-                        vim.diagnostic.open_float(nil, {
-                           focusable = false
-                        })
+                        vim.diagnostic.open_float(nil, { focusable = false })
                      end,
-                     group = vim.api.nvim_create_autocmd('DiagnosticFloat', {
-                        clear = true,
-                     })
+                     group = vim.api.nvim_create_autocmd('DiagnosticFloat', { clear = true, })
                   })
                end,
             },

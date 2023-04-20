@@ -172,7 +172,6 @@ return {
             ),
             formatting = formatting,
             mapping = insert_mapping,
-
          }
 
          cmp.setup.cmdline(':', {
@@ -184,7 +183,8 @@ return {
                   option = {
                      ignore_cmds = { 'Man', '!' },
                   },
-               }}),
+               }}
+            ),
          })
 
          cmp.setup.cmdline('/', {
