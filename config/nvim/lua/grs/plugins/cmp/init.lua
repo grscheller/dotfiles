@@ -6,23 +6,26 @@ return {
 
    {
       'hrsh7th/nvim-cmp',
+      -- TODO: some of these are cmp-nvim-lsp dependecies, not nvim-cmp dependecies
       dependencies = {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
          'hrsh7th/cmp-nvim-lsp',
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
-         {
-            'L3MON4D3/LuaSnip',
-            dependencies = {
-               'rafamadriz/friendly-snippets',
-            },
-         },
          'lukas-reineke/cmp-rg',
          'lukas-reineke/cmp-under-comparator',
          'onsails/lspkind.nvim',
-         'saadparwaiz1/cmp_luasnip',
-         'saecki/crates.nvim',
+         {
+            'saadparwaiz1/cmp_luasnip',
+            {
+               'L3MON4D3/LuaSnip',
+               dependencies = {
+                  'rafamadriz/friendly-snippets',
+               },
+            },
+         },
+         'saecki/crates.nvim',  -- TODO: this is also a rust-tools dependency
       },
       event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
@@ -126,10 +129,10 @@ return {
                   buffer = '[buf]',
                   cmdline = '[cmd]',
                   crates = '[crates]',
-                  nvim_lsp = '[lsp]',
                   nvim_lua = '[lua]',
                   path = '[path]',
                   rg = '[rg]',
+                  luasnip = '[snip]',
                },
             },
          }
@@ -140,7 +143,6 @@ return {
             window = window,
             sources = cmp.config.sources(
                {
-                  { name = 'nvim_lsp' },
                   { name = 'nvim_lua' },
                   { name = 'crates' },
                },
@@ -168,6 +170,9 @@ return {
                      keyword_length = 3,
                      max_item_count = 12,
                   },
+                  {
+                     name = 'luasnip',
+                  },
                }
             ),
             formatting = formatting,
@@ -177,7 +182,13 @@ return {
          cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources(
-               {{ name = 'path' }},
+               {{
+                  name = 'path',
+                  option = {
+                     label_trailing_slash = false,
+                     trailing_slash = false,
+                  },
+               }},
                {{
                   name = 'cmdline',
                   option = {

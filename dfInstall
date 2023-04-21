@@ -139,11 +139,11 @@ CONFIG_FILES='
    nvim/lua/grs/config/treesitter.lua
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/text.lua
+   nvim/lua/grs/plugins/cmp/init.lua
    nvim/lua/grs/plugins/lsp/init.lua
    nvim/lua/grs/plugins/lsp/nullLs.lua
    nvim/lua/grs/plugins/mason/init.lua
    nvim/lua/grs/plugins/mason/utils.lua
-   nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/lua/grs/plugins/telescope.lua
@@ -177,6 +177,7 @@ RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/cmp.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/util
