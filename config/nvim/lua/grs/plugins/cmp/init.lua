@@ -6,12 +6,9 @@ return {
 
    {
       'hrsh7th/nvim-cmp',
-      -- TODO: some of these are cmp-nvim-lsp dependecies, not nvim-cmp dependecies
       dependencies = {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
-         'hrsh7th/cmp-nvim-lsp',
-         'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
          'lukas-reineke/cmp-rg',
          'lukas-reineke/cmp-under-comparator',
@@ -25,7 +22,6 @@ return {
                },
             },
          },
-         'saecki/crates.nvim',  -- TODO: this is also a rust-tools dependency
       },
       event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
@@ -48,6 +44,26 @@ return {
                cmp.config.compare.sort_text,
                cmp.config.compare.length,
                cmp.config.compare.order,
+            },
+         }
+
+         local formatting = {
+            expandable_indicator = true,
+            fields = { 'abbr', 'kind', 'menu' },
+            format = lspkind.cmp_format {
+               mode = 'symbol_text',
+               preset = 'default',
+               maxwidth = 50,
+               ellipsis_char = '…',
+               menu = {
+                  buffer = '[buf]',
+                  cmdline = '[cmd]',
+                  crates = '[crates]',
+                  nvim_lua = '[lua]',
+                  path = '[path]',
+                  rg = '[rg]',
+                  luasnip = '[snip]',
+               },
             },
          }
 
@@ -117,85 +133,66 @@ return {
             end),
          }
 
-         local formatting = {
-            expandable_indicator = true,
-            fields = { 'abbr', 'kind', 'menu' },
-            format = lspkind.cmp_format {
-               mode = 'symbol_text',
-               preset = 'default',
-               maxwidth = 50,
-               ellipsis_char = '…',
-               menu = {
-                  buffer = '[buf]',
-                  cmdline = '[cmd]',
-                  crates = '[crates]',
-                  nvim_lua = '[lua]',
-                  path = '[path]',
-                  rg = '[rg]',
-                  luasnip = '[snip]',
+         -- unknown or unused sources are ignored
+         local sources = {
+            { name = 'nvim_lua' },
+            { name = 'crates' },
+            {
+               name = 'path',
+               option = {
+                  label_trailing_slash = false,
+                  trailing_slash = false,
+               },
+            },
+            {
+               name = 'buffer',
+               option = {
+                  get_bufnrs = function()
+                     return vim.api.nvim_list_bufs()
+                  end,
+               },
+            },
+            {
+               name = 'rg',
+               option = {
+                  additional_arguments = '--smart-case --hidden',
+               },
+               keyword_length = 3,
+               max_item_count = 12,
+            },
+            {
+               name = 'luasnip',
+            },
+         }
+
+         local cmdline_sources = {
+            {
+               name = 'path',
+               option = {
+                  label_trailing_slash = false,
+                  trailing_slash = false,
+               },
+            },
+            {
+               name = 'cmdline',
+               option = {
+                  ignore_cmds = { 'Man', '!', 'e', 'w' },
                },
             },
          }
 
          cmp.setup {
             sorting = sorting,
+            formatting = formatting,
             snippet = snippet,
             window = window,
-            sources = cmp.config.sources(
-               {
-                  { name = 'nvim_lua' },
-                  { name = 'crates' },
-               },
-               {
-                  {
-                     name = 'path',
-                     option = {
-                        label_trailing_slash = false,
-                        trailing_slash = false,
-                     },
-                  },
-                  {
-                     name = 'buffer',
-                     option = {
-                        get_bufnrs = function()
-                           return vim.api.nvim_list_bufs()
-                        end,
-                     },
-                  },
-                  {
-                     name = 'rg',
-                     option = {
-                        additional_arguments = '--smart-case --hidden',
-                     },
-                     keyword_length = 3,
-                     max_item_count = 12,
-                  },
-                  {
-                     name = 'luasnip',
-                  },
-               }
-            ),
-            formatting = formatting,
             mapping = insert_mapping,
+            sources = sources,
          }
 
          cmp.setup.cmdline(':', {
             mapping = cmp.mapping.preset.cmdline(),
-            sources = cmp.config.sources(
-               {{
-                  name = 'path',
-                  option = {
-                     label_trailing_slash = false,
-                     trailing_slash = false,
-                  },
-               }},
-               {{
-                  name = 'cmdline',
-                  option = {
-                     ignore_cmds = { 'Man', '!' },
-                  },
-               }}
-            ),
+            sources = cmdline_sources,
          })
 
          cmp.setup.cmdline('/', {

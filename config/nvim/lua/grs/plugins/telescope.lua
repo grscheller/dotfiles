@@ -12,11 +12,15 @@ return {
          {
             'nvim-telescope/telescope-frecency.nvim',
             dependencies = {
+               'nvim-lua/plenary.nvim',
                'kkharji/sqlite.lua',
             },
          },
          {
             'nvim-telescope/telescope-fzf-native.nvim',
+            dependencies = {
+               'nvim-lua/plenary.nvim',
+            },
             build = 'make',
          },
       },

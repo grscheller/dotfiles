@@ -14,14 +14,14 @@ km('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
 km('n', '<leader>tt', '<cmd>Telescope<cr>', {
    noremap = true,
    silent = true,
-   desc = 'Telescope',
+   desc = 'telescope',
 })
 
 -- Treesitter related keymaps
 km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
    noremap = true,
    silent = true,
-   desc = 'toggle treesitter',
+   desc = 'toggle treesitter highlighting',
 })
 
 --[[ Window/Tabpage related mappings/bindings ]]

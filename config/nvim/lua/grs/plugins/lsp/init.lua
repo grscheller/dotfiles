@@ -40,6 +40,7 @@ return {
          'hrsh7th/cmp-nvim-lsp',
          'jose-elias-alvarez/null-ls.nvim',
          'williamboman/mason.nvim',
+         'hrsh7th/cmp-nvim-lua', -- too specific, move lua, rust, scala to their own configs 
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
          local lspconf = require 'lspconfig'
@@ -93,8 +94,7 @@ return {
       end,
    },
 
-   {
-      -- Rust-Tools directly configures lspconfig for rust-analyzer
+   {  -- Rust-Tools directly configures lspconfig for rust-analyzer
       --
       -- Initially followed both https://github.com/simrat39/rust-tools.nvim
       -- and https://github.com/sharksforarms/neovim-rust.
@@ -106,9 +106,10 @@ return {
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'mfussenegger/nvim-dap',
-         'neovim/nvim-lspconfig',
+         'saecki/crates.nvim',
          'nvim-lua/plenary.nvim',
          'nvim-telescope/telescope.nvim',
+         'neovim/nvim-lspconfig',
       },
       enabled = LspTbl.system.rust_tools == m.man,
       ft = { 'rust' },
@@ -148,8 +149,7 @@ return {
       end
    },
 
-   {
-      -- Scala Metals directly configures lspconfig
+   {  -- Scala Metals directly configures lspconfig
       --    Latest Metals Server: https://scalameta.org/metals/docs
       --    Following: https://github.com/scalameta/nvim-metals/discussions/39
       --               https://github.com/scalameta/nvim-metals/discussions/279
@@ -212,4 +212,13 @@ return {
          end
       end,
    },
+
+   {  -- let LSP servers know about nvim.cmp completion capabilities
+      'hrsh7th/cmp-nvim-lsp',
+      dependencies = {
+         'hrsh7th/nvim-cmp',
+      },
+      event = { 'LspAttach' },
+   },
+
 }
