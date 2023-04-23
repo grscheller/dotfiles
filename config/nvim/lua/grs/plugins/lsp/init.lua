@@ -1,5 +1,8 @@
 --[[ LSP Configuration ]]
 
+local autogrp = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 local km = require 'grs.config.keymaps'
 local configMason = require 'grs.config.mason'
 local masonUtils = require 'grs.plugins.mason.utils'
@@ -113,6 +116,9 @@ return {
       },
       enabled = LspTbl.system.rust_tools == m.man,
       ft = { 'rust' },
+      init = function()
+         autogrp('GrsRustDiagnosticFloat', { clear = true })
+      end,
       config = function()
          local dap = require 'dap'
          local dap_ui_widgets = require 'dap.ui.widgets'
@@ -129,7 +135,8 @@ return {
                   other_hints_prefix = '',
                },
             },
-            -- The server table contains nvim-lspconfig opts overriding those set by rust-tools.nvim
+            -- The server table contains nvim-lspconfig opts
+            -- overriding the defaults set by rust-tools.nvim.
             server = {
                capabilities = require('cmp_nvim_lsp').default_capabilities(),
                on_attach = function(_, bufnr)
@@ -137,11 +144,17 @@ return {
                   km.lsp(bufnr)
                   km.dap(bufnr, dap, dap_ui_widgets)
                   -- show diagnostic popup on cursor hover
-                  vim.api.nvim_create_autocmd('CursorHold', {
+                  autocmd('CursorHold', {
+                     buffer = bufnr,
                      callback = function()
-                        vim.diagnostic.open_float(nil, { focusable = false })
+                        vim.diagnostic.open_float {
+                           bufnr = bufnr,
+                           scope = 'line',
+                           focusable = false,
+                        }
                      end,
-                     group = vim.api.nvim_create_autocmd('DiagnosticFloat', { clear = true, })
+                     group = autogrp('GrsRustDiagnosticFloat', { clear = false }),
+                     desc = 'Open floating diagnostic window for Rust-Tools',
                   })
                end,
             },
@@ -163,14 +176,13 @@ return {
       enabled = LspTbl.system.scala_metals == m.man,
       ft = { 'scala', 'sbt' },
       init = function()
-         vim.api.nvim_create_autocmd('FileType', {
+         local GrsMetalsGrp = autogrp('GrsMetals', { clear = true })
+         autocmd('FileType', {
             pattern = { 'scala', 'sbt' },
             callback = function()
                grs_metals.metals.initialize_or_attach(grs_metals.config)
             end,
-            group = vim.api.nvim_create_augroup('grs_scala_metals', {
-               clear = true
-            })
+            group = GrsMetalsGrp,
          })
       end,
       config = function()

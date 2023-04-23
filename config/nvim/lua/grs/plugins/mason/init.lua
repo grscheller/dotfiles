@@ -1,4 +1,8 @@
 --[[ Mason Setup ]]
+
+local autogrp = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 local configMason = require 'grs.config.mason'
 local m = configMason.MasonEnum
 local LspTbl = configMason.LspTbl
@@ -37,7 +41,6 @@ return {
    -- Install & update Mason packages on neovim startup
    {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-      event = 'VeryLazy',
       dependencies = {
          'williamboman/mason.nvim',
          'rcarriga/nvim-notify',
@@ -58,29 +61,29 @@ return {
             desc = 'Mason Tools Update',
          },
       },
+      init = function()
+         autogrp('GrsMason', { clear = true })
+      end,
       config = function()
-         --[[ Give user some mason-tool-installer feedback ]]
-         local grs_mason_group = vim.api.nvim_create_augroup('grs_mason', {})
-
-         vim.api.nvim_create_autocmd('User', {
+         autocmd('User', {
             pattern = 'MasonToolsStartingInstall',
             callback = function()
                vim.schedule(function()
                   vim.notify '  mason-tool-installer is starting!'
                end)
             end,
-            group = grs_mason_group,
+            group = autogrp('GrsMason', { clear = false }),
             desc = 'Give feedback when updating Mason tools',
          })
 
-         vim.api.nvim_create_autocmd('User', {
+         autocmd('User', {
             pattern = 'MasonToolsUpdateCompleted',
             callback = function()
                vim.schedule(function()
                   vim.notify '  mason-tool-installer has finished!'
                end)
             end,
-            group = grs_mason_group,
+            group = autogrp('GrsMason', { clear = false }),
             desc = 'Give feedback when Mason tools are finished updating',
          })
 
