@@ -79,6 +79,14 @@ km('n', '<m-b>', '<c-w>T', { noremap = true, silent = true, desc = 'breakout win
 km('n', '<m-c>', '<c-w>c', { noremap = true, silent = true, desc = 'close current window' })
 km('n', '<m-o>', '<c-w>o', { noremap = true, silent = true, desc = 'close other tab windows' })
 
+--[[ Launch external programs ]]
+
+km('n', '<leader>f', '<cmd>!fish -c fishterm<cr><cr>', {
+   noremap = true,
+   silent = true,
+   desc = 'launch fish shell in alacritty'
+})
+
 --[[ Text editting keymaps not related to any specific plugins ]]
 
 -- toggle line numberings schemes
