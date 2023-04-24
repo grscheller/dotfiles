@@ -13,37 +13,60 @@ local m = configMason.MasonEnum
 local grs_metals = {}
 
 return {
+   -- let LSP servers know about nvim.cmp completion capabilities
+   {
+      'hrsh7th/cmp-nvim-lsp',
+      dependencies = {
+         'hrsh7th/nvim-cmp',
+      },
+      event = { 'LspAttach' },
+   },
 
+   -- give feedback regarding LSP server progress
+   {
+      'j-hui/fidget.nvim',
+      config = function()
+         require('fidget').setup()
+      end,
+   },
+
+   -- nvim-cmp source for neovim Lua API
+   {
+      'hrsh7th/cmp-nvim-lua',
+      dependencies = {
+         'hrsh7th/cmp-nvim-lsp',
+      },
+      ft = { 'lua' },
+   },
+
+   -- Neovim plugin to manage global & project-local settings
+   {
+      'folke/neoconf.nvim',
+      cmd = 'Neoconf',
+      config = true,
+   },
+
+   -- Setup for Neovim init.lua and plugin development with full
+   -- signature help, docs and completion for the nvim lua API.
+   {
+      'folke/neodev.nvim',
+      opts = {
+         experimental = { pathStrict = true },
+      },
+   },
+
+   -- auto/manual configure lsp servers and null-ls builtins
    {
       'neovim/nvim-lspconfig',
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
-         -- Neovim plugin to manage global & project-local settings
-         {
-            'folke/neoconf.nvim',
-            cmd = 'Neoconf',
-            config = true,
-         },
-         -- Neovim setup for init.lua and plugin development with full
-         -- signature help, docs and completion for the nvim lua API.
-         {
-            'folke/neodev.nvim',
-            opts = {
-               experimental = { pathStrict = true },
-            },
-         },
-         -- give feedback regarding LSP server progress
-         {
-            'j-hui/fidget.nvim',
-            config = function()
-               require('fidget').setup()
-            end,
-         },
+         'folke/neoconf.nvim',
+         'folke/neodev.nvim',
+         'j-hui/fidget.nvim',
          'hrsh7th/cmp-nvim-lsp',
          'jose-elias-alvarez/null-ls.nvim',
          'williamboman/mason.nvim',
-         'hrsh7th/cmp-nvim-lua', -- too specific, move lua, rust, scala to their own configs 
       },
       config = function()  -- Initialize LSP servers & Null-ls builtins
          local lspconf = require 'lspconfig'
@@ -73,11 +96,7 @@ return {
                   km.lsp(bufnr)
                end,
                settings = {
-                  Lua = {
-                     completion = {
-                        callSnippet = 'Replace'
-                     },
-                  },
+                  Lua = { completion = { callSnippet = 'Replace' } },
                },
             }
          end
@@ -97,14 +116,15 @@ return {
       end,
    },
 
-   {  -- Rust-Tools directly configures lspconfig for rust-analyzer
-      --
-      -- Initially followed both https://github.com/simrat39/rust-tools.nvim
-      -- and https://github.com/sharksforarms/neovim-rust.
-      --
-      -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
-      --       and :help dap-widgets
-      --
+   -- Rust-Tools directly configures lspconfig for rust-analyzer itself
+   --
+   -- Initially followed both https://github.com/simrat39/rust-tools.nvim
+   -- and https://github.com/sharksforarms/neovim-rust.
+   --
+   -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
+   --       and :help dap-widgets
+   --       
+   {
       'simrat39/rust-tools.nvim',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
@@ -113,11 +133,12 @@ return {
          'nvim-lua/plenary.nvim',
          'nvim-telescope/telescope.nvim',
          'neovim/nvim-lspconfig',
+         'j-hui/fidget.nvim',
       },
       enabled = LspTbl.system.rust_tools == m.man,
       ft = { 'rust' },
       init = function()
-         autogrp('GrsRustDiagnosticFloat', { clear = true })
+         autogrp('GrsRustTools', { clear = true })
       end,
       config = function()
          local dap = require 'dap'
@@ -143,7 +164,8 @@ return {
                   -- set up keymaps
                   km.lsp(bufnr)
                   km.dap(bufnr, dap, dap_ui_widgets)
-                  -- show diagnostic popup on cursor hover
+
+                  -- show diagnostic popup when cursor lingers on line with errors
                   autocmd('CursorHold', {
                      buffer = bufnr,
                      callback = function()
@@ -153,7 +175,7 @@ return {
                            focusable = false,
                         }
                      end,
-                     group = autogrp('GrsRustDiagnosticFloat', { clear = false }),
+                     group = autogrp('GrsRustTools', { clear = false }),
                      desc = 'Open floating diagnostic window for Rust-Tools',
                   })
                end,
@@ -162,27 +184,28 @@ return {
       end
    },
 
-   {  -- Scala Metals directly configures lspconfig
-      --    Latest Metals Server: https://scalameta.org/metals/docs
-      --    Following: https://github.com/scalameta/nvim-metals/discussions/39
-      --               https://github.com/scalameta/nvim-metals/discussions/279
+   -- Scala Metals directly configures lspconfig itself
+   --    Latest Metals Server: https://scalameta.org/metals/docs
+   --    Following: https://github.com/scalameta/nvim-metals/discussions/39
+   --               https://github.com/scalameta/nvim-metals/discussions/279
+   {
       'scalameta/nvim-metals',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'mfussenegger/nvim-dap',
          'neovim/nvim-lspconfig',
          'nvim-lua/plenary.nvim',
+         'j-hui/fidget.nvim',
       },
       enabled = LspTbl.system.scala_metals == m.man,
       ft = { 'scala', 'sbt' },
       init = function()
-         local GrsMetalsGrp = autogrp('GrsMetals', { clear = true })
          autocmd('FileType', {
             pattern = { 'scala', 'sbt' },
             callback = function()
                grs_metals.metals.initialize_or_attach(grs_metals.config)
             end,
-            group = GrsMetalsGrp,
+            group = autogrp('GrsMetals', { clear = true }),
          })
       end,
       config = function()
@@ -217,20 +240,29 @@ return {
             },
          }
          function grs_metals.config.on_attach(_, bufnr)
+            -- set up dap
             grs_metals.metals.setup_dap()
+
+            -- set up keymaps
             km.lsp(bufnr)
             km.metals(bufnr, grs_metals.metals)
             km.dap(bufnr, dap, dap_ui_widgets)
+
+            -- show diagnostic popup when cursor lingers on line with errors
+            autocmd('CursorHold', {
+               buffer = bufnr,
+               callback = function()
+                  vim.diagnostic.open_float {
+                     bufnr = bufnr,
+                     scope = 'line',
+                     focusable = false,
+                  }
+               end,
+               group = autogrp('GrsMetals', { clear = false }),
+               desc = 'Open floating diagnostic window for Scala-Metals',
+            })
          end
       end,
-   },
-
-   {  -- let LSP servers know about nvim.cmp completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-      dependencies = {
-         'hrsh7th/nvim-cmp',
-      },
-      event = { 'LspAttach' },
    },
 
 }
