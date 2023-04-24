@@ -3,7 +3,27 @@
 local text = require('grs.lib.text')
 
 return {
+   -- LuaSnip completion source for nvim-cmp
+   {
+      'saadparwaiz1/cmp_luasnip',
+      dependencies = {
+         'L3MON4D3/LuaSnip',
+      },
+   },
 
+   -- Snippet-engine written in lua and used with nvim-cmp
+   {
+      'L3MON4D3/LuaSnip',
+      dependencies = {
+         'rafamadriz/friendly-snippets', -- wide coverage various languages
+         'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
+      },
+      build = 'make install_jsregexp',
+   },
+
+   -- Completion engine written in Lua, requires a snippet engine.
+   -- Any unused or unkonwn sources are ignored, so these can be
+   -- safely configured here.
    {
       'hrsh7th/nvim-cmp',
       dependencies = {
@@ -13,15 +33,7 @@ return {
          'lukas-reineke/cmp-rg',
          'lukas-reineke/cmp-under-comparator',
          'onsails/lspkind.nvim',
-         {
-            'saadparwaiz1/cmp_luasnip',
-            {
-               'L3MON4D3/LuaSnip',
-               dependencies = {
-                  'rafamadriz/friendly-snippets',
-               },
-            },
-         },
+         'saadparwaiz1/cmp_luasnip',
       },
       event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
@@ -162,6 +174,7 @@ return {
             },
             {
                name = 'luasnip',
+               option = { show_autosnippets = true },
             },
          }
 
@@ -195,12 +208,12 @@ return {
             sources = cmdline_sources,
          })
 
-         cmp.setup.cmdline('/', {
+         cmp.setup.cmdline( '/', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {{ name = 'buffer' }},
          })
 
-         cmp.setup.cmdline('?', {
+         cmp.setup.cmdline( '?', {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {{ name = 'buffer' }},
          })
