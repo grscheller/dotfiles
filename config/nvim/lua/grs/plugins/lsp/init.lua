@@ -146,7 +146,8 @@ return {
          dap.configurations.rust = {
             { type = 'rust', request = 'launch', name = 'rt_lldb' },
          }
-         require('rust-tools').setup {
+         local rt = require('rust-tools')
+         rt.setup {
             tools = {
                runnables = { use_telescope = true },
                inlay_hints = {
@@ -163,6 +164,7 @@ return {
                on_attach = function(_, bufnr)
                   -- set up keymaps
                   km.lsp(bufnr)
+                  km.rust(bufnr, rt)
                   km.dap(bufnr, dap, dap_ui_widgets)
 
                   -- show diagnostic popup when cursor lingers on line with errors

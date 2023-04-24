@@ -319,7 +319,7 @@ end
 
 -- Haskell related keymaps
 function M.haskell(bufnr)
-   km({ 'n', 'x' }, 'zH', '<cmd>%!stylish-haskell<cr>', {
+   km({ 'n', 'x' }, 'zS', '<cmd>%!stylish-haskell<cr>', {
       noremap = true,
       silent = true,
       buffer = bufnr,
@@ -327,9 +327,25 @@ function M.haskell(bufnr)
    })
 end
 
+-- Rust-Tools related keymaps
+function M.rust(bufnr, rt)
+   km('n', 'zH', rt.hover_actions.hover_actions, {
+      noremap = true,
+      silent = true,
+      buffer = bufnr,
+      desc = 'rust hover actions',
+   })
+   km('n', 'zA', rt.code_action_group.code_action_group, {
+      noremap = true,
+      silent = true,
+      buffer = bufnr,
+      desc = 'rust code action group',
+   })
+end
+
 -- Scala Metals related keymaps
 function M.metals(bufnr, metals)
-   km('n', 'M', metals.hover_worksheet, {
+   km('n', 'zH', metals.hover_worksheet, {
       noremap = true,
       silent = true,
       buffer = bufnr,
