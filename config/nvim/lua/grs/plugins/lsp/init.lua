@@ -10,8 +10,6 @@ local masonUtils = require 'grs.plugins.mason.utils'
 local LspTbl = configMason.LspTbl
 local m = configMason.MasonEnum
 
-local grs_metals = {}
-
 return {
    -- let LSP servers know about nvim.cmp completion capabilities
    {
@@ -128,10 +126,10 @@ return {
    {
       'simrat39/rust-tools.nvim',
       dependencies = {
+         'nvim-lua/plenary.nvim',
          'hrsh7th/cmp-nvim-lsp',
          'mfussenegger/nvim-dap',
          'saecki/crates.nvim',
-         'nvim-lua/plenary.nvim',
          'nvim-telescope/telescope.nvim',
          'neovim/nvim-lspconfig',
       },
@@ -151,7 +149,6 @@ return {
             tools = {
                runnables = { use_telescope = true },
                inlay_hints = {
-                  auto = true,
                   show_parameter_hints = false,
                   parameter_hints_prefix = '',
                   other_hints_prefix = '',
@@ -199,6 +196,7 @@ return {
       'scalameta/nvim-metals',
       dependencies = {
          'nvim-lua/plenary.nvim',
+         'hrsh7th/cmp-nvim-lsp',
          'mfussenegger/nvim-dap',
          'j-hui/fidget.nvim', -- metals currently does not send out progress notifications
       },
@@ -212,8 +210,8 @@ return {
          metals_config.settings = {
             showImplicitArguments = true,
             excludedPackages = {
-               "akka.actor.typed.javadsl",
-               "com.github.swagger.akka.javadsl",
+               'akka.actor.typed.javadsl',
+               'com.github.swagger.akka.javadsl',
             },
          }
          metals_config.capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -243,11 +241,11 @@ return {
 
          metals_config.on_attach = function(_, bufnr)
             -- set up dap
-             metals.setup_dap()
+            metals.setup_dap()
 
             -- set up keymaps
             km.lsp(bufnr)
-            km.metals(bufnr, grs_metals.metals)
+            km.metals(bufnr, metals)
             km.dap(bufnr, dap, dap_ui_widgets)
 
             local GrsMetalsGrp = autogrp('GrsMetals', { clear = true })
