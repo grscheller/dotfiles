@@ -4,7 +4,8 @@ return {
 
    {
       'folke/which-key.nvim',
-      event = 'VeryLazy',
+      lazy = false,
+      priority = 800,
       config = function()
          local wk = require('which-key')
          wk.setup {
@@ -15,6 +16,12 @@ return {
                },
             }
          }
+
+         -- for Which-Key menus
+         wk.register(
+            { name = '<space>' },
+            { prefix = '<leader>' }
+         )
          wk.register(
             { name = 'lazy' },
             { prefix = '<leader>l' }
@@ -30,6 +37,18 @@ return {
          wk.register(
             { name = 'telescope' },
             { prefix = '<leader>t' }
+         )
+         wk.register(
+            { name = 'dap' },
+            { prefix = '<\\>' }
+         )
+         wk.register(
+            { name = 'lsp+g' },
+            { prefix = 'g' }
+         )
+         wk.register(
+            { name = 'lsp+z (no folds)' },
+            { prefix = 'z' }
          )
       end,
    }

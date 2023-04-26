@@ -22,7 +22,7 @@ return {
       event = { 'LspAttach' },
    },
 
-   -- give feedback regarding LSP server progress
+   -- standalone UI for nvim-lsp progress
    {
       'j-hui/fidget.nvim',
       config = function()
@@ -200,6 +200,7 @@ return {
       dependencies = {
          'nvim-lua/plenary.nvim',
          'mfussenegger/nvim-dap',
+         'j-hui/fidget.nvim', -- metals currently does not send out progress notifications
       },
       enabled = LspTbl.system.scala_metals == m.man,
       -- Don't trigger this config for java files, but once triggered

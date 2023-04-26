@@ -40,23 +40,11 @@ return {
       end,
    },
 
-   -- WebDevicons needs patched font,
-   -- like Noto Mono Nerd Font,
-   -- see https://github.com/ryanoasis/nerd-fonts
-   {
-      'kyazdani42/nvim-web-devicons',
-      lazy = false,
-      priority = 900,
-      opts = {
-         default = true
-      },
-   },
-
    -- Replace vim.notify
    {
       'rcarriga/nvim-notify',
       lazy = false,
-      priority = 800,
+      priority = 900,
       opts = {},
       config = function()
          vim.notify = require 'notify'
@@ -171,6 +159,16 @@ return {
             lualine_z = {},
          },
          extensions = {},
+      },
+   },
+
+   -- WebDevicons needs patched font,
+   -- like Noto Mono Nerd Font,
+   -- see https://github.com/ryanoasis/nerd-fonts
+   {
+      'kyazdani42/nvim-web-devicons',
+      opts = {
+         default = true
       },
    },
 

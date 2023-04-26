@@ -180,7 +180,6 @@ return {
       'tsakirist/telescope-lazy.nvim',
       dependencies = {
          'nvim-telescope/telescope.nvim',
-         'folke/lazy.nvim',
       },
       keys = {
          {

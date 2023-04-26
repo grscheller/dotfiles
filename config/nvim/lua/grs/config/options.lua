@@ -44,7 +44,7 @@ local options = {
    sidescroll = 1,           -- horizontally scroll one character at a time
 
    -- Settings affecting LSP clients & plugins
-   timeoutlen = 1500,                      -- ms to wait for key mapped sequence to complete
+   timeoutlen = 1200,                      -- ms to wait for key mapped sequence to complete
    updatetime = 400,                       -- ms of no cursor movement to trigger CursorHold event
    signcolumn = 'yes',                     -- fixes first column, reduces jitter
    showmode = false,                       -- redundant with Lualine

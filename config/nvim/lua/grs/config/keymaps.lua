@@ -202,7 +202,6 @@ km('n', '<leader>u', 'a<c-v>u', {
 })
 
 --[[ LSP related keymaps ]]
-
 km('n', 'zd', vim.diagnostic.setloclist, {
    noremap = true,
    silent = true,
@@ -356,8 +355,6 @@ end
 --[[ DAP (Debug Adapter Protocol) related kemaps ]]
 
 function M.dap(bufnr, dap, dap_ui_widgets)
-   require('which-key').register({ name = 'dap' }, { buffer = bufnr, prefix = '\\' })
-
    km('n', '\\c', dap.continue, {
       noremap = true,
       silent = true,

@@ -23,7 +23,7 @@ return {
 
    -- Completion engine written in Lua, requires a snippet engine.
    -- Any unused or unkonwn sources are ignored, so these can be
-   -- safely configured here.
+   -- safely configured here even if not yet lazy loaded.
    {
       'hrsh7th/nvim-cmp',
       dependencies = {
@@ -98,13 +98,29 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
-         local insert_mapping = {
+         local mapping = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
             ['<cr>'] = cmp.mapping.confirm(confirm_opts),
-            ['<c-space>'] = cmp.mapping.close(),
+            ['<c-q>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
             ['<tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.complete_common_string()
+               elseif text.cursor_has_words_before_it() then
+                  cmp.complete(confirm_opts)
+               else
+                  fallback()
+               end
+            end, { 'i', 'c' }),
+            ['<s-tab>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.select_prev_item(select_opts)
+               else
+                  fallback()
+               end
+            end, { 'i', 'c' }),
+            ['<c-n>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_next_item(select_opts)
                elseif text.cursor_has_words_before_it() then
@@ -112,16 +128,14 @@ return {
                else
                   fallback()
                end
-            end),
-            ['<s-tab>'] = cmp.mapping(function(fallback)
+            end, { 'i', 'c' }),
+            ['<c-p>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item(select_opts)
                else
                   fallback()
                end
-            end),
-            ['<c-p>'] = cmp.mapping.select_prev_item(select_opts),
-            ['<c-n>'] = cmp.mapping.select_next_item(select_opts),
+            end, { 'i', 'c' }),
             ['<c-s>'] = cmp.mapping.complete {
                config = {
                   sources = {
@@ -199,12 +213,13 @@ return {
             formatting = formatting,
             snippet = snippet,
             window = window,
-            mapping = insert_mapping,
+            mapping = mapping,
             sources = sources,
          }
 
          cmp.setup.cmdline(':', {
-            mapping = cmp.mapping.preset.cmdline(),
+            -- mapping = cmp.mapping.preset.cmdline(),
+            mapping = mapping,
             sources = cmdline_sources,
          })
 

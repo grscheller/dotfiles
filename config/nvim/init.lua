@@ -33,22 +33,19 @@ local lazy_opts = {
    defaults = { lazy = true, version = '*' },
    git = {
       log = { '--since=5 days ago' },
-      timeout = 120,  -- seconds
       url_format = 'https://github.com/%s.git',
-      filter = true,
    },
    dev = {
-      path = '~/devel/scheller-linux-archive/plugins',
-      patterns = { 'grscheller' },
-      fallback = false,
+      path = '~/devel/plugins',
+      patterns = {}, -- { 'grscheller' },
+      fallback = true,
    },
+   install = { colorscheme = { 'kanagawa' } },
    ui = { browser = '/usr/bin/firefox' },
    checker = { enabled = true },
    performance = {
       cache = { enabled = true },
       rtp = {
-         reset_packpath = true,
-         paths = {},
          disabled_plugins = {
             '2html_plugin',
             'getscript',
@@ -57,9 +54,11 @@ local lazy_opts = {
             'logiPat',
             'matchit',
             'matchparen',
+            'rplugin',
             'rrhelper',
             'tar',
             'tarPlugin',
+            'tohtml',
             'tutor',
             'vimball',
             'vimballPlugin',
