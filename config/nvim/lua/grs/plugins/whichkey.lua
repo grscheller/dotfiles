@@ -18,38 +18,14 @@ return {
          }
 
          -- for Which-Key menus
-         wk.register(
-            { name = '<space>' },
-            { prefix = '<leader>' }
-         )
-         wk.register(
-            { name = 'lazy' },
-            { prefix = '<leader>l' }
-         )
-         wk.register(
-            { name = 'system clipboard'},
-            { mode = { 'n', 'x'}, prefix = '<leader>s' }
-         )
-         wk.register(
-            { name = 'mason' },
-            { prefix = '<leader>m' }
-         )
-         wk.register(
-            { name = 'telescope' },
-            { prefix = '<leader>t' }
-         )
-         wk.register(
-            { name = 'dap' },
-            { prefix = '<\\>' }
-         )
-         wk.register(
-            { name = 'lsp+g' },
-            { prefix = 'g' }
-         )
-         wk.register(
-            { name = 'lsp+z (no folds)' },
-            { prefix = 'z' }
-         )
+         wk.register({ name = 'dap' },              { prefix = '<\\>' })
+         wk.register({ name = 'lsp+g' },            { prefix = 'g' })
+         wk.register({ name = 'lsp+z (no folds)' }, { prefix = 'z' })
+         wk.register({ name = '<space>' },          { prefix = '<leader>' })
+         wk.register({ name = 'lazy' },             { prefix = '<leader>l' })
+         wk.register({ name = 'mason' },            { prefix = '<leader>m' })
+         wk.register({ name = 'telescope' },        { prefix = '<leader>t' })
+         wk.register({ name = 'system clipboard'},  { prefix = '<leader>s', mode = { 'n', 'x'} })
       end,
    }
 

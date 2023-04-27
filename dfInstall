@@ -132,7 +132,6 @@ CONFIG_FILES='
    nvim/lua/grs/config/autocmds.lua
    nvim/lua/grs/config/colors.lua
    nvim/lua/grs/config/globals.lua
-   nvim/lua/grs/config/icons.lua
    nvim/lua/grs/config/keymaps.lua
    nvim/lua/grs/config/mason.lua
    nvim/lua/grs/config/options.lua
@@ -177,10 +176,7 @@ RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/cmp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/util
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/icons.lua
 "
 
 RM_REPO_ITEMS="
@@ -322,7 +318,7 @@ install_file () {
          then
             printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
          else
-            diff "$src" "$trgt" || {
+            diff "$src" "$trgt" > /dev/null || {
                printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" "$trgt" "$src_abs"
             }
          fi

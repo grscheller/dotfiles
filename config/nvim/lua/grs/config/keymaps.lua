@@ -1,4 +1,4 @@
---[[ Define keymappings/keybindings ]]
+--[[ Define keymappings/keybindings - loaded on VeryLazy event ]]
 
 -- loaded on "VeryLazy" event
 

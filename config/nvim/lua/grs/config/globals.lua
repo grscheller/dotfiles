@@ -1,4 +1,4 @@
---[[ Globals - loaded via plugins/config.lua ]]
+--[[ Globals - loaded before lazy takes control ]]
 
 -- Loaded very early in init.lua,
 -- most plugins only read these on startup.

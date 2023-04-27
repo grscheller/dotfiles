@@ -1,4 +1,4 @@
---[[ Options - loaded via plugins/config.lua ]]
+--[[ Options - loaded before lazy takes control ]]
 
 -- loaded very early
 
@@ -26,8 +26,8 @@ local options = {
    undofile = true,                    -- save undo history in ~/.local/share/nvim/undo/
    ignorecase = true,                  -- Case insensitive search when given
    smartcase = true,                   -- just lower case search patterns.
-   textwidth = 100,                    -- 80 columns seems too narrow these days
-   colorcolumn = '+1,+21',             -- keep source code horizontally under control
+   textwidth = 80,                     -- keep source code horizontally under control
+   colorcolumn = '+1,+21,+41',         -- keep comments <= 80 columns, code <= 100, data <= 120 
    formatoptions = 'cqjp1',            -- for joining and breaking comment lines
    spelloptions = 'camel',             -- spellCheckCamelCaseComponents
 
