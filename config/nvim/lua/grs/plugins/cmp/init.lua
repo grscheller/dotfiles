@@ -101,7 +101,13 @@ return {
          local mapping = {
             ['<c-d>'] = cmp.mapping.scroll_docs(-4),
             ['<c-f>'] = cmp.mapping.scroll_docs(4),
-            ['<cr>'] = cmp.mapping.confirm(confirm_opts),
+            ['<cr>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.confirm(confirm_opts)
+               else
+                  fallback()
+               end
+            end, { 'i', 'c' }),
             ['<c-q>'] = cmp.mapping.close(),
             ['<c-a>'] = cmp.mapping.abort(),
             ['<tab>'] = cmp.mapping(function(fallback)
@@ -192,22 +198,6 @@ return {
             },
          }
 
-         local cmdline_sources = {
-            {
-               name = 'path',
-               option = {
-                  label_trailing_slash = false,
-                  trailing_slash = false,
-               },
-            },
-            {
-               name = 'cmdline',
-               option = {
-                  ignore_cmds = { 'Man', '!', 'e', 'w' },
-               },
-            },
-         }
-
          cmp.setup {
             sorting = sorting,
             formatting = formatting,
@@ -218,9 +208,22 @@ return {
          }
 
          cmp.setup.cmdline(':', {
-            -- mapping = cmp.mapping.preset.cmdline(),
             mapping = mapping,
-            sources = cmdline_sources,
+            sources = {
+               {
+                  name = 'path',
+                  option = {
+                     label_trailing_slash = false,
+                     trailing_slash = false,
+                  },
+               },
+               {
+                  name = 'cmdline',
+                  option = {
+                     ignore_cmds = { 'Man', '!', 'e', 'w' },
+                  },
+               }
+            },
          })
 
          cmp.setup.cmdline( '/', {
