@@ -30,7 +30,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local lazy_opts = {
-   defaults = { lazy = true, version = '*' },
+   defaults = { lazy = true, version = '' },
    git = {
       log = { '--since=5 days ago' },
       url_format = 'https://github.com/%s.git',

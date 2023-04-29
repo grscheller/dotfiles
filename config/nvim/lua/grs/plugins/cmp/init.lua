@@ -1,6 +1,7 @@
 --[[ Completions & Snippets ]]
 
-local text = require('grs.lib.text')
+local cursor_has_words_before_it = require('grs.lib.text').cursor_has_words_before_it
+local mergeTables = require('grs.lib.functional').mergeTables
 
 return {
    -- LuaSnip completion source for nvim-cmp
@@ -21,19 +22,20 @@ return {
       build = 'make install_jsregexp',
    },
 
-   -- Completion engine written in Lua, requires a snippet engine.
-   -- Any unused or unkonwn sources are ignored, so these can be
-   -- safely configured here even if not yet lazy loaded.
+   -- Completion engine written in Lua, requires a snippet engine.  Any unused
+   -- or unkonwn sources are ignored, so these can be safely configured here
+   -- even if not yet lazy loaded.
    {
       'hrsh7th/nvim-cmp',
       dependencies = {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
-         'hrsh7th/cmp-path',
+         'hrsh7th/cmp-nvim-lsp',
          'lukas-reineke/cmp-rg',
          'lukas-reineke/cmp-under-comparator',
          'onsails/lspkind.nvim',
          'saadparwaiz1/cmp_luasnip',
+         'saecki/crates.nvim',
       },
       event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
@@ -71,8 +73,8 @@ return {
                   buffer = '[buf]',
                   cmdline = '[cmd]',
                   crates = '[crates]',
+                  nvim_lsp = '[lsp]',
                   nvim_lua = '[lua]',
-                  path = '[path]',
                   rg = '[rg]',
                   luasnip = '[snip]',
                },
@@ -94,27 +96,29 @@ return {
             behavior = cmp.SelectBehavior.Select,
          }
          local confirm_opts = {
-            select = true,
+            select = false,
             behavior = cmp.ConfirmBehavior.Replace,
          }
 
          local mapping = {
-            ['<c-d>'] = cmp.mapping.scroll_docs(-4),
-            ['<c-f>'] = cmp.mapping.scroll_docs(4),
             ['<cr>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.confirm(confirm_opts)
+                  cmp.close()
                else
                   fallback()
                end
             end, { 'i', 'c' }),
-            ['<c-q>'] = cmp.mapping.close(),
-            ['<c-a>'] = cmp.mapping.abort(),
-            ['<tab>'] = cmp.mapping(function(fallback)
+            ['<c-q>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.complete_common_string()
-               elseif text.cursor_has_words_before_it() then
-                  cmp.complete(confirm_opts)
+                  cmp.close()
+               else
+                  fallback()
+               end
+            end, { 'i', 'c' }),
+            ['<c-a>'] = cmp.mapping(function(fallback)
+               if cmp.visible() then
+                  cmp.abort()
                else
                   fallback()
                end
@@ -126,15 +130,24 @@ return {
                   fallback()
                end
             end, { 'i', 'c' }),
-            ['<c-n>'] = cmp.mapping(function(fallback)
-               if cmp.visible() then
-                  cmp.select_next_item(select_opts)
-               elseif text.cursor_has_words_before_it() then
-                  cmp.complete(confirm_opts)
-               else
-                  fallback()
-               end
-            end, { 'i', 'c' }),
+            ['<c-n>'] = cmp.mapping {
+               i = function(fallback)
+                      if cmp.visible() then
+                         cmp.select_next_item(select_opts)
+                      elseif cursor_has_words_before_it() then
+                         cmp.complete(confirm_opts)
+                      else
+                         fallback()
+                      end
+                   end,
+               c = function(fallback)
+                      if cmp.visible() then
+                         cmp.select_next_item(select_opts)
+                      else
+                         fallback()
+                      end
+                   end,
+            },
             ['<c-p>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.select_prev_item(select_opts)
@@ -142,53 +155,89 @@ return {
                   fallback()
                end
             end, { 'i', 'c' }),
-            ['<c-s>'] = cmp.mapping.complete {
-               config = {
-                  sources = {
-                     { name = 'luasnip' },
-                  },
-               },
-            },
-            ['<c-right>'] = cmp.mapping(function(fallback)
-               if luasnip.jumpable(1) then
-                  luasnip.jump(1)
-               else
-                  fallback()
-               end
-            end),
-            ['<c-left>'] = cmp.mapping(function(fallback)
-               if luasnip.jumpable(-1) then
-                  luasnip.jump(-1)
-               else
-                  fallback()
-               end
-            end),
          }
 
-         -- unknown or unused sources are ignored
-         local sources = {
+         local mapping_insert_mode = mergeTables {
+            mapping, {
+               ['<c-d>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.scroll_docs(-4)
+                  else
+                     fallback()
+                  end
+               end),
+               ['<c-f>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.scroll_docs(4)
+                  else
+                     fallback()
+                  end
+               end),
+               ['<c-s>'] = cmp.mapping.complete {
+                  config = {
+                     sources = {
+                        { name = 'luasnip' },
+                     },
+                  },
+               },
+               ['<c-right>'] = cmp.mapping(function(fallback)
+                  if luasnip.jumpable(1) then
+                     luasnip.jump(1)
+                  else
+                     fallback()
+                  end
+               end),
+               ['<c-left>'] = cmp.mapping(function(fallback)
+                  if luasnip.jumpable(-1) then
+                     luasnip.jump(-1)
+                  else
+                     fallback()
+                  end
+               end),
+               ['<tab>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     return cmp.complete_common_string()
+                  elseif cursor_has_words_before_it() then
+                     cmp.complete(confirm_opts)
+                  else
+                     fallback()
+                  end
+               end),
+            }
+         }
+
+         local mapping_cmdline_mode = mergeTables {
+            mapping, {
+               ['<tab>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     local completed = cmp.complete_common_string()
+                     if completed then
+                        return completed
+                     else
+                        cmp.close()
+                     end
+                  else
+                     fallback()
+                  end
+               end, { 'c' }),
+            },
+         }
+
+         local sources_insert_mode = {
+            { name = 'nvim_lsp' },
             { name = 'nvim_lua' },
             { name = 'crates' },
             {
-               name = 'path',
-               option = {
-                  label_trailing_slash = false,
-                  trailing_slash = false,
-               },
-            },
-            {
                name = 'buffer',
                option = {
-                  get_bufnrs = function()
+                  get_bufnrs = function()  -- look in all buffers
                      return vim.api.nvim_list_bufs()
                   end,
                },
             },
             {
                name = 'rg',
-               option = {
-                  additional_arguments = '--smart-case --hidden',
-               },
+               option = { additional_arguments = '--smart-case --hidden' },
                keyword_length = 3,
                max_item_count = 12,
             },
@@ -198,42 +247,36 @@ return {
             },
          }
 
+         local sources_cmdline_mode = {{ name = 'cmdline' }}
+
+         local sources_current_buffer_only = {
+            {
+               name = 'buffer',
+               option = {
+                  get_bufnrs = function()
+                     return vim.api.nvim_get_current_buf()
+                  end,
+               },
+            },
+         }
+
          cmp.setup {
             sorting = sorting,
             formatting = formatting,
             snippet = snippet,
             window = window,
-            mapping = mapping,
-            sources = sources,
+            mapping = mapping_insert_mode,
+            sources = sources_insert_mode,
          }
 
          cmp.setup.cmdline(':', {
-            mapping = mapping,
-            sources = {
-               {
-                  name = 'path',
-                  option = {
-                     label_trailing_slash = false,
-                     trailing_slash = false,
-                  },
-               },
-               {
-                  name = 'cmdline',
-                  option = {
-                     ignore_cmds = { 'Man', '!', 'e', 'w' },
-                  },
-               }
-            },
+            mapping = mapping_cmdline_mode,
+            sources = sources_cmdline_mode,
          })
 
-         cmp.setup.cmdline( '/', {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = {{ name = 'buffer' }},
-         })
-
-         cmp.setup.cmdline( '?', {
-            mapping = cmp.mapping.preset.cmdline(),
-            sources = {{ name = 'buffer' }},
+         cmp.setup.cmdline({ '/', '?' }, {
+            mapping = mapping_cmdline_mode,
+            sources = sources_current_buffer_only,
          })
       end,
    },
