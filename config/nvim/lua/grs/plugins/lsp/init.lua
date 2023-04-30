@@ -81,7 +81,7 @@ return {
          end
 
          -- Initialize Null-ls builtins
-         require('grs.plugins.lsp.nullLs').setup()
+         require('grs.plugins.lsp.utils.nullLs').setup()
 
          -- Manual LSP, DAP, and Null-ls configurations as well as
          -- other development environment configurations.
@@ -112,75 +112,6 @@ return {
          end
 
       end,
-   },
-
-   -- Rust-Tools itself directly configures rust-analyzer with nvim-lspconfig 
-   --
-   --    Original setup based on:
-   --      https://github.com/simrat39/rust-tools.nvim
-   --      https://github.com/sharksforarms/neovim-rust
-   --
-   -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
-   --       and :help dap-widgets
-   --       
-   {
-      'simrat39/rust-tools.nvim',
-      dependencies = {
-         'nvim-lua/plenary.nvim',
-         'hrsh7th/cmp-nvim-lsp',
-         'mfussenegger/nvim-dap',
-         'saecki/crates.nvim',
-         'nvim-telescope/telescope.nvim',
-         'neovim/nvim-lspconfig',
-      },
-      enabled = LspTbl.system.rust_tools == m.man,
-      ft = { 'rust' },
-      init = function()
-         autogrp('GrsRustTools', { clear = true })
-      end,
-      config = function()
-         local dap = require 'dap'
-         local dap_ui_widgets = require 'dap.ui.widgets'
-         dap.configurations.rust = {
-            { type = 'rust', request = 'launch', name = 'rt_lldb' },
-         }
-         local rt = require('rust-tools')
-         rt.setup {
-            tools = {
-               runnables = { use_telescope = true },
-               inlay_hints = {
-                  show_parameter_hints = false,
-                  parameter_hints_prefix = '',
-                  other_hints_prefix = '',
-               },
-            },
-            -- The server table contains nvim-lspconfig opts
-            -- overriding the defaults set by rust-tools.nvim.
-            server = {
-               capabilities = require('cmp_nvim_lsp').default_capabilities(),
-               on_attach = function(_, bufnr)
-                  -- set up keymaps
-                  km.lsp(bufnr)
-                  km.rust(bufnr, rt)
-                  km.dap(bufnr, dap, dap_ui_widgets)
-
-                  -- show diagnostic popup when cursor lingers on line with errors
-                  autocmd('CursorHold', {
-                     buffer = bufnr,
-                     callback = function()
-                        vim.diagnostic.open_float {
-                           bufnr = bufnr,
-                           scope = 'line',
-                           focusable = false,
-                        }
-                     end,
-                     group = autogrp('GrsRustTools', { clear = false }),
-                     desc = 'Open floating diagnostic window for Rust-Tools',
-                  })
-               end,
-            },
-         }
-      end
    },
 
    -- Scala Metals directly configures the Neovim LSP client itself

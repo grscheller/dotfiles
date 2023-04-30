@@ -32,6 +32,7 @@ return {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
          'hrsh7th/cmp-nvim-lsp',
+         'hrsh7th/cmp-path',
          'lukas-reineke/cmp-rg',
          'lukas-reineke/cmp-under-comparator',
          'onsails/lspkind.nvim',
@@ -76,6 +77,7 @@ return {
                   crates = '[crates]',
                   nvim_lsp = '[lsp]',
                   nvim_lua = '[lua]',
+                  path = '[path]',
                   rg = '[rg]',
                   luasnip = '[snip]',
                },
@@ -177,7 +179,10 @@ return {
                ['<c-s>'] = cmp.mapping.complete {
                   config = {
                      sources = {
-                        { name = 'luasnip' },
+                        {
+                           name = 'luasnip',
+                           option = { show_autosnippets = true },
+                        },
                      },
                   },
                },
@@ -243,8 +248,11 @@ return {
                max_item_count = 12,
             },
             {
-               name = 'luasnip',
-               option = { show_autosnippets = true },
+               name = 'path',
+               option = {
+                  label_trailing_slash = false,
+                  trailing_slash = false,
+               },
             },
          }
 
