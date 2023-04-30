@@ -30,7 +30,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local lazy_opts = {
-   defaults = { lazy = true, version = '' },
+   spec = {
+     { import = 'grs.plugins' },
+   },
+   defaults = { lazy = true, version = nil },
    git = {
       log = { '--since=5 days ago' },
       url_format = 'https://github.com/%s.git',
@@ -40,7 +43,7 @@ local lazy_opts = {
       patterns = {}, -- { 'grscheller' },
       fallback = true,
    },
-   install = { colorscheme = { 'kanagawa' } },
+   install = { colorscheme = { 'habamax' } },
    ui = { browser = '/usr/bin/firefox' },
    checker = { enabled = true },
    performance = {
@@ -54,6 +57,8 @@ local lazy_opts = {
             'logiPat',
             'matchit',
             'matchparen',
+            'netrw',
+            'netrwPlugin',
             'rplugin',
             'rrhelper',
             'tar',
@@ -73,7 +78,7 @@ local ok, lazy, keymaps
 ok, lazy = pcall(require, 'lazy')
 if ok then
    -- Let lazy.nvim take control
-   lazy.setup('grs.plugins', lazy_opts)
+   lazy.setup(lazy_opts)
 else
    -- otherwise, at least load key mappings
    print(string.format('lazy.nvim failed with error: %s', lazy))
@@ -81,4 +86,5 @@ else
    if not ok then
       print(string.format('Keymaps failed to load with error: %s', keymaps))
    end
+   vim.cmd [[colorscheme habamax]]
 end

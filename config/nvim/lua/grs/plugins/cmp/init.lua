@@ -27,6 +27,7 @@ return {
    -- even if not yet lazy loaded.
    {
       'hrsh7th/nvim-cmp',
+      version = nil,
       dependencies = {
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
