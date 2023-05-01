@@ -27,6 +27,7 @@ abbr -a gl git log
 abbr -a gp git pull
 abbr -a gh git push
 abbr -a gs git status  # gs steps on ghostscript
+abbr -a gb git 'branch --list|cat'
 
 # So I can run these outside the dotfiles repo
 abbr -a dfInstall '$DOTFILE_GIT_REPO/dfInstall'
