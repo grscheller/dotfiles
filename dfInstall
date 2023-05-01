@@ -235,22 +235,26 @@ fi
 
 ## Function to ensure directory exists
 ensure_dir () {
-   dir="$1"
-   if [ ! -d "$dir" ]
+   targetDir="$1"
+   srcDir="$2"
+   if [ ! -d "$targetDir" ]
    then
       case "$switch" in
          install)
-            mkdir -p "$dir" ||
-               printf "\\nWarning: Failed to create '%s' directory\\n" "$dir"
-            ;;
-         repo)
-            printf "\\nSource directory '%s' does not exist.\\n" "$dir"
+            mkdir -p "$targetDir" ||
+               printf "\\nWarning: Failed to create '%s' directory\\n" "$targetDir"
             ;;
          target)
-            printf "\\nTarget directory '%s' needs to be created.\\n" "$dir"
+            printf "\\nTarget directory '%s' needs to be created.\\n" "$targetDir"
             ;;
       esac
    fi
+   if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
+   then
+      printf "\\nSource directory '%s' does not exist.\\n" "$srcDir"
+   fi
+   srcDir=
+   targetDir=
 }
 
 ## Function to check or remove files or directories
@@ -295,8 +299,8 @@ install_file () {
    trgt="$install_dir/$file_path"
    trgt_dir="${trgt%/*}"
 
-   # Make sure target directory exists
-   ensure_dir "$trgt_dir"
+   # Make sure target and source directory exists
+   ensure_dir "$trgt_dir" "$src_dir"
 
    case "$switch" in
       install)
