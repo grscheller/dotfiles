@@ -15,8 +15,8 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 local km = require 'grs.config.keymaps'
-local configMason = require 'grs.config.mason'
-local m = configMason.MasonEnum
+local masonConf = require 'grs.config.masonConf'
+local m = masonConf.MasonEnum
 
 return {
    {
@@ -27,7 +27,7 @@ return {
          'mfussenegger/nvim-dap',
          'j-hui/fidget.nvim', -- metals currently does not send out progress notifications
       },
-      enabled = configMason.LspTbl.system.scala_metals == m.man,
+      enabled = masonConf.LspTbl.system.scala_metals == m.man,
       -- Have not yet decided whether to use Metals for pure Java projects. For
       -- now trigger for just Scala & SBT.  Once triggered, Metals will take
       -- control over Java code too.  This is for mixed Scala/Java projects.

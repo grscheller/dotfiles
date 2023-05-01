@@ -9,7 +9,7 @@ local LspTbl = configMason.LspTbl
 local DapTbl = configMason.DapTbl
 local BuiltinTbls = configMason.BuiltinTbls
 
-local masonUtils = require 'grs.plugins.mason.utils'
+local masonCore = require 'grs.core.masonCore'
 
 local iFlatten = require('grs.lib.functional').iFlatten
 
@@ -18,13 +18,13 @@ local install = function(_, v)
 end
 
 local masonPackages = iFlatten {
-   masonUtils.lspconfig2mason(LspTbl, install),
-   masonUtils.dap2mason(DapTbl, install),
-   masonUtils.nullLs2mason(BuiltinTbls.code_actions, install),
-   masonUtils.nullLs2mason(BuiltinTbls.completions, install),
-   masonUtils.nullLs2mason(BuiltinTbls.diagnostics, install),
-   masonUtils.nullLs2mason(BuiltinTbls.formatting, install),
-   masonUtils.nullLs2mason(BuiltinTbls.hover, install),
+   masonCore.lspconfig2mason(LspTbl, install),
+   masonCore.dap2mason(DapTbl, install),
+   masonCore.nullLs2mason(BuiltinTbls.code_actions, install),
+   masonCore.nullLs2mason(BuiltinTbls.completions, install),
+   masonCore.nullLs2mason(BuiltinTbls.diagnostics, install),
+   masonCore.nullLs2mason(BuiltinTbls.formatting, install),
+   masonCore.nullLs2mason(BuiltinTbls.hover, install),
 }
 
 return {

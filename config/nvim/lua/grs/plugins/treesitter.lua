@@ -1,6 +1,6 @@
 --[[ Install Language Modules for Neovim's built-in Treesitter ]]
 
-local ts = require('grs.config.treesitter')
+local ts = require('grs.config.treesitterConf')
 
 return {
 

@@ -1,43 +1,38 @@
 --[[ Completions & Snippets ]]
+--
+-- nvim-cmp is a completion engine written in Lua.  It requires a snippet
+-- engine (using LuaSnip) and completion sources (see below).
 
 local cursor_has_words_before_it = require('grs.lib.text').cursor_has_words_before_it
 local mergeTables = require('grs.lib.functional').mergeTables
 
 return {
-   -- LuaSnip completion source for nvim-cmp
-   {
-      'saadparwaiz1/cmp_luasnip',
-      dependencies = {
-         'L3MON4D3/LuaSnip',
-      },
-   },
 
-   -- Snippet-engine written in lua and used with nvim-cmp
-   {
-      'L3MON4D3/LuaSnip',
-      dependencies = {
-         'rafamadriz/friendly-snippets', -- wide coverage various languages
-         'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
-      },
-      build = 'make install_jsregexp',
-   },
-
-   -- Completion engine written in Lua, requires a snippet engine.  Any unused
-   -- or unkonwn sources are ignored, so these can be safely configured here
-   -- even if not yet lazy loaded.
    {
       'hrsh7th/nvim-cmp',
       version = nil,
       dependencies = {
+         -- Snippet engine
+         {
+            'L3MON4D3/LuaSnip',
+            dependencies = {
+               'rafamadriz/friendly-snippets', -- wide coverage various languages
+               'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
+            },
+            build = 'make install_jsregexp',
+         },
+         -- completion sources
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
          'hrsh7th/cmp-nvim-lsp',
          'hrsh7th/cmp-path',
          'lukas-reineke/cmp-rg',
-         'lukas-reineke/cmp-under-comparator',
-         'onsails/lspkind.nvim',
-         'saadparwaiz1/cmp_luasnip',
          'saecki/crates.nvim',
+         'saadparwaiz1/cmp_luasnip',
+         -- modify formatting of ui
+         'onsails/lspkind.nvim',
+         -- modify sorting behavior
+         'lukas-reineke/cmp-under-comparator',
       },
       event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()

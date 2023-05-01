@@ -133,18 +133,18 @@ CONFIG_FILES='
    nvim/lua/grs/config/colors.lua
    nvim/lua/grs/config/globals.lua
    nvim/lua/grs/config/keymaps.lua
-   nvim/lua/grs/config/mason.lua
+   nvim/lua/grs/config/masonConf.lua
    nvim/lua/grs/config/options.lua
-   nvim/lua/grs/config/treesitter.lua
+   nvim/lua/grs/config/treesitterConf.lua
+   nvim/lua/grs/core/masonCore.lua
+   nvim/lua/grs/core/nullLsCore.lua
    nvim/lua/grs/lib/functional.lua
    nvim/lua/grs/lib/text.lua
-   nvim/lua/grs/plugins/cmp/init.lua
-   nvim/lua/grs/plugins/lsp/utils/nullLs.lua
+   nvim/lua/grs/plugins/cmp.lua
    nvim/lua/grs/plugins/lsp/init.lua
    nvim/lua/grs/plugins/lsp/rust.lua
    nvim/lua/grs/plugins/lsp/scala.lua
-   nvim/lua/grs/plugins/mason/init.lua
-   nvim/lua/grs/plugins/mason/utils.lua
+   nvim/lua/grs/plugins/mason.lua
    nvim/lua/grs/plugins/colorscheme.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/lua/grs/plugins/telescope.lua
@@ -180,6 +180,12 @@ RM_TARGET_ITEMS="
    $HOME/.mako
    $XDG_CONFIG_HOME/nvim/lua/grs/config/icons.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp/nullLs.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lua/utils
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lua/mason
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lua/cmp
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/appearance.lua
+   $XDG_CONFIG_HOME/lua/grs/config/treesitter.lua
+   $XDG_CONFIG_HOME/lua/grs/config/mason.lua
 "
 
 RM_REPO_ITEMS="
