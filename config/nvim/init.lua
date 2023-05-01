@@ -32,7 +32,7 @@ vim.opt.rtp:prepend(lazypath)
 local lazy_opts = {
    spec = {
      { import = 'grs.plugins' },
-     { import = 'grs.plugins.lsp' },
+     { import = 'grs.plugins.ide' },
    },
    defaults = { lazy = true, version = nil },
    git = {

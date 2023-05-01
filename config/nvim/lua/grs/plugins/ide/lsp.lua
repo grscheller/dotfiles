@@ -59,7 +59,7 @@ return {
          'folke/neoconf.nvim',
          'folke/neodev.nvim',
          'j-hui/fidget.nvim',
-         'hrsh7th/cmp-nvim-lsp',
+         'hrsh7th/nvim-cmp',
          'jose-elias-alvarez/null-ls.nvim',
          'williamboman/mason.nvim',
       },
