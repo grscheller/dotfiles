@@ -1,4 +1,13 @@
 --[[ Rust-Tools and  Configuration ]]
+-- Rust-Tools itself directly configures rust-analyzer with nvim-lspconfig 
+--
+--    Original setup based on:
+--      https://github.com/simrat39/rust-tools.nvim
+--      https://github.com/sharksforarms/neovim-rust
+--
+-- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
+--       and :help dap-widgets
+--       
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -29,15 +38,6 @@ return {
       end,
    },
 
-   -- Rust-Tools itself directly configures rust-analyzer with nvim-lspconfig 
-   --
-   --    Original setup based on:
-   --      https://github.com/simrat39/rust-tools.nvim
-   --      https://github.com/sharksforarms/neovim-rust
-   --
-   -- Todo: see https://davelage.com/posts/nvim-dap-getting-started/
-   --       and :help dap-widgets
-   --       
    {
       'simrat39/rust-tools.nvim',
       dependencies = {

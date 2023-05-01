@@ -142,6 +142,7 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/lsp/utils/nullLs.lua
    nvim/lua/grs/plugins/lsp/init.lua
    nvim/lua/grs/plugins/lsp/rust.lua
+   nvim/lua/grs/plugins/lsp/scala.lua
    nvim/lua/grs/plugins/mason/init.lua
    nvim/lua/grs/plugins/mason/utils.lua
    nvim/lua/grs/plugins/colorscheme.lua
