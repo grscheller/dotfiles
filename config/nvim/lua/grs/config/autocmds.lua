@@ -5,7 +5,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
-local GrsTextGrp = autogrp('GrsText', {})
+local GrsTextGrp = autogrp('GrsText', { clear = true })
 
 -- Write file as root - works when sudo doesn't require a password
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
@@ -40,8 +40,10 @@ autocmd('TextYankPost', {
 autocmd('BufReadPost', {
    pattern = '*',
    callback = function()
-      if vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
-         vim.api.nvim_exec('normal! g\'"', false)
+      local lastLoc = vim.fn.line('\'"')
+      local lastLine = vim.fn.line('$')
+      if 1 < lastLoc and lastLoc <= lastLine then
+         vim.api.nvim_exec2('' .. lastLoc, { output = false })
       end
    end,
    group = GrsTextGrp,

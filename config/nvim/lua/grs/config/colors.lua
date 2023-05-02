@@ -1,7 +1,8 @@
 --[[ Colorscheme early/override values ]]
-
+--
+-- Kanagawa pallet - taken from 'rebelot/kanagawa.nvim'
+--
 local kanagawa = {
-      -- Kanagawa pallet
       dragonWhite =  '#C5C9C5',
       dragonBlack0 = '#0D0C0C',
       dragonBlack1 = '#12120F',

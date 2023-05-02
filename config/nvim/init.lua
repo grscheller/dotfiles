@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd('User', {
    end,
 })
 
--- Install folke/lazy.nvim if not already installed
+-- Bootstrap folke/lazy.nvim if not already installed
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
 if not vim.loop.fs_stat(lazypath) then
    vim.fn.system {
@@ -26,9 +26,10 @@ if not vim.loop.fs_stat(lazypath) then
    }
 end
 
--- lazy.nvim configuration , see :h lazy.nvim-lazy.nvim-configuration
+-- Enable Neovim to find lazy.nvim
 vim.opt.rtp:prepend(lazypath)
 
+-- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
 local lazy_opts = {
    spec = {
      { import = 'grs.plugins' },
@@ -75,6 +76,7 @@ local lazy_opts = {
    },
 }
 
+-- Kickoff lazy.nvim or fail gracefully
 local ok, lazy, keymaps
 ok, lazy = pcall(require, 'lazy')
 if ok then
