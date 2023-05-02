@@ -90,10 +90,10 @@ return {
             documentation = cmp.config.window.bordered(),
          }
 
-         local select_opts = {
+         local optSelect = {
             behavior = cmp.SelectBehavior.Select,
          }
-         local confirm_opts = {
+         local optConfirm = {
             select = false,
             behavior = cmp.ConfirmBehavior.Replace,
          }
@@ -101,8 +101,10 @@ return {
          local mapping = {
             ['<cr>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.confirm(confirm_opts)
-                  cmp.close()
+                  cmp.confirm(optConfirm)
+                  if cmp.visible() then
+                     cmp.close()
+                  end
                else
                   fallback()
                end
@@ -121,34 +123,34 @@ return {
                   fallback()
                end
             end, { 'i', 'c' }),
+            ['<tab>'] = cmp.mapping {
+               i = function(fallback)
+                      if cmp.visible() then
+                         cmp.select_next_item(optSelect)
+                      elseif cursor_has_words_before_it() then
+                         cmp.complete(optConfirm)
+                      else
+                         fallback()
+                      end
+                   end,
+               c = function()
+                      if cmp.visible() then
+                         cmp.select_next_item(optSelect)
+                      else
+                         cmp.complete(optConfirm)
+                      end
+                   end,
+            },
             ['<s-tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_prev_item(select_opts)
+                  cmp.select_prev_item(optSelect)
                else
                   fallback()
                end
             end, { 'i', 'c' }),
-            ['<c-n>'] = cmp.mapping {
-               i = function(fallback)
-                      if cmp.visible() then
-                         cmp.select_next_item(select_opts)
-                      elseif cursor_has_words_before_it() then
-                         cmp.complete(confirm_opts)
-                      else
-                         fallback()
-                      end
-                   end,
-               c = function(fallback)
-                      if cmp.visible() then
-                         cmp.select_next_item(select_opts)
-                      else
-                         fallback()
-                      end
-                   end,
-            },
-            ['<c-p>'] = cmp.mapping(function(fallback)
+            ['<m-tab>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
-                  cmp.select_prev_item(select_opts)
+                  return cmp.complete_common_string()
                else
                   fallback()
                end
@@ -181,47 +183,25 @@ return {
                      },
                   },
                },
-               ['<c-right>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(1) then
+               ['<m-right>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.complete(optConfirm)
+                  elseif luasnip.jumpable(1) then
                      luasnip.jump(1)
                   else
                      fallback()
                   end
                end),
-               ['<c-left>'] = cmp.mapping(function(fallback)
-                  if luasnip.jumpable(-1) then
+               ['<m-left>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                     cmp.complete(optConfirm)
+                  elseif luasnip.jumpable(-1) then
                      luasnip.jump(-1)
                   else
                      fallback()
                   end
                end),
-               ['<tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     return cmp.complete_common_string()
-                  elseif cursor_has_words_before_it() then
-                     cmp.complete(confirm_opts)
-                  else
-                     fallback()
-                  end
-               end),
             }
-         }
-
-         local mapping_cmdline_mode = mergeTables {
-            mapping, {
-               ['<tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     local completed = cmp.complete_common_string()
-                     if completed then
-                        return completed
-                     else
-                        cmp.close()
-                     end
-                  else
-                     fallback()
-                  end
-               end, { 'c' }),
-            },
          }
 
          local sources_insert_mode = {
@@ -274,12 +254,12 @@ return {
          }
 
          cmp.setup.cmdline(':', {
-            mapping = mapping_cmdline_mode,
+            mapping = mapping,
             sources = sources_cmdline_mode,
          })
 
          cmp.setup.cmdline({ '/', '?' }, {
-            mapping = mapping_cmdline_mode,
+            mapping = mapping,
             sources = sources_current_buffer_only,
          })
       end,
