@@ -55,6 +55,11 @@ local options = {
    complete = '.,w,b,u,kspell',            -- no "t,i" - redundant with LSP
    shortmess = 'atToOc',                   -- shorten statusline - removed F for Scala Metals
    wildmenu = false,                       -- using hrsh7th/cmp-cmdline for this
+
+   -- Essentially disable folding
+   foldenable = false,     -- Allows the repurposing of folding
+   foldmethod = 'manual',  -- related keymaps. I have an autocmd
+   foldlevelstart = 99,    -- that helps it stay disabled.
 }
 
 for k, v in pairs(options) do

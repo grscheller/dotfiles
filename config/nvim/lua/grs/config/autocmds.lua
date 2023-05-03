@@ -11,22 +11,6 @@ local GrsTextGrp = autogrp('GrsText', { clear = true })
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
 usercmd('WR', 'WRF %', {})
 
--- No smartcase while in cmdline mode
-autocmd('CmdLineEnter', {
-   pattern = '*',
-   command = 'set nosmartcase noignorecase',
-   group = GrsTextGrp,
-   desc = 'Use case sensitive search in command mode',
-})
-
--- Use smartcase outside cmdline mode
-autocmd('CmdLineLeave', {
-   pattern = '*',
-   command = 'set ignorecase smartcase',
-   group = GrsTextGrp,
-   desc = 'Use smartcase when not in Command Mode',
-})
-
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
@@ -36,7 +20,7 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
--- Return to last edit posistion - doesn't work for first file on cmdline
+-- Does not work for first file on cmdline
 autocmd('BufReadPost', {
    pattern = '*',
    callback = function()
@@ -48,4 +32,16 @@ autocmd('BufReadPost', {
    end,
    group = GrsTextGrp,
    desc = 'Open file at last cursor position',
+})
+
+-- Make sure folding remains essentially disabled.
+autocmd({ 'BufWritePost', 'BuffEnter'}, {
+   pattern = '*',
+   callback = function()
+      vim.opt.foldenable = false
+      vim.opt.foldmethod = 'manual'
+      vim.opt.foldlevelstart = 99
+   end,
+   group = GrsTextGrp,
+   desc = 'Make sure folding is off',
 })

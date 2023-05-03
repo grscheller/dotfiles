@@ -22,6 +22,7 @@ return {
          wk.register({ name = 'lsp+g' },            { prefix = 'g' })
          wk.register({ name = 'lsp+z (no folds)' }, { prefix = 'z' })
          wk.register({ name = '<space>' },          { prefix = '<leader>' })
+         wk.register({ name = 'blackhole' },        { prefix = '<leader>l' })
          wk.register({ name = 'lazy' },             { prefix = '<leader>l' })
          wk.register({ name = 'mason' },            { prefix = '<leader>m' })
          wk.register({ name = 'telescope' },        { prefix = '<leader>t' })

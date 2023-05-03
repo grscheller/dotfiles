@@ -32,7 +32,7 @@ return {
          require('crates').setup {
             null_ls = {
                enabled = true,
-               name = 'Crates',
+               name = 'crates',
             },
          }
       end,

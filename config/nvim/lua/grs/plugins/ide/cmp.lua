@@ -109,16 +109,9 @@ return {
                   fallback()
                end
             end, { 'i', 'c' }),
-            ['<c-q>'] = cmp.mapping(function(fallback)
+            ['<c-space>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.close()
-               else
-                  fallback()
-               end
-            end, { 'i', 'c' }),
-            ['<c-a>'] = cmp.mapping(function(fallback)
-               if cmp.visible() then
-                  cmp.abort()
                else
                   fallback()
                end

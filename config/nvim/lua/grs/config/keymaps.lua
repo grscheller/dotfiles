@@ -52,30 +52,27 @@ km('n', '<m-s-h>', '<c-w>H', { noremap = true, silent = true, desc = 'move windo
 km('n', '<m-s-j>', '<c-w>J', { noremap = true, silent = true, desc = 'move window bottom' })
 km('n', '<m-s-k>', '<c-w>K', { noremap = true, silent = true, desc = 'move window top' })
 km('n', '<m-s-l>', '<c-w>L', { noremap = true, silent = true, desc = 'move window rhs' })
-km('n', '<m-x>', '<c-w>x',   { noremap = true, silent = true, desc = 'exchange window next' })
-km('n', '<m-r>', '<c-w>r',   { noremap = true, silent = true, desc = 'rotate inner split' })
 km('n', '<m-e>', '<c-w>=',   { noremap = true, silent = true, desc = 'equalize windows' })
 
 -- Resizing windows
--- Think: Alt+Minus Alt+Plus Alt+Shift+Minus Alt+Shift+Plus
-km('n', '<m-->', '2<c-w><', { noremap = true, silent = true, desc = 'make window narrower' })
-km('n', '<m-=>', '2<c-w>>', { noremap = true, silent = true, desc = 'make window wider' })
-km('n', '<m-_>', '2<c-w>-', { noremap = true, silent = true, desc = 'make window shorter' })
-km('n', '<m-+>', '2<c-w>+', { noremap = true, silent = true, desc = 'make window taller' })
+km('n', '<m-left>',  '2<c-w><', { noremap = true, silent = true, desc = 'make window narrower' })
+km('n', '<m-right>', '2<c-w>>', { noremap = true, silent = true, desc = 'make window wider' })
+km('n', '<m-down>',  '2<c-w>-', { noremap = true, silent = true, desc = 'make window shorter' })
+km('n', '<m-up>',    '2<c-w>+', { noremap = true, silent = true, desc = 'make window taller' })
 
 -- Move view in window, only move cursor to keep on screen
-km('n', '<c-h>', 'z4h', { noremap = true, silent = true, desc = 'move view left 4 columns' })
+km('n', '<c-h>', 'z4h',    { noremap = true, silent = true, desc = 'move view left 4 columns' })
 km('n', '<c-j>', '3<c-e>', { noremap = true, silent = true, desc = 'move view down 3 lines' })
 km('n', '<c-k>', '3<c-y>', { noremap = true, silent = true, desc = 'move view up 3 lines' })
-km('n', '<c-l>', 'z4l', { noremap = true, silent = true, desc = 'move view right 4 columns' })
+km('n', '<c-l>', 'z4l',    { noremap = true, silent = true, desc = 'move view right 4 columns' })
 
 -- Managing tabpages
-km('n', '<c-right>', '<cmd>tabnext<cr>', { noremap = true, silent = true, desc = 'goto next tab' })
-km('n', '<c-left>', '<cmd>tabprev<cr>', { noremap = true, silent = true, desc = 'goto prev tab' })
-km('n', '<c-up>', '<cmd>tabfirst<cr>', { noremap = true, silent = true, desc = 'goto first tab' })
-km('n', '<c-down>', '<cmd>tablast<cr>', { noremap = true, silent = true, desc = 'goto last tab' })
-km('n', '<m-n>', '<cmd>tabnew<cr>', { noremap = true, silent = true, desc = 'create new tab' })
-km('n', '<m-b>', '<c-w>T', { noremap = true, silent = true, desc = 'breakout window new tab' })
+km('n', '<c-right>', '<cmd>tabnext<cr>',  { noremap = true, silent = true, desc = 'goto next tab' })
+km('n', '<c-left>',  '<cmd>tabprev<cr>',  { noremap = true, silent = true, desc = 'goto prev tab' })
+km('n', '<c-up>',    '<cmd>tabfirst<cr>', { noremap = true, silent = true, desc = 'goto first tab' })
+km('n', '<c-down>',  '<cmd>tablast<cr>',  { noremap = true, silent = true, desc = 'goto last tab' })
+km('n', '<m-n>',     '<cmd>tabnew<cr>',   { noremap = true, silent = true, desc = 'create new tab' })
+km('n', '<m-t>', '<c-w>T', { noremap = true, silent = true, desc = 'breakout window new tab' })
 km('n', '<m-c>', '<c-w>c', { noremap = true, silent = true, desc = 'close current window' })
 km('n', '<m-o>', '<c-w>o', { noremap = true, silent = true, desc = 'close other tab windows' })
 
@@ -109,12 +106,12 @@ km('n', '<leader>n', toggle_line_numbering, {
 })
 
 -- Delete & change text without affecting default register
-km({ 'n', 'x' }, '<leader>d', '"_d', {
+km({ 'n', 'x' }, '<leader>Bd', '"_d', {
    noremap = true,
    silent = true,
    desc = 'delete text to blackhole register',
 })
-km({ 'n', 'x' }, '<leader>c', '"_c', {
+km({ 'n', 'x' }, '<leader>Bc', '"_c', {
    noremap = true,
    silent = true,
    desc = 'change text to blackhole register',
