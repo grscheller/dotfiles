@@ -35,7 +35,7 @@ autocmd('BufReadPost', {
 })
 
 -- Make sure folding remains essentially disabled.
-autocmd({ 'BufWritePost', 'BuffEnter'}, {
+autocmd({ 'BufWritePost', 'BufEnter'}, {
    pattern = '*',
    callback = function()
       vim.opt.foldenable = false
