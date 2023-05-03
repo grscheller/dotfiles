@@ -11,6 +11,22 @@ local GrsTextGrp = autogrp('GrsText', { clear = true })
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
 usercmd('WR', 'WRF %', {})
 
+-- No smartcase while in cmdline mode
+autocmd('CmdLineEnter', {
+   pattern = '*',
+   command = 'set nosmartcase noignorecase',
+   group = GrsTextGrp,
+   desc = 'Use case sensitive search in command mode',
+})
+
+-- Use smartcase outside cmdline mode
+autocmd('CmdLineLeave', {
+   pattern = '*',
+   command = 'set ignorecase smartcase',
+   group = GrsTextGrp,
+   desc = 'Use smartcase when not in Command Mode',
+})
+
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
