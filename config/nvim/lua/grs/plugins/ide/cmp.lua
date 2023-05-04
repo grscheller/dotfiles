@@ -226,17 +226,6 @@ return {
 
          local sources_cmdline_mode = {{ name = 'cmdline' }}
 
-         local sources_current_buffer_only = {
-            {
-               name = 'buffer',
-               option = {
-                  get_bufnrs = function()
-                     return vim.api.nvim_get_current_buf()
-                  end,
-               },
-            },
-         }
-
          cmp.setup {
             sorting = sorting,
             formatting = formatting,
@@ -251,10 +240,6 @@ return {
             sources = sources_cmdline_mode,
          })
 
-         cmp.setup.cmdline({ '/', '?' }, {
-            mapping = mapping,
-            sources = sources_current_buffer_only,
-         })
       end,
    },
 
