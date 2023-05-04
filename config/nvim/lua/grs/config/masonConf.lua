@@ -1,24 +1,46 @@
---[[ Mason Related Configurations ]]
+--[[ Drives LSP, Null-Ls, and DAP related Client/Server Configurations ]]
 
--- Using Mason as a 3rd party package manager when a server, linter or formatter
--- is not provided in the underlying os/environment.
-
+-- Using both Mason and the underlying os/environment for server install.
+--
+-- The Mason plugin is a 3rd party package manager for language servers,
+-- null-ls built-ins (like linters or formatters), and dap servers.  It
+-- only installs these servers, it does not configure them.
+--
+-- The nvim-lspconfig plugin is is used to configure the built-in Neovim LSP
+-- client.  It provides "cooked in" configurations for a variety of lsp servers.
+-- These server specific configurations can be adjusted by providing their setup
+-- function an opts table, but otherwise are fairly generic.
+--
+-- The nvim-dap plugin is a DAP client.  It has no notion of any sort of
+-- "default" or "builtin" configurations.  It must be configured for each
+-- dap server it invokes.
+--
+-- The null-ls plugin is a language server that can run external programs like
+-- linters, formatters, syntax checkers and provide their information to the
+-- built in Neovim lsp client.  It has a number of "built in" configuratinons
+-- for this.  Users can also define own configurations.
+--
+-- Mason will install packages from the mason tables not marked m.ignore.
+-- The names used below are lspconfig, dap, and null-ls names, not Mason
+-- package names.
+--
+-- TODO: split m.man up into m.man & m.other
+--
 local M = {}
 
 M.MasonEnum = {
-   auto = 1,     -- automatically configure with lspconf or null-ls
-   man = 2,      -- manually configure
-   install = 3,  -- install but don't configure
-   ignore = 4,   -- don't install nor configure
+   auto = 1, -- nvim configuration invokes either lspconfig or null-ls (for built-ins)
+   man = 2, -- user manually configures nvim LSP client, null-ls, or dap
+   other = 3, -- configured with 3rd party tool (like Scala-Metals or Rust-Tools)
+   install = 4, -- install but don't configure, 
+   ignore = 5, -- don't install nor configure
 }
 
 local m = M.MasonEnum
 
 --[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
 
--- Lspconfig uses default configurations for items marked m.auto.  Mason
--- installs packages in the Mason tables not marked m.ignore.  Both lists use
--- the LSP module names, not the Mason package names.
+-- lspconfig table
 M.LspTbl = {
    mason = {
       groovyls = m.auto,
@@ -35,7 +57,7 @@ M.LspTbl = {
       pyright = m.auto,
       rust_analyzer = m.install,
       rust_tools = m.man,   -- directly calls lspconfig and dap
-      scala_metals = m.man, -- directly calls dap & configures Neovim LSP client
+      scala_metals = m.man, -- directly calls dap & configures Neovim LSP client 
       lua_ls = m.man,
       taplo = m.auto,
       yamlls = m.auto,
@@ -43,10 +65,7 @@ M.LspTbl = {
    },
 }
 
--- Nvim-dap does not have any "default" or "builtin" configurations.  no reason
--- to mark anything as m.auto.  Mason installs packages from the mason tables
--- not marked m.ignore.  Names used are DAP names, not Mason package names.  For
--- system table, m.man will turn on a manual config if it exists.
+-- nvim-dap table
 M.DapTbl = {
    mason = {
       bash = m.install,
@@ -56,12 +75,8 @@ M.DapTbl = {
    system = {},
 }
 
+-- NullLs builtin table
 M.BuiltinTbls = {
-   -- Null-ls uses default "builtin" configurations for certain tools, items
-   -- marked m.auto will be configured with these builtin configs.  Mason will
-   -- installs packages in the mason tables not marked m.ignore.  Names used are
-   -- Null-ls names, not Mason package names.  For system tables, anything not
-   -- m.auto is just informational.
    code_actions = {
       mason = {},
       system = {},
