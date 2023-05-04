@@ -1,6 +1,6 @@
 --[[ Install Language Modules for Neovim's built-in Treesitter ]]
 
-local ts = require('grs.config.treesitterConf')
+local tooling = require('grs.config.tooling')
 
 return {
 
@@ -11,7 +11,7 @@ return {
       event = { 'BufReadPost', 'BufNewFile' },
       config = function()
          require('nvim-treesitter.configs').setup {
-            ensure_installed = ts.ensure_installed,
+            ensure_installed = tooling.treesitter_ensure_installed,
             auto_install = true,
             ignore_install = {},
             highlight = {

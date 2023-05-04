@@ -1,5 +1,58 @@
---[[ Drives LSP, Null-Ls, and DAP related Client/Server Configurations ]]
+--[[ Treesitter, LSP, Null-Ls, and DAP external tooling ]]
 
+local M = {}
+
+-- Treesitter parsers to ensure are installed
+M.treesitter_ensure_installed = {
+   'awk',
+   'bash',
+   'c',
+   'clojure',
+   'cmake',
+   'cpp',
+   'css',
+   'diff',
+   'fish',
+   'fortran',
+   'git_rebase',
+   'gitattributes',
+   'gitcommit',
+   'gitignore',
+   'go',
+   'haskell',
+   'html',
+   'java',
+   'javascript',
+   'json',
+   'jsonc',
+   'julia',
+   'kotlin',
+   'latex',
+   'llvm',
+   'lua',
+   'make',
+   'markdown',
+   'markdown_inline',
+   'norg',
+   'ocaml',
+   'python',
+   'query',
+   'r',
+   'racket',
+   'regex',
+   'rust',
+   'scala',
+   'toml',
+   'tsx',
+   'typescript',
+   'vim',
+   'vimdoc',
+   'yaml',
+   'zig',
+}
+
+-- The following Drives LSP, Null-Ls, and DAP Configuration
+--
 -- Using both Mason and the underlying os/environment for server install.
 --
 -- The Mason plugin is a 3rd party package manager for language servers,
@@ -26,7 +79,6 @@
 --
 -- TODO: split m.man up into m.man & m.other
 --
-local M = {}
 
 M.MasonEnum = {
    auto = 1, -- nvim configuration invokes either lspconfig or null-ls (for built-ins)

@@ -1,9 +1,9 @@
 --[[ Null-ls Infrastructure & Boilerplate ]]
 local M = {}
 
-local masonConfig = require 'grs.config.masonConf'
-local BuiltinTbls = masonConfig.BuiltinTbls
-local m = masonConfig.MasonEnum
+local tooling = require 'grs.config.tooling'
+local BuiltinTbls = tooling.BuiltinTbls
+local m = tooling.MasonEnum
 
 local func = require 'grs.lib.functional'
 local iFlatten = func.iFlatten

@@ -3,13 +3,13 @@
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local configMason = require 'grs.config.mason'
-local m = configMason.MasonEnum
-local LspTbl = configMason.LspTbl
-local DapTbl = configMason.DapTbl
-local BuiltinTbls = configMason.BuiltinTbls
+local tooling = require 'grs.config.tooling'
+local m = tooling.MasonEnum
+local LspTbl = tooling.LspTbl
+local DapTbl = tooling.DapTbl
+local BuiltinTbls = tooling.BuiltinTbls
 
-local masonCore = require 'grs.core.masonCore'
+local masonUtils = require 'grs.utils.masonUtils'
 
 local iFlatten = require('grs.lib.functional').iFlatten
 
@@ -18,13 +18,13 @@ local install = function(_, v)
 end
 
 local masonPackages = iFlatten {
-   masonCore.lspconfig2mason(LspTbl, install),
-   masonCore.dap2mason(DapTbl, install),
-   masonCore.nullLs2mason(BuiltinTbls.code_actions, install),
-   masonCore.nullLs2mason(BuiltinTbls.completions, install),
-   masonCore.nullLs2mason(BuiltinTbls.diagnostics, install),
-   masonCore.nullLs2mason(BuiltinTbls.formatting, install),
-   masonCore.nullLs2mason(BuiltinTbls.hover, install),
+   masonUtils.lspconfig2mason(LspTbl, install),
+   masonUtils.dap2mason(DapTbl, install),
+   masonUtils.nullLs2mason(BuiltinTbls.code_actions, install),
+   masonUtils.nullLs2mason(BuiltinTbls.completions, install),
+   masonUtils.nullLs2mason(BuiltinTbls.diagnostics, install),
+   masonUtils.nullLs2mason(BuiltinTbls.formatting, install),
+   masonUtils.nullLs2mason(BuiltinTbls.hover, install),
 }
 
 return {
@@ -39,6 +39,7 @@ return {
    },
 
    -- Install & update Mason packages on neovim startup
+   -- TODO: figure out what event best to use to start this
    {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       dependencies = {

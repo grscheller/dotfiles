@@ -1,11 +1,11 @@
 --[[ LSP Configuration ]]
 
 local km = require 'grs.config.keymaps'
-local masonConf = require 'grs.config.masonConf'
-local masonCore = require 'grs.core.masonCore'
+local tooling = require 'grs.config.tooling'
+local masonUtils = require 'grs.utils.masonUtils'
 
-local LspTbl = masonConf.LspTbl
-local m = masonConf.MasonEnum
+local LspTbl = tooling.LspTbl
+local m = tooling.MasonEnum
 
 return {
    -- let LSP servers know about nvim.cmp completion capabilities
@@ -68,7 +68,7 @@ return {
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
          -- Add LSP serves we are letting lspconfig automatically configure
-         for _, lspServer in ipairs(masonCore.serverList(LspTbl, m.auto)) do
+         for _, lspServer in ipairs(masonUtils.serverList(LspTbl, m.auto)) do
             lspconf[lspServer].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)
@@ -78,7 +78,7 @@ return {
          end
 
          -- Initialize Null-ls builtins
-         require('grs.core.nullLsCore').setup()
+         require('grs.utils.nullLsUtils').setup()
 
          -- Manual LSP, DAP, and Null-ls configurations as well as
          -- other development environment configurations.

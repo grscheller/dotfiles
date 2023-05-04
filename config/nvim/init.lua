@@ -32,7 +32,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
 local lazy_opts = {
    spec = {
-     { import = 'grs.plugins' },
+     { import = 'grs.plugins.lazy' },
+     { import = 'grs.plugins.editor' },
+     { import = 'grs.plugins.tooling' },
      { import = 'grs.plugins.ide' },
    },
    defaults = { lazy = true, version = nil },

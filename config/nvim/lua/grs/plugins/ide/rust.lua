@@ -13,10 +13,10 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 local km = require 'grs.config.keymaps'
-local masonConf = require 'grs.config.masonConf'
+local tooling = require 'grs.config.tooling'
 
-local LspTbl = masonConf.LspTbl
-local m = masonConf.MasonEnum
+local LspTbl = tooling.LspTbl
+local m = tooling.MasonEnum
 
 return {
    -- Crates, a neovim plugin that helps managing crates.io dependencies.
