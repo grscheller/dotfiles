@@ -1,22 +1,19 @@
 --[[ Scala Metals Configuration ]]
 --
--- Scala Metals directly configures the Neovim LSP client itself
--- and does not involke nvim-lspconfig at all.
+-- The nvim-metals plugin directly configures the Neovim LSP client itself
+-- and does not involke nvim-lspconfig at all.  It also uses Coursier to
+-- download & install the Scala Metals LSP server.
 --
---    Latest Metals Server: https://scalameta.org/metals/docs
+--    See: https://scalameta.org/metals/docs
 --
 --    Original setup based on:
 --      https://github.com/scalameta/nvim-metals/discussions/39
 --      https://github.com/scalameta/nvim-metals/discussions/279
 --
--- TODO: Figure out why LSP completions are not working.
---
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 local km = require 'grs.config.keymaps'
-local tooling = require 'grs.config.tooling'
-local m = tooling.MasonEnum
 
 return {
    {
@@ -27,7 +24,6 @@ return {
          'mfussenegger/nvim-dap',
          'j-hui/fidget.nvim', -- metals currently does not send out progress notifications
       },
-      enabled = tooling.LspTbl.system.scala_metals == m.man,
       -- Have not yet decided whether to use Metals for pure Java projects. For
       -- now trigger for just Scala & SBT.  Once triggered, Metals will take
       -- control over Java code too.  This is for mixed Scala/Java projects.
@@ -103,7 +99,7 @@ return {
          -- The above autocmd cannot be defined until metals_config has been
          -- fully built. I verified that it indeed fires even for the first
          -- scala/sbt file edited.  Otherwise, InsertEnter & CmdlineEnter events
-         -- which will trigger completions without full LSP support.
+         -- will trigger completions without full LSP support.
       end,
    },
 

@@ -3,7 +3,6 @@ local M = {}
 
 local tooling = require 'grs.config.tooling'
 local BuiltinTbls = tooling.BuiltinTbls
-local m = tooling.MasonEnum
 
 local func = require 'grs.lib.functional'
 local iFlatten = func.iFlatten
@@ -11,7 +10,7 @@ local getFilteredKeys = func.getFilteredKeys
 
 M.setup = function()
    local configure = function(_, v)
-      return v == m.auto
+      return v == true
    end
 
    local builtins = {}

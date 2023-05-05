@@ -106,7 +106,7 @@ return {
             section_separators = { left = '', right = '' },
             disabled_filetypes = {
                statusline = { 'help' },
-               winbar = { 'help' },
+               winbar = {},
             },
             ignore_focus = {},
             always_divide_middle = true,
@@ -131,6 +131,11 @@ return {
                },
             },
             lualine_x = {
+               {
+                  require('lazy.status').updates,
+                  cond = require('lazy.status').has_updates,
+                  color = { fg = color_pallet.sakuraPink },
+               },
                'encoding',
                'fileformat',
                'filetype',

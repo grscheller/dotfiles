@@ -1,8 +1,11 @@
---[[ Treesitter, LSP, Null-Ls, and DAP external tooling ]]
+-- Configurations for Treesitter parsers to install,
+-- LSP servers to directly configure via lspconfig,
+-- Null-Ls builtins to configure directly with 
+-- and LSP servers, Null-LS builtDAP
 
 local M = {}
 
--- Treesitter parsers to ensure are installed
+-- Treesitter parsers to ensure installed
 M.treesitter_ensure_installed = {
    'awk',
    'bash',
@@ -51,10 +54,6 @@ M.treesitter_ensure_installed = {
    'zig',
 }
 
--- The following Drives LSP, Null-Ls, and DAP Configuration
---
--- Using both Mason and the underlying os/environment for server install.
---
 -- The Mason plugin is a 3rd party package manager for language servers,
 -- null-ls built-ins (like linters or formatters), and dap servers.  It
 -- only installs these servers, it does not configure them.
@@ -65,64 +64,46 @@ M.treesitter_ensure_installed = {
 -- function an opts table, but otherwise are fairly generic.
 --
 -- The nvim-dap plugin is a DAP client.  It has no notion of any sort of
--- "default" or "builtin" configurations.  It must be configured for each
+-- "default" or "builtin" configurations and must be configured for each
 -- dap server it invokes.
 --
 -- The null-ls plugin is a language server that can run external programs like
 -- linters, formatters, syntax checkers and provide their information to the
 -- built in Neovim lsp client.  It has a number of "built in" configuratinons
--- for this.  Users can also define own configurations.
+-- for this.  Users can also define own such configurations.
+
+-- Mason will install all keys from the mason tables below.  The keys used
+-- are lspconfig, dap, and null-ls builtin names, not Mason package names.
 --
--- Mason will install packages from the mason tables not marked m.ignore.
--- The names used below are lspconfig, dap, and null-ls names, not Mason
--- package names.
---
--- TODO: split m.man up into m.man & m.other
---
-
-M.MasonEnum = {
-   auto = 1, -- nvim configuration invokes either lspconfig or null-ls (for built-ins)
-   man = 2, -- user manually configures nvim LSP client, null-ls, or dap
-   other = 3, -- configured with 3rd party tool (like Scala-Metals or Rust-Tools)
-   install = 4, -- install but don't configure, 
-   ignore = 5, -- don't install nor configure
-}
-
-local m = M.MasonEnum
-
---[[ The next 3 tables are the main drivers for lspconfig, dap, and null-ls ]]
-
--- lspconfig table
+-- if true, lspconfig is directly involked to configure
 M.LspTbl = {
    mason = {
-      groovyls = m.auto,
-      html = m.auto,
-      jsonls = m.auto,
-      marksman = m.auto,
-      zls = m.auto,
+      groovyls = false,
+      html = true,
+      jsonls = true,
+      marksman = true,
+      zls = true,
    },
    system = {
-      bashls = m.auto,
-      clangd = m.auto,
-      gopls = m.auto,
-      hls = m.man,
-      pyright = m.auto,
-      rust_analyzer = m.install,
-      rust_tools = m.man,   -- directly calls lspconfig and dap
-      scala_metals = m.man, -- directly calls dap & configures Neovim LSP client 
-      lua_ls = m.man,
-      taplo = m.auto,
-      yamlls = m.auto,
-      zls = m.auto,
+      bashls = true,
+      clangd = true,
+      gopls = false,
+      hls = true,
+      pyright = true,
+      rust_analyzer = false,  -- Rust-Tools configures this
+      lua_ls = true,
+      taplo = true,
+      yamlls = true,
+      zls = true,
    },
 }
 
--- nvim-dap table
+-- nvim-dap table: must be manually configured (directly of via another tool)
 M.DapTbl = {
    mason = {
-      bash = m.install,
-      cppdbg = m.install,
-      codelldb = m.install,
+      bash = false,
+      cppdbg = false,
+      codelldb = false,
    },
    system = {},
 }
@@ -139,18 +120,18 @@ M.BuiltinTbls = {
    },
    diagnostics = {
       mason = {
-         markdownlint = m.auto,
+         markdownlint = true,
       },
       system = {
-         cppcheck = m.auto,
-         cpplint = m.auto,
-         selene = m.auto,
+         cppcheck = true,
+         cpplint = true,
+         selene = true,
       },
    },
    formatting = {
       mason = {},
       system = {
-         stylua = m.auto,
+         stylua = true,
       },
    },
    hover = {

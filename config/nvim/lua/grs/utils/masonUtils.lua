@@ -230,9 +230,9 @@ M.nullLs2mason = function(BuiltinToolsTbl, pred)
    return convertToMasonPkgs(getFilteredKeys(BuiltinToolsTbl.mason, pred), BuiltinsToMasonPackage)
 end
 
-M.serverList = function(ServerTbl, masonEnum)
+M.serverList = function(ServerTbl, bool)
    local pred = function(_, v)
-      return v == masonEnum
+      return v == bool
    end
    return iFlatten {
       getFilteredKeys(ServerTbl.mason, pred),

@@ -13,10 +13,6 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 local km = require 'grs.config.keymaps'
-local tooling = require 'grs.config.tooling'
-
-local LspTbl = tooling.LspTbl
-local m = tooling.MasonEnum
 
 return {
    -- Crates, a neovim plugin that helps managing crates.io dependencies.
@@ -46,7 +42,6 @@ return {
          'mfussenegger/nvim-dap',
          'neovim/nvim-lspconfig',
       },
-      enabled = LspTbl.system.rust_tools == m.man,
       ft = { 'rust' },
       init = function()
          autogrp('GrsRustTools', { clear = true })

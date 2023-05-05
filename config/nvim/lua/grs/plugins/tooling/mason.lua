@@ -4,7 +4,6 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
 local tooling = require 'grs.config.tooling'
-local m = tooling.MasonEnum
 local LspTbl = tooling.LspTbl
 local DapTbl = tooling.DapTbl
 local BuiltinTbls = tooling.BuiltinTbls
@@ -13,8 +12,8 @@ local masonUtils = require 'grs.utils.masonUtils'
 
 local iFlatten = require('grs.lib.functional').iFlatten
 
-local install = function(_, v)
-   return v ~= m.ignore
+local install = function(_, _)
+   return true
 end
 
 local masonPackages = iFlatten {
