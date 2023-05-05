@@ -2,6 +2,10 @@
 --
 -- Kanagawa pallet - taken from 'rebelot/kanagawa.nvim'
 --
+-- Need to tweak kanagawa.nvim colorscheme in its setup function.  There doesn't
+-- seem to be a "clean" way to get at this information before the colorscheme is
+-- actually loaded.  So some of its colors I use are duplicated here.
+--
 local kanagawa = {
       dragonWhite =  '#C5C9C5',
       dragonBlack0 = '#0D0C0C',

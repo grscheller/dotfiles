@@ -8,9 +8,10 @@ local func = require 'grs.lib.functional'
 local iFlatten = func.iFlatten
 local getFilteredKeys = func.getFilteredKeys
 
-M.setup = function()
+M.getNullLsBuiltins= function()
+
    local configure = function(_, v)
-      return v == true
+      return v
    end
 
    local builtins = {}
@@ -35,16 +36,8 @@ M.setup = function()
       getFilteredKeys(BuiltinTbls.hover.system, configure),
    }
 
-   local null_ls = require 'null-ls'
+   return builtins
 
-   local sources = {}
-   for key, list in pairs(builtins) do
-      for _, builtin in ipairs(list) do
-         table.insert(sources, null_ls.builtins[key][builtin])
-      end
-   end
-
-   null_ls.setup { sources = sources }
 end
 
 return M

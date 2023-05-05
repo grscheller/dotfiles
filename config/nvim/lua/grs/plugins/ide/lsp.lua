@@ -3,8 +3,10 @@
 local km = require 'grs.config.keymaps'
 local tooling = require 'grs.config.tooling'
 local masonUtils = require 'grs.utils.masonUtils'
+local nullLsUtils= require('grs.utils.nullLsUtils')
 
-local LspTbl = tooling.LspTbl
+local lspServers = masonUtils.serverList(tooling.LspTbl, true)  -- TODO: redo like next line
+local nullLsBuiltins = nullLsUtils.getNullLsBuiltins()
 
 return {
    -- standalone UI for nvim-lsp progress
@@ -49,7 +51,7 @@ return {
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
          -- Add LSP serves we are letting lspconfig automatically configure
-         for _, lspServer in ipairs(masonUtils.serverList(LspTbl, true)) do
+         for _, lspServer in ipairs(lspServers) do
             lspconf[lspServer].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)
@@ -58,16 +60,26 @@ return {
             }
          end
 
-         -- Initialize Null-ls builtins
-         require('grs.utils.nullLsUtils').setup()
+         -- Setup Null-ls builtins
+         local null_ls = require 'null-ls'
 
-         -- Manual LSP, DAP, and Null-ls configurations as well as
-         -- other development environment configurations.
+         local nullLsSources = {}
+         for key, list in pairs(nullLsBuiltins) do
+            for _, builtin in ipairs(list) do
+               table.insert(nullLsSources, null_ls.builtins[key][builtin])
+            end
+         end
 
-         --[[ Lua Configuration - affected by neodev.nvim ]]
-         if LspTbl.system.lua_ls == true or LspTbl.mason.lua_ls == true then
+         null_ls.setup { sources = nullLsSources }
+
+         --[[ "Manually" configure these for now, until I figure out how best to
+               handle these opts tables being passed to setup functions ]]
+
+         -- Lua Configuration
+         if tooling.LspTbl.system.lua_ls == false then
             lspconf['lua_ls'].setup {
                capabilities = capabilities,
+               filetypes = { 'lua' },
                on_attach = function(_, bufnr)
                   km.lsp(bufnr)
                end,
@@ -77,8 +89,8 @@ return {
             }
          end
 
-         --[[ Haskell Configuration ]]
-         if LspTbl.system.hls == true or LspTbl.mason.hls == true then
+         -- Haskell Configuration
+         if tooling.LspTbl.system.hls == false then
             lspconf['hls'].setup {
                capabilities = capabilities,
                filetypes = { 'haskell', 'lhaskell', 'cabal' },

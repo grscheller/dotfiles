@@ -4,8 +4,8 @@ local color_pallet = require('grs.config.colors')
 
 return {
 
-   -- Kanagawa colorscheme - with minor tweaks
-   -- Needs to be loaded early to provide highlight groups to other pluggins
+   -- Kanagawa colorscheme - with minor tweaks, needs to be loaded early to
+   -- provide highlight groups to other plugins.
    {
       'rebelot/kanagawa.nvim',
       lazy = false,
