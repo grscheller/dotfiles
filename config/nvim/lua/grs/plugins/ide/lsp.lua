@@ -1,57 +1,26 @@
 --[[ LSP Configuration ]]
 
 local km = require 'grs.config.keymaps'
-local tooling = require 'grs.config.tooling'
-local masonUtils = require 'grs.utils.masonUtils'
-local nullLsUtils= require('grs.utils.nullLsUtils')
-
-local lspServers = masonUtils.serverList(tooling.LspTbl, true)  -- TODO: redo like next line
-local nullLsBuiltins = nullLsUtils.getNullLsBuiltins()
+local lspUtils = require 'grs.utils.lspUtils'
+local getNullLsSources = require('grs.utils.lspUtils').getNullLsSources
 
 return {
-   -- standalone UI for nvim-lsp progress
-   {
-      'j-hui/fidget.nvim',
-      config = function()
-         require('fidget').setup()
-      end,
-   },
-
-   -- Neovim plugin to manage global & project-local settings
-   {
-      'folke/neoconf.nvim',
-      cmd = 'Neoconf',
-      config = true,
-   },
-
-   -- Setup for Neovim init.lua and plugin development with full
-   -- signature help, docs and completion for the nvim lua API.
-   {
-      'folke/neodev.nvim',
-      opts = {
-         experimental = { pathStrict = true },
-      },
-   },
-
-   -- auto/manual configure lsp servers and null-ls builtins
+   -- Configure LSP client and Null-ls builtins
    {
       'neovim/nvim-lspconfig',
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
-         'folke/neoconf.nvim',
-         'folke/neodev.nvim',
-         'j-hui/fidget.nvim',
+         'folke/neoconf.nvim',                -- see below
+         'folke/neodev.nvim',                 -- see below
+         'j-hui/fidget.nvim',                 -- see below
          'hrsh7th/nvim-cmp',
          'jose-elias-alvarez/null-ls.nvim',
-         'williamboman/mason.nvim',
       },
-      config = function()  -- Initialize LSP servers & Null-ls builtins
+      config = function()
          local lspconf = require 'lspconfig'
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-         -- Add LSP serves we are letting lspconfig automatically configure
-         for _, lspServer in ipairs(lspServers) do
+         for _, lspServer in ipairs(lspUtils.getLspServers()) do
             lspconf[lspServer].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)
@@ -60,20 +29,10 @@ return {
             }
          end
 
-         -- Setup Null-ls builtins
-         local null_ls = require 'null-ls'
+         --[[ Manually configure the following for now, until I figure out how
+              to best handle customized opts tables passed to setup functions ]]
 
-         local nullLsSources = {}
-         for key, list in pairs(nullLsBuiltins) do
-            for _, builtin in ipairs(list) do
-               table.insert(nullLsSources, null_ls.builtins[key][builtin])
-            end
-         end
-
-         null_ls.setup { sources = nullLsSources }
-
-         --[[ "Manually" configure these for now, until I figure out how best to
-               handle these opts tables being passed to setup functions ]]
+         local tooling = require 'grs.config.tooling'
 
          -- Lua Configuration
          if tooling.LspTbl.system.lua_ls == false then
@@ -102,6 +61,38 @@ return {
          end
 
       end,
+   },
+
+   -- Configure Null-ls builtins
+   {
+      'jose-elias-alvarez/null-ls.nvim',
+      version = false,
+      config = function()
+         local null_ls = require 'null-ls'
+         null_ls.setup { sources = getNullLsSources(null_ls) }
+      end,
+   },
+
+   -- Neovim plugin to manage global & project-local settings
+   {
+      'folke/neoconf.nvim',
+      cmd = 'Neoconf',
+      config = true,
+   },
+
+   -- Setup for Neovim init.lua and plugin development with full
+   -- signature help, docs and completion for the nvim lua API.
+   {
+      'folke/neodev.nvim',
+      opts = {
+         experimental = { pathStrict = true },
+      },
+   },
+
+   -- standalone UI for nvim-lsp progress
+   {
+      'j-hui/fidget.nvim',
+      config = true,
    },
 
 }

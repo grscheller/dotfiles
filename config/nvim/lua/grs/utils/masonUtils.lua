@@ -12,6 +12,7 @@
      for the LSP, DAP and Null-ls servers/builtins installed by Mason.
 
 --]]
+
 local LspconfigToMasonPackage = {
    ['als'] = 'ada-language-server',
    ['angularls'] = 'angular-language-server',
@@ -197,46 +198,53 @@ end
 
 setmetatable(BuiltinsToMasonPackage, BuiltinsToMasonPackageMT)
 
-local func = require 'grs.lib.functional'
-local iFlatten = func.iFlatten
-local getFilteredKeys = func.getFilteredKeys
+local iFlatten = require('grs.lib.functional').iFlatten
+local tooling = require 'grs.config.tooling'
 
-local function convertToMasonPkgs(names, package_names)
-   local mason_names = {}
-   local cnt = 0
-   for _, v in pairs(names) do
-      if package_names[v] then
-         cnt = cnt + 1
-         mason_names[cnt] = package_names[v]
-      else
-         local message = string.format('Warning: No Mason package for %s found!"', v)
-         vim.notify(message)
-      end
-   end
-   return mason_names
-end
+local message
+local warn = vim.log.levels.WARN
 
 local M = {}
 
-M.lspconfig2mason = function(LspSvrTbl, pred)
-   return convertToMasonPkgs(getFilteredKeys(LspSvrTbl.mason, pred), LspconfigToMasonPackage)
-end
-
-M.dap2mason = function(DapSrvrTbl, pred)
-   return convertToMasonPkgs(getFilteredKeys(DapSrvrTbl.mason, pred), DapToMasonPackage)
-end
-
-M.nullLs2mason = function(BuiltinToolsTbl, pred)
-   return convertToMasonPkgs(getFilteredKeys(BuiltinToolsTbl.mason, pred), BuiltinsToMasonPackage)
-end
-
-M.serverList = function(ServerTbl, bool)
-   local pred = function(_, v)
-      return v == bool
+-- Uses above tables to convert a list of lspconfig, dap,
+-- and null-ls names to mason package names. Can be curried.
+local function convertToMasonPkgs(mason_pkgs_names, names)
+   local function convert(_names)
+      local mason_names = {}
+      local cnt = 0
+      for k, _ in pairs(_names) do
+         if mason_pkgs_names[k] then
+            cnt = cnt + 1
+            mason_names[cnt] = mason_pkgs_names[k]
+         else
+            message = string.format('Warning: No Mason package for %s found!', k)
+            vim.notify(message, warn)
+         end
+      end
+      return mason_names
    end
-   return iFlatten {
-      getFilteredKeys(ServerTbl.mason, pred),
-      getFilteredKeys(ServerTbl.system, pred),
+
+   if names then
+      return convert(names)
+   else
+      return convert
+   end
+end
+
+M.convertLspconfToMason = convertToMasonPkgs(LspconfigToMasonPackage)
+M.convertDapToMason = convertToMasonPkgs(DapToMasonPackage)
+M.convertNullLsToMason = convertToMasonPkgs(BuiltinsToMasonPackage)
+
+-- TODO: Don't hardcode names
+M.masonPackages = function()
+   iFlatten {
+      M.convertLspconfToMason(tooling.LspTbl.mason),
+      M.convertDapToMason(tooling.DapTbl.mason),
+      M.convertNullLsToMason(tooling.BuiltinTbls.code_actions.mason),
+      M.convertNullLsToMason(tooling.BuiltinTbls.completion.mason),
+      M.convertNullLsToMason(tooling.BuiltinTbls.diagnostics.mason),
+      M.convertNullLsToMason(tooling.BuiltinTbls.formatting.mason),
+      M.convertNullLsToMason(tooling.BuiltinTbls.hover.mason),
    }
 end
 

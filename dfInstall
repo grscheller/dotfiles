@@ -148,8 +148,8 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/tooling/mason.lua
    nvim/lua/grs/plugins/tooling/treesitter.lua
    nvim/lua/grs/plugins/lazy.lua
+   nvim/lua/grs/utils/lspUtils.lua
    nvim/lua/grs/utils/masonUtils.lua
-   nvim/lua/grs/utils/nullLsUtils.lua
    nvim/init.lua
    sway/config
    sway/config_bg_color
@@ -177,27 +177,12 @@ RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/icons.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/treesitter.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/mason.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/masonConf.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/cmp
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason
    $XDG_CONFIG_HOME/nvim/lua/grs/core
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/colorscheme.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/telescope.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/textedit.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/whichkey.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/cmp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/rust.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/scala.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/treesitter.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/toolingConf.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/treesitterConf.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/utils/nullLsUtils.lua
 "
 
 RM_REPO_ITEMS="

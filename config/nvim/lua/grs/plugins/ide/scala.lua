@@ -10,10 +10,13 @@
 --      https://github.com/scalameta/nvim-metals/discussions/39
 --      https://github.com/scalameta/nvim-metals/discussions/279
 --
+local km = require 'grs.config.keymaps'
+
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local km = require 'grs.config.keymaps'
+local message
+local info = vim.log.levels.INFO
 
 return {
    {
@@ -92,14 +95,14 @@ return {
             pattern = { 'scala', 'sbt', 'java' },
             callback = function()
                metals.initialize_or_attach(metals_config)
-               vim.notify('Scala Metals initialize or attached.')
+               message = 'Scala Metals initialize or attached.'
+               vim.notify(message, info)
             end,
             group = autogrp('GrsMetals', { clear = false }),
          })
          -- The above autocmd cannot be defined until metals_config has been
          -- fully built. I verified that it indeed fires even for the first
-         -- scala/sbt file edited.  Otherwise, InsertEnter & CmdlineEnter events
-         -- will trigger completions without full LSP support.
+         -- scala/sbt file edited.
       end,
    },
 

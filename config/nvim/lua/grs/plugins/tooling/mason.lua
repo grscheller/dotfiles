@@ -3,28 +3,10 @@
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local tooling = require 'grs.config.tooling'
-local LspTbl = tooling.LspTbl
-local DapTbl = tooling.DapTbl
-local BuiltinTbls = tooling.BuiltinTbls
+local masonPackages = require('grs.utils.masonUtils').masonPackages()
 
-local masonUtils = require 'grs.utils.masonUtils'
-
-local iFlatten = require('grs.lib.functional').iFlatten
-
-local install = function(_, _)
-   return true
-end
-
-local masonPackages = iFlatten {
-   masonUtils.lspconfig2mason(LspTbl, install),
-   masonUtils.dap2mason(DapTbl, install),
-   masonUtils.nullLs2mason(BuiltinTbls.code_actions, install),
-   masonUtils.nullLs2mason(BuiltinTbls.completions, install),
-   masonUtils.nullLs2mason(BuiltinTbls.diagnostics, install),
-   masonUtils.nullLs2mason(BuiltinTbls.formatting, install),
-   masonUtils.nullLs2mason(BuiltinTbls.hover, install),
-}
+local message
+local info = vim.log.levels.INFO
 
 return {
 
@@ -61,18 +43,18 @@ return {
             desc = 'Mason Tools Update',
          },
       },
-      init = function()
-         autogrp('GrsMason', { clear = true })
-      end,
       config = function()
+         local grsMasonGrp = autogrp('GrsMason', { clear = true })
+
          autocmd('User', {
             pattern = 'MasonToolsStartingInstall',
             callback = function()
                vim.schedule(function()
-                  vim.notify '  mason-tool-installer is starting!'
+                  message = '● mason-tool-installer is starting!'
+                  vim.notify(message, info)
                end)
             end,
-            group = autogrp('GrsMason', { clear = false }),
+            group = grsMasonGrp,
             desc = 'Give feedback when updating Mason tools',
          })
 
@@ -80,10 +62,11 @@ return {
             pattern = 'MasonToolsUpdateCompleted',
             callback = function()
                vim.schedule(function()
-                  vim.notify '  mason-tool-installer has finished!'
+                  message = '●  mason-tool-installer has finished!'
+                  vim.notify(message, info)
                end)
             end,
-            group = autogrp('GrsMason', { clear = false }),
+            group = grsMasonGrp,
             desc = 'Give feedback when Mason tools are finished updating',
          })
 

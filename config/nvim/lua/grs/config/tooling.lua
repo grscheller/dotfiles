@@ -31,63 +31,77 @@
 
 local M = {}
 
+-- document reasons for true and false choices
+local auto = true    -- automatically config via lspconfig or null-ls
+local man = false    -- manually configure
+local tool = false   -- configured via another tool
+local ignore = false -- place holder
+
 -- lspconfig table: if true, lazy.nvim will directly configure via lspconfig
 M.LspTbl = {
    mason = {
-      groovyls = false,  -- Just turned off for no particular reason
-      html = true,
-      jsonls = true,
-      marksman = true,
-      zls = true,
+      groovyls = ignore,
+      html = auto,
+      jsonls = auto,
+      marksman = auto,
+      zls = auto,
    },
    system = {
-      bashls = true,
-      clangd = true,
-      gopls = false,
-      hls = false,  -- "manually configure until I better deal with setup opts
-      pyright = true,
-      rust_analyzer = false,  -- Rust-Tools configures this
-      lua_ls = false,  -- "manually configure until I better deal with setup opts
-      taplo = true,
-      yamlls = true,
-      zls = true,
+      bashls = auto,
+      clangd = auto,
+      gopls = ignore,
+      hls = man,             -- manually configure for now
+      lua_ls = man,          -- manually configure for now
+      pyright = auto,
+      rust_analyzer = tool,  -- Rust-Tools configures this
+      taplo = auto,
+      yamlls = auto,
+      zls = auto,
    },
 }
 
--- nvim-dap table: must be manually configured (directly of via another tool)
+-- nvim-dap table: must be configured manually or via another tool
 M.DapTbl = {
    mason = {
-      bash = false,
-      cppdbg = false,
-      codelldb = false,
+      bash = man,
+      cppdbg = man,
+      codelldb = man,
    },
    system = {},
 }
 
--- null-ls table: if true, null-ls builtins will be configured 
+-- null-ls table: if auto (true) builtins configured for null-ls
 M.BuiltinTbls = {
    code_actions = {
       mason = {},
       system = {},
    },
-   completions = {
-      mason = {},
+   completion = {
+      mason = {
+  --       foofoorules = auto,
+      },
       system = {},
    },
+  -- foobaz = {
+  --    mason = {},
+  --    system = {
+  --       cppcheck = auto,
+  --    },
+  -- },
    diagnostics = {
       mason = {
-         markdownlint = true,
+         markdownlint = auto,
       },
       system = {
-         cppcheck = true,
-         cpplint = true,
-         selene = true,
+         cppcheck = auto,
+         cpplint = auto,
+         selene = auto,
       },
    },
    formatting = {
       mason = {},
       system = {
-         stylua = true,
+         stylua = auto,
       },
    },
    hover = {
