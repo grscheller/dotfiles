@@ -77,17 +77,9 @@ M.BuiltinTbls = {
       system = {},
    },
    completion = {
-      mason = {
-  --       foofoorules = auto,
-      },
+      mason = {},
       system = {},
    },
-  -- foobaz = {
-  --    mason = {},
-  --    system = {
-  --       cppcheck = auto,
-  --    },
-  -- },
    diagnostics = {
       mason = {
          markdownlint = auto,

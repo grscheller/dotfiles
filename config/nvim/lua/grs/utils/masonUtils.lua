@@ -231,20 +231,20 @@ local function convertToMasonPkgs(mason_pkgs_names, names)
    end
 end
 
-M.convertLspconfToMason = convertToMasonPkgs(LspconfigToMasonPackage)
-M.convertDapToMason = convertToMasonPkgs(DapToMasonPackage)
-M.convertNullLsToMason = convertToMasonPkgs(BuiltinsToMasonPackage)
+local convertLspconfToMason = convertToMasonPkgs(LspconfigToMasonPackage)
+local convertDapToMason = convertToMasonPkgs(DapToMasonPackage)
+local convertNullLsToMason = convertToMasonPkgs(BuiltinsToMasonPackage)
 
 -- TODO: Don't hardcode names
 M.masonPackages = function()
-   iFlatten {
-      M.convertLspconfToMason(tooling.LspTbl.mason),
-      M.convertDapToMason(tooling.DapTbl.mason),
-      M.convertNullLsToMason(tooling.BuiltinTbls.code_actions.mason),
-      M.convertNullLsToMason(tooling.BuiltinTbls.completion.mason),
-      M.convertNullLsToMason(tooling.BuiltinTbls.diagnostics.mason),
-      M.convertNullLsToMason(tooling.BuiltinTbls.formatting.mason),
-      M.convertNullLsToMason(tooling.BuiltinTbls.hover.mason),
+   return iFlatten {
+      convertLspconfToMason(tooling.LspTbl.mason),
+      convertDapToMason(tooling.DapTbl.mason),
+      convertNullLsToMason(tooling.BuiltinTbls.code_actions.mason),
+      convertNullLsToMason(tooling.BuiltinTbls.completion.mason),
+      convertNullLsToMason(tooling.BuiltinTbls.diagnostics.mason),
+      convertNullLsToMason(tooling.BuiltinTbls.formatting.mason),
+      convertNullLsToMason(tooling.BuiltinTbls.hover.mason),
    }
 end
 

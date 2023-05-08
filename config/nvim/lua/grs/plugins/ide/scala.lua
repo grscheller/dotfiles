@@ -32,7 +32,6 @@ return {
       -- control over Java code too.  This is for mixed Scala/Java projects.
       ft = { 'scala', 'sbt' },
       config = function()
-         autogrp('GrsMetals', { clear = true })
          local metals = require 'metals'
          local metals_config = metals.bare_config()
          metals_config.settings = {
@@ -68,6 +67,8 @@ return {
             },
          }
 
+         local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
+
          metals_config.on_attach = function(_, bufnr)
             metals.setup_dap()
 
@@ -85,7 +86,7 @@ return {
                      focusable = false,
                   }
                end,
-               group = autogrp('GrsMetals', { clear = false }),
+               group = grsMetalsGrp,
                desc = 'Open floating diagnostic window for Scala-Metals',
             })
          end
@@ -98,7 +99,7 @@ return {
                message = 'Scala Metals initialize or attached.'
                vim.notify(message, info)
             end,
-            group = autogrp('GrsMetals', { clear = false }),
+            group = grsMetalsGrp,
          })
          -- The above autocmd cannot be defined until metals_config has been
          -- fully built. I verified that it indeed fires even for the first

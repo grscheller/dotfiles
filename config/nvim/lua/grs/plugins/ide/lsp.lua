@@ -5,16 +5,41 @@ local lspUtils = require 'grs.utils.lspUtils'
 local getNullLsSources = require('grs.utils.lspUtils').getNullLsSources
 
 return {
-   -- Configure LSP client and Null-ls builtins
+   -- Configure Null-ls builtins
+   {
+      'jose-elias-alvarez/null-ls.nvim',
+      version = false,
+      config = function()
+         local null_ls = require 'null-ls'
+         null_ls.setup { sources = getNullLsSources(null_ls) }
+      end,
+   },
+
+   -- Configure the LSP client with lspconfig
    {
       'neovim/nvim-lspconfig',
       version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
-         'folke/neoconf.nvim',                -- see below
-         'folke/neodev.nvim',                 -- see below
-         'j-hui/fidget.nvim',                 -- see below
-         'hrsh7th/nvim-cmp',
+         -- Neovim plugin to manage global & project-local settings
+         {
+            'folke/neoconf.nvim',
+            cmd = 'Neoconf',
+            config = true,
+         },
+         -- Setup for Neovim init.lua and plugin development with full
+         -- signature help, docs and completion for the nvim lua API.
+         {
+            'folke/neodev.nvim',
+            opts = {
+               experimental = { pathStrict = true },
+            },
+         },
+         -- standalone UI for nvim-lsp progress
+         {
+            'j-hui/fidget.nvim',
+            config = true,
+         },
          'jose-elias-alvarez/null-ls.nvim',
       },
       config = function()
@@ -61,38 +86,6 @@ return {
          end
 
       end,
-   },
-
-   -- Configure Null-ls builtins
-   {
-      'jose-elias-alvarez/null-ls.nvim',
-      version = false,
-      config = function()
-         local null_ls = require 'null-ls'
-         null_ls.setup { sources = getNullLsSources(null_ls) }
-      end,
-   },
-
-   -- Neovim plugin to manage global & project-local settings
-   {
-      'folke/neoconf.nvim',
-      cmd = 'Neoconf',
-      config = true,
-   },
-
-   -- Setup for Neovim init.lua and plugin development with full
-   -- signature help, docs and completion for the nvim lua API.
-   {
-      'folke/neodev.nvim',
-      opts = {
-         experimental = { pathStrict = true },
-      },
-   },
-
-   -- standalone UI for nvim-lsp progress
-   {
-      'j-hui/fidget.nvim',
-      config = true,
    },
 
 }

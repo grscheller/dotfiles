@@ -21,15 +21,16 @@ return {
             },
             build = 'make install_jsregexp',
          },
+         'saadparwaiz1/cmp_luasnip',
          -- completion sources
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
-         'hrsh7th/cmp-nvim-lsp',
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
          'lukas-reineke/cmp-rg',
          'saecki/crates.nvim',
-         'saadparwaiz1/cmp_luasnip',
+         -- provide completion capabilities to LSP servers, completion source
+         'hrsh7th/cmp-nvim-lsp',
          -- modify formatting of ui
          'onsails/lspkind.nvim',
          -- modify sorting behavior
