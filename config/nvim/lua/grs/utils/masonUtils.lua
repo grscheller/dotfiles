@@ -198,8 +198,9 @@ end
 
 setmetatable(BuiltinsToMasonPackage, BuiltinsToMasonPackageMT)
 
-local iFlatten = require('grs.lib.functional').iFlatten
-local tooling = require 'grs.config.tooling'
+local func = require('grs.lib.functional')
+local getKeys = func.getKeys
+local iFlatten = func.iFlatten
 
 local message
 local warn = vim.log.levels.WARN
@@ -235,16 +236,22 @@ local convertLspconfToMason = convertToMasonPkgs(LspconfigToMasonPackage)
 local convertDapToMason = convertToMasonPkgs(DapToMasonPackage)
 local convertNullLsToMason = convertToMasonPkgs(BuiltinsToMasonPackage)
 
--- TODO: Don't hardcode names
+local tooling = require 'grs.config.tooling'
+local LspMasonTbl = tooling.LspTbl.mason
+local DapMasonTbl = tooling.DapTbl.mason
+local BuiltinTbls = tooling.BuiltinTbls
+
+local BuiltinMasonTbls = {}
+for _, v in ipairs(getKeys(BuiltinTbls)) do
+   table.insert(BuiltinMasonTbls, BuiltinTbls[v].mason)
+end
+local BuiltinMasonTbl = iFlatten(BuiltinMasonTbls)
+
 M.masonPackages = function()
    return iFlatten {
-      convertLspconfToMason(tooling.LspTbl.mason),
-      convertDapToMason(tooling.DapTbl.mason),
-      convertNullLsToMason(tooling.BuiltinTbls.code_actions.mason),
-      convertNullLsToMason(tooling.BuiltinTbls.completion.mason),
-      convertNullLsToMason(tooling.BuiltinTbls.diagnostics.mason),
-      convertNullLsToMason(tooling.BuiltinTbls.formatting.mason),
-      convertNullLsToMason(tooling.BuiltinTbls.hover.mason),
+      convertLspconfToMason(LspMasonTbl),
+      convertDapToMason(DapMasonTbl),
+      convertNullLsToMason(BuiltinMasonTbl),
    }
 end
 
