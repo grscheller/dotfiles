@@ -1,19 +1,9 @@
---[[ LSP Configuration ]]
+--[[ Configure lspconfig ]]
 
 local km = require 'grs.config.keymaps'
 local lspUtils = require 'grs.utils.lspUtils'
-local getNullLsSources = require('grs.utils.lspUtils').getNullLsSources
 
 return {
-   -- Configure Null-ls builtins
-   {
-      'jose-elias-alvarez/null-ls.nvim',
-      config = function()
-         local null_ls = require 'null-ls'
-         null_ls.setup { sources = getNullLsSources(null_ls) }
-      end,
-   },
-
    -- Configure the LSP client with lspconfig
    {
       'neovim/nvim-lspconfig',

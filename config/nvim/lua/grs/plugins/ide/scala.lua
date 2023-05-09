@@ -35,6 +35,7 @@ return {
          local metals = require 'metals'
          local metals_config = metals.bare_config()
          metals_config.settings = {
+            serverVersion = 'SNAPSHOT',
             showImplicitArguments = true,
             showImplicitConversionsAndClasses = true,
             excludedPackages = {
@@ -91,7 +92,6 @@ return {
             })
          end
 
-         -- Seems that Metals does not directly take an on_attach event.
          autocmd('FileType', {
             pattern = { 'scala', 'sbt', 'java' },
             callback = function()
@@ -101,9 +101,13 @@ return {
             end,
             group = grsMetalsGrp,
          })
-         -- The above autocmd cannot be defined until metals_config has been
-         -- fully built. I verified that it indeed fires even for the first
-         -- scala/sbt file edited.
+         -- Is ft = { 'scala', 'sbt' } the best event for lazy.nvim
+         -- to tigger on?  The above autocmd cannot be defined until
+         -- metals_config has been fully built. I verified that it
+         -- indeed fires even for the first scala/sbt file edited.
+         -- But because it seems to work does not mean it is a good
+         -- idea.  I am worried about race conditions.  Maybe manually
+         -- set it off with a keyboard shortcut?
       end,
    },
 

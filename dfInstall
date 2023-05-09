@@ -142,7 +142,8 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/editor/textedit.lua
    nvim/lua/grs/plugins/editor/whichkey.lua
    nvim/lua/grs/plugins/ide/cmp.lua
-   nvim/lua/grs/plugins/ide/lsp.lua
+   nvim/lua/grs/plugins/ide/lspconfig.lua
+   nvim/lua/grs/plugins/ide/nullLS.lua
    nvim/lua/grs/plugins/ide/rust.lua
    nvim/lua/grs/plugins/ide/scala.lua
    nvim/lua/grs/plugins/tooling/mason.lua
@@ -183,6 +184,7 @@ RM_TARGET_ITEMS="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason
    $XDG_CONFIG_HOME/nvim/lua/grs/core
    $XDG_CONFIG_HOME/nvim/lua/grs/utils/nullLsUtils.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
 "
 
 RM_REPO_ITEMS="
