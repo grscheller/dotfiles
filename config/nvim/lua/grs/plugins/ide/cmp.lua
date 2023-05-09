@@ -10,7 +10,6 @@ return {
 
    {
       'hrsh7th/nvim-cmp',
-      version = nil,
       dependencies = {
          -- Snippet engine
          {

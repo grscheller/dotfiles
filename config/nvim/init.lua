@@ -37,7 +37,7 @@ local lazy_opts = {
      { import = 'grs.plugins.tooling' },
      { import = 'grs.plugins.ide' },
    },
-   defaults = { lazy = true, version = nil },
+   defaults = { lazy = true, version = false },
    git = {
       log = { '--since=5 days ago' },
       url_format = 'https://github.com/%s.git',

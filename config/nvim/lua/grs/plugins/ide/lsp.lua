@@ -8,7 +8,6 @@ return {
    -- Configure Null-ls builtins
    {
       'jose-elias-alvarez/null-ls.nvim',
-      version = false,
       config = function()
          local null_ls = require 'null-ls'
          null_ls.setup { sources = getNullLsSources(null_ls) }
@@ -18,7 +17,6 @@ return {
    -- Configure the LSP client with lspconfig
    {
       'neovim/nvim-lspconfig',
-      version = false,
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
          -- Neovim plugin to manage global & project-local settings

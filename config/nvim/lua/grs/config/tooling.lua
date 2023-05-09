@@ -46,7 +46,7 @@ local man = false    -- manually configure
 local tool = false   -- configured via another tool
 local ignore = false -- place holder
 
--- lspconfig table: if true, lazy.nvim will directly configure via lspconfig
+-- lspconfig table: if true, configure with nvim-lspconfig
 M.LspTbl = {
    mason = {
       groovyls = ignore,
@@ -62,7 +62,7 @@ M.LspTbl = {
       hls = man,             -- manually configure for now
       lua_ls = man,          -- manually configure for now
       pyright = auto,
-      rust_analyzer = tool,  -- Rust-Tools configures this
+      rust_analyzer = tool,  -- Rust-Tools configures this with nvim-lspconfig
       taplo = auto,
       yamlls = auto,
       zls = auto,
@@ -79,7 +79,7 @@ M.DapTbl = {
    system = {},
 }
 
--- null-ls table: if auto (true) builtins configured for null-ls
+-- null-ls table: if true builtins configured for null-ls
 M.BuiltinTbls = {
    code_actions = {
       mason = {},

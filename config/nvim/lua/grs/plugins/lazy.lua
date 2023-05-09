@@ -1,5 +1,3 @@
---[[ Once bootstrapped, lazy.nvim can also manage itself ]]
+--[[ Once bootstrapped, lazy.nvim can also keep itself updated ]]
 --
--- set to HEAD for now, lazy.nvim too much a moving target.
---
-return {{ 'folke/lazy.nvim', version = nil }}
+return {{ 'folke/lazy.nvim' }}
