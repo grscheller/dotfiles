@@ -3,7 +3,7 @@
 # Warning: non-idiomatic use of fish universals!
 #
 # All permanent configurations should flow from
-# configuration files, not done on the command line!
+# configuration files, not done on the command line!!!
 # 
 # If REDO_ENV is set, all "manual" configurations will be blown away!
 # This way, I know configuration is sane and not affected by old cruft.
@@ -110,6 +110,9 @@ and begin
    set -gx PIP_REQUIRE_VIRTUALENV true
    set -gx PYENV_ROOT ~/.local/share/pyenv
    set -gx PYTHONPATH lib ../lib
+
+   # Minimize Neovim lspconfig and mason internal coupling
+   fish_add_path -gaP ~/.local/share/nvim/mason/bin
 
    # For non-Systemd systems
    if not type -q hostnamectl

@@ -1,6 +1,6 @@
 --[[ Configure parsers for treesitter to install, indicate what tools mason
-     to install, what LSP servers lazy to configure via lspconfig, and what
-     builtins lazy to configure via null-ls. ]]
+     to install, what LSP servers to configure via nvim-lspconfig, and what
+     null-ls builtins to configure via null-ls.nvim. ]]
 
 -- Factoids:
 --
@@ -20,7 +20,8 @@
 -- The null-ls plugin is a language server that can run external programs like
 -- linters, formatters, syntax checkers and provide their information to the
 -- built in Neovim lsp client.  It has a number of "built in" configuratinons
--- for this.  Users can also define own such configurations.
+-- for this.  Users can also define own such configurations.  I beleive it
+-- configures the nvim builtin LSP client directly itself.
 --
 -- Mason will install all keys from the mason tables below.  The keys used
 -- are lspconfig, dap, and null-ls builtin names, not Mason package names.
@@ -28,6 +29,14 @@
 -- Other plugins, like nvim-metals or rust-tools.nvim, can either involk
 -- lspconfig, dap, and null-ls themselves, or configure the Neovim LSP client
 -- directly.
+
+-- Note: The $PATH Neovim inherits ends with ~/.local/share/nvim/mason/bin to
+--       ensure nvim can find the mason installed tools for the lspconfig but
+--       only after not finding one installed somewhere else first.  This way
+--       I can also use mason installed tools from the shell,
+--
+-- Note: A package manager and a configuration tool should not be coupled
+--       together with each other.
 
 local M = {}
 
