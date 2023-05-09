@@ -2,6 +2,26 @@
 
 Configuration files for my Arch Linux workstations & laptops.
 
+## IMPORTANT NOTICE:
+On 2023 May 09, I screwed up something and could not push main up to
+GitHub.  I created a new branch called master and pushed it to GitHub.
+I changed my GitHub default to master and deleted both the main and
+tmpWork branches both locally and on GitHub.
+
+If you have cloned my repo, you may need to either re-clone it or try to
+fix your clone repo as follows:
+
+```sh
+   $ git branch -m main master
+   ...
+   $ git fetch origin
+   ...
+   $ git branch -u origin/master master
+   ...
+   $ git remote set-head origin -a
+   ...
+```
+
 ## Scripts
 
 * [dfInstall](dfInstall)
