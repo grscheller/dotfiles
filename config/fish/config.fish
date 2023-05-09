@@ -5,6 +5,11 @@
 # config.fish in alphabetical order.
 #
 
+# So that scp will work for receiving files
+if not status --is-interactive
+   return
+end
+
 # opam OCaml configuration
 test -f ~/.opam/opam-init/init.fish
 and source ~/.opam/opam-init/init.fish >/dev/null
