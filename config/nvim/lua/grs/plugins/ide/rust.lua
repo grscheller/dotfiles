@@ -19,21 +19,21 @@ return {
    -- Crates, a neovim plugin that helps managing crates.io dependencies.
    {
       'saecki/crates.nvim',
-      tag = 'v0.3.0',
       dependencies = {
          'nvim-lua/plenary.nvim',
+         'hrsh7th/nvim-cmp',
          'jose-elias-alvarez/null-ls.nvim',
       },
-      event = { 'BufRead Cargo.toml' },
+      event = { 'BufRead Cargo.toml', 'BufNewFile Cargo.toml' },
       config = function()
          require('crates').setup {
             null_ls = {
                enabled = true,
-               name = 'crates',
             },
          }
       end,
    },
+
 
    {
       'simrat39/rust-tools.nvim',

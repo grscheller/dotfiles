@@ -27,11 +27,6 @@ return {
          'hrsh7th/cmp-nvim-lua',
          'hrsh7th/cmp-path',
          'lukas-reineke/cmp-rg',
-         {
-            'saecki/crates.nvim',
-            dependencies = { 'nvim-lua/plenary.nvim' },
-            config = true,
-         },
          -- provide completion capabilities to LSP servers, completion source
          'hrsh7th/cmp-nvim-lsp',
          -- modify formatting of ui
