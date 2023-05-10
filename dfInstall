@@ -150,6 +150,8 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/ide/scala.lua
    nvim/lua/grs/plugins/ide/utils.lua
    nvim/lua/grs/plugins/tooling/init.lua
+   nvim/lua/grs/plugins/tooling/mason.lua
+   nvim/lua/grs/plugins/tooling/treesitter.lua
    nvim/lua/grs/plugins/tooling/utils.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/init.lua
@@ -179,21 +181,15 @@ RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.sway
    $HOME/.mako
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/cmp
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/mason
    $XDG_CONFIG_HOME/nvim/lua/grs/core
    $XDG_CONFIG_HOME/nvim/lua/grs/utils
-   $XDG_CONFIG_HOME/nvim/lua/grs/utils/nullLsUtils.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/utils/masonUtils.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/tooling/mason.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/tooling/treesitter.lua
 "
 
 RM_REPO_ITEMS="
    $DOTFILE_GIT_REPO/config/nvim/lua/grs/util
+   $DOTFILE_GIT_REPO/config/nvim/lua/grs/utils
 "
 
 DIRS_TO_CREATE="
