@@ -146,11 +146,10 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/ide/nullLS.lua
    nvim/lua/grs/plugins/ide/rust.lua
    nvim/lua/grs/plugins/ide/scala.lua
-   nvim/lua/grs/plugins/tooling/mason.lua
-   nvim/lua/grs/plugins/tooling/treesitter.lua
+   nvim/lua/grs/plugins/tooling/init.lua
+   nvim/lua/grs/plugins/tooling/utils.lua
    nvim/lua/grs/plugins/lazy.lua
    nvim/lua/grs/utils/lspUtils.lua
-   nvim/lua/grs/utils/masonUtils.lua
    nvim/init.lua
    sway/config
    sway/config_bg_color
@@ -185,6 +184,9 @@ RM_TARGET_ITEMS="
    $XDG_CONFIG_HOME/nvim/lua/grs/core
    $XDG_CONFIG_HOME/nvim/lua/grs/utils/nullLsUtils.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/utils/masonUtils.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/tooling/mason.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/tooling/treesitter.lua
 "
 
 RM_REPO_ITEMS="

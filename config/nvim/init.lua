@@ -31,12 +31,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
 local lazy_opts = {
-   spec = {
-     { import = 'grs.plugins.lazy' },
-     { import = 'grs.plugins.editor' },
-     { import = 'grs.plugins.tooling' },
-     { import = 'grs.plugins.ide' },
-   },
+   spec = {{ import = 'grs.plugins' }},
    defaults = { lazy = true, version = false },
    git = {
       log = { '--since=5 days ago' },
@@ -47,7 +42,6 @@ local lazy_opts = {
       patterns = {}, -- { 'grscheller' },
       fallback = true,
    },
-   install = { colorscheme = { 'habamax' } },
    ui = { browser = '/usr/bin/firefox' },
    checker = { enabled = true },
    performance = {

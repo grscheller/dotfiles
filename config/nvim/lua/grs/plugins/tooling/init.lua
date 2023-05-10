@@ -1,4 +1,4 @@
---[[ Mason Setup ]]
+--[[ Tooling: Install 3rd party tools & Treesitter language modules ]]
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -6,7 +6,29 @@ local autocmd = vim.api.nvim_create_autocmd
 local message
 local info = vim.log.levels.INFO
 
+local ensureInstalled = require('grs.config.tooling').treesitter_ensure_installed
+local masonPackages = require('grs.plugins.tooling.utils').masonPackages()
+
 return {
+
+   -- Install Language Modules for Neovim's built-in Treesitter
+   {
+      'nvim-treesitter/nvim-treesitter',
+      build = ':TSUpdateSync',
+      event = { 'BufReadPost', 'BufNewFile' },
+      config = function()
+         require('nvim-treesitter.configs').setup {
+            ensure_installed = ensureInstalled,
+            auto_install = true,
+            ignore_install = {},
+            highlight = {
+               enable = true,
+               disable = {},
+            },
+            indent = { enable = true },
+         }
+      end,
+   },
 
    --  Mason package manager infrastructure used to install/upgrade
    --  3rd party tools like LSP & DAP servers and Null-ls builtins.
@@ -66,8 +88,6 @@ return {
             group = grsMasonGrp,
             desc = 'Give feedback when Mason tools are finished updating',
          })
-
-         local masonPackages = require('grs.utils.masonUtils').masonPackages()
 
          --[[ Configure mason-tool-installer ]]
          require('mason-tool-installer').setup {
