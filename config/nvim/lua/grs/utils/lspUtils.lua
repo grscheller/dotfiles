@@ -19,8 +19,6 @@ M.getLspServers = function()
 end
 
 M.getNullLsSources= function(null_ls)
-
-   -- Combine Mason and Systems tables
    local builtins = {}
    for _, nullLsType in pairs(getKeys(BuiltinTbls)) do
       builtins[nullLsType] = mergeTables {
@@ -38,7 +36,6 @@ M.getNullLsSources= function(null_ls)
    end
 
    return nullLsSources
-
 end
 
 return M

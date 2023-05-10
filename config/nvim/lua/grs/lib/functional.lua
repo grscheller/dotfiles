@@ -43,7 +43,7 @@ M.iFlatten = function(aoa)
    return flattened
 end
 
--- Apply a function to each element of an <list>, can be curried.
+-- Apply a function to each element of an <list>, can be Curried.
 M.iMap = function(f, a)
    local function map(vs)
       local ma = {}

@@ -243,13 +243,13 @@ ensure_dir () {
                printf "\\nWarning: Failed to create '%s' directory\\n" "$targetDir"
             ;;
          target)
-            printf "\\nTarget directory '%s' needs to be created.\\n" "$targetDir"
+            printf "\\ntarget directory '%s' needs to be created\\n" "$targetDir"
             ;;
       esac
    fi
    if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
    then
-      printf "\\nSource directory '%s' does not exist.\\n" "$srcDir"
+      printf "\\nsource directory '%s' does not exist\\n" "$srcDir"
    fi
    srcDir=
    targetDir=
@@ -267,19 +267,19 @@ remove_item () {
             test -e "$item" && {
                case "$flag" in
                   target)
-                     printf "\\nWarning: Failed to remove '%s' from target.\\n" "$item"
+                     printf "\\nWarning: Failed to remove '%s' from target\\n" "$item"
                      ;;
                   repo)
-                     printf "\\nWarning: Failed to remove '%s' from repo.\\n" "$item"
+                     printf "\\nWarning: Failed to remove '%s' from repo\\n" "$item"
                      ;;
                esac
             }
             ;;
          repo)
-            printf "\\n'%s' needs removing from the repo.\\n" "$item"
+            printf "\\n'%s' is still in the target\\n" "$item"
             ;;
          target)
-            printf "\\n'%s' needs removing from the target.\\n" "$item"
+            printf "\\n'%s' needs removing from the target\\n" "$item"
             ;;
       esac
    fi
