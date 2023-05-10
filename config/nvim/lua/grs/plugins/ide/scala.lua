@@ -19,6 +19,7 @@ local message
 local info = vim.log.levels.INFO
 
 return {
+
    {
       'scalameta/nvim-metals',
       dependencies = {

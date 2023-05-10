@@ -2,6 +2,7 @@
 
 vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
 
+
 return {
 
    -- Comment/uncomment blocks of code

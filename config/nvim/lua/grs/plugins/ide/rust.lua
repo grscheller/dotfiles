@@ -15,6 +15,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local km = require 'grs.config.keymaps'
 
 return {
+
    -- Crates, a neovim plugin that helps managing crates.io dependencies.
    {
       'saecki/crates.nvim',

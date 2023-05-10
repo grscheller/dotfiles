@@ -2,7 +2,7 @@
 
 -- Do like LazyVim but decouple mason and null-ls
 
-local getNullLsSources = require('grs.utils.lspUtils').getNullLsSources
+local getNullLsSources = require('grs.plugins.ide.utils').getNullLsSources
 
 return {
 

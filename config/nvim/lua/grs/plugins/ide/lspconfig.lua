@@ -3,7 +3,7 @@
 -- Do like LazyVim but decouple mason and lspconfig
 
 local km = require 'grs.config.keymaps'
-local lspUtils = require 'grs.utils.lspUtils'
+local getLspServers = require('grs.plugins.ide.utils').getLspServers()
 
 return {
 
@@ -35,7 +35,7 @@ return {
          local lspconf = require 'lspconfig'
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-         for _, lspServer in ipairs(lspUtils.getLspServers()) do
+         for _, lspServer in ipairs(getLspServers) do
             lspconf[lspServer].setup {
                capabilities = capabilities,
                on_attach = function(_, bufnr)

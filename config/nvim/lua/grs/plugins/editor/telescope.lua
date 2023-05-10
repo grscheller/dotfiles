@@ -1,5 +1,7 @@
 --[[ Telescope - search, filter, find & pick items ]]
 
+local M = {}
+
 return {
 
    {
