@@ -15,7 +15,7 @@ return {
    {
       'williamboman/mason.nvim',
       cmd = { 'Mason', 'MasonUpdate' },
-      keys = { { '<leader>mm', '<cmd>Mason<cr>', desc = 'Mason' } },
+      keys = {{ '<leader>mm', '<cmd>Mason<cr>', desc = 'Mason' }},
       config = function()
          require('mason').setup {
             ui = {

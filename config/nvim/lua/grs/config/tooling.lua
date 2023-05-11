@@ -20,8 +20,8 @@
 -- The null-ls plugin is a language server that can run external programs like
 -- linters, formatters, syntax checkers and provide their information to the
 -- built in Neovim lsp client.  It has a number of "built in" configuratinons
--- for this.  Users can also define own such configurations.  I beleive it
--- configures the nvim builtin LSP client directly itself.
+-- for this.  Users can also define own such configurations.  I suspect this
+-- plugin configures nvim's builtin LSP client directly itself.
 --
 -- Mason will install all keys from the mason tables below.  The keys used
 -- are lspconfig, dap, and null-ls builtin names, not Mason package names.

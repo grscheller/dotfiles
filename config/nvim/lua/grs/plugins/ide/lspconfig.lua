@@ -33,8 +33,8 @@ local LspconfigServerOpts = {
    end,
 }
 
--- If a config is not explicitly defined, return a function
--- to create a default LSP server configuration.
+-- If an LSP server configuration is not explicitly defined above, return
+-- a function which creates a default LSP server configuration to use.
 local LspconfigServerOptsMT = {}
 LspconfigServerOptsMT.__index = function()
    return function(capabilities)

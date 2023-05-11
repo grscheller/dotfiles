@@ -106,39 +106,39 @@ km('n', '<leader>n', toggle_line_numbering, {
 })
 
 -- Delete & change text without affecting default register
-km({ 'n', 'x' }, '<leader>Bd', '"_d', {
+km({ 'n', 'x' }, ',d', '"_d', {
    noremap = true,
    silent = true,
    desc = 'delete text to blackhole register',
 })
-km({ 'n', 'x' }, '<leader>Bc', '"_c', {
+km({ 'n', 'x' }, ',c', '"_c', {
    noremap = true,
    silent = true,
    desc = 'change text to blackhole register',
 })
 
 -- Yank, delete, change & paste with system clipboard
-km({ 'n', 'x' }, '<leader>sy', '"+y', {
+km({ 'n', 'x' }, ',sy', '"+y', {
    noremap = true,
    silent = true,
    desc = 'yank to system clipboard',
 })
-km({ 'n', 'x' }, '<leader>sd', '"+d', {
+km({ 'n', 'x' }, ',sd', '"+d', {
    noremap = true,
    silent = true,
    desc = 'delete to system clipboard',
 })
-km({ 'n', 'x' }, '<leader>sc', '"+c', {
+km({ 'n', 'x' }, ',sc', '"+c', {
    noremap = true,
    silent = true,
    desc = 'change with system clipboard',
 })
-km({ 'n', 'x' }, '<leader>sp', '"+p', {
+km({ 'n', 'x' }, ',sp', '"+p', {
    noremap = true,
    silent = true,
    desc = 'paste after cursor from system clipboard',
 })
-km({ 'n', 'x' }, '<leader>sP', '"+P', {
+km({ 'n', 'x' }, ',sP', '"+P', {
    noremap = true,
    silent = true,
    desc = 'paste before cursor from system clipboard',
