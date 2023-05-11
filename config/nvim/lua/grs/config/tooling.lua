@@ -30,13 +30,12 @@
 -- lspconfig, dap, and null-ls themselves, or configure the Neovim LSP client
 -- directly.
 
--- Note: The $PATH Neovim inherits ends with ~/.local/share/nvim/mason/bin to
---       ensure nvim can find the mason installed tools for the lspconfig but
---       only after not finding one installed somewhere else first.  This way
---       I can also use mason installed tools from the shell,
+-- Note: The PATH inherited from the shell ends ~/.local/share/nvim/mason/bin
+--       ensuring nvim can find mason installed tools for lspconfig.  System
+--       installed tools will take presedent.
 --
--- Note: A package manager and a configuration tool should not be coupled
---       together with each other.
+-- Note: Package managers and configuration tools should not be too tightly
+--       coupled together with each other.
 
 local M = {}
 
@@ -59,10 +58,10 @@ M.LspTbl = {
       bashls = auto,
       clangd = auto,
       gopls = ignore,
-      hls = man,             -- manually configure for now
-      lua_ls = man,          -- manually configure for now
+      hls = auto,
+      lua_ls = auto,         -- Neodev needs to be set up before nvim-lsconfig
       pyright = auto,
-      rust_analyzer = tool,  -- Rust-Tools configures this with nvim-lspconfig
+      rust_analyzer = tool,  -- Rust-Tools configures via nvim-lspconfig
       taplo = auto,
       yamlls = auto,
       zls = auto,

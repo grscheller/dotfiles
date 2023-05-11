@@ -1,9 +1,53 @@
 --[[ Configure lspconfig ]]
 
--- Do like LazyVim but decouple mason and lspconfig
+-- Following LazyVim setup except decoupling from Mason
 
 local km = require 'grs.config.keymaps'
-local getLspServers = require('grs.plugins.ide.utils').getLspServers()
+local LspServers = require('grs.plugins.ide.utils').getLspServers()
+
+-- table of functions returning LSP server configurations
+local LspconfigServerOpts = {
+   -- Lua Configuration
+   lua_ls = function(capabilities)
+      return {
+         capabilities = capabilities,
+         filetypes = { 'lua' },
+         on_attach = function(_, bufnr)
+            km.lsp(bufnr)
+         end,
+         setting = {
+            Lua = { completion = { callSnippet = 'Replace' } },
+         },
+      }
+   end,
+   -- Haskell Configuration
+   hls = function(capabilities)
+      return {
+         capabilities = capabilities,
+         filetypes = { 'haskell', 'lhaskell', 'cabal' },
+         on_attach = function(_, bufnr)
+            km.lsp(bufnr)
+            km.haskell(bufnr)
+         end,
+      }
+   end,
+}
+
+-- If a config is not explicitly defined, return a function
+-- to create a default LSP server configuration.
+local LspconfigServerOptsMT = {}
+LspconfigServerOptsMT.__index = function()
+   return function(capabilities)
+      return {
+         capabilities = capabilities,
+         on_attach = function(_, bufnr)
+            km.lsp(bufnr)
+         end,
+      }
+   end
+end
+
+setmetatable(LspconfigServerOpts, LspconfigServerOptsMT)
 
 return {
 
@@ -12,60 +56,17 @@ return {
       'neovim/nvim-lspconfig',
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
-         -- Manage global & project-local settings
-         {
-            'folke/neoconf.nvim',
-            cmd = 'Neoconf',
-            config = true,
-         },
-         -- Neovim config & plugin development (nvim lua API)
-         {
-            'folke/neodev.nvim',
-            opts = {
-               experimental = { pathStrict = true },
-            },
-         },
-         -- Give nvim-lsp progress feedback (standalone UI)
-         {
-            'j-hui/fidget.nvim',
-            config = true,
-         },
+         { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
+         { 'folke/neodev.nvim', opts = { experimental = { pathStrict = true } } },
+         { 'j-hui/fidget.nvim', config = true },
       },
       config = function()
-         local lspconf = require 'lspconfig'
+         local lspconfig = require 'lspconfig'
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-         for _, lspServer in ipairs(getLspServers) do
-            lspconf[lspServer].setup {
-               capabilities = capabilities,
-               on_attach = function(_, bufnr)
-                  km.lsp(bufnr)
-               end,
-            }
+         for _, lspServer in ipairs(LspServers) do
+            lspconfig[lspServer].setup(LspconfigServerOpts[lspServer](capabilities))
          end
-
-         -- Lua Configuration
-         lspconf.lua_ls.setup {
-            capabilities = capabilities,
-            filetypes = { 'lua' },
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-            end,
-            settings = {
-               Lua = { completion = { callSnippet = 'Replace' } },
-            },
-         }
-
-         -- Haskell Configuration
-         lspconf.hls.setup {
-            capabilities = capabilities,
-            filetypes = { 'haskell', 'lhaskell', 'cabal' },
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-               km.haskell(bufnr)
-            end,
-         }
-
       end,
    },
 
