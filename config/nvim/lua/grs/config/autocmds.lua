@@ -1,4 +1,4 @@
---[[ Autocmds & Usercmds - loaded on VeryLazy event ]]
+--[[ Autocmds & Usercmdst ]]
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

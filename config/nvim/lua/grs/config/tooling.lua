@@ -63,7 +63,7 @@ M.LspTbl = {
       pyright = auto,
       rust_analyzer = tool,  -- Rust-Tools configures via nvim-lspconfig
       taplo = auto,
-      yamlls = auto,
+      yamlls = ignore,
       zls = auto,
    },
 }
@@ -81,12 +81,16 @@ M.DapTbl = {
 -- null-ls table: if true builtins configured for null-ls
 M.BuiltinTbls = {
    code_actions = {
-      mason = {},
-      system = {},
+      mason = {
+      },
+      system = {
+      },
    },
    completion = {
-      mason = {},
-      system = {},
+      mason = {
+      },
+      system = {
+      },
    },
    diagnostics = {
       mason = {
@@ -96,17 +100,21 @@ M.BuiltinTbls = {
          cppcheck = auto,
          cpplint = auto,
          selene = auto,
+         yamllint = auto,
       },
    },
    formatting = {
-      mason = {},
+      mason = {
+      },
       system = {
          stylua = auto,
       },
    },
    hover = {
-      mason = {},
-      system = {},
+      mason = {
+      },
+      system = {
+      },
    },
 }
 

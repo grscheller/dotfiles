@@ -73,17 +73,21 @@ local lazy_opts = {
 }
 
 -- Kickoff lazy.nvim or fail gracefully
-local ok, lazy, keymaps
+local ok, lazy, keymaps, autocmds
 ok, lazy = pcall(require, 'lazy')
 if ok then
    -- Let lazy.nvim take control
    lazy.setup(lazy_opts)
 else
-   -- otherwise, at least load key mappings
+   -- otherwise, manually load some key mappings and autocmds
    print(string.format('lazy.nvim failed with error: %s', lazy))
    ok, keymaps = pcall(require, 'grs.config.keymaps')
    if not ok then
       print(string.format('Keymaps failed to load with error: %s', keymaps))
+   end
+   ok, autocmds = pcall(require, 'grs.config.autocmds')
+   if not ok then
+      print(string.format('Autocmds failed to load with error: %s', autocmds))
    end
    vim.cmd [[colorscheme habamax]]
 end
