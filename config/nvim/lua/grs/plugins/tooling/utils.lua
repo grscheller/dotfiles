@@ -1,4 +1,4 @@
---[[ Mason Related Infrastructure
+--[[ Mason related infrastructure to install external ide tooling
 
      Chore: Periodically update these next three tables,
      LspconfigToMasonPackage, DapToMasonPackage, and NullLsToMasonPackage,
