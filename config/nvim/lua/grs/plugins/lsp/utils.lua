@@ -1,4 +1,4 @@
---[[ Null-ls Infrastructure & Boilerplate ]]
+--[[ Infrastructure for nvim-lspconfig & null-ls.nvim  ]]
 
 local km = require 'grs.config.keymaps'
 local ct = require('grs.config.tooling')
@@ -13,9 +13,7 @@ local mergeTables= func.mergeTables
 
 local M = {}
 
---[[ Config lspconfig servers and opts to override ]]
-
--- table of functions returning LSP server configuration overrides
+-- nvim-lspconfig setup opts to override the fault opts
 local LspconfigServerOpts = {
    lua_ls = function(capabilities)
       return {
@@ -41,8 +39,17 @@ local LspconfigServerOpts = {
    end,
 }
 
--- If an LSP server configuration is not explicitly defined above,
--- return function generating default LSP server configuration.
+-- Builtin overrides for null-ls configuration
+local NullLSBuiltinOpts = {
+   yamllint = {
+      extra_args = {
+         '-d',
+         '{extends: relaxed, rules: {key-ordering: "disable"}}',
+      },
+   }
+}
+
+-- Default lspconfig setup opts to use an override not specified
 local LspconfigServerOptsMT = {}
 LspconfigServerOptsMT.__index = function()
    return function(capabilities)
@@ -55,7 +62,14 @@ LspconfigServerOptsMT.__index = function()
    end
 end
 
+-- Use builtin's default Null-ls configuration when an override not specified
+local NullLSBuiltinOptsMT = {}
+NullLSBuiltinOptsMT.__index = function()
+   return {}
+end
+
 setmetatable(LspconfigServerOpts, LspconfigServerOptsMT)
+setmetatable(NullLSBuiltinOpts, NullLSBuiltinOptsMT)
 
 M.getLspServerOpts = function()
    return LspconfigServerOpts
@@ -70,26 +84,6 @@ M.getLspServers = function()
       getFilteredKeys(LspTbl.system, p),
    }
 end
-
---[[ Get null-ls builtins and builtin overrides ]]
-
--- table of indexed tables NullLs builtin overrides
-local NullLSBuiltinOpts = {
-   yamllint = {
-      extra_args = {
-         '-d',
-         '{extends: relaxed, rules: {key-ordering: "disable"}}',
-      },
-   }
-}
-
--- Return an empty table if a builtin overrides not defined
-local NullLSBuiltinOptsMT = {}
-NullLSBuiltinOptsMT.__index = function()
-   return {}
-end
-
-setmetatable(NullLSBuiltinOpts, NullLSBuiltinOptsMT)
 
 M.getNullLsBuiltins = function(null_ls)
    local function p(_, v)

@@ -1,6 +1,10 @@
---[[ Configure lspconfig ]]
+--[[ Configure LSP client with lspconfig & null-ls builtins ]]
 
--- Following LazyVim except decouple from mason
+-- To provide overrides to customize the default configurations pushed
+-- to LSP servers and Null-ls wrapped tools, edit the first two tables
+-- in grs/plugins/lsp/utils.lua.
+--
+-- Following LazyVim except decoupled from Mason configuration.
 
 local ideUtils = require 'grs.plugins.lsp.utils'
 local LspServers = ideUtils.getLspServers()
@@ -49,7 +53,7 @@ return {
       config = function()
          local null_ls = require 'null-ls'
 
-         -- setup null-ls for all builtins at once
+         -- setup null-ls for all builtin configurations at once
          null_ls.setup {
             sources = getNullLsBuiltins(null_ls),
          }

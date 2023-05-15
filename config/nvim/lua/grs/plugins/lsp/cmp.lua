@@ -3,7 +3,7 @@
 -- nvim-cmp is a completion engine written in Lua.  It requires a snippet
 -- engine (using LuaSnip) and completion sources (see below).
 
-local cursor_has_words_before_it = require('grs.lib.text').cursor_has_words_before_it
+local words_before = require('grs.lib.text').cursor_has_words_before_it
 local mergeTables = require('grs.lib.functional').mergeTables
 
 return {
@@ -120,7 +120,7 @@ return {
                i = function(fallback)
                       if cmp.visible() then
                          cmp.select_next_item(optSelect)
-                      elseif cursor_has_words_before_it() then
+                      elseif words_before() then
                          cmp.complete(optConfirm)
                       else
                          fallback()
