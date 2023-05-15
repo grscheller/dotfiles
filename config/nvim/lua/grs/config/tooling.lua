@@ -17,11 +17,11 @@
 -- "builtin" configurations and must be configured for the dap server invoked,
 -- usually by some build system.
 --
--- The null-ls plugin is a language server that can run external programs like
--- linters, formatters, syntax checkers and provide their information to the
--- built in Neovim lsp client.  It has a number of "built in" configuratinons
--- for this.  Users can also define own such configurations.  I suspect this
--- plugin configures nvim's builtin LSP client directly itself.
+-- The null-ls plugin acts like a language server by running external programs
+-- like linters, formatters, syntax checkers and providing their output to
+-- the built in Neovim LSP client.  It has a number of "built in"
+-- configuratinons for this.  Users can also define their own configurations.
+-- I suspect this plugin configures nvim's builtin LSP client directly itself.
 --
 -- Mason will install all keys from the mason tables below.  The keys used
 -- are lspconfig, dap, and null-ls builtin names, not Mason package names.
@@ -59,11 +59,11 @@ M.LspTbl = {
       clangd = auto,
       gopls = ignore,
       hls = auto,
-      lua_ls = auto,         -- Neodev needs to be set up before nvim-lsconfig
+      lua_ls = auto,
+      metals = tool,         -- nvim-metals configures LSP client directly
       pyright = auto,
-      rust_analyzer = tool,  -- Rust-Tools configures via nvim-lspconfig
+      rust_analyzer = tool,  -- rust-tools configures using nvim-lspconfig
       taplo = auto,
-      yamlls = ignore,
       zls = auto,
    },
 }

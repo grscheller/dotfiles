@@ -143,13 +143,12 @@ CONFIG_FILES='
    nvim/lua/grs/plugins/editor/telescope.lua
    nvim/lua/grs/plugins/editor/textedit.lua
    nvim/lua/grs/plugins/editor/whichkey.lua
-   nvim/lua/grs/plugins/ide/init.lua
-   nvim/lua/grs/plugins/ide/cmp.lua
-   nvim/lua/grs/plugins/ide/lspconfig.lua
-   nvim/lua/grs/plugins/ide/nullLS.lua
-   nvim/lua/grs/plugins/ide/rust.lua
-   nvim/lua/grs/plugins/ide/scala.lua
-   nvim/lua/grs/plugins/ide/utils.lua
+   nvim/lua/grs/plugins/lsp/init.lua
+   nvim/lua/grs/plugins/lsp/cmp.lua
+   nvim/lua/grs/plugins/lsp/lsp.lua
+   nvim/lua/grs/plugins/lsp/rust.lua
+   nvim/lua/grs/plugins/lsp/scala.lua
+   nvim/lua/grs/plugins/lsp/utils.lua
    nvim/lua/grs/plugins/tooling/init.lua
    nvim/lua/grs/plugins/tooling/mason.lua
    nvim/lua/grs/plugins/tooling/treesitter.lua
@@ -184,8 +183,7 @@ RM_TARGET_ITEMS="
    $HOME/.mako
    $XDG_CONFIG_HOME/nvim/lua/grs/core
    $XDG_CONFIG_HOME/nvim/lua/grs/utils
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/utils/masonUtils.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide
 "
 
 RM_REPO_ITEMS="

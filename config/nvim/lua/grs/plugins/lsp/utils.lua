@@ -8,15 +8,15 @@ local BuiltinTbls = ct.BuiltinTbls
 local func = require 'grs.lib.functional'
 local iFlatten = func.iFlatten
 local getKeys = func.getKeys
+local getFilteredKeys = func.getFilteredKeys
 local mergeTables= func.mergeTables
 
 local M = {}
 
---[[ Config lspconfig servers and opts to overide ]]
+--[[ Config lspconfig servers and opts to override ]]
 
 -- table of functions returning LSP server configuration overrides
 local LspconfigServerOpts = {
-   -- Lua Configuration
    lua_ls = function(capabilities)
       return {
          capabilities = capabilities,
@@ -29,7 +29,6 @@ local LspconfigServerOpts = {
          end,
       }
    end,
-   -- Haskell Configuration
    hls = function(capabilities)
       return {
          capabilities = capabilities,
@@ -63,20 +62,44 @@ M.getLspServerOpts = function()
 end
 
 M.getLspServers = function()
+   local function p(_, v)
+      return v
+   end
    return iFlatten {
-      getKeys(LspTbl.mason),
-      getKeys(LspTbl.system),
+      getFilteredKeys(LspTbl.mason, p),
+      getFilteredKeys(LspTbl.system, p),
    }
 end
 
---[[ Get null-ls builtins and TODO: configure overides ]]
+--[[ Get null-ls builtins and builtin overrides ]]
 
-M.getNullLsSources= function(null_ls)
+-- table of indexed tables NullLs builtin overrides
+local NullLSBuiltinOpts = {
+   yamllint = {
+      extra_args = {
+         '-d',
+         '{extends: relaxed, rules: {key-ordering: "disable"}}',
+      },
+   }
+}
+
+-- Return an empty table if a builtin overrides not defined
+local NullLSBuiltinOptsMT = {}
+NullLSBuiltinOptsMT.__index = function()
+   return {}
+end
+
+setmetatable(NullLSBuiltinOpts, NullLSBuiltinOptsMT)
+
+M.getNullLsBuiltins = function(null_ls)
+   local function p(_, v)
+      return v
+   end
    local builtins = {}
    for _, nullLsType in pairs(getKeys(BuiltinTbls)) do
       builtins[nullLsType] = mergeTables {
-         getKeys(BuiltinTbls[nullLsType].mason),
-         getKeys(BuiltinTbls[nullLsType].system),
+         getFilteredKeys(BuiltinTbls[nullLsType].mason, p),
+         getFilteredKeys(BuiltinTbls[nullLsType].system, p),
       }
    end
 
@@ -84,7 +107,12 @@ M.getNullLsSources= function(null_ls)
    local nullLsSources = {}
    for nullLsType, nullLsBuiltins in pairs(builtins) do
       for _, builtin in pairs(nullLsBuiltins) do
-         table.insert(nullLsSources, null_ls.builtins[nullLsType][builtin])
+         table.insert(
+            nullLsSources,
+            null_ls.builtins[nullLsType][builtin].with(
+               NullLSBuiltinOpts[builtin]
+            )
+         )
       end
    end
 

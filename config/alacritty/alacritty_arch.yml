@@ -1,247 +1,9 @@
 # Configuration for Alacritty, the GPU enhanced terminal emulator.
 #
-# Modified from: /usr/share/doc/alacritty/example/alacritty.yml
+# See: /usr/share/doc/alacritty/example/alacritty.yml
 #
 
 ---
-# Any items in the `env` entry below will be added as
-# environment variables. Some entries may override variables
-# set by alacritty itself.
-env:
-  # TERM variable
-  #
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
-  # check the local terminfo database and use `alacritty` if it is
-  # available, otherwise `xterm-256color` is used.
-  TERM: alacritty
-
-window:
-  # Window dimensions (changes require restart)
-  #
-  # Number of lines/columns (not pixels) in the terminal. Both lines and columns
-  # must be non-zero for this to take effect. The number of columns must be at
-  # least `2`, while using a value of `0` for columns and lines will fall back
-  # to the window manager's recommended size
-  dimensions:
-    columns: 0
-    lines: 0
-
-  # Window position (changes require restart)
-  #
-  # Specified in number of pixels.
-  # If the position is not set, the window manager will handle the placement.
-  position:
-    x: 0
-    y: 0
-
-  # Window padding (changes require restart)
-  #
-  # Blank space added around the window in pixels. This padding is scaled
-  # by DPI and the specified value is always added at both opposing sides.
-  padding:
-    x: 0
-    y: 0
-
-  # Spread additional padding evenly around the terminal content.
-  dynamic_padding: false
-
-  # Window decorations
-  #
-  # Values for `decorations`:
-  #     - full: Borders and title bar
-  #     - none: Neither borders nor title bar
-  #
-  # Values for `decorations` (macOS only):
-  #     - transparent: Title bar, transparent background and title bar buttons
-  #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: full
-
-  # Background opacity
-  #
-  # Window opacity as a floating point number from `0.0` to `1.0`.
-  # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.7
-
-  # Startup Mode (changes require restart)
-  #
-  # Values for `startup_mode`:
-  #   - Windowed
-  #   - Maximized
-  #   - Fullscreen
-  #
-  # Values for `startup_mode` (macOS only):
-  #   - SimpleFullscreen
-  startup_mode: Windowed
-
-  # Window title
-  title: Alacritty
-
-  # Allow terminal applications to change Alacritty's window title.
-  dynamic_title: true
-
-  # Window class (Linux/BSD only):
-  class:
-    # Application instance name
-    instance: Alacritty
-    # General application class
-    general: Alacritty
-
-  # Decorations theme variant
-  #
-  # Override the variant of the System theme/GTK theme/Wayland client side
-  # decorations. Commonly supported values are `Dark`, `Light`, and `None` for
-  # auto pick-up. Set this to `None` to use the default theme variant.
-  decorations_theme_variant: None
-
-  # Resize increments
-  #
-  # Prefer resizing window by discrete steps equal to cell dimensions.
-  resize_increments: false
-
-  # Make `Option` key behave as `Alt` (macOS only):
-  #   - OnlyLeft
-  #   - OnlyRight
-  #   - Both
-  #   - None (default)
-  option_as_alt: None
-
-scrolling:
-  # Maximum number of lines in the scrollback buffer.
-  # Specifying '0' will disable scrolling.
-  history: 10000
-
-  # Scrolling distance multiplier.
-  multiplier: 2
-
-font:
-  normal:
-    family: Fira Code Nerd Font
-    style: Regular
-
-  bold:
-    family: Fira Code Nerd Font
-    style: Bold
-
-  italic:
-    family: Roboto Mono Nerd Font
-    style: Italic
-
-  bold_italic:
-    family: Roboto Mono Nerd Font
-    style: Bold Italic
-
-  # Point size
-  size: 13.0
-
-  # Offset is the extra space around each character. `offset.y` can be thought
-  # of as modifying the line spacing, and `offset.x` as modifying the letter
-  # spacing.
-  offset:
-    x: 0
-    y: 0
-
-  # Glyph offset determines the locations of the glyphs within their cells with
-  # the default being at the bottom. Increasing `x` moves the glyph to the
-  # right, increasing `y` moves the glyph upward.
-  glyph_offset:
-    x: 0
-    y: 0
-
-  # Use built-in font for box drawing characters.
-  #
-  # If `true`, Alacritty will use a custom built-in font for box drawing
-  # characters (Unicode points 2500 - 259f).
-  #
-  builtin_box_drawing: false
-
-# If `true`, bold text is drawn using the bright color variants.
-draw_bold_text_with_bright_colors: true
-
-# Colors (Based on Kanagawa)
-colors:
-  primary:
-    background: '#0d0c0c'
-    foreground: '#c5c9c5'
-    dim_foreground: '#828482'
-    bright_foreground: '#eaeaea'
-
-  cursor:
-    text: CellBackground
-    cursor: CellForeground
-
-  vi_mode_cursor:
-    text: CellBackground
-    cursor: CellForeground
-
-  search:
-    matches:
-      foreground: '#828482'
-      background: '#0d0c0c'
-    focused_match:
-      foreground: '#c5c9c5'
-      background: '#0d0c0c'
-
-  hints:
-    start:
-      foreground: '#1d1f21'
-      background: '#e9ff5e'
-    end:
-      foreground: '#e9ff5e'
-      background: '#1d1f21'
-
-  line_indicator:
-    foreground: None
-    background: None
-
-  footer_bar:
-    background: '#c5c8c6'
-    foreground: '#1d1f21'
-
-  selection:
-    text: CellBackground
-    background: CellForeground
-
-  # Normal colors
-  normal:
-    black:   '#0d0c0c'
-    red:     '#c34043'
-    green:   '#76946a'
-    yellow:  '#e6c384'
-    blue:    '#7e9cd8'
-    magenta: '#957fb8'
-    cyan:    '#6a9589'
-    white:   '#dcd7ba'
-
-  # Bright colors
-  bright:
-    black:   '#12120f'
-    red:     '#e82424'
-    green:   '#98bb6c'
-    yellow:  '#f9d791'
-    blue:    '#7fb4ca'
-    magenta: '#b8b4d0'
-    cyan:    '#7aa89f'
-    white:   '#ede8cb'
-
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  dim:
-    black:   '#181616'
-    red:     '#c4746e'
-    green:   '#8a9a7b'
-    yellow:  '#c4b28a'
-    blue:    '#4d699b'
-    magenta: '#624c83'
-    cyan:    '#597b75'
-    white:   '#c5c9c5'
-
-  indexed_colors: []
-
-  transparent_background_colors: false
-
 bell:
   # Values for `animation`:
   #   - Ease
@@ -255,47 +17,188 @@ bell:
   #   - EaseOutCirc
   #   - Linear
   animation: EaseOutSine
-  duration: 200
-
-  # Visual bell animation color.
   color: '#99aa00'
   command: None
+  duration: 200
 
-selection:
-  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
-  save_to_clipboard: true
+# Colors (Based on Kanagawa)
+colors:
+  cursor:
+    cursor: CellForeground
+    text: CellBackground
+
+  footer_bar:
+    background: '#c5c8c6'
+    foreground: '#1d1f21'
+
+  hints:
+    end:
+      background: '#1d1f21'
+      foreground: '#e9ff5e'
+    start:
+      background: '#e9ff5e'
+      foreground: '#1d1f21'
+
+  indexed_colors: []
+
+  line_indicator:
+    background: None
+    foreground: None
+
+  primary:
+    background: '#0d0c0c'
+    bright_foreground: '#eaeaea'
+    dim_foreground: '#828482'
+    foreground: '#c5c9c5'
+
+  search:
+    focused_match:
+      background: '#0d0c0c'
+      foreground: '#c5c9c5'
+    matches:
+      background: '#0d0c0c'
+      foreground: '#828482'
+
+  selection:
+    background: CellForeground
+    text: CellBackground
+
+  # Bright colors
+  bright:
+    black:   '#12120f'
+    blue:    '#7fb4ca'
+    cyan:    '#7aa89f'
+    green:   '#98bb6c'
+    magenta: '#b8b4d0'
+    red:     '#e82424'
+    white:   '#ede8cb'
+    yellow:  '#f9d791'
+
+  # Dim colors
+  # If not set, dim calculated based on normal colors
+  dim:
+    black:   '#181616'
+    blue:    '#4d699b'
+    cyan:    '#597b75'
+    green:   '#8a9a7b'
+    magenta: '#624c83'
+    red:     '#c4746e'
+    white:   '#c5c9c5'
+    yellow:  '#c4b28a'
+
+  # Normal colors
+  normal:
+    black:   '#0d0c0c'
+    blue:    '#7e9cd8'
+    cyan:    '#6a9589'
+    green:   '#76946a'
+    magenta: '#957fb8'
+    red:     '#c34043'
+    white:   '#dcd7ba'
+    yellow:  '#e6c384'
+
+  transparent_background_colors: false
+
+  vi_mode_cursor:
+    cursor: CellForeground
+    text: CellBackground
 
 cursor:
+  blink_interval: 750   # milliseconds
+  blink_timeout: 0
   style:
-    # Cursor shape
-    #
-    # Values for `shape`:
-    #   - ▇ Block
-    #   - _ Underline
-    #   - | Beam
+    # Never: Prevent the cursor from ever blinking
+    # Off: Disable blinking by default
+    # On: Enable blinking by default
+    # Always: Force the cursor to always blink
+    blinking: Never
+    # ▇ Block
+    # _ Underline
+    # | Beam
     shape: Block
 
-    # Values for `blinking`:
-    #   - Never: Prevent the cursor from ever blinking
-    #   - Off: Disable blinking by default
-    #   - On: Enable blinking by default
-    #   - Always: Force the cursor to always blink
-    blinking: Never
-
+  thickness: 0.15  # Cursor thickness relative to the cell width (0.0 to 1.0)
+  unfocused_hollow: true
   vi_mode_style: None
 
-  # Cursor blinking interval in milliseconds.
-  blink_interval: 750
-  # Time after which cursor stops blinking, in seconds.
-  # Specifying '0' will disable timeout for blinking.
-  blink_timeout: 0
-  unfocused_hollow: true
+draw_bold_text_with_bright_colors: true
 
-  # Thickness of the cursor relative to the cell width from `0.0` to `1.0`.
-  thickness: 0.15
+env:
+  TERM: alacritty
+
+font:
+  bold:
+    family: Fira Code Nerd Font
+    style: Bold
+  bold_italic:
+    family: Roboto Mono Nerd Font
+    style: Bold Italic
+
+  builtin_box_drawing: false
+  glyph_offset:
+    x: 0
+    y: 0
+
+  italic:
+    family: Roboto Mono Nerd Font
+    style: Italic
+  normal:
+    family: Fira Code Nerd Font
+    style: Regular
+
+  offset:
+    x: 0
+    y: 0
+
+  # Point size
+  size: 13.0
+
+# Offer IPC using `alacritty msg` (unix only)
+ipc_socket: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
+
+mouse:
+  double_click: { threshold: 200 }
+  hide_when_typing: false
+  triple_click: { threshold: 300 }
+
+scrolling:
+  history: 5000
+  multiplier: 2
+
+selection:
+  save_to_clipboard: true
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+
+window:
+  class:
+    general: Alacritty
+    instance: Alacritty
+
+  decorations: full
+  decorations_theme_variant: None
+
+  dimensions:
+    columns: 0
+    lines: 0
+
+  dynamic_padding: false
+  dynamic_title: true
+  opacity: 0.7
+
+  padding:
+    x: 0
+    y: 0
+
+  position:
+    x: 0
+    y: 0
+
+  resize_increments: false
+  startup_mode: Windowed
+  title: Alacritty
 
 # Shell Default:
 #   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
@@ -309,19 +212,6 @@ live_config_reload: true
 # directory of the parent process will be used.
 working_directory: None
 
-# Offer IPC using `alacritty msg` (unix only)
-ipc_socket: true
-
-mouse:
-  # Click settings
-  #
-  # The `double_click` and `triple_click` settings control the time
-  # alacritty should wait for accepting multiple clicks as one double
-  # or triple click.
-  double_click: { threshold: 200 }
-  triple_click: { threshold: 300 }
-  hide_when_typing: false
-
 # Hints
 #
 # Terminal hints can be used to find text or hyperlink in the visible part of
@@ -329,74 +219,45 @@ mouse:
 hints:
   # Keys used for the hint labels.
   alphabet: "jfkdls;ahgurieowpq"
-
-  # List with all available hints https://google.com
-  #
-  # Each hint must have any of `regex` or `hyperlinks` field and either an
-  # `action` or a `command` field. The fields `mouse`, `binding` and
-  # `post_processing` are optional.
-  #
-  # The `hyperlinks` option will cause OSC 8 escape sequence hyperlinks to be
-  # highlighted.
-  #
-  # The fields `command`, `binding.key`, `binding.mods`, `binding.mode` and
-  # `mouse.mods` accept the same values as they do in the `key_bindings` section.
-  #
-  # The `mouse.enabled` field controls if the hint should be underlined while
-  # the mouse with all `mouse.mods` keys held or the vi mode cursor is above it.
-  #
-  # If the `post_processing` field is set to `true`, heuristics will be used to
-  # shorten the match if there are characters likely not to be part of the hint
-  # (e.g. a trailing `.`). This is most useful for URIs and applies only to
-  # `regex` matches.
-  #
-  # Values for `action`:
-  #   - Copy
-  #       Copy the hint's text to the clipboard.
-  #   - Paste
-  #       Paste the hint's text to the terminal or search.
-  #   - Select
-  #       Select the hint's text.
-  #   - MoveViModeCursor
-  #       Move the vi mode cursor to the beginning of the hint.
-  ## enabled:  # grs: not clear what below are comments vs commented out code
-  # - regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:|https:|http:|news:|file:|git:|ssh:|ftp:)\
-  #           [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
-  #   hyperlinks: true
-  #   command: xdg-open
-  #   post_processing: true
-  #   mouse:
-  #     enabled: true
-  #     mods: None
-  #   binding:
-  #     key: U
-  #     mods: Control|Shift
+  enabled:
+    - binding:
+        key: U
+        mods: Control|Shift
+      command: xdg-open
+      hyperlinks: true
+      mouse:
+        enabled: true
+        mods: None
+      post_processing: true
+      regex: "(ipfs:|ipns:|magnet:|mailto:|gemini:|gopher:\
+              |https:|http:|news:|file:|git:|ssh:|ftp:)\
+              [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
 
 key_bindings:
-  - { key: Paste,                                       action: Paste          }
-  - { key: Copy,                                        action: Copy           }
-  - { key: L,         mods: Control,                    action: ClearLogNotice }
-  - { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
-  - { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp   }
-  - { key: PageDown,  mods: Shift,   mode: ~Alt,        action: ScrollPageDown }
-  - { key: Home,      mods: Shift,   mode: ~Alt,        action: ScrollToTop    }
-  - { key: End,       mods: Shift,   mode: ~Alt,        action: ScrollToBottom }
+  - { key: Paste,                               action: Paste          }
+  - { key: Copy,                                action: Copy           }
+  - { key: PageUp,   mods: Shift,   mode: ~Alt, action: ScrollPageUp   }
+  - { key: PageDown, mods: Shift,   mode: ~Alt, action: ScrollPageDown }
+  - { key: Home,     mods: Shift,   mode: ~Alt, action: ScrollToTop    }
+  - { key: End,      mods: Shift,   mode: ~Alt, action: ScrollToBottom }
+  - { key: L,        mods: Control,             action: ClearLogNotice }
+  - { key: L,        mods: Control, mode: ~Vi|~Search, chars: "\x0c"   }
 
   # Vi Mode
-  - { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
-  - { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom          }
-  - { key: Escape,                      mode: Vi|~Search, action: ClearSelection          }
-  - { key: I,                           mode: Vi|~Search, action: ToggleViMode            }
-  - { key: I,                           mode: Vi|~Search, action: ScrollToBottom          }
-  - { key: C,      mods: Control,       mode: Vi|~Search, action: ToggleViMode            }
-  - { key: Y,      mods: Control,       mode: Vi|~Search, action: ScrollLineUp            }
-  - { key: E,      mods: Control,       mode: Vi|~Search, action: ScrollLineDown          }
-  - { key: G,                           mode: Vi|~Search, action: ScrollToTop             }
-  - { key: G,      mods: Shift,         mode: Vi|~Search, action: ScrollToBottom          }
-  - { key: B,      mods: Control,       mode: Vi|~Search, action: ScrollPageUp            }
-  - { key: F,      mods: Control,       mode: Vi|~Search, action: ScrollPageDown          }
-  - { key: U,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageUp        }
-  - { key: D,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageDown      }
+  - { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode   }
+  - { key: Space,  mods: Shift|Control, mode: Vi|~Search, action: ScrollToBottom }
+  - { key: Escape,                      mode: Vi|~Search, action: ClearSelection }
+  - { key: I,                           mode: Vi|~Search, action: ToggleViMode   }
+  - { key: I,                           mode: Vi|~Search, action: ScrollToBottom }
+  - { key: C,      mods: Control,       mode: Vi|~Search, action: ToggleViMode   }
+  - { key: Y,      mods: Control,       mode: Vi|~Search, action: ScrollLineUp   }
+  - { key: E,      mods: Control,       mode: Vi|~Search, action: ScrollLineDown }
+  - { key: G,                           mode: Vi|~Search, action: ScrollToTop    }
+  - { key: G,      mods: Shift,         mode: Vi|~Search, action: ScrollToBottom }
+  - { key: B,      mods: Control,       mode: Vi|~Search, action: ScrollPageUp   }
+  - { key: F,      mods: Control,       mode: Vi|~Search, action: ScrollPageDown }
+  - { key: U,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageUp }
+  - { key: D,      mods: Control,       mode: Vi|~Search, action: ScrollHalfPageDown }
   - { key: Y,                           mode: Vi|~Search, action: Copy                    }
   - { key: Y,                           mode: Vi|~Search, action: ClearSelection          }
   - { key: Copy,                        mode: Vi|~Search, action: ClearSelection          }
@@ -458,33 +319,3 @@ key_bindings:
   - { key: NumpadAdd,      mods: Control,                         action: IncreaseFontSize }
   - { key: Minus,          mods: Control,                         action: DecreaseFontSize }
   - { key: NumpadSubtract, mods: Control,                         action: DecreaseFontSize }
-
-#debug:
-  # Display the time it takes to redraw each frame.
-  #render_timer: false
-
-  # Keep the log file after quitting Alacritty.
-  #persistent_logging: false
-
-  # Log level
-  #
-  # Values for `log_level`:
-  #   - Off
-  #   - Error
-  #   - Warn
-  #   - Info
-  #   - Debug
-  #   - Trace
-  #log_level: Warn
-
-  # Renderer override.
-  #   - glsl3
-  #   - gles2
-  #   - gles2_pure
-  #renderer: None
-
-  # Print all received window events.
-  #print_events: false
-
-  # Highlight window damage information.
-  #highlight_damage: false
