@@ -2,22 +2,18 @@
 
 Configuration files for my Arch Linux workstations & laptops.
 
-## IMPORTANT NOTICE:
-On 2023 May 09, I screwed up something and could not push main up to
-GitHub.  I created a new branch called master and pushed it to GitHub.
-I changed my GitHub default branch to master and deleted both the main
-and tmpWork branches locally and on GitHub.
+## Steps to Clone
 
-If you have cloned my repo, you will need to re-clone it, or try to
-fix your local repo as follows:
+First clone the grscheller/dotfiles GitHub repo.  Then you will need to
+initialize and update the submodules.  Currently, grscheller/nvim is the
+only submodule used.
 
-``` bash
-   $ git branch -m main master
-   $ git fetch origin
-   $ git branch -u origin/master master
-   branch 'master' set up to track 'origin/master'.
-   $ git remote set-head origin -a
-   origin/HEAD set to master
+
+```
+   $ git clone https://github.com/grscheller/dotfiles
+   $ cd dotfiles
+   $ git submodule init
+   $ git submodule update
 ```
 
 ## Scripts
