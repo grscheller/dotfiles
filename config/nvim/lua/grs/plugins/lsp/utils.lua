@@ -44,7 +44,7 @@ local NullLSBuiltinOpts = {
    yamllint = {
       extra_args = {
          '-d',
-         '{extends: relaxed, rules: {key-ordering: "disable"}}',
+         '{extends: default, rules: {key-ordering: "disable", line-length: {max: 100}}}',
       },
    }
 }

@@ -2,8 +2,154 @@
 #
 # See: /usr/share/doc/alacritty/example/alacritty.yml
 #
-
 ---
+env:
+  TERM: alacritty
+
+window:
+  dimensions:
+    columns: 0
+    lines: 0
+
+  position:
+    x: 0
+    y: 0
+
+  padding:
+    x: 0
+    y: 0
+
+  dynamic_padding: false
+  decorations: full
+  opacity: 0.7
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: true
+
+  class:
+    instance: Alacritty
+    general: Alacritty
+
+  decorations_theme_variant: None
+  resize_increments: false
+
+scrolling:
+  history: 5000
+  multiplier: 2
+
+font:
+  normal:
+    family: Fira Code Nerd Font
+    style: Regular
+  bold:
+    family: Fira Code Nerd Font
+    style: Bold
+  italic:
+    family: Roboto Mono Nerd Font
+    style: Italic
+  bold_italic:
+    family: Roboto Mono Nerd Font
+    style: Bold Italic
+
+  # Point size
+  size: 13.0
+
+  offset:
+    x: 0
+    y: 0
+
+  glyph_offset:
+    x: 0
+    y: 0
+
+  builtin_box_drawing: false
+
+draw_bold_text_with_bright_colors: true
+
+# Colors (Based on Kanagawa)
+colors:
+  primary:
+    background: '#0d0c0c'
+    foreground: '#c5c9c5'
+    dim_foreground: '#828482'
+    bright_foreground: '#eaeaea'
+
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  vi_mode_cursor:
+    text: CellBackground
+    cursor: CellForeground
+
+  search:
+    focused_match:
+      background: '#0d0c0c'
+      foreground: '#c5c9c5'
+    matches:
+      background: '#0d0c0c'
+      foreground: '#828482'
+
+  # Keyboard hints
+  hints:
+    start:
+      foreground: '#1d1f21'
+      background: '#e9ff5e'
+    end:
+      foreground: '#e9ff5e'
+      background: '#1d1f21'
+
+  # History position
+  line_indicator:
+    foreground: None
+    background: None
+
+  footer_bar:
+    background: '#c5c8c6'
+    foreground: '#1d1f21'
+
+  # Selection colors
+  selection:
+    background: CellForeground
+    text: CellBackground
+
+  # Normal colors
+  normal:
+    black:   '#0d0c0c'
+    red:     '#c34043'
+    green:   '#76946a'
+    yellow:  '#e6c384'
+    blue:    '#7e9cd8'
+    magenta: '#957fb8'
+    cyan:    '#6a9589'
+    white:   '#dcd7ba'
+
+  # Bright colors
+  bright:
+    black:   '#12120f'
+    red:     '#e82424'
+    green:   '#98bb6c'
+    yellow:  '#f9d791'
+    blue:    '#7fb4ca'
+    magenta: '#b8b4d0'
+    cyan:    '#7aa89f'
+    white:   '#ede8cb'
+
+  # Dim colors
+  # If not set, dim calculated based on normal colors
+  dim:
+    black:   '#181616'
+    red:     '#c4746e'
+    green:   '#8a9a7b'
+    yellow:  '#c4b28a'
+    blue:    '#4d699b'
+    magenta: '#624c83'
+    cyan:    '#597b75'
+    white:   '#c5c9c5'
+
+  indexed_colors: []
+  transparent_background_colors: false
+
 bell:
   # Values for `animation`:
   #   - Ease
@@ -17,200 +163,51 @@ bell:
   #   - EaseOutCirc
   #   - Linear
   animation: EaseOutSine
+  duration: 200
   color: '#99aa00'
   command: None
-  duration: 200
-
-# Colors (Based on Kanagawa)
-colors:
-  cursor:
-    cursor: CellForeground
-    text: CellBackground
-
-  footer_bar:
-    background: '#c5c8c6'
-    foreground: '#1d1f21'
-
-  hints:
-    end:
-      background: '#1d1f21'
-      foreground: '#e9ff5e'
-    start:
-      background: '#e9ff5e'
-      foreground: '#1d1f21'
-
-  indexed_colors: []
-
-  line_indicator:
-    background: None
-    foreground: None
-
-  primary:
-    background: '#0d0c0c'
-    bright_foreground: '#eaeaea'
-    dim_foreground: '#828482'
-    foreground: '#c5c9c5'
-
-  search:
-    focused_match:
-      background: '#0d0c0c'
-      foreground: '#c5c9c5'
-    matches:
-      background: '#0d0c0c'
-      foreground: '#828482'
-
-  selection:
-    background: CellForeground
-    text: CellBackground
-
-  # Bright colors
-  bright:
-    black:   '#12120f'
-    blue:    '#7fb4ca'
-    cyan:    '#7aa89f'
-    green:   '#98bb6c'
-    magenta: '#b8b4d0'
-    red:     '#e82424'
-    white:   '#ede8cb'
-    yellow:  '#f9d791'
-
-  # Dim colors
-  # If not set, dim calculated based on normal colors
-  dim:
-    black:   '#181616'
-    blue:    '#4d699b'
-    cyan:    '#597b75'
-    green:   '#8a9a7b'
-    magenta: '#624c83'
-    red:     '#c4746e'
-    white:   '#c5c9c5'
-    yellow:  '#c4b28a'
-
-  # Normal colors
-  normal:
-    black:   '#0d0c0c'
-    blue:    '#7e9cd8'
-    cyan:    '#6a9589'
-    green:   '#76946a'
-    magenta: '#957fb8'
-    red:     '#c34043'
-    white:   '#dcd7ba'
-    yellow:  '#e6c384'
-
-  transparent_background_colors: false
-
-  vi_mode_cursor:
-    cursor: CellForeground
-    text: CellBackground
-
-cursor:
-  blink_interval: 750   # milliseconds
-  blink_timeout: 0
-  style:
-    # Never: Prevent the cursor from ever blinking
-    # Off: Disable blinking by default
-    # On: Enable blinking by default
-    # Always: Force the cursor to always blink
-    blinking: Never
-    # ▇ Block
-    # _ Underline
-    # | Beam
-    shape: Block
-
-  thickness: 0.15  # Cursor thickness relative to the cell width (0.0 to 1.0)
-  unfocused_hollow: true
-  vi_mode_style: None
-
-draw_bold_text_with_bright_colors: true
-
-env:
-  TERM: alacritty
-
-font:
-  bold:
-    family: Fira Code Nerd Font
-    style: Bold
-  bold_italic:
-    family: Roboto Mono Nerd Font
-    style: Bold Italic
-
-  builtin_box_drawing: false
-  glyph_offset:
-    x: 0
-    y: 0
-
-  italic:
-    family: Roboto Mono Nerd Font
-    style: Italic
-  normal:
-    family: Fira Code Nerd Font
-    style: Regular
-
-  offset:
-    x: 0
-    y: 0
-
-  # Point size
-  size: 13.0
-
-# Offer IPC using `alacritty msg` (unix only)
-ipc_socket: true
-
-# Live config reload (changes require restart)
-live_config_reload: true
-
-mouse:
-  double_click: { threshold: 200 }
-  hide_when_typing: false
-  triple_click: { threshold: 300 }
-
-scrolling:
-  history: 5000
-  multiplier: 2
 
 selection:
   save_to_clipboard: true
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
-window:
-  class:
-    general: Alacritty
-    instance: Alacritty
+cursor:
+  style:
+    # ▇ Block
+    # _ Underline
+    # | Beam
+    shape: Block
+    # Never: Prevent the cursor from ever blinking
+    # Off: Disable blinking by default
+    # On: Enable blinking by default
+    # Always: Force the cursor to always blink
+    blinking: Never
 
-  decorations: full
-  decorations_theme_variant: None
+  vi_mode_style: None
 
-  dimensions:
-    columns: 0
-    lines: 0
+  blink_interval: 750   # milliseconds
+  blink_timeout: 0
+  unfocused_hollow: true
+  thickness: 0.15  # Cursor thickness relative to the cell width (0.0 to 1.0)
 
-  dynamic_padding: false
-  dynamic_title: true
-  opacity: 0.7
+# Live config reload (changes require restart)
+live_config_reload: true
 
-  padding:
-    x: 0
-    y: 0
+#shell:
+#  program: /bin/bash
+#  args:
+#    - --login
 
-  position:
-    x: 0
-    y: 0
-
-  resize_increments: false
-  startup_mode: Windowed
-  title: Alacritty
-
-# Shell Default:
-#   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
-#   - (Windows) powershell
-## shell:
-##  program: '/usr/bin/bash'
-##  args:
-##    - --login
-
-# Directory the shell is started in. If this is unset, or `None`, the working
-# directory of the parent process will be used.
+# Use directory of parent process for shell
 working_directory: None
+
+# Offer IPC using `alacritty msg` (unix only)
+ipc_socket: true
+
+mouse:
+  double_click: { threshold: 200 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: false
 
 # Hints
 #
@@ -233,15 +230,20 @@ hints:
               |https:|http:|news:|file:|git:|ssh:|ftp:)\
               [^\u0000-\u001F\u007F-\u009F<>\"\\s{-}\\^⟨⟩`]+"
 
+mouse_bindings:
+  - { mouse: Right,                 action: ExpandSelection }
+  - { mouse: Right,  mods: Control, action: ExpandSelection }
+  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
+
 key_bindings:
   - { key: Paste,                               action: Paste          }
   - { key: Copy,                                action: Copy           }
+  - { key: L,        mods: Control,             action: ClearLogNotice }
+  - { key: L,        mods: Control, mode: ~Vi|~Search, chars: "\x0c"   }
   - { key: PageUp,   mods: Shift,   mode: ~Alt, action: ScrollPageUp   }
   - { key: PageDown, mods: Shift,   mode: ~Alt, action: ScrollPageDown }
   - { key: Home,     mods: Shift,   mode: ~Alt, action: ScrollToTop    }
   - { key: End,      mods: Shift,   mode: ~Alt, action: ScrollToBottom }
-  - { key: L,        mods: Control,             action: ClearLogNotice }
-  - { key: L,        mods: Control, mode: ~Vi|~Search, chars: "\x0c"   }
 
   # Vi Mode
   - { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode   }
