@@ -67,8 +67,9 @@ and begin
    set -gx MANPAGER 'nvim +Man!'
    set -gx DIFFPROG 'nvim -d'
 
-   # Set up path to dotfiles repo
+   # Set up path to dotfiles related repos
    set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+   set -gx NVIM_GIT_REPO ~/devel/nvim
 
    # Added ~/bin and relative paths at end of PATH
    fish_add_path -gP ~/bin bin ../bin .
