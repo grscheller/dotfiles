@@ -1,12 +1,5 @@
 #!/bin/sh
-#
-#  Installs my Neovim, Fish, Sway, Git, SSH and Bash based
-#  software development environment into my $HOME directory.
-#
-#  Note: To the best of my knowledge this is a fully POSIX compliant
-#        shell script.  Tested regularly against dash, where on my
-#        Arch Linux systems I set /usr/bin/sh -> /usr/bin/dash and
-#        Arch sets /bin -> /usr/bin for POSIX compliance.
+#  Installs my Linix desktop environment into my $HOME directory.
 #
 #  Systemd --user Services used
 #    - kanshi - Wayland daemon that automatically configures outputs
@@ -22,6 +15,7 @@ usage='Usage: dfInstall [-s {install|repo|target}]'
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
 umask 0022
 
 cd "$DOTFILE_GIT_REPO" || {
@@ -49,14 +43,6 @@ BIN_SCRIPTS='
    spin
    startw
    viewJarManifest
-'
-
-BLOOP_FILES='
-   bloop.json
-'
-
-CABAL_CONFIGS='
-   config
 '
 
 CONFIG_FILES='
@@ -117,44 +103,6 @@ CONFIG_FILES='
    kanshi/config
    mako/config
    mpd/mpd.conf
-   nvim/ftplugin/c.lua
-   nvim/ftplugin/cpp.lua
-   nvim/ftplugin/fish.lua
-   nvim/ftplugin/haskell.lua
-   nvim/ftplugin/help.lua
-   nvim/ftplugin/html.lua
-   nvim/ftplugin/lua.lua
-   nvim/ftplugin/markdown.lua
-   nvim/ftplugin/ocaml.lua
-   nvim/ftplugin/rust.lua
-   nvim/ftplugin/sbt.lua
-   nvim/ftplugin/scala.lua
-   nvim/ftplugin/sh.lua
-   nvim/lua/grs/config/autocmds.lua
-   nvim/lua/grs/config/colors.lua
-   nvim/lua/grs/config/globals.lua
-   nvim/lua/grs/config/keymaps.lua
-   nvim/lua/grs/config/tooling.lua
-   nvim/lua/grs/config/options.lua
-   nvim/lua/grs/lib/functional.lua
-   nvim/lua/grs/lib/text.lua
-   nvim/lua/grs/plugins/editor/init.lua
-   nvim/lua/grs/plugins/editor/colorscheme.lua
-   nvim/lua/grs/plugins/editor/telescope.lua
-   nvim/lua/grs/plugins/editor/textedit.lua
-   nvim/lua/grs/plugins/editor/whichkey.lua
-   nvim/lua/grs/plugins/lsp/init.lua
-   nvim/lua/grs/plugins/lsp/cmp.lua
-   nvim/lua/grs/plugins/lsp/lsp.lua
-   nvim/lua/grs/plugins/lsp/rust.lua
-   nvim/lua/grs/plugins/lsp/scala.lua
-   nvim/lua/grs/plugins/lsp/utils.lua
-   nvim/lua/grs/plugins/tooling/init.lua
-   nvim/lua/grs/plugins/tooling/mason.lua
-   nvim/lua/grs/plugins/tooling/treesitter.lua
-   nvim/lua/grs/plugins/tooling/utils.lua
-   nvim/lua/grs/plugins/lazy.lua
-   nvim/init.lua
    sway/config
    sway/config_bg_color
    sway/config_bg_picture
@@ -167,28 +115,26 @@ CONFIG_FILES='
    wofi/style.css
 '
 
-#NVIM_TOML='
-#   selene.toml
-#   stylua.toml
-#   vim.toml
-#'
+SSH_FILES='
+   config
+'
 
-SSH_CONFIGS='
+BLOOP_FILES='
+   bloop.json
+'
+
+CABAL_FILES='
    config
 '
 
 RM_TARGET_ITEMS="
    $HOME/.gitconfig
-   $HOME/.sway
    $HOME/.mako
+   $HOME/.sway
+   $HOME/.vimrc
    $XDG_CONFIG_HOME/nvim/lua/grs/core
    $XDG_CONFIG_HOME/nvim/lua/grs/utils
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide
-"
-
-RM_REPO_ITEMS="
-   $DOTFILE_GIT_REPO/config/nvim/lua/grs/util
-   $DOTFILE_GIT_REPO/config/nvim/lua/grs/utils
 "
 
 DIRS_TO_CREATE="
@@ -251,8 +197,8 @@ ensure_dir () {
    then
       printf "\\nsource directory '%s' does not exist\\n" "$srcDir"
    fi
-   srcDir=
    targetDir=
+   srcDir=
 }
 
 ## Function to check or remove files or directories
@@ -356,16 +302,16 @@ chmod 0755 "$HOME/bin"
 ## Install configuration files
 
 # Install Bloop Configs for Scala
-for conf_file in $BLOOP_FILES
+for bloop_file in $BLOOP_FILES
 do
-   install_file "$HOME/.bloop" "$conf_file" ./home/bloop 0600 "$switch"
+   install_file "$HOME/.bloop" "$bloop_file" ./home/bloop 0600 "$switch"
 done
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal Configs for Haskell
-for conf_file in $CABAL_CONFIGS
+for cabal_file in $CABAL_FILES
 do
-   install_file "$HOME/.cabal" "$conf_file" ./home/cabal 0644 "$switch"
+   install_file "$HOME/.cabal" "$cabal_file" ./home/cabal 0644 "$switch"
 done
 chmod 0755 "$HOME/.cabal"
 
@@ -376,20 +322,20 @@ do
 done
 chmod 0755 "$HOME/.config"
 
-## Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
-##
-##   Note: These don't seam to work in the repo
-##         unless located at repo's root.
-##
-#for conf_file in $NVIM_TOML
-#do
-#   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644 "$switch"
-#done
+# Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
+#
+#   Note: These don't seam to work in the repo
+#         unless located at repo's root.
+#
+for conf_file in $NVIM_TOML
+do
+   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644 "$switch"
+done
 
 # Install SSH Configs
-for conf_file in $SSH_CONFIGS
+for ssh_file in $SSH_FILES
 do
-   install_file "$HOME/.ssh" "$conf_file" ./home/ssh 0600 "$switch"
+   install_file "$HOME/.ssh" "$ssh_file" ./home/ssh 0600 "$switch"
 done
 chmod 0700 "$HOME/.ssh"
 
@@ -405,12 +351,6 @@ done
 for item in $RM_TARGET_ITEMS
 do
    remove_item "$item" target
-done
-
-# Remove/report no longer needed items, usually empty directories, from repo
-for item in $RM_REPO_ITEMS
-do
-   remove_item "$item" repo
 done
 
 # Some final adjustments/tweaks/tasks
