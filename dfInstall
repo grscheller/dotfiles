@@ -13,20 +13,9 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
 
-cd "$DOTFILE_GIT_REPO" || {
-   printf "\\nError: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
-   return 1
-}
-
 ### Source install infrastructure
 switch=''
-. ./installInclude.sh
-
-### Install git submodules
- (
-    NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
-    . ./config/nvim/nvInstall
- ) &
+. ./installSource.sh
 
 ### Configuration
 
@@ -148,6 +137,12 @@ DIRS_TO_CREATE="
    $HOME/.cabal/bin
    $XDG_CONFIG_HOME/mpd/playlists
 "
+
+### Install git submodules
+ (
+    NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
+    . ./config/nvim/nvInstall
+ ) &
 
 ### Install or Check
 

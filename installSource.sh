@@ -1,6 +1,7 @@
-## This included script is designed to be compatible with the
-#  grscheller/dotfiles GitHub repo and all of its submolule repos.
+# This sourced script is designed to be compatible with the
+# grscheller/dotfiles GitHub repo and all of its submodule repos.
 #
+# shellcheck shell=sh
 #
 if [ -z "$scriptName" ]
 then
