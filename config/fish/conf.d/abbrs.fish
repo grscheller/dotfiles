@@ -7,7 +7,8 @@ abbr -a gq 'geeqie &; disown'
 # Shell terminal cmds
 abbr -a da date
 abbr -a dp digpath
-abbr -a nv nvim
+abbr -a n nvim
+abbr -a vim nvim
 abbr -a pa 'string join \n $PATH'
 abbr -a -- pst ps -ejH
 
@@ -32,6 +33,8 @@ abbr -a gb git 'branch --list|cat'
 # So I can run these outside the dotfiles repo
 abbr -a dfInstall '$DOTFILE_GIT_REPO/dfInstall'
 abbr -a sfInstall 'sudo $DOTFILE_GIT_REPO/sfInstall'
+abbr -a nvInstall '$NVIM_GIT_REPO/nvInstall'
+abbr -a snvInstall 'NVIM_GIT_REPO=$DOTFILE_GIT_REPO/config/nvim $DOTFILE_GIT_REPO/config/nvim/nvInstall'
 
 # Shell environment cmds
 abbr -a re 'cd; REDO_ENV=yes fish'
