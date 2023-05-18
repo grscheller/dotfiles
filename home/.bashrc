@@ -122,33 +122,33 @@ digpath () (
 ax () {
    if [[ -f $1 ]]
    then
-       case $1 in
-          *.tar)     tar -xvf "$1"               ;;
-          *.tar.bz2) tar -xjvf "$1"              ;;
-          *.tbz2)    tar -xjvf "$1"              ;;
-          *.tar.gz)  tar -xzvf "$1"              ;;
-          *.tgz)     tar -xzvf "$1"              ;;
-          *.tar.Z)   tar -xZvf "$1"              ;;
-          *.gz)      gunzip "$1"                 ;;
-          *.bz2)     bunzip2 "$1"                ;;
-          *.zip)     unzip "$1"                  ;;
-          *.Z)       uncompress "$1"             ;;
-          *.rar)     unrar x "$1"                ;;
-          *.tar.xz)  xz -dc "$1" | tar -xvf -    ;;
-          *.tar.7z)  7za x -so "$1" | tar -xvf - ;;
-          *.7z)      7z x "$1"                   ;;
-          *.tar.zst) zstd -dc "$1" | tar -xvf -  ;;
-          *.zst)     zstd -d "$1"                ;;
-          *.cpio)    cpio -idv < "$1"            ;;
-          *) printf 'ax: error: "%s" unknown file type' "$1"  >&2 ;;
-       esac
+      case $1 in
+         *.tar)     tar -xvf "$1"               ;;
+         *.tar.bz2) tar -xjvf "$1"              ;;
+         *.tbz2)    tar -xjvf "$1"              ;;
+         *.tar.gz)  tar -xzvf "$1"              ;;
+         *.tgz)     tar -xzvf "$1"              ;;
+         *.tar.Z)   tar -xZvf "$1"              ;;
+         *.gz)      gunzip "$1"                 ;;
+         *.bz2)     bunzip2 "$1"                ;;
+         *.zip)     unzip "$1"                  ;;
+         *.Z)       uncompress "$1"             ;;
+         *.rar)     unrar x "$1"                ;;
+         *.tar.xz)  xz -dc "$1" | tar -xvf -    ;;
+         *.tar.7z)  7za x -so "$1" | tar -xvf - ;;
+         *.7z)      7z x "$1"                   ;;
+         *.tar.zst) zstd -dc "$1" | tar -xvf -  ;;
+         *.zst)     zstd -d "$1"                ;;
+         *.cpio)    cpio -idv < "$1"            ;;
+         *) printf 'ax: error: "%s" unknown file type' "$1"  >&2 ;;
+      esac
    else
-       if [[ -n $1 ]]
-       then
-           printf 'ax: error: "%s" is not a file' "$1" >&2
-       else
-           printf 'ax: error: No file argument given' >&2
-       fi
+      if [[ -n $1 ]]
+      then
+         printf 'ax: error: "%s" is not a file' "$1" >&2
+      else
+         printf 'ax: error: No file argument given' >&2
+      fi
    fi
 }
 
