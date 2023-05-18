@@ -1,5 +1,5 @@
 #!/bin/sh
-#  Installs my Linix desktop environment into my $HOME directory.
+#  Installs my entire Linix desktop environment into my $HOME directory.
 #
 #  Systemd --user Services used
 #    - kanshi - Wayland daemon that automatically configures outputs
@@ -7,11 +7,7 @@
 #    - mpd - Music daemon for linux
 #
 
-### Usage
-
-usage='Usage: dfInstall [-s {install|repo|target}]'
-
-### Setup
+export scriptName=dfInstall
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
@@ -21,6 +17,16 @@ cd "$DOTFILE_GIT_REPO" || {
    printf "\\nError: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
    return 1
 }
+
+### Source install infrastructure
+switch=''
+. ./installInclude.sh
+
+### Install git submodules
+ (
+    NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
+    . ./config/nvim/nvInstall
+ ) &
 
 ### Configuration
 
@@ -143,150 +149,7 @@ DIRS_TO_CREATE="
    $XDG_CONFIG_HOME/mpd/playlists
 "
 
-### Argument parsing, last -s option wins, default is to install
-
-switch=install
-while getopts s: opt 2>&1
-do
-   case "$opt" in
-      s)
-         switch="$OPTARG"
-         ;;
-      \?)
-         printf '\n%s\n' "$usage"
-         return 1
-         ;;
-   esac
-done
-shift $((OPTIND - 1))
-
-if [ $# -gt 0 ]
-then
-   printf '\nError: dfInstall takes no arguments\n'
-   printf '\n%s\n' "$usage"
-   return 1
-fi
-
-if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != target ]
-then
-   printf '\nError: dfInstall -s given an invalid option argument\n'
-   printf '\n%s\n' "$usage"
-   return 1
-fi
-
-### Kickoff git submodule  installs
-NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim" ./config/nvim/nvInstall -s "$switch" &
-
-### Functions
-
-## Function to ensure directory exists
-ensure_dir () {
-   targetDir="$1"
-   srcDir="$2"
-   if [ ! -d "$targetDir" ]
-   then
-      case "$switch" in
-         install)
-            mkdir -p "$targetDir" ||
-               printf "\\nWarning: Failed to create '%s' directory\\n" "$targetDir"
-            ;;
-         target)
-            printf "\\ntarget directory '%s' needs to be created\\n" "$targetDir"
-            ;;
-      esac
-   fi
-   if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
-   then
-      printf "\\nsource directory '%s' does not exist\\n" "$srcDir"
-   fi
-   targetDir=
-   srcDir=
-}
-
-## Function to check or remove files or directories
-remove_item () {
-   item="$1"
-   flag="$2"
-   if test -e "$item"
-   then
-      case "$switch" in
-         install)
-            rm -rf "$item"
-            test -e "$item" && {
-               case "$flag" in
-                  target)
-                     printf "\\nWarning: Failed to remove '%s' from target\\n" "$item"
-                     ;;
-                  repo)
-                     printf "\\nWarning: Failed to remove '%s' from repo\\n" "$item"
-                     ;;
-               esac
-            }
-            ;;
-         repo)
-            printf "\\n'%s' is still in the target\\n" "$item"
-            ;;
-         target)
-            printf "\\n'%s' needs removing from the target\\n" "$item"
-            ;;
-      esac
-   fi
-}
-
-## Function to install files
-install_file () {
-   install_dir="$1"
-   file_path="$2"
-   src_dir="$3"
-   file_perm="$4"
-   switch="$5"
-   src="$src_dir/$file_path"
-   src_abs="$DOTFILE_GIT_REPO${src#.}"
-   trgt="$install_dir/$file_path"
-   trgt_dir="${trgt%/*}"
-
-   # Make sure target and source directory exists
-   ensure_dir "$trgt_dir" "$src_dir"
-
-   case "$switch" in
-      install)
-         # Install the file
-         if cp "$src" "$trgt"
-         then
-            chmod --quiet "$file_perm" "$trgt" || {
-               printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
-            }
-         else
-            printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
-         fi
-         ;;
-      repo)
-         # Compare config (this script) with dotfile repo working directory
-         test -e "$src" || {
-            printf "\\nSource: '%s' not in git working directory.\\n" "$src_abs"
-         }
-         ;;
-      target)
-         # Compare config (this script) with install target
-         if [ ! -e "$src" ] && [ ! -e "$trgt" ]
-         then
-            printf "\\nBoth Target: '%s'\n and Source: '%s' don't exist.\\n" "$trgt" "$src_abs"
-         elif [ ! -e "$trgt" ]
-         then
-            printf "\\nTarget: '%s' doesn't exist.\\n" "$trgt"
-         elif [ ! -e "$src" ]
-         then
-            printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
-         else
-            diff "$src" "$trgt" > /dev/null || {
-               printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" "$trgt" "$src_abs"
-            }
-         fi
-         ;;
-   esac
-}
-
-### Install or check dotfiles
+### Install or Check
 
 ## Install home directory files
 for home_file in $HOME_FILES
@@ -323,16 +186,6 @@ do
    install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 "$switch"
 done
 chmod 0755 "$HOME/.config"
-
-# Install $NVIM_TOML files from repo root to $XDG_CONFIG_HOME/nvim
-#
-#   Note: These don't seam to work in the repo
-#         unless located at repo's root.
-#
-for conf_file in $NVIM_TOML
-do
-   install_file "$XDG_CONFIG_HOME/nvim" "$conf_file" . 0644 "$switch"
-done
 
 # Install SSH Configs
 for ssh_file in $SSH_FILES
