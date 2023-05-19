@@ -4,14 +4,22 @@ Configuration files for my Arch Linux workstations & laptops.
 
 ## Steps to Clone
 
-First clone the grscheller/dotfiles GitHub repo.  Then initialize and update
-the submodules.  Currently, grscheller/nvim is the only GitHub submodule used.
+First clone the grscheller/dotfiles GitHub repo.  Then initialize and
+update the submodules.  Currently, grscheller/nvim is the only GitHub
+submodule used.
 
 
 ```
    $ git clone https://github.com/grscheller/dotfiles
    $ cd dotfiles
    $ git submodule init
+   $ git submodule update
+```
+
+When you update dotfiles, you also need to update the submodules.
+
+```
+   $ git pull
    $ git submodule update
 ```
 
