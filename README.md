@@ -1,6 +1,6 @@
 # dotfiles
 
-Configuration files for my Arch Linux workstations & laptops.
+Installs my configuration files for my Arch Linux based systems.
 
 ## Steps to Clone
 
