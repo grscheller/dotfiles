@@ -23,6 +23,15 @@ When you update dotfiles, you also need to update the submodules.
    $ git submodule update
 ```
 
+To update the submodules to their latest versions, do
+
+```
+   $ git submodule update --remote --merge
+```
+
+But this will create changes that will need to be added and committed to
+the dotfiles repo.
+
 ## Scripts
 
 * [dfInstall](dfInstall)
