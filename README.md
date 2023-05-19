@@ -8,7 +8,6 @@ First clone the grscheller/dotfiles GitHub repo.  Then initialize and
 update the submodules.  Currently, grscheller/nvim is the only GitHub
 submodule used.
 
-
 ```
    $ git clone https://github.com/grscheller/dotfiles
    $ cd dotfiles
@@ -29,7 +28,7 @@ To update the submodules to their latest versions, do
    $ git submodule update --remote --merge
 ```
 
-This will create changes that need to be added and committed to the
+This will create changes needing to be added and committed to the
 dotfiles repo.
 
 ## Scripts

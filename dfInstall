@@ -19,26 +19,6 @@ switch=''
 
 ### Configuration
 
-HOME_FILES='
-   .bash_profile
-   .bashrc
-   .inputrc
-'
-
-BIN_SCRIPTS='
-   buArch
-   chkcolor
-   codepoint
-   digpath
-   monitor
-   myCalc
-   pathtrim
-   rt
-   spin
-   startw
-   viewJarManifest
-'
-
 CONFIG_FILES='
    alacritty/alacritty_arch.yml
    alacritty/alacritty.yml
@@ -58,18 +38,6 @@ CONFIG_FILES='
    wofi/style.css
 '
 
-SSH_FILES='
-   config
-'
-
-BLOOP_FILES='
-   bloop.json
-'
-
-CABAL_FILES='
-   config
-'
-
 RM_TARGET_ITEMS="
    $HOME/.gitconfig
    $HOME/.mako
@@ -77,9 +45,6 @@ RM_TARGET_ITEMS="
 "
 
 DIRS_TO_CREATE="
-   $HOME/catch
-   $HOME/.local/bin
-   $HOME/.cabal/bin
    $XDG_CONFIG_HOME/mpd/playlists
 "
 
@@ -96,34 +61,7 @@ DIRS_TO_CREATE="
 
 ### Install or Check
 
-## Install home directory files
-for home_file in $HOME_FILES
-do
-   install_file "$HOME" "$home_file" ./home 0644 "$switch"
-done
-
-## Install  ~/bin  scripts
-for bin_file in $BIN_SCRIPTS
-do
-   install_file "$HOME/bin" "$bin_file" ./home/bin 0755 "$switch"
-done
-chmod 0755 "$HOME/bin"
-
 ## Install configuration files
-
-# Install Bloop Configs for Scala
-for bloop_file in $BLOOP_FILES
-do
-   install_file "$HOME/.bloop" "$bloop_file" ./home/bloop 0600 "$switch"
-done
-chmod 0755 "$HOME/.bloop"
-
-# Install Cabal Configs for Haskell
-for cabal_file in $CABAL_FILES
-do
-   install_file "$HOME/.cabal" "$cabal_file" ./home/cabal 0644 "$switch"
-done
-chmod 0755 "$HOME/.cabal"
 
 # Install $XDG_CONFIG_HOME files
 for conf_file in $CONFIG_FILES
@@ -132,25 +70,18 @@ do
 done
 chmod 0755 "$HOME/.config"
 
-# Install SSH Configs
-for ssh_file in $SSH_FILES
-do
-   install_file "$HOME/.ssh" "$ssh_file" ./home/ssh 0600 "$switch"
-done
-chmod 0700 "$HOME/.ssh"
-
 ### Some final tweaks, checks & cleanup
-
-# Create or report on missing directories
-for DIR in $DIRS_TO_CREATE
-do
-   ensure_dir "$DIR"
-done
 
 # Remove/report no longer needed files and directories
 for item in $RM_TARGET_ITEMS
 do
    remove_item "$item" target
+done
+
+# Create or report on missing directories
+for DIR in $DIRS_TO_CREATE
+do
+   ensure_dir "$DIR"
 done
 
 # Some final adjustments/tweaks/tasks
