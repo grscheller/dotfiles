@@ -4,3 +4,6 @@
 [submodule "config/fish"]
 	path = config/fish
 	url = https://github.com/grscheller/fish
+[submodule "home"]
+	path = home
+	url = https://github.com/grscheller/home
