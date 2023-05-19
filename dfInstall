@@ -89,6 +89,11 @@ DIRS_TO_CREATE="
     . ./config/nvim/nvInstall
  ) &
 
+ (
+    FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
+    . ./config/fish/fishInstall
+ ) &
+
 ### Install or Check
 
 ## Install home directory files
