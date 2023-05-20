@@ -2,6 +2,13 @@
 
 Installs my configuration files for my Arch Linux based systems.
 
+Uses the following GitHub repos as submodules:
+
+* grscheller/fish - Fish shell (my main interactive shell) config files
+* grscheller/home - Bash shell & other $HOME based configuration files
+* grscheller/nvim - Neovim configuration files
+* grscheller/sway - Sway tiling WM configuration files
+
 ## Steps to Clone
 
 First clone the grscheller/dotfiles GitHub repo.  Then initialize and

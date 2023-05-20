@@ -1,10 +1,11 @@
 #!/bin/sh
-#  Installs my entire Linix desktop environment into my $HOME directory.
+#  Installs ani entire Linix desktop environment into $HOME directory
+#  uses the following GitHub repos as submodules:
 #
-#  Systemd --user Services used
-#    - kanshi - Wayland daemon that automatically configures outputs
-#    - mako - Notification daemon for Wayland
-#    - mpd - Music daemon for linux
+#    grscheller/home
+#    grscheller/fish
+#    grscheller/nvim
+#    grscheller/sway
 #
 
 export scriptName=dfInstall
@@ -13,53 +14,36 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
 
-### Source install infrastructure
+## Source install infrastructure
 switch=''
 . ./installSource.sh
 
-### Configuration
+## Files to install
 
 CONFIG_FILES='
-   alacritty/alacritty_arch.yml
-   alacritty/alacritty.yml
    git/config
-   kanshi/config
-   mako/config
-   mpd/mpd.conf
-   sway/config
-   sway/config_bg_color
-   sway/config_bg_picture
-   systemd/user/kanshi.service
-   systemd/user/mako.service
-   systemd/user/sway-session.target
-   waybar/config
-   waybar/style.css
-   wofi/config
-   wofi/style.css
 '
 
 RM_TARGET_ITEMS="
    $HOME/.gitconfig
-   $HOME/.mako
-   $HOME/.sway
 "
 
-DIRS_TO_CREATE="
-   $XDG_CONFIG_HOME/mpd/playlists
-"
+DIRS_TO_CREATE=""
 
-### Install or Check
+## Install or Check
 
-## Install configuration files
+# Install via git submodules
+(FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
+(NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
+(HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
+(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway"; . ./sway/swayInstall) &
 
-# Install $XDG_CONFIG_HOME files
-for conf_file in $CONFIG_FILES
+# Install miscellaneous $XDG_CONFIG_HOME configuration files
+for file in $CONFIG_FILES
 do
-   install_file "$XDG_CONFIG_HOME" "$conf_file" ./config 0644 "$switch"
+   install_file "$XDG_CONFIG_HOME" "$file" ./config 0644 "$switch"
 done
-chmod 0755 "$HOME/.config"
-
-### Some final tweaks, checks & cleanup
+chmod 0755 "$XDG_CONFIG_HOME"
 
 # Remove/report no longer needed files and directories
 for item in $RM_TARGET_ITEMS
@@ -73,25 +57,10 @@ do
    ensure_dir "$DIR"
 done
 
-# Some final adjustments/tweaks/tasks
+# Final adjustments/tweaks/tasks
 case "$switch" in
    install)
-      ## Setup sway output configuration
-      # The background picture I personally use is from
-      # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
-      picture="$HOME"/Pictures/Desktops/SwayBG.jpg
-      bg_link="$XDG_CONFIG_HOME"/sway/config_bg
-      if test -f "$picture"
-      then
-         bg="$XDG_CONFIG_HOME"/sway/config_bg_picture
-      else
-         bg="$XDG_CONFIG_HOME"/sway/config_bg_color
-      fi
-      test -L "$bg_link" && rm "$bg_link"
-      ln -s "$bg" "$bg_link"
-
-      ## Reload Systemd services in case config files get updated
-      systemctl --user daemon-reload
+      :
       ;;
    repo)
       # Get git status info on repo
@@ -102,19 +71,3 @@ case "$switch" in
       :
       ;;
 esac
-
-### Install git submodules
- (
-    NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
-    . ./config/nvim/nvInstall
- ) &
-
- (
-    FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
-    . ./config/fish/fishInstall
- ) &
-
- (
-    HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"
-    . ./home/homeInstall
- ) &
