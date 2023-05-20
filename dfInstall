@@ -41,7 +41,7 @@ DIRS_TO_CREATE=""
 (FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
 (NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
 (HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
-(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway"; . ./sway-env/swayInstall) &
+(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"; . ./sway-env/swayInstall) &
 
 # Install miscellaneous $XDG_CONFIG_HOME configuration files
 for file in $CONFIG_FILES
