@@ -5,7 +5,7 @@
 #    grscheller/home
 #    grscheller/fish
 #    grscheller/nvim
-#    grscheller/sway
+#    grscheller/sway-env
 #
 
 export scriptName=dfInstall
@@ -13,6 +13,11 @@ export scriptName=dfInstall
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
+
+cd "$DOTFILE_GIT_REPO" || {
+   printf "\\nError: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
+   return 1
+}
 
 ## Source install infrastructure
 switch=''
@@ -36,7 +41,7 @@ DIRS_TO_CREATE=""
 (FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
 (NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
 (HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
-(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway"; . ./sway/swayInstall) &
+(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway"; . ./sway-env/swayInstall) &
 
 # Install miscellaneous $XDG_CONFIG_HOME configuration files
 for file in $CONFIG_FILES

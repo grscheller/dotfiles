@@ -7,3 +7,6 @@
 [submodule "home"]
 	path = home
 	url = https://github.com/grscheller/home
+[submodule "sway-env"]
+	path = sway-env
+	url = https://github.com/grscheller/sway-env
