@@ -8,22 +8,23 @@
 #    grscheller/sway-env
 #
 
-export scriptName=dfInstall
+repoName=dotfiles
+scriptName=dfInstall
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
 
 cd "$DOTFILE_GIT_REPO" || {
-   printf "\\nError: Failed to cd into '%s'\\n" "$DOTFILE_GIT_REPO"
+   printf '\n%s: Error - failed to cd into "%s"\n' "$scriptName" "$DOTFILE_GIT_REPO"
    return 1
 }
 
-## Source install infrastructure
+## Parse cmdline arguments and source functions
 switch=''
 . ./installSource.sh
 
-## Files to install
+## Installation configuration
 
 CONFIG_FILES='
    git/config
@@ -35,44 +36,36 @@ RM_TARGET_ITEMS="
 
 DIRS_TO_CREATE=""
 
-## Install or Check
-
-# Install via git submodules
-(FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
-(NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
-(HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
-(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"; . ./sway-env/swayInstall) &
+## Install/Check
 
 # Install miscellaneous $XDG_CONFIG_HOME configuration files
-for file in $CONFIG_FILES
-do
-   install_file "$XDG_CONFIG_HOME" "$file" ./config 0644 "$switch"
-done
+ensure_dir "$XDG_CONFIG_HOME"
 chmod 0755 "$XDG_CONFIG_HOME"
+install_files "$XDG_CONFIG_HOME" "$CONFIG_FILES" ./config 0644
 
 # Remove/report no longer needed files and directories
-for item in $RM_TARGET_ITEMS
-do
-   remove_item "$item" target
-done
+remove_items "$RM_TARGET_ITEMS"
 
-# Create or report on missing directories
-for DIR in $DIRS_TO_CREATE
-do
-   ensure_dir "$DIR"
-done
+# Create/report missing directories
+ensure_dirs "$DIRS_TO_CREATE"
 
-# Final adjustments/tweaks/tasks
+# Adjustments/tweaks/tasks
 case "$switch" in
    install)
       :
       ;;
    repo)
       # Get git status info on repo
-      printf '\nGit Status:\n'
+      printf '\n%s git status:\n' "$repoName"
       git status -s
       ;;
    target)
       :
       ;;
 esac
+
+## Install git submodules boldly in parallel in a single instance of dash
+(FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
+(NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
+(HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
+(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"; . ./sway-env/swayInstall) &

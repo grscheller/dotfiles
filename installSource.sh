@@ -3,6 +3,12 @@
 #
 # shellcheck shell=sh
 #
+if [ -z "$repoName" ]
+then
+   printf 'Check configuration, repoName not defined'
+   return 1
+fi
+
 if [ -z "$scriptName" ]
 then
    printf 'Check configuration, scriptName not defined'
@@ -47,7 +53,7 @@ then
 
    ## Functions
 
-   # Function to ensure directory exists
+   # Check or ensure directory exists
    ensure_dir () {
       targetDir="$1"
       srcDir="$2"
@@ -56,58 +62,47 @@ then
          case "$switch" in
             install)
                mkdir -p "$targetDir" ||
-                  printf "\\nWarning: Failed to create '%s' directory\\n" "$targetDir"
+                  printf '\n%s: failed to create "%s" directory\n' "$scriptName" "$targetDir"
                ;;
             target)
-               printf "\\ntarget directory '%s' needs to be created\\n" "$targetDir"
+               printf '\n%s: directory "%s" needs to be created\n' "$scriptName" "$targetDir"
                ;;
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
       then
-         printf "\\nsource directory '%s' does not exist\\n" "$srcDir"
+         printf '\n%s: source directory "%s" does not exist\n' "$scriptName" "$srcDir"
       fi
-      targetDir=
-      srcDir=
    }
 
-   # Function to check or remove files or directories
+   # Check or remove a file or a directory
    remove_item () {
       item="$1"
-      flag="$2"
       if test -e "$item"
       then
          case "$switch" in
             install)
                rm -rf "$item"
                test -e "$item" && {
-                  case "$flag" in
-                     target)
-                        printf "\\nWarning: Failed to remove '%s' from target\\n" "$item"
-                        ;;
-                     repo)
-                        printf "\\nWarning: Failed to remove '%s' from repo\\n" "$item"
-                        ;;
-                  esac
+                  printf '\n%s: Failed to remove "%s" from target\n' "$scriptName" "$item"
                }
                ;;
             repo)
-               printf "\\n'%s' is still in the target\\n" "$item"
+               printf '\n%s: "%s" still installed in target\n' "$scriptName" "$item"
                ;;
             target)
-               printf "\\n'%s' needs removing from the target\\n" "$item"
+               printf '\n%s: "%s" needs removing from target\\n' "$scriptName" "$item"
                ;;
          esac
       fi
    }
 
-   # Function to install files
+   # Install a file
    install_file () {
       install_dir="$1"
       file_path="$2"
       src_dir="$3"
       file_perm="$4"
-      switch="$5"
       src="$src_dir/$file_path"
       src_abs="$DOTFILE_GIT_REPO${src#.}"
       trgt="$install_dir/$file_path"
@@ -122,35 +117,75 @@ then
             if cp "$src" "$trgt"
             then
                chmod --quiet "$file_perm" "$trgt" || {
-                  printf "\\nWarning: Failed to set permissions on '%s' to '%s'\\n" "$trgt" "$file_perm"
+                  printf '\n%s: failed to set permissions on '%s' to '%s'\n' "$scriptName" "$trgt" "$file_perm"
                }
             else
-               printf "\\nWarning: Failed to install '%s'\\n" "$trgt"
+               printf '\n%s: failed to install "%s"\n' "$scriptName" "$trgt"
             fi
             ;;
          repo)
             # Compare config (this script) with dotfile repo working directory
             test -e "$src" || {
-               printf "\\nSource: '%s' not in git working directory.\\n" "$src_abs"
+               printf '\n%s: "%s" not in git working directory.\n' "$scriptName" "$src_abs"
             }
             ;;
          target)
             # Compare config (this script) with install target
             if [ ! -e "$src" ] && [ ! -e "$trgt" ]
             then
-               printf "\\nBoth Target: '%s'\n and Source: '%s' don't exist.\\n" "$trgt" "$src_abs"
+               printf '\n%s: both target: "%s"\n and source: "%s" do not exist.\n' "$scriptName" "$trgt" "$src_abs"
             elif [ ! -e "$trgt" ]
             then
-               printf "\\nTarget: '%s' doesn't exist.\\n" "$trgt"
+               printf '\n%s: target: "%s" does not exist\n' "$scriptName" "$trgt"
             elif [ ! -e "$src" ]
             then
-               printf "\\nSource: '%s' doesn't exist.\\n" "$src_abs"
+               printf '\n%s: source "%s" does not exist\n' "$scriptName" "$src_abs"
             else
                diff "$src" "$trgt" > /dev/null || {
-                  printf "\\nTarget: '%s' differs from\\nSource: '%s'.\\n" "$trgt" "$src_abs"
+                  printf '\nTarget: "%s" differs from\nSource: "%s"\n' "$trgt" "$src_abs"
                }
             fi
             ;;
       esac
    }
+
+   # Install files - convenience function
+   install_files () {
+      install_dir="$1"
+      files="$2"
+      src_dir="$3"
+      file_perm="$4"
+      test -z "$files" && return
+      for file in $files
+      do
+         install_file "$install_dir" "$file" "$src_dir" "$file_perm"
+      done
+   }
+
+   # Check or remove files or directories - convenience function
+   remove_items () {
+      test ${#} -gt 1 && {
+         printf '\n%s: Error - remove_items only takes one argument\n' "$scriptName" 
+      }
+      items="$1"
+      test -z "$items" && return
+      for item in $items
+      do
+         remove_item "$item"
+      done
+   }
+
+   # Check or remove files or directories - convenience function
+   ensure_dirs () {
+      test ${#} -gt 1 && {
+         printf '\n%s: Error - ensure_dirs only takes one argument\n' "$scriptName" 
+      }
+      dirs="$1"
+      test -z "$dirs" && return
+      for dir in $dirs
+      do
+         ensure_dir "$dir"
+      done
+   }
+
 fi

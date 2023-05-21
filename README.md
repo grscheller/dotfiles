@@ -9,6 +9,8 @@ Uses the following GitHub repos as submodules:
 * grscheller/nvim - Neovim configuration files
 * grscheller/sway - Sway tiling WM configuration files
 
+These git submodules can also be used as standalone repos.
+
 ## Steps to Clone
 
 First clone the grscheller/dotfiles GitHub repo.  Then initialize and
