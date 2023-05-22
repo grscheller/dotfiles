@@ -7,9 +7,14 @@
 #    grscheller/nvim
 #    grscheller/sway-env
 #
+# shellcheck disable=SC3043
+#   SC3043: allow use of non-POSIX keyword "local"
+#
+# Tested with both dash and bash.
+#
 
-repoName=dotfiles
-scriptName=dfInstall
+export MyRepoName=dotfiles
+export MyScriptName=dfInstall
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
@@ -26,28 +31,41 @@ switch=''
 
 ## Installation configuration
 
-CONFIG_FILES='
+df_Config_Files='
    git/config
 '
 
-RM_TARGET_ITEMS="
+df_Remove_Items="
    $HOME/.gitconfig
 "
 
-DIRS_TO_CREATE=""
+df_Dirs_To_Create=""
 
 ## Install/Check
 
-# Install miscellaneous $XDG_CONFIG_HOME configuration files
 ensure_dir "$XDG_CONFIG_HOME"
 chmod 0755 "$XDG_CONFIG_HOME"
-install_files "$XDG_CONFIG_HOME" "$CONFIG_FILES" ./config 0644
+
+# Install git submodules boldly in parallel in subshells
+# with a single instance of sh (tested with Dash and Bash).
+ FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
+ NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
+ HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"
+ SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"
+ 
+ ( . ./config/fish/fishInstall ) &
+ ( . ./config/nvim/nvInstall ) &
+ ( . ./home/homeInstall ) &
+ ( . ./sway-env/swayInstall ) &
+
+# Install miscellaneous $XDG_CONFIG_HOME configuration files
+install_files "$XDG_CONFIG_HOME" "$df_Config_Files" ./config 0644
 
 # Remove/report no longer needed files and directories
-remove_items "$RM_TARGET_ITEMS"
+remove_items "$df_Remove_Items"
 
 # Create/report missing directories
-ensure_dirs "$DIRS_TO_CREATE"
+ensure_dirs "$df_Dirs_To_Create"
 
 # Adjustments/tweaks/tasks
 case "$switch" in
@@ -55,17 +73,9 @@ case "$switch" in
       :
       ;;
    repo)
-      # Get git status info on repo
-      printf '\n%s git status:\n' "$repoName"
-      git status -s
+      git_status
       ;;
    target)
       :
       ;;
 esac
-
-## Install git submodules boldly in parallel in a single instance of dash
-(FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"; . ./config/fish/fishInstall) &
-(NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"; . ./config/nvim/nvInstall) &
-(HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"; . ./home/homeInstall) &
-(SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"; . ./sway-env/swayInstall) &

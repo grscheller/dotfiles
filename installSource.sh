@@ -2,17 +2,25 @@
 # grscheller/dotfiles GitHub repo and all of its submodule repos.
 #
 # shellcheck shell=sh
+# shellcheck disable=SC3043
+#   SC3043: allow use of non-POSIX keyword "local"
 #
-if [ -z "$repoName" ]
+if [ -n "$MyRepoName" ]
 then
-   printf 'Check configuration, repoName not defined'
-   return 1
+   repoName="$MyRepoName"
+   unset MyRepoName
+else
+   printf 'Check configuration, MyRepoName not defined'
+   exit 1
 fi
 
-if [ -z "$scriptName" ]
+if [ -n "$MyScriptName" ]
 then
-   printf 'Check configuration, scriptName not defined'
-   return 1
+   scriptName="$MyScriptName"
+   unset MyScriptName
+else
+   printf 'Check configuration, MyScriptName not defined'
+   exit 1
 fi
 
 usage="Usage: $scriptName [-s {install|repo|target}]"
@@ -31,7 +39,7 @@ then
             ;;
          \?)
             printf '\n%s\n' "$usage"
-            return 1
+            exit 1
             ;;
       esac
    done
@@ -41,20 +49,20 @@ then
    then
       printf '\nError: %s takes no arguments\n' "$scriptName"
       printf '\n%s\n' "$usage"
-      return 1
+      exit 1
    fi
 
    if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != target ]
    then
-      printf '\nError: %s -s given an invalid option argument\n' "$scriptName"
-      printf '\n%s\n' "$usage"
-      return 1
+      printf '\nError: %s -s given an invalid option argument\n\n%s\n' "$scriptName" "$usage"
+      exit 1
    fi
 
    ## Functions
 
    # Check or ensure directory exists
    ensure_dir () {
+      local targetDir srcDir
       targetDir="$1"
       srcDir="$2"
       if [ ! -d "$targetDir" ]
@@ -77,6 +85,7 @@ then
 
    # Check or remove a file or a directory
    remove_item () {
+      local item
       item="$1"
       if test -e "$item"
       then
@@ -99,6 +108,7 @@ then
 
    # Install a file
    install_file () {
+      local install_dir file_path src_dir file_perm src src_abs trgt trgt_dir
       install_dir="$1"
       file_path="$2"
       src_dir="$3"
@@ -149,8 +159,15 @@ then
       esac
    }
 
-   # Install files - convenience function
+   git_status () {
+      local gs
+      gs="$(git status --porcelain)"
+      test -n "$gs" && printf '\nGIT Status %s:\n%s\n' "$repoName" "$gs"
+   }
+
+   # Install files - convenience function (keep loops out of config files)
    install_files () {
+      local install_dir file files src_dir file_perm
       install_dir="$1"
       files="$2"
       src_dir="$3"
@@ -164,6 +181,7 @@ then
 
    # Check or remove files or directories - convenience function
    remove_items () {
+      local item items
       test ${#} -gt 1 && {
          printf '\n%s: Error - remove_items only takes one argument\n' "$scriptName" 
       }
@@ -177,6 +195,7 @@ then
 
    # Check or remove files or directories - convenience function
    ensure_dirs () {
+      local dirs dir
       test ${#} -gt 1 && {
          printf '\n%s: Error - ensure_dirs only takes one argument\n' "$scriptName" 
       }
