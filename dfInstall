@@ -7,11 +7,13 @@
 #    grscheller/nvim
 #    grscheller/sway-env
 #
-# shellcheck disable=SC3043
-#   SC3043: allow use of non-POSIX keyword "local"
+# shellcheck disable=SC2031
+#   SC2031: "var" was modified in a subshell (reason why a subshell was used!)
 #
 # Tested with both dash and bash.
 #
+
+me="$(id -un)"
 
 export MyRepoName=dotfiles
 export MyScriptName=dfInstall
@@ -31,13 +33,20 @@ switch=''
 
 ## Installation configuration
 
-df_Config_Files='
-   git/config
-'
+if test "$me" = grs
+then
+   df_Config_Files='
+      git/config
+   '
 
-df_Remove_Items="
-   $HOME/.gitconfig
-"
+   df_Remove_Items="
+      $HOME/.gitconfig
+   "
+else
+   df_Config_Files=''
+
+   df_Remove_Items=""
+fi
 
 df_Dirs_To_Create=""
 
@@ -48,15 +57,14 @@ chmod 0755 "$XDG_CONFIG_HOME"
 
 # Install git submodules boldly in parallel in subshells
 # with a single instance of sh (tested with Dash and Bash).
- FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
- NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
- HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"
- SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"
- 
- ( . ./config/fish/fishInstall ) &
- ( . ./config/nvim/nvInstall ) &
- ( . ./home/homeInstall ) &
- ( . ./sway-env/swayInstall ) &
+FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
+NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
+HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"
+SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"
+( . ./config/fish/fishInstall ) &
+( . ./config/nvim/nvInstall ) &
+( . ./home/homeInstall ) &
+( . ./sway-env/swayInstall ) &
 
 # Install miscellaneous $XDG_CONFIG_HOME configuration files
 install_files "$XDG_CONFIG_HOME" "$df_Config_Files" ./config 0644
