@@ -23,7 +23,7 @@ else
    exit 1
 fi
 
-usage="Usage: $scriptName [-s {install|repo|check}]"
+usage="Usage: $scriptName [-s {install|check|repo}]"
 
 if [ -z "$switch" ]
 then

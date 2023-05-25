@@ -44,7 +44,7 @@ dotfiles repo.
 
 * [dfInstall](dfInstall)
   * Installs "dotfiles" to "$HOME"
-  * Usage: `./dfInstall [-s {install|target|repo}]`
+  * Usage: `./dfInstall [-s {install|check|repo}]`
 * [sudo sfInstall](sfInstall)
   * Installs "root/" files to "/"
   * Usage: `sudo ./sfInstall`
