@@ -38,16 +38,13 @@ then
    df_Config_Files='
       git/config
    '
-
    df_Remove_Items="
       $HOME/.gitconfig
    "
 else
    df_Config_Files=''
-
    df_Remove_Items=""
 fi
-
 df_Dirs_To_Create=""
 
 ## Install/Check
@@ -83,7 +80,7 @@ case "$switch" in
    repo)
       git_status
       ;;
-   target)
+   check)
       :
       ;;
 esac

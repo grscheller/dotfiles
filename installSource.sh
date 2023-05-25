@@ -23,7 +23,7 @@ else
    exit 1
 fi
 
-usage="Usage: $scriptName [-s {install|repo|target}]"
+usage="Usage: $scriptName [-s {install|repo|check}]"
 
 if [ -z "$switch" ]
 then
@@ -52,7 +52,7 @@ then
       exit 1
    fi
 
-   if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != target ]
+   if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != check ]
    then
       printf '\nError: %s -s given an invalid option argument\n\n%s\n' "$scriptName" "$usage"
       exit 1
@@ -72,7 +72,7 @@ then
                mkdir -p "$targetDir" ||
                   printf '\n%s: failed to create "%s" directory\n' "$scriptName" "$targetDir"
                ;;
-            target)
+            check)
                printf '\n%s: directory "%s" needs to be created\n' "$scriptName" "$targetDir"
                ;;
          esac
@@ -99,8 +99,8 @@ then
             repo)
                printf '\n%s: "%s" still installed in target\n' "$scriptName" "$item"
                ;;
-            target)
-               printf '\n%s: "%s" needs removing from target\\n' "$scriptName" "$item"
+            check)
+               printf '\n%s: "%s" needs removing from target\n' "$scriptName" "$item"
                ;;
          esac
       fi
@@ -139,20 +139,20 @@ then
                printf '\n%s: "%s" not in git working directory.\n' "$scriptName" "$src_abs"
             }
             ;;
-         target)
+         check)
             # Compare config (this script) with install target
             if [ ! -e "$src" ] && [ ! -e "$trgt" ]
             then
                printf '\n%s: both target: "%s"\n and source: "%s" do not exist.\n' "$scriptName" "$trgt" "$src_abs"
             elif [ ! -e "$trgt" ]
             then
-               printf '\n%s: target: "%s" does not exist\n' "$scriptName" "$trgt"
+               printf '\n%s: target "%s" does not exist\n' "$scriptName" "$trgt"
             elif [ ! -e "$src" ]
             then
                printf '\n%s: source "%s" does not exist\n' "$scriptName" "$src_abs"
             else
                diff "$src" "$trgt" > /dev/null || {
-                  printf '\nTarget: "%s" differs from\nSource: "%s"\n' "$trgt" "$src_abs"
+                  printf '\n%s: "%s" differs from "%s"\n' "$scriptName" "$trgt" "$src_abs"
                }
             fi
             ;;
@@ -162,7 +162,7 @@ then
    git_status () {
       local gs
       gs="$(git status --porcelain)"
-      test -n "$gs" && printf '\nGIT Status %s:\n%s\n' "$repoName" "$gs"
+      test -n "$gs" && printf '\ngit status %s:\n%s\n' "$repoName" "$gs"
    }
 
    # Install files - convenience function (keep loops out of config files)
