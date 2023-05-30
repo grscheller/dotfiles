@@ -29,7 +29,7 @@ cd "$DOTFILE_GIT_REPO" || {
 
 ## Parse cmdline arguments and source functions
 switch=''
-. ./installSource.sh
+. ./.installSource.sh
 
 ## Installation configuration
 

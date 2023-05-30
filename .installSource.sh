@@ -161,7 +161,7 @@ then
 
    git_status () {
       local gs
-      gs="$(git status --porcelain)"
+      gs="$(git status --short --renames)"
       test -n "$gs" && printf '\ngit status %s:\n%s\n' "$repoName" "$gs"
    }
 
