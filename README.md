@@ -1,44 +1,62 @@
 # dotfiles
 
-Installs my configuration files for my Arch Linux based systems.
-
-Uses the following GitHub repos as submodules:
+Installs my configuration files for my Arch Linux based systems.  This
+GIT superproject wraps 4 other standalone repos as submodules:
 
 * grscheller/fish - Fish shell (my main interactive shell) config files
 * grscheller/home - Bash shell & other $HOME based configuration files
 * grscheller/nvim - Neovim configuration files
 * grscheller/sway - Sway tiling WM configuration files
 
-These git submodules can also be used as standalone repos.
+## Steps to clone
 
-## Steps to Clone
-
-First clone the grscheller/dotfiles GitHub repo.  Then initialize and
-update the submodules.  Currently, grscheller/nvim is the only GitHub
-submodule used.
+First enable recursion so that many (but not all) regular commands will
+recurse into submodules by default.
 
 ```
-   $ git clone https://github.com/grscheller/dotfiles
+   $ git config --global submodules.recurse true
+```
+
+Now clone the grscheller/dotfiles GitHub repo.
+
+```
+   $ git clone --recurse https://github.com/grscheller/dotfiles
    $ cd dotfiles
-   $ git submodule init
-   $ git submodule update
 ```
 
-When you update dotfiles, you also need to update the submodules.
+Get to know the code.
 
 ```
-   $ git pull
-   $ git submodule update
+   $ git grep foobar
+   $ git  ls-files --recurse-submodules
 ```
 
-To update the submodules to their latest versions, do
+When you update dotfiles,
+
+```
+   $ git fetch
+   $ git pull --rebase
+```
+
+## Steps to maintain dotfiles repo
+
+When maintaining the dotfiles repo itself, I check it out so I can push
+my changes back to GitHub.
+
+```
+   $ git clone --recurse git@github.com:grscheller/dotfiles
+```
+
+I usually make changes to each submodules by directly cloning their
+repos and not working with them as submodules of dotfiles.
+
+To update the submodules to their latest versions,
 
 ```
    $ git submodule update --remote --merge
 ```
 
-This will create changes needing to be added and committed to the
-dotfiles repo.
+this will create changes needing to be added/committed to the dotfiles repo.
 
 ## Scripts
 
