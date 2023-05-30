@@ -53,7 +53,7 @@ repos and not working with them as submodules of dotfiles.
 To update the submodules to their latest versions,
 
 ```
-   $ git submodule update --remote --merge
+   $ git submodule update --remote --rebase
 ```
 
 this will create changes needing to be added/committed to the dotfiles repo.
