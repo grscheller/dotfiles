@@ -10,53 +10,63 @@ GIT superproject wraps 4 other standalone repos as submodules:
 
 ## Steps to clone
 
-First enable recursion so that many (but not all) regular commands will
-recurse into submodules by default.
+First enable recursion so that many regular commands (but not clone)
+will recurse into submodules by default.
 
 ```
    $ git config --global submodules.recurse true
+   $ git config --global diff.submodule log
 ```
 
-Now clone the grscheller/dotfiles GitHub repo.
+Now clone the grscheller/dotfiles GitHub repo,
 
 ```
-   $ git clone --recurse https://github.com/grscheller/dotfiles
+   $ git clone --recurse-submodules https://github.com/grscheller/dotfiles
    $ cd dotfiles
+   $ git submodule update --init --recursive
 ```
 
-Get to know the code.
+Get to know the code,
 
 ```
    $ git grep foobar
    $ git  ls-files --recurse-submodules
 ```
 
-When you update dotfiles,
+then to update dotfiles,
 
 ```
    $ git fetch
-   $ git pull --rebase
+   $ git pull
 ```
 
-## Steps to maintain dotfiles repo
+should be safe since I try to keep the default branches very
+fastforwardable.
 
-When maintaining the dotfiles repo itself, I check it out so I can push
-my changes back to GitHub.
+## Steps to maintain a dotfiles like repo
+
+When maintaining the dotfiles repo, I check it out in a way so
+my changes can be pushed back to GitHub.
 
 ```
-   $ git clone --recurse git@github.com:grscheller/dotfiles
+   $ git clone --recurse-submodules git@github.com:grscheller/dotfiles
 ```
 
-I usually make changes to each submodules by directly cloning their
-repos and not working with them as submodules of dotfiles.
+I usually make changes to the submodules by directly cloning their
+repos, not working with them as submodules.  Anyway, pushing them up
+to GitHub as submodules would would be irksome since they are cloned
+with http protocol and not git protocol.  
 
 To update the submodules to their latest versions,
 
 ```
-   $ git submodule update --remote --rebase
+   $ git submodule update --remote --merge
 ```
 
-this will create changes needing to be added/committed to the dotfiles repo.
+this will create changes needing to be added/committed to the dotfiles
+repo.  Should be safe if submodules default branches are kept linear in
+their commit history.  In that case, the merge will just be a fast
+forward.
 
 ## Scripts
 
