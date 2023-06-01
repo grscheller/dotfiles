@@ -38,6 +38,7 @@ then, with the above config changes, to update dotfiles,
 ```
    $ git fetch
    $ git pull
+   $ git submodule update
 ```
 
 should be safe since I try to keep the default branches very
