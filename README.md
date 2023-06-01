@@ -33,7 +33,7 @@ Get to know the code,
    $ git  ls-files --recurse-submodules
 ```
 
-then to update dotfiles,
+then, with the above config changes, to update dotfiles,
 
 ```
    $ git fetch
@@ -53,8 +53,8 @@ my changes can be pushed back to GitHub.
 ```
 
 I usually make changes to the submodules by directly cloning their
-repos, not working with them as submodules.  Anyway, pushing them up
-to GitHub as submodules would would be irksome since they are cloned
+repos, not working with them as submodules.  Anyway, pushing them
+up to GitHub as submodules would be irksome since they are cloned
 with http protocol and not git protocol.  
 
 To update the submodules to their latest versions,
