@@ -54,9 +54,9 @@ my changes can be pushed back to GitHub.
 ```
 
 I usually make changes to the submodules by directly cloning their
-repos, not working with them as submodules.  Anyway, pushing them
-up to GitHub as submodules would be irksome since they are cloned
-with http protocol and not git protocol.  
+repos, not working with them as submodules.  Anyway, pushing them up to
+GitHub as submodules would be irksome since they are cloned with http
+protocol and not git protocol.  
 
 To update the submodules to their latest versions,
 
@@ -64,10 +64,9 @@ To update the submodules to their latest versions,
    $ git submodule update --remote --merge
 ```
 
-this will create changes needing to be added/committed to the dotfiles
-repo.  Should be safe if submodules default branches are kept linear in
-their commit history.  In that case, the merge will just be a fast
-forward.
+this will create changes needing to be added and committed to the repo.
+Should be safe if submodules default branches are kept linear in their
+commit history.  In that case, the merge will just be a fast forward.
 
 ## Scripts
 
