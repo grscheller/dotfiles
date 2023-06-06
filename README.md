@@ -30,19 +30,16 @@ Get to know the code,
 
 ```
    $ git grep foobar
-   $ git  ls-files --recurse-submodules
+   $ git ls-files --recurse-submodules
 ```
 
-then, with the above config changes, to update dotfiles,
+then, after making the above config changes, to update dotfiles,
 
 ```
    $ git fetch
    $ git pull
    $ git submodule update
 ```
-
-should be safe since I try to keep the default branches very
-fastforwardable.
 
 ## Steps to maintain a dotfiles like repo
 
@@ -66,7 +63,7 @@ To update the submodules to their latest versions,
 
 this will create changes needing to be added and committed to the repo.
 Should be safe if submodules default branches are kept linear in their
-commit history.  In that case, the merge will just be a fast forward.
+commit history.  In that case, the merges will just be a fast forwards.
 
 ## Scripts
 
