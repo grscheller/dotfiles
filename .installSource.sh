@@ -114,7 +114,7 @@ then
       src_dir="$3"
       file_perm="$4"
       src="$src_dir/$file_path"
-      src_abs="$DOTFILE_GIT_REPO${src#.}"
+      src_abs="$GIT_REPO${src#.}"
       trgt="$install_dir/$file_path"
       trgt_dir="${trgt%/*}"
 
