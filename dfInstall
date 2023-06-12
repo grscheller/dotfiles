@@ -19,13 +19,14 @@ export MyRepoName=dotfiles
 export MyScriptName=dfInstall
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-DOTFILE_GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 umask 0022
 
-cd "$DOTFILE_GIT_REPO" || {
-   printf '\n%s: Error - failed to cd into "%s"\n' "$scriptName" "$DOTFILE_GIT_REPO"
+cd "$GIT_REPO" || {
+   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
    return 1
 }
+
 
 ## Parse cmdline arguments and source functions
 switch=''
@@ -54,10 +55,10 @@ chmod 0755 "$XDG_CONFIG_HOME"
 
 # Install git submodules boldly in parallel in subshells
 # with a single instance of sh (tested with Dash and Bash).
-FISH_GIT_REPO="${DOTFILE_GIT_REPO}/config/fish"
-NVIM_GIT_REPO="${DOTFILE_GIT_REPO}/config/nvim"
-HOME_GIT_REPO="${DOTFILE_GIT_REPO}/home"
-SWAY_GIT_REPO="${DOTFILE_GIT_REPO}/sway-env"
+FISH_GIT_REPO="${GIT_REPO}/config/fish"
+NVIM_GIT_REPO="${GIT_REPO}/config/nvim"
+HOME_GIT_REPO="${GIT_REPO}/home"
+SWAY_GIT_REPO="${GIT_REPO}/sway-env"
 ( . ./config/fish/fishInstall ) &
 ( . ./config/nvim/nvInstall ) &
 ( . ./home/homeInstall ) &
