@@ -6,6 +6,7 @@
 #    - avahi-daemon.service
 #    - dhcpcd.service
 #    - iwd.service
+#    - nix-daemon.service
 #    - systemd-resolved,service
 #    - reflector.timer
 #
