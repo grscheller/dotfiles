@@ -36,17 +36,21 @@ switch=''
 
 if test "$me" = grs
 then
-   df_Config_Files='
+   df_Config_Files_grs='
       git/config
    '
-   df_Remove_Items="
+   df_Remove_Items_grs="
       $HOME/.gitconfig
    "
 else
-   df_Config_Files=''
-   df_Remove_Items=""
+   df_Config_Files_grs=''
+   df_Remove_Items_grs=''
 fi
-df_Dirs_To_Create=""
+df_Config_Files='
+   nixpkgs/config.nix
+'
+df_Remove_Items=''
+df_Dirs_To_Create=''
 
 ## Install/Check
 
@@ -65,10 +69,10 @@ SWAY_GIT_REPO="${GIT_REPO}/sway-env"
 ( . ./sway-env/swayInstall ) &
 
 # Install miscellaneous $XDG_CONFIG_HOME configuration files
-install_files "$XDG_CONFIG_HOME" "$df_Config_Files" ./config 0644
+install_files "$XDG_CONFIG_HOME" "$df_Config_Files_grs $df_Config_Files" ./config 0644
 
 # Remove/report no longer needed files and directories
-remove_items "$df_Remove_Items"
+remove_items "$df_Remove_Items_grs $df_Remove_Items"
 
 # Create/report missing directories
 ensure_dirs "$df_Dirs_To_Create"
