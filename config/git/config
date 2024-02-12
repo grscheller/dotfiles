@@ -3,6 +3,7 @@
 	email = geoffrey@scheller.com
 [core]
 	editor = nvim
+	fsmonitor = true
 	pager = nvim -R -c 'setfiletype git'
 [color]
 	pager = no
@@ -14,3 +15,5 @@
 	recurse = true
 [diff]
 	submodule = log
+[rerere]
+	enabled = true

@@ -39,9 +39,7 @@ then
    df_Config_Files_grs='
       git/config
    '
-   df_Remove_Items_grs="
-      $HOME/.gitconfig
-   "
+   df_Remove_Items_grs=''
 else
    df_Config_Files_grs=''
    df_Remove_Items_grs=''
