@@ -1,6 +1,9 @@
 [user]
 	name = grscheller
 	email = geoffrey@scheller.com
+	signingkey = /home/grs/.ssh/id_ed25519_grscheller.pub
+[gpg]
+	format = ssh
 [core]
 	editor = nvim
 	fsmonitor = true
