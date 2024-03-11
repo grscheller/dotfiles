@@ -10,7 +10,7 @@ then
    repoName="$MyRepoName"
    unset MyRepoName
 else
-   printf 'Check configuration, MyRepoName not defined'
+   printf 'Check configuration, MyRepoName not defined\n\n'
    exit 1
 fi
 
@@ -19,7 +19,7 @@ then
    scriptName="$MyScriptName"
    unset MyScriptName
 else
-   printf 'Check configuration, MyScriptName not defined'
+   printf 'Check configuration, MyScriptName not defined\n\n'
    exit 1
 fi
 
@@ -38,7 +38,7 @@ then
             switch="$OPTARG"
             ;;
          \?)
-            printf '\n%s\n' "$usage"
+            printf '%s\n\n' "$usage"
             exit 1
             ;;
       esac
@@ -47,14 +47,14 @@ then
 
    if [ $# -gt 0 ]
    then
-      printf '\nError: %s takes no arguments\n' "$scriptName"
-      printf '\n%s\n' "$usage"
+      printf 'Error: %s takes no arguments\n\n' "$scriptName"
+      printf '%s\n\n' "$usage"
       exit 1
    fi
 
    if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != check ]
    then
-      printf '\nError: %s -s given an invalid option argument\n\n%s\n' "$scriptName" "$usage"
+      printf 'Error: %s -s given an invalid option argument\n\n%s\n\n' "$scriptName" "$usage"
       exit 1
    fi
 
@@ -70,16 +70,16 @@ then
          case "$switch" in
             install)
                mkdir -p "$targetDir" ||
-                  printf '\n%s: failed to create "%s" directory\n' "$scriptName" "$targetDir"
+                  printf '%s: failed to create "%s" directory\n\n' "$scriptName" "$targetDir"
                ;;
             check)
-               printf '\n%s: directory "%s" needs to be created\n' "$scriptName" "$targetDir"
+               printf '%s: directory "%s" needs to be created\n\n' "$scriptName" "$targetDir"
                ;;
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
       then
-         printf '\n%s: source directory "%s" does not exist\n' "$scriptName" "$srcDir"
+         printf '%s: source directory "%s" does not exist\n\n' "$scriptName" "$srcDir"
       fi
    }
 
@@ -93,14 +93,14 @@ then
             install)
                rm -rf "$item"
                test -e "$item" && {
-                  printf '\n%s: Failed to remove "%s" from target\n' "$scriptName" "$item"
+                  printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
                }
                ;;
             repo)
-               printf '\n%s: "%s" still installed in target\n' "$scriptName" "$item"
+               printf '%s: "%s" still installed in target\n\n' "$scriptName" "$item"
                ;;
             check)
-               printf '\n%s: "%s" needs removing from target\n' "$scriptName" "$item"
+               printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
                ;;
          esac
       fi
@@ -127,32 +127,32 @@ then
             if cp "$src" "$trgt"
             then
                chmod --quiet "$file_perm" "$trgt" || {
-                  printf '\n%s: failed to set permissions on '%s' to '%s'\n' "$scriptName" "$trgt" "$file_perm"
+                  printf '%s: failed to set permissions on "%s" to "%s"\n\n' "$scriptName" "$trgt" "$file_perm"
                }
             else
-               printf '\n%s: failed to install "%s"\n' "$scriptName" "$trgt"
+               printf '%s: failed to install "%s"\n\n' "$scriptName" "$trgt"
             fi
             ;;
          repo)
             # Compare config (this script) with dotfile repo working directory
             test -e "$src" || {
-               printf '\n%s: "%s" not in git working directory.\n' "$scriptName" "$src_abs"
+               printf '%s: "%s" not in git working directory.\n\n' "$scriptName" "$src_abs"
             }
             ;;
          check)
             # Compare config (this script) with install target
             if [ ! -e "$src" ] && [ ! -e "$trgt" ]
             then
-               printf '\n%s: both target: "%s"\n and source: "%s" do not exist.\n' "$scriptName" "$trgt" "$src_abs"
+               printf '%s: both target: "%s"\n and source: "%s" do not exist.\n\n' "$scriptName" "$trgt" "$src_abs"
             elif [ ! -e "$trgt" ]
             then
-               printf '\n%s: target "%s" does not exist\n' "$scriptName" "$trgt"
+               printf '%s: target "%s" does not exist\n\n' "$scriptName" "$trgt"
             elif [ ! -e "$src" ]
             then
-               printf '\n%s: source "%s" does not exist\n' "$scriptName" "$src_abs"
+               printf '%s: source "%s" does not exist\n\n' "$scriptName" "$src_abs"
             else
                diff "$src" "$trgt" > /dev/null || {
-                  printf '\n%s: "%s" differs from "%s"\n' "$scriptName" "$trgt" "$src_abs"
+                  printf '%s: "%s" differs from "%s"\n\n' "$scriptName" "$trgt" "$src_abs"
                }
             fi
             ;;
@@ -162,7 +162,7 @@ then
    git_status () {
       local gs
       gs="$(git status --short --renames)"
-      test -n "$gs" && printf '\ngit status %s:\n%s\n' "$repoName" "$gs"
+      test -n "$gs" && printf 'git status %s:\n%s\n\n' "$repoName" "$gs"
    }
 
    # Install files - convenience function (keep loops out of config files)
@@ -183,7 +183,7 @@ then
    remove_items () {
       local item items
       test ${#} -gt 1 && {
-         printf '\n%s: Error - remove_items only takes one argument\n' "$scriptName" 
+         printf '%s: Error - remove_items only takes one argument\n\n' "$scriptName" 
       }
       items="$1"
       test -z "$items" && return
@@ -197,7 +197,7 @@ then
    ensure_dirs () {
       local dirs dir
       test ${#} -gt 1 && {
-         printf '\n%s: Error - ensure_dirs only takes one argument\n' "$scriptName" 
+         printf '%s: Error - ensure_dirs only takes one argument\n\n' "$scriptName" 
       }
       dirs="$1"
       test -z "$dirs" && return
