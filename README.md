@@ -1,16 +1,16 @@
-# dotfiles
+# grschelldotfiles
 
 Installs my configuration files for my Arch Linux based systems.  This
-GIT superproject wraps 4 other standalone repos as submodules:
+GIT superproject wraps 4 other as submodules:
 
-* grscheller/fish - Fish shell (my main interactive shell) config files
-* grscheller/home - Bash shell & other $HOME based configuration files
-* grscheller/nvim - Neovim configuration files
-* grscheller/sway - Sway tiling WM configuration files
+* fish branch - Fish shell (my main interactive shell) config files
+* home branch - Bash shell & other $HOME based configuration files
+* nvim branch - Neovim configuration files
+* sway branch - Sway tiling WM configuration files
 
 ## BREAKING CHANGE
 
-I wish to see if I can put the submodules onto different
+I am in the process of moving the submodules onto different
 branches of the dotfiles repo instead of their own independent repos.
 Will use the new, circa 2019, `set-branch` sub-sub-command:
 
