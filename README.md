@@ -26,7 +26,8 @@ Will use the new, circa 2019, `set-branch` sub-sub-command:
 
 **Disadvantages:**
 
-* each submodule no longer its own totally independent project
+* each submodule no longer its own standalone independent project
+* not worth trying to preserve git history for the submodules
 
 ## Steps to clone
 
