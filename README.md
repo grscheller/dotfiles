@@ -8,6 +8,26 @@ GIT superproject wraps 4 other standalone repos as submodules:
 * grscheller/nvim - Neovim configuration files
 * grscheller/sway - Sway tiling WM configuration files
 
+## BREAKING CHANGE
+
+I wish to see if I can put the submodules onto different
+branches of the dotfiles repo instead of their own independent repos.
+Will use the new, circa 2019, `set-branch` sub-sub-command:
+
+```fish
+    $ git submodule [--quiet] set-branch [<options>] [--] <path>
+```
+
+**Advantages:**
+
+* one repo with multiple branches
+* instead of 5 separate repos 
+* no longer will have to keep in sync separate .installSource.sh
+
+**Disadvantages:**
+
+* each submodule no longer its own totally independent project
+
 ## Steps to clone
 
 First enable recursion so that many regular commands (but not clone)
