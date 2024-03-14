@@ -1,0 +1,6 @@
+#!/usr/bin/sh
+#
+# For wofi to use to find to launch etherape
+#
+user=$(id -un)
+sudo /usr/bin/etherape -Z "$user" >/dev/null 2>&1 &

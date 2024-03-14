@@ -1,0 +1,18 @@
+Host gauss17
+  Hostname 192.168.1.17  
+  Port 31502
+  User grs
+
+Host euler7
+  Port 22555
+  User grs
+
+Host sc31
+  Hostname 10.100.51.89
+  Port 22
+  User geoffreyscheller
+
+Host onepiece
+  Hostname 192.168.1.8  
+  Port 22
+  User buggy

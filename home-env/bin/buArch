@@ -1,0 +1,92 @@
+#!/bin/bash
+#
+# Back-up important files to my external HD
+#
+# Usage: buArch
+#
+
+## Backup configuration
+
+BackupLocation='/buslink/grs/Backup'
+
+ExcludeDirs=(
+    build/ArchISOs
+    build/AUR
+    devel/dotfiles
+    devel/neovim-notes
+    devel/scheller-linux-archive
+    Downloads
+    Games
+    node_modules
+    OneDrive
+    .bloop
+    .cabal
+    .cache
+    .cargo
+    .config/chromium
+    .config/discord/blob_storage
+    .config/evolution
+    .config/google-chrome
+    .config/skypeforlinux/Cache
+    .g8
+    .gem
+    .gradle
+    .ivy2
+    .local
+    .mozilla
+    .npm
+    .opam
+    .rustup
+    .sbt
+    .scalac
+    .stack
+    .wine
+)
+
+ExcludeFiles=(
+    .dropbox-dist
+)
+
+## Run script from home directory
+
+cd ~ || { printf 'Error: Cannot cd to home dir\n'; exit 1; } >&2
+
+## Check backup location on external HD
+
+printf '\nINFO: Checking external HD backup location\n' >&2
+
+if [[ ! -d $BackupLocation ]]
+then
+    printf 'Error: backup location, %s, not found\n' "$BackupLocation" >&2
+    exit 1
+fi
+
+## Backup to External HD
+
+printf 'INFO: Now backup to external HD\n' >&2
+
+if printf -- '--exclude=%s/\n' "${ExcludeDirs[@]}" | {
+   mapfile -t ExcludeDirFlags
+   printf -- '--exclude=%s\n' "${ExcludeFiles[@]}" | {
+      mapfile -t ExcludeFileFlags
+      /usr/bin/rsync -avxP --delete \
+      "${ExcludeDirFlags[@]}" \
+      "${ExcludeFileFlags[@]}" \
+      "${HOME}" \
+      "$BackupLocation/" || {
+         RSYNC_FAILURE=$?
+         printf 'ERROR: rsync failure with error %s\n' "$RSYNC_FAILURE" >&2
+         printf 'ERROR: Failed backing up Home directory\n' >&2
+         exit 1
+      }
+   }
+}
+then
+    # Success
+    printf '\nINFO: Backup to external HD successful!\n' >&2
+    exit 0
+else
+    # Failure
+    printf '\nWARNING: Problems with backup to external HD!\n' >&2
+    exit 1
+fi

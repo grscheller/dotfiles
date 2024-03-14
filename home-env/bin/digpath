@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# Drill down through $PATH to look for files or directories.
+# Like the ksh builtin whence, except it does not stop
+# after finding the first instance.  Handles spaces in both
+# filenames and directories on $PATH.  Also, shell patterns
+# are supported.
+
+usage () {
+  printf 'Description:\n'                                 >&2
+  printf "  Look for files on \$PATH, do not stop\\n"     >&2
+  printf '  after finding the first one, files do not \n' >&2
+  printf '  necessarily have to be executable.\n\n'       >&2
+  printf '  Usage:\n'                                     >&2
+  printf '    digpath [-q] [-x] file1 file2 ...\n'        >&2
+  printf "    digpath [-q] [-x] 'shell_pattern'\\n"       >&2
+  printf '    digpath [-h]\n\n'                           >&2
+  printf '  Output:\n'                                    >&2
+  printf "    print any matches on \$PATH to stdout,\\n"  >&2
+  printf '      suppresses output if -q given,\n'         >&2
+  printf '      suppresses nonexecutables if -x given.\n' >&2
+  printf '    print help to stderr if -h given\n\n'       >&2
+  printf '  Exit Status:\n'                               >&2
+  printf "    0 (true) if a match found on \$PATH\\n"     >&2
+  printf '    1 (false) if no match found\n'              >&2
+  printf '    2 error or -h option was given\n'           >&2
+}
+
+quite_flag=
+executable_flag=
+while getopts :hqx opt
+do
+  case $opt in
+    q) quite_flag=1
+       ;;
+    x) executable_flag=1
+       ;;
+    h) usage
+       return 2
+       ;;
+    ?) printf 'digpath: -%s: unknown option\n' "$OPTARG" >&2
+       printf '  for help type: digpath -h\n' >&2
+       return 2
+       ;;
+  esac
+done
+
+IFS=':'
+
+ii=0  # for simulated array
+for File in "$@"
+do
+   test -z "$File" && continue
+   for Dir in $PATH
+   do
+      test ! -d "$Dir" && continue
+      for target in $Dir/$File
+      do
+          if test -e "$target" -o -e "$target"
+          then
+              if test -z "$executable_flag" -o -x "$target"
+              then
+                  # simulating an array of found files
+                  ii=$((ii + 1))
+                  eval File_$ii=\"\$target\"
+              fi
+          fi
+      done
+   done
+done
+
+if test -z "$quite_flag"
+then
+    jj=0
+    while test $jj -lt $ii
+    do
+        jj=$((jj+1))
+        eval printf \'%s\\n\' \"\$File_$jj\"
+    done
+fi
+
+if test $ii -gt 0
+then
+    return 0
+else
+    return 1
+fi

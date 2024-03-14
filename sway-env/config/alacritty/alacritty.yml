@@ -1,0 +1,16 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+#
+# Imports are loaded in order, skipping all missing files, with the importing
+# file being loaded last. If a field is already present in a previous import, it
+# will be replaced.
+#
+# All imports must either be absolute paths starting with `/`, or paths relative
+# to the user's home directory starting with `~/`.
+#
+# Note: alacritty_arch.yml needs to be installed BEFORE alacritty.yml
+#
+# Note: If support for multiple OS is again needed, conditionally installing
+#       different versions of this file depending on OS would be a good hook.
+---
+import:
+  - ~/.config/alacritty/alacritty_arch.yml

@@ -1,0 +1,7 @@
+show=dmenu
+lines=5
+allow_images=true
+allow_markup=true
+term=/usr/bin/alacritty
+gtk-dark=true
+columns=2

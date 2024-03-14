@@ -1,0 +1,117 @@
+#!/bin/sh
+#
+#  Installs my Neovim environment into my $HOME directory.
+#
+
+export MyRepoName=nvim
+export MyScriptName=nvInstall
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+GIT_REPO="${NVIM_GIT_REPO:=$HOME/devel/dotfiles-submodules/nvim}"
+umask 0022
+
+cd "$GIT_REPO" || {
+   printf '\n%s: Error - Failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+   return 1
+}
+
+## source install infrastructure and, if not done already, parse cmdline args
+. ./.installSource.sh
+
+nv_Config_Files='
+   ftplugin/c.lua
+   ftplugin/cpp.lua
+   ftplugin/csv.lua
+   ftplugin/fish.lua
+   ftplugin/haskell.lua
+   ftplugin/help.lua
+   ftplugin/html.lua
+   ftplugin/lua.lua
+   ftplugin/markdown.lua
+   ftplugin/ocaml.lua
+   ftplugin/rust.lua
+   ftplugin/sbt.lua
+   ftplugin/scala.lua
+   ftplugin/sh.lua
+   ftplugin/text.lua
+   ftplugin/tsv.lua
+   lua/grs/config/autocmds.lua
+   lua/grs/config/globals.lua
+   lua/grs/config/keymaps.lua
+   lua/grs/config/options.lua
+   lua/grs/config/treesitter.lua
+   lua/grs/lib/functional.lua
+   lua/grs/lib/scroll.lua
+   lua/grs/lib/text.lua
+   lua/grs/plugins/coding/init.lua
+   lua/grs/plugins/coding/harpoon.lua
+   lua/grs/plugins/coding/refactoring.lua
+   lua/grs/plugins/editor/init.lua
+   lua/grs/plugins/editor/colorscheme.lua
+   lua/grs/plugins/editor/noice.lua
+   lua/grs/plugins/editor/telescope.lua
+   lua/grs/plugins/editor/textedit.lua
+   lua/grs/plugins/editor/whichkey.lua
+   lua/grs/plugins/linters_formatters/init.lua
+   lua/grs/plugins/linters_formatters/formatters.lua
+   lua/grs/plugins/linters_formatters/linters.lua
+   lua/grs/plugins/lsp/init.lua
+   lua/grs/plugins/lsp/cmp.lua
+   lua/grs/plugins/lsp/lsp.lua
+   lua/grs/plugins/lsp/rust.lua
+   lua/grs/plugins/lsp/scala.lua
+   lua/grs/plugins/common.lua
+   spell/en.utf-8.add
+   init.lua
+'
+
+nv_Toml_Files='
+   selene.toml
+   stylua.toml
+   vim.toml
+'
+
+nv_Remove_Items="
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/linters.lua
+"
+
+nv_Dirs_To_Create=""
+
+## Install/Check
+
+# Install Neovim files & NVIM related TOML files
+install_files "$XDG_CONFIG_HOME/nvim" "
+   $nv_Config_Files
+   $nv_Toml_Files
+" . 0644
+chmod 0755 "$XDG_CONFIG_HOME/nvim"
+
+# Remove/report no longer needed files and directories
+remove_items "$nv_Remove_Items"
+
+# Create/report missing directories
+ensure_dirs "$nv_Dirs_To_Create"
+
+# Adjustments/tweaks/tasks
+case "$switch" in
+   install)
+      printf '{}' > "$XDG_CONFIG_HOME/nvim/.neoconf.json"
+      ;;
+   repo)
+      git_status
+      ;;
+   check)
+      SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
+      if test -f "$SpellFile"
+      then
+         if ! diff -q spell/en.utf-8.add "$SpellFile" > /dev/null
+         then
+            printf "Spell file: %s will need updating/compiling:\n" "$SpellFile"
+            printf "   After install,\n"
+            printf "      $ cd %s\n" "${SpellFile%/*}/"
+            printf "      $ nvim %s\n" "${SpellFile##*/}"
+            printf "      :mkspell! %s\n\n" "${SpellFile##*/}"
+         fi
+      fi
+      ;;
+esac

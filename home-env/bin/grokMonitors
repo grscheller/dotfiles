@@ -1,0 +1,16 @@
+#!/bin/sh
+
+laptop_screen=false
+dp=0
+hdmi=0
+
+for output in $(swaymsg -r -t get_outputs|grep name|sed -e 's/",$//' -e 's/^.*"//')
+do
+   case $output in
+      eDP-1) laptop_screen=true ;;
+      DP-*) dp=$((dp + 1)) ;;
+      HDMI-*) hdmi=$((hdmi + 1)) ;;
+   esac
+done
+
+echo $laptop_screen $dp $hdmi

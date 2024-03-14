@@ -1,0 +1,107 @@
+#!/bin/sh
+#
+#  Installs my Bash environment and other configurations into $HOME directory.
+#
+#    - bash (startup files)
+#    - ~/bin scripts for various scipting languages
+#    - ssh, bloop (Scala), Cabal (Haskell)
+#    - create directories important to my work flow
+#    - remove items
+#
+
+export MyRepoName=home
+export MyScriptName=homeInstall
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+GIT_REPO="${HOME_GIT_REPO:=$HOME/devel/dotfiles-submodules/home}"
+umask 0022
+
+cd "$HOME_GIT_REPO" || {
+   printf '\nError - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+   return 1
+}
+
+## source install infrastructure and, if not done already, parse cmdline args
+. ./.installSource.sh
+
+home_Files='
+   .bash_profile
+   .bashrc
+   .inputrc
+'
+
+home_Bin_Scripts='
+   buArch
+   chkcolor
+   codepoint
+   digpath
+   etherApe
+   monitor
+   myCalc
+   pathtrim
+   rt
+   spin
+   viewJarManifest
+'
+
+home_Ssh_Files='
+   config
+'
+
+home_Bloop_Files='
+   bloop.json
+'
+
+home_Cabal_Files='
+   config
+'
+
+home_Remove_Items="
+   $HOME/.vimrc
+"
+
+home_Dirs_To_Create="
+   $HOME/catch
+   $HOME/.local/bin
+   $HOME/.cabal/bin
+"
+
+## Install or Check
+
+# Install bash config files
+install_files "$HOME" "$home_Files" . 0644
+
+# Install ~/bin scripts
+install_files "$HOME/bin" "$home_Bin_Scripts" ./bin 0755
+chmod 0755 "$HOME/bin"
+
+# Install SSH Configs
+install_files "$HOME/.ssh" "$home_Ssh_Files" ./ssh 0600
+chmod 0700 "$HOME/.ssh"
+
+# Install Bloop Configs for Scala
+install_files "$HOME/.bloop" "$home_Bloop_Files" ./bloop 0644
+chmod 0755 "$HOME/.bloop"
+
+# Install Cabal Configs for Haskell
+install_files "$HOME/.cabal" "$home_Cabal_Files" ./cabal 0644
+chmod 0755 "$HOME/.cabal"
+
+# Remove/report no longer needed files and directories
+remove_items "$home_Remove_Items"
+
+# Create/report missing directories
+ensure_dirs "$home_Dirs_To_Create"
+
+## Adjustments/tweaks/tasks
+case "$switch" in
+   install)
+      :
+      ;;
+   repo)
+      git_status
+      ;;
+   check)
+      :
+      ;;
+esac

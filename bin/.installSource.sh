@@ -1,5 +1,4 @@
-# This sourced script is designed to be compatible with the
-# grscheller/dotfiles GitHub repo and all of its submodule repos.
+# grscheller/dotfiles GitHub installation and verification scripts.
 #
 # shellcheck shell=sh
 # shellcheck disable=SC3043

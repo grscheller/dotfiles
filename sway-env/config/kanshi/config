@@ -1,0 +1,13 @@
+profile laptop {
+    output eDP-1 enable position 0,0
+}
+
+profile room {
+    output eDP-1 disable
+    output HDMI-A-1 mode 1920x1080 position 0,0
+}
+
+profile workseat {
+    output eDP-1 disable
+    output DP-1 enable position 0,0
+}

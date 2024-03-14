@@ -1,0 +1,113 @@
+#!/bin/sh
+#
+#  Installs Sway WM configuration into my $XDG_CONFIG_HOME.
+#
+#  Systemd user Services used:
+#    kanshi - Wayland daemon that automatically configures outputs
+#    mako - Notification daemon for Wayland
+#    mpd - Music daemon for linux
+#
+
+export MyRepoName=sway-env
+export MyScriptName=swayInstall
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
+GIT_REPO="${SWAY_GIT_REPO:=$HOME/devel/dotfiles-submodule/sway-env}"
+umask 0022
+
+cd "$GIT_REPO" || {
+   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+   return 1
+}
+
+## source install infrastructure and, if not done already, parse cmdline args
+. ./.installSource.sh
+
+## Files to install
+
+sway_Config_Files='
+   alacritty/alacritty_arch.toml
+   alacritty/alacritty.toml
+   alacritty/alacritty_arch.yml
+   alacritty/alacritty.yml
+   kanshi/config
+   mako/config
+   mpd/mpd.conf
+   sway/config
+   sway/config_bg_color
+   sway/config_bg_picture
+   waybar/config
+   waybar/style.css
+   wofi/config
+   wofi/style.css
+'
+
+sway_Systemd_Service_Files='
+   systemd/user/kanshi.service
+   systemd/user/mako.service
+   systemd/user/sway-session.target
+'
+
+sway_Bin_Scripts='
+   startw
+'
+
+sway_Remove_Items="
+   $HOME/.mako
+   $HOME/.mpd
+   $HOME/.sway
+"
+
+sway_Dirs_To_Create="
+   $XDG_CONFIG_HOME/mpd/playlists
+   $XDG_STATE_HOME/mpd/
+   $XDG_CACHE_HOME/mpd/
+"
+
+## Install or Check
+
+# Install Sway and Sway/Desktop related config files
+install_files "$XDG_CONFIG_HOME" "
+   $sway_Config_Files
+   $sway_Systemd_Service_Files
+" ./config 0644
+
+# Install ~/bin scripts
+install_files "$HOME/bin" "$sway_Bin_Scripts" ./bin 0755
+chmod 0755 "$HOME/bin"
+
+# Remove/report no longer needed files and directories
+remove_items "$sway_Remove_Items"
+
+# Create/report missing directories
+ensure_dirs "$sway_Dirs_To_Create"
+
+# Adjustments/tweaks/tasks
+case "$switch" in
+   install)
+      # The background picture I personally use is from
+      # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'
+      picture="$HOME"/Pictures/Desktops/SwayBG.jpg
+      bg_link="$XDG_CONFIG_HOME"/sway/config_bg
+      if test -f "$picture"
+      then
+         bg="$XDG_CONFIG_HOME"/sway/config_bg_picture
+      else
+         bg="$XDG_CONFIG_HOME"/sway/config_bg_color
+      fi
+      test -L "$bg_link" && rm "$bg_link"
+      ln -s "$bg" "$bg_link"
+
+      # Reload Systemd user services in case config files get updated
+      systemctl --user daemon-reload
+      :
+      ;;
+   repo)
+      git_status
+      ;;
+   check)
+      :
+      ;;
+esac

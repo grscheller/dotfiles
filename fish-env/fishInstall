@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+#  Installs my Fish Shell environment into $XDG_CONFIG_HOME
+#
+#
+
+export MyRepoName=fish
+export MyScriptName=fishInstall
+
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+GIT_REPO="${FISH_GIT_REPO:=$HOME/devel/dotfiles-submodules/fish}"
+umask 0022
+
+cd "$GIT_REPO" || {
+   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+   return 1
+}
+
+## Source install infrastructure and, if not done already, parse cmdline args
+. ./.installSource.sh
+
+fish_Config_Files='
+   completions/alacritty.fish
+   completions/pypi.fish
+   completions/ve.fish
+   config.fish
+   conf.d/00-ensure-or-redo-init-env.fish
+   conf.d/abbrs.fish
+   conf.d/colors.fish
+   functions/archJDK.fish
+   functions/ax.fish
+   functions/cu.fish
+   functions/digpath.fish
+   functions/disable_touch_pad.fish
+   functions/enable_touch_pad.fish
+   functions/ev.fish
+   functions/fdot.fish
+   functions/ff.fish
+   functions/fields.fish
+   functions/fishcolors.fish
+   functions/fm.fish
+   functions/fish_greeting.fish
+   functions/fish_mode_prompt.fish
+   functions/fish_prompt.fish
+   functions/fish_title.fish
+   functions/la.fish
+   functions/ldir.fish
+   functions/ldot.fish
+   functions/lf.fish
+   functions/lh.fish
+   functions/ll.fish
+   functions/ls.fish
+   functions/mc.fish
+   functions/nsort.fish
+   functions/pathtrim.fish
+   functions/pypi.fish
+   functions/rc.fish
+   functions/ve.fish
+   functions/vinst.fish
+   functions/Wget.fish
+   functions/WgetM.fish
+   functions/b2b.fish
+   functions/b2d.fish
+   functions/b2h.fish
+   functions/b2o.fish
+   functions/d2b.fish
+   functions/d2d.fish
+   functions/d2h.fish
+   functions/d2o.fish
+   functions/h2b.fish
+   functions/h2d.fish
+   functions/h2h.fish
+   functions/h2o.fish
+   functions/o2b.fish
+   functions/o2d.fish
+   functions/o2h.fish
+   functions/o2o.fish
+   functions/dn.fish
+   functions/ud.fish
+'
+
+fish_Remove_Items="
+   $XDG_CONFIG_HOME/fish/functions/fishterm.fish
+"
+
+DIRS_TO_CREATE=""
+
+## Install/Check
+
+# Install Fish config files
+install_files "$XDG_CONFIG_HOME/fish" "$fish_Config_Files" . 0644
+chmod 0755 "$XDG_CONFIG_HOME/fish"
+
+# Remove/report no longer needed files and directories
+remove_items "$fish_Remove_Items"
+
+# Create/report missing directories
+ensure_dirs "$DIRS_TO_CREATE"
+
+# Adjustments/tweaks/tasks
+case "$switch" in
+   install)
+      :
+      ;;
+   repo)
+      git_status
+      ;;
+   check)
+      :
+      ;;
+esac

@@ -1,0 +1,47 @@
+window {
+    background-color: #2d4f67;
+    border: 0px;
+    border-radius: 10px;
+    color: #dddddd;
+    font-family: "Roboto Mono Bold Nerd Font Complete Mono", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+}
+
+#input {
+    background-color: #252535;
+    border: none;
+    border-radius: 10px 10px 0px 0px;
+    margin: 6px;
+    padding-left: 5px;
+}
+
+#inner-box {
+    background-color: #223249;
+    border: none;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+#outer-box {
+    background-color: #223249;
+    border: none;
+    margin: 6px;
+}
+
+#entry {
+    background-color: transparent;
+    border: none;
+    margin: 1px;
+}
+
+#entry:selected {
+    background-color: #252535;
+    border: none;
+    margin: 1px;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
