@@ -28,7 +28,7 @@ or begin
    return 1
 end
 
-set -l Files (string sub --start=8 (find root-env/ -type f))
+set -l Files (string sub --start=9 (find root-env/ -type f))
 
 for File in $Files
    test -e $File
@@ -38,5 +38,5 @@ for File in $Files
       or mkdir -p $Dir
       touch $File
    end
-   cp root$File $File
+   cp root-env$File $File
 end
