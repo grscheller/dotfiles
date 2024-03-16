@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 #
 # Trims off duplicate and non-existant directories
 # for colen separated lists of UNIX PATH components.

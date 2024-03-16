@@ -74,6 +74,26 @@ nv_remove_items=""
 
 nv_dirs_to_create=""
 
+## Preinstall check
+
+# See if spell file will need to be recompiled
+SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
+if which nvim >/dev/null 2>&1
+then
+   if ! test -e "$SpellFile" || {
+      ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add >/dev/null 2>&1
+   }
+   then
+      compileSpellFile=yes
+   fi
+   if ! test -e "${SpellFile}.spl"
+   then
+      compileSpellFile=yes
+   fi
+else
+   compileSpellFile=no
+fi
+
 ## Install/Check
 
 # Install Neovim files & NVIM related TOML files
@@ -92,14 +112,26 @@ ensure_dirs "$nv_dirs_to_create"
 # Adjustments/tweaks/tasks
 case "$switch" in
    install)
+      # Helps when editing installed Neovim configs
       printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
+
+      # Recompiled spell file if necessary
+      if test "$compileSpellFile" = yes
+      then
+         sf="${SpellFile##*/}" 
+         sf_dir="${SpellFile%/*}"
+         ( if cd "$sf_dir"
+           then
+              nvim -c ":mkspell! $sf" -c 'q' "$sf"
+           fi )
+      fi
       ;;
    check)
-      SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
-      if ! test -e "$SpellFile" || ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>/dev/null
+      # Indicate is spell file will be recompiles on next install
+      if test "$compileSpellFile" = yes
       then
-         printf '\nThe spell file %s will need to be compiled after the install:\n\n' "$SpellFile"
-         printf "  $ cd %s; nvim -c ':mkspell! %%' -c 'q' %s; cd -\n\n" "${SpellFile%/*}/" "${SpellFile##*/}"
+         printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+         printf '             recompiled on the next install.\n\n'
       fi
       ;;
 esac

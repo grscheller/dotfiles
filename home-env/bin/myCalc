@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 # Using the old style tkinter libraries, not the newer tkinter.ttk version.
 #

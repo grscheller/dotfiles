@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/python
 
 from fontTools.ttLib import TTFont
 import sys

@@ -12,31 +12,41 @@ Linux based workstation computers.
   * mfussenegger/nvim-lint to inject cli linting into vim.diagnostics
   * mhartington/formatter.nvim to run formatters
 * fish-env - Fish shell configuration files
-  * very opinionated
+  * very opinionated - my main shell
   * permanent configuration flows from configuration files
     * manual configurations can be used for temporary changes
     * manual changes can be lost on configuration file updates
-* home-env - Bash & other $HOME based configuration files
-  * bash (startup files)
+* sway-env - Sway configuration files
+  * Sway is a Wayland based tiling window manager modeled after i3
+* home-env - other $HOME based configuration files
   * ~/bin scripts
+    * bash, POSIX shell, python
+  * bash startup files
+    * attempted to be kept Linux/Unix system independent
+    * not POSIX compatible
   * other configuration files
     * ssh
     * bloop (Scala)
-    * Cabal (Haskell)
-* sway-env - Sway configuration files
-  * Sway is a Wayland based tiling window manager modeled after i3 
+    * cabal (Haskell)
 * root-env - Arch Linux system configuration files
 
 Currently only tested out on Arch Linux.
 
 ## Scripts
 
-* [dfInstall](dfInstall)
-  * Installs "dotfiles" to "$HOME"
-  * Usage: `./dfInstall [-s {install|check|repo}]`
-* [sfInstall](sfInstall)
+* bin/[dfInstall](dfInstall)
+  * Installs all "dotfiles" to the $HOME directory
+  * Usage: `$DOTFILE_GIT_REPO/bin/dfInstall [-s {install|check}]`
+* bin/[sfInstall](sfInstall)
   * Installs "root-env/" files to "/"
-  * Usage: `sudo ./root-env/sfInstall`
+  * Usage: `sudo $DOTFILE_GIT_REPO/bin/sfInstall`
+* fish abbreviations provided to install from anywhere
+  * fInstall to install fish-env files
+  * nvInstall to install nvim-env files
+  * swInstall to install sway-env files
+  * hInstall  to install home-env files
+  * dfInstall to install all of the above in parallel
+  * sfInstall to install system configuration files
 
 ## Public Domain Declaration
 

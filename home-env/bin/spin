@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 # Spin a curser around and around
 #
 #   Handy to keep ssh connections alive when they terminate after
