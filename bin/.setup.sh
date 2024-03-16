@@ -193,4 +193,7 @@ then
       done
    }
 
+   # For initial bootstrap
+   ensure_dir "$XDG_CONFIG_HOME"
+   chmod 0755 "$XDG_CONFIG_HOME"
 fi

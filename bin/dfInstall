@@ -14,15 +14,11 @@ cd "$gitRepo" || {
    exit 1
 }
 
-## Parse cmdline arguments and source functions
+# Parse cmdline arguments and source functions
 switch=''
 . bin/.setup.sh
 
-## Install dotfiles
-ensure_dir "$XDG_CONFIG_HOME"
-chmod 0755 "$XDG_CONFIG_HOME"
-
-# Boldly install configuration files in parallel
+# Install dotfiles
 ( . fish-env/fishInstall ) &
 ( . nvim-env/nvimInstall ) &
 ( . home-env/homeInstall ) &
