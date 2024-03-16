@@ -30,6 +30,7 @@ end
 
 set -l Files (string sub --start=9 (find root-env/ -type f))
 
+# install my system configuration files
 for File in $Files
    test -e $File
    or begin
@@ -40,3 +41,8 @@ for File in $Files
    end
    cp root-env$File $File
 end
+
+# redo some symlinks - pacman updates will step on these
+rm /usr/bin/sh
+ln -s -r /usr/bin/dash /usr/bin/sh
+
