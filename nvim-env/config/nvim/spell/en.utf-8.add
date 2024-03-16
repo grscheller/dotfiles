@@ -1,6 +1,10 @@
-cpp
+baz
+css
 dap
+foofoo
 formatter
+fortran
+jupyter
 linter
 lsp
 lspconfig
@@ -8,10 +12,14 @@ nvim
 scala
 submodule
 subshell
+timestamp
+toml
 zig
 AFRL
 Alacritty
+GL
 Neovim
 RVS
 RVSW
 RVSX
+SSC

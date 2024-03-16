@@ -1,88 +1,32 @@
 #!/bin/sh
 #
-# POSIX shell script to install an entire Linix desktop environment
+# POSIX shell script to install an entire Linux desktop environment
 # into the $HOME directory.
-#
-# shellcheck disable=SC2031
-#   SC2031: "var" was modified in a subshell (reason why a subshell was used!)
 #
 # Tested with both dash and bash.
 #
 
-me="$(id -un)"
+scriptName=dfInstall
+gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
 
-export MyRepoName=dotfiles
-export MyScriptName=dfInstall
-
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-GIT_REPO="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
-umask 0022
-
-cd "$GIT_REPO" || {
-   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+cd "$gitRepo" || {
+   printf '\n%s: Error - failed to cd into "%s"\n' "$scriptName" "$gitRepo"
    return 1
 }
 
-
 ## Parse cmdline arguments and source functions
 switch=''
-. ./.installSource.sh
+. bin/.setup.sh
 
-## Installation configuration
-
-if test "$me" = grs
-then
-   df_Config_Files_grs='
-      git/config
-   '
-   df_Remove_Items_grs=''
-else
-   df_Config_Files_grs=''
-   df_Remove_Items_grs=''
-fi
-df_Config_Files='
-   nixpkgs/config.nix
-'
-df_Remove_Items=''
-df_Dirs_To_Create=''
-
-## Install/Check
-
+## Install dotfiles
 ensure_dir "$XDG_CONFIG_HOME"
 chmod 0755 "$XDG_CONFIG_HOME"
 
-# Install git submodules boldly in parallel in subshells
-# with a single instance of sh (tested with Dash and Bash).
-FISH_GIT_REPO="${GIT_REPO}/config/fish"
-NVIM_GIT_REPO="${GIT_REPO}/config/nvim"
-HOME_GIT_REPO="${GIT_REPO}/home"
-SWAY_GIT_REPO="${GIT_REPO}/sway-env"
-( . ./config/fish/fishInstall ) &
-( . ./config/nvim/nvInstall ) &
-( . ./home/homeInstall ) &
-( . ./sway-env/swayInstall ) &
+# Boldly install configuration files in parallel
+( . fish-env/fishInstall ) &
+( . nvim-env/nvimInstall ) &
+( . home-env/homeInstall ) &
+( . sway-env/swayInstall ) &
 
-# Install miscellaneous $XDG_CONFIG_HOME configuration files
-install_files "$XDG_CONFIG_HOME" "$df_Config_Files_grs $df_Config_Files" ./config 0644
-
-# Remove/report no longer needed files and directories
-remove_items "$df_Remove_Items_grs $df_Remove_Items"
-
-# Create/report missing directories
-ensure_dirs "$df_Dirs_To_Create"
-
-# Adjustments/tweaks/tasks
-case "$switch" in
-   install)
-      :
-      ;;
-   repo)
-      git_status
-      ;;
-   check)
-      :
-      ;;
-esac
-
-# Make sure all background jobs to finish
+# Make sure all background jobs finish
 wait

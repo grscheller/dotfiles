@@ -1,7 +1,7 @@
 --[[ GRS Neovim Configuration - using lazy.nvim without LazyVim ]]
 
--- Load globals & options here, before lazy starts. Keymaps and autocmds
--- are done at rhe end.
+-- Load globals & options here, before lazy starts.
+-- Keymaps and autocmds are done at rhe end.
 require 'grs.config.globals'
 require 'grs.config.options'
 

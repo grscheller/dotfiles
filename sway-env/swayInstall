@@ -8,26 +8,32 @@
 #    mpd - Music daemon for linux
 #
 
-export MyRepoName=sway-env
-export MyScriptName=swayInstall
+scriptName=swayInstall
+envName=sway-env
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
-XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
-GIT_REPO="${SWAY_GIT_REPO:=$HOME/devel/dotfiles-submodule/sway-env}"
-umask 0022
+gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+envPath="$gitRepo/$envName"
 
-cd "$GIT_REPO" || {
-   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+cd "$envPath" || {
+   printf '%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
 
-## source install infrastructure and, if not done already, parse cmdline args
-. ./.installSource.sh
+## Parse cmdline arguments and source functions, if not done already
+. "$gitRepo/bin/.setup.sh"
+
+XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
 
 ## Files to install
 
-sway_Config_Files='
+sway_config_files='
+   config
+   config_bg_color
+   config_bg_picture
+'
+
+sway_related_files='
    alacritty/alacritty_arch.toml
    alacritty/alacritty.toml
    alacritty/alacritty_arch.yml
@@ -35,32 +41,29 @@ sway_Config_Files='
    kanshi/config
    mako/config
    mpd/mpd.conf
-   sway/config
-   sway/config_bg_color
-   sway/config_bg_picture
    waybar/config
    waybar/style.css
    wofi/config
    wofi/style.css
 '
 
-sway_Systemd_Service_Files='
-   systemd/user/kanshi.service
-   systemd/user/mako.service
-   systemd/user/sway-session.target
+sway_systemd_service_files='
+   kanshi.service
+   mako.service
+   sway-session.target
 '
 
-sway_Bin_Scripts='
+sway_bin_scripts='
    startw
 '
 
-sway_Remove_Items="
+sway_remove_items="
    $HOME/.mako
    $HOME/.mpd
    $HOME/.sway
 "
 
-sway_Dirs_To_Create="
+sway_dirs_to_create="
    $XDG_CONFIG_HOME/mpd/playlists
    $XDG_STATE_HOME/mpd/
    $XDG_CACHE_HOME/mpd/
@@ -68,21 +71,24 @@ sway_Dirs_To_Create="
 
 ## Install or Check
 
-# Install Sway and Sway/Desktop related config files
-install_files "$XDG_CONFIG_HOME" "
-   $sway_Config_Files
-   $sway_Systemd_Service_Files
-" ./config 0644
+# Install Sway config files
+install_files "$XDG_CONFIG_HOME/sway" "$sway_config_files" config/sway 0644 "$envPath"
+
+# Install Sway desktop related config files
+install_files "$XDG_CONFIG_HOME" "$sway_related_files" config 0644 "$envPath"
+
+# Install Sway related Systemd service files
+install_files "$XDG_CONFIG_HOME/systemd/user" "$sway_systemd_service_files" config/systemd/user 0644 "$envPath"
 
 # Install ~/bin scripts
-install_files "$HOME/bin" "$sway_Bin_Scripts" ./bin 0755
+install_files "$HOME/bin" "$sway_bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
 # Remove/report no longer needed files and directories
-remove_items "$sway_Remove_Items"
+remove_items "$sway_remove_items"
 
 # Create/report missing directories
-ensure_dirs "$sway_Dirs_To_Create"
+ensure_dirs "$sway_dirs_to_create"
 
 # Adjustments/tweaks/tasks
 case "$switch" in
@@ -103,9 +109,6 @@ case "$switch" in
       # Reload Systemd user services in case config files get updated
       systemctl --user daemon-reload
       :
-      ;;
-   repo)
-      git_status
       ;;
    check)
       :

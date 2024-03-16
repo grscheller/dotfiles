@@ -1,34 +1,31 @@
-# grscheller/dotfiles GitHub installation and verification scripts.
+# grscheller/dotfiles setup script
+#
+# Parse imput arguments and setup infrasture.
 #
 # shellcheck shell=sh
 # shellcheck disable=SC3043
 #   SC3043: allow use of non-POSIX keyword "local"
 #
-if [ -n "$MyRepoName" ]
+if [ -z "$scriptName" ]
 then
-   repoName="$MyRepoName"
-   unset MyRepoName
-else
-   printf 'Check configuration, MyRepoName not defined\n\n'
+   printf 'Check configuration, scriptName is not set.\n\n'
    exit 1
 fi
 
-if [ -n "$MyScriptName" ]
+if [ -z "$gitRepo" ]
 then
-   scriptName="$MyScriptName"
-   unset MyScriptName
-else
-   printf 'Check configuration, MyScriptName not defined\n\n'
+   printf 'Check configuration, gitRepo is not set.\n\n'
    exit 1
 fi
 
-usage="Usage: $scriptName [-s {install|check|repo}]"
+usage="Usage: $scriptName [-s {install|check}]"
 
 if [ -z "$switch" ]
 then
-   ## Parse cmdline arguments if $switch not set.
-   #    last -s option wins,
-   #    default is to install
+   umask 0022
+   XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+
+   ## Parse cmdline arguments if $switch not set - default is to install
    switch=install
    while getopts s: opt 2>&1
    do
@@ -41,8 +38,8 @@ then
             exit 1
             ;;
       esac
+      shift $((OPTIND - 1))
    done
-   shift $((OPTIND - 1))
 
    if [ $# -gt 0 ]
    then
@@ -51,7 +48,7 @@ then
       exit 1
    fi
 
-   if [ "$switch" != install ] && [ "$switch" != repo ] && [ "$switch" != check ]
+   if [ "$switch" != install ] && [ "$switch" != check ]
    then
       printf 'Error: %s -s given an invalid option argument\n\n%s\n\n' "$scriptName" "$usage"
       exit 1
@@ -95,9 +92,6 @@ then
                   printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
                }
                ;;
-            repo)
-               printf '%s: "%s" still installed in target\n\n' "$scriptName" "$item"
-               ;;
             check)
                printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
                ;;
@@ -107,23 +101,24 @@ then
 
    # Install a file
    install_file () {
-      local install_dir file_path src_dir file_perm src src_abs trgt trgt_dir
+      local install_dir file_path src_dir file_perm envPath
+      local src_rel src_abs trgt
       install_dir="$1"
       file_path="$2"
       src_dir="$3"
       file_perm="$4"
-      src="$src_dir/$file_path"
-      src_abs="$GIT_REPO${src#.}"
-      trgt="$install_dir/$file_path"
-      trgt_dir="${trgt%/*}"
+      envPath=$5
+      src_rel=$(echo "$src_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
+      src_abs=$(echo "$envPath/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
+      trgt=$(echo "$install_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
 
-      # Make sure target and source directory exists
-      ensure_dir "$trgt_dir" "$src_dir"
+      # Ensure target directory exists and complain if source directory doesn't
+      ensure_dir "${trgt%/*}" "${src_abs%/*}"
 
       case "$switch" in
          install)
             # Install the file
-            if cp "$src" "$trgt"
+            if cp "$src_rel" "$trgt"
             then
                chmod --quiet "$file_perm" "$trgt" || {
                   printf '%s: failed to set permissions on "%s" to "%s"\n\n' "$scriptName" "$trgt" "$file_perm"
@@ -132,25 +127,19 @@ then
                printf '%s: failed to install "%s"\n\n' "$scriptName" "$trgt"
             fi
             ;;
-         repo)
-            # Compare config (this script) with dotfile repo working directory
-            test -e "$src" || {
-               printf '%s: "%s" not in git working directory.\n\n' "$scriptName" "$src_abs"
-            }
-            ;;
          check)
-            # Compare config (this script) with install target
-            if [ ! -e "$src" ] && [ ! -e "$trgt" ]
+            # Compare config with install target 
+            if [ ! -e "$src_abs" ] && [ ! -e "$trgt" ]
             then
-               printf '%s: both target: "%s"\n and source: "%s" do not exist.\n\n' "$scriptName" "$trgt" "$src_abs"
+               printf '%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n' "$scriptName" "$src_abs" "$trgt"
             elif [ ! -e "$trgt" ]
             then
                printf '%s: target "%s" does not exist\n\n' "$scriptName" "$trgt"
-            elif [ ! -e "$src" ]
+            elif [ ! -e "$src_abs" ]
             then
                printf '%s: source "%s" does not exist\n\n' "$scriptName" "$src_abs"
             else
-               diff "$src" "$trgt" > /dev/null || {
+               diff "$trgt" "$src_abs" > /dev/null || {
                   printf '%s: "%s" differs from "%s"\n\n' "$scriptName" "$trgt" "$src_abs"
                }
             fi
@@ -158,29 +147,26 @@ then
       esac
    }
 
-   git_status () {
-      local gs
-      gs="$(git status --short --renames)"
-      test -n "$gs" && printf 'git status %s:\n%s\n\n' "$repoName" "$gs"
-   }
-
    # Install files - convenience function (keep loops out of config files)
    install_files () {
-      local install_dir file files src_dir file_perm
+      local install_dir files src_dir file_perm envPath
+      local file
       install_dir="$1"
       files="$2"
       src_dir="$3"
       file_perm="$4"
+      envPath=$5
       test -z "$files" && return
       for file in $files
       do
-         install_file "$install_dir" "$file" "$src_dir" "$file_perm"
+         install_file "$install_dir" "$file" "$src_dir" "$file_perm" "$envPath"
       done
    }
 
    # Check or remove files or directories - convenience function
    remove_items () {
-      local item items
+      local items
+      local item
       test ${#} -gt 1 && {
          printf '%s: Error - remove_items only takes one argument\n\n' "$scriptName" 
       }
@@ -194,7 +180,8 @@ then
 
    # Check or remove files or directories - convenience function
    ensure_dirs () {
-      local dirs dir
+      local dirs
+      local dir
       test ${#} -gt 1 && {
          printf '%s: Error - ensure_dirs only takes one argument\n\n' "$scriptName" 
       }

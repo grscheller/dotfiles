@@ -28,7 +28,7 @@ or begin
    return 1
 end
 
-set -l Files (string sub --start=5 (find root/etc -type f))
+set -l Files (string sub --start=8 (find root-env/ -type f))
 
 for File in $Files
    test -e $File

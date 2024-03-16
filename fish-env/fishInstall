@@ -4,22 +4,21 @@
 #
 #
 
-export MyRepoName=fish
-export MyScriptName=fishInstall
+scriptName=fishInstall
+envName=fish-env
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-GIT_REPO="${FISH_GIT_REPO:=$HOME/devel/dotfiles-submodules/fish}"
-umask 0022
+gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+envPath="$gitRepo/$envName"
 
-cd "$GIT_REPO" || {
-   printf '\n%s: Error - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+cd "$envPath" || {
+   printf '%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
 
 ## Source install infrastructure and, if not done already, parse cmdline args
-. ./.installSource.sh
+. "$gitRepo/bin/.setup.sh"
 
-fish_Config_Files='
+fish_config_files='
    completions/alacritty.fish
    completions/pypi.fish
    completions/ve.fish
@@ -79,31 +78,28 @@ fish_Config_Files='
    functions/ud.fish
 '
 
-fish_Remove_Items="
+fish_remove_items="
    $XDG_CONFIG_HOME/fish/functions/fishterm.fish
 "
 
-DIRS_TO_CREATE=""
+dirs_to_create=""
 
 ## Install/Check
 
 # Install Fish config files
-install_files "$XDG_CONFIG_HOME/fish" "$fish_Config_Files" . 0644
+install_files "$XDG_CONFIG_HOME/fish" "$fish_config_files" config/fish 0644 "$envPath"
 chmod 0755 "$XDG_CONFIG_HOME/fish"
 
 # Remove/report no longer needed files and directories
-remove_items "$fish_Remove_Items"
+remove_items "$fish_remove_items"
 
 # Create/report missing directories
-ensure_dirs "$DIRS_TO_CREATE"
+ensure_dirs "$dirs_to_create"
 
 # Adjustments/tweaks/tasks
 case "$switch" in
    install)
       :
-      ;;
-   repo)
-      git_status
       ;;
    check)
       :

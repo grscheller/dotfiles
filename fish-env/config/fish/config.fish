@@ -30,6 +30,6 @@ end
 # Check if shell is running in a desktop environment
 if set -q XDG_CURRENT_DESKTOP
    # Activate grs Python virtual environment - /usr/bin python scripts will
-   # still use the system Python.environment.
+   # still use the system Python and its environment.
    ve grs
 end

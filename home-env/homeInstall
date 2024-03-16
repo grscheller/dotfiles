@@ -1,36 +1,37 @@
 #!/bin/sh
 #
-#  Installs my Bash environment and other configurations into $HOME directory.
+#  Installs a basic Bash environment and other home
+#  directory miscellaneous configurations and tweaks.
 #
-#    - bash (startup files)
-#    - ~/bin scripts for various scipting languages
-#    - ssh, bloop (Scala), Cabal (Haskell)
-#    - create directories important to my work flow
-#    - remove items
+#  - bash (startup files)
+#  - ~/bin scripts
+#  - ssh
+#  - bloop (Scala), Cabal (Haskell)
+#  - create directories important to my work flow
+#  - remove items
 #
 
-export MyRepoName=home
-export MyScriptName=homeInstall
+scriptName=homeInstall
+envName=home-env
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-GIT_REPO="${HOME_GIT_REPO:=$HOME/devel/dotfiles-submodules/home}"
-umask 0022
+gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+envPath="$gitRepo/$envName"
 
-cd "$HOME_GIT_REPO" || {
-   printf '\nError - failed to cd into "%s"\n' "$MyScriptName" "$GIT_REPO"
+cd "$envPath" || {
+   printf 'Error %s: failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
 
-## source install infrastructure and, if not done already, parse cmdline args
-. ./.installSource.sh
+## Parse cmdline arguments and source functions, if not done already
+. "$gitRepo/bin/.setup.sh"
 
-home_Files='
+home_files='
    .bash_profile
    .bashrc
    .inputrc
 '
 
-home_Bin_Scripts='
+home_bin_scripts='
    buArch
    chkcolor
    codepoint
@@ -44,23 +45,27 @@ home_Bin_Scripts='
    viewJarManifest
 '
 
-home_Ssh_Files='
-   config
-'
-
-home_Bloop_Files='
+home_bloop_files='
    bloop.json
 '
 
-home_Cabal_Files='
+home_cabal_files='
    config
 '
 
-home_Remove_Items="
+home_config_files='
+   git/config
+   nixpkgs/config.nix
+'
+home_remove_items="
    $HOME/.vimrc
 "
 
-home_Dirs_To_Create="
+home_ssh_files='
+   config
+'
+
+home_ensure_dirs_exist="
    $HOME/catch
    $HOME/.local/bin
    $HOME/.cabal/bin
@@ -69,37 +74,38 @@ home_Dirs_To_Create="
 ## Install or Check
 
 # Install bash config files
-install_files "$HOME" "$home_Files" . 0644
+install_files "$HOME" "$home_files" . 0644 "$envPath"
 
 # Install ~/bin scripts
-install_files "$HOME/bin" "$home_Bin_Scripts" ./bin 0755
+install_files "$HOME/bin" "$home_bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
-# Install SSH Configs
-install_files "$HOME/.ssh" "$home_Ssh_Files" ./ssh 0600
+# Install ssh configs
+install_files "$HOME/.ssh" "$home_ssh_files" ssh 0600 "$envPath"
 chmod 0700 "$HOME/.ssh"
 
-# Install Bloop Configs for Scala
-install_files "$HOME/.bloop" "$home_Bloop_Files" ./bloop 0644
+# Install Bloop configs for Scala
+install_files "$HOME/.bloop" "$home_bloop_files" bloop 0644 "$envPath"
 chmod 0755 "$HOME/.bloop"
 
-# Install Cabal Configs for Haskell
-install_files "$HOME/.cabal" "$home_Cabal_Files" ./cabal 0644
+# Install Cabal configs for Haskell
+install_files "$HOME/.cabal" "$home_cabal_files" cabal 0644 "$envPath"
+chmod 0755 "$HOME/.cabal"
+
+# Install miscellaneous ~/.config files
+install_files "$HOME/.config" "$home_config_files" config 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Remove/report no longer needed files and directories
-remove_items "$home_Remove_Items"
+remove_items "$home_remove_items"
 
 # Create/report missing directories
-ensure_dirs "$home_Dirs_To_Create"
+ensure_dirs "$home_ensure_dirs_exist"
 
 ## Adjustments/tweaks/tasks
 case "$switch" in
    install)
       :
-      ;;
-   repo)
-      git_status
       ;;
    check)
       :

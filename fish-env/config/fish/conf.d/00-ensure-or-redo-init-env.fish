@@ -65,11 +65,7 @@ and begin
    set -gx DIFFPROG 'nvim -d'
 
    # Set up paths to dotfiles related repos
-   set -gx DOTFILE_GIT_REPO ~/devel/dot/dotfiles
-   set -gx FISH_GIT_REPO ~/devel/dot/submodules/fish
-   set -gx NVIM_GIT_REPO ~/devel/dot/submodules/nvim
-   set -gx HOME_GIT_REPO ~/devel/dot/submodules/home
-   set -gx SWAY_GIT_REPO ~/devel/dot/submodules/sway-env
+   set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
 
    # Add ~/bin to end of PATH
    fish_add_path -gpP ~/bin
