@@ -4,7 +4,7 @@
 #
 # All permanent configurations should flow from
 # configuration files, not done on the command line!!!
-# 
+#
 # If REDO_ENV is set, all "manual" configurations will be blown away!
 # This way, I know configuration is sane and not affected by old cruft.
 #
@@ -65,7 +65,7 @@ and begin
    set -gx DIFFPROG 'nvim -d'
 
    # Set up paths to dotfiles related repos
-   set -gx DOTFILE_GIT_REPO ~/devel/dotfiles
+   set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
    # Add ~/bin to end of PATH
    fish_add_path -gpP ~/bin
@@ -113,7 +113,7 @@ and begin
    set -gx PYTHON_GRS_ENVS ~/devel/python_envs
    test -d $PYTHON_GRS_ENVS || mkdir -p $PYTHON_GRS_ENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
- 
+
    # For non-Systemd systems
    if not type -q hostnamectl
       set -gx make_phoney_hostnamectl

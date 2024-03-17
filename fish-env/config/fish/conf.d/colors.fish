@@ -1,4 +1,4 @@
-## Setup Kanagawa based colorscheme for fish
+## Setup Kanagawa based color scheme for fish
 
 # Examples: https://github.com/dmi3/fish/blob/master/colors.fish
 #           https://github.com/fish-shell/fish-shell/issues/3443
@@ -16,15 +16,15 @@ set -l blue 7e9cd8        #7e9cd8
 set -l cyan 7aa89f        #7aa89f
 set -l pink d27e99        #d27e99
 
-# Syntax highlightin  colors
+# Syntax highlighting colors
 set -U fish_color_normal $foreground      # default color
 set -U fish_color_command $cyan           # color for commands
 set -U fish_color_keyword $pink           # fish keywords
 set -U fish_color_quote $yellow           # quoted text
-set -U fish_color_redirection $blue       # IO redirections
+set -U fish_color_redirection $blue       # IO redirection
 set -U fish_color_end $orange             # process separators like ; or & or |
 set -U fish_color_error $red              # syntax errors
-set -U fish_color_param $purple           # ordiary command parameters
+set -U fish_color_param $purple           # ordinary command parameters
 set -U fish_color_comment $comment        # code comments
 set -U fish_color_operator $green         # parameter expansion operators like '*' and '~'
 set -U fish_color_escape $pink            # character escapes like '\n' and '\x70'

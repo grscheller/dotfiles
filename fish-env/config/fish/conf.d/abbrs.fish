@@ -19,12 +19,12 @@ abbr -a gt 'git tag --list|cat'
 abbr -a gw git switch
 
 # So I can run these outside their repos - single quotes intentional
-abbr -a sfInstall 'sudo $DOTFILE_GIT_REPO/bin/sfInstall'
-abbr -a dfInstall '$DOTFILE_GIT_REPO/bin/dfInstall'
-abbr -a nvInstall '$DOTFILE_GIT_REPO/nvim-env/nvimInstall'
-abbr -a fInstall  '$DOTFILE_GIT_REPO/fish-env/fishInstall'
-abbr -a hInstall  '$DOTFILE_GIT_REPO/home-env/homeInstall'
-abbr -a swInstall '$DOTFILE_GIT_REPO/sway-env/swayInstall'
+abbr -a sfInstall 'sudo $DOTFILES_GIT_REPO/bin/sfInstall'
+abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
+abbr -a nvInstall '$DOTFILES_GIT_REPO/nvim-env/nvimInstall'
+abbr -a fInstall  '$DOTFILES_GIT_REPO/fish-env/fishInstall'
+abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'
+abbr -a swInstall '$DOTFILES_GIT_REPO/sway-env/swayInstall'
 
 # Python virtual environment for system python
 abbr -a -- p3_11clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'

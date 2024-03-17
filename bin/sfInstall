@@ -1,4 +1,4 @@
-#!/bin/fish
+#!/usr/bin/fish
 #
 #  Install system files into my Wayland/Systemd based Arch Linux systems.
 #
@@ -10,21 +10,34 @@
 #    - systemd-resolved,service
 #    - reflector.timer
 #
+#  TODO: use as template to create sfCheck fish script
+#
 
-test (count $argv) -gt 0 || not fish_is_root_user
+test (count $argv) -gt 1 || not fish_is_root_user
 and begin
-   printf 'Usage: sudo ./sfInstall\n'
-   printf '       sudo $DOTFILE_GIT_REPO/sfInstall\n'
+   printf 'Usage: sudo $DOTFILES_GIT_REPO/bin/sfInstall [$DOTFILES_GIT_REPO]\n\n'
    return 1
 end
 
-set -q DOTFILE_GIT_REPO
-or set -gx DOTFILE_GIT_REPO ~grs/devel/dotfiles
+test (count $argv) -eq 1
+and begin
+   set DOTFILES_GIT_REPO $argv[1]
+end
 
-cd $DOTFILE_GIT_REPO 2>/dev/null
+set -q DOTFILES_GIT_REPO
+or set DOTFILES_GIT_REPO ~(echo $SUDO_USER)/devel/dotfiles
+
+cd $DOTFILES_GIT_REPO 2>/dev/null
 or begin
-   printf '\nFailed to cd into the dotfile repo\'s'
-   printf '\nhome directory \'%s\'' "$DOTFILE_GIT_REPO"
+   printf 'sfInstall: Failed to cd into the dotfiles\n'
+   printf '           git directory \'%s\'\n\n' "$DOTFILES_GIT_REPO"
+   return 1
+end
+
+test -d ./root-env
+or begin
+   printf 'sfInstall: No \'%s\' directory, ...\n' "$DOTFILES_GIT_REPO/root-env"
+   printf '           PUNTING!\n\n'
    return 1
 end
 
