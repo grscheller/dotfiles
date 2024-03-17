@@ -7,7 +7,7 @@
 #
 
 scriptName=dfInstall
-gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 
 cd "$gitRepo" || {
    printf '\n%s: Error - failed to cd into "%s"\n' "$scriptName" "$gitRepo"

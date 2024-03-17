@@ -7,7 +7,7 @@
 scriptName=fishInstall
 envName=fish-env
 
-gitRepo="${DOTFILE_GIT_REPO:=$HOME/devel/dotfiles}"
+gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 envPath="$gitRepo/$envName"
 
 cd "$envPath" || {

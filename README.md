@@ -36,10 +36,10 @@ Currently only tested out on Arch Linux.
 
 * bin/[dfInstall](dfInstall)
   * Installs all "dotfiles" to the $HOME directory
-  * Usage: `$DOTFILE_GIT_REPO/bin/dfInstall [-s {install|check}]`
+  * Usage: `$DOTFILES_GIT_REPO/bin/dfInstall [--install|--check}]`
 * bin/[sfInstall](sfInstall)
   * Installs "root-env/" files to "/"
-  * Usage: `sudo $DOTFILE_GIT_REPO/bin/sfInstall`
+  * Usage: `sudo $DOTFILES_GIT_REPO/bin/sfInstall`
 * fish abbreviations provided to install from anywhere
   * fInstall to install fish-env files
   * nvInstall to install nvim-env files
