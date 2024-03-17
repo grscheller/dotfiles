@@ -1,12 +1,10 @@
 --[[ Options - loaded before lazy takes control ]]
 
--- string, numeric  & boolean options
 local options = {
 
-   -- POSIX compatible shells are needed by some plugins
-   shell = '/bin/sh',
+   shell = '/bin/sh',  -- POSIX compatible shells are needed by some plugins
 
-   -- Set default fileencoding, localizations, and file formats
+   -- Set default file encoding, localization, and file formats
    fileencoding = 'utf-8',
    spelllang = 'en_us',
    fileformats = 'unix,mac,dos',
@@ -14,10 +12,10 @@ local options = {
    -- Set default tab/indenting behavior
    tabstop = 4,      -- tab stops every 4 spaces, not size of tab character
    shiftwidth = 4,   -- number of columns used for auto-indentation with << & >>
-   softtabstop = 4,  -- <tab>/<bs> inserts/deletes 4 columns ws
+   softtabstop = 4,  -- <tab>/<bs> inserts/deletes 4 columns of white space
    expandtab = true,  -- use only spaces when tabbing or auto-indenting
-   autoindent = true, -- align a newline ident with previous linw
-   shiftround = true, -- round ident to mumultiple of shiftwidth
+   autoindent = true, -- align a newline ident with previous line
+   shiftround = true, -- round ident to a multiple of shiftwidth
 
    -- Buffer/Editing preferences
    hidden = true,       -- my expectations are that buffers don't get abandoned
@@ -30,6 +28,7 @@ local options = {
    colorcolumn = '+1,+21,+41',  -- keep comments <= 80 code <= 100, data <= 120
    spelloptions = 'camel',   -- spellCheckCamelCaseComponents
    formatoptions = 'tcqjr1',  -- use <C-u> to undo unwanted comment insertion
+   spell = true,  -- use 'z ' to toggle unknown word highlighting
 
    -- Windowing preferences
    mouse = 'a',        -- enable mouse for all modes
@@ -56,9 +55,9 @@ local options = {
    completeopt = 'menu,menuone,noselect',  -- for nvim-cmp
 
    -- Essentially disable folding
-   foldenable = false,     -- Allows the repurposing of folding
-   foldmethod = 'manual',  -- related keymaps. I have an autocmd
-   foldlevelstart = 99,    -- that helps it stay disabled.
+   foldenable = false,     -- Allows the reuse of folding keybindings.
+   foldmethod = 'manual',  -- I have an autocmd which helps folding to
+   foldlevelstart = 99,    -- stay disabled.
 }
 
 for k, v in pairs(options) do
