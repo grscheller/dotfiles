@@ -45,4 +45,3 @@ end
 # redo some symlinks - pacman updates will step on these
 rm /usr/bin/sh
 ln -s -r /usr/bin/dash /usr/bin/sh
-

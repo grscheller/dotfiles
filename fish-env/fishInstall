@@ -16,7 +16,7 @@ cd "$envPath" || {
 }
 
 ## Source install infrastructure and, if not done already, parse cmdline args
-. "$gitRepo/bin/.setup.sh"
+. ../bin/.setup.sh
 
 fish_config_files='
    completions/alacritty.fish
@@ -97,7 +97,7 @@ remove_items "$fish_remove_items"
 ensure_dirs "$dirs_to_create"
 
 # Adjustments/tweaks/tasks
-case "$switch" in
+case "$dfOption" in
    install)
       :
       ;;

@@ -23,7 +23,7 @@ cd "$envPath" || {
 }
 
 ## Parse cmdline arguments and source functions, if not done already
-. "$gitRepo/bin/.setup.sh"
+. ../bin/.setup.sh
 
 home_files='
    .bash_profile
@@ -103,7 +103,7 @@ remove_items "$home_remove_items"
 ensure_dirs "$home_ensure_dirs_exist"
 
 ## Adjustments/tweaks/tasks
-case "$switch" in
+case "$dfOption" in
    install)
       :
       ;;

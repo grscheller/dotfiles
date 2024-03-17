@@ -1,6 +1,6 @@
 # grscheller/dotfiles setup script
 #
-# Parse imput arguments and setup infrasture.
+# Parse input arguments and setup infrastructure.
 #
 # shellcheck shell=sh
 # shellcheck disable=SC3043
@@ -18,40 +18,35 @@ then
    exit 1
 fi
 
-usage="Usage: $scriptName [-s {install|check}]"
-
-if [ -z "$switch" ]
+if [ -z "$dfOption" ]
 then
    umask 0022
    XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
 
-   ## Parse cmdline arguments if $switch not set - default is to install
-   switch=install
-   while getopts s: opt 2>&1
-   do
-      case "$opt" in
-         s)
-            switch="$OPTARG"
+   ## Parse cmdline arguments
+
+   usage="Usage: $scriptName [--install|--check]"
+
+   if test $# -gt 1
+   then
+      printf '%s\n\n' "$usage"
+      exit 1
+   elif test $# -eq 1
+   then
+      case "$1" in
+         --check)
+            dfOption=check
             ;;
-         \?)
+         --install)
+            dfOption=install
+            ;;
+         *)
             printf '%s\n\n' "$usage"
             exit 1
             ;;
       esac
-      shift $((OPTIND - 1))
-   done
-
-   if [ $# -gt 0 ]
-   then
-      printf 'Error: %s takes no arguments\n\n' "$scriptName"
-      printf '%s\n\n' "$usage"
-      exit 1
-   fi
-
-   if [ "$switch" != install ] && [ "$switch" != check ]
-   then
-      printf 'Error: %s -s given an invalid option argument\n\n%s\n\n' "$scriptName" "$usage"
-      exit 1
+   else
+      dfOption=install
    fi
 
    ## Functions
@@ -63,7 +58,7 @@ then
       srcDir="$2"
       if [ ! -d "$targetDir" ]
       then
-         case "$switch" in
+         case "$dfOption" in
             install)
                mkdir -p "$targetDir" ||
                   printf '%s: failed to create "%s" directory\n\n' "$scriptName" "$targetDir"
@@ -85,7 +80,7 @@ then
       item="$1"
       if test -e "$item"
       then
-         case "$switch" in
+         case "$dfOption" in
             install)
                rm -rf "$item"
                test -e "$item" && {
@@ -115,7 +110,7 @@ then
       # Ensure target directory exists and complain if source directory doesn't
       ensure_dir "${trgt%/*}" "${src_abs%/*}"
 
-      case "$switch" in
+      case "$dfOption" in
          install)
             # Install the file
             if cp "$src_rel" "$trgt"
@@ -193,7 +188,8 @@ then
       done
    }
 
-   # For initial bootstrap
+   ## For initial bootstrap when $XDG_CONFIG_HOME does not exist
+
    ensure_dir "$XDG_CONFIG_HOME"
    chmod 0755 "$XDG_CONFIG_HOME"
 fi

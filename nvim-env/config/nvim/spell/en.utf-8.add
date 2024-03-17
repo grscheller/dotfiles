@@ -1,6 +1,7 @@
 # grscheller word list
 autocmd
 autocmds
+avahi
 bashism
 bashisms
 baz
@@ -8,8 +9,10 @@ clojure
 cmdline
 cmp
 commandline
+config
 css
 dap
+dhcpcd
 dotfile
 dotfiles
 env
@@ -21,9 +24,11 @@ ghc
 grscheller
 i3
 ident
+iwd
 jitter
 journalctl
 jupyter
+kanshi
 keymap
 keymaps
 linter
@@ -34,7 +39,9 @@ lsp
 lspconfig
 lua
 lualine
+mako
 modprobe
+mpd
 nolist
 nvidia
 nvim
@@ -46,6 +53,7 @@ rustc
 rustup
 scala
 scalac
+shellcheck
 shiftwidth
 spellfile
 statusline
@@ -77,3 +85,5 @@ RVSW
 RVSX
 SSC
 TCP
+Wayland
+XDG

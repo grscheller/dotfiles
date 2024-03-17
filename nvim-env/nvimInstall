@@ -15,7 +15,7 @@ cd "$envPath" || {
 }
 
 ## Parse cmdline arguments and source functions, if not done already
-. "$gitRepo/bin/.setup.sh"
+. ../bin/.setup.sh
 
 nv_config_files='
    ftplugin/c.lua
@@ -76,7 +76,7 @@ nv_dirs_to_create=""
 
 ## Preinstall check
 
-# See if spell file will need to be recompiled
+# See if nvim spellfile will need to be recompiled
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim >/dev/null 2>&1
 then
@@ -110,7 +110,7 @@ remove_items "$nv_remove_items"
 ensure_dirs "$nv_dirs_to_create"
 
 # Adjustments/tweaks/tasks
-case "$switch" in
+case "$dfOption" in
    install)
       # Helps when editing installed Neovim configs
       printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
@@ -127,7 +127,7 @@ case "$switch" in
       fi
       ;;
    check)
-      # Indicate is spell file will be recompiles on next install
+      # Indicate whether the spellfile will be recompiled on next install
       if test "$compileSpellFile" = yes
       then
          printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"

@@ -5,7 +5,7 @@
 #  Systemd user Services used:
 #    kanshi - Wayland daemon that automatically configures outputs
 #    mako - Notification daemon for Wayland
-#    mpd - Music daemon for linux
+#    mpd - Music daemon for Linux
 #
 
 scriptName=swayInstall
@@ -20,7 +20,7 @@ cd "$envPath" || {
 }
 
 ## Parse cmdline arguments and source functions, if not done already
-. "$gitRepo/bin/.setup.sh"
+. ../bin/.setup.sh
 
 XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
 XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
@@ -91,7 +91,7 @@ remove_items "$sway_remove_items"
 ensure_dirs "$sway_dirs_to_create"
 
 # Adjustments/tweaks/tasks
-case "$switch" in
+case "$dfOption" in
    install)
       # The background picture I personally use is from
       # 'https://www.facebook.com/alittleofmeinyou/photos/325964185818238'

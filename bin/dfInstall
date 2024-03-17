@@ -15,14 +15,14 @@ cd "$gitRepo" || {
 }
 
 # Parse cmdline arguments and source functions
-switch=''
+dfOption=''
 . bin/.setup.sh
 
 # Install dotfiles
-( . fish-env/fishInstall ) &
-( . nvim-env/nvimInstall ) &
-( . home-env/homeInstall ) &
-( . sway-env/swayInstall ) &
+(. fish-env/fishInstall) &
+(. nvim-env/nvimInstall) &
+(. home-env/homeInstall) &
+(. sway-env/swayInstall) &
 
 # Make sure all background jobs finish
 wait
