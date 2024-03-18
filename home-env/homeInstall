@@ -1,14 +1,13 @@
 #!/bin/sh
 #
-#  Installs a basic Bash environment and other home
-#  directory miscellaneous configurations and tweaks.
+# homeInstall: Installs a basic Bash environment and other
+#              miscellaneous home directory configuration files,
 #
-#  - bash (startup files)
-#  - ~/bin scripts
-#  - ssh
-#  - bloop (Scala), Cabal (Haskell)
-#  - create directories important to my work flow
-#  - remove items
+#   - bash (startup files)
+#   - ~/bin scripts
+#   - ssh
+#   - bloop (Scala), Cabal (Haskell)
+#   - create directories important to my work flow
 #
 
 scriptName=homeInstall
@@ -21,9 +20,6 @@ cd "$envPath" || {
    printf 'Error %s: failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
-
-## Parse cmdline arguments and source functions, if not done already
-. ../bin/.setup.sh
 
 home_files='
    .bash_profile
@@ -67,9 +63,13 @@ home_ssh_files='
 
 home_ensure_dirs_exist="
    $HOME/catch
-   $HOME/.local/bin
    $HOME/.cabal/bin
+   $HOME/.local/bin
 "
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
 
 ## Install or Check
 

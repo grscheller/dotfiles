@@ -1,7 +1,6 @@
 #!/bin/sh
 #
-#  Installs my Fish Shell environment into $XDG_CONFIG_HOME
-#
+# fishInstall: Installs Fish Shell configuration files.
 #
 
 scriptName=fishInstall

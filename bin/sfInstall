@@ -1,16 +1,16 @@
 #!/usr/bin/fish
 #
-#  Install system files into my Wayland/Systemd based Arch Linux systems.
+# sfInstall: Installs system files into Arch Linux Systemd based computers.
 #
-#  Systemd Services & Timers used
-#    - avahi-daemon.service
-#    - dhcpcd.service
-#    - iwd.service
-#    - nix-daemon.service
-#    - systemd-resolved,service
-#    - reflector.timer
+#   Systemd Services & Timers used
+#     - avahi-daemon.service
+#     - dhcpcd.service
+#     - iwd.service
+#     - nix-daemon.service
+#     - systemd-resolved,service
+#     - reflector.timer
 #
-#  TODO: use as template to create sfCheck fish script
+# TODO: use as template to create sfCheck fish script
 #
 
 test (count $argv) -gt 1 || not fish_is_root_user
@@ -55,6 +55,6 @@ for File in $Files
    cp root-env$File $File
 end
 
-# redo some symlinks - pacman updates will step on these
+# redo some symlinks - pacman updates for Bash will step on these
 rm /usr/bin/sh
 ln -s -r /usr/bin/dash /usr/bin/sh

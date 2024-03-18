@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-#  Installs my Neovim environment into my $HOME directory.
+# nvimInstall: Installs Neovim configuration files.
 #
 
 scriptName=nvimInstall
@@ -13,9 +13,6 @@ cd "$envPath" || {
    printf '%s: Error - Failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
-
-## Parse cmdline arguments and source functions, if not done already
-. ../bin/.setup.sh
 
 nv_config_files='
    ftplugin/c.lua
@@ -93,6 +90,10 @@ then
 else
    compileSpellFile=no
 fi
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
 
 ## Install/Check
 

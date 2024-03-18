@@ -1,11 +1,11 @@
 #!/bin/sh
 #
-#  Installs Sway WM configuration into my $XDG_CONFIG_HOME.
+# swayInstall: Installs Sway WM configuration files.
 #
-#  Systemd user Services used:
-#    kanshi - Wayland daemon that automatically configures outputs
-#    mako - Notification daemon for Wayland
-#    mpd - Music daemon for Linux
+#   Systemd user Services used:
+#     kanshi - Wayland daemon that automatically configures outputs
+#     mako - Notification daemon for Wayland
+#     mpd - Music daemon for Linux
 #
 
 scriptName=swayInstall
@@ -18,9 +18,6 @@ cd "$envPath" || {
    printf '%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$envPath"
    return 1
 }
-
-## Parse cmdline arguments and source functions, if not done already
-. ../bin/.setup.sh
 
 XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
 XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
@@ -68,6 +65,10 @@ sway_dirs_to_create="
    $XDG_STATE_HOME/mpd/
    $XDG_CACHE_HOME/mpd/
 "
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
 
 ## Install or Check
 
