@@ -55,6 +55,6 @@ for File in $Files
    cp root-env$File $File
 end
 
-# redo some symlinks - pacman updates for Bash will step on these
+# redo some symlinks - Pacman updates can step on these
 rm /usr/bin/sh
 ln -s -r /usr/bin/dash /usr/bin/sh

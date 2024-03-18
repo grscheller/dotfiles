@@ -24,13 +24,7 @@ XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
 
 ## Files to install
 
-sway_config_files='
-   config
-   config_bg_color
-   config_bg_picture
-'
-
-sway_related_files='
+dot_config_files='
    alacritty/alacritty_arch.toml
    alacritty/alacritty.toml
    alacritty/alacritty_arch.yml
@@ -38,29 +32,32 @@ sway_related_files='
    kanshi/config
    mako/config
    mpd/mpd.conf
+   sway/config
+   sway/config_bg_color
+   sway/config_bg_picture
    waybar/config
    waybar/style.css
    wofi/config
    wofi/style.css
 '
 
-sway_systemd_service_files='
+systemd_service_files='
    kanshi.service
    mako.service
    sway-session.target
 '
 
-sway_bin_scripts='
+bin_scripts='
    startw
 '
 
-sway_remove_items="
+remove_items="
    $HOME/.mako
    $HOME/.mpd
    $HOME/.sway
 "
 
-sway_dirs_to_create="
+dirs_to_create="
    $XDG_CONFIG_HOME/mpd/playlists
    $XDG_STATE_HOME/mpd/
    $XDG_CACHE_HOME/mpd/
@@ -73,23 +70,20 @@ sway_dirs_to_create="
 ## Install or Check
 
 # Install Sway config files
-install_files "$XDG_CONFIG_HOME/sway" "$sway_config_files" config/sway 0644 "$envPath"
-
-# Install Sway desktop related config files
-install_files "$XDG_CONFIG_HOME" "$sway_related_files" config 0644 "$envPath"
+install_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644 "$envPath"
 
 # Install Sway related Systemd service files
-install_files "$XDG_CONFIG_HOME/systemd/user" "$sway_systemd_service_files" config/systemd/user 0644 "$envPath"
+install_files "$XDG_CONFIG_HOME/systemd/user" "$systemd_service_files" config/systemd/user 0644 "$envPath"
 
 # Install ~/bin scripts
-install_files "$HOME/bin" "$sway_bin_scripts" bin 0755 "$envPath"
+install_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
 # Remove/report no longer needed files and directories
-remove_items "$sway_remove_items"
+remove_items "$remove_items"
 
 # Create/report missing directories
-ensure_dirs "$sway_dirs_to_create"
+ensure_dirs "$dirs_to_create"
 
 # Adjustments/tweaks/tasks
 case "$dfOption" in

@@ -21,13 +21,13 @@ cd "$envPath" || {
    return 1
 }
 
-home_files='
+bash_files='
    .bash_profile
    .bashrc
    .inputrc
 '
 
-home_bin_scripts='
+bin_scripts='
    buArch
    chkcolor
    codepoint
@@ -41,27 +41,27 @@ home_bin_scripts='
    viewJarManifest
 '
 
-home_bloop_files='
+bloop_files='
    bloop.json
 '
 
-home_cabal_files='
+cabal_files='
    config
 '
 
-home_config_files='
+other_config_files='
    git/config
    nixpkgs/config.nix
 '
-home_remove_items="
+remove_items="
    $HOME/.vimrc
 "
 
-home_ssh_files='
+ssh_files='
    config
 '
 
-home_ensure_dirs_exist="
+ensure_dirs_exist="
    $HOME/catch
    $HOME/.cabal/bin
    $HOME/.local/bin
@@ -74,33 +74,33 @@ home_ensure_dirs_exist="
 ## Install or Check
 
 # Install bash config files
-install_files "$HOME" "$home_files" . 0644 "$envPath"
+install_files "$HOME" "$bash_files" . 0644 "$envPath"
 
 # Install ~/bin scripts
-install_files "$HOME/bin" "$home_bin_scripts" bin 0755 "$envPath"
+install_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
 # Install ssh configs
-install_files "$HOME/.ssh" "$home_ssh_files" ssh 0600 "$envPath"
+install_files "$HOME/.ssh" "$ssh_files" ssh 0600 "$envPath"
 chmod 0700 "$HOME/.ssh"
 
 # Install Bloop configs for Scala
-install_files "$HOME/.bloop" "$home_bloop_files" bloop 0644 "$envPath"
+install_files "$HOME/.bloop" "$bloop_files" bloop 0644 "$envPath"
 chmod 0755 "$HOME/.bloop"
 
 # Install Cabal configs for Haskell
-install_files "$HOME/.cabal" "$home_cabal_files" cabal 0644 "$envPath"
+install_files "$HOME/.cabal" "$cabal_files" cabal 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Install miscellaneous ~/.config files
-install_files "$HOME/.config" "$home_config_files" config 0644 "$envPath"
+install_files "$HOME/.config" "$other_config_files" config 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Remove/report no longer needed files and directories
-remove_items "$home_remove_items"
+remove_items "$remove_items"
 
 # Create/report missing directories
-ensure_dirs "$home_ensure_dirs_exist"
+ensure_dirs "$ensure_dirs_exist"
 
 ## Adjustments/tweaks/tasks
 case "$dfOption" in
