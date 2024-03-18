@@ -49,7 +49,7 @@ cabal_files='
    config
 '
 
-other_config_files='
+dot_config_files='
    git/config
    nixpkgs/config.nix
 '
@@ -93,7 +93,7 @@ install_files "$HOME/.cabal" "$cabal_files" cabal 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Install miscellaneous ~/.config files
-install_files "$HOME/.config" "$other_config_files" config 0644 "$envPath"
+install_files "$HOME/.config" "$dot_config_files" config 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Remove/report no longer needed files and directories
