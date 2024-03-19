@@ -1,5 +1,9 @@
 # grscheller word list
 alacritty
+arg
+argc
+args
+argv
 autocmd
 autocmds
 avahi
@@ -19,12 +23,15 @@ cmp
 commandline
 conf
 config
+configs
 csh
 css
 ctrl
 dap
 datastructures
 decodings
+dev
+devs
 devel
 df
 dhcpcd
@@ -57,7 +64,9 @@ gitignore
 globbing
 grs
 grscheller
+grscheller's
 haskell
+html
 http
 https
 i3
@@ -74,6 +83,7 @@ keymap
 keymapping
 keymappings
 keymaps
+ksh
 libre
 linter
 linters
