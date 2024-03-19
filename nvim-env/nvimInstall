@@ -75,7 +75,7 @@ dirs_to_create=""
 
 . ../bin/.setup.sh
 
-## Preinstall
+## Preinstall checks
 
 # See if nvim spellfile will need to be recompiled
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
@@ -110,7 +110,8 @@ remove_items "$remove_items"
 # Create/report missing directories
 ensure_dirs "$dirs_to_create"
 
-# Adjustments/tweaks/tasks
+## Post install/check tweaks
+
 case "$dfOption" in
    install)
       # Helps when editing installed Neovim configs

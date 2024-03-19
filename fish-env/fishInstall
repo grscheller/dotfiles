@@ -14,9 +14,6 @@ cd "$envPath" || {
    return 1
 }
 
-## Source install infrastructure and, if not done already, parse cmdline args
-. ../bin/.setup.sh
-
 dot_config_files='
    completions/alacritty.fish
    completions/pypi.fish
@@ -77,11 +74,15 @@ dot_config_files='
    functions/ud.fish
 '
 
-remove_items="
-   $XDG_CONFIG_HOME/fish/functions/fishterm.fish
-"
+remove_items=""
 
 dirs_to_create=""
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
+
+## Preinstall checks
 
 ## Install/Check
 
@@ -95,7 +96,8 @@ remove_items "$remove_items"
 # Create/report missing directories
 ensure_dirs "$dirs_to_create"
 
-# Adjustments/tweaks/tasks
+## Post install/check tweaks
+
 case "$dfOption" in
    install)
       :
