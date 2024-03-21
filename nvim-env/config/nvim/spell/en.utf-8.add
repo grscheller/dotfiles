@@ -8,6 +8,8 @@ autocmd
 autocmds
 avahi
 awk
+backend
+backends
 bashism
 bashisms
 baz
@@ -55,6 +57,8 @@ formatter
 formatters
 fortran
 fp
+frontend
+frontends
 ftplugin
 ftplugins
 fudd
@@ -74,6 +78,7 @@ ident
 init
 iwd
 jitter
+js
 journalctl
 jumplist
 jumplists
@@ -110,10 +115,12 @@ nvim
 ocaml
 olde
 pacman
+performant
 perl
 pipenv
 pipfile
 pipx
+popup
 preinstall
 printf
 pullable
@@ -123,12 +130,15 @@ python
 rebase
 repo
 repos
+repo's
 req
 reqs
 rgb
 rm
+runtime
 rustc
 rustup
+sbt
 scala
 scalac
 scheller
@@ -141,6 +151,8 @@ statuslines
 stdin
 stderr
 stdout
+struct
+structs
 su
 sublicense
 submodule
@@ -169,9 +181,13 @@ typeclasses
 unicode
 unlicense
 usr
+utf
 virtualenv
 waybar
 wayland
+webapp
+webapps
+repos
 webmail
 webtools
 whitespace
@@ -185,6 +201,7 @@ CHANGELOG
 CLI
 CUDA
 CUI
+DOM
 ECMA
 GDM
 GIT's
@@ -220,8 +237,4 @@ TensorFlow
 TLDR
 TODO
 USHealth
-UTF
-UTF-8
-UTF-16
-UTF-32
 XDG
