@@ -75,6 +75,7 @@ http
 https
 i3
 ident
+implicits
 init
 iwd
 jitter
@@ -230,6 +231,7 @@ Scala3
 Setuptools
 SSC
 Stackage
+TASTy
 TCP
 Tcl
 Tk
