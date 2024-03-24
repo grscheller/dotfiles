@@ -23,9 +23,12 @@ cmd
 cmds
 cmp
 commandline
+computable
 conf
 config
 configs
+coprime
+coprimed
 csh
 css
 ctrl
@@ -39,12 +42,13 @@ df
 dhcpcd
 dotfile
 dotfiles
-dotstring
-dotstrings
+docstring
+docstrings
 egrep
 emacs
 encodings
 env
+executables
 fgrep
 file1
 file2
@@ -68,6 +72,7 @@ frontends
 ftplugin
 ftplugins
 fudd
+gcd
 ghc
 github
 gitignore
@@ -100,6 +105,7 @@ keymapping
 keymappings
 keymaps
 ksh
+lcm
 libre
 linter
 linters
@@ -236,10 +242,12 @@ Hoogle
 IP
 IPv4
 IPv6
+JIT
 LTS
 LVHN
 POSIX
 PyPI
+PyPy
 Python2
 Python3
 PyTorch
@@ -266,6 +274,9 @@ TODO
 USHealth
 XDG
 # grscheller ~/devel names
+ackermann
+Ackermann
+Ackermann's
 FIFOQueue
 FIFOQueues
 FStack
