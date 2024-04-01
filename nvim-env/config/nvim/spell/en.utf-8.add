@@ -318,6 +318,8 @@ subclassed
 subclasses
 subclassing
 sublicense
+subdirectory
+subdirectories
 submodule
 submodules
 subproject
@@ -451,6 +453,9 @@ XDG
 Xsession
 # grscheller ~/devel names
 ackermann
+dn
+gitup
+ud
 Ackermann
 Ackermann's
 FIFOQueue

@@ -29,6 +29,7 @@ dot_config_files='
    functions/disable_touch_pad.fish
    functions/enable_touch_pad.fish
    functions/ev.fish
+   functions/gitup.fish
    functions/fdot.fish
    functions/ff.fish
    functions/fields.fish
