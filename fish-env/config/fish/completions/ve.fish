@@ -14,3 +14,6 @@ complete -c ve \
 complete -c ve \
   -n 'not __fish_seen_subcommand_from jupyter_learn' \
   -a 'jupyter_learn'
+complete -c ve \
+  -n 'not __fish_seen_subcommand_from py4ai' \
+  -a 'py4ai'

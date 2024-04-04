@@ -23,12 +23,10 @@ function ve --description 'Switch Python Virtual environments'
    if test (count $veName) -ge 1
       set veName $veName[1]
       switch $veName
-      case grs devel neovim pypy
+      case grs devel jupyter_learn neovim pypy py4ai
          :
       case 'pypi*'
          set veName pypi3_12_1
-      case jupyter_learn
-         :
       case '*'
          set fmt 'Warning: Untracked Python virtual environment: %s\n'
          printf $fmt $argv[1] >&2
