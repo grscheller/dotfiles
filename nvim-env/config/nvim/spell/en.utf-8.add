@@ -430,6 +430,7 @@ C11
 C17
 C18
 C23
+CDL
 CGA
 CHANGELOG
 CLI
@@ -464,6 +465,7 @@ Makefile
 MSYS2
 Nix
 NTFS
+OOP
 PHP
 PKGBUILD
 POSIX
@@ -487,6 +489,7 @@ SDKMAN!
 Setuptools
 SGID
 SSC
+Smalltalk
 Stackage
 SUID
 TASTy
