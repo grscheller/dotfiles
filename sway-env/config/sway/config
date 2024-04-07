@@ -45,7 +45,7 @@ input "type:keyboard" {
 #  - Sway containers are organized in tree structures
 #  - Containers either contain other containers or a single application window
 #  - By "window" one usually means a container displaying a single app (leaf)
-#  - Sway "popups" are not displated in containers, but are something else
+#  - Sway "popups" are not displayed in containers, but are something else
 #
 # Basics:
 #
@@ -218,6 +218,6 @@ bar swaybar_command waybar
 #
 for_window [class="Tk"] floating enable
 
-### OS distibution environment tweaks
+### OS distribution environment tweaks
 #
 include /etc/sway/config.d/*

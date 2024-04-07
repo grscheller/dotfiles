@@ -196,7 +196,7 @@ live_config_reload: true
 # Use directory of parent process for shell
 working_directory: None
 
-# Offer IPC using `alacritty msg` (unix only)
+# Offer IPC using `alacritty msg` (Unix only)
 ipc_socket: true
 
 mouse:
@@ -204,8 +204,8 @@ mouse:
 
 # Hints
 #
-# Terminal hints can be used to find text or hyperlink in the visible part of
-# the terminal and pipe it to other applications.
+# Terminal hints can be used to find text or hyperlink in the
+# visible part of the terminal and pipe it to other applications.
 hints:
   # Keys used for the hint labels.
   alphabet: "jfkdls;ahgurieowpq"

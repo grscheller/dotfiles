@@ -1,5 +1,5 @@
 [Unit]
-Description=Dynamic output configuration for wlroot compositors
+Description=Dynamic output configuration for wlroots compositors
 Documentation=https://sr.ht/~emersion/kanshi/
 BindsTo=sway-session.target
 
