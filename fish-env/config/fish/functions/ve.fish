@@ -6,7 +6,8 @@ function ve --description 'Instantiate or configure a Python virtual env'
    end
    test -d "$PYTHON_GRS_ENVS" || mkdir -p "$PYTHON_GRS_ENVS"
 
-   function usage_ve
+   # DRY utility function: fish functions have global scope - will need removing
+   function _usage_ve
       printf 'Usage: ve\n'
       printf '       ve <virtenv>\n'
       printf '       ve [-c | --clear]\n'
@@ -19,8 +20,8 @@ function ve --description 'Instantiate or configure a Python virtual env'
    set arg1 $argv[1]
 
    if test $argc -gt 1 || test "$arg1" = "-h" || test "$arg1" = "--help"
-      usage_ve
-      functions -e usage_ve
+      _usage_ve
+      functions -e _usage_ve
       return 1
    end
 
@@ -29,6 +30,8 @@ function ve --description 'Instantiate or configure a Python virtual env'
       type -q deactivate && deactivate
       set fmt 'No Python venv in use, using python version: %s\n\n'
       printf $fmt (python --version)
+      set -ge PYTHON_GRS_ENV
+      functions -e _usage_ve
       return 0
    end
 
@@ -56,9 +59,9 @@ function ve --description 'Instantiate or configure a Python virtual env'
          set pythonVersion '3.12.2'
       case '*'
          if string match -q -r -- '-.*' $arg1
-            printf 'Error: invalid argument\n'
-            usage_ve
-            functions -e usage_ve
+            printf 'Error: invalid argument or option\n'
+            _usage_ve
+            functions -e _usage_ve
             return 1
          end
          set fmt 'Warning: Untracked Python virtual environment: %s\n'
@@ -70,13 +73,14 @@ function ve --description 'Instantiate or configure a Python virtual env'
       if not test -e "$python_env/bin/activate.fish"
          set fmt 'Info: No venv "%s" found in $PYTHON_GRS_ENVS: %s\n\n'
          printf $fmt $veName $PYTHON_GRS_ENVS
-         functions -e usage_ve
+         functions -e _usage_ve
          return 1
       end
 
       # Activate Python virtual environment
       set -gx PYTHON_GRS_ENV $python_env
       source $PYTHON_GRS_ENV/bin/activate.fish
+      functions -e _usage_ve
       return 0
    end
 
@@ -86,7 +90,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
    if not set -q PYTHON_GRS_ENV
       printf 'Not in a ve managed Python virtual environment.\n'
       printf 'Possibly venv manually invoked?\n\n'
-      functions -e usage_ve
+      functions -e _usage_ve
       return 1
    else if not test -e "$PYTHON_GRS_ENV/bin/python"
       printf 'No python executable found in the "%s" venv.\n' $PYTHON_GRS_ENV
@@ -95,7 +99,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
    else
       set fmt 'Python executable not on $PATH, yet $PYTHON_GRS_ENV = %s\n'
       printf $fmt $PYTHON_GRS_ENV
-      functions -e usage_ve
+      functions -e _usage_ve
       return 1
    end
 
@@ -106,9 +110,9 @@ function ve --description 'Instantiate or configure a Python virtual env'
       set pypyVer pyVers[2]
       set veName (string replace -r '^.*/' '' $PYTHON_GRS_ENV)
    else
-      set fmt 'First python found on $PATH, %s,/nis not %s./n/n'
+      set fmt 'First python found on $PATH, %s,\nis not %s.\n\n'
       printf $fmt $pythonPath $PythonVe
-      functions -e usage_ve
+      functions -e _usage_ve
       return 1
    end
 
@@ -119,7 +123,6 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
    if set -q optRedo
       printf 'option '-r' given\n'
-
    end
          
 end
