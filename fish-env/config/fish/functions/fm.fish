@@ -11,8 +11,8 @@ function fm --description 'Launch desktop\'s file manager app'
     end
 
     set -l DiR $argv[1]
-    test -z $DiR; and set DiR $PWD
-    if test -d $DiR
+    test -z "$DiR"; and set DiR $PWD
+    if test -d "$DiR"
         $open_cmd $DiR 2>/dev/null &
     else
         printf 'Error: "%s" is not a directory\n' $DiR

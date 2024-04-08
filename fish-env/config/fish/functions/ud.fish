@@ -27,7 +27,7 @@ function ud --description 'Jump up multiple directories, default is 1'
    end
 
    set -f cnt 1
-   if test -z $target
+   if test -z "$target"
       # Setup number of directories to jump if no target given
       while test $cnt -lt $nDirs
          set upDir ../$upDir
@@ -36,7 +36,7 @@ function ud --description 'Jump up multiple directories, default is 1'
    else
       # First look for exact match.
       while test $cnt -le $nDirs
-         test -e $upDir/$target && break
+         test -e "$upDir/$target" && break
          set upDir ../$upDir
          set cnt (math $cnt + 1)
       end
@@ -60,10 +60,10 @@ function ud --description 'Jump up multiple directories, default is 1'
 
    set -f destination
    set -f targetDest $upDir/$target
-   if test ! -e $targetDest
+   if test ! -e "$targetDest"
       printf 'ud: "%s" not found in any higher directory\n' $target >&2
       return 1
-   else if test -d $targetDest
+   else if test -d "$targetDest"
       set destination $targetDest
    else
       set destination (dirname $targetDest)

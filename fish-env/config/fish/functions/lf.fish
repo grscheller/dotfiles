@@ -5,15 +5,15 @@ function lf --description 'Hierarchically list just files'
 
    # Arguments which do not exist in the file system are ignored.
    for arg in $argv
-      if test -e $arg
+      if test -e "$arg"
          set -a targets $arg
       end
    end
 
    # By "files" we mean anything that is not a directory.
    for target in {$targets}**
-      test -d $target
-      or echo $target
+      test -d "$target"
+      or printf '%s\n' $target
    end | sort | uniq
 
 end

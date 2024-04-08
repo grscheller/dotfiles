@@ -30,7 +30,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
     set -f javaHome /usr/lib/jvm/java-$jdkVersion[1]-openjdk
 
     # Bail if Java version is not installed
-    if not test -d $javaHome
+    if not test -d "$javaHome"
         printf '\nNo JDK found for Java version %s in the\n' $jdkVersion >&2
         printf 'standard location on Arch Linux: /usr/lib/jvm\n' >&2
         return 1

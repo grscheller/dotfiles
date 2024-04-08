@@ -76,7 +76,7 @@ function digpath --description 'Look for files on $PATH'
       if [ $arg = -p ] || [ $arg = --path ]
          set Toggle Path
       else
-         test -n $arg
+         test -n "$arg"
          and set -a $Toggle $arg
       end
    end
@@ -98,7 +98,7 @@ function digpath --description 'Look for files on $PATH'
    # Ignore non-existent directories
    set -f Dirs
    for Dir in $Path
-      test -d $Dir
+      test -d "$Dir"
       and set -a Dirs $Dir
    end
 
@@ -106,7 +106,7 @@ function digpath --description 'Look for files on $PATH'
    set -f Found
    eval set -l Targets (path normalize $Dirs/$Files)
    for Target in $Targets
-      test -e $Target -o -L $Target
+      test -e "$Target" -o -L "$Target"
       and begin
          test -z "$_flag_executable" -o -x "$Target"
          and set -a Found $Target
@@ -118,7 +118,7 @@ function digpath --description 'Look for files on $PATH'
    if test (count $Found) -gt 0
       if not set -q _flag_quiet
          for item in $Found
-            if test -d $item
+            if test -d "$item"
                printf %s/\n $item
             else
                printf %s\n $item

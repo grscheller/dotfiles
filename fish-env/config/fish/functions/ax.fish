@@ -2,10 +2,10 @@ function ax --description 'Archive eXtractor: usage: ax <file>'
 
    set -f exFile $argv[1]
 
-   if test -z (string trim $exFile)
+   if test -z (string trim "$exFile")
       printf '\nError: no argument given\n'
       return 1
-   else if test ! -f $exFile
+   else if test ! -f "$exFile"
       printf '\nError: \'%s\' is not a file\n' $exFile[1]
       return 1
    end

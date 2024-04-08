@@ -7,8 +7,8 @@ function fdot --description 'Find dotfiles in non-hidden directories'
   end
 
   for dotfile in $dotfiles
-      test -f $dotfile
-      and echo $dotfile
+      test -f "$dotfile"
+      and printf '%s\n' $dotfile
   end | sort | uniq
 
 end

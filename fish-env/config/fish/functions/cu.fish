@@ -3,7 +3,7 @@ function cu --description 'change to user with bash shell'
    set -f user $argv[1]
 
    # default to root if no user given
-   test -z $user
+   test -z "$user"
    and set user root
    
    if /usr/bin/id $user >/dev/null 2>&1

@@ -4,31 +4,36 @@ function ve --description 'Instantiate or configure a Python virtual env'
    if not set -q PYTHON_GRS_ENVS
       set -g PYTHON_GRS_ENVS ~/devel/python_envs/
    end
-   test -d $PYTHON_GRS_ENVS || mkdir -p $PYTHON_GRS_ENVS
+   test -d "$PYTHON_GRS_ENVS" || mkdir -p "$PYTHON_GRS_ENVS"
+
+   function usage_ve
+      printf 'Usage: ve\n'
+      printf '       ve <virtenv>\n'
+      printf '       ve [-c | --clear]\n'
+      printf '       ve [-r | --redo]\n'
+      printf '       ve [-h | --help]\n\n'
+   end
 
    # Parse commandline
    set argc (count $argv)
    set arg1 $argv[1]
 
-   if test $argc -gt 1 -o $arg1 = '-h' -o $arg1 = '--help'
-      printf 'Error: invalid arguments\n\n'
-      printf 'Usage: ve [veName]\n'
-      printf '       ve [-c | --clear]\n'
-      printf '       ve [-r | --redo]\n'
-      printf '       ve [-h | --help]\n\n'
+   if test $argc -gt 1 || test "$arg1" = "-h" || test "$arg1" = "--help"
+      usage_ve
+      functions -e usage_ve
       return 1
    end
 
    if test $argc -eq 0
       # deactivate current virtual env if we are in one
       type -q deactivate && deactivate
-      set fmt 'No Python venv in use, using python version %s\n'
+      set fmt 'No Python venv in use, using python version: %s\n\n'
       printf $fmt (python --version)
       return 0
    end
 
    set -e optRedo optClear
-   switch $argv[1]
+   switch $arg1
       case -c --clear 
          set optClear
       case -r --redo
@@ -44,21 +49,28 @@ function ve --description 'Instantiate or configure a Python virtual env'
    else
       switch $veName
       case grs devel jupyter_learn neovim pypy py4ai
-         set python_env $PYTHON_GRS_ENVS/$veName
+         set python_env $PYTHON_GRS_ENVS/$veName[1]
          set pythonVersion '3.11.8'             # current arch system python
       case devNext pypi3_12_1                                        # tests
-         set python_env $PYTHON_GRS_ENVS/$veName
+         set python_env $PYTHON_GRS_ENVS/$veName[1]
          set pythonVersion '3.12.2'
       case '*'
+         if string match -q -r -- '-.*' $arg1
+            printf 'Error: invalid argument\n'
+            usage_ve
+            functions -e usage_ve
+            return 1
+         end
          set fmt 'Warning: Untracked Python virtual environment: %s\n'
-         printf $fmt $argv[1] >&2
+         printf $fmt $argv[1]
          set python_env $PYTHON_GRS_ENVS/$veName
       end
 
       # Check if virtual env actually exists
-      if test -n $veName && not test -e $python_env/bin/activate.fish
-         set fmt 'Info: No venv "%s" found in $PYTHON_GRS_ENVS: %s\n'
-         printf $fmt $veName $PYTHON_GRS_ENVS >&2
+      if not test -e "$python_env/bin/activate.fish"
+         set fmt 'Info: No venv "%s" found in $PYTHON_GRS_ENVS: %s\n\n'
+         printf $fmt $veName $PYTHON_GRS_ENVS
+         functions -e usage_ve
          return 1
       end
 
@@ -70,44 +82,44 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
    ## Manage the current virtual environment
 
-   # Sanity checks
+   # Sanity/consistency checks
    if not set -q PYTHON_GRS_ENV
       printf 'Not in a ve managed Python virtual environment.\n'
+      printf 'Possibly venv manually invoked?\n\n'
+      functions -e usage_ve
       return 1
-   end
-
-   if digpath -q python
+   else if not test -e "$PYTHON_GRS_ENV/bin/python"
+      printf 'No python executable found in the "%s" venv.\n' $PYTHON_GRS_ENV
+   else if digpath -q python
       set pyVers (string split -f 2 ' ' (python --version))
    else
-      set msg 'Python executable not found, yet $PYTHON_GRS_ENV = %s\n'
-      printf $msg $PYTHON_GRS_ENV
+      set fmt 'Python executable not on $PATH, yet $PYTHON_GRS_ENV = %s\n'
+      printf $fmt $PYTHON_GRS_ENV
+      functions -e usage_ve
       return 1
    end
 
    set pythonPath (which python)
    set pythonVe $PYTHON_GRS_ENV/bin/python
-   if test $pythonPath = $pythonVe
+   if test "$pythonPath" = "$pythonVe"
       set pythonVer pyVers[1]
       set pypyVer pyVers[2]
       set veName (string replace -r '^.*/' '' $PYTHON_GRS_ENV)
    else
-      set msg 'Python found on $PATH, %s, is not %s./n'
-      printf $msg $pythonPath $PythonVe
+      set fmt 'First python found on $PATH, %s,/nis not %s./n/n'
+      printf $fmt $pythonPath $PythonVe
+      functions -e usage_ve
       return 1
    end
 
-   # Consistency checks
+   # Perform option actions
+   if set -q optClear
+      printf 'option '-c' given\n'
+   end
 
-   # Parse commandline arguments
-   set opt $argv[1]
-   switch $opt
-      case -c --clear
-         printf 'option %s given\n' $opt
-      case -r --redo
-         printf 'option %s given\n' $opt
-      case '*'
-         printf 'Unknown option: %s\n' $opt
-         return 1
+   if set -q optRedo
+      printf 'option '-r' given\n'
+
    end
          
 end

@@ -43,9 +43,9 @@ function pathtrim --description 'Canonicalize $PATH'
     set -f Dirs ()
     for Dir in $Path
         if string match -q -v '/*' $Dir
-            set -a Dirs $Dir
-        else if test -d $Dir
-            set -a Dirs ($READLINK -e $Dir)
+            set -a Dirs "$Dir"
+        else if test -d "$Dir"
+            set -a Dirs ($READLINK -e "$Dir")
         end
     end
 
@@ -55,12 +55,12 @@ function pathtrim --description 'Canonicalize $PATH'
     for Dir in $Dirs
         set -l Found no
         for DirFound in $Path
-            test $Dir = $DirFound
+            test "$Dir" = "$DirFound"
             and set Found yes
             and break
         end
-        test $Found = no
-        and set -a Path $Dir
+        test "$Found" = no
+        and set -a Path "$Dir"
     end
 
     # Print cleaned up path to stdout

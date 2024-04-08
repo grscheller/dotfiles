@@ -5,7 +5,7 @@ function ff --description 'Launch Firefox web browser'
    else
       # Maybe we are on iMac
       set -l ff_exe /Applications/Firefox.app/Contents/MacOS/firefox 
-      if test -x $ff_exe
+      if test -x "$ff_exe"
          $ff_exe $argv >/dev/null 2>&1 &
          disown
       else

@@ -17,7 +17,7 @@ function vinst --description 'install/upgrade python packages'
       return 1
    end
 
-   test -f $VIRTUAL_ENV/bin/activate
+   test -f "$VIRTUAL_ENV/bin/activate"
    or begin
       set msg 'does not point to a valid Python virtual environment'
       printf 'Punting: %s %s' $VIRTUAL_ENV[1] $msg >&2
