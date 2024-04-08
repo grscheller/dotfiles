@@ -71,6 +71,7 @@ cmds
 cmp
 codepoint
 COLORTERM
+combinatorics
 commandline
 computable
 concat
@@ -691,6 +692,8 @@ PArrays
 pypi
 ud
 ve
+virtenv
+virtenvs
 # Python typing names
 abc
 argtype

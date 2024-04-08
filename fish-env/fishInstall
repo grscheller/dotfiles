@@ -52,7 +52,6 @@ dot_config_files='
    functions/pypi.fish
    functions/rc.fish
    functions/ve.fish
-   functions/vinst.fish
    functions/Wget.fish
    functions/WgetM.fish
    functions/b2b.fish
@@ -76,7 +75,7 @@ dot_config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/gitup.fish
+   $XDG_CONFIG_HOME/fish/functions/vinst.fish
 "
 
 dirs_to_create=""
