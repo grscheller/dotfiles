@@ -1,18 +1,15 @@
 #!/usr/bin/sh
 #
-# Trims off duplicate and non-existant directories
-# for colen separated lists of UNIX PATH components.
+# Trims off duplicate and existent directories
+# for colon separated lists of UNIX PATH components.
 #
-# Replace each path component with "canonicalized" version.
-#
-# This facilitates sharing the same dot configuration
-# scripts between diverse POSIX-like environments.
+# Replace each path component with a "canonical" version.
 #
 # Correctly handles directories with whitespace in their
-# names, including \n and \v charavters.
+# names, including \n and \v characters.
 #
 # Will have trouble with directories with : characters
-# contained in their names.  Also linked directories
+# contained in their names. Also linked directories
 # and effectively linked directories like /bin and
 # /usr/bin in MSYS2.
 #
@@ -22,7 +19,7 @@
 #
 # Also see Fish and BASH function versions of pathtrim.
 #
-# Usages: pathtrim /first/path/component:/second/path/coponent:.
+# Usages: pathtrim /first/path/component:/second/path/component:.
 #         PATH="$(pathtrim)"
 #
 if [ $# -eq 0 ]
@@ -32,7 +29,7 @@ else
     Paths="$1"
 fi
 
-## Standarize the $PATH list:
+## Standardize the $PATH list:
 #  - remove redundant / and :
 #  - remove trailing /'s on directory names
 #  - replace /./ -> /
@@ -55,12 +52,12 @@ READLINK=readlink
 which greadlink >/dev/null 2>&1 && READLINK=greadlink
 
 ## Simulate arrays to store actual and relative paths,
-#  drop non-existant absolute paths and duplicates.
+#  drop non-existent absolute paths and duplicates.
 cnt=0
 IFS=':'
 for Path in $Paths
 do
-    # Check if path component exists and is a dirctory
+    # Check if path component exists and is a directory
     # for absolute path components.
     AddPath=yes; nn=0; NewPath=
     case "$Path" in

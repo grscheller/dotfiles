@@ -1,12 +1,39 @@
 function ve --description 'Instantiate or configure a Python virtual env'
 
+   # Python virtual environment configurations
+   set modules_devel \
+      ipython                  \
+      pytest                   \
+      pdoc3                    \
+      flit                     \
+      "python-lsp-server[all]" \
+      jedi-language-server    
+   
+   set modules_grs \
+      ipython                   \
+      fonttools                 \
+      grscheller.circular-array \
+      grscheller.datastructures \
+      grscheller.boring-math    \
+      'python-lsp-server[all]'  \
+      jedi-language-server
+
+   set modules_jupiter_learn \
+      jupyterlab
+
+   set 
+
+   modules_jupiter_learn
+   
+   # Python base environment configuration
+
    # Provide override mechanism to usual virtual env location
    if not set -q PYTHON_GRS_ENVS
       set -g PYTHON_GRS_ENVS ~/devel/python_envs/
    end
    test -d "$PYTHON_GRS_ENVS" || mkdir -p "$PYTHON_GRS_ENVS"
 
-   # DRY utility function: fish functions have global scope - will need removing
+   # usage function: fish functions have global scope - will need removing
    function _usage_ve
       printf 'Usage: ve\n'
       printf '       ve <virtenv>\n'
@@ -15,17 +42,31 @@ function ve --description 'Instantiate or configure a Python virtual env'
       printf '       ve [-h | --help]\n\n'
    end
 
-   # Parse commandline
-   set argc (count $argv)
-   set arg1 $argv[1]
+   # Parse cmdline options
+   argparse -n 've' c/clear r/redo h/help -- $argv
 
-   if test $argc -gt 1 || test "$arg1" = "-h" || test "$arg1" = "--help"
+   # if user gave a help option, show usage and quit
+   if set -q _flag_help
       _usage_ve
       functions -e _usage_ve
       return 1
    end
 
-   if test $argc -eq 0
+   # what is left after option parsing
+   set argc (count $argv)
+   set arg1 $argv[1]
+
+   if set -q _flag_clear || set -q _flag_redo
+      set flag_given
+      if test $argc -gt 0
+         printf 've: invalid argument/option combination\n'
+         _usage_ve
+         functions -e _usage_ve
+         return 1
+      end
+   end
+
+   if test $argc -eq 0 && not set -q flag_given
       # deactivate current virtual env if we are in one
       type -q deactivate && deactivate
       set fmt 'No Python venv in use, using python version: %s\n\n'
@@ -35,41 +76,29 @@ function ve --description 'Instantiate or configure a Python virtual env'
       return 0
    end
 
-   set -e optRedo optClear
-   switch $arg1
-      case -c --clear 
-         set optClear
-      case -r --redo
-         set optRedo
-      case '*'
-         set veName $arg1
-   end
+   if not set -q flag_given && test $argc -gt 1
+      printf 've: invalid argument/option combination\n'
+      _usage_ve
+      functions -e _usage_ve
+      return 1
+   else if not set -q flag_given
+      set veName $arg1
 
-   # Semantic parsing - edit here for new managed environments
-   set -e pythonVersion python_env
-   if set -q optClear || set -q optRedo
-      :
-   else
+      # Semantic parsing - edit here for new managed environments
       switch $veName
       case grs devel jupyter_learn neovim pypy py4ai
-         set python_env $PYTHON_GRS_ENVS/$veName[1]
+         set python_env $PYTHON_GRS_ENVS/$veName
          set pythonVersion '3.11.8'             # current arch system python
       case devNext pypi3_12_1                                        # tests
          set python_env $PYTHON_GRS_ENVS/$veName[1]
          set pythonVersion '3.12.2'
       case '*'
-         if string match -q -r -- '-.*' $arg1
-            printf 'Error: invalid argument or option\n'
-            _usage_ve
-            functions -e _usage_ve
-            return 1
-         end
-         set fmt 'Warning: Untracked Python virtual environment: %s\n'
+         set fmt 've: Untracked Python virtual environment: %s\n'
          printf $fmt $argv[1]
          set python_env $PYTHON_GRS_ENVS/$veName
       end
 
-      # Check if virtual env actually exists
+      # Check if virtual env exists in the canonical location
       if not test -e "$python_env/bin/activate.fish"
          set fmt 'Info: No venv "%s" found in $PYTHON_GRS_ENVS: %s\n\n'
          printf $fmt $veName $PYTHON_GRS_ENVS
@@ -84,7 +113,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
       return 0
    end
 
-   ## Manage the current virtual environment
+   # Manage the current virtual environment
 
    # Sanity/consistency checks
    if not set -q PYTHON_GRS_ENV
@@ -93,7 +122,8 @@ function ve --description 'Instantiate or configure a Python virtual env'
       functions -e _usage_ve
       return 1
    else if not test -e "$PYTHON_GRS_ENV/bin/python"
-      printf 'No python executable found in the "%s" venv.\n' $PYTHON_GRS_ENV
+      set fmt 'No python executable found in the "%s" venv.\n'
+      printf $fmt $PYTHON_GRS_ENV
    else if digpath -q python
       set pyVers (string split -f 2 ' ' (python --version))
    else
@@ -117,12 +147,19 @@ function ve --description 'Instantiate or configure a Python virtual env'
    end
 
    # Perform option actions
-   if set -q optClear
+   if set -q _flag_clear
       printf 'option '-c' given\n'
+# p3_11clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'
+# p3_12clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")'
    end
 
-   if set -q optRedo
+   if set -q _flag_redo
       printf 'option '-r' given\n'
+# vdredo 'pip install --upgrade ipython pytest pdoc3 flit "python-lsp-server[all]" jedi-language-server'
+# vgredo 'pip install --upgrade ipython fonttools grscheller.circular-array grscheller.datastructures grscheller.boring-math "python-lsp-server[all]" jedi-language-server'
+# vjredo 'pip install --upgrade jupyterlab'
+# vnredo 'pip install --upgrade neovim pynvim mypy ruff black'
+# vpredo 'pip install --upgrade ipython pytest'
    end
          
 end

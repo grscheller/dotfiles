@@ -27,14 +27,6 @@ abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/sway-env/swayInstall'
 
 # Python virtual environment for system python
-abbr -a -- p3_11clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'
-abbr -a -- p3_12clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")'
-abbr -a -- pypyclr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools|cffi|greenlet|hpy|readline|wheel)")'
-abbr -a -- vdredo 'pip install --upgrade ipython pytest pdoc3 flit "python-lsp-server[all]" jedi-language-server'
-abbr -a -- vgredo 'pip install --upgrade ipython fonttools grscheller.circular-array grscheller.datastructures grscheller.boring-math "python-lsp-server[all]" jedi-language-server'
-abbr -a -- vjredo 'pip install --upgrade jupyterlab'
-abbr -a -- vnredo 'pip install --upgrade neovim pynvim mypy ruff black'
-abbr -a -- vpredo 'pip install --upgrade ipython pytest'
 abbr -a pl pip list|cat
 abbr -a -- ipy ipython --TerminalInteractiveShell.editing_mode=vi
 

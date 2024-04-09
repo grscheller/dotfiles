@@ -82,6 +82,7 @@ contravariant
 coprime
 coprimed
 copyrightable
+coreutils
 coroutine
 covariant
 cpp
@@ -162,6 +163,7 @@ file4
 file5
 file6
 filename
+filenames
 filesysystem
 filesysystems
 filetype
@@ -456,6 +458,8 @@ quux
 qux
 radian
 radians
+readlink
+readpath
 README
 README's
 RE's
@@ -686,9 +690,10 @@ IPython
 LIFOQueue
 LIFOQueues
 nohole
-py4ai
 PArray
 PArrays
+pathtrim
+py4ai
 pypi
 ud
 ve
