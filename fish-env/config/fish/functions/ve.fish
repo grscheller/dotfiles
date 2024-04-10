@@ -4,14 +4,14 @@ function ve --description 'Instantiate or configure a Python virtual env'
    if not set -q PYTHON_GRS_VENVS
       set -gx PYTHON_GRS_VENVS ~/devel/python_venvs/
    end
-   set venvs_conf $PYTHON_GRS_VENVS/venvs.conf
+   set ve_conf $PYTHON_GRS_VENVS/ve.conf
 
    ## Read in the venv configuration file
-   if test -f $venvs_conf
-      source $venvs_conf
+   if test -f $ve_conf
+      source $ve_conf
    else
       set fmt 'Virtual environment config file: %s,\nwas not found.'
-      printf $fmt $venvs_conf
+      printf $fmt $ve_conf
       return 1
    end
 
@@ -76,7 +76,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
       # See if $veName is one of our manage versions of Python
       set -e managed
-      for ve in $vert_venvs
+      for ve in $virtual_envs
          if test "$ve" = "$veName"
             set managed
             break
@@ -155,7 +155,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
    # See if $veName is one of our manage versions of Python
    set -e managed
-   for ve in $vert_venvs
+   for ve in $virtual_envs
       if test "$ve" = "$veName"
          set managed
          break
