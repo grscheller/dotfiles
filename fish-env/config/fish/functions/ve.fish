@@ -1,39 +1,49 @@
 function ve --description 'Instantiate or configure a Python virtual env'
 
-   # Python virtual environment configurations
-   set modules_devel \
-      ipython                  \
-      pytest                   \
-      pdoc3                    \
-      flit                     \
-      "python-lsp-server[all]" \
-      jedi-language-server    
-   
-   set modules_grs \
-      ipython                   \
-      fonttools                 \
-      grscheller.circular-array \
-      grscheller.datastructures \
-      grscheller.boring-math    \
-      'python-lsp-server[all]'  \
-      jedi-language-server
-
-   set modules_jupiter_learn \
-      jupyterlab
-
-   set 
-
-   modules_jupiter_learn
-   
-   # Python base environment configuration
-
-   # Provide override mechanism to usual virtual env location
+   ## Provide an override mechanism to usual virtual env location
    if not set -q PYTHON_GRS_ENVS
       set -g PYTHON_GRS_ENVS ~/devel/python_envs/
    end
    test -d "$PYTHON_GRS_ENVS" || mkdir -p "$PYTHON_GRS_ENVS"
 
-   # usage function: fish functions have global scope - will need removing
+   ## Configuration (TODO: source this from $PYTHON_GRS_ENVS location)
+
+   # Python virtual env names
+   set vert_envs devel devNext grs jupyter_learn py4ai neovim
+
+   # Python versions for each virtual environment
+   set ver_devel 3.11.8
+   set ver_devNext 3.12.2
+   set ver_grs 3.11.8
+   set ver_jupyter_learn 3.11.8
+   set ver_py4a1 3.11.8
+   set ver_neovim 3.11.8
+
+   # Python virtual environment modules
+   set mods_devel ipython pytest pdoc3 flit \
+      jedi-language-server "python-lsp-server[all]"
+
+   set mods_devNext ipython pytest \
+      jedi-language-server "python-lsp-server[all]"
+
+   set mods_grs ipython fonttools \
+      grscheller.circular-array \
+      grscheller.datastructures \
+      grscheller.boring-math \
+      jedi-language-server 'python-lsp-server[all]'
+
+   set mods_jupiter_learn jupyterlab
+
+   set mods_py4ai ipython pytest \
+      matplotlib \
+      jedi-language-server 'python-lsp-server[all]'
+
+   # Not sure what should go here verses the virtenv of the code
+   set mods_neovim neovim pynvim mypy ruff black
+
+   ## Usage function
+   #    note: Fish functions have global scope and will
+   #          need to be erased before the ve function ends.
    function _usage_ve
       printf 'Usage: ve\n'
       printf '       ve <virtenv>\n'
@@ -42,8 +52,14 @@ function ve --description 'Instantiate or configure a Python virtual env'
       printf '       ve [-h | --help]\n\n'
    end
 
-   # Parse cmdline options
+   ## Parse cmdline options
    argparse -n 've' c/clear r/redo h/help -- $argv
+   or begin
+      _usage_ve
+      functions -e _usage_ve
+      return 1
+   end
+
 
    # if user gave a help option, show usage and quit
    if set -q _flag_help
@@ -52,7 +68,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
       return 1
    end
 
-   # what is left after option parsing
+   ## 
    set argc (count $argv)
    set arg1 $argv[1]
 
@@ -84,19 +100,27 @@ function ve --description 'Instantiate or configure a Python virtual env'
    else if not set -q flag_given
       set veName $arg1
 
-      # Semantic parsing - edit here for new managed environments
-      switch $veName
-      case grs devel jupyter_learn neovim pypy py4ai
-         set python_env $PYTHON_GRS_ENVS/$veName
-         set pythonVersion '3.11.8'             # current arch system python
-      case devNext pypi3_12_1                                        # tests
-         set python_env $PYTHON_GRS_ENVS/$veName[1]
-         set pythonVersion '3.12.2'
-      case '*'
-         set fmt 've: Untracked Python virtual environment: %s\n'
-         printf $fmt $argv[1]
-         set python_env $PYTHON_GRS_ENVS/$veName
+      # See if $veName is one of our manage versions of Python
+      set -e managed
+      for ve in $vert_envs
+         if test "$ve" = "$veName"
+            set managed
+            break
+         end
       end
+
+      # Give user option to punt if not a manage environment
+      if not set -q managed
+         set fmt 'virtual env: %s is not one of our managed ones\n'
+         printf $fmt $veName
+         read --nchars 1 --prompt-str 'Proceed [Y or N]? ' ans
+         if test $ans != Y
+            functions -e _usage_ve
+            return 1
+         end
+      end
+
+      set python_env $PYTHON_GRS_ENVS/$veName
 
       # Check if virtual env exists in the canonical location
       if not test -e "$python_env/bin/activate.fish"
@@ -106,16 +130,24 @@ function ve --description 'Instantiate or configure a Python virtual env'
          return 1
       end
 
-      # Activate Python virtual environment
+      ## Activate Python virtual environment and exit
       set -gx PYTHON_GRS_ENV $python_env
       source $PYTHON_GRS_ENV/bin/activate.fish
       functions -e _usage_ve
       return 0
    end
 
-   # Manage the current virtual environment
+   ## Manage the current virtual environment
 
-   # Sanity/consistency checks
+   # Sanity check - if we got here, a valid option was given
+   if not set -q _flag_clear && not set -q _flag_redo
+      set fmt 've: check ve.fish script, neither %s nor %s were set'
+      printf $fmt _flag_clear _flag_redo
+      functions -e _usage_ve
+      return 1
+   end
+   
+   # Make sure $PYTHON_GRS_ENV/bin/python is the python on the $PATH
    if not set -q PYTHON_GRS_ENV
       printf 'Not in a ve managed Python virtual environment.\n'
       printf 'Possibly venv manually invoked?\n\n'
@@ -127,16 +159,17 @@ function ve --description 'Instantiate or configure a Python virtual env'
    else if digpath -q python
       set pyVers (string split -f 2 ' ' (python --version))
    else
-      set fmt 'Python executable not on $PATH, yet $PYTHON_GRS_ENV = %s\n'
+      set fmt 'A python executable was not found on $PATH, yet $PYTHON_GRS_ENV = %s\n'
       printf $fmt $PYTHON_GRS_ENV
       functions -e _usage_ve
       return 1
    end
 
+   # Make sure we are using the correct version of Python
    set pythonPath (which python)
    set pythonVe $PYTHON_GRS_ENV/bin/python
    if test "$pythonPath" = "$pythonVe"
-      set pythonVer pyVers[1]
+      set pythonVersion $pyVers[1]
       set pypyVer pyVers[2]
       set veName (string replace -r '^.*/' '' $PYTHON_GRS_ENV)
    else
@@ -146,20 +179,50 @@ function ve --description 'Instantiate or configure a Python virtual env'
       return 1
    end
 
-   # Perform option actions
+   # See if $veName is one of our manage versions of Python
+   set -e managed
+   for ve in $vert_envs
+      if test "$ve" = "$veName"
+         set managed
+         break
+      end
+   end
+
+   # Give user option to punt if not a manage environment
+   if not set -q managed
+      set fmt 'virtual env: %s is not one of our managed ones\n'
+      printf $fmt $veName
+      read --nchars 1 --prompt-str 'Proceed [Y or N]? ' ans
+      if test $ans != Y
+         functions -e _usage_ve
+         return 1
+      end
+   end
+
+   # See if the venv is the version we expect
+   if set -q managed
+      eval set versionExpected \$ver_$veName
+      if test "$versionExpected" != "$pythonVersion"
+         set fmt 'Python version found: %s\nPython version expected for %s: %s\n'
+         printf $fmt $versionExpected $veName $pythonVersion
+         read --nchars 1 --prompt-str 'Proceed [Y or N]? ' ans
+         if test $ans != Y
+            functions -e _usage_ve
+            return 1
+         end
+      end
+   end
+
+   ## Perform option actions
    if set -q _flag_clear
       printf 'option '-c' given\n'
-# p3_11clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'
-# p3_12clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")'
+   # p3_11clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")'
+   # p3_12clr 'pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")'
    end
 
    if set -q _flag_redo
       printf 'option '-r' given\n'
-# vdredo 'pip install --upgrade ipython pytest pdoc3 flit "python-lsp-server[all]" jedi-language-server'
-# vgredo 'pip install --upgrade ipython fonttools grscheller.circular-array grscheller.datastructures grscheller.boring-math "python-lsp-server[all]" jedi-language-server'
-# vjredo 'pip install --upgrade jupyterlab'
-# vnredo 'pip install --upgrade neovim pynvim mypy ruff black'
-# vpredo 'pip install --upgrade ipython pytest'
+   # vdredo 'pip install --upgrade ipython pytest pdoc3 flit "python-lsp-server[all]" jedi-language-server'
    end
-         
+
 end

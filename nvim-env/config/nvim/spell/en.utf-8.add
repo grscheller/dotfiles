@@ -634,7 +634,11 @@ value4
 value5
 value6
 vDSO
+ve
+venv
 vimdoc
+virtenv
+virtenvs
 virtualenv
 vm
 vscode
@@ -696,9 +700,6 @@ pathtrim
 py4ai
 pypi
 ud
-ve
-virtenv
-virtenvs
 # Python typing names
 abc
 argtype
