@@ -23,11 +23,12 @@ function ve --description 'Instantiate or configure a Python virtual env'
       printf '       ve <virtenv>\n'
       printf '       ve [-c | --clear]\n'
       printf '       ve [-r | --redo]\n'
+      printf '       ve [-l | --list]\n'
       printf '       ve [-h | --help]\n\n'
    end
 
    ## Parse cmdline options
-   argparse -n 've' c/clear r/redo h/help -- $argv
+   argparse -n 've' c/clear r/redo l/list h/help -- $argv
    or begin
       _usage_ve
       functions -e _usage_ve
@@ -38,6 +39,18 @@ function ve --description 'Instantiate or configure a Python virtual env'
    # if user gave a help option, show usage and quit
    if set -q _flag_help
       _usage_ve
+      functions -e _usage_ve
+      return 1
+   end
+
+   # if user gave a help option, show usage and quit
+   if set -q _flag_list
+      set fmt 'venvs in %s:'
+      printf $fmt $PYTHON_GRS_VENVS
+      for ve in $virtual_envs
+         printf ' %s' $ve
+      end
+      printf '\n\n'
       functions -e _usage_ve
       return 1
    end
