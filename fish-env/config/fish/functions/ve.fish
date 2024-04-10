@@ -1,45 +1,19 @@
 function ve --description 'Instantiate or configure a Python virtual env'
 
    ## Provide an override mechanism to usual virtual env location
-   if not set -q PYTHON_GRS_ENVS
-      set -g PYTHON_GRS_ENVS ~/devel/python_envs/
+   if not set -q PYTHON_GRS_VENVS
+      set -gx PYTHON_GRS_VENVS ~/devel/python_venvs/
    end
-   test -d "$PYTHON_GRS_ENVS" || mkdir -p "$PYTHON_GRS_ENVS"
+   set venvs_conf $PYTHON_GRS_VENVS/venvs.conf
 
-   ## Configuration (TODO: source this from $PYTHON_GRS_ENVS location)
-
-   # Python virtual env names
-   set vert_envs devel devNext grs jupyter_learn py4ai neovim
-
-   # Python versions for each virtual environment
-   set ver_devel 3.11.8
-   set ver_devNext 3.12.2
-   set ver_grs 3.11.8
-   set ver_jupyter_learn 3.11.8
-   set ver_py4a1 3.11.8
-   set ver_neovim 3.11.8
-
-   # Python virtual environment modules
-   set mods_devel ipython pytest pdoc3 flit \
-      jedi-language-server "python-lsp-server[all]"
-
-   set mods_devNext ipython pytest \
-      jedi-language-server "python-lsp-server[all]"
-
-   set mods_grs ipython fonttools \
-      grscheller.circular-array \
-      grscheller.datastructures \
-      grscheller.boring-math \
-      jedi-language-server 'python-lsp-server[all]'
-
-   set mods_jupiter_learn jupyterlab
-
-   set mods_py4ai ipython pytest \
-      matplotlib \
-      jedi-language-server 'python-lsp-server[all]'
-
-   # Not sure what should go here verses the virtenv of the code
-   set mods_neovim neovim pynvim mypy ruff black
+   ## Read in the venv configuration file
+   if test -f $venvs_conf
+      source $venvs_conf
+   else
+      set fmt 'Virtual environment config file: %s,\nwas not found.'
+      printf $fmt $venvs_conf
+      return 1
+   end
 
    ## Usage function
    #    note: Fish functions have global scope and will
@@ -87,7 +61,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
       type -q deactivate && deactivate
       set fmt 'No Python venv in use, using python version: %s\n\n'
       printf $fmt (python --version)
-      set -ge PYTHON_GRS_ENV
+      set -ge PYTHON_GRS_VENV
       functions -e _usage_ve
       return 0
    end
@@ -102,7 +76,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
       # See if $veName is one of our manage versions of Python
       set -e managed
-      for ve in $vert_envs
+      for ve in $vert_venvs
          if test "$ve" = "$veName"
             set managed
             break
@@ -120,19 +94,19 @@ function ve --description 'Instantiate or configure a Python virtual env'
          end
       end
 
-      set python_env $PYTHON_GRS_ENVS/$veName
+      set python_venv $PYTHON_GRS_VENVS/$veName
 
       # Check if virtual env exists in the canonical location
-      if not test -e "$python_env/bin/activate.fish"
-         set fmt 'Info: No venv "%s" found in $PYTHON_GRS_ENVS: %s\n\n'
-         printf $fmt $veName $PYTHON_GRS_ENVS
+      if not test -e "$python_venv/bin/activate.fish"
+         set fmt 'Info: No venv "%s" found in $PYTHON_GRS_VENVS: %s\n\n'
+         printf $fmt $veName $PYTHON_GRS_VENVS
          functions -e _usage_ve
          return 1
       end
 
       ## Activate Python virtual environment and exit
-      set -gx PYTHON_GRS_ENV $python_env
-      source $PYTHON_GRS_ENV/bin/activate.fish
+      set -gx PYTHON_GRS_VENV $python_venv
+      source $PYTHON_GRS_VENV/bin/activate.fish
       functions -e _usage_ve
       return 0
    end
@@ -147,31 +121,31 @@ function ve --description 'Instantiate or configure a Python virtual env'
       return 1
    end
    
-   # Make sure $PYTHON_GRS_ENV/bin/python is the python on the $PATH
-   if not set -q PYTHON_GRS_ENV
+   # Make sure $PYTHON_GRS_VENV/bin/python is the python on the $PATH
+   if not set -q PYTHON_GRS_VENV
       printf 'Not in a ve managed Python virtual environment.\n'
       printf 'Possibly venv manually invoked?\n\n'
       functions -e _usage_ve
       return 1
-   else if not test -e "$PYTHON_GRS_ENV/bin/python"
+   else if not test -e "$PYTHON_GRS_VENV/bin/python"
       set fmt 'No python executable found in the "%s" venv.\n'
-      printf $fmt $PYTHON_GRS_ENV
+      printf $fmt $PYTHON_GRS_VENV
    else if digpath -q python
       set pyVers (string split -f 2 ' ' (python --version))
    else
-      set fmt 'A python executable was not found on $PATH, yet $PYTHON_GRS_ENV = %s\n'
-      printf $fmt $PYTHON_GRS_ENV
+      set fmt 'A python executable was not found on $PATH, yet $PYTHON_GRS_VENV = %s\n'
+      printf $fmt $PYTHON_GRS_VENV
       functions -e _usage_ve
       return 1
    end
 
    # Make sure we are using the correct version of Python
    set pythonPath (which python)
-   set pythonVe $PYTHON_GRS_ENV/bin/python
+   set pythonVe $PYTHON_GRS_VENV/bin/python
    if test "$pythonPath" = "$pythonVe"
       set pythonVersion $pyVers[1]
       set pypyVer pyVers[2]
-      set veName (string replace -r '^.*/' '' $PYTHON_GRS_ENV)
+      set veName (string replace -r '^.*/' '' $PYTHON_GRS_VENV)
    else
       set fmt 'First python found on $PATH, %s,\nis not %s.\n\n'
       printf $fmt $pythonPath $PythonVe
@@ -181,7 +155,7 @@ function ve --description 'Instantiate or configure a Python virtual env'
 
    # See if $veName is one of our manage versions of Python
    set -e managed
-   for ve in $vert_envs
+   for ve in $vert_venvs
       if test "$ve" = "$veName"
          set managed
          break

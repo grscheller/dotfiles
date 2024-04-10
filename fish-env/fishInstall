@@ -14,7 +14,7 @@ cd "$envPath" || {
    return 1
 }
 
-dot_config_files='
+config_files='
    completions/alacritty.fish
    completions/pypi.fish
    completions/ve.fish
@@ -75,7 +75,8 @@ dot_config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/vinst.fish
+   $XDG_CONFIG_HOME/fish/functions/ve-conf.fish
+   $XDG_CONFIG_HOME/fish/functions/ve_conf.fish
 "
 
 dirs_to_create=""
@@ -89,7 +90,7 @@ dirs_to_create=""
 ## Install/Check
 
 # Install Fish config files
-install_files "$XDG_CONFIG_HOME/fish" "$dot_config_files" config/fish 0644 "$envPath"
+install_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$envPath"
 chmod 0755 "$XDG_CONFIG_HOME/fish"
 
 # Remove/report no longer needed files and directories

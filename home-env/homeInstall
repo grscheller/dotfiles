@@ -41,6 +41,10 @@ bin_scripts='
    viewJarManifest
 '
 
+ssh_files='
+   config
+'
+
 bloop_files='
    bloop.json
 '
@@ -53,13 +57,14 @@ dot_config_files='
    git/config
    nixpkgs/config.nix
 '
+
+devel_files='
+   python_venvs/ve.conf
+'
+
 remove_items="
    $HOME/.vimrc
 "
-
-ssh_files='
-   config
-'
 
 dirs_to_create="
    $HOME/catch
@@ -97,6 +102,10 @@ chmod 0755 "$HOME/.cabal"
 # Install miscellaneous ~/.config files
 install_files "$HOME/.config" "$dot_config_files" config 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
+
+# Install devel config files
+install_files "$HOME/devel/" "$devel_files" devel 0644 "$envPath"
+chmod 0755 "$HOME/devel"
 
 # Remove/report no longer needed files and directories
 remove_items "$remove_items"

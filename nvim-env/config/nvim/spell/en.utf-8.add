@@ -173,6 +173,7 @@ foldleft
 foldright
 folke
 Folke
+fonttools
 foo
 foofoo
 formatter
@@ -283,6 +284,7 @@ junk3
 junk4
 junk5
 jupyter
+jupyterlab
 Kanagawa
 kanshi
 kbs
@@ -368,6 +370,7 @@ monoids
 monospace
 monospaced
 mpd
+mypy
 neoconf
 msg
 msg0
@@ -636,6 +639,8 @@ value6
 vDSO
 ve
 venv
+ver
+vers
 vimdoc
 virtenv
 virtenvs

@@ -110,8 +110,8 @@ and begin
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
-   set -gx PYTHON_GRS_ENVS ~/devel/python_envs
-   test -d $PYTHON_GRS_ENVS || mkdir -p $PYTHON_GRS_ENVS
+   set -gx PYTHON_GRS_VENVS ~/devel/python_venvs
+   test -d $PYTHON_GRS_VENVS || mkdir -p $PYTHON_GRS_VENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
 
    # For non-Systemd systems
@@ -128,7 +128,7 @@ if set -q make_phoney_hostnamectl
 end
 
 # Python pyenv function configuration
-if test -e $PYENV_ROOT/bin/pyenv
+if test -x $PYENV_ROOT/bin/pyenv
    fish_add_path -gpP $PYENV_ROOT/bin
    source (pyenv init - | psub)
 elif digpath -q pyenv
