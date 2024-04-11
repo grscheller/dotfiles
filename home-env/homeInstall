@@ -104,7 +104,7 @@ install_files "$HOME/.config" "$dot_config_files" config 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
 # Install devel config files
-install_files "$HOME/devel/" "$devel_files" devel 0644 "$envPath"
+install_files "$HOME/devel" "$devel_files" devel 0644 "$envPath"
 chmod 0755 "$HOME/devel"
 
 # Remove/report no longer needed files and directories
