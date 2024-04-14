@@ -47,7 +47,7 @@ and begin
    set -e UPDATE_ENV
    set -e REDO_ENV
 
-   ## Configure fish itself
+   ## Configure fish itself, IMHO one of the few legitimate uses for Universals
    set -U fish_features all
 
    # Use cursor shape to indicate vi-mode
@@ -70,30 +70,6 @@ and begin
    # Add ~/bin to end of PATH
    fish_add_path -gpP ~/bin
 
-   # RubyGems
-   #   Neovim syntax:      $ gem install neovim
-   #   Markdown linter:    $ gem install mdl
-   #   Markdown converter: $ gem install kramdown
-   set -l gemDirs ~/.local/share/gem/ruby/*/bin
-   set -l cnt (count $gemDirs)
-   set -l idx
-   switch $cnt
-   case '0'
-   case '1'
-      fish_add_path -gpP $gemDirs
-   case '*'
-      if status is-interactive
-         fish_add_path -gpP $gemDirs[1]
-         printf '\n[fish.config] Warning: Multiple Ruby Gem directories found'
-         for idx in (seq 1 $cnt)
-            printf '\n  %s' $gemDirs[$idx]
-            test $idx -eq 1; and printf '  <- using this one'
-            test $idx -eq $cnt; and printf '\n'
-         end
-      end
-   end
-   set -e gemDirs cnt idx
-
    # Rust toolchain
    fish_add_path -gpP ~/.cargo/bin
 
@@ -110,8 +86,8 @@ and begin
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
-   set -gx PYTHON_GRS_VENVS ~/devel/python_venvs
-   test -d $PYTHON_GRS_VENVS || mkdir -p $PYTHON_GRS_VENVS
+   set -gx PYTHON_VE_VENVS ~/devel/python_venvs
+   test -d $PYTHON_VE_VENVS || mkdir -p $PYTHON_VE_VENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
 
    # For non-Systemd systems

@@ -265,9 +265,11 @@ iterable
 itertools
 iwd
 javascript
+JDK
 jedi
 JIT
 jitter
+JRE
 js
 json
 JSON
@@ -461,11 +463,11 @@ quux
 qux
 radian
 radians
+RE's
 readlink
-readpath
+realpath
 README
 README's
-RE's
 realloc
 reallocarray
 rebase
