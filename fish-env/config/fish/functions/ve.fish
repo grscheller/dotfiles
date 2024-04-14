@@ -44,6 +44,7 @@ function ve --description 'Manage a group of Python virtual environments'
    function isVenvManaged
       set veName $argv[1]
       set venvs $argv[2..-1]
+
       set --global --erase _ve_flag_venv_managed
       for venv in $venvs
          if test "$venv" = "$veName"
@@ -60,8 +61,7 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    # Get cmdline options. If argparse errors out, show usage & quit with error.
-   argparse -n 've' c/clear r/redo l/list h/help -- $argv
-   or begin
+   if not argparse -n 've' c/clear r/redo l/list h/help -- $argv
       usage_ve
       cleanup_ve_cmd
       return 1
@@ -78,17 +78,24 @@ function ve --description 'Manage a group of Python virtual environments'
    if set -q _flag_list
       set_color $fish_color_host
       printf 'Tracked virtual environments:\n'
+
       set_color $fish_color_user
       for ve in $virtual_envs
          printf '%s\n' $ve
       end
+
       set_color $fish_color_host
       printf '\n%s:\n' $PYTHON_VE_VENVS
+
       set_color $fish_color_user
       for item in (ls $PYTHON_VE_VENVS)
-         test -x $PYTHON_VE_VENVS/$item/bin/python && printf '%s\n' $item
+         if test -x $PYTHON_VE_VENVS/$item/bin/python
+            printf '%s\n' $item
+         end
       end
+
       set_color $fish_color_normal
+
       printf '\n'
       cleanup_ve_cmd
       return 0
@@ -102,20 +109,20 @@ function ve --description 'Manage a group of Python virtual environments'
    set argc (count $argv)
 
    # Error out for invalid option/flag combination.
-   if set -q _ve_flags_cr
-      if test $argc -gt 0
-         printf 'Invalid argument/option combination\n'
-         usage_ve
-         cleanup_ve_cmd
-         return 1
-      end
-   else
-      if test $argc -gt 1
-         printf 'Invalid argument/option combination\n'
-         usage_ve
-         cleanup_ve_cmd
-         return 1
-      end
+   if set -q _ve_flags_cr && test $argc -gt 0
+      printf 'Invalid argument/option combination\n'
+      usage_ve
+
+      cleanup_ve_cmd
+      return 1
+   end
+
+   if not set -q _ve_flags_cr && test $argc -gt 1
+      printf 'Invalid argument/option combination\n'
+      usage_ve
+      
+      cleanup_ve_cmd
+      return 1
    end
 
    # Try deactivating any venv if no arguments or options given.
@@ -126,8 +133,10 @@ function ve --description 'Manage a group of Python virtual environments'
       else
          printf 'No Python venv in use.\n'
       end
+
       printf 'Using python version: %s\n\n' (python --version)
       set --global --erase PYTHON_VE_VENV
+
       cleanup_ve_cmd
       return 0
    end
@@ -143,13 +152,14 @@ function ve --description 'Manage a group of Python virtual environments'
          set --global --export PYTHON_VE_VENV $PYTHON_VE_VENVS/$venvName
       else
          # Give user feedback on failure and quit.
-         set fmt 'Virtual env activation script,\n   %s\nwas ot found!\n\n'
+         set fmt 'Virtual env activation script,\n%s\nwas ot found!\n\n'
          printf $fmt $PYTHON_VE_VENVS/$venvName/bin/activate.fish
 
          if test -d $PYTHON_VE_VENVS/$venvName
-            fmt = 'Python venv %s not found here: %s\n\n'
+            set fmt 'Python venv %s not found here: %s\n\n'
             printf $fmt $venvName $PYTHON_VE_VENVS
          end
+
          cleanup_ve_cmd
          return 1
       end
@@ -161,14 +171,14 @@ function ve --description 'Manage a group of Python virtual environments'
       printf 'Currently $PYTHON_VE_VENV is not set.\n'
       printf 'Either not in a venv or, possibly, a venv '
       printf 'was manually invoked via activate?\n\n'
+
       cleanup_ve_cmd
       return 1
-      end
    end
 
    # Check if $venvName is a ve managed environment
    if not isVenvManaged $venvName $virtual_envs
-      set fmt 'Warning: "%s" is not one of ve\'s managed venv!\n'
+      set fmt 'Warning: "%s" is not one of ve\'s managed venv!\n\n'
       printf $fmt $venvName
    end
 
@@ -176,10 +186,9 @@ function ve --description 'Manage a group of Python virtual environments'
    # the same version as the one in the venv. If case pyenv is being used,
    # we cannot just call realpath on each one due to pyenv shims.
    set pythonFromPath (which python)
-   if -q PYTHON_VE_VENV
+   set pythonFromVE
+   if set -q PYTHON_VE_VENV
       set pythonFromVE $PYTHON_VE_VENV/bin/python
-   else
-
    end
 
    if test -x "$pythonFromPath" && test -x "$pythonFromVE"
@@ -194,6 +203,7 @@ function ve --description 'Manage a group of Python virtual environments'
          set fmt2 'python version found in this venv: "%s"\n'
          set fmt3 'Do not match! Shell environment misconfigured?\n\n'
          printf $fmt0$fmt1$fmt2$fmt3 $PYTHON_VE_VENV $pyPathVer $pyVenvVer
+
          cleanup_ve_cmd
          return 1
       end
@@ -206,8 +216,9 @@ function ve --description 'Manage a group of Python virtual environments'
          set --global --erase PYTHON_VE_VENV
       end
       if test -z "$pythonFromPath"
-         fmt = 'No python executable found on $PATH\n\n'
+         set fmt 'No python executable found on $PATH\n\n'
       end
+
       cleanup_ve_cmd
       return 1
    end
@@ -220,7 +231,7 @@ function ve --description 'Manage a group of Python virtual environments'
          set fmt 'Python version found: %s\nPython version expected for %s: %s\n'
          printf $fmt $pythonVersion $venvName $versionExpected
          read --nchars 1 --prompt-str 'Proceed [Y or [N]]? ' ans
-         if test $ans != Y
+         if test "$ans" != Y
             cleanup_ve_cmd
             return 1
          end
@@ -229,12 +240,9 @@ function ve --description 'Manage a group of Python virtual environments'
 
    ## Perform actions for options --clean and --redo
 
-   if set -q _ve_flags_cr
-      set PIP $PYTHON_VE_VENV/bin/pip
-   end
-
    # Remove all installed modules from the venv
    if set -q _flag_clear
+      set PIP $PYTHON_VE_VENV/bin/pip
       set fmt 'Remove all installed modules from venv: %s\n\n'
       printf $fmt $venvName
       switch $pythonVersion
@@ -251,6 +259,7 @@ function ve --description 'Manage a group of Python virtual environments'
       case '*'
          set fmt 'Punting clearing venv: got an unconfigured Python version: %s\n\n'
          printf $fmt $pythonVersion
+
          cleanup_ve_cmd
          return 1
       end
