@@ -70,6 +70,7 @@ cmdline
 cmds
 cmp
 codepoint
+colorscheme
 COLORTERM
 combinatorics
 commandline
@@ -209,6 +210,7 @@ gh-pages
 ghc
 gitattributes
 gitcommit
+gitconfig
 github
 gitignore
 GIT's
@@ -623,6 +625,7 @@ unflatten
 unicode
 unistd
 unlicense
+unmanaged
 untar
 upgradability
 urandom
@@ -641,7 +644,7 @@ value6
 vDSO
 ve
 venv
-venvs
+venv's
 ver
 vers
 vimdoc

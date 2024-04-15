@@ -206,11 +206,14 @@ function ve --description 'Manage a group of Python virtual environments'
    # we cannot just call realpath on each one due to pyenv shims.
    set pythonFromPath (which python)
    set pythonFromVE
+
    if set -q VIRTUAL_ENV
       set norm_venv (realpath (path normalize $VIRTUAL_ENV))
+
       if test "$norm_venv" != /usr && test "$norm_venv" != ""
          set pythonFromVE $VIRTUAL_ENV/bin/python
       end
+
       set -e norm_venv
    end
 
@@ -268,7 +271,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    # Remove all installed modules from the venv
    if set -q _flag_clear
-      set fmt 'Remove all installed modules from venv: %s\n\n'
+      set fmt '\nRemove all installed modules from venv: %s\n\n'
       printf $fmt $venv_name
       switch $pythonVersion
       case '3.10.*' '3.11.*'
@@ -292,13 +295,13 @@ function ve --description 'Manage a group of Python virtual environments'
 
    if set -q _flag_redo
       if set -q _ve_flag_venv_managed
-         set fmt 'Installing/upgrading all managed modules to venv: %s\n\n'
+         set fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
          printf $fmt $venv_name
          set dollar '$'
          eval set modules "$dollar"modules_$venv_name
          $PIP install --upgrade $modules
       else
-         set fmt 'The %s venv is not a ve managed environment.\n' 
+         set fmt '\nThe %s venv is not a ve managed environment.\n' 
          printf $fmt $VIRTUAL_ENV
          set prompt 'Use another managed configuration to redo? [Y or [N]]'
          read --nchars 1 --prompt-str $prompt ans
