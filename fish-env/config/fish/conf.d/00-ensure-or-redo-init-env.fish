@@ -86,8 +86,8 @@ and begin
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
-   set -gx PYTHON_VE_VENVS ~/devel/python_venvs
-   test -d $PYTHON_VE_VENVS || mkdir -p $PYTHON_VE_VENVS
+   set -gx VE_VENV_DIR ~/devel/python_venvs
+   test -d $VE_VENV_DIR || mkdir -p $PYTHON_VE_VENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
 
    # For non-Systemd systems
