@@ -17,7 +17,6 @@ return {
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
          { 'folke/neodev.nvim', opts = {} },
       },
-
       config = function()
          local lspconfig = require 'lspconfig'
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -32,7 +31,6 @@ return {
          local defaultConfiguredLspServers = {
             'bashls',
             'clangd',
-            'jedi_language_server',
             'lua_ls',
             'zls',
          }
@@ -63,7 +61,8 @@ return {
             }
          }
 
-         -- Manually configure lsp client for python-lsp-server using
+         -- Manually configure lsp client for python-lsp-server,
+         -- using jdhao configs as a starting point.
          --   ruff linter (pip)
          --   black formatter (pip)
          --   jedi auto completion (pacman)
@@ -72,28 +71,39 @@ return {
             on_attach = function(_, bufnr)
                km.lsp(bufnr)
             end,
+            flags = { debounce_text_changes = 200 },
             settings = {
                pylsp = {
                   plugins = {
                      -- formatter options
-                     black = { enabled = true },
+                     black = { enabled = false },
                      autopep8 = { enabled = false },
-                     yapf = { enabled = false },
+                     yapf = { enabled = true },
                      -- linter options
-                     pylint = { enabled = false },
+                     pylint = { enabled = false, executable = "pylint" },
                      ruff = { enabled = true },
                      pyflakes = { enabled = false },
                      pycodestyle = { enabled = false },
-                     pylsp_mypy = { enabled = true },
+                     -- type checker
+                     pylsp_mypy = {
+                        enabled = true,
+                        overrides = {
+                           "--python-executable",
+                           vim.g.python3_host_prog,
+                           report_progress = true,
+                           live_mode = false,
+                        }
+                     },
                      -- auto-completion options
                      jedi_completion = { fuzzy = true },
                      -- import sorting
-                     isort = { enabled = false },
+                     isort = { enabled = true },
+                     -- refacoring
+                     rope = { enable = true },
                   },
                },
             },
          }
-      end,
    },
 
    {
@@ -143,4 +153,5 @@ return {
          }
       end,
    },
+
 }
