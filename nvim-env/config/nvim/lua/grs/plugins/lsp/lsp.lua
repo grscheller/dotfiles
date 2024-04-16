@@ -58,7 +58,7 @@ return {
                      km.haskell(bufnr)
                   end,
                },
-            }
+            },
          }
 
          -- Manually configure lsp client for python-lsp-server,
@@ -92,18 +92,19 @@ return {
                            vim.g.python3_host_prog,
                            report_progress = true,
                            live_mode = false,
-                        }
+                        },
                      },
                      -- auto-completion options
                      jedi_completion = { fuzzy = true },
                      -- import sorting
                      isort = { enabled = true },
-                     -- refacoring
+                     -- refactoring
                      rope = { enable = true },
                   },
                },
             },
          }
+      end,
    },
 
    {
@@ -149,7 +150,7 @@ return {
             },
             -- Additional configs for specific servers which will be merged
             -- into default lspconfig configs.
-            configs = {}
+            configs = {},
          }
       end,
    },
