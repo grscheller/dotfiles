@@ -254,6 +254,7 @@ implicits
 indexable
 init
 instantiation
+integrations
 interoperability
 IP
 ipaddr
@@ -614,6 +615,8 @@ ttys
 txt
 typeclass
 typeclasses
+typescripty
+
 udacity
 Udacity
 Udacity's
