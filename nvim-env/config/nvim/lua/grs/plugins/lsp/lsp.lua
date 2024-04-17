@@ -63,9 +63,6 @@ return {
 
          -- Manually configure lsp client for python-lsp-server,
          -- using jdhao configs as a starting point.
-         --   ruff linter (pip)
-         --   black formatter (pip)
-         --   jedi auto completion (pacman)
          lspconfig.pylsp.setup {
             capabilities = capabilities,
             on_attach = function(_, bufnr)
@@ -78,26 +75,16 @@ return {
                      -- formatter options
                      black = { enabled = false },
                      autopep8 = { enabled = false },
-                     yapf = { enabled = true },
+                     yapf = { enabled = false },
                      -- linter options
-                     pylint = { enabled = false, executable = "pylint" },
+                     pylint = { enabled = false },
                      ruff = { enabled = true },
                      pyflakes = { enabled = false },
                      pycodestyle = { enabled = false },
                      -- type checker
                      pylsp_mypy = {
                         enabled = true,
-                        overrides = {
-                           "--python-executable",
-                           vim.g.python3_host_prog,
-                           report_progress = true,
-                           live_mode = false,
-                        },
                      },
-                     -- auto-completion options
-                     jedi_completion = { fuzzy = true },
-                     -- import sorting
-                     isort = { enabled = true },
                      -- refactoring
                      rope = { enable = true },
                   },

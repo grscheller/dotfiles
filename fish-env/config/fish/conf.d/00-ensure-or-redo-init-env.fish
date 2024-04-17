@@ -102,11 +102,3 @@ if set -q make_phoney_hostnamectl
       hostname
    end
 end
-
-# Python pyenv function configuration
-if test -x $PYENV_ROOT/bin/pyenv
-   fish_add_path -gpP $PYENV_ROOT/bin
-   source (pyenv init - | psub)
-elif digpath -q pyenv
-   source (pyenv init - | psub)
-end

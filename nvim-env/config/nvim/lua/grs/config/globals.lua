@@ -8,7 +8,7 @@ vim.g.maplocalleader = ' '
 
 -- Python managed by pyenv
 vim.g.python3_host_prog = string.format(
-   '%s/devel/python_envs/neovim/bin/python',
+   '%s/devel/python_venvs/neovim/bin/python',
    os.getenv 'HOME'
 )
 

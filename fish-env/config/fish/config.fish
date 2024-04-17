@@ -10,13 +10,6 @@ if not status --is-interactive
    return
 end
 
-# If pyenv is installed, use it to manage Python environments
-type -P pyenv >/dev/null 2>&1
-and begin
-   set -gx PYENV_ROOT ~/.local/share/pyenv
-   pyenv init - | source
-end
-
 # Enable vi keybindings
 fish_vi_key_bindings
 
@@ -27,9 +20,9 @@ if ! set -q SSH_AGENT_PID
    and ssh-add
 end
 
-# Check if shell is running in a desktop environment
-if set -q XDG_CURRENT_DESKTOP
-   # Activate grs Python virtual environment - /usr/bin python scripts will
-   # still use the system Python and its environment.
-   ve grs
+# If pyenv is installed, use it to manage Python environments
+type -P pyenv >/dev/null 2>&1
+and begin
+   set -gx PYENV_ROOT ~/.local/share/pyenv
+   pyenv init - | source
 end
