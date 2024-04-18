@@ -1,4 +1,4 @@
-function pypi --description 'toggle python development environment'
+function pypath --description 'manage $PYPATH environment variable'
    set -e PYTHONPATH
    set -l PythonPath
    for arg in $argv

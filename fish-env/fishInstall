@@ -16,7 +16,7 @@ cd "$envPath" || {
 
 config_files='
    completions/alacritty.fish
-   completions/pypi.fish
+   completions/pypath.fish
    completions/ve.fish
    config.fish
    conf.d/00-ensure-or-redo-init-env.fish
@@ -49,7 +49,7 @@ config_files='
    functions/mc.fish
    functions/nsort.fish
    functions/pathtrim.fish
-   functions/pypi.fish
+   functions/pypath.fish
    functions/rc.fish
    functions/ve.fish
    functions/Wget.fish
@@ -75,8 +75,8 @@ config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/ve-conf.fish
-   $XDG_CONFIG_HOME/fish/functions/ve_conf.fish
+   $XDG_CONFIG_HOME/fish/completions/pypi.fish
+   $XDG_CONFIG_HOME/fish/functions/pypi.fish
 "
 
 dirs_to_create=""
