@@ -428,6 +428,8 @@ pipenv
 pipfile
 pipx
 PKGBUILD
+png
+PNG
 pnpm
 Polkit
 polkit
@@ -449,6 +451,7 @@ py
 pyenv
 pylsp
 pynvim
+PyGObjects
 PyPI
 pyplot
 pyproject
@@ -504,6 +507,15 @@ rustc
 rustup
 rw
 rwx
+s1
+s2
+s3
+s4
+s5
+s6
+s7
+s8
+s9
 sbt
 scala
 Scala2
@@ -544,15 +556,6 @@ str
 struct
 structs
 stty
-s1
-s2
-s3
-s4
-s5
-s6
-s7
-s8
-s9
 su
 subclassed
 subclasses
@@ -579,6 +582,8 @@ SUID
 superscript
 superscripted
 superscripting
+svg
+SVG
 symlink
 symlinked
 symlinks
@@ -598,6 +603,7 @@ timedatectl
 timestamp
 timestamps
 Tk
+Tkinter
 TLDR
 TODO
 toml
@@ -616,7 +622,6 @@ txt
 typeclass
 typeclasses
 typescripty
-
 udacity
 Udacity
 Udacity's
@@ -676,6 +681,7 @@ workseat
 workspace
 workspaces
 www
+wxPython
 x86
 x86_64
 xargs
