@@ -1,4 +1,4 @@
-function gitstat --description 'Update GIT repos in subdirectories'
+function gitfd --description 'Update GIT repos in subdirectories'
 
    set -l brblue (set_color brblue)
    set -l normal (set_color normal)
