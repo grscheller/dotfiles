@@ -160,9 +160,9 @@ function ve --description 'Manage a group of Python virtual environments'
          source $VE_VENV_DIR/$venv_name/bin/activate.fish
       else
          set fmt1 'Error: No venv for "%s" was found in the\n'
-         set fmt2 '       managed venv location: %s\n\n'
-         set fmt3 '       "%s" is a managed venv name\n\n'
-         set fmt4 '       "%s" is not a managed venv name\n\n'
+         set fmt2 '       managed venv location: %s\n'
+         set fmt3 '       but "%s" is a managed venv name\n\n'
+         set fmt4 '       and "%s" is not a managed venv name\n\n'
          printf $fmt1 $venv_name
          printf $fmt2 $VE_VENV_DIR
          if isVenvManaged $venv_name $virtual_envs
@@ -180,9 +180,9 @@ function ve --description 'Manage a group of Python virtual environments'
       set ve_venv_norm_dir (path normalize $VE_VENV_DIR)
       if test "$venv_norm_dir" != "$ve_venv_norm_dir"
          set fmt1 'WARNING: The %s venv, located here: %s\n'
-         set fmt2 '         is NOT in managed location: %s\n\n'
-         set fmt3 '         "%s" is a managed venv name\n\n'
-         set fmt4 '         "%s" is not a managed venv name\n\n'
+         set fmt2 '         is NOT in managed location: %s\n'
+         set fmt3 '         but "%s" is a managed venv name\n\n'
+         set fmt4 '         and "%s" is not a managed venv name\n\n'
          set pmt1 '         Proceed? [Y or [N]]? '
          printf $fmt1 $venv_name $venv_norm_dir
          printf $fmt2 $VE_VENV_DIR
@@ -191,7 +191,7 @@ function ve --description 'Manage a group of Python virtual environments'
          else
             printf $fmt4 $venv_name 
          end
-         read --nchars 1 --prompt-str $pmt ans
+         read --nchars 1 --prompt-str $pmt1 ans
          printf '\n'
          if test "$ans" != Y
             cleanup_ve_cmd
@@ -319,11 +319,11 @@ function ve --description 'Manage a group of Python virtual environments'
       else
          set fmt '\nThe "%s" venv is not a ve managed virtual environment.\n' 
          printf $fmt $VIRTUAL_ENV
-         set prompt 'Use another managed configuration to redo? [Y or [N]]'
-         read --nchars 1 --prompt-str $prompt ans
+         set pmt 'Use another managed configuration to redo? [Y or [N]]'
+         read --nchars 1 --prompt-str $pmt ans
          if test "$ans" = Y
-            set prompt 'Enter name of a managed environment: '
-            read --line --prompt-str $prompt user_managed_venv_name
+            set pmt 'Enter name of a managed environment: '
+            read --line --prompt-str $pmt user_managed_venv_name
             if isVenvManaged $user_managed_venv_name $virtual_envs
                set fmt 'Installing/upgrading modules with managed venv: %s\n\n'
                printf $fmt $user_managed_env_name

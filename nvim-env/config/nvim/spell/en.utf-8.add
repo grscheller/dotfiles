@@ -10,6 +10,7 @@
 8-bit
 ABI
 ADT
+ad hoc
 Affero
 alacritty
 alloc
@@ -170,6 +171,7 @@ filesysystems
 filetype
 firefox
 flapmap
+fmt
 foldleft
 foldright
 folke
@@ -428,6 +430,7 @@ pipenv
 pipfile
 pipx
 PKGBUILD
+pmt
 png
 PNG
 pnpm
@@ -449,9 +452,9 @@ pushable
 px
 py
 pyenv
+PyGObjects
 pylsp
 pynvim
-PyGObjects
 PyPI
 pyplot
 pyproject
@@ -691,8 +694,8 @@ xfce
 Xsession
 XSI
 yaml
-zig
 yml
+zig
 zsh
 # grscheller ~/devel names
 ackermann
@@ -709,6 +712,7 @@ FStacks
 FTuple
 FTuples
 gaussian
+gitfd
 gitup
 IPython
 LIFOQueue
@@ -718,6 +722,7 @@ PArray
 PArrays
 pathtrim
 py4ai
+pypath
 pypi
 ud
 # Python typing names
