@@ -166,9 +166,9 @@ function ve --description 'Manage a group of Python virtual environments'
          printf $fmt1 $venv_name
          printf $fmt2 $VE_VENV_DIR
          if isVenvManaged $venv_name $virtual_envs
-            print $fmt3 $venv_name 
+            printf $fmt3 $venv_name 
          else
-            print $fmt4 $venv_name 
+            printf $fmt4 $venv_name 
          end
          cleanup_ve_cmd
          return 1
@@ -187,9 +187,9 @@ function ve --description 'Manage a group of Python virtual environments'
          printf $fmt1 $venv_name $venv_norm_dir
          printf $fmt2 $VE_VENV_DIR
          if isVenvManaged $venv_name $virtual_envs
-            print $fmt3 $venv_name 
+            printf $fmt3 $venv_name 
          else
-            print $fmt4 $venv_name 
+            printf $fmt4 $venv_name 
          end
          read --nchars 1 --prompt-str $pmt ans
          printf '\n'
