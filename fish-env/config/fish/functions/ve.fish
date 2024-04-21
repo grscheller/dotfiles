@@ -3,45 +3,26 @@
 # I manage my installed versions on Python with pyenv, so I have to be mindful
 # of the possibility of pyenv shims being in use. I did not want this function
 # to depend on pyenv commands in case I am in a situation where pyenv is not
-# used,
+# available, If pyenv shell function is defined, this script will use it to
+# provide additional user feedback.
 #
-# The global environment variable $VE_VENV_DIR controls which group of
-# venvs I am managing together. All the venvs must be installed in this
-# directory which it points to, Also the configuration file ve.conf must also
-# be stored there.
+# The global environment variable $VE_VENV_DIR controls which group of venv's
+# I am managing together. All the venv's "should" be installed in the directory
+# it points to, Other non-managed venv can be located there. Also, a ve.conf
+# configuration file must be located there too, stored there too.
 #
-# I maintain one version of ve.conf with home-env section of my dotfiles GIT
-# repo and set $VE_VENV_DIR from my fish configs.
+# I maintain one version of ve.conf in the home-env section of my dotfiles
+# GIT repo and $VE_VENV_DIR is set from my fish configs.
 #
-# If a python virtual environment of the name of one of the managed ones in
-# $VE_VENV_DIR is activated, the script will warn the user giving the user an
-# opportunity to bail, but will otherwise operate on the venv. Still has to be
-# the correct version of Python.
+# If a non-managed python virtual environment, within $VE_VENV_DIR or not, is
+# currently activated, the script will warn the user giving them an opportunity
+# either to bail or work with the venv.
 #
 function ve --description 'Manage a group of Python virtual environments'
 
    # Provide an override mechanism to the usual virtual env location
    if not set -q VE_VENV_DIR
       set --global --export VE_VENV_DIR ~/devel/python_venvs/
-   end
-
-   # Warn user if $VIRTUAL_ENV not in $VE_VENV_DIR
-   if set -q VIRTUAL_ENV && test (count $argv) -gt 0 && string match -r -- '-[rc]' $argv[1]
-      set virtual_env_dir (path normalize (path dirname $VIRTUAL_ENV))
-      set ve_venv_dir (path normalize $VE_VENV_DIR)
-
-      if test "$virtual_env_dir" != "$ve_venv_dir"
-         set fmt 'WARNING: The %s venv is NOT contained in %s\n'
-         printf $fmt $VIRTUAL_ENV $VE_VENV_DIR
-         read --nchars 1 --prompt-str 'Proceed [Y or [N]]? ' ans
-         printf '\n'
-         if test "$ans" != Y
-            return 1
-         end
-      end
-
-      set -e virtual_env_dir
-      set -e ve_venv_dir
    end
 
    # Source in the ve.conf configuration file
@@ -58,8 +39,7 @@ function ve --description 'Manage a group of Python virtual environments'
    function usage_ve
       printf 'Usage: ve\n'
       printf '       ve <virtenv>\n'
-      printf '       ve [-c | --clear]\n'
-      printf '       ve [-r | --redo]\n'
+      printf '       ve [-c | --clear] [-r | --redo]\n'
       printf '       ve [-l | --list]\n'
       printf '       ve [-h | --help]\n\n'
    end
@@ -98,7 +78,7 @@ function ve --description 'Manage a group of Python virtual environments'
       return 0
    end
 
-   # List names of managed venvs, directories in $VE_VENV_DIR, then quit.
+   # List names of managed venv's, directories in $VE_VENV_DIR, then quit.
    if set -q _flag_list
       set_color $fish_color_host
       printf 'Tracked virtual environments:\n'
@@ -133,8 +113,9 @@ function ve --description 'Manage a group of Python virtual environments'
    set argc (count $argv)
 
    # Error out for invalid option/flag combination
+
    if set -q _ve_flags_cr && test $argc -gt 0
-      printf 'Invalid argument/option combination\n'
+      printf 've: Invalid argument/option combination\n'
       usage_ve
 
       cleanup_ve_cmd
@@ -142,7 +123,7 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    if not set -q _ve_flags_cr && test $argc -gt 1
-      printf 'Invalid argument/option combination\n'
+      printf 've: Invalid argument/option combination\n'
       usage_ve
 
       cleanup_ve_cmd
@@ -159,7 +140,7 @@ function ve --description 'Manage a group of Python virtual environments'
       end
 
       printf 'Now using python version: %s\n\n' (python --version)
-      if digpath -q pyenv
+      if type -q pyenv
          pyenv versions
          printf '\n'
       end
@@ -168,8 +149,9 @@ function ve --description 'Manage a group of Python virtual environments'
       return 0
    end
 
-   # If name given by user, activate venv if one in canonical location.
-   # Otherwise get the name of the venv from $VIRTUAL_ENV.
+   # If venv name given by user, activate venv if one exists with that name
+   # in canonical managed venv location. Otherwise get the name of the venv
+   # from the $VIRTUAL_ENV environment variable.
    set --erase venv_name
    if test $argc -eq 1
       # Get venv name from user
@@ -177,33 +159,65 @@ function ve --description 'Manage a group of Python virtual environments'
       if test -f "$VE_VENV_DIR/$venv_name/bin/activate.fish"
          source $VE_VENV_DIR/$venv_name/bin/activate.fish
       else
-         set fmt 'No valid venv for %s was found in canonical location: %s\n\n'
-         printf $fmt $venv_name $VE_VENV_DIR
+         set fmt1 'Error: No venv for "%s" was found in the\n'
+         set fmt2 '       managed venv location: %s\n\n'
+         set fmt3 '       "%s" is a managed venv name\n\n'
+         set fmt4 '       "%s" is not a managed venv name\n\n'
+         printf $fmt1 $venv_name
+         printf $fmt2 $VE_VENV_DIR
+         if isVenvManaged $venv_name $virtual_envs
+            print $fmt3 $venv_name 
+         else
+            print $fmt4 $venv_name 
+         end
          cleanup_ve_cmd
          return 1
       end
    else if set -q VIRTUAL_ENV
       # Try venv name from environment, not necessarily a managed one.
       set venv_name (path basename $VIRTUAL_ENV)
+      set venv_norm_dir (path normalize (path dirname $VIRTUAL_ENV))
+      set ve_venv_norm_dir (path normalize $VE_VENV_DIR)
+      if test "$venv_norm_dir" != "$ve_venv_norm_dir"
+         set fmt1 'WARNING: The %s venv, located here: %s\n'
+         set fmt2 '         is NOT in managed location: %s\n\n'
+         set fmt3 '         "%s" is a managed venv name\n\n'
+         set fmt4 '         "%s" is not a managed venv name\n\n'
+         set pmt1 '         Proceed? [Y or [N]]? '
+         printf $fmt1 $venv_name $venv_norm_dir
+         printf $fmt2 $VE_VENV_DIR
+         if isVenvManaged $venv_name $virtual_envs
+            print $fmt3 $venv_name 
+         else
+            print $fmt4 $venv_name 
+         end
+         read --nchars 1 --prompt-str $pmt ans
+         printf '\n'
+         if test "$ans" != Y
+            cleanup_ve_cmd
+            return 1
+         end
+      end
+      set -e venv_norm_dir ve_venv_norm_dir
    else
-      printf 'Currently $VIRTUAL_ENV is not set.\n'
-      printf 'Either not in a venv, or user did not supply one\n'
-      set fmt 'in the canonical location: %s.\n\n'
-      printf $fmt $VE_VENV_DIR
-
+      set fmt1 'Error: Currently $VIRTUAL_ENV is not set. Either not in a venv,\n'
+      set fmt2 '       or user did not supply a name of a venv located in the\n'
+      set fmt3 '       managed venv location: %s.\n\n'
+      printf $fmt1$fmt2$fmt3 $VE_VENV_DIR
       cleanup_ve_cmd
       return 1
    end
 
    # Check if $venv_name is a ve managed environment
    if not isVenvManaged $venv_name $virtual_envs
-      set fmt 'Warning: "%s" is not the name of one of ve\'s managed venv!\n\n'
+      set fmt 'Warning: "%s" is not a ve managed venv!\n\n'
       printf $fmt $venv_name
    end
 
    # Perform a consistency check, Make sure python on $PATH is at least
    # the same version as the one in the venv. If case pyenv is being used,
-   # we cannot just call realpath on each one due to pyenv shims.
+   # we cannot just call realpath on each one due to the possibility of
+   # encountering pyenv shims in some cases.
    set pythonFromPath (which python)
    set pythonFromVE
 
@@ -213,7 +227,6 @@ function ve --description 'Manage a group of Python virtual environments'
       if test "$norm_venv" != /usr && test "$norm_venv" != ""
          set pythonFromVE $VIRTUAL_ENV/bin/python
       end
-
       set -e norm_venv
    end
 
@@ -224,23 +237,23 @@ function ve --description 'Manage a group of Python virtual environments'
       set pyVenvVer $pyVenvVers[1]
 
       if test "$pyPathVer" != "$pyVenvVer"
-         set fmt0 'For venv = %s,\n'
-         set fmt1 'python version found on the $PATH: "%s"\n'
-         set fmt2 'python version found in this venv: "%s"\n'
-         set fmt3 'Do not match! Shell environment misconfigured?\n\n'
-         printf $fmt0$fmt1$fmt2$fmt3 $VIRTUAL_ENV $pyPathVer $pyVenvVer
-
+         set fmt0 'Error: For venv = %s,\n'
+         set fmt1 '       python version found on the $PATH: "%s"\n'
+         set fmt2 '       python version found in this venv: "%s"\n'
+         set fmt3 '       Do not match!\n\n'
+         set fmt4 '       Maybe shell environment misconfigured?\n\n'
+         printf $fmt0$fmt1$fmt2$fmt3$fmt4 $VIRTUAL_ENV $pyPathVer $pyVenvVer
          cleanup_ve_cmd
          return 1
       end
       set pythonVersion $pyVenvVer
    else
       if test ! -d "$VIRTUAL_ENV"
-         set fmt 'The "%s" venv directory, %s, does not exist!\n\n'
+         set fmt 'Error: The "%s" venv directory, %s, does not exist!\n\n'
          printf $fmt $venv_name $VIRTUAL_ENV
-      else if test ! -f "$VIRTUAL_ENV/bin/activate.fish"
-         set fmt 'No activate.fish in "%s" venv bin/ directory!\n\n'
-         printf $fmt $venv_name $VE_VENV_DIR
+      else if test ! -x "$VIRTUAL_ENV/bin/python"
+         set fmt 'Error: No python executable found in "%s" for "%s" venv!\n\n'
+         printf $fmt $VIRTUAL_ENV/bin $venv_name
       end
 
       if test -z "$pythonFromPath"
@@ -251,14 +264,17 @@ function ve --description 'Manage a group of Python virtual environments'
       return 1
    end
 
-   # If a name of a managed environment, see if python version is what we expect.
+   # If a managed environment, see if python version is what is expect.
    if set -q _ve_flag_venv_managed
       set dollar '$'
       eval set versionExpected "$dollar"version_$venv_name
       if test "$versionExpected" != "$pythonVersion"
-         set fmt 'Python version found: %s\nPython version expected for %s: %s\n'
-         printf $fmt $pythonVersion $venv_name $versionExpected
-         read --nchars 1 --prompt-str 'Proceed [Y or [N]]? ' ans
+         set fmt1 'Warning: Python version found: %s\n'
+         set fmt2 '         Python version expected for %s: %s\n\n'
+         set pmt1 '         Proceed? [Y or [N]]? '
+         printf $fmt1$fmt2 $pythonVersion $venv_name $versionExpected
+         read --nchars 1 --prompt-str $pmt1 ans
+         printf '\n'
          if test "$ans" != Y
             cleanup_ve_cmd
             return 1
@@ -294,24 +310,28 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    if set -q _flag_redo
+      set dollar '$'
       if set -q _ve_flag_venv_managed
          set fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
          printf $fmt $venv_name
-         set dollar '$'
          eval set modules "$dollar"modules_$venv_name
          $PIP install --upgrade $modules
       else
-         set fmt '\nThe %s venv is not a ve managed environment.\n' 
+         set fmt '\nThe "%s" venv is not a ve managed virtual environment.\n' 
          printf $fmt $VIRTUAL_ENV
          set prompt 'Use another managed configuration to redo? [Y or [N]]'
          read --nchars 1 --prompt-str $prompt ans
          if test "$ans" = Y
             set prompt 'Enter name of a managed environment: '
-            read --line --prompt-str $prompt managed_env_name
-            if isVenvManaged "$managed_env_name"
-               set fmt 'Installing/upgrading modules with managed env: %s\n\n'
-               printf $fmt $managed_env_name
+            read --line --prompt-str $prompt user_managed_venv_name
+            if isVenvManaged $user_managed_venv_name $virtual_envs
+               set fmt 'Installing/upgrading modules with managed venv: %s\n\n'
+               printf $fmt $user_managed_env_name
+               eval set modules "$dollar"modules_$user_managed_venv_name
                $PIP install --upgrade $modules
+            else
+               set fmt '"%s" is not a name of any managed venv.\n\n'
+               printf $fmt 
             end
          end
       end
