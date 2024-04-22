@@ -24,6 +24,7 @@ argparse
 args
 argv
 async
+AUR
 autocmd
 autocmds
 avahi
@@ -100,6 +101,7 @@ css
 ctrl
 CUDA
 CUI
+cyberseurity
 Cygwin
 dap
 datastructures
@@ -224,10 +226,7 @@ globbing
 GPL
 GPLv2
 GPLv3
-grs
-grscheller
-GRScheller
-grscheller's
+Gradle
 gt
 gtk
 GTK
@@ -625,6 +624,7 @@ txt
 typeclass
 typeclasses
 typescripty
+UCHealth
 udacity
 Udacity
 Udacity's
@@ -714,6 +714,11 @@ FTuples
 gaussian
 gitfd
 gitup
+grs
+grscheller
+grscheller's
+GRScheller
+GRScheller's
 IPython
 LIFOQueue
 LIFOQueues
@@ -753,7 +758,13 @@ tvars
 AF
 AFRL
 AFNet
-ATTAPS
+ATAAPS
+CAC
+DAU
+DISS
+DTS
+GPC
+GTC
 HPCMP
 IL1
 IL2
@@ -785,7 +796,7 @@ SIPRnet
 SSO
 Standup
 UDL
-USSP
+USSF
 # Very sway/wlroots specific
 acpi_video1
 alittleofmeinyou
