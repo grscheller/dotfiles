@@ -705,6 +705,7 @@ apue
 APUE
 ai4py
 dn
+fdgit
 FIFOQueue
 FIFOQueues
 FStack
@@ -712,7 +713,6 @@ FStacks
 FTuple
 FTuples
 gaussian
-gitfd
 gitup
 grs
 grscheller
