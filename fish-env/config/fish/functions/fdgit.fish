@@ -1,4 +1,4 @@
-function gitfd --description 'Update GIT repos in subdirectories'
+function fdgit --description 'Update GIT repos in subdirectories'
 
    set -l brblue (set_color brblue)
    set -l normal (set_color normal)

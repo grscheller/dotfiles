@@ -29,6 +29,7 @@ config_files='
    functions/disable_touch_pad.fish
    functions/enable_touch_pad.fish
    functions/ev.fish
+   functions/fdgit.fish
    functions/fdot.fish
    functions/ff.fish
    functions/fields.fish
@@ -38,7 +39,6 @@ config_files='
    functions/fish_mode_prompt.fish
    functions/fish_prompt.fish
    functions/fish_title.fish
-   functions/gitfd.fish
    functions/la.fish
    functions/ldir.fish
    functions/ldot.fish
@@ -75,9 +75,7 @@ config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/completions/pypi.fish
-   $XDG_CONFIG_HOME/fish/functions/pypi.fish
-   $XDG_CONFIG_HOME/fish/functions/gitstat.fish
+   $XDG_CONFIG_HOME/fish/functions/gitfd.fish
 "
 
 dirs_to_create=""
