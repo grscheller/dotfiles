@@ -3,7 +3,7 @@ function digpath --description 'Look for files on $PATH'
    ## Parse cmdline options and set up for processing
 
    # First pass - stop at first non-option argument
-   argparse -s q/quiet h/help x/executable p/path -- $argv
+   argparse -s q/quiet h/help x/executable p/path f/first -- $argv
    or begin
       printf '  for help type: digpath -h\n' >&2
       return 2
@@ -18,7 +18,7 @@ function digpath --description 'Look for files on $PATH'
    end
 
    # Second pass - parse remaining -q, -h, -x options
-   argparse -i q/quiet h/help x/executable -- $argv
+   argparse -i q/quiet h/help x/executable f/first -- $argv
    or begin
       printf '  for help type: digpath -h\n' >&2
       return 2
@@ -42,7 +42,7 @@ function digpath --description 'Look for files on $PATH'
       printf '  Glob patterns supported for Targets, not for Path\n'    >&2
       printf '  components.\n\n'                                        >&2
       printf 'Usage: \n'                                                >&2
-      printf '  digpath [-h] [-q] [-x] $Targets [ -p $Path ]\n\n'       >&2
+      printf '  digpath [-h] [-q] [-x] [-f] $Targets [ -p $Path ]\n\n'  >&2
       printf 'Examples: \n'                                             >&2
       printf '  digpath \'nm*\' gc\\* \'../.bashrc\'\n'                 >&2
       printf '  digpath \'**/README*\' -p /usr/share/ ~/.local/share\n' >&2
@@ -50,6 +50,7 @@ function digpath --description 'Look for files on $PATH'
       printf 'Options:\n'                                               >&2
       printf '    -h or --help\n'                                       >&2
       printf '    -q or --quiet\n'                                      >&2
+      printf '    -f 0r --first\n'                                      >&2
       printf '    -x or --executable\n'                                 >&2
       printf '    -p or --path\n'                                       >&2
       printf '  Option -p separates the $Targets from the $Path\n'      >&2
@@ -59,6 +60,7 @@ function digpath --description 'Look for files on $PATH'
       printf '  Print any matches on Path to stdout,\n'                 >&2
       printf '    suppresses output if -q was given,\n'                 >&2
       printf '    suppresses nonexecutables if -x was given.\n'         >&2
+      printf '  Print only first match if -f was given.\n'              >&2
       printf '  Print help message to stderr if -h was given.\n\n'      >&2
       printf 'Exit Status:\n'                                           >&2
       printf '  0 (true) if match found on $PATH\n'                     >&2
@@ -73,7 +75,7 @@ function digpath --description 'Look for files on $PATH'
    set -f Path
    set -f arg
    for arg in $argv_pass2
-      if [ $arg = -p ] || [ $arg = --path ]
+      if test "$arg" = -p || test "$arg" = --path
          set Toggle Path
       else
          test -n "$arg"
@@ -117,11 +119,15 @@ function digpath --description 'Look for files on $PATH'
    set -f item
    if test (count $Found) -gt 0
       if not set -q _flag_quiet
-         for item in $Found
-            if test -d "$item"
-               printf %s/\n $item
-            else
-               printf %s\n $item
+         if set -q _flag_first
+            printf '%s\n' $Found[1]
+         else
+            for item in $Found
+               if test -d "$item"
+                  printf '%s\n' $item
+               else
+                  printf '%s\n' $item
+               end
             end
          end
       end
