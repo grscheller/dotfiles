@@ -67,7 +67,7 @@ function ve --description 'Manage a group of Python virtual environments'
          return 1
       end
 
-      set -l pythonFromPath (realpath (path normalize (which python)))
+      set -l pythonFromPath (realpath (path normalize (digpath -f -x python)))
 
       if test -x "$pythonFromPath" && test -x "$pythonFromVenv"
          set pyPathVers (string split -f 2 ' ' ($pythonFromPath --version))
@@ -210,6 +210,14 @@ function ve --description 'Manage a group of Python virtual environments'
             return 1
          end
          eval set versionExpected "$dollar"version_$venv_name
+         if digpath -q -x python
+            do_python_versions_match_ve $venv_name (digpath -f -x python) 
+         else
+            printf 'Error: Cannot find a python executable on the $PATH\n\n'
+            cleanup_ve
+            return 1
+         end
+
 
 
 
