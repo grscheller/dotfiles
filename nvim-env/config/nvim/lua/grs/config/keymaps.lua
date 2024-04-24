@@ -167,6 +167,9 @@ km('x', 'K', ":m '<-2<cr>gv=gv", {
    desc = 'move selection up a line',
 })
 
+-- Visually select what was just pasted
+km('n', 'gV', "`[v`]", { noremap = true, silent = true, desc = 'select what was just pasted' })
+
 -- Cleanup related keymaps
 km('n', '<leader>w', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', {
    noremap = true,
