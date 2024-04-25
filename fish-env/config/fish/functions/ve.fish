@@ -20,6 +20,19 @@
 #
 function ve --description 'Manage a group of Python virtual environments'
 
+   # Function local variables
+   set -f dollar '$'
+   set -f venv_name
+   set -f is_managed
+   set -f ans
+   set -f fmt
+   set -f fmt1
+   set -f fmt2
+   set -f fmt3
+   set -f fmt4
+   set -f pmt
+   set -f pmt1
+
    ## Initial setup
 
    # Provide an override mechanism to the default managed venv location
@@ -210,12 +223,6 @@ function ve --description 'Manage a group of Python virtual environments'
 
    ## Manipulate virtual environments
 
-   # Function local variables
-   set -f ans
-   set -f dollar '$'
-   set -f venv_name
-   set -f is_managed no
-
    # User supplied a (not necessarily managed) Venv name.
    # Launch it if it is in the Managed venv location, or
    # offer to create it if it does not exist.
@@ -256,32 +263,32 @@ function ve --description 'Manage a group of Python virtual environments'
          end
       end
 
+      eval set versionExpected "$dollar"version_$venv_name
+      _ve_is_python_on_path_correct_version $versionExpected
+      switch $status
+         case 1
+            set fmt1 'Warning: Python version on $PATH not expected version!\n'
+            set fmt2 '         Expected version: "%s"\n'
+            set fmt3 '         Version on $PATH: "%s"\n\n'
+            set pmt1 '         Proceed? [Y or [N]]? '
+            read --nchars 1 --prompt-str $pmt1 ans
+            printf '\n'
+            test "$ans" = Y || begin 
+               _ve_cleanup
+               return 1
+            end
+         case 2
+            set fmt1 'Error: No executable version of python found on $PATH!\n\n'
+            set fmt2 '       One is needed to create the "%s" venv.\n\n'
+            printf $fmt1$fmt2 $venv_name
+            _ve_cleanup
+            return 1
+      end
+
    end
    _ve_cleanup
    return 0
 end
- #      eval set versionExpected "$dollar"version_$venv_name
- #      _ve_is_python_on_path_correct_version $versionExpected
- #      switch $status
- #         case 1
- #            set fmt1 'Warning: Python version on $PATH not expected version!\n'
- #            set fmt2 '         Expected version: "%s"\n'
- #            set fmt3 '         Version on $PATH: "%s"\n\n'
- #            set pmt1 '         Proceed? [Y or [N]]? '
- #            read --nchars 1 --prompt-str $pmt1 ans
- #            printf '\n'
- #            test "$ans" = Y || begin 
- #               _ve_cleanup
- #               return 1
- #            end
- #         case 2
- #            set fmt1 'Error: No executable version of python found on $PATH!\n\n'
- #            set fmt2 '       One is needed to create the "%s" venv.\n\n'
- #            printf $fmt1$fmt2 $venv_name
- #            _ve_cleanup
- #            return 1
- #      end
-
  #      test -e $VE_VENV_DIR/$venv_name
  #      and rm -rf $VE_VENV_DIR/$venv_name
 
