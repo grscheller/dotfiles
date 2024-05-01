@@ -21,12 +21,6 @@ cd "$envPath" || {
    return 1
 }
 
-bash_files='
-   .bash_profile
-   .bashrc
-   .inputrc
-'
-
 bin_scripts='
    buArch
    chkcolor
@@ -79,9 +73,6 @@ dirs_to_create="
 ## Preinstall checks
 
 ## Install or Check
-
-# Install bash config files
-install_files "$HOME" "$bash_files" . 0644 "$envPath"
 
 # Install ~/bin scripts
 install_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"

@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# homeInstall: Installs a basic Bash environment and other
+#              miscellaneous home directory configuration files,
+#
+#   - bash (startup files)
+#   - ~/bin scripts
+#   - ssh
+#   - bloop (Scala), Cabal (Haskell)
+#   - create directories important to my work flow
+#
+
+scriptName=bashInstall
+envName=bash-env
+
+gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
+envPath="$gitRepo/$envName"
+
+cd "$envPath" || {
+   printf 'Error %s: failed to cd into "%s"\n\n' "$scriptName" "$envPath"
+   return 1
+}
+
+bash_files='
+   .bash_profile
+   .bashrc
+   .inputrc
+'
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
+
+## Preinstall checks
+
+## Install or Check
+
+# Install bash config files
+install_files "$HOME" "$bash_files" . 0644 "$envPath"
+
+case "$dfOption" in
+   install)
+      :
+      ;;
+   check)
+      :
+      ;;
+esac

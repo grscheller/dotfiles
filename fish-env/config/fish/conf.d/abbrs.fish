@@ -18,13 +18,14 @@ abbr -a gsm git submodule update --remote --merge
 abbr -a gt 'git tag --list|cat'
 abbr -a gw git switch
 
-# So I can run these outside their repos - single quotes intentional
+# appropriate for arch linux desktop environment - single quotes intentional
 abbr -a sfInstall 'sudo $DOTFILES_GIT_REPO/bin/sfInstall'
 abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvInstall '$DOTFILES_GIT_REPO/nvim-env/nvimInstall'
 abbr -a fInstall  '$DOTFILES_GIT_REPO/fish-env/fishInstall'
-abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/sway-env/swayInstall'
+abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'
+abbr -a bInstall  '$DOTFILES_GIT_REPO/bash-env/bashInstall'
 
 # Python virtual environment for system python
 abbr -a pl pip list|cat
@@ -43,4 +44,4 @@ abbr WgetM -- /usr/bin/wget --mirror -p --convert-links -e robots=off
 
 # Shell environment cmds
 abbr -a re 'cd; REDO_ENV=yes fish'
-abbr -a ue UPDATE_ENV=yes fishsource (pyenv init - | psub)
+abbr -a ue 'UPDATE_ENV=yes fish'

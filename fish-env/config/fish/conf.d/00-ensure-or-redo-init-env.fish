@@ -15,12 +15,9 @@
 # sourced BEFORE config.fish in alphabetical order.
 #
 
-# Sentinel value indicating whether an initial shell environment was setup.
+# Sentinel value indicating whether an initial shell environment was setup
 set -q FISHVIRGINPATH
 or begin
-   if set -q BASHVIRGINPATH
-      set -gx FISHVIRGINPATH $BASHVIRGINPATH
-   else
       set -gx FISHVIRGINPATH $PATH
       set -g UPDATE_ENV
    end
@@ -39,11 +36,6 @@ end
 
 set -q UPDATE_ENV
 and begin
-   # Let Bash know initial environment already configured
-   set -q _ENV_INITIALIZED
-   or set -gx _ENV_INITIALIZED 0
-   set -x _ENV_INITIALIZED (math "$_ENV_INITIALIZED+1")
-
    set -e UPDATE_ENV
    set -e REDO_ENV
 
@@ -58,8 +50,8 @@ and begin
 
    # Set up paging
    set -gx EDITOR nvim
-   set -gx VISUAL $EDITOR
-   set -gx SUDO_EDITOR $EDITOR
+   set -gx VISUAL nvim
+   set -gx SUDO_EDITOR /usr/bin/nvim
    set -gx PAGER 'nvim -R'
    set -gx MANPAGER 'nvim +Man!'
    set -gx DIFFPROG 'nvim -d'
@@ -89,16 +81,4 @@ and begin
    set -gx VE_VENV_DIR ~/devel/python_venvs
    test -d $VE_VENV_DIR || mkdir -p $PYTHON_VE_VENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
-
-   # For non-Systemd systems
-   if not type -q hostnamectl
-      set -gx make_phoney_hostnamectl
-   end
-end
-
-# For non-Systemd systems
-if set -q make_phoney_hostnamectl
-   function hostnamectl
-      hostname
-   end
 end

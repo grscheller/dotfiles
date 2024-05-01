@@ -21,40 +21,6 @@ return {
       end
    },
 
-   -- Comment out code
-   {
-      'numToStr/Comment.nvim',
-      keys = {
-         { mode = { 'n', 'x' }, 'gb', desc = 'toggle block comment' },
-         { mode = { 'n', 'x' }, 'gc', desc = 'toggle line comments' },
-         {
-            mode = 'n',
-            '<C-c>',
-            '<Plug>(comment_toggle_linewise_current)',
-            desc = 'toggle line comment',
-         },
-         {
-            mode = 'x',
-            '<C-c>',
-            '<Cmd>norm gcgv<CR>',
-            desc = 'toggle line comments',
-         },
-         {
-            mode = 'x',
-            '<C-b>',
-            '<Cmd>norm gbgv<CR>',
-            desc = 'toggle block comment',
-         },
-      },
-      opts = {
-         ignore = '^$',
-         mappings = {
-            basic = true,
-            extra = true,
-         },
-      },
-   },
-
    -- Quickly jump around window - like sneak but on steroids
    {
       'ggandor/leap.nvim',

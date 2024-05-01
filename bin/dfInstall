@@ -21,8 +21,9 @@ dfOption=''
 # Install dotfiles
 (. fish-env/fishInstall) &
 (. nvim-env/nvimInstall) &
-(. home-env/homeInstall) &
 (. sway-env/swayInstall) &
+(. home-env/homeInstall) &
+(. bash-env/bashInstall) &
 
 # Make sure all background jobs finish
 wait
