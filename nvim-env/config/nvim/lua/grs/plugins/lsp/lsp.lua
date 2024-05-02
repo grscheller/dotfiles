@@ -29,10 +29,7 @@ return {
          -- Configure Neovim builtin lsp client with the default configurations
          -- provided by the lspconfig pluggin.
          local defaultConfiguredLspServers = {
-            'bashls',
             'clangd',
-            'lua_ls',
-            'zls',
          }
 
          for _, lspServer in ipairs(defaultConfiguredLspServers) do
@@ -105,25 +102,27 @@ return {
       event = { 'BufReadPre', 'BufNewFile' },
       config = function()
          local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
          require('lazy-lsp').setup {
             excluded_servers = {
                'ccls',          -- using clangd instead
                'ltex',          -- tags JS keywords as spelling mistakes
+               'sourcekit',     -- nix barfs on Pop OS when building Swift dependency
                'sqls',          -- deprecated in lspconfig in favor of sqlls
                'rome',          -- misbehaving
                'vale',          -- not using vale for prose
                'zk',            -- not using Zettelkasten for note taking
             },
             preferred_servers = {
-               hls = {},
-               lua = {},
                java = {},
+               lua = { 'lua_ls' },
                markdown = { 'marksman' },
                python = {},
                scala = {},
+               sh = { 'bashls' },
                rust = {},
+               zig = { 'zls' },
             },
+            prefer_local = true,
             -- Default config passed to all servers to specify on_attach
             -- callback and other options.
             default_config = {
