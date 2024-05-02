@@ -15,16 +15,88 @@
 
 #  Jump up multiple directories
 function ud {
-   local upDir=..
-   local nDirs="$1"
-   if [[ $nDirs == @([1-9])*([0-9]) ]]
+   if (( $# > 1 ))
    then
+      printf 'Error: ud takes 0 or 1 arguements\n\n'
+      return 1
+   elif (( $# == 0 )) || [[ -z $1 ]]
+   then
+      cd ..
+      return $?
+   fi
+
+   local maxUp=-1
+   IFS='/'
+   for _dir in $PWD
+   do
+      (( maxUp++ ))
+   done
+   unset IFS _dir
+
+   local upDir=..
+   local nDirs
+   local uDirs
+
+   # user gave a number > 0
+   if [[ $1 == @([1-9])*([0-9]) ]]
+   then
+      uDirs=$1
+      if (( uDirs < maxUp ))
+      then
+         (( nDirs = uDirs ))
+      else
+         (( nDirs = maxUp ))
+      fi
       until (( nDirs-- <= 1 ))
       do
          upDir=../$upDir
       done
+      cd $upDir || return 0
+      return 1
    fi
-   cd $upDir || return
+
+   # user gave a target to find
+   local cnt=0
+   local target="$1"
+   # First look for exact match
+   while (( cnt < maxUp ))
+   do
+      if [[ -e $upDir/$target ]]
+      then
+         if [[ -d $upDir/$target ]]
+         then
+            cd "$upDir/$target" || return 1
+         else
+            cd "$upDir" || return 1
+         fi
+         return 0
+      fi
+      upDir=../$upDir
+      (( cnt++ ))
+   done
+   # Otherwise, find an initial string match
+   cnt=0
+   upDir=..
+   local targetStart="$1"
+   local first
+   shopt -s nullglob
+   while (( cnt < maxUp ))
+   do
+      for first in "$upDir"/"$targetStart"*
+      do
+         if [[ -d $first ]]
+         then
+            cd "$first" || { shopt -u nullglob; return 1; }
+         else
+            cd "$upDir" || { shopt -u nullglob; return 1; }
+         fi
+         shopt -u nullglob; return 0
+      done
+      upDir=../$upDir
+      (( cnt++ ))
+   done
+   printf 'ud: "%s" not found in any higher directory\n\n' "$target"
+   shopt -u nullglob; return 2
 }
 
 # Similar to the DOS path command
@@ -43,14 +115,14 @@ function pa {
 
 # Canonicalize and remove duplicate $PATH components 
 function pathtrim {
-   if [[ $# -eq 0 ]]
+   if [[ $# -ne 1 ]]
    then
       printf 'Error: pathtrim takes exactly one arguement\n\n'
       return 1
    fi
    local PathRaw="$1"
 
-   # Standardize the $PATH list:
+   # Sed script to tandardize the $PATH list:
    # - remove redundant / and :
    # - remove trailing /'s on directory names
    # - replace /./ -> /

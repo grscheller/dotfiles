@@ -7,7 +7,7 @@ function ud --description 'Jump up multiple directories, default is 1'
    set -f argc (count $argv)
 
    if test (count $argv) -gt 1 
-      printf 'ud: ud only takes 0 or 1 arguments' >&2
+      printf 'ud: ud only takes 0 or 1 arguments\n\n'
       return 2
    end
 
@@ -61,7 +61,7 @@ function ud --description 'Jump up multiple directories, default is 1'
    set -f destination
    set -f targetDest $upDir/$target
    if test ! -e "$targetDest"
-      printf 'ud: "%s" not found in any higher directory\n' $target >&2
+      printf 'ud: "%s" not found in any higher directory\n\n' $target
       return 1
    else if test -d "$targetDest"
       set destination $targetDest
@@ -72,7 +72,7 @@ function ud --description 'Jump up multiple directories, default is 1'
    if cd $destination 2>/dev/null
       return 0
    else
-      printf 'ud: failed to cd to "%s"\n    for target "%s"\n' $destination $target >&2
+      printf 'ud: failed to cd to "%s"\n    for target "%s"\n\n' $destination $target
       return 3
    end
 end
