@@ -3,7 +3,7 @@
 # Warning: non-idiomatic use of fish universals!
 #
 # All permanent configurations should flow from
-# configuration files, not done on the command line!!!
+# configuration files, not done on the command line or random GUI!!!
 #
 # If REDO_ENV is set, all "manual" configurations will be blown away!
 # This way, I know configuration is sane and not affected by old cruft.
@@ -18,9 +18,12 @@
 # Sentinel value indicating whether an initial shell environment was setup
 set -q FISHVIRGINPATH
 or begin
+   if set -q BASHVIRGINPATH
+      set -gx FISHVIRGINPATH $BASHVIRGINPATH
+   else
       set -gx FISHVIRGINPATH $PATH
-      set -g UPDATE_ENV
    end
+   set -g UPDATE_ENV
 end
 
 set -q REDO_ENV
@@ -39,14 +42,15 @@ and begin
    set -e UPDATE_ENV
    set -e REDO_ENV
 
-   ## Configure fish itself, IMHO one of the few legitimate uses for Universals
+   ## First configure fish itself
    set -U fish_features all
+   set -U fish_cursor_default block
+   set -U fish_cursor_insert line
+   set -U fish_cursor_replace_one underscore
+   set -U fish_cursor_visual underscore blink
 
-   # Use cursor shape to indicate vi-mode
-   set -gx fish_cursor_default block
-   set -gx fish_cursor_insert line
-   set -gx fish_cursor_replace_one underscore
-   set -gx fish_cursor_visual underscore blink
+   # Set locale
+   set -gx LANG en_US.utf8
 
    # Set up paging
    set -gx EDITOR nvim
@@ -59,26 +63,27 @@ and begin
    # Set up paths to dotfiles related repos
    set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
-   # Add ~/bin to end of PATH
-   fish_add_path -gpP ~/bin
-
    # Rust toolchain
-   fish_add_path -gpP ~/.cargo/bin
+   digpath -x -q rustc
+   and set PATH ~/.cargo/bin $PATH
 
-   # Haskell location used by Stack and Cabal
-   fish_add_path -gpP ~/.local/bin  ~/.cabal/bin
-
-   # Nix - thru symbolic link to current Nix environment, defer to pacman
-   set PATH $PATH ~/.nix-profile/bin
-
-   # Configure JDK on arch with fish function
-   if string match -qr 'arch' (uname -r)
-      archJDK 17
-   end
+   # Haskell locations used by Stack and Cabal
+   set PATH ~/.local/bin ~/.cabal/bin $PATH
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
    set -gx VE_VENV_DIR ~/devel/python_venvs
-   test -d $VE_VENV_DIR || mkdir -p $PYTHON_VE_VENVS
    set -gx PYENV_ROOT ~/.local/share/pyenv
+   set PATH $PATH $PYENV_ROOT/bin
+
+   # Add ~/bin at end of PATH
+   set PATH $PATH ~/bin
+
+   # Cleanup PATH: remove duplicate & nonexistent entries, resolve symlinks
+   set PATH (pathtrim)
+
+   # Configure JDK on arch
+   if string match -qr 'arch' (uname -r)
+      archJDK 17
+   end
 end

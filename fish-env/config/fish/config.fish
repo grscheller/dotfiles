@@ -20,9 +20,7 @@ if ! set -q SSH_AGENT_PID
    and ssh-add
 end
 
-# If pyenv is installed, use it to manage Python environments
-type -P pyenv >/dev/null 2>&1
-and begin
-   set -gx PYENV_ROOT ~/.local/share/pyenv
+# If installed, use pyenv to manage Python environments
+if digpath -q -x pyenv
    pyenv init - | source
 end

@@ -7,7 +7,7 @@
 [core]
 	editor = nvim
 	fsmonitor = true
-	pager = nvim -R -c 'setfiletype git'
+	pager = nvim -R -c 'set filetype=git'
 [color]
 	pager = no
 [pull]

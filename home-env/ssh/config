@@ -1,4 +1,5 @@
 Host gauss17
+  Hostname 192.168.1.23
   Port 31502
   User grs
 
@@ -7,6 +8,6 @@ Host euler7
   User grs
 
 Host onepiece
-  Hostname 192.168.1.8  
+  Hostname 192.168.1.22
   Port 22
   User buggy

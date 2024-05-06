@@ -113,7 +113,7 @@ function pa {
    ( IFS=':'; printf '%s\n' $PathWord )
 }
 
-# Canonicalize and remove duplicate $PATH components 
+# remove duplicates and standardize $PATH components 
 function pathtrim {
    if [[ $# -ne 1 ]]
    then
@@ -176,7 +176,6 @@ function pathtrim {
    do
       PathTrimmed="$PathTrimmed:$Dir"
    done
-   # PathTrimmed=$(printf %s "$PathTrimmed" | sed -E -e "$sedScript")
    printf '%s\n' "${PathTrimmed}"
 
    return 0
@@ -312,16 +311,15 @@ function ff {
 ## Make sure the initial shell environment is sane
 
 # Initial starting point - we want to be able to override these in subshells
-if [[ ! -v BASHVIRGINPATH ]] || [[ -v FORCEBASHREDO ]]
+if [[ ! -v BASHVIRGINPATH ]]
 then
-   if [[ -v FORCEBASHREDO ]] && [[ -v BASHVIRGINPATH ]]
-   then
-      PATH="$BASHVIRGINPATH"
-   fi
-   unset FORCEBASHREDO
-
    # Save original PATH
-   export BASHVIRGINPATH="$PATH"
+   if [[ -v FISHVIRGINPATH ]]
+   then
+      export BASHVIRGINPATH="$FISHVIRGINPATH"
+   else
+      export BASHVIRGINPATH="$PATH"
+   fi
 
    # Set locale so commandline tools & other programs default to unicode
    export LANG=en_US.utf8
@@ -351,6 +349,11 @@ then
 
    # Haskell locations used by Cabal and Stack
    PATH=~/.cabal/bin:~/.local/bin:"$PATH"
+
+   # Python configuration
+   export PIP_REQUIRE_VIRTUALENV=true
+   export PYENV_ROOT=~/.local/share/pyenv
+   PATH="$PATH":$PYENV_ROOT/bin
 
    # If there is a ~/bin directory, put near end
    PATH="$PATH":~/bin
@@ -435,10 +438,15 @@ PS2='> '
 PS3='#? '
 PS4='++ '
 
-# Python configuration
-export PIP_REQUIRE_VIRTUALENV=true
-export PYENV_ROOT=~/.local/share/pyenv
-if [[ -e "$PYENV_ROOT/bin/pyenv" ]]
+# Ensure SSH key-agent running with your private keys
+if [[ ! -v SSH_AGENT_PID ]]
 then
-   eval "$($PYENV_ROOT/bin/pyenv init -)"
+   printf 'SSH '
+   eval "$(ssh-agent -s)" && ssh-add
+fi
+
+# If installed, use pyenv to manage Python environments
+if digpath -q -x pyenv
+then
+   eval "$(pyenv init -)"
 fi
