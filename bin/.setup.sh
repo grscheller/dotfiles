@@ -21,14 +21,14 @@ fi
 if [ -z "$dfOption" ]
 then
    umask 0022
-   XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
-   XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
-   XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
-   XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+   export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+   export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
+   export XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
+   export XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
 
    ## Parse cmdline arguments
 
-   usage="Usage: $scriptName [--install|--check]"
+   usage="Usage: $scriptName [--install|--check|--remove]"
 
    if test $# -gt 1
    then
@@ -42,6 +42,9 @@ then
             ;;
          --install)
             dfOption=install
+            ;;
+         --remove)
+            dfOption=remove
             ;;
          *)
             printf '%s\n\n' "$usage"
@@ -69,6 +72,9 @@ then
             check)
                printf '%s: directory "%s" needs to be created\n\n' "$scriptName" "$targetDir"
                ;;
+            remove)
+               :
+               ;;
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
@@ -84,7 +90,7 @@ then
       if test -e "$item"
       then
          case "$dfOption" in
-            install)
+            install | remove)
                rm -rf "$item"
                test -e "$item" && {
                   printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
@@ -98,7 +104,7 @@ then
    }
 
    # Install a file
-   install_file () {
+   process_file () {
       local install_dir file_path src_dir file_perm envPath
       local src_rel src_abs trgt
       install_dir="$1"
@@ -115,7 +121,7 @@ then
 
       case "$dfOption" in
          install)
-            # Install the file
+            # Install the remove the target file
             if cp "$src_rel" "$trgt"
             then
                chmod --quiet "$file_perm" "$trgt" || {
@@ -142,11 +148,15 @@ then
                }
             fi
             ;;
+         remove)
+            # remove the target file
+            remove_item "$trgt"
+            ;;
       esac
    }
 
    # Install files - convenience function (keep loops out of config files)
-   install_files () {
+   process_files () {
       local install_dir files src_dir file_perm envPath
       local file
       install_dir="$1"
@@ -157,7 +167,7 @@ then
       test -z "$files" && return
       for file in $files
       do
-         install_file "$install_dir" "$file" "$src_dir" "$file_perm" "$envPath"
+         process_file "$install_dir" "$file" "$src_dir" "$file_perm" "$envPath"
       done
    }
 

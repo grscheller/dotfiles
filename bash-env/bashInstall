@@ -33,16 +33,19 @@ bash_files='
 
 ## Preinstall checks
 
-## Install or Check
+## Install, Check or Remove
 
-# Install bash config files
-install_files "$HOME" "$bash_files" . 0644 "$envPath"
+# Process bash config files
+process_files "$HOME" "$bash_files" . 0644 "$envPath"
 
 case "$dfOption" in
    install)
       :
       ;;
    check)
+      :
+      ;;
+   remove)
       :
       ;;
 esac

@@ -22,6 +22,7 @@ abbr -a gw git switch
 abbr -a sfInstall 'sudo $DOTFILES_GIT_REPO/bin/sfInstall'
 abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvInstall '$DOTFILES_GIT_REPO/nvim-env/nvimInstall'
+abbr -a ksInstall '$DOTFILES_GIT_REPO/nvim-ks-env/ksInstall'
 abbr -a fInstall  '$DOTFILES_GIT_REPO/fish-env/fishInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/sway-env/swayInstall'
 abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'

@@ -67,13 +67,13 @@ dirs_to_create="
 ## Install or Check
 
 # Install Sway config files
-install_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644 "$envPath"
+process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644 "$envPath"
 
 # Install Sway related Systemd service files
-install_files "$XDG_CONFIG_HOME/systemd/user" "$systemd_service_files" config/systemd/user 0644 "$envPath"
+process_files "$XDG_CONFIG_HOME/systemd/user" "$systemd_service_files" config/systemd/user 0644 "$envPath"
 
 # Install ~/bin scripts
-install_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
+process_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
 # Remove/report no longer needed files and directories
@@ -105,5 +105,14 @@ case "$dfOption" in
       ;;
    check)
       :
+      ;;
+   remove)
+      remove_item "$XDG_CONFIG_HOME"/alacritty
+      remove_item "$XDG_CONFIG_HOME"/kanshi
+      remove_item "$XDG_CONFIG_HOME"/mako
+      remove_item "$XDG_CONFIG_HOME"/mpd
+      remove_item "$XDG_CONFIG_HOME"/sway
+      remove_item "$XDG_CONFIG_HOME"/waybar
+      remove_item "$XDG_CONFIG_HOME"/wofi
       ;;
 esac

@@ -98,7 +98,7 @@ fi
 ## Install/Check
 
 # Install Neovim files & NVIM related TOML files
-install_files "$XDG_CONFIG_HOME/nvim" "
+process_files "$XDG_CONFIG_HOME/nvim" "
    $dot_config_files
    $toml_files
 " config/nvim 0644 "$envPath"
@@ -135,5 +135,9 @@ case "$dfOption" in
          printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
          printf '             recompiled on the next install.\n\n'
       fi
+      ;;
+   remove)
+      remove_items "$XDG_CONFIG_HOME"/nvim/ftplugin
+      remove_items "$XDG_CONFIG_HOME"/nvim/lua/grs
       ;;
 esac

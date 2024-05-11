@@ -70,32 +70,29 @@ dirs_to_create="
 
 . ../bin/.setup.sh
 
-## Preinstall checks
+## Install, Check or Remove
 
-## Install or Check
-
-# Install ~/bin scripts
-install_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
+# Process ~/bin scripts
+process_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
 
-# Install ssh configs
-install_files "$HOME/.ssh" "$ssh_files" ssh 0600 "$envPath"
+# Process ssh configs
+process_files "$HOME/.ssh" "$ssh_files" ssh 0600 "$envPath"
 chmod 0700 "$HOME/.ssh"
 
-# Install Bloop configs for Scala
-install_files "$HOME/.bloop" "$bloop_files" bloop 0644 "$envPath"
+# Process Bloop configs for Scala
+process_files "$HOME/.bloop" "$bloop_files" bloop 0644 "$envPath"
 chmod 0755 "$HOME/.bloop"
 
-# Install Cabal configs for Haskell
-install_files "$HOME/.cabal" "$cabal_files" cabal 0644 "$envPath"
+# Process Cabal configs for Haskell
+process_files "$HOME/.cabal" "$cabal_files" cabal 0644 "$envPath"
 chmod 0755 "$HOME/.cabal"
 
-# Install miscellaneous ~/.config files
-install_files "$HOME/.config" "$dot_config_files" config 0644 "$envPath"
-chmod 0755 "$HOME/.cabal"
+# Process miscellaneous ~/.config files
+process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644 "$envPath"
 
-# Install devel config files
-install_files "$HOME/devel" "$devel_files" devel 0644 "$envPath"
+# Process devel config files
+process_files "$HOME/devel" "$devel_files" devel 0644 "$envPath"
 chmod 0755 "$HOME/devel"
 
 # Remove/report no longer needed files and directories
@@ -112,5 +109,8 @@ case "$dfOption" in
       ;;
    check)
       :
+      ;;
+   remove)
+      remove_item "$XDG_CONFIG_HOME"/nixpkgs
       ;;
 esac
