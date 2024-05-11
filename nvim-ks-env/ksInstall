@@ -1,0 +1,102 @@
+#!/bin/sh
+#
+# nvimInstall: Installs Neovim configuration files.
+#
+
+scriptName=ksInstall
+envName=nvim-ks-env
+
+gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
+envPath="$gitRepo/$envName"
+
+cd "$envPath" || {
+   printf '%s: Error - Failed to cd into "%s"\n\n' "$scriptName" "$envPath"
+   return 1
+}
+
+dot_config_files='
+   lua/kickstart/plugins/autopairs.lua
+   lua/kickstart/plugins/debug.lua
+   lua/kickstart/plugins/gitsigns.lua
+   lua/kickstart/plugins/indent_line.lua
+   lua/kickstart/plugins/lint.lua
+   lua/kickstart/plugins/neo-tree.lua
+   init.lua
+'
+
+toml_files='
+   .stylua.toml
+'
+
+remove_items=""
+
+dirs_to_create=""
+
+## Setup - parse cmdline arguments and source functions, if not done already
+
+. ../bin/.setup.sh
+
+## Preinstall checks
+
+# See if nvim spellfile will need to be recompiled
+#SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
+#if which nvim >/dev/null 2>&1
+#then
+#   if ! test -e "$SpellFile" || {
+#      ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add >/dev/null 2>&1
+#   }
+#   then
+#      compileSpellFile=yes
+#   fi
+#   if ! test -e "${SpellFile}.spl"
+#   then
+#      compileSpellFile=yes
+#   fi
+#else
+#   compileSpellFile=no
+#fi
+
+## Install/Check
+
+# Install Neovim files & NVIM related TOML files
+process_files "$XDG_CONFIG_HOME/nvim" "$dot_config_files $toml_files" config/nvim 0644 "$envPath" chmod 0755 "$XDG_CONFIG_HOME/nvim"
+
+# Remove/report no longer needed files and directories thru
+remove_items "$remove_items"
+
+# Create/report missing directories
+ensure_dirs "$dirs_to_create"
+
+## Post install/check tweaks
+
+case "$dfOption" in
+   install)
+   #   # Helps when editing installed Neovim configs
+   #   printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
+
+   #   # Recompiled spell file if necessary
+   #   if test "$compileSpellFile" = yes
+   #   then
+   #      sf="${SpellFile##*/}" 
+   #      sf_dir="${SpellFile%/*}"
+   #      ( if cd "$sf_dir"
+   #        then
+   #           nvim -c ":mkspell! $sf" -c 'q' "$sf"
+   #        fi )
+   #   fi
+      :
+      ;;
+   check)
+   #   # Indicate whether the spellfile will be recompiled on next install
+   #   if test "$compileSpellFile" = yes
+   #   then
+   #      printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+   #      printf '             recompiled on the next install.\n\n'
+   #   fi
+      :
+      ;;
+   remove)
+      remove_items "$XDG_CONFIG_HOME"/nvim/lua/kickstart
+      :
+      ;;
+esac
