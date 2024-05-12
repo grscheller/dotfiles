@@ -14,6 +14,9 @@ cd "$envPath" || {
    return 1
 }
 
+# Parse cmdline arguments and source functions, if not done already
+. ../bin/.setup.sh
+
 dot_config_files='
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/debug.lua
@@ -29,14 +32,10 @@ toml_files='
 '
 
 remove_items="
-   "$XDG_CONFIG_HOME/nvim/lua/kickstart"
+   $XDG_CONFIG_HOME/nvim/lua/kickstart
 "
 
 dirs_to_create=""
-
-## Setup - parse cmdline arguments and source functions, if not done already
-
-. ../bin/.setup.sh
 
 ## Preinstall checks
 
