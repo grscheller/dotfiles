@@ -15,12 +15,12 @@ cd "$envPath" || {
 }
 
 dot_config_files='
-   lua/kickstart/plugins/autopairs.lua
-   lua/kickstart/plugins/debug.lua
-   lua/kickstart/plugins/gitsigns.lua
-   lua/kickstart/plugins/indent_line.lua
-   lua/kickstart/plugins/lint.lua
-   lua/kickstart/plugins/neo-tree.lua
+   lua/grs/plugins/autopairs.lua
+   lua/grs/plugins/debug.lua
+   lua/grs/plugins/gitsigns.lua
+   lua/grs/plugins/indent_line.lua
+   lua/grs/plugins/lint.lua
+   lua/grs/plugins/neo-tree.lua
    init.lua
 '
 
@@ -28,7 +28,9 @@ toml_files='
    .stylua.toml
 '
 
-remove_items=""
+remove_items="
+   "$XDG_CONFIG_HOME/nvim/lua/kickstart"
+"
 
 dirs_to_create=""
 
@@ -96,7 +98,7 @@ case "$dfOption" in
       :
       ;;
    remove)
-      remove_items "$XDG_CONFIG_HOME/nvim/lua/kickstart"
+      remove_items "$XDG_CONFIG_HOME/nvim/lua/grs"
       :
       ;;
 esac
