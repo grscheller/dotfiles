@@ -48,8 +48,11 @@ cabal_files='
 '
 
 dot_config_files='
+   alacritty/alacritty_arch.toml
+   alacritty/alacritty.toml
+   alacritty/alacritty_arch.yml
+   alacritty/alacritty.yml
    git/config
-   nixpkgs/config.nix
 '
 
 devel_files='
@@ -57,13 +60,14 @@ devel_files='
 '
 
 remove_items="
-   $HOME/.vimrc
+   "$HOME/.vimrc"
+   "$XDG_CONFIG_HOME/nixpkgs"
 "
 
 dirs_to_create="
-   $HOME/catch
-   $HOME/.cabal/bin
-   $HOME/.local/bin
+   "$HOME/catch"
+   "$HOME/.cabal/bin"
+   "$HOME/.local/bin"
 "
 
 ## Setup - parse cmdline arguments and source functions, if not done already
@@ -111,6 +115,6 @@ case "$dfOption" in
       :
       ;;
    remove)
-      remove_item "$XDG_CONFIG_HOME"/nixpkgs
+      remove_item "$XDG_CONFIG_HOME/alacritty"
       ;;
 esac

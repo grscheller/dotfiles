@@ -115,7 +115,7 @@ ensure_dirs "$dirs_to_create"
 case "$dfOption" in
    install)
       # Helps when editing installed Neovim configs
-      printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
+      printf '{}' > "$XDG_CONFIG_HOME/nvim/.neoconf.json"
 
       # Recompiled spell file if necessary
       if test "$compileSpellFile" = yes

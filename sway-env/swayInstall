@@ -22,10 +22,6 @@ cd "$envPath" || {
 ## Files to install
 
 dot_config_files='
-   alacritty/alacritty_arch.toml
-   alacritty/alacritty.toml
-   alacritty/alacritty_arch.yml
-   alacritty/alacritty.yml
    kanshi/config
    mako/config
    mpd/mpd.conf
@@ -107,7 +103,6 @@ case "$dfOption" in
       :
       ;;
    remove)
-      remove_item "$XDG_CONFIG_HOME"/alacritty
       remove_item "$XDG_CONFIG_HOME"/kanshi
       remove_item "$XDG_CONFIG_HOME"/mako
       remove_item "$XDG_CONFIG_HOME"/mpd

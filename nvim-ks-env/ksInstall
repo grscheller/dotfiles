@@ -96,7 +96,7 @@ case "$dfOption" in
       :
       ;;
    remove)
-      remove_items "$XDG_CONFIG_HOME"/nvim/lua/kickstart
+      remove_items "$XDG_CONFIG_HOME/nvim/lua/kickstart"
       :
       ;;
 esac

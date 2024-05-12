@@ -20,7 +20,7 @@ dfOption=''
 
 # Install dotfiles
 (. fish-env/fishInstall) &
-(. nvim-env/nvimInstall) &
+(. nvim-ks-env/ksInstall) &
 (. sway-env/swayInstall) &
 (. home-env/homeInstall) &
 (. bash-env/bashInstall) &
