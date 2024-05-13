@@ -18,12 +18,14 @@ cd "$envPath" || {
 . ../bin/.setup.sh
 
 dot_config_files='
+   lua/grs/config/options.lua
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/debug.lua
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
    lua/grs/plugins/lint.lua
    lua/grs/plugins/neo-tree.lua
+   spell/en.utf-8.add
    init.lua
 '
 
@@ -40,22 +42,22 @@ dirs_to_create=""
 ## Preinstall checks
 
 # See if nvim spellfile will need to be recompiled
-#SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
-#if which nvim >/dev/null 2>&1
-#then
-#   if ! test -e "$SpellFile" || {
-#      ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add >/dev/null 2>&1
-#   }
-#   then
-#      compileSpellFile=yes
-#   fi
-#   if ! test -e "${SpellFile}.spl"
-#   then
-#      compileSpellFile=yes
-#   fi
-#else
-#   compileSpellFile=no
-#fi
+SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
+if which nvim >/dev/null 2>&1
+then
+   if ! test -e "$SpellFile" || {
+      ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add >/dev/null 2>&1
+   }
+   then
+      compileSpellFile=yes
+   fi
+   if ! test -e "${SpellFile}.spl"
+   then
+      compileSpellFile=yes
+   fi
+else
+   compileSpellFile=no
+fi
 
 ## Install/Check
 
@@ -72,29 +74,27 @@ ensure_dirs "$dirs_to_create"
 
 case "$dfOption" in
    install)
-   #   # Helps when editing installed Neovim configs
-   #   printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
+      # Helps when editing installed Neovim configs
+      printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
 
-   #   # Recompiled spell file if necessary
-   #   if test "$compileSpellFile" = yes
-   #   then
-   #      sf="${SpellFile##*/}" 
-   #      sf_dir="${SpellFile%/*}"
-   #      ( if cd "$sf_dir"
-   #        then
-   #           nvim -c ":mkspell! $sf" -c 'q' "$sf"
-   #        fi )
-   #   fi
-      :
+      # Recompiled spell file if necessary
+      if test "$compileSpellFile" = yes
+      then
+         sf="${SpellFile##*/}" 
+         sf_dir="${SpellFile%/*}"
+         ( if cd "$sf_dir"
+           then
+              nvim -c ":mkspell! $sf" -c 'q' "$sf"
+           fi )
+      fi
       ;;
    check)
-   #   # Indicate whether the spellfile will be recompiled on next install
-   #   if test "$compileSpellFile" = yes
-   #   then
-   #      printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
-   #      printf '             recompiled on the next install.\n\n'
-   #   fi
-      :
+      # Indicate whether the spellfile will be recompiled on next install
+      if test "$compileSpellFile" = yes
+      then
+         printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+         printf '             recompiled on the next install.\n\n'
+      fi
       ;;
    remove)
       remove_items "$XDG_CONFIG_HOME/nvim/lua/grs"
