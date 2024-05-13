@@ -1,9 +1,8 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+--[[ Using nvim-lua/kickstart.nvim as a starting point to redo my Neovim
+    configs. I will be merging my prior configuration into this framework. ]]
 
-vim.g.have_nerd_font = true
-
--- Set options
+-- Preliminary setup
+require 'grs.config.globals'
 require 'grs.config.options'
 
 -- [[ Basic Keymaps ]]

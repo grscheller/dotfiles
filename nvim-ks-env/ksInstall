@@ -18,6 +18,7 @@ cd "$envPath" || {
 . ../bin/.setup.sh
 
 dot_config_files='
+   lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/debug.lua
