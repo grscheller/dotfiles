@@ -18,6 +18,22 @@ cd "$envPath" || {
 . ../bin/.setup.sh
 
 dot_config_files='
+   ftplugin/c.lua
+   ftplugin/cpp.lua
+   ftplugin/csv.lua
+   ftplugin/fish.lua
+   ftplugin/haskell.lua
+   ftplugin/help.lua
+   ftplugin/html.lua
+   ftplugin/lua.lua
+   ftplugin/markdown.lua
+   ftplugin/ocaml.lua
+   ftplugin/rust.lua
+   ftplugin/sbt.lua
+   ftplugin/scala.lua
+   ftplugin/sh.lua
+   ftplugin/text.lua
+   ftplugin/tsv.lua
    lua/grs/config/autocmds.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/globals.lua

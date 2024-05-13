@@ -171,14 +171,12 @@ filenames
 filesysystem
 filesysystems
 filetype
+finalizer
 firefox
 flapmap
 fmt
 foldleft
 foldright
-folke
-Folke
-fonttools
 foo
 foofoo
 formatter
@@ -253,6 +251,7 @@ ifname
 ignorable
 implicits
 indexable
+initializer
 init
 instantiation
 integrations
@@ -708,6 +707,9 @@ dn
 fdgit
 FIFOQueue
 FIFOQueues
+folke
+Folke
+fonttools
 FStack
 FStacks
 FTuple
