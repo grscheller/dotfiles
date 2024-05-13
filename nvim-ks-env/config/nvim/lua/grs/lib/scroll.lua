@@ -1,12 +1,12 @@
 --[[ Automatic scrolling in window ]]
 
 -- Here are the keymaps I use with these, see config/keymaps.lua
---   scroll.up:     <c-up>          
---   scroll.down:   <c-down>        
---   scroll.faster: <c-right>       
---   scroll.slower: <c-left>        
---   scroll.reset:  <c-s>           
---   scroll.pause:  <c- >
+--   scroll.up:     <pageup>
+--   scroll.down:   <pagedown>
+--   scroll.faster: <home>
+--   scroll.slower: <end>
+--   scroll.reset:  <insert>
+--   scroll.pause:  <delete>
 
 local up = 'normal <c-y>'
 local dn = 'normal <c-e>'

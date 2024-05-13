@@ -9,4 +9,4 @@ vim.opt_local.shiftround = true
 -- We need to skip $VIMRUNTIME/ftplugin/markdown.vim. It does not respect
 -- my settings and I am not smart enough to fix the damage it does with
 -- an after/ftplugin/markdown.lua file.
-vim.api.nvim_command('let b:did_ftplugin=1')
+-- vim.api.nvim_command('let b:did_ftplugin=1')
