@@ -71,22 +71,22 @@ require('lazy').setup({
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+      local wk = require 'which-key'
+      local keymaps = require 'grs.config.keymaps'
+      wk.setup()
+      keymaps.wk_prefixes(wk)
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-      }
-      -- visual mode
       require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
-      }, { mode = 'v' })
+        ['<leader>c'] = { name = 'code', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = 'document', _ = 'which_key_ignore' },
+        ['<leader>r'] = { name = 'rename', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = 'search', _ = 'which_key_ignore' },
+        ['<leader>w'] = { name = 'workspace', _ = 'which_key_ignore' },
+        ['<leader>t'] = { name = 'toggle', _ = 'which_key_ignore' },
+      }, { mode = 'n' })
+
+      require('which-key').register({ ['<leader>h'] = { 'Git hunk' } }, { mode = { 'n', 'v' } })
     end,
   },
 
@@ -144,8 +144,10 @@ require('lazy').setup({
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
+        -- TODO: Cleanup this mess. I am defining the prefixes for my keymaps
+        -- along with the keymaps defined in this file by kickstart.nvim.
+        -- Eventually I will migrate all keymaps to grs.config.keymaps. I won't
+        -- wire in my keymaps until I "drive" the kickstart config for a while.
         --
         -- defaults = {
         --   mappings = {

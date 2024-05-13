@@ -4,7 +4,6 @@
 
 local M = {}
 local km = vim.keymap.set
---local wk = require 'which-key'
 local scroll = require 'grs.lib.scroll'
 
 --[[ Window/Tabpage related mappings/bindings ]]
@@ -105,72 +104,73 @@ km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
 
---[[ Which-key prefix-keys]]
+-- Which-key prefix-keys - defer until Which-Key is available
+function M.wk_prefixes(wk)
+  -- Leader & leader-like prefix-keys
+  wk.register({
+    name = 'space key',
+  }, {
+    prefix = '<space>',
+    mode = { 'n', 'v' },
+  })
 
--- -- Leader & leader-like prefix-keys
--- wk.register({
---   name = 'space key',
--- }, {
---   prefix = '<space>',
---   mode = { 'n', 'v' },
--- })
---
--- wk.register({
---   name = 'clipboard, blackhole, LSP, DAP',
--- }, {
---   prefix = '<bslash>',
---   mode = 'n',
--- })
---
--- wk.register({
---   name = 'clipboard, blackhole, LSP',
--- }, {
---   prefix = '<bslash>',
---   mode = 'v',
--- })
---
--- -- Lazy GUI prefix-key & keymap
--- wk.register({
---   name = 'lazy',
--- }, {
---   prefix = '<leader>l',
---   mode = 'n',
--- })
---
--- km('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
---
--- -- Telescope prefix-key & additional keymap
--- wk.register({
---   name = 'telescope',
--- }, {
---   prefix = '<leader>t',
---   mode = 'n',
--- })
---
--- km('n', '<leader>tt', '<cmd>Telescope<cr>', {
---   desc = 'telescope',
--- })
---
--- -- Treesitter related keymap
--- km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
---   desc = 'toggle treesitter highlighting',
--- })
---
--- -- Harpoon prefix-key
--- wk.register({
---   name = 'harpoon',
--- }, {
---   prefix = '<leader>h',
---   mode = 'n',
--- })
---
--- -- Refactoring prefix-key
--- wk.register({
---   name = 'refactoring',
--- }, {
---   prefix = '<leader>r',
---   mode = { 'n', 'v' },
--- })
+  wk.register({
+    name = 'LSP, DAP',
+  }, {
+    prefix = '<bslash>',
+    mode = 'n',
+  })
+
+  wk.register({
+    name = 'LSP',
+  }, {
+    prefix = '<bslash>',
+    mode = 'v',
+  })
+
+  -- Lazy GUI prefix-key & keymap
+  wk.register({
+    name = 'lazy',
+  }, {
+    prefix = '<leader>l',
+    mode = 'n',
+  })
+
+  km('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+
+  -- Telescope prefix-key & additional keymap
+  wk.register({
+    name = 'telescope',
+  }, {
+    prefix = '<leader>t',
+    mode = 'n',
+  })
+
+  km('n', '<leader>tt', '<cmd>Telescope<cr>', {
+    desc = 'telescope',
+  })
+
+  -- Treesitter related keymap
+  km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
+    desc = 'toggle treesitter highlighting',
+  })
+
+  -- Harpoon prefix-key
+  wk.register({
+    name = 'harpoon',
+  }, {
+    prefix = '<leader>h',
+    mode = 'n',
+  })
+
+  -- Refactoring prefix-key
+  wk.register({
+    name = 'refactoring',
+  }, {
+    prefix = '<leader>r',
+    mode = { 'n', 'v' },
+  })
+end
 
 -- --[[ Diagnostic keymaps ]]
 km('n', '<bslash>[', vim.diagnostic.goto_prev, { desc = 'goto prev diagostic' })
@@ -178,181 +178,181 @@ km('n', '<bslash>]', vim.diagnostic.goto_next, { desc = 'goto next diagostic' })
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'show diagnostic quickfix list' })
 
--- --[[ LSP related keymaps ]] -- TODO: pass wk to these? Or define elsewhere?
--- function M.lsp(bufnr)
---   km('n', '<bslash>H', vim.lsp.buf.hover, {
---     buffer = bufnr,
---     desc = 'hover',
---   })
---   km('n', '<bslash>K', vim.lsp.buf.signature_help, {
---     buffer = bufnr,
---     desc = 'signature help',
---   })
---   km('n', '<bslash>gd', vim.lsp.buf.definition, {
---     buffer = bufnr,
---     desc = 'goto definition',
---   })
---   km('n', '<bslash>gD', vim.lsp.buf.declaration, {
---     buffer = bufnr,
---     desc = 'goto declaration',
---   })
---   km('n', '<bslash>gI', vim.lsp.buf.implementation, {
---     buffer = bufnr,
---     desc = 'goto implementation',
---   })
---   km('n', '<bslash>gr', vim.lsp.buf.references, {
---     buffer = bufnr,
---     desc = 'goto references',
---   })
---   km('n', '<bslash>gt', vim.lsp.buf.type_definition, {
---     buffer = bufnr,
---     desc = 'goto type definition',
---   })
---   km('n', '<bslash>gW', vim.lsp.buf.workspace_symbol, {
---     buffer = bufnr,
---     desc = 'workspace symbol',
---   })
---   km('n', '<bslash>gS', vim.lsp.buf.document_symbol, {
---     buffer = bufnr,
---     desc = 'document symbol',
---   })
---   km('n', '<bslash>a', vim.lsp.buf.code_action, {
---     buffer = bufnr,
---     desc = 'code action',
---   })
---   km('n', '<bslash>h', vim.lsp.codelens.refresh, {
---     buffer = bufnr,
---     desc = 'code lens refresh',
---   })
---   km('n', '<bslash>l', vim.lsp.codelens.run, {
---     buffer = bufnr,
---     desc = 'code lens run',
---   })
---   km('n', '<bslash>r', vim.lsp.buf.rename, {
---     buffer = bufnr,
---     desc = 'rename',
---   })
---   km('n', '<bslash>wa', vim.lsp.buf.add_workspace_folder, {
---     buffer = bufnr,
---     desc = 'add workspace folder',
---   })
---   km('n', '<bslash>wr', vim.lsp.buf.remove_workspace_folder, {
---     buffer = bufnr,
---     desc = 'remove workspace folder',
---   })
---   km({ 'n', 'v' }, '<bslash>F', vim.lsp.buf.format, {
---     buffer = bufnr,
---     desc = 'lsp format',
---   })
---
---   wk.register({
---     name = 'goto',
---   }, {
---     prefix = '<bslash>g',
---     mode = 'n',
---     buffer = bufnr,
---   })
---
---   wk.register({
---     name = 'workspace',
---   }, {
---     prefix = '<bslash>w',
---     mode = 'n',
---     buffer = bufnr,
---   })
--- end
---
--- -- Haskell related keymaps
--- function M.haskell(bufnr)
---   km({ 'n', 'v' }, '<bslash>LF', '<cmd>%!stylish-haskell<cr>', {
---     buffer = bufnr,
---     desc = 'stylish haskell format',
---   })
---
---   wk.register({
---     name = 'haskell specific',
---   }, {
---     prefix = '<bslash>L',
---     mode = { 'n', 'v' },
---     buffer = bufnr,
---   })
--- end
---
--- -- Rust-Tools related keymaps
--- function M.rust(bufnr, rt)
---   km('n', '<bslash>LH', rt.hover_actions.hover_actions, {
---     buffer = bufnr,
---     desc = 'rust hover actions',
---   })
---   km('n', '<bslash>LA', rt.code_action_group.code_action_group, {
---     buffer = bufnr,
---     desc = 'rust code action group',
---   })
---
---   wk.register({
---     name = 'rust specific',
---   }, {
---     prefix = '<bslash>L',
---     mode = 'n',
---     buffer = bufnr,
---   })
--- end
---
--- -- Scala Metals related keymaps
--- function M.metals(bufnr, metals)
---   km('n', '<bslash>LH', metals.hover_worksheet, {
---     buffer = bufnr,
---     desc = 'metals hover worksheet',
---   })
---
---   wk.register({
---     name = 'scala specific',
---   }, {
---     prefix = '<bslash>L',
---     mode = 'n',
---     buffer = bufnr,
---   })
--- end
---
--- --[[ DAP (Debug Adapter Protocol) related keymaps ]]
---
--- function M.dap(bufnr, dap, dap_ui_widgets)
---   km('n', '<bslash><bslash>c', dap.continue, {
---     buffer = bufnr,
---     desc = 'dap continue',
---   })
---   km('n', '<bslash><bslash>h', dap_ui_widgets.hover, {
---     buffer = bufnr,
---     desc = 'dap hover',
---   })
---   km('n', '<bslash><bslash>l', dap.run_last, {
---     buffer = bufnr,
---     desc = 'dap run last',
---   })
---   km('n', '<bslash><bslash>o', dap.step_over, {
---     buffer = bufnr,
---     desc = 'dap step over',
---   })
---   km('n', '<bslash><bslash>i', dap.step_into, {
---     buffer = bufnr,
---     desc = 'dap step into',
---   })
---   km('n', '<bslash><bslash>b', dap.toggle_breakpoint, {
---     buffer = bufnr,
---     desc = 'dap toggle breakpoint',
---   })
---   km('n', '<bslash><bslash>r', dap.repl.toggle, {
---     buffer = bufnr,
---     desc = 'dap repl toggle',
---   })
---
---   wk.register({
---     name = 'dap',
---   }, {
---     prefix = '<bslash><bslash>',
---     mode = 'n',
---     buffer = bufnr,
---   })
--- end
+--[[ LSP related keymaps ]]
+function M.lsp(bufnr, wk)
+  km('n', '<bslash>H', vim.lsp.buf.hover, {
+    buffer = bufnr,
+    desc = 'hover',
+  })
+  km('n', '<bslash>K', vim.lsp.buf.signature_help, {
+    buffer = bufnr,
+    desc = 'signature help',
+  })
+  km('n', '<bslash>gd', vim.lsp.buf.definition, {
+    buffer = bufnr,
+    desc = 'goto definition',
+  })
+  km('n', '<bslash>gD', vim.lsp.buf.declaration, {
+    buffer = bufnr,
+    desc = 'goto declaration',
+  })
+  km('n', '<bslash>gI', vim.lsp.buf.implementation, {
+    buffer = bufnr,
+    desc = 'goto implementation',
+  })
+  km('n', '<bslash>gr', vim.lsp.buf.references, {
+    buffer = bufnr,
+    desc = 'goto references',
+  })
+  km('n', '<bslash>gt', vim.lsp.buf.type_definition, {
+    buffer = bufnr,
+    desc = 'goto type definition',
+  })
+  km('n', '<bslash>gW', vim.lsp.buf.workspace_symbol, {
+    buffer = bufnr,
+    desc = 'workspace symbol',
+  })
+  km('n', '<bslash>gS', vim.lsp.buf.document_symbol, {
+    buffer = bufnr,
+    desc = 'document symbol',
+  })
+  km('n', '<bslash>a', vim.lsp.buf.code_action, {
+    buffer = bufnr,
+    desc = 'code action',
+  })
+  km('n', '<bslash>h', vim.lsp.codelens.refresh, {
+    buffer = bufnr,
+    desc = 'code lens refresh',
+  })
+  km('n', '<bslash>l', vim.lsp.codelens.run, {
+    buffer = bufnr,
+    desc = 'code lens run',
+  })
+  km('n', '<bslash>r', vim.lsp.buf.rename, {
+    buffer = bufnr,
+    desc = 'rename',
+  })
+  km('n', '<bslash>wa', vim.lsp.buf.add_workspace_folder, {
+    buffer = bufnr,
+    desc = 'add workspace folder',
+  })
+  km('n', '<bslash>wr', vim.lsp.buf.remove_workspace_folder, {
+    buffer = bufnr,
+    desc = 'remove workspace folder',
+  })
+  km({ 'n', 'v' }, '<bslash>F', vim.lsp.buf.format, {
+    buffer = bufnr,
+    desc = 'lsp format',
+  })
+
+  wk.register({
+    name = 'goto',
+  }, {
+    prefix = '<bslash>g',
+    mode = 'n',
+    buffer = bufnr,
+  })
+
+  wk.register({
+    name = 'workspace',
+  }, {
+    prefix = '<bslash>w',
+    mode = 'n',
+    buffer = bufnr,
+  })
+end
+
+-- Haskell related keymaps
+function M.haskell(bufnr, wk)
+  km({ 'n', 'v' }, '<bslash>LF', '<cmd>%!stylish-haskell<cr>', {
+    buffer = bufnr,
+    desc = 'stylish haskell format',
+  })
+
+  wk.register({
+    name = 'haskell specific',
+  }, {
+    prefix = '<bslash>L',
+    mode = { 'n', 'v' },
+    buffer = bufnr,
+  })
+end
+
+-- Rust-Tools related keymaps
+function M.rust(bufnr, rt, wk)
+  km('n', '<bslash>LH', rt.hover_actions.hover_actions, {
+    buffer = bufnr,
+    desc = 'rust hover actions',
+  })
+  km('n', '<bslash>LA', rt.code_action_group.code_action_group, {
+    buffer = bufnr,
+    desc = 'rust code action group',
+  })
+
+  wk.register({
+    name = 'rust specific',
+  }, {
+    prefix = '<bslash>L',
+    mode = 'n',
+    buffer = bufnr,
+  })
+end
+
+-- Scala Metals related keymaps
+function M.metals(bufnr, metals, wk)
+  km('n', '<bslash>LH', metals.hover_worksheet, {
+    buffer = bufnr,
+    desc = 'metals hover worksheet',
+  })
+
+  wk.register({
+    name = 'scala specific',
+  }, {
+    prefix = '<bslash>L',
+    mode = 'n',
+    buffer = bufnr,
+  })
+end
+
+--[[ DAP (Debug Adapter Protocol) related keymaps ]]
+
+function M.dap(bufnr, dap, dap_ui_widgets, wk)
+  km('n', '<bslash><bslash>c', dap.continue, {
+    buffer = bufnr,
+    desc = 'dap continue',
+  })
+  km('n', '<bslash><bslash>h', dap_ui_widgets.hover, {
+    buffer = bufnr,
+    desc = 'dap hover',
+  })
+  km('n', '<bslash><bslash>l', dap.run_last, {
+    buffer = bufnr,
+    desc = 'dap run last',
+  })
+  km('n', '<bslash><bslash>o', dap.step_over, {
+    buffer = bufnr,
+    desc = 'dap step over',
+  })
+  km('n', '<bslash><bslash>i', dap.step_into, {
+    buffer = bufnr,
+    desc = 'dap step into',
+  })
+  km('n', '<bslash><bslash>b', dap.toggle_breakpoint, {
+    buffer = bufnr,
+    desc = 'dap toggle breakpoint',
+  })
+  km('n', '<bslash><bslash>r', dap.repl.toggle, {
+    buffer = bufnr,
+    desc = 'dap repl toggle',
+  })
+
+  wk.register({
+    name = 'dap',
+  }, {
+    prefix = '<bslash><bslash>',
+    mode = 'n',
+    buffer = bufnr,
+  })
+end
 
 return M
