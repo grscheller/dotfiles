@@ -11,6 +11,9 @@ Linux based workstation computers.
   * neovim/nvim-lspconfig for system or manually installed LSP servers
   * mfussenegger/nvim-lint to inject cli linting into vim.diagnostics
   * mhartington/formatter.nvim to run formatters
+* nvim-ks-env - Refactoring my Neovim configuration files
+  * using nvim-lua/kickstart as a template/guide
+    * mostly to change back from lazy-lspconfig (with nix) to mason
 * fish-env - Fish shell configuration files
   * very opinionated - my main shell
   * permanent configuration flows from configuration files
