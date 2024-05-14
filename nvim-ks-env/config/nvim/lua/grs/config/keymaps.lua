@@ -98,7 +98,7 @@ km('x', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
 km('n', 'gV', '`[v`]', { desc = 'select what was just pasted' })
 
 -- Cleanup related keymaps
-km('n', '<leader>w', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
+km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
 km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })
 
 -- Spelling related keymaps

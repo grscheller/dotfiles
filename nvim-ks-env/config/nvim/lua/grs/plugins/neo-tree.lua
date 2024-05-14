@@ -11,13 +11,13 @@ return {
    },
    cmd = 'Neotree',
    keys = {
-      { '<baskspace><baskspace>', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
+      { '<c-enter>', ':Neotree reveal<CR>', { desc = 'NeoTree reveal' } },
    },
    opts = {
       filesystem = {
          window = {
             mappings = {
-               ['<backspace>'] = 'close_window',
+               ['<c-enter>'] = 'close_window',
             },
          },
       },

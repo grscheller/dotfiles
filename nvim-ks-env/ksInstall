@@ -52,11 +52,12 @@ dot_config_files='
 '
 
 toml_files='
-   .stylua.toml
+   stylua.toml
 '
 
 remove_items="
    $XDG_CONFIG_HOME/nvim/lua/kickstart
+   $XDG_CONFIG_HOME/nvim/.stylua.toml
 "
 
 dirs_to_create=""
@@ -84,7 +85,11 @@ fi
 ## Install/Check
 
 # Install Neovim files & NVIM related TOML files
-process_files "$XDG_CONFIG_HOME/nvim" "$dot_config_files $toml_files" config/nvim 0644 "$envPath" chmod 0755 "$XDG_CONFIG_HOME/nvim"
+process_files "$XDG_CONFIG_HOME/nvim" "
+   $dot_config_files
+   $toml_files
+" config/nvim 0644 "$envPath"
+chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
 # Remove/report no longer needed files and directories thru
 remove_items "$remove_items"
