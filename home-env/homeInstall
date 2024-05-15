@@ -103,7 +103,7 @@ ensure_dirs "$dirs_to_create"
 
 ## Post install/check tweaks
 
-case "$dfOption" in
+case "$OPTION_GIVEN" in
    install)
       :
       ;;

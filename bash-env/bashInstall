@@ -31,7 +31,9 @@ bash_files='
 # Process bash config files
 process_files "$HOME" "$bash_files" . 0644 "$envPath"
 
-case "$dfOption" in
+## Post install/check tweaks
+
+case "$OPTION_GIVEN" in
    install)
       :
       ;;

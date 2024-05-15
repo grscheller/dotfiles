@@ -102,7 +102,7 @@ ensure_dirs "$dirs_to_create"
 
 ## Post install/check tweaks
 
-case "$dfOption" in
+case "$OPTION_GIVEN" in
    install)
       # Helps when editing installed Neovim configs
       printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json

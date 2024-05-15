@@ -16,7 +16,7 @@ then
    exit 1
 fi
 
-if [ -z "$dfOption" ]
+if [ -z "$OPTION_GIVEN" ]
 then
    umask 0022
    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
@@ -36,13 +36,13 @@ then
    then
       case "$1" in
          --check)
-            dfOption=check
+            export OPTION_GIVEN=check
             ;;
          --install)
-            dfOption=install
+            export OPTION_GIVEN=install
             ;;
          --remove)
-            dfOption=remove
+            export OPTION_GIVEN=remove
             ;;
          *)
             printf '%s\n\n' "$usage"
@@ -50,7 +50,7 @@ then
             ;;
       esac
    else
-      dfOption=install
+      export OPTION_GIVEN=install
    fi
 
    ## Functions
@@ -62,7 +62,7 @@ then
       srcDir="$2"
       if [ ! -d "$targetDir" ]
       then
-         case "$dfOption" in
+         case "$OPTION_GIVEN" in
             install)
                mkdir -p "$targetDir" ||
                   printf '%s: failed to create "%s" directory\n\n' "$scriptName" "$targetDir"
@@ -87,7 +87,7 @@ then
       item="$1"
       if test -e "$item"
       then
-         case "$dfOption" in
+         case "$OPTION_GIVEN" in
             install | remove)
                rm -rf "$item"
                test -e "$item" && {
@@ -117,7 +117,7 @@ then
       # Ensure target directory exists and complain if source directory doesn't
       ensure_dir "${trgt%/*}" "${src_abs%/*}"
 
-      case "$dfOption" in
+      case "$OPTION_GIVEN" in
          install)
             # Install the remove the target file
             if cp "$src_rel" "$trgt"
