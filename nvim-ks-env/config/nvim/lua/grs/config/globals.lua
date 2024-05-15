@@ -6,8 +6,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Perl had its day
-vim.g.loaded_perl_provider = 0
-
 -- Nerd fonts need to be configured in terminal emulator
 vim.g.have_nerd_font = true
+
+-- Perl had its day
+vim.g.loaded_perl_provider = 0

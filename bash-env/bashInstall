@@ -1,13 +1,6 @@
 #!/bin/sh
 #
-# homeInstall: Installs a basic Bash environment and other
-#              miscellaneous home directory configuration files,
-#
-#   - bash (startup files)
-#   - ~/bin scripts
-#   - ssh
-#   - bloop (Scala), Cabal (Haskell)
-#   - create directories important to my work flow
+# shellcheck shell=dash
 #
 
 scriptName=bashInstall

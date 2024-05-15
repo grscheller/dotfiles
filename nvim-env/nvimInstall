@@ -2,6 +2,8 @@
 #
 # nvimInstall: Installs Neovim configuration files.
 #
+# shellcheck shell=dash
+#
 
 scriptName=nvimInstall
 envName=nvim-env

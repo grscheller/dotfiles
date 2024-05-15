@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# dfInstall: POSIX shell script to install an entire Linux desktop environment
-#            into a user's $HOME directory.
+# dfInstall: POSIX shell script to install an entire Linux desktop
+#            environment into a user's $HOME directory.
 #
-# Tested with both dash and bash.
+# shellcheck shell=dash
 #
 
 scriptName=dfInstall
@@ -15,7 +15,7 @@ cd "$gitRepo" || {
 }
 
 # Parse cmdline arguments and source functions
-dfOption=''
+export dfOption=''
 . bin/.setup.sh
 
 # Install dotfiles

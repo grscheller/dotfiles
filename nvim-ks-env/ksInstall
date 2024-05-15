@@ -2,6 +2,8 @@
 #
 # nvimInstall: Installs Neovim configuration files.
 #
+# shellcheck shell=dash
+#
 
 scriptName=ksInstall
 envName=nvim-ks-env
@@ -45,6 +47,7 @@ dot_config_files='
    lua/grs/plugins/debug.lua
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
+   lua/grs/plugins/kickstart.lua
    lua/grs/plugins/lint.lua
    lua/grs/plugins/neo-tree.lua
    spell/en.utf-8.add

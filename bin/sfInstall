@@ -6,11 +6,8 @@
 #     - avahi-daemon.service
 #     - dhcpcd.service
 #     - iwd.service
-#     - nix-daemon.service
 #     - systemd-resolved,service
 #     - reflector.timer
-#
-# TODO: use as template to create sfCheck fish script
 #
 
 test (count $argv) -gt 1 || not fish_is_root_user

@@ -2,9 +2,7 @@
 #
 # Parse input arguments and setup infrastructure.
 #
-# shellcheck shell=sh
-# shellcheck disable=SC3043
-#   SC3043: allow use of non-POSIX keyword "local"
+# shellcheck shell=dash
 #
 if [ -z "$scriptName" ]
 then

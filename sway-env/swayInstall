@@ -2,6 +2,8 @@
 #
 # swayInstall: Installs Sway WM configuration files.
 #
+# shellcheck shell=dash
+#
 #   Systemd user Services used:
 #     kanshi - Wayland daemon that automatically configures outputs
 #     mako - Notification daemon for Wayland

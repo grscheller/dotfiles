@@ -2,6 +2,8 @@
 #
 # fishInstall: Installs Fish Shell configuration files.
 #
+# shellcheck shell=dash
+#
 
 scriptName=fishInstall
 envName=fish-env
