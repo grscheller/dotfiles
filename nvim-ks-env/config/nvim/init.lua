@@ -24,7 +24,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
 local lazy_opts = {
-   defaults = { lazy = true, version = nil, cond = nil },
+   -- defaults = { lazy = true, version = nil, cond = nil },
+   defaults = { lazy = false, version = nil, cond = nil },
    spec = { { import = 'grs.plugins' } },
    dev = {
       path = '~/devel/nvim/plugins',

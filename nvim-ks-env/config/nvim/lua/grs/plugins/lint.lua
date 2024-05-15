@@ -7,8 +7,8 @@ return {
          local lint = require 'lint'
          lint.linters_by_ft = {
             ccs = { 'stylelint' },
-            clojure = nil
-            dockerfile = nil
+            clojure = nil,
+            dockerfile = nil,
             inko = { "inko" },
             janet = { "janet" },
             json = { "jsonlint" },
