@@ -45,6 +45,7 @@ dot_config_files='
    lua/grs/lib/text.lua
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/debug.lua
+   lua/grs/plugins/formatters.lua
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
    lua/grs/plugins/kickstart.lua

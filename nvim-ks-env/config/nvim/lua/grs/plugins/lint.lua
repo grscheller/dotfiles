@@ -1,35 +1,51 @@
+--[[ Lint certain file types on BufWritePost and InsertLeave ]]
+
+-- Nvim-lint does not present itself as an LSP like null-ls did. Instead it uses
+-- the vim.diagnostic module to present diagnostics in the same way the language
+-- client built into neovim does. Nvim-lint is meant to fill the gaps for
+-- languages where either no language server exists, or where standalone linters
+-- provide better results than available language servers do.
+
+local autogrp = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+
 return {
 
-   { -- Linting
+   {
       'mfussenegger/nvim-lint',
-      event = { 'BufReadPre', 'BufNewFile' },
+      ft = {
+         'ccs',
+         'javascript',
+         'json',
+         'lua',
+         'luau',
+         'md',
+         'sh',
+         'typescript',
+      },
       config = function()
          local lint = require 'lint'
          lint.linters_by_ft = {
             ccs = { 'stylelint' },
-            clojure = nil,
-            dockerfile = nil,
-            inko = { "inko" },
-            janet = { "janet" },
-            json = { "jsonlint" },
+            javascript = { 'eslint' },
+            -- javascriptreact = { 'eslint' },
+            json = { 'jsonlint' },
+            lua = { 'selene' },
+            luau = { 'selene' },
             markdown = { 'markdownlint' },
-            rst = nil,
-            ruby = { "ruby" },
             sh = { 'shellcheck' },
-            terraform = { "tflint" },
-            text = { "vale" },
+            typescript = { 'eslint' },
+            -- vue = { 'eslint' },
+            -- svelte = { 'eslint' },
          }
 
-         local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
-         vim.api.nvim_create_autocmd({
-            'BufEnter',
-            'BufWritePost',
-            'InsertLeave',
-         }, {
-            group = lint_augroup,
+         local grsLintGrp = autogrp('GrsLint', { clear = true })
+         autocmd({ 'BufWritePost', 'InsertLeave' }, {
             callback = function()
-               require('lint').try_lint()
+               lint.try_lint()
             end,
+            group = grsLintGrp,
+            desc = 'Trigger linting on write or leaving insert mode',
          })
       end,
    },
