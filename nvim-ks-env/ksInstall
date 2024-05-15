@@ -45,11 +45,12 @@ dot_config_files='
    lua/grs/lib/text.lua
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/debug.lua
-   lua/grs/plugins/formatters.lua
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
    lua/grs/plugins/kickstart.lua
-   lua/grs/plugins/lint.lua
+   lua/grs/plugins/linters_formatters/formatters.lua
+   lua/grs/plugins/linters_formatters/init.lua
+   lua/grs/plugins/linters_formatters/linters.lua
    lua/grs/plugins/neo-tree.lua
    spell/en.utf-8.add
    init.lua
@@ -60,8 +61,9 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/kickstart
-   $XDG_CONFIG_HOME/nvim/.stylua.toml
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/formatters.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lint.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/linters_formatters/lint.lua
 "
 
 dirs_to_create=""
