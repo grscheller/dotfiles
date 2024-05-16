@@ -40,7 +40,7 @@ return {
          }
 
          local grsLintGrp = autogrp('GrsLint', { clear = true })
-         autocmd({ 'BufWritePost', 'InsertLeave' }, {
+         autocmd({ 'BufWritePost' }, {
             callback = function()
                lint.try_lint()
             end,

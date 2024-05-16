@@ -34,14 +34,14 @@ km('n', '<m-e>', '<c-w>=', { desc = 'equalize windows' })
 -- Resizing windows
 km('n', '<m-left>', '2<c-w><', { desc = 'make window narrower' })
 km('n', '<m-right>', '2<c-w>>', { desc = 'make window wider' })
-km('n', '<m-down>', '2<c-w>-', { desc = 'make window shorter' })
 km('n', '<m-up>', '2<c-w>+', { desc = 'make window taller' })
+km('n', '<m-down>', '2<c-w>-', { desc = 'make window shorter' })
 
 -- Move view in window, only move cursor to keep on screen
 km('n', '<c-left>', 'z4h', { desc = 'move view left 4 columns' })
-km('n', '<c-right>', '3<c-e>', { desc = 'move view down 3 lines' })
-km('n', '<c-up>', '3<c-y>', { desc = 'move view up 3 lines' })
-km('n', '<c-down>', 'z4l', { desc = 'move view right 4 columns' })
+km('n', '<c-right>', 'z4l', { desc = 'move view right 4 columns' })
+km('n', '<c-up>', '3<c-y>', { desc = 'move up 3 lines' })
+km('n', '<c-down>', '3<c-e>', { desc = 'move view down 3 lines' })
 
 -- Managing tabpages - use gt & gT to move between tabpages
 km('n', '<m-t>', '<c-w>T', { desc = 'breakout window to new tab' })
