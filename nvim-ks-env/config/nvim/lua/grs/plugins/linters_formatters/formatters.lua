@@ -30,6 +30,7 @@ return {
                },
             },
          }
+
          local grsFormatGrp = autogrp('GrsFormat', { clear = true })
          autocmd('User', {
             pattern = 'FormatterPost',
@@ -38,7 +39,7 @@ return {
                vim.notify(string.format(msg, vim.api.nvim_buf_get_name(ev.buf)))
             end,
             group = grsFormatGrp,
-            desc = 'Format code via nvim.formatter',
+            desc = 'Format code via formatter.nvim',
          })
       end,
    },
