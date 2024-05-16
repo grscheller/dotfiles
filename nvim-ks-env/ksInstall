@@ -48,9 +48,12 @@ dot_config_files='
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
    lua/grs/plugins/kickstart.lua
-   lua/grs/plugins/linters_formatters/formatters.lua
    lua/grs/plugins/linters_formatters/init.lua
+   lua/grs/plugins/linters_formatters/formatters.lua
    lua/grs/plugins/linters_formatters/linters.lua
+   lua/grs/plugins/lsp/init.lua
+   lua/grs/plugins/lsp/cmp.lua
+   lua/grs/plugins/lsp/lsp.lua
    lua/grs/plugins/neo-tree.lua
    spell/en.utf-8.add
    init.lua
