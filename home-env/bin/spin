@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# Spin a curser around and around
+# Spin a cursor around and around
 #
 #   Handy to keep ssh connections alive when they terminate after
 #   only 10 minutes of inactivity.

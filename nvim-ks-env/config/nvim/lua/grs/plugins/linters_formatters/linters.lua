@@ -8,6 +8,7 @@
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
+local usercmd = vim.api.nvim_create_user_command
 
 return {
 
@@ -38,6 +39,19 @@ return {
             -- vue = { 'eslint' },
             -- svelte = { 'eslint' },
          }
+
+         local list_linters = function()
+            local msg
+            local linters = require('lint').get_running()
+            if #linters == 0 then
+               msg = '󰦕 '
+            else
+               msg = '󱉶 ' .. table.concat(linters, ', ')
+            end
+            vim.api.nvim_notify(msg, vim.log.levels.INFO, {})
+         end
+
+         usercmd('GL', list_linters, {})
 
          local grsLintGrp = autogrp('GrsLint', { clear = true })
          autocmd({ 'BufWritePost' }, {
