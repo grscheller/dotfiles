@@ -14,7 +14,6 @@ local comment_overrides = {
 
 return {
    { 'numToStr/Comment.nvim', opts = comment_overrides },
-   { 'tpope/vim-sleuth' }, -- Detect tabstop and shiftwidth automatically
    {
       'folke/which-key.nvim',
       event = 'VimEnter',
@@ -102,11 +101,6 @@ return {
                prompt_title = 'Live Grep in Open Files',
             }
          end, { desc = 'search / in Open Files' })
-
-         -- Shortcut for searching your Neovim configuration files
-         vim.keymap.set('n', '<leader>sn', function()
-            builtin.find_files { cwd = vim.fn.stdpath 'config' }
-         end, { desc = '[S]earch [N]eovim files' })
       end,
    },
 
