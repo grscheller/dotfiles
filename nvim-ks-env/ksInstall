@@ -43,6 +43,9 @@ dot_config_files='
    lua/grs/lib/functional.lua
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
+   lua/grs/plugins/editor/init.lua
+   lua/grs/plugins/editor/colorscheme.lua
+   lua/grs/plugins/editor/textedit.lua
    lua/grs/plugins/linters_formatters/init.lua
    lua/grs/plugins/linters_formatters/formatters.lua
    lua/grs/plugins/linters_formatters/linters.lua
@@ -69,6 +72,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/debug.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp/
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp_dap/
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/noice.lua
 "
 
 dirs_to_create=""

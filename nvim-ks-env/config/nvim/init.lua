@@ -14,6 +14,9 @@ if not ok then
    print(string.format('\n\nKeymaps failed to load with error:\n\n %s\n\n', options))
 end
 
+-- Fallback colorscheme
+vim.cmd [[colorscheme lunaperche]]
+
 -- Bootstrap folke/lazy.nvim if not already installed
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
 local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -34,7 +37,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
 local lazy_opts = {
    -- defaults = { lazy = true, version = nil, cond = nil },
-   defaults = { lazy = false, version = nil, cond = nil },
+   defaults = { lazy = true, version = nil, cond = nil },
    spec = { { import = 'grs.plugins' } },
    dev = {
       path = '~/devel/nvim/plugins',
@@ -57,7 +60,6 @@ local lazy_opts = {
             'logiPat',
             'matchit',
             'matchparen',
-            'netrwPlugin',
             'rplugin',
             'rrhelper',
             'tar',
@@ -80,7 +82,7 @@ if ok then
    lazy.setup(lazy_opts)
 else
    print(string.format('\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n', lazy))
-   vim.cmd [[colorscheme habamax]]
+   vim.cmd [[colorscheme lunaperche]]
 end
 
 -- Load keymaps and auto commands
