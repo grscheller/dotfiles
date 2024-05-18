@@ -12,8 +12,10 @@ Linux based workstation computers.
   * mfussenegger/nvim-lint to inject cli linting into vim.diagnostics
   * mhartington/formatter.nvim to run formatters
 * nvim-ks-env - Refactoring my Neovim configuration files
-  * using nvim-lua/kickstart as a template/guide
+    * using nvim-lua/kickstart as a template/guide
     * mostly to change back from lazy-lspconfig (with nix) to mason
+    * to improve my choice of key mappings
+    * will eventually replace nvim-env
 * fish-env - Fish shell configuration files
   * very opinionated - my main shell
   * permanent configuration flows from configuration files
@@ -21,12 +23,13 @@ Linux based workstation computers.
     * manual changes can be lost on configuration file updates
 * sway-env - Sway configuration files
   * Sway is a Wayland based tiling window manager modeled after i3
-* home-env - other $HOME based configuration files
-  * ~/bin scripts
-    * bash, POSIX shell, python
+* bash-env - Bash $HOME based configuration files
   * bash startup files
     * attempted to be kept Linux/Unix system independent
     * not POSIX compatible
+* home-env - other $HOME based configuration files
+  * ~/bin scripts
+    * bash, POSIX shell, python
   * other configuration files
     * ssh
     * bloop (Scala)
