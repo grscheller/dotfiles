@@ -56,7 +56,6 @@ dot_config_files='
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
    lua/grs/plugins/kickstart.lua
-   lua/grs/plugins/neo-tree.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -74,6 +73,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp_dap/
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/noice.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/colorscheme.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/neo-tree.lua
    $XDG_CONFIG_HOME/nvim/ftplugin
 "
 

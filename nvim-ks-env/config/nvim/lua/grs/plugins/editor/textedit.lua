@@ -1,14 +1,24 @@
 --[[ Plugins for general Text editing Related taske ]]
 
-vim.g['sneak#label'] = 1 -- minimalist alternative to EasyMotion
+local comment_overrides = {
+   opleader = {
+      line = 'gcc',
+      block = 'gbb',
+   },
+   extra = {
+      above = 'gcO',
+      below = 'gco',
+      eol = 'gcA',
+   },
+}
 
 return {
 
-   -- makes some plugins dot-repeatable like leap
-   { 'tpope/vim-repeat', lazy = false },
-
    -- comment out or restore lines and blocks of code
    { 'numToStr/Comment.nvim', opts = comment_overrides },
+
+   -- makes some plugins dot-repeatable like leap
+   { 'tpope/vim-repeat', lazy = false },
 
    -- Surround text objects with matching symbols
    {

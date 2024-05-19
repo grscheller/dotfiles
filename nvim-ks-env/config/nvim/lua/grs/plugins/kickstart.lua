@@ -1,17 +1,5 @@
 --[[ Originally in init.lua ]]
 
-local comment_overrides = {
-   opleader = {
-      line = 'gc ',
-      block = 'gb ',
-   },
-   extra = {
-      above = 'gcO',
-      below = 'gco',
-      eol = 'gcA',
-   },
-}
-
 return {
    {
       'folke/which-key.nvim',
@@ -37,11 +25,18 @@ return {
    },
 
    {
+      -- TODO: Make extensions lazier
+      -- Open window showing keymaps for current picker,
+         -- Insert mode: <c-/>
+         -- Normal mode: ?
       'nvim-telescope/telescope.nvim',
-      event = 'VimEnter',
-      branch = '0.1.x',
+      event = 'VeryLazy',
       dependencies = {
          { 'nvim-lua/plenary.nvim' },
+         {
+            'nvim-telescope/telescope-file-browser.nvim',
+            dependencies = { 'nvim-lua/plenary.nvim' },
+         },
          {
             'nvim-telescope/telescope-fzf-native.nvim',
             build = 'make',
@@ -49,32 +44,56 @@ return {
                return vim.fn.executable 'make' == 1
             end,
          },
-         { 'nvim-telescope/telescope-ui-select.nvim' },
-         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+         {
+            'nvim-telescope/telescope-ui-select.nvim',
+            dependencies = {
+               {
+                  'nvim-tree/nvim-web-devicons',
+                  enabled = vim.g.have_nerd_font,
+               },
+            }
+         },
+         { "tsakirist/telescope-lazy.nvim" },
       },
       config = function()
-         -- Two important keymaps to use while in Telescope are:
-         --    - Insert mode: <c-/>
-         --    - Normal mode: ?
-         -- This opens a window showing all the keymaps for the current picker.
-         require('telescope').setup {
+         local telescope = require 'telescope'
+         local builtin = require 'telescope.builtin'
+         local themes = require 'telescope.themes'
+
+         telescope.setup {
             defaults = {
+               -- mappings while in telescope
                mappings = {
                   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
                },
+               prompt_prefix = ' ',
+               selection_caret = ' ',
             },
-            pickers = {},
             extensions = {
+               file_browser = {
+                  theme = 'ivy',
+                  hijack_netrw = true,
+               },
+               fzf = {
+                  fuzzy = true,
+                  override_generic_sorter = true,
+                  override_file_sorter = true,
+                  case_mode = 'respect_case',
+               },
+               lazy = {
+                  theme = 'ivy',
+               },
                ['ui-select'] = {
-                  require('telescope.themes').get_dropdown(),
+                  themes.get_dropdown {},
                },
             },
+            pickers = {},
          }
-         pcall(require('telescope').load_extension, 'fzf')
-         pcall(require('telescope').load_extension, 'ui-select')
+         telescope.load_extension "file_browser"
+         telescope.load_extension 'fzf'
+         telescope.load_extension 'lazy'
+         telescope.load_extension 'ui-select'
 
-         -- See `:help telescope.builtin`
-         local builtin = require 'telescope.builtin'
          vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = 'search help' })
          vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = 'search kymaps' })
          vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = 'search files' })
@@ -85,22 +104,28 @@ return {
          vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = 'search resume' })
          vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = 'search recent files ("." for repeat)' })
          vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = 'Find existing buffers' })
-
-         -- Slightly advanced example of overriding default behavior and theme
-         vim.keymap.set('n', '<leader>/', function()
-            builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-               winblend = 10,
-               previewer = false,
-            })
-         end, { desc = '[/] Fuzzily search in current buffer' })
-
-         -- It's also possible to pass additional configuration options.
-         vim.keymap.set('n', '<leader>s/', function()
-            builtin.live_grep {
-               grep_open_files = true,
-               prompt_title = 'Live Grep in Open Files',
-            }
-         end, { desc = 'search / in Open Files' })
+         vim.keymap.set(
+            'n',
+            '<leader>/',
+            function()
+               builtin.current_buffer_fuzzy_find(require(themes).get_dropdown {
+                  winblend = 10,
+                  previewer = false,
+               })
+            end,
+            { desc = 'fuzzily search in current buffer' }
+         )
+         vim.keymap.set(
+            'n',
+            '<leader>so',
+            function()
+               builtin.live_grep {
+                  grep_open_files = true,
+                  prompt_title = 'Live Grep in Open Files',
+               }
+            end,
+            { desc = 'search open files' }
+         )
       end,
    },
 
