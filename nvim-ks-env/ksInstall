@@ -58,6 +58,8 @@ dot_config_files='
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/lsp.lua
+   lua/grs/plugins/ide/rust.lua
+   lua/grs/plugins/ide/scala.lua
    lua/grs/plugins/autopairs.lua
    lua/grs/plugins/common.lua
    lua/grs/plugins/gitsigns.lua

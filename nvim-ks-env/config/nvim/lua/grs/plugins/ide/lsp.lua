@@ -13,8 +13,8 @@ local old_one = {
       -- for a list of the LSP server names and configuration defaults.
       'neovim/nvim-lspconfig',
       dependencies = {
-         { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-         { 'folke/neodev.nvim', opts = {} },
+         { 'folke/neoconf.nvim' },
+         { 'folke/neodev.nvim' },
       },
       config = function()
          local lspconfig = require 'lspconfig'
@@ -26,7 +26,7 @@ local old_one = {
          }
 
          -- Configure Neovim builtin lsp client with the default configurations
-         -- provided by the lspconfig pluggin.
+         -- provided by the lspconfig plugin.
          local defaultConfiguredLspServers = {
             'clangd',
          }
@@ -90,67 +90,17 @@ local old_one = {
       end,
    },
 
-   {
-      -- LSP servers auto-installed with Nix & configured via lspconfig.
-      -- See https://github.com/dundalek/lazy-lsp.nvim/blob/master/servers.md
-      -- for a list of supported servers,
-      'dundalek/lazy-lsp.nvim',
-      dependencies = {
-         'neovim/nvim-lspconfig',
-      },
-      event = { 'BufReadPre', 'BufNewFile' },
-      config = function()
-         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-         require('lazy-lsp').setup {
-            excluded_servers = {
-               'ccls',          -- using clangd instead
-               'ltex',          -- tags JS keywords as spelling mistakes
-               'sourcekit',     -- nix barfs on Pop OS when building Swift dependency
-               'sqls',          -- deprecated in lspconfig in favor of sqlls
-               'rome',          -- misbehaving
-               'vale',          -- not using vale for prose
-               'zk',            -- not using Zettelkasten for note taking
-            },
-            preferred_servers = {
-               java = {},
-               lua = { 'lua_ls' },
-               markdown = { 'marksman' },
-               python = {},
-               scala = {},
-               sh = { 'bashls' },
-               rust = {},
-               zig = { 'zls' },
-            },
-            prefer_local = true,
-            -- Default config passed to all servers to specify on_attach
-            -- callback and other options.
-            default_config = {
-               flags = {
-                  debounce_text_changes = 250,
-               },
-               on_attach = function(_, bufnr)
-                  km.lsp(bufnr)
-               end,
-               capabilities = capabilities,
-            },
-            -- Additional configs for specific servers which will be merged
-            -- into default lspconfig configs.
-            configs = {},
-         }
-      end,
-   },
-
 }
 
 return {
 
    { -- LSP Configuration & Plugins
       'neovim/nvim-lspconfig',
+      lazy = false,
       dependencies = {
          -- Automatically install LSP's & related tools to Neovim's stdpath
-         { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependents
+         { 'williamboman/mason.nvim' }, -- NOTE: Must be loaded before dependents
          { 'williamboman/mason-lspconfig.nvim' },
-         { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
 
          -- Give user feedback on LSP activity
          { 'j-hui/fidget.nvim', opts = {} },
@@ -161,11 +111,25 @@ return {
          { 'folke/neodev.nvim', opts = {} },
       },
       config = function()
-         local lspconfig = require 'lspconfig'
-         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+         require('mason').setup {}
+         require('mason-lspconfig').setup {}
 
+         -- setup before configuring any LSP servers with lspconfig
+         require('neoconf').setup {
+            experimental = { pathStrict = true },
+         }
+         require('neodev').setup {}
+
+         local lspconfig = require 'lspconfig'
+
+         capabilities = vim.tbl_deep_extend(
+            'force',
+            vim.lsp.protocol.make_client_capabilities(),
+            require('cmp_nvim_lsp').default_capabilities()
+         )
+
+         -- TODO: Move to config/keymaps.lua
          vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('grs-lsp-attach', { clear = true }),
             callback = function(event)
                local map = function(keys, func, desc)
                   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -206,12 +170,26 @@ return {
                -- Goto Declaration. For example, in C this would take you to the header.
                map('gD', vim.lsp.buf.declaration, 'goto declaration')
             end,
+            group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+            desc = 'Get rid of this stupid thing'
          })
 
-         -- Enable desired language servers
-         local servers = {
-            bashls = {},
-            clangd = {},
+         -- Configure Neovim builtin lsp client with the default configurations
+         -- provided by the lspconfig plugin.
+         local defaultConfiguredLspServers = {
+            'clangd',
+         }
+
+         for _, lspServer in ipairs(defaultConfiguredLspServers) do
+            lspconfig[lspServer].setup {
+               capabilities = capabilities,
+               on_attach = function(_, bufnr)
+                  km.lsp(bufnr)
+               end,
+            }
+         end
+
+         lspconfig.lua_ls.setup {
             lua_ls = {
                filetypes = { 'lua', 'luau' },
                capabilities = capabilities,
@@ -220,122 +198,148 @@ return {
                      completion = {
                         callSnippet = 'Replace',
                      },
-                     -- uncomment below to ignore lua_ls's noisy `missing-fields` warnings
                      -- diagnostics = { disable = { 'missing-fields' } },
                   },
                },
             },
-            marksman = {},
-            tsserver = {},
-            zls = {},
          }
 
-         --[[ Configure the Mason toolchain
+         -- Configure Haskell Language Server
+         lspconfig.hls.setup {
+            capabilities = capabilities,
+            on_attach = function(_, bufnr)
+               km.lsp(bufnr)
+            end,
+            settings = {
+               hls = {
+                  filetypes = { 'haskell', 'lhaskell', 'cabal' },
+                  on_attach = function(_, bufnr)
+                     km.lsp(bufnr)
+                     km.haskell(bufnr)
+                  end,
+               },
+            },
+         }
 
-             - mason: LSP, DAP, Linter, Formatter installer
-               - use '':Mason' to launch GUI
-               - use 'g?' to provide a help menu for GUI
-             - mason-tool-installer: automates mason
-             = mason-lspconfig: helps lspconfig & mason work better together ]]
-
-         require('mason').setup {}
-         require('mason-tool-installer').setup {}
-         require('mason-lspconfig').setup {
-            handlers = {
-               function(server_name)
-                  local server = servers[server_name] or {}
-                  server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                  require('lspconfig')[server_name].setup(server)
-               end,
+         -- Manually configure lsp client for python-lsp-server,
+         -- using jdhao configs as a starting point.
+         lspconfig.pylsp.setup {
+            capabilities = capabilities,
+            on_attach = function(_, bufnr)
+               km.lsp(bufnr)
+            end,
+            flags = { debounce_text_changes = 200 },
+            settings = {
+               pylsp = {
+                  plugins = {
+                     -- formatter options
+                     black = { enabled = false },
+                     autopep8 = { enabled = false },
+                     yapf = { enabled = false },
+                     -- linter options
+                     pylint = { enabled = false },
+                     ruff = { enabled = true },
+                     pyflakes = { enabled = false },
+                     pycodestyle = { enabled = false },
+                     -- type checker
+                     pylsp_mypy = {
+                        enabled = true,
+                     },
+                     -- refactoring
+                     rope = { enable = true },
+                  },
+               },
             },
          }
       end,
    },
 
-   {
-      'mfussenegger/nvim-dap',
-      dependencies = {
-         -- Creates a beautiful debugger UI
-         'rcarriga/nvim-dap-ui',
 
-         -- Required dependency for nvim-dap-ui
-         'nvim-neotest/nvim-nio',
 
-         -- Installs the debug adapters for you
-         'williamboman/mason.nvim',
-         'jay-babu/mason-nvim-dap.nvim',
+   -- {
+   --    'mfussenegger/nvim-dap',
+   --    dependencies = {
+   --       -- Creates a beautiful debugger UI
+   --       'rcarriga/nvim-dap-ui',
 
-         -- Add your own debuggers here
-         'leoluz/nvim-dap-go',
-      },
-      config = function()
-         local dap = require 'dap'
-         local dapui = require 'dapui'
+   --       -- Required dependency for nvim-dap-ui
+   --       'nvim-neotest/nvim-nio',
 
-         require('mason-nvim-dap').setup {
-            -- Makes a best effort to setup the various debuggers with
-            -- reasonable debug configurations
-            automatic_installation = true,
+   --       -- Installs the debug adapters for you
+   --       'williamboman/mason.nvim',
+   --       'jay-babu/mason-nvim-dap.nvim',
 
-            -- You can provide additional configuration to the handlers,
-            -- see mason-nvim-dap README for more information
-            handlers = {},
+   --       -- Add your own debuggers here
+   --       'leoluz/nvim-dap-go',
+   --    },
+   --    config = function()
+   --       local dap = require 'dap'
+   --       local dapui = require 'dapui'
 
-            -- You'll need to check that you have the required things installed
-            -- online, please don't ask me how to install them :)
-            ensure_installed = {
-               -- Update this to ensure that you have the debuggers for the langs you want
-               'delve',
-            },
-         }
+   --       require('mason-nvim-dap').setup {
+   --          -- Makes a best effort to setup the various debuggers with
+   --          -- reasonable debug configurations
+   --          automatic_installation = true,
 
-         -- Basic debugging keymaps, feel free to change to your liking!
-         vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
-         vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
-         vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-         vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
-         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-         vim.keymap.set('n', '<leader>B', function()
-            dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-         end, { desc = 'Debug: Set Breakpoint' })
+   --          -- You can provide additional configuration to the handlers,
+   --          -- see mason-nvim-dap README for more information
+   --          handlers = {},
 
-         -- Dap UI setup
-         -- For more information, see |:help nvim-dap-ui|
-         dapui.setup {
-            -- Set icons to characters that are more likely to work in every terminal.
-            --    Feel free to remove or use ones that you like more! :)
-            --    Don't feel like these are good choices.
-            icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-            controls = {
-               icons = {
-                  pause = '⏸',
-                  play = '▶',
-                  step_into = '⏎',
-                  step_over = '⏭',
-                  step_out = '⏮',
-                  step_back = 'b',
-                  run_last = '▶▶',
-                  terminate = '⏹',
-                  disconnect = '⏏',
-               },
-            },
-         }
+   --          -- You'll need to check that you have the required things installed
+   --          -- online, please don't ask me how to install them :)
+   --          ensure_installed = {
+   --             -- Update this to ensure that you have the debuggers for the langs you want
+   --             'delve',
+   --          },
+   --       }
 
-         -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-         vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+   --       -- Basic debugging keymaps, feel free to change to your liking!
+   --       vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+   --       vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
+   --       vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+   --       vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+   --       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+   --       vim.keymap.set('n', '<leader>B', function()
+   --          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+   --       end, { desc = 'Debug: Set Breakpoint' })
 
-         dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-         dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-         dap.listeners.before.event_exited['dapui_config'] = dapui.close
+   --       -- Dap UI setup
+   --       -- For more information, see |:help nvim-dap-ui|
+   --       dapui.setup {
+   --          -- Set icons to characters that are more likely to work in every terminal.
+   --          --    Feel free to remove or use ones that you like more! :)
+   --          --    Don't feel like these are good choices.
+   --          icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
+   --          controls = {
+   --             icons = {
+   --                pause = '⏸',
+   --                play = '▶',
+   --                step_into = '⏎',
+   --                step_over = '⏭',
+   --                step_out = '⏮',
+   --                step_back = 'b',
+   --                run_last = '▶▶',
+   --                terminate = '⏹',
+   --                disconnect = '⏏',
+   --             },
+   --          },
+   --       }
 
-         -- Install golang specific config
-         require('dap-go').setup {
-            delve = {
-               -- On Windows delve must be run attached or it crashes.
-               -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-               detached = vim.fn.has 'win32' == 0,
-            },
-         }
-      end,
-   }
+   --       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+   --       vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+
+   --       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+   --       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+   --       dap.listeners.before.event_exited['dapui_config'] = dapui.close
+
+   --       -- Install golang specific config
+   --       require('dap-go').setup {
+   --          delve = {
+   --             -- On Windows delve must be run attached or it crashes.
+   --             -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+   --             detached = vim.fn.has 'win32' == 0,
+   --          },
+   --       }
+   --    end,
+   -- }
 }

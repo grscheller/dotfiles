@@ -34,6 +34,7 @@ return {
 
 
    -- rust-tools.nvim sets up lsp & dap for Rust
+   -- TODO: replace with mrcjkb/rustaceanvim 
    {
       'simrat39/rust-tools.nvim',
       dependencies = {
