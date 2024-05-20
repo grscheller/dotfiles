@@ -40,7 +40,7 @@ return {
    {
       'norcalli/nvim-colorizer.lua',
       keys = {
-         { '<leader>C', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
+         { '<leader>tC', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
       },
       opts = {
          '*',
@@ -196,7 +196,7 @@ return {
          'folke/twilight.nvim',
       },
       keys = {
-         { 'zZ', '<cmd>ZenMode<cr>', desc = 'zen-mode toggle' },
+         { 'tz', '<cmd>ZenMode<cr>', desc = 'toggle zen-mode' },
       },
       opts = {
          window = {

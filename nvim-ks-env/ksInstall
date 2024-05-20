@@ -40,6 +40,7 @@ dot_config_files='
    lua/grs/config/keymaps.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
+   lua/grs/config/treesitter.lua
    lua/grs/lib/functional.lua
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
@@ -58,9 +59,9 @@ dot_config_files='
    lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/autopairs.lua
+   lua/grs/plugins/common.lua
    lua/grs/plugins/gitsigns.lua
    lua/grs/plugins/indent_line.lua
-   lua/grs/plugins/kickstart.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -80,6 +81,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/colorscheme.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/neo-tree.lua
    $XDG_CONFIG_HOME/nvim/ftplugin
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/kickstart.lua
 "
 
 dirs_to_create=""

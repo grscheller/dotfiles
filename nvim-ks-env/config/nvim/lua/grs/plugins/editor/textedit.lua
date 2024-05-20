@@ -2,23 +2,27 @@
 
 local comment_overrides = {
    opleader = {
-      line = 'gcc',
-      block = 'gbb',
+      line = '<leader>tcc',
+      block = '<leader>tcb',
    },
    extra = {
-      above = 'gcO',
-      below = 'gco',
-      eol = 'gcA',
+      above = '<leader>tcO',
+      below = '<leader>tco',
+      eol = '<leader>tcA',
    },
 }
 
 return {
 
    -- comment out or restore lines and blocks of code
-   { 'numToStr/Comment.nvim', opts = comment_overrides },
-
-   -- makes some plugins dot-repeatable like leap
-   { 'tpope/vim-repeat', lazy = false },
+   {
+      'numToStr/Comment.nvim',
+      lazy = false,
+      opts = comment_overrides,
+      keys = {
+         { '<leader>tc', mode = { 'n', 'x'}, desc = 'toggle comment' },
+      }
+   },
 
    -- Surround text objects with matching symbols
    {
@@ -27,7 +31,7 @@ return {
          { 'ys', mode = { 'n', 'x' }, desc = 'surround around text' },
          { 'ds', mode = { 'n', 'x' }, desc = 'delete surrounding pair' },
          { 'cs', mode = { 'n', 'x' }, desc = 'change surrounding pair' },
-         { '<c-g>s', mode = 'i', desc = 'empty surrounding pair' },
+         { '<c-g>s', mode = 'i', desc = 'create empty surrounding pair' },
       },
       config = function()
          require('nvim-surround').setup()

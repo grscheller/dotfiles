@@ -6,8 +6,7 @@ return {
 
    {
       'folke/which-key.nvim',
-      lazy = false,
-      priority = 800,
+      event = 'VeryLazy',
       config = function()
          local wk = require('which-key')
          wk.setup {
@@ -108,15 +107,6 @@ return {
             }, {
                prefix = '<leader>h',
                mode = 'n',
-            }
-         )
-
-         wk.register(
-            {
-               name = 'refactoring',
-            }, {
-               prefix = '<leader>r',
-               mode = { 'n', 'v' },
             }
          )
 

@@ -14,11 +14,11 @@ return {
       cmd = 'Refactor',
       keys = {
          {
-            '<leader>rs',
+            '<leader>R',
             function()
                require('refactoring').select_refactor()
             end,
-            mode = { 'n', 'v' },
+            mode = { 'n', 'x' },
             noremap = true,
             silent = true,
             expr = false,

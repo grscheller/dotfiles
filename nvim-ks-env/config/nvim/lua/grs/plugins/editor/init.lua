@@ -4,21 +4,6 @@ local iFlatten = require('grs.lib.functional').iFlatten
 
 return iFlatten {
 
-   {
-      -- Nvim-web-devicons needs patched a font.
-      -- See https://github.com/ryanoasis/nerd-fonts
-      {
-         'nvim-tree/nvim-web-devicons',
-         enabled = vim.g.have_nerd_font,
-         opts = {
-            color_icons = true,
-            default = true,
-            strict = true,
-         },
-      },
-
-   },
-
    require 'grs.plugins.editor.appearance',
    require 'grs.plugins.editor.telescope',
    require 'grs.plugins.editor.textedit',
