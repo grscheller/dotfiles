@@ -105,76 +105,139 @@ km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
 
--- --[[ Diagnostic keymaps ]]
+--[[ Diagnostic keymaps ]]
+
 km('n', '<bslash>[', vim.diagnostic.goto_prev, { desc = 'goto prev diagostic' })
 km('n', '<bslash>]', vim.diagnostic.goto_next, { desc = 'goto next diagostic' })
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'show diagnostic quickfix list' })
 
--- Which-key prefix-keys - defer until Which-Key is available
-function M.wk_prefixes(wk)
-   -- Leader & leader-like prefix-keys
+--[[ Plugin related keymaps ]]
+
+-- plugin/package managers keymaps
+km('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+km('n', '<leader>pm', '<cmd>Mason<cr>', { desc = 'mason gui' })
+
+-- toggle treesitter
+km('n', '<leader>tt', '<cmd>TSBufToggle highlight<cr>', {
+   desc = 'toggle treesitter highlighting',
+})
+
+--[[ Which-key prefix-keys - defer until Which-Key is available ]]
+
+function M.prefixes(wk)
+
    wk.register({
       name = 'space key',
    }, {
-      prefix = '<space>',
+      prefix = '<leader>',
       mode = { 'n', 'v' },
    })
 
-   wk.register({
-      name = 'LSP, DAP',
-   }, {
-      prefix = '<bslash>',
-      mode = 'n',
-   })
+   wk.register(
+      {
+         name = 'diagnosics & dap',
+      }, {
+         prefix = '<bslash>',
+         mode = 'n',
+      }
+   )
 
-   wk.register({
-      name = 'LSP',
-   }, {
-      prefix = '<bslash>',
-      mode = 'v',
-   })
+   wk.register(
+      {
+         name = 'package managers',
+      }, {
+         prefix = '<leader>p',
+         mode = 'n',
+      }
+   )
 
-   -- Lazy GUI prefix-key & keymap
-   wk.register({
-      name = 'lazy',
-   }, {
-      prefix = '<leader>l',
-      mode = 'n',
-   })
+   wk.register(
+      {
+         name = 'code',
+      }, {
+         prefix = '<leader>c',
+         mode = 'n',
+      }
+   )
 
-   km('n', '<leader>ll', '<cmd>Lazy<cr>', { desc = 'lazy gui' })
+   wk.register(
+      {
+         name = 'document',
+      }, {
+         prefix = '<leader>d',
+         mode = 'n',
+      }
+   )
 
-   -- Telescope prefix-key & additional keymap
-   wk.register({
-      name = 'telescope',
-   }, {
-      prefix = '<leader>t',
-      mode = 'n',
-   })
+   wk.register(
+      {
+         name = 'goto',
+      }, {
+         prefix = '<leader>g',
+         mode = 'n',
+      }
+   )
 
-   km('n', '<leader>tt', '<cmd>Telescope<cr>', {
-      desc = 'telescope',
-   })
+   wk.register(
+      {
+         name = 'rename',
+      }, {
+         prefix = '<leader>r',
+         mode = 'n',
+      }
+   )
 
-   -- Treesitter related keymap
-   km('n', '<leader>H', '<cmd>TSBufToggle highlight<cr>', {
-      desc = 'toggle treesitter highlighting',
-   })
+   wk.register(
+      {
+         name = 'search',
+      }, {
+         prefix = '<leader>s',
+         mode = 'n',
+      }
+   )
 
-   -- Harpoon prefix-key
-   wk.register({
-      name = 'harpoon',
-   }, {
-      prefix = '<leader>h',
-      mode = 'n',
-   })
+   wk.register(
+      {
+         name = 'toggle',
+      }, {
+         prefix = '<leader>t',
+         mode = 'n',
+      }
+   )
+
+   wk.register(
+      {
+         name = 'workspace',
+      }, {
+         prefix = '<leader>w',
+         mode = 'n',
+      }
+   )
+
+   wk.register(
+      {
+         name = 'git Hunk'
+      }, {
+         prefix = '<leader>H',
+         mode = { 'n', 'v' },
+      }
+   )
+
+   wk.register(
+      {
+         name = 'harpoon',
+      }, {
+         prefix = '<leader>h',
+         mode = 'n',
+      }
+   )
 
    -- Refactoring prefix-key
    wk.register({
       name = 'refactoring',
    }, {
-      prefix = '<leader>r',
+      prefix = '<leader>R',
       mode = { 'n', 'v' },
    })
 end

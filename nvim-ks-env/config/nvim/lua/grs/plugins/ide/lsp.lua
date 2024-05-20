@@ -161,6 +161,9 @@ return {
          { 'folke/neodev.nvim', opts = {} },
       },
       config = function()
+         local lspconfig = require 'lspconfig'
+         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
          vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('grs-lsp-attach', { clear = true }),
             callback = function(event)
@@ -205,12 +208,9 @@ return {
             end,
          })
 
-         --  Communicate new capabilities provided by nvim-cmp, to the LSP servers.
-         local capabilities = vim.lsp.protocol.make_client_capabilities()
-         capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
          -- Enable desired language servers
          local servers = {
+            bashls = {},
             clangd = {},
             lua_ls = {
                filetypes = { 'lua', 'luau' },
@@ -225,7 +225,9 @@ return {
                   },
                },
             },
+            marksman = {},
             tsserver = {},
+            zls = {},
          }
 
          --[[ Configure the Mason toolchain
