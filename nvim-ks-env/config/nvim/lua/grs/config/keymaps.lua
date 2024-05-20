@@ -3,6 +3,7 @@
 -- loaded on "VeryLazy" event
 
 local M = {}
+
 local km = vim.keymap.set
 local scroll = require 'grs.lib.scroll'
 
@@ -104,6 +105,12 @@ km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
 
+-- --[[ Diagnostic keymaps ]]
+km('n', '<bslash>[', vim.diagnostic.goto_prev, { desc = 'goto prev diagostic' })
+km('n', '<bslash>]', vim.diagnostic.goto_next, { desc = 'goto next diagostic' })
+km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
+km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'show diagnostic quickfix list' })
+
 -- Which-key prefix-keys - defer until Which-Key is available
 function M.wk_prefixes(wk)
    -- Leader & leader-like prefix-keys
@@ -171,12 +178,6 @@ function M.wk_prefixes(wk)
       mode = { 'n', 'v' },
    })
 end
-
--- --[[ Diagnostic keymaps ]]
-km('n', '<bslash>[', vim.diagnostic.goto_prev, { desc = 'goto prev diagostic' })
-km('n', '<bslash>]', vim.diagnostic.goto_next, { desc = 'goto next diagostic' })
-km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'show diagnostic error messages' })
-km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'show diagnostic quickfix list' })
 
 --[[ LSP related keymaps ]]
 function M.lsp(bufnr, wk)
@@ -317,31 +318,31 @@ end
 --[[ DAP (Debug Adapter Protocol) related keymaps ]]
 
 function M.dap(bufnr, dap, dap_ui_widgets, wk)
-   km('n', '<bslash><bslash>c', dap.continue, {
+   km('n', '<bslash>c', dap.continue, {
       buffer = bufnr,
       desc = 'dap continue',
    })
-   km('n', '<bslash><bslash>h', dap_ui_widgets.hover, {
+   km('n', '<bslash>h', dap_ui_widgets.hover, {
       buffer = bufnr,
       desc = 'dap hover',
    })
-   km('n', '<bslash><bslash>l', dap.run_last, {
+   km('n', '<bslash>l', dap.run_last, {
       buffer = bufnr,
       desc = 'dap run last',
    })
-   km('n', '<bslash><bslash>o', dap.step_over, {
+   km('n', '<bslash>o', dap.step_over, {
       buffer = bufnr,
       desc = 'dap step over',
    })
-   km('n', '<bslash><bslash>i', dap.step_into, {
+   km('n', '<bslash>i', dap.step_into, {
       buffer = bufnr,
       desc = 'dap step into',
    })
-   km('n', '<bslash><bslash>b', dap.toggle_breakpoint, {
+   km('n', '<bslash>b', dap.toggle_breakpoint, {
       buffer = bufnr,
       desc = 'dap toggle breakpoint',
    })
-   km('n', '<bslash><bslash>r', dap.repl.toggle, {
+   km('n', '<bslash>r', dap.repl.toggle, {
       buffer = bufnr,
       desc = 'dap repl toggle',
    })
@@ -349,7 +350,7 @@ function M.dap(bufnr, dap, dap_ui_widgets, wk)
    wk.register({
       name = 'dap',
    }, {
-      prefix = '<bslash><bslash>',
+      prefix = '<bslash>',
       mode = 'n',
       buffer = bufnr,
    })

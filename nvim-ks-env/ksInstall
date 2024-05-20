@@ -43,9 +43,14 @@ dot_config_files='
    lua/grs/lib/functional.lua
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
+   lua/grs/plugins/coding/init.lua
+   lua/grs/plugins/coding/harpoon.lua
+   lua/grs/plugins/coding/refactoring.lua
    lua/grs/plugins/editor/init.lua
    lua/grs/plugins/editor/appearance.lua
+   lua/grs/plugins/editor/telescope.lua
    lua/grs/plugins/editor/textedit.lua
+   lua/grs/plugins/editor/whichkey.lua
    lua/grs/plugins/linters_formatters/init.lua
    lua/grs/plugins/linters_formatters/formatters.lua
    lua/grs/plugins/linters_formatters/linters.lua

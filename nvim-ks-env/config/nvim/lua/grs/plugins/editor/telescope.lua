@@ -1,132 +1,113 @@
 --[[ Telescope - search, filter, find & pick items ]]
 
+local km = vim.keymap.set
+
 return {
 
    {
-      'nvim-telescope/telescope.nvim',
-      event = 'VeryLazy',
+      -- Open window showing keymaps for current picker,
+         -- Insert mode: <c-/>
+         -- Normal mode: ?
+     'nvim-telescope/telescope.nvim',
       dependencies = {
-         'nvim-telescope/telescope-ui-select.nvim',
+         { 'nvim-lua/plenary.nvim' },
+         {
+            'nvim-tree/nvim-web-devicons',
+            enabled = vim.g.have_nerd_font,
+         },
+         {
+            'nvim-telescope/telescope-ui-select.nvim',
+         },
          {
             'nvim-telescope/telescope-fzf-native.nvim',
             build = 'make',
+            cond = function()
+               return vim.fn.executable 'make' == 1
+            end,
          },
       },
-      opts = {
-         defaults = {
-            prompt_prefix = ' ',
-            selection_caret = ' ',
-         },
-      },
+      event = 'VeryLazy',
       config = function()
          local telescope = require 'telescope'
+         local builtin = require 'telescope.builtin'
+         local themes = require 'telescope.themes'
+
          telescope.setup {
+            defaults = {
+               -- mappings while in telescope
+               mappings = {
+                  i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+               },
+               prompt_prefix = ' ',
+               selection_caret = ' ',
+            },
             extensions = {
-               -- hijack netrw with something better
                file_browser = {
                   theme = 'ivy',
                   hijack_netrw = true,
                },
-
-               -- replaces Python fzf with one written in C
                fzf = {
                   fuzzy = true,
                   override_generic_sorter = true,
                   override_file_sorter = true,
                   case_mode = 'respect_case',
                },
-
-               -- info on plugins installed via lazy.nvim
                lazy = {
                   theme = 'ivy',
-                  show_icon = true,
-                  mappings = {
-                     open_in_browser = "<C-o>",
-                     open_in_file_browser = "<M-b>",
-                     open_in_find_files = "<C-f>",
-                     open_in_live_grep = "<C-g>",
-                     open_plugins_picker = "<C-b>",  -- works only after another action
-                     open_lazy_root_find_files = "<C-r>f",
-                     open_lazy_root_live_grep = "<C-r>g",
-                  },
                },
-
-               -- set vim.ui.select to telescope
                ['ui-select'] = {
-                  require('telescope.themes').get_dropdown {
-                     -- no idea how to configure this thing yet
-                  },
+                  themes.get_dropdown {},
                },
             },
+            pickers = {},
          }
-         telescope.load_extension 'fzf'
+
          telescope.load_extension 'ui-select'
+         telescope.load_extension 'fzf'
+
+         km('n', '<leader>sh', builtin.help_tags, { desc = 'search help' })
+         km('n', '<leader>sk', builtin.keymaps, { desc = 'search kymaps' })
+         km('n', '<leader>sf', builtin.find_files, { desc = 'search files' })
+         km('n', '<leader>ss', builtin.builtin, { desc = 'search select telescope' })
+         km('n', '<leader>sw', builtin.grep_string, { desc = 'search current word' })
+         km('n', '<leader>sg', builtin.live_grep, { desc = 'search by grep' })
+         km('n', '<leader>sd', builtin.diagnostics, { desc = 'search diagnostics' })
+         km('n', '<leader>sr', builtin.resume, { desc = 'search resume' })
+         km('n', '<leader>s.', builtin.oldfiles, { desc = 'search recent files ("." for repeat)' })
+         km(
+            'n',
+            '<leader>/',
+            function()
+               builtin.current_buffer_fuzzy_find(require(themes).get_dropdown {
+                  winblend = 10,
+                  previewer = false,
+               })
+            end,
+            { desc = 'fuzzily search in current buffer' }
+         )
+         km(
+            'n',
+            '<leader>so',
+            function()
+               builtin.live_grep {
+                  grep_open_files = true,
+                  prompt_title = 'Live Grep in Open Files',
+               }
+            end,
+            { desc = 'search open files' }
+         )
       end,
-      cmd = 'Telescope',
-      keys = {
-         {
-            '<leader>tb',
-            function()
-               require 'telescope'
-               require('telescope.builtin').buffers()
-            end,
-            desc = 'list buffers',
-         },
-         {
-            '<leader>td',
-            function()
-               require 'telescope'
-               require('telescope.builtin').grep_string()
-            end,
-            desc = 'grep files in dir',
-         },
-         {
-            '<leader>tf', function()
-               require 'telescope'
-               require('telescope.builtin').find_files()
-            end,
-            desc = 'find files',
-         },
-         {
-            '<leader>tg',
-            function()
-               require 'telescope'
-               require('telescope.builtin').live_grep()
-            end,
-            desc = 'live grep',
-         },
-         {
-            '<leader>th',
-            function()
-               require 'telescope'
-               require('telescope.builtin').help_tags()
-            end,
-            desc = 'help tags',
-         },
-         {
-            '<leader>tr',
-            function()
-               require 'telescope'
-               require('telescope.builtin').oldfiles()
-            end,
-            desc = 'recent files',
-         },
-         {
-            '<leader>tz',
-            function()
-               require 'telescope'
-               require('telescope.builtin').current_buffer_fuzzy_find()
-            end,
-            desc = 'fzf current buffer',
-         },
-      },
    },
 
    {
       'nvim-telescope/telescope-file-browser.nvim',
+      dependencies = {
+         'nvim-telescope/telescope.nvim',
+         'nvim-lua/plenary.nvim',
+      },
       keys = {
          {
-            '<leader>tB',
+            '<leader>sF',
             function()
                local telescope = require('telescope')
                telescope.load_extension 'file_browser'
@@ -137,6 +118,7 @@ return {
       },
    },
 
+
    {
       'tsakirist/telescope-lazy.nvim',
       dependencies = {
@@ -144,7 +126,7 @@ return {
       },
       keys = {
          {
-            '<leader>tl',
+            '<leader>sl',
             function()
                local telescope = require('telescope')
                telescope.load_extension 'lazy'

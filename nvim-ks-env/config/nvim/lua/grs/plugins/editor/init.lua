@@ -8,7 +8,7 @@ return iFlatten {
       -- Nvim-web-devicons needs patched a font.
       -- See https://github.com/ryanoasis/nerd-fonts
       {
-         'nvin-tree/nvim-web-devicons',
+         'nvim-tree/nvim-web-devicons',
          enabled = vim.g.have_nerd_font,
          opts = {
             color_icons = true,
@@ -20,7 +20,7 @@ return iFlatten {
    },
 
    require 'grs.plugins.editor.appearance',
-   -- require 'grs.plugins.editor.telescope',
+   require 'grs.plugins.editor.telescope',
    require 'grs.plugins.editor.textedit',
-   -- require 'grs.plugins.editor.whichkey',
+   require 'grs.plugins.editor.whichkey',
 }
