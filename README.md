@@ -3,19 +3,13 @@
 GitHub repository to maintain and install the configuration files for my
 Linux based workstation computers.
 
-* nvim-env - Neovim configuration files
+* nvim-ks-env - Refactoring my Neovim configuration files
   * always a work in progress
   * uses folke/lazy.nvim as the plugin manager
-  * hrsh7th/nvim-cmp completions integrated with LSP
-  * dundalek/lazy-lspconfig for Nix based LSP management
-  * neovim/nvim-lspconfig for system or manually installed LSP servers
-  * mfussenegger/nvim-lint to inject cli linting into vim.diagnostics
-  * mhartington/formatter.nvim to run formatters
-* nvim-ks-env - Refactoring my Neovim configuration files
-    * using nvim-lua/kickstart as a template/guide
-    * mostly to change back from lazy-lspconfig (with nix) to mason
-    * to improve my choice of key mappings
-    * will eventually replace nvim-env
+  * using nvim-lua/kickstart as a template/guide
+  * mostly to change back from lazy-lspconfig (with nix) to mason
+  * to improve my choice of key mappings
+  * will eventually replace nvim-env
 * fish-env - Fish shell configuration files
   * very opinionated - my main shell
   * permanent configuration flows from configuration files

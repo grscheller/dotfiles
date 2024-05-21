@@ -45,7 +45,10 @@ dot_config_files='
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
    lua/grs/plugins/coding/init.lua
+   lua/grs/plugins/coding/autopairs.lua
+   lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/harpoon.lua
+   lua/grs/plugins/coding/indent_line.lua
    lua/grs/plugins/coding/refactoring.lua
    lua/grs/plugins/editor/init.lua
    lua/grs/plugins/editor/appearance.lua
@@ -60,10 +63,7 @@ dot_config_files='
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/ide/rust.lua
    lua/grs/plugins/ide/scala.lua
-   lua/grs/plugins/autopairs.lua
    lua/grs/plugins/common.lua
-   lua/grs/plugins/gitsigns.lua
-   lua/grs/plugins/indent_line.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -84,6 +84,9 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/neo-tree.lua
    $XDG_CONFIG_HOME/nvim/ftplugin
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/kickstart.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/indent_line.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/gitsigns.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/autopairs.lua
 "
 
 dirs_to_create=""

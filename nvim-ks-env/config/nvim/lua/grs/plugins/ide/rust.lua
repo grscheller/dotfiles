@@ -22,7 +22,7 @@ return {
       dependencies = {
          'hrsh7th/nvim-cmp',
       },
-      event = { 'BufRead Cargo.toml', 'BufNewFile Cargo.toml' },
+      event = { 'BufReadPre Cargo.toml', 'BufNewFile Cargo.toml' },
       config = function()
          require('crates').setup {
             null_ls = {

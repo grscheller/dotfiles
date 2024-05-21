@@ -5,110 +5,26 @@
 
 local km = require 'grs.config.keymaps'
 
-local old_one = {
-
-   {
-      -- Manually installed LSP servers configured via lspconfig.
-      -- See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-      -- for a list of the LSP server names and configuration defaults.
-      'neovim/nvim-lspconfig',
-      dependencies = {
-         { 'folke/neoconf.nvim' },
-         { 'folke/neodev.nvim' },
-      },
-      config = function()
-         local lspconfig = require 'lspconfig'
-         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-         -- needs to run before configuring any LSP servers via lspconfig
-         require('neoconf').setup {
-            experimental = { pathStrict = true },
-         }
-
-         -- Configure Neovim builtin lsp client with the default configurations
-         -- provided by the lspconfig plugin.
-         local defaultConfiguredLspServers = {
-            'clangd',
-         }
-
-         for _, lspServer in ipairs(defaultConfiguredLspServers) do
-            lspconfig[lspServer].setup {
-               capabilities = capabilities,
-               on_attach = function(_, bufnr)
-                  km.lsp(bufnr)
-               end,
-            }
-         end
-
-         -- Configure Haskell Language Server
-         lspconfig.hls.setup {
-            capabilities = capabilities,
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-            end,
-            settings = {
-               hls = {
-                  filetypes = { 'haskell', 'lhaskell', 'cabal' },
-                  on_attach = function(_, bufnr)
-                     km.lsp(bufnr)
-                     km.haskell(bufnr)
-                  end,
-               },
-            },
-         }
-
-         -- Manually configure lsp client for python-lsp-server,
-         -- using jdhao configs as a starting point.
-         lspconfig.pylsp.setup {
-            capabilities = capabilities,
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-            end,
-            flags = { debounce_text_changes = 200 },
-            settings = {
-               pylsp = {
-                  plugins = {
-                     -- formatter options
-                     black = { enabled = false },
-                     autopep8 = { enabled = false },
-                     yapf = { enabled = false },
-                     -- linter options
-                     pylint = { enabled = false },
-                     ruff = { enabled = true },
-                     pyflakes = { enabled = false },
-                     pycodestyle = { enabled = false },
-                     -- type checker
-                     pylsp_mypy = {
-                        enabled = true,
-                     },
-                     -- refactoring
-                     rope = { enable = true },
-                  },
-               },
-            },
-         }
-      end,
-   },
-
-}
-
 return {
 
    { -- LSP Configuration & Plugins
       'neovim/nvim-lspconfig',
-      lazy = false,
+      event = 'VeryLazy', -- plugin itself is "lazy"
       dependencies = {
          -- Automatically install LSP's & related tools to Neovim's stdpath
-         { 'williamboman/mason.nvim' }, -- NOTE: Must be loaded before dependents
-         { 'williamboman/mason-lspconfig.nvim' },
-
-         -- Give user feedback on LSP activity
-         { 'j-hui/fidget.nvim', opts = {} },
+         'williamboman/mason.nvim', -- NOTE: Must be loaded first
+         'williamboman/mason-lspconfig.nvim',
 
          -- Configures Lua LSP for your Neovim configs, runtime and plugins.
          -- Used for completion, annotations and signatures for Neovim API's.
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
          { 'folke/neodev.nvim', opts = {} },
+
+         -- Give user feedback on LSP activity
+         { 'j-hui/fidget.nvim', opts = {} },
+
+         -- Show line indentations when when editing code
+         'lukas-reineke/indent-blankline.nvim'
       },
       config = function()
          require('mason').setup {}

@@ -13,14 +13,16 @@ local usercmd = vim.api.nvim_create_user_command
 return {
 
    {
+      -- TODO: move linters_by_ft to config/ and generate ft from it
       'mfussenegger/nvim-lint',
       ft = {
          'ccs',
+         'gitcommit',
          'javascript',
          'json',
          'lua',
          'luau',
-         'md',
+         'markdown',
          'sh',
          'typescript',
       },
@@ -28,21 +30,23 @@ return {
          local lint = require 'lint'
          lint.linters_by_ft = {
             ccs = { 'stylelint' },
-            javascript = { 'eslint' },
+            gitcommit ={ 'gitlint' },
+            javascript = { 'eslint_d' },
             -- javascriptreact = { 'eslint' },
             json = { 'jsonlint' },
             lua = { 'selene' },
             luau = { 'selene' },
             markdown = { 'markdownlint' },
             sh = { 'shellcheck' },
-            typescript = { 'eslint' },
-            -- vue = { 'eslint' },
-            -- svelte = { 'eslint' },
+            typescript = { 'eslint_d' },
+            -- vue = { 'eslint_d' },
+            -- svelte = { 'eslint_d' },
          }
 
          local list_linters = function()
             local msg
-            local linters = require('lint').get_running()
+            local linters = lint.linters_by_ft[vim.bo.filetype] or {}
+
             if #linters == 0 then
                msg = '󰦕 '
             else

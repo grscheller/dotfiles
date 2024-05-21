@@ -52,7 +52,7 @@ return {
    -- Lualine statusline
    { 'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
-      event = "VeryLazy",
+      event = 'VeryLazy',
       opts = function()
          local kanagawa_colors = require('kanagawa.colors').setup()
          local palette = kanagawa_colors.palette
