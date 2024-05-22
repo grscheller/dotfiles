@@ -12,35 +12,29 @@ local autocmd = vim.api.nvim_create_autocmd
 return {
 
    {
-      'mhartington/formatter.nvim',
+      'stevearc/conform.nvim',
       keys = {
-         { mode = 'n', '<leader>F', '<Cmd>:Format<CR>' },
-      },
-      config = function()
-         local formatter = require 'formatter'
-         formatter.setup {
-            logging = true,
-            log_level = vim.log.levels.WARN,
-            filetype = {
-               lua = {
-                  require('formatter.filetypes.lua').stylua,
-               },
-               toml = {
-                  require('formatter.filetypes.toml').taplo,
-               },
-            },
-         }
-
-         local grsFormatGrp = autogrp('GrsFormat', { clear = true })
-         autocmd('User', {
-            pattern = 'FormatterPost',
-            callback = function(ev)
-               local msg = 'formatting completed: %s'
-               vim.notify(string.format(msg, vim.api.nvim_buf_get_name(ev.buf)))
+         {
+             '<leader>f',
+            function()
+               require('conform').format { async = true, lsp_fallback = true }
             end,
-            group = grsFormatGrp,
-            desc = 'Format code via formatter.nvim',
-         })
-      end,
+            mode = '',
+            desc = 'format buffer',
+         },
+      },
+      opts = {
+         notify_on_error = false,
+         formatters_by_ft = {
+            lua = { 'stylua' },
+            toml = { 'taplo' },
+
+            -- run multiple formatters sequentially
+            -- python = { "isort", "black" },
+
+            -- run first formatter found.
+            -- javascript = { { "prettierd", "prettier" } },
+         },
+      },
    },
 }
