@@ -2,6 +2,42 @@
 
 local M = {}
 
+M.linters = {
+   ccs = { 'stylelint' },
+   gitcommit ={ 'gitlint' },
+   haskell ={ 'hlint' },
+   html = { 'htmlhint' },
+   javascript = { 'eslint_d' },
+   javascriptreact = { 'eslint_d' },
+   json = { 'jsonlint' },
+   lua = { 'selene' },
+   luau = { 'selene' },
+   markdown = { 'markdownlint-cli2' },
+   sh = { 'shellcheck' },
+   svelte = { 'eslint_d' },
+   typescript = { 'eslint_d' },
+   vue = { 'eslint_d' },
+}
+
+M.formatters = {
+   css = { 'prettierd' },
+   graphql = { 'prettierd' },
+   haskell ={ 'ormolu' },
+   html = { 'prettierd' },
+   javascript = { 'prettierd' },
+   javascriptreact = { 'prettierd' },
+   json = { 'prettierd' },
+   lua = { 'stylua' },
+   markdown = { 'markdownlint-cli2' },
+   svelte = { 'prettierd' },
+   toml = { 'taplo' },
+   typescript = { 'prettierd' },
+   typescriptreact = { 'prettierd' },
+   yaml = { 'prettierd' },
+   -- css = { { "prettierd", "prettier" } }, -- run first formatter found
+   -- python = { "isort", "black" }, -- run multiple linters
+}
+
 -- Treesitter parsers to ensure installed
 M.treesitter_parsers = {
    'awk',
@@ -49,21 +85,6 @@ M.treesitter_parsers = {
    'vimdoc',
    'yaml',
    'zig',
-}
-
-M.linters = {
-   ccs = { 'stylelint' },
-   gitcommit ={ 'gitlint' },
-   javascript = { 'eslint_d' },
-   -- javascriptreact = { 'eslint' },
-   json = { 'jsonlint' },
-   lua = { 'selene' },
-   luau = { 'selene' },
-   markdown = { 'markdownlint-cli2' },
-   sh = { 'shellcheck' },
-   typescript = { 'eslint_d' },
-   -- vue = { 'eslint_d' },
-   -- svelte = { 'eslint_d' },
 }
 
 return M

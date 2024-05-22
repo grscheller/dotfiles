@@ -18,7 +18,6 @@ local filetypes = getKeys(linters_by_filetype)
 return {
 
    {
-      -- TODO: move linters_by_ft to config/ and generate ft from it
       'mfussenegger/nvim-lint',
       ft = filetypes,
       config = function()

@@ -9,6 +9,8 @@
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
+local formatters_by_filetype = require('grs.config.ensure_install').formatters
+
 return {
 
    {
@@ -25,16 +27,7 @@ return {
       },
       opts = {
          notify_on_error = false,
-         formatters_by_ft = {
-            lua = { 'stylua' },
-            toml = { 'taplo' },
-
-            -- run multiple formatters sequentially
-            -- python = { "isort", "black" },
-
-            -- run first formatter found.
-            -- javascript = { { "prettierd", "prettier" } },
-         },
+         formatters_by_ft = formatters_by_filetype,
       },
    },
 }
