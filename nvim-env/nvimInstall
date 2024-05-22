@@ -5,8 +5,8 @@
 # shellcheck shell=dash
 #
 
-scriptName=ksInstall
-envName=nvim-ks-env
+scriptName=nvInstall
+envName=nvim-env
 
 gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 envPath="$gitRepo/$envName"
