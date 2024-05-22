@@ -44,6 +44,8 @@ return {
             require('cmp_nvim_lsp').default_capabilities()
          )
 
+
+
          -- TODO: Move to config/keymaps.lua
          vim.api.nvim_create_autocmd('LspAttach', {
             callback = function(event)

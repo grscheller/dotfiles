@@ -244,7 +244,7 @@ end
 
 --[[ LSP related keymaps ]]
 function M.lsp(bufnr, wk)
-   km('n', '<bslash>H', vim.lsp.buf.hover, {
+   km('n', 'gd', vim.lsp.buf.hover, {
       buffer = bufnr,
       desc = 'hover',
    })

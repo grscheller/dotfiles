@@ -8,6 +8,7 @@ local mergeTables = require('grs.lib.functional').mergeTables
 
 return {
 
+   -- insert mode completions
    {
       'hrsh7th/nvim-cmp',
       dependencies = {
@@ -21,6 +22,8 @@ return {
             build = 'make install_jsregexp',
          },
          'saadparwaiz1/cmp_luasnip',
+         -- complete matching symbol pairs
+         'windwp/nvim-autopairs',
          -- completion sources
          'hrsh7th/cmp-buffer',
          'hrsh7th/cmp-cmdline',
@@ -35,7 +38,6 @@ return {
          -- modify sorting behavior
          'lukas-reineke/cmp-under-comparator',
       },
-      event = { 'InsertEnter', 'CmdlineEnter' },
       config = function()
          local cmp = require 'cmp'
          local cmp_under_comparator = require 'cmp-under-comparator'
@@ -273,6 +275,11 @@ return {
             mapping = mapping,
             sources = sources_search_mode,
          })
+
+         -- complete matching symbol pairs
+         require('nvim-autopairs').setup {}
+         local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
+         cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
       end,
    },
