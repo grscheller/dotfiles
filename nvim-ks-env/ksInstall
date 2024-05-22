@@ -37,10 +37,10 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    lua/grs/config/autocmds.lua
+   lua/grs/config/ensure_install.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
-   lua/grs/config/treesitter.lua
    lua/grs/lib/functional.lua
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
@@ -54,6 +54,7 @@ dot_config_files='
    lua/grs/plugins/editor/appearance.lua
    lua/grs/plugins/editor/telescope.lua
    lua/grs/plugins/editor/textedit.lua
+   lua/grs/plugins/editor/treesitter.lua
    lua/grs/plugins/editor/whichkey.lua
    lua/grs/plugins/linters_formatters/init.lua
    lua/grs/plugins/linters_formatters/formatters.lua
@@ -87,6 +88,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/indent_line.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/gitsigns.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/autopairs.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/treesitter.lua
 "
 
 dirs_to_create=""

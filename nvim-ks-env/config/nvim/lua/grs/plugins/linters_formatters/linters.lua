@@ -6,42 +6,24 @@
 -- languages where either no language server exists, or where standalone linters
 -- provide better results than available language servers do.
 
+local getKeys = require('grs.lib.functional').getKeys
+
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
+
+local linters_by_filetype = require('grs.config.ensure_install').linters
+local filetypes = getKeys(linters_by_filetype)
 
 return {
 
    {
       -- TODO: move linters_by_ft to config/ and generate ft from it
       'mfussenegger/nvim-lint',
-      ft = {
-         'ccs',
-         'gitcommit',
-         'javascript',
-         'json',
-         'lua',
-         'luau',
-         'markdown',
-         'sh',
-         'typescript',
-      },
+      ft = filetypes,
       config = function()
          local lint = require 'lint'
-         lint.linters_by_ft = {
-            ccs = { 'stylelint' },
-            gitcommit ={ 'gitlint' },
-            javascript = { 'eslint_d' },
-            -- javascriptreact = { 'eslint' },
-            json = { 'jsonlint' },
-            lua = { 'selene' },
-            luau = { 'selene' },
-            markdown = { 'markdownlint' },
-            sh = { 'shellcheck' },
-            typescript = { 'eslint_d' },
-            -- vue = { 'eslint_d' },
-            -- svelte = { 'eslint_d' },
-         }
+         lint.linters_by_ft = linters_by_filetype
 
          local list_linters = function()
             local msg

@@ -1,9 +1,9 @@
---[[ Configure parsers for treesitter to install ]]
+--[[ Ensure Installation ]]
 
 local M = {}
 
 -- Treesitter parsers to ensure installed
-M.ensure_installed = {
+M.treesitter_parsers = {
    'awk',
    'bash',
    'c',
@@ -49,6 +49,21 @@ M.ensure_installed = {
    'vimdoc',
    'yaml',
    'zig',
+}
+
+M.linters = {
+   ccs = { 'stylelint' },
+   gitcommit ={ 'gitlint' },
+   javascript = { 'eslint_d' },
+   -- javascriptreact = { 'eslint' },
+   json = { 'jsonlint' },
+   lua = { 'selene' },
+   luau = { 'selene' },
+   markdown = { 'markdownlint' },
+   sh = { 'shellcheck' },
+   typescript = { 'eslint_d' },
+   -- vue = { 'eslint_d' },
+   -- svelte = { 'eslint_d' },
 }
 
 return M

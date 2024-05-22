@@ -1,4 +1,4 @@
---[[ Configure plugins to assist in software development & refactoring ]]
+--[[ Configure plugins related to software development/refactoring ]]
 
 local iFlatten = require('grs.lib.functional').iFlatten
 

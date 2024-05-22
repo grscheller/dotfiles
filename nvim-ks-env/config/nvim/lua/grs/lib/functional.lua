@@ -1,19 +1,19 @@
 --[[ Functional Programming for Lua
-  
+
      Functions designed to be applied against "simple" tables:
        <list> means a Lua consecutive integer indexed table with no holes
        <maps> means a table of "key" -> value pairs
-    
+
      So that these JIT compile and run very fast, there is no type or error
      checking.  It is the programmer's responsibility to pass the correct data
      structures to these functions.
-    
+
      I would not use with mixed tables. Function-like objects, like tables with
      __call metamethods, should be OK as function arguments ... I think?
-    
+
      The use of the word "functional" is meant to mean that the interface is
      functional, not necessarily the implementation.
-  
+
      Recursively copy a table, or what a table with a metatable table presents
      itself as.  Does not recreate a table with metatable. ]]
 
@@ -61,8 +61,8 @@ M.iMap = function(f, a)
    end
 end
 
--- Merge an <list> of <maps>
--- Right-most wins when given same key.
+-- Merge a <list> of <maps>
+-- note: later tables override earlier ones when given the same key
 M.mergeTables = function(array_of_tables)
    local mergedTable = {}
    for _, tbl in ipairs(array_of_tables) do
