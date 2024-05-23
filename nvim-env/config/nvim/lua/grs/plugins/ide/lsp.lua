@@ -1,4 +1,4 @@
---[[ Config Neovim LSP client and Mason toolchain ]]
+--[[ Config Neovim LSP client leveraging the Mason toolchain ]]
 
 -- To provide overrides to customize the default configurations
 -- pushed to LSP servers.
@@ -7,32 +7,123 @@ local km = require 'grs.config.keymaps'
 
 return {
 
-   { -- LSP Configuration & Plugins
-      'neovim/nvim-lspconfig',
-      event = 'VeryLazy', -- plugin itself is "lazy"
+   -- LSP configuration & Mason integration
+   {
+      'williamboman/mason-lspconfig.nvim',
       dependencies = {
-         -- Automatically install LSP's & related tools to Neovim's stdpath
-         'williamboman/mason.nvim', -- NOTE: Must be loaded first
-         'williamboman/mason-lspconfig.nvim',
+         -- package manager for LSP servers & related tools
+         {
+            'williamboman/mason.nvim',
+            config = require('mason').setup {},
+         },
+      },
+      config = require('mason-lspconfig').setup {
+         ensure_installed = {},
+         automatic_installation = true,
+         handlers = {
+            -- default handler
+            function (server_name) -- default handler (optional)
+               require('lspconfig')[server_name].setup {}
+            end,
 
-         -- Configures Lua LSP for your Neovim configs, runtime and plugins.
+            ['rust_analyzer'] = function ()
+               require('rust-tools').setup {}
+            end,
+
+            ['lua_ls'] = function ()
+               local lspconfig = require('lspconfig')
+               lspconfig.lua_ls.setup {
+                  settings = {
+                     Lua = {
+                        completion = {
+                           callSnippet = 'Replace',
+                        },
+                        diagnostics = {
+                           globals = { 'vim' },
+                           disable = { 'missing-fields' },
+                        },
+                     },
+                  },
+               }
+            end,
+
+      --   -- Configure Haskell Language Server
+      --   lspconfig.hls.setup {
+      --      capabilities = capabilities,
+      --      on_attach = function(_, bufnr)
+      --         km.lsp(bufnr)
+      --      end,
+      --      settings = {
+      --         hls = {
+      --            filetypes = { 'haskell', 'lhaskell', 'cabal' },
+      --            on_attach = function(_, bufnr)
+      --               km.lsp(bufnr)
+      --               km.haskell(bufnr)
+      --            end,
+      --         },
+      --      },
+      --   }
+
+      --   -- Manually configure lsp client for python-lsp-server,
+      --   -- using jdhao configs as a starting point.
+      --   lspconfig.pylsp.setup {
+      --      capabilities = capabilities,
+      --      on_attach = function(_, bufnr)
+      --         km.lsp(bufnr)
+      --      end,
+      --      flags = { debounce_text_changes = 200 },
+      --      settings = {
+      --         pylsp = {
+      --            plugins = {
+      --               -- formatter options
+      --               black = { enabled = false },
+      --               autopep8 = { enabled = false },
+      --               yapf = { enabled = false },
+      --               -- linter options
+      --               pylint = { enabled = false },
+      --               ruff = { enabled = true },
+      --               pyflakes = { enabled = false },
+      --               pycodestyle = { enabled = false },
+      --               -- type checker
+      --               pylsp_mypy = {
+      --                  enabled = true,
+      --               },
+      --               -- refactoring
+      --               rope = { enable = true },
+      --            },
+      --         },
+      --      },
+      --   }
+         }.
+      },
+   },
+
+   -- Give user feedback on LSP activity
+   {
+      'j-hui/fidget.nvim',
+      event = 'LspAttach',
+      opts = {},
+   },
+
+   -- LSP Configuration & Plugins
+   {
+      'neovim/nvim-lspconfig',
+      event = 'VeryLazy',
+      dependencies = {
+         -- for cmp completions capabilities
+         'hrsh7th/cmp_nvim_lsp'
+
+         -- configures Lua LSP for your Neovim configs, runtime and plugins.
          -- Used for completion, annotations and signatures for Neovim API's.
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
          { 'folke/neodev.nvim', opts = {} },
-
-         -- Give user feedback on LSP activity
-         { 'j-hui/fidget.nvim', opts = {} },
-
-         -- Show line indentations when editing code
-         'lukas-reineke/indent-blankline.nvim'
       },
       config = function()
-         require('mason').setup {}
-         require('mason-lspconfig').setup {
-            ensure_installed = {},
-            automatic_installation = true,
-            handlers = nil,
-         }
+         capabilities = vim.tbl_deep_extend(
+            'force',
+            vim.lsp.protocol.make_client_capabilities(),
+            require('cmp_nvim_lsp').default_capabilities()
+         )
 
          -- setup before configuring any LSP servers with lspconfig
          require('neoconf').setup {
@@ -42,13 +133,7 @@ return {
 
          local lspconfig = require 'lspconfig'
 
-         capabilities = vim.tbl_deep_extend(
-            'force',
-            vim.lsp.protocol.make_client_capabilities(),
-            require('cmp_nvim_lsp').default_capabilities()
-         )
-
-         -- TODO: Move to config/keymaps.lua
+         -- TODO: Move to config/keymaps.lua???
          vim.api.nvim_create_autocmd('LspAttach', {
             callback = function(event)
                local map = function(keys, func, desc)
@@ -93,83 +178,7 @@ return {
             desc = 'Get rid of this stupid thing'
          })
 
-         -- Configure Neovim builtin lsp client with the default configurations
-         -- provided by the lspconfig plugin.
-         local defaultConfiguredLspServers = {
-            'clangd',
-         }
 
-         for _, lspServer in ipairs(defaultConfiguredLspServers) do
-            lspconfig[lspServer].setup {
-               capabilities = capabilities,
-               on_attach = function(_, bufnr)
-                  km.lsp(bufnr)
-               end,
-            }
-         end
-
-         lspconfig.lua_ls.setup {
-            lua_ls = {
-               filetypes = { 'lua', 'luau' },
-               capabilities = capabilities,
-               settings = {
-                  Lua = {
-                     completion = {
-                        callSnippet = 'Replace',
-                     },
-                     -- diagnostics = { disable = { 'missing-fields' } },
-                  },
-               },
-            },
-         }
-
-         -- Configure Haskell Language Server
-         lspconfig.hls.setup {
-            capabilities = capabilities,
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-            end,
-            settings = {
-               hls = {
-                  filetypes = { 'haskell', 'lhaskell', 'cabal' },
-                  on_attach = function(_, bufnr)
-                     km.lsp(bufnr)
-                     km.haskell(bufnr)
-                  end,
-               },
-            },
-         }
-
-         -- Manually configure lsp client for python-lsp-server,
-         -- using jdhao configs as a starting point.
-         lspconfig.pylsp.setup {
-            capabilities = capabilities,
-            on_attach = function(_, bufnr)
-               km.lsp(bufnr)
-            end,
-            flags = { debounce_text_changes = 200 },
-            settings = {
-               pylsp = {
-                  plugins = {
-                     -- formatter options
-                     black = { enabled = false },
-                     autopep8 = { enabled = false },
-                     yapf = { enabled = false },
-                     -- linter options
-                     pylint = { enabled = false },
-                     ruff = { enabled = true },
-                     pyflakes = { enabled = false },
-                     pycodestyle = { enabled = false },
-                     -- type checker
-                     pylsp_mypy = {
-                        enabled = true,
-                     },
-                     -- refactoring
-                     rope = { enable = true },
-                  },
-               },
-            },
-         }
       end,
    },
 

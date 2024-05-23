@@ -1,27 +1,25 @@
 --[[ Plugins for general Text editing Related taske ]]
 
-local comment_overrides = {
-   opleader = {
-      line = '<leader>tcc',
-      block = '<leader>tcb',
-   },
-   extra = {
-      above = '<leader>tcO',
-      below = '<leader>tco',
-      eol = '<leader>tcA',
-   },
-}
-
 return {
 
    -- comment out or restore lines and blocks of code
    {
       'numToStr/Comment.nvim',
       lazy = false,
-      opts = comment_overrides,
+      opts = {
+         opleader = {
+            line = '<leader>tcc',
+            block = '<leader>tcb',
+         },
+         extra = {
+            above = '<leader>tcO',
+            below = '<leader>tco',
+            eol = '<leader>tcA',
+         },
+      },
       keys = {
          { '<leader>tc', mode = { 'n', 'x'}, desc = 'toggle comment' },
-      }
+      },
    },
 
    -- Surround text objects with matching symbols
@@ -35,7 +33,7 @@ return {
       },
       config = function()
          require('nvim-surround').setup()
-      end
+      end,
    },
 
    -- Quickly jump around window - like sneak but on steroids
@@ -51,6 +49,13 @@ return {
          leap.opts.case_sensitive = true
          leap.add_default_mappings(true)
       end,
+   },
+
+   -- Show line indentations when editing code
+   {
+      'lukas-reineke/indent-blankline.nvim',
+      event = 'InsertEnter',
+      dependencies = { 'hrsh7th/cmp_nvim_lsp' },
    },
 
 }
