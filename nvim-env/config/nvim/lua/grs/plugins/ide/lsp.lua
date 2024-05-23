@@ -23,12 +23,15 @@ return {
          -- Give user feedback on LSP activity
          { 'j-hui/fidget.nvim', opts = {} },
 
-         -- Show line indentations when when editing code
+         -- Show line indentations when editing code
          'lukas-reineke/indent-blankline.nvim'
       },
       config = function()
          require('mason').setup {}
-         require('mason-lspconfig').setup {}
+         require('mason-lspconfig').setup {
+            ensure_installed = {},
+
+         }
 
          -- setup before configuring any LSP servers with lspconfig
          require('neoconf').setup {
@@ -43,8 +46,6 @@ return {
             vim.lsp.protocol.make_client_capabilities(),
             require('cmp_nvim_lsp').default_capabilities()
          )
-
-
 
          -- TODO: Move to config/keymaps.lua
          vim.api.nvim_create_autocmd('LspAttach', {
@@ -79,13 +80,12 @@ return {
 
                -- Execute a code action, usually cursor needs to be on top of an error or suggestion
                -- for this to activate.
-               map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+               map('<leader>ca', vim.lsp.buf.code_action, 'code action')
 
                -- Opens a popup that displays documentation about the word under
-               -- your cursor. See :help K for why this keymap was choosen.
-               map('K', vim.lsp.buf.hover, 'Hover Documentation')
+               -- your cursor. See :help K for why this keymap was chosen.
+               map('K', vim.lsp.buf.hover, 'hover documentation')
 
-               -- Goto Declaration. For example, in C this would take you to the header.
                map('gD', vim.lsp.buf.declaration, 'goto declaration')
             end,
             group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -173,36 +173,35 @@ return {
    },
 
 
-
    -- {
    --    'mfussenegger/nvim-dap',
    --    dependencies = {
    --       -- Creates a beautiful debugger UI
    --       'rcarriga/nvim-dap-ui',
-
+   --
    --       -- Required dependency for nvim-dap-ui
    --       'nvim-neotest/nvim-nio',
-
+   --
    --       -- Installs the debug adapters for you
    --       'williamboman/mason.nvim',
    --       'jay-babu/mason-nvim-dap.nvim',
-
+   --
    --       -- Add your own debuggers here
    --       'leoluz/nvim-dap-go',
    --    },
    --    config = function()
    --       local dap = require 'dap'
    --       local dapui = require 'dapui'
-
+   --
    --       require('mason-nvim-dap').setup {
    --          -- Makes a best effort to setup the various debuggers with
    --          -- reasonable debug configurations
    --          automatic_installation = true,
-
+   --
    --          -- You can provide additional configuration to the handlers,
    --          -- see mason-nvim-dap README for more information
    --          handlers = {},
-
+   --
    --          -- You'll need to check that you have the required things installed
    --          -- online, please don't ask me how to install them :)
    --          ensure_installed = {
@@ -210,7 +209,7 @@ return {
    --             'delve',
    --          },
    --       }
-
+   --
    --       -- Basic debugging keymaps, feel free to change to your liking!
    --       vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
    --       vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
@@ -220,7 +219,7 @@ return {
    --       vim.keymap.set('n', '<leader>B', function()
    --          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
    --       end, { desc = 'Debug: Set Breakpoint' })
-
+   --
    --       -- Dap UI setup
    --       -- For more information, see |:help nvim-dap-ui|
    --       dapui.setup {
@@ -242,14 +241,14 @@ return {
    --             },
    --          },
    --       }
-
+   --
    --       -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
    --       vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
-
+   --
    --       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
    --       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
    --       dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
+   --
    --       -- Install golang specific config
    --       require('dap-go').setup {
    --          delve = {

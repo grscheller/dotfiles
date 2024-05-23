@@ -2,6 +2,38 @@
 
 local M = {}
 
+M.handlers = {
+   -- default handler - when install server does not have dedicated handler
+   function (server_name) -- default handler (optional)
+      require('lspconfig')[server_name].setup {}
+   end,
+   
+   ['rust_analyzer'] = function ()
+      require('rust-tools').setup {}
+   end,
+
+   ['lua_ls'] = function ()
+      local lspconfig = require('lspconfig')
+      lspconfig.lua_ls.setup {
+         settings = {
+            Lua = {
+               completion = {
+                  callSnippet = 'Replace',
+               },
+               diagnostics = {
+                  globals = { 'vim' },
+                  disable = { 'missing-fields' },
+               },
+            },
+         },
+      },
+   end,
+}
+
+
+
+
+
 M.linters = {
    ccs = { 'stylelint' },
    gitcommit ={ 'gitlint' },

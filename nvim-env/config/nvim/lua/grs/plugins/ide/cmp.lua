@@ -17,9 +17,11 @@ return {
             'L3MON4D3/LuaSnip',
             dependencies = {
                'rafamadriz/friendly-snippets', -- wide coverage various languages
-               'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
+               {
+                  'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
+                  build = 'make install_jsregexp',
+               }
             },
-            build = 'make install_jsregexp',
          },
          'saadparwaiz1/cmp_luasnip',
          -- complete matching symbol pairs
@@ -109,14 +111,6 @@ return {
          }
 
          local mapping = {
-            ['<c-return>'] = cmp.mapping(function(fallback)
-               if cmp.visible() then
-                  cmp.confirm(optConfirm)
-                  fallback()
-               else
-                  fallback()
-               end
-            end, { 'i', 'c' }),
             ['<c-space>'] = cmp.mapping(function(fallback)
                if cmp.visible() then
                   cmp.close()
