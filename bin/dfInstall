@@ -20,7 +20,7 @@ export OPTION_GIVEN=''
 
 # Install dotfiles
 (. fish-env/fishInstall) &
-(. nvim-ks-env/ksInstall) &
+(. nvim-env/nvimInstall) &
 (. sway-env/swayInstall) &
 (. home-env/homeInstall) &
 (. bash-env/bashInstall) &
