@@ -134,104 +134,82 @@ function M.prefixes(wk)
       mode = { 'n', 'v' },
    })
 
-   wk.register(
-      {
-         name = 'diagnosics & dap',
-      }, {
-         prefix = '<bslash>',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'code',
+   }, {
+      prefix = '<leader>c',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'package managers',
-      }, {
-         prefix = '<leader>p',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'format',
+   }, {
+      prefix = '<leader>f',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'code',
-      }, {
-         prefix = '<leader>c',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'diagnosics & dap',
+   }, {
+      prefix = '<bslash>',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'document',
-      }, {
-         prefix = '<leader>d',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'document',
+   }, {
+      prefix = '<leader>d',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'goto',
-      }, {
-         prefix = '<leader>g',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'package managers',
+   }, {
+      prefix = '<leader>p',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'rename',
-      }, {
-         prefix = '<leader>r',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'rename',
+   }, {
+      prefix = '<leader>r',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'search',
-      }, {
-         prefix = '<leader>s',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'search',
+   }, {
+      prefix = '<leader>s',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'toggle',
-      }, {
-         prefix = '<leader>t',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'toggle',
+   }, {
+      prefix = '<leader>t',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'workspace',
-      }, {
-         prefix = '<leader>w',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'workspace',
+   }, {
+      prefix = '<leader>w',
+      mode = 'n',
+   })
 
-   wk.register(
-      {
-         name = 'git Hunk'
-      }, {
-         prefix = '<leader>H',
-         mode = { 'n', 'v' },
-      }
-   )
+   wk.register({
+      name = 'git Hunk'
+   }, {
+      prefix = '<leader>H',
+      mode = { 'n', 'v' },
+   })
 
-   wk.register(
-      {
-         name = 'harpoon',
-      }, {
-         prefix = '<leader>h',
-         mode = 'n',
-      }
-   )
+   wk.register({
+      name = 'harpoon',
+   }, {
+      prefix = '<leader>h',
+      mode = 'n',
+   })
 
    -- Refactoring prefix-key
    wk.register({
@@ -243,87 +221,60 @@ function M.prefixes(wk)
 end
 
 --[[ LSP related keymaps ]]
-function M.lsp(bufnr, wk)
-   km('n', 'gd', vim.lsp.buf.hover, {
-      buffer = bufnr,
-      desc = 'hover',
-   })
-   km('n', '<bslash>K', vim.lsp.buf.signature_help, {
-      buffer = bufnr,
-      desc = 'signature help',
-   })
-   km('n', '<bslash>gd', vim.lsp.buf.definition, {
-      buffer = bufnr,
-      desc = 'goto definition',
-   })
-   km('n', '<bslash>gD', vim.lsp.buf.declaration, {
-      buffer = bufnr,
-      desc = 'goto declaration',
-   })
-   km('n', '<bslash>gI', vim.lsp.buf.implementation, {
-      buffer = bufnr,
-      desc = 'goto implementation',
-   })
-   km('n', '<bslash>gr', vim.lsp.buf.references, {
-      buffer = bufnr,
-      desc = 'goto references',
-   })
-   km('n', '<bslash>gt', vim.lsp.buf.type_definition, {
-      buffer = bufnr,
-      desc = 'goto type definition',
-   })
-   km('n', '<bslash>gW', vim.lsp.buf.workspace_symbol, {
-      buffer = bufnr,
-      desc = 'workspace symbol',
-   })
-   km('n', '<bslash>gS', vim.lsp.buf.document_symbol, {
-      buffer = bufnr,
-      desc = 'document symbol',
-   })
-   km('n', '<bslash>a', vim.lsp.buf.code_action, {
-      buffer = bufnr,
-      desc = 'code action',
-   })
-   km('n', '<bslash>h', vim.lsp.codelens.refresh, {
-      buffer = bufnr,
-      desc = 'code lens refresh',
-   })
-   km('n', '<bslash>l', vim.lsp.codelens.run, {
-      buffer = bufnr,
-      desc = 'code lens run',
-   })
-   km('n', '<bslash>r', vim.lsp.buf.rename, {
-      buffer = bufnr,
-      desc = 'rename',
-   })
-   km('n', '<bslash>wa', vim.lsp.buf.add_workspace_folder, {
-      buffer = bufnr,
-      desc = 'add workspace folder',
-   })
-   km('n', '<bslash>wr', vim.lsp.buf.remove_workspace_folder, {
-      buffer = bufnr,
-      desc = 'remove workspace folder',
-   })
-   km({ 'n', 'v' }, '<bslash>F', vim.lsp.buf.format, {
-      buffer = bufnr,
-      desc = 'lsp format',
-   })
+function M.lsp(bufnr)
+   local telescope_builtin = require 'telescople.builtin'
 
-   wk.register({
-      name = 'goto',
-   }, {
-      prefix = '<bslash>g',
-      mode = 'n',
-      buffer = bufnr,
-   })
+   km('n', 'gd', require('telescope.builtin').lsp_definitions,
+      { buffer = bufnr, desc = 'goto definition' })
 
-   wk.register({
-      name = 'workspace',
-   }, {
-      prefix = '<bslash>w',
-      mode = 'n',
-      buffer = bufnr,
-   })
+   km('n', 'gr', require('telescope.builtin').lsp_references,
+      { buffer = bufnr, desc = 'goto references' })
+
+   km('n', 'gI', require('telescope.builtin').lsp_implentations,
+      { buffer = bufnr, desc = 'goto implementation' })
+
+   km('n', '<leader>D', require('telescope.builtin').lsp_type_definitions,
+      { buffer = bufnr, desc = 'goto type definition' })
+
+   km('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols,
+      { buffer = bufnr, desc = 'document symbols' })
+
+   km('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+      { buffer = bufnr, desc = 'document symbols' })
+
+   km('n', '<bslash>gD', vim.lsp.buf.declaration,
+      { buffer = bufnr, desc = 'goto declaration' })
+
+   km('n', '<leader>rn', vim.lsp.buf.rename,
+      { buffer = bufnr, desc = 'rename' })
+
+   km('n', 'K', vim.lsp.buf.hover,
+      { buffer = bufnr, desc = 'hover document' })
+
+   km('n', '<leader>K', vim.lsp.buf.signature_help,
+      { buffer = bufnr, desc = 'signature help' })
+
+   km('n', '<leader>ca', vim.lsp.buf.code_action,
+      { buffer = bufnr, desc = 'code action' })
+
+   km('n', '<leader>cr', vim.lsp.codelens.refresh,
+      { buffer = bufnr, desc = 'code lens refresh' })
+
+   km('n', '<leader>cl', vim.lsp.codelens.run,
+      { buffer = bufnr, desc = 'code lens run' })
+
+   km('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
+      { buffer = bufnr, desc = 'add workspace folder' })
+
+   km('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
+      { buffer = bufnr, desc = 'remove workspace folder' })
+
+   km({ 'n', 'v' }, '<leader>fl', vim.lsp.buf.format,
+      { buffer = bufnr, desc = 'format wit lsp' })
+
+   km('n', '<leader>th', function()
+         vim.lsp.inlay.hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end, { buffer = bufnr, desc = 'toggle inlay hints' })
 end
 
 -- Haskell related keymaps

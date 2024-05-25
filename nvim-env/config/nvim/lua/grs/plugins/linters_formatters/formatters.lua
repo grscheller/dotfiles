@@ -6,20 +6,16 @@
 -- plugin's directory for all the available default configurations. See the
 -- README.md for how to set up a user defined configuration.
 
-local autogrp = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-
 local formatters_by_filetype = require('grs.config.ensure_install').formatters
 
 return {
-
    {
       'stevearc/conform.nvim',
       keys = {
          {
-             '<leader>f',
+            '<leader>fF',
             function()
-               require('conform').format { async = true, lsp_fallback = true }
+               require('conform').format { async = true, lsp_fallback = false }
             end,
             mode = '',
             desc = 'format buffer',
