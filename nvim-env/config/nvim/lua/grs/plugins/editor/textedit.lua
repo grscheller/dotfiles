@@ -55,7 +55,6 @@ return {
    {
       'lukas-reineke/indent-blankline.nvim',
       event = 'InsertEnter',
-      dependencies = { 'hrsh7th/cmp_nvim_lsp' },
    },
 
 }

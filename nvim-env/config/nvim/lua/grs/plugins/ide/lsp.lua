@@ -7,97 +7,6 @@ local km = require 'grs.config.keymaps'
 
 return {
 
-   -- LSP configuration & Mason integration
-   {
-      'williamboman/mason-lspconfig.nvim',
-      dependencies = {
-         -- package manager for LSP servers & related tools
-         {
-            'williamboman/mason.nvim',
-            config = require('mason').setup {},
-         },
-      },
-      config = require('mason-lspconfig').setup {
-         ensure_installed = {},
-         automatic_installation = true,
-         handlers = {
-            -- default handler
-            function (server_name) -- default handler (optional)
-               require('lspconfig')[server_name].setup {}
-            end,
-
-            ['rust_analyzer'] = function ()
-               require('rust-tools').setup {}
-            end,
-
-            ['lua_ls'] = function ()
-               local lspconfig = require('lspconfig')
-               lspconfig.lua_ls.setup {
-                  settings = {
-                     Lua = {
-                        completion = {
-                           callSnippet = 'Replace',
-                        },
-                        diagnostics = {
-                           globals = { 'vim' },
-                           disable = { 'missing-fields' },
-                        },
-                     },
-                  },
-               }
-            end,
-
-      --   -- Configure Haskell Language Server
-      --   lspconfig.hls.setup {
-      --      capabilities = capabilities,
-      --      on_attach = function(_, bufnr)
-      --         km.lsp(bufnr)
-      --      end,
-      --      settings = {
-      --         hls = {
-      --            filetypes = { 'haskell', 'lhaskell', 'cabal' },
-      --            on_attach = function(_, bufnr)
-      --               km.lsp(bufnr)
-      --               km.haskell(bufnr)
-      --            end,
-      --         },
-      --      },
-      --   }
-
-      --   -- Manually configure lsp client for python-lsp-server,
-      --   -- using jdhao configs as a starting point.
-      --   lspconfig.pylsp.setup {
-      --      capabilities = capabilities,
-      --      on_attach = function(_, bufnr)
-      --         km.lsp(bufnr)
-      --      end,
-      --      flags = { debounce_text_changes = 200 },
-      --      settings = {
-      --         pylsp = {
-      --            plugins = {
-      --               -- formatter options
-      --               black = { enabled = false },
-      --               autopep8 = { enabled = false },
-      --               yapf = { enabled = false },
-      --               -- linter options
-      --               pylint = { enabled = false },
-      --               ruff = { enabled = true },
-      --               pyflakes = { enabled = false },
-      --               pycodestyle = { enabled = false },
-      --               -- type checker
-      --               pylsp_mypy = {
-      --                  enabled = true,
-      --               },
-      --               -- refactoring
-      --               rope = { enable = true },
-      --            },
-      --         },
-      --      },
-      --   }
-         }.
-      },
-   },
-
    -- Give user feedback on LSP activity
    {
       'j-hui/fidget.nvim',
@@ -110,11 +19,9 @@ return {
       'neovim/nvim-lspconfig',
       event = 'VeryLazy',
       dependencies = {
-         -- for cmp completions capabilities
-         'hrsh7th/cmp_nvim_lsp'
-
-         -- configures Lua LSP for your Neovim configs, runtime and plugins.
-         -- Used for completion, annotations and signatures for Neovim API's.
+         'hrsh7th/cmp-nvim-lsp',
+         'williamboman/mason.nvim',
+         'williamboman/mason-lspconfig.nvim',
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
          { 'folke/neodev.nvim', opts = {} },
       },
@@ -125,19 +32,65 @@ return {
             require('cmp_nvim_lsp').default_capabilities()
          )
 
-         -- setup before configuring any LSP servers with lspconfig
-         require('neoconf').setup {
-            experimental = { pathStrict = true },
+         require('mason').setup {}
+         require('mason-lspconfig').setup {
+            ensure_installed = {},
+            automatic_installation = true,
+            handlers = {
+               -- default handler
+               function (server_name) -- default handler (optional)
+                  require('lspconfig')[server_name].setup {
+                     -- capabilities = capabilities,
+                  }
+               end,
+
+               -- ['rust_analyzer'] = function ()
+               --    require('rust-tools').setup {}
+               -- end,
+
+               ['lua_ls'] = function ()
+                  local lspconfig = require('lspconfig')
+                  lspconfig.lua_ls.setup {
+                     -- capabilities = capabilities,
+                     -- on_attach = function(_, bufnr)
+                     --    -- km.lsp(bufnr)
+                     --    vim.notify('buffer number is ' .. tostring(bufnr))
+                     -- end,
+                     settings = {
+                        Lua = {
+                           completion = {
+                              callSnippet = 'Replace',
+                           },
+                           diagnostics = {
+                              globals = { 'vim' },
+                              disable = { 'missing-fields' },
+                           },
+                        },
+                     },
+                  }
+               end,
+            },
          }
-         require('neodev').setup {}
 
          local lspconfig = require 'lspconfig'
 
-         -- TODO: Move to config/keymaps.lua???
+         -- TODO: Make this my own
+         --       - https://github.com/nvim-telescope/telescope.nvim
+         --       - :h lsp
+         --       - :h lsp-inlay_hint
+         --
          vim.api.nvim_create_autocmd('LspAttach', {
             callback = function(event)
                local map = function(keys, func, desc)
                   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+               end
+
+               local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+               if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+                  map('<leader>th', function()
+                  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+                  end, 'toggle inlay hints')
                end
 
                map('gd', require('telescope.builtin').lsp_definitions, 'goto definition')
@@ -173,14 +126,65 @@ return {
                map('K', vim.lsp.buf.hover, 'hover documentation')
 
                map('gD', vim.lsp.buf.declaration, 'goto declaration')
+
             end,
             group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
-            desc = 'Get rid of this stupid thing'
+            desc = 'Get rid of this stupid thing or embrace it?'
          })
-
 
       end,
    },
+
+
+
+   --   -- Configure Haskell Language Server
+   --   lspconfig.hls.setup {
+   --      capabilities = capabilities,
+   --      on_attach = function(_, bufnr)
+   --         km.lsp(bufnr)
+   --      end,
+   --      settings = {
+   --         hls = {
+   --            filetypes = { 'haskell', 'lhaskell', 'cabal' },
+   --            on_attach = function(_, bufnr)
+   --               km.lsp(bufnr)
+   --               km.haskell(bufnr)
+   --            end,
+   --         },
+   --      },
+   --   }
+
+   --   -- Manually configure lsp client for python-lsp-server,
+   --   -- using jdhao configs as a starting point.
+   --   lspconfig.pylsp.setup {
+   --      capabilities = capabilities,
+   --      on_attach = function(_, bufnr)
+   --         km.lsp(bufnr)
+   --      end,
+   --      flags = { debounce_text_changes = 200 },
+   --      settings = {
+   --         pylsp = {
+   --            plugins = {
+   --               -- formatter options
+   --               black = { enabled = false },
+   --               autopep8 = { enabled = false },
+   --               yapf = { enabled = false },
+   --               -- linter options
+   --               pylint = { enabled = false },
+   --               ruff = { enabled = true },
+   --               pyflakes = { enabled = false },
+   --               pycodestyle = { enabled = false },
+   --               -- type checker
+   --               pylsp_mypy = {
+   --                  enabled = true,
+   --               },
+   --               -- refactoring
+   --               rope = { enable = true },
+   --            },
+   --         },
+   --      },
+   --   }
+
 
 
    -- {

@@ -8,47 +8,48 @@ local mergeTables = require('grs.lib.functional').mergeTables
 
 return {
 
+   -- Snippet engine
+   {
+      "L3MON4D3/LuaSnip",
+      dependencies = { 'rafamadriz/friendly-snippets' },
+      version = 'v2.*',
+      build = 'make install_jsregexp'
+   },
+
    -- insert mode completions
    {
       'hrsh7th/nvim-cmp',
+      event = { 'InsertEnter', 'CmdlineEnter' },
       dependencies = {
-         -- Snippet engine
-         {
-            'L3MON4D3/LuaSnip',
-            dependencies = {
-               'rafamadriz/friendly-snippets', -- wide coverage various languages
-               {
-                  'kmarius/jsregexp', -- ECMAScript regular expressions snippet sources
-                  build = 'make install_jsregexp',
-               }
-            },
-         },
-         'saadparwaiz1/cmp_luasnip',
-         -- complete matching symbol pairs
-         'windwp/nvim-autopairs',
-         -- completion sources
-         'hrsh7th/cmp-buffer',
-         'hrsh7th/cmp-cmdline',
-         'hrsh7th/cmp-nvim-lsp-document-symbol',
-         'hrsh7th/cmp-nvim-lua',
-         'hrsh7th/cmp-path',
-         'lukas-reineke/cmp-rg',
-         -- provide completion capabilities to LSP servers, completion source
-         'hrsh7th/cmp-nvim-lsp',
+         -- snippet engine (required)
+         'L3MON4D3/LuaSnip',
          -- modify formatting of ui
          'onsails/lspkind.nvim',
          -- modify sorting behavior
          'lukas-reineke/cmp-under-comparator',
+         -- integrate with matching symbol plugin
+         'windwp/nvim-autopairs',
+         -- completion sources
+         'hrsh7th/cmp-buffer',
+         'hrsh7th/cmp-cmdline',
+         'hrsh7th/cmp-nvim-lsp',
+         'hrsh7th/cmp-nvim-lsp-document-symbol',
+         'hrsh7th/cmp-nvim-lua',
+         'hrsh7th/cmp-path',
+         'lukas-reineke/cmp-rg',
+         'saadparwaiz1/cmp_luasnip',
       },
       config = function()
          local cmp = require 'cmp'
-         local cmp_under_comparator = require 'cmp-under-comparator'
          local lspkind = require 'lspkind'
+         local cmp_under_comparator = require 'cmp-under-comparator'
          local luasnip = require 'luasnip'
+         local autopairs = require 'nvim-autopairs'
+         local autopairs_cmp = require 'nvim-autopairs.completion.cmp'
 
          require('luasnip.loaders.from_vscode').lazy_load()
 
-         --[[ Modify completion behaiviors $ appearance ]]
+         --[[ Modify completion behaviors & appearance ]]
 
          local sorting = {
             comparators = {
@@ -270,10 +271,8 @@ return {
             sources = sources_search_mode,
          })
 
-         -- complete matching symbol pairs
-         require('nvim-autopairs').setup {}
-         local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
-         cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+         autopairs.setup {}
+         cmp.event:on('confirm_done', autopairs_cmp.on_confirm_done())
 
       end,
    },
