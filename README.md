@@ -3,13 +3,12 @@
 GitHub repository to maintain and install the configuration files for my
 Linux based workstation computers.
 
-* nvim-ks-env - Refactoring my Neovim configuration files
+* nvim-env - Neovim configuration files
   * always a work in progress
   * uses folke/lazy.nvim as the plugin manager
-  * using nvim-lua/kickstart as a template/guide
-  * mostly to change back from lazy-lspconfig (with nix) to mason
-  * to improve my choice of key mappings
-  * will eventually replace nvim-env
+  * used nvim-lua/kickstart as a guide to my key mappings
+  * uses mason as an LSP/DAP/Linter/Formatter package manager
+    * made to play nice with locally installed tools
 * fish-env - Fish shell configuration files
   * very opinionated - my main shell
   * permanent configuration flows from configuration files
@@ -17,7 +16,9 @@ Linux based workstation computers.
     * manual changes can be lost on configuration file updates
 * sway-env - Sway configuration files
   * Sway is a Wayland based tiling window manager modeled after i3
+  * using systemd, so only one session possible on a host at a time
 * bash-env - Bash $HOME based configuration files
+  * currently the shell I use on Pop!OS
   * bash startup files
     * attempted to be kept Linux/Unix system independent
     * not POSIX compatible
@@ -29,6 +30,7 @@ Linux based workstation computers.
     * bloop (Scala)
     * cabal (Haskell)
 * root-env - Arch Linux system configuration files
+  * customization not as necessary as was the case 4-6 years ago
 
 Currently only tested out on Arch Linux.
 
