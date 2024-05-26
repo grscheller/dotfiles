@@ -21,11 +21,11 @@ abbr -a gw git switch
 # appropriate for arch linux desktop environment - single quotes intentional
 abbr -a sfInstall 'sudo $DOTFILES_GIT_REPO/bin/sfInstall'
 abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
-abbr -a nvInstall '$DOTFILES_GIT_REPO/nvim-env/nvimInstall'
-abbr -a fInstall  '$DOTFILES_GIT_REPO/fish-env/fishInstall'
-abbr -a swInstall '$DOTFILES_GIT_REPO/sway-env/swayInstall'
-abbr -a hInstall  '$DOTFILES_GIT_REPO/home-env/homeInstall'
-abbr -a bInstall  '$DOTFILES_GIT_REPO/bash-env/bashInstall'
+abbr -a nvInstall '$DOTFILES_GIT_REPO/bin/nvimInstall'
+abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
+abbr -a swInstall '$DOTFILES_GIT_REPO/bin/swayInstall'
+abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
+abbr -a bInstall  '$DOTFILES_GIT_REPO/bin/bashInstall'
 
 # Python virtual environment for system python
 abbr -a pl pip list|cat

@@ -19,11 +19,11 @@ export OPTION_GIVEN=''
 . bin/.setup.sh
 
 # Install dotfiles
-(. fish-env/fishInstall) &
-(. nvim-env/nvimInstall) &
-(. sway-env/swayInstall) &
-(. home-env/homeInstall) &
-(. bash-env/bashInstall) &
+(. bin/fishInstall) &
+(. bin/nvimInstall) &
+(. bin/swayInstall) &
+(. bin/homeInstall) &
+(. bin/bashInstall) &
 
 # Make sure all background jobs finish
 wait
