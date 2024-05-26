@@ -101,7 +101,7 @@ SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim >/dev/null 2>&1
 then
    if ! test -e "$SpellFile" || {
-      ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add >/dev/null 2>&1
+      ! diff -q "$SpellFile" spell/en.utf-8.add >/dev/null 2>&1
    }
    then
       compileSpellFile=yes
@@ -120,7 +120,7 @@ fi
 process_files "$XDG_CONFIG_HOME/nvim" "
    $dot_config_files
    $toml_files
-" config/nvim 0644 "$envPath"
+" . 0644 "$envPath"
 chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
 # Remove/report no longer needed files and directories thru

@@ -91,7 +91,7 @@ dirs_to_create=""
 ## Install/Check
 
 # Install Fish config files
-process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$envPath"
+process_files "$XDG_CONFIG_HOME/fish" "$config_files" . 0644 "$envPath"
 chmod 0755 "$XDG_CONFIG_HOME/fish"
 
 # Remove/report no longer needed files and directories
