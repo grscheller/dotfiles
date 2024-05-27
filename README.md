@@ -3,52 +3,26 @@
 GitHub repository to maintain and install the configuration files for my
 Linux based workstation computers.
 
-* nvim-env - Neovim configuration files
-  * always a work in progress
-  * uses folke/lazy.nvim as the plugin manager
-  * used nvim-lua/kickstart as a guide to my key mappings
-  * uses mason as an LSP/DAP/Linter/Formatter package manager
-    * made to play nice with locally installed tools
-* fish-env - Fish shell configuration files
-  * very opinionated - my main shell
-  * permanent configuration flows from configuration files
-    * manual configurations can be used for temporary changes
-    * manual changes can be lost on configuration file updates
-* sway-env - Sway configuration files
-  * Sway is a Wayland based tiling window manager modeled after i3
-  * using systemd, so only one session possible on a host at a time
-* bash-env - Bash $HOME based configuration files
-  * currently the shell I use on Pop!OS
-  * bash startup files
-    * attempted to be kept Linux/Unix system independent
-    * not POSIX compatible
-* home-env - other $HOME based configuration files
-  * ~/bin scripts
-    * bash, POSIX shell, python
-  * other configuration files
-    * ssh
-    * bloop (Scala)
-    * cabal (Haskell)
-* root-env - Arch Linux system configuration files
-  * customization not as necessary as was the case 4-6 years ago
+* currently only tested regularly on Arch Linux
+* tested intermittently on Pop!OS
 
-Currently only tested out on Arch Linux.
+## Installation scripts
 
-## Scripts
-
-* bin/[dfInstall](dfInstall)
-  * Installs all "dotfiles" to the $HOME directory
-  * Usage: `$DOTFILES_GIT_REPO/bin/dfInstall [--install|--check}]`
-* bin/[sfInstall](sfInstall)
-  * Installs "root-env/" files to "/"
-  * Usage: `sudo $DOTFILES_GIT_REPO/bin/sfInstall`
-* fish abbreviations provided to install from anywhere
-  * fInstall to install fish-env files
-  * nvInstall to install nvim-env files
-  * swInstall to install sway-env files
-  * hInstall  to install home-env files
-  * dfInstall to install all of the above in parallel
-  * sfInstall to install system configuration files
+* install various "dotfiles" to my $HOME directory
+  * [nvimInstall](bin/nvimInstall) - Neovim (always a work in progress)
+  * [fishInstall](bin/fishInstall) - Fish (my primary shell)
+  * [bashInstall](bin/bashInstall) - Bash (my backup shell, mostly for Pop!OS)
+  * [swayInstall](bin/swayInstall) - Sway (my Wayland desktop on Arch)
+  * [miscInstall](bin/miscInstall) - miscellaneous config files
+* install all of the above in parallel: [dfInstall](bin/dfInstall)
+* install Arch Linux system files: sudo [rootInstall](bin/rootInstall)
+* fish abbreviations provided to install from $DOTFILES_GIT_REPO
+  * nvInstall - for nvimInstall
+  * fInstall  - for fishInstall
+  * bInstall  - for bashInstall
+  * swInstall - for swayInstall
+  * mInstall  - for miscInstall
+  * dfInstall - for dfInstall
 
 ## Public Domain Declaration
 

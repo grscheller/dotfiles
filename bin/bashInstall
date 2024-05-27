@@ -9,8 +9,8 @@ envName=bash-env
 gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 envPath="$gitRepo/$envName"
 
-cd "$envPath" || {
-   printf 'Error %s: failed to cd into "%s"\n\n' "$scriptName" "$envPath"
+cd "$envPath" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$gitRepo"
    return 1
 }
 

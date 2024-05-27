@@ -10,15 +10,10 @@
 #     - reflector.timer
 #
 
-test (count $argv) -gt 1 || not fish_is_root_user
+test (count $argv) -gt 0 || not fish_is_root_user
 and begin
-   printf 'Usage: sudo $DOTFILES_GIT_REPO/bin/sfInstall [$DOTFILES_GIT_REPO]\n\n'
+   printf '\nUsage: sudo $DOTFILES_GIT_REPO/bin/rootInstall\n\n'
    return 1
-end
-
-test (count $argv) -eq 1
-and begin
-   set DOTFILES_GIT_REPO $argv[1]
 end
 
 set -q DOTFILES_GIT_REPO
@@ -26,15 +21,15 @@ or set DOTFILES_GIT_REPO ~(echo $SUDO_USER)/devel/dotfiles
 
 cd $DOTFILES_GIT_REPO 2>/dev/null
 or begin
-   printf 'sfInstall: Failed to cd into the dotfiles\n'
-   printf '           git directory \'%s\'\n\n' "$DOTFILES_GIT_REPO"
+   printf '\nsfInstall: Failed to cd into the dotfiles'
+   printf '\n           git directory \'%s\'\n\n' "$DOTFILES_GIT_REPO"
    return 1
 end
 
 test -d ./root-env
 or begin
-   printf 'sfInstall: No \'%s\' directory, ...\n' "$DOTFILES_GIT_REPO/root-env"
-   printf '           PUNTING!\n\n'
+   printf '\nsfInstall: No \'%s\' directory, ...' "$DOTFILES_GIT_REPO/root-env"
+   printf '\n           PUNTING!\n\n'
    return 1
 end
 

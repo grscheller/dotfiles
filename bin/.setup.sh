@@ -6,13 +6,13 @@
 #
 if [ -z "$scriptName" ]
 then
-   printf 'Check configuration, scriptName is not set.\n\n'
+   printf '\nCheck configuration, $scriptName is not set.\n\n'
    exit 1
 fi
 
 if [ -z "$gitRepo" ]
 then
-   printf 'Check configuration, gitRepo is not set.\n\n'
+   printf '\nCheck configuration, $gitRepo is not set.\n\n'
    exit 1
 fi
 

@@ -1,4 +1,4 @@
-#source (pyenv init - | psub)# Set up abbreviations
+# Set up abbreviations
 
 # Git related cmds - anything more complicated, I want to think about
 abbr -a ga git add .
@@ -19,12 +19,12 @@ abbr -a gt 'git tag --list|cat'
 abbr -a gw git switch
 
 # appropriate for arch linux desktop environment - single quotes intentional
-abbr -a sfInstall 'sudo $DOTFILES_GIT_REPO/bin/sfInstall'
+abbr -a rInstall 'sudo $DOTFILES_GIT_REPO/bin/rInstall'
 abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvInstall '$DOTFILES_GIT_REPO/bin/nvimInstall'
 abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/bin/swayInstall'
-abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
+abbr -a mInstall  '$DOTFILES_GIT_REPO/bin/miscInstall'
 abbr -a bInstall  '$DOTFILES_GIT_REPO/bin/bashInstall'
 
 # Python virtual environment for system python
