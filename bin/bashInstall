@@ -22,7 +22,7 @@ bash_files='
 
 ## Setup - parse cmdline arguments and source functions, if not done already
 
-. ../bin/.setup.sh
+. ../bin/source_setup.sh
 
 ## Preinstall checks
 

@@ -17,7 +17,7 @@ cd "$envPath" 2>/dev/null || {
 }
 
 # Parse cmdline arguments and source functions, if not done already
-. ../bin/.setup.sh
+. ../bin/source_setup.sh
 
 dot_config_files='
    after/ftplugin/c.lua

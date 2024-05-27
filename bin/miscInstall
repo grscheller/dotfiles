@@ -68,7 +68,7 @@ dirs_to_create="
 
 ## Setup - parse cmdline arguments and source functions, if not done already
 
-. ../bin/.setup.sh
+. ../bin/source_setup.sh
 
 ## Install, Check or Remove
 
