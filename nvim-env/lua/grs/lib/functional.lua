@@ -1,7 +1,7 @@
 --[[ Functional Programming for Lua
 
      Functions designed to be applied against "simple" tables:
-       <list> means a Lua consecutive integer indexed table with no holes
+       <array> means a Lua consecutive integer indexed table with no holes
        <maps> means a table of "key" -> value pairs
 
      So that these JIT compile and run very fast, there is no type or error
@@ -17,23 +17,23 @@
      Recursively copy a table, or what a table with a metatable table presents
      itself as.  Does not recreate a table with metatable. ]]
 
-local function _deepCopy(original)
+local M = {}
+
+---Recursively copy a table, make no attempt replicating metatables
+---@param original table
+---@return table
+M.deepCopy = function(original)
    local copy = {}
    for k, v in pairs(original) do
       if type(v) == 'table' then
-         v = _deepCopy(v)
+         v = M.deepCopy(v)
       end
       copy[k] = v
    end
    return copy
 end
 
-local M = {}
-
--- Deep copy any (simple) Lua table (no meta-tables)
-M.deepCopy = _deepCopy
-
--- Flatten an <list> of <lists> (will repeat values)
+-- Flatten an <array> of <arrays> (will repeat values)
 M.iFlatten = function(aoa)
    local flattened = {}
    for _, v in ipairs(aoa) do
@@ -44,14 +44,19 @@ M.iFlatten = function(aoa)
    return flattened
 end
 
--- Apply a function to each element of an <list>, can be Curried.
+-- Apply a function to each element of an <array>, can be Curried.
 M.iMap = function(f, a)
    local function map(vs)
       local ma = {}
-      for i, v in ipairs(vs) do
-         ma[i] = f(v)
+      local j = 0
+      for _, v in ipairs(vs) do
+         local value = f(v)
+         if type(value) ~= nil then
+            j = j + 1
+            ma[j] = f(v)
+         end
       end
-      return ma
+      return ma, j
    end
 
    if a then
@@ -61,11 +66,12 @@ M.iMap = function(f, a)
    end
 end
 
--- Merge a <list> of <maps>
--- note: later tables override earlier ones when given the same key
-M.mergeTables = function(array_of_tables)
+---Merge a <array> of <maps> - later tables override earlier ones
+---@param array_of_maps table
+---@return table
+M.mergeTables = function(array_of_maps)
    local mergedTable = {}
-   for _, tbl in ipairs(array_of_tables) do
+   for _, tbl in ipairs(array_of_maps) do
       for k, v in pairs(tbl) do
          mergedTable[k] = v
       end
@@ -73,7 +79,7 @@ M.mergeTables = function(array_of_tables)
    return mergedTable
 end
 
--- get <table> keys, return <list>
+-- get <map> keys, return <array>
 M.getKeys = function(t)
    local filteredKeys = {}
    for k, _ in pairs(t) do
@@ -82,7 +88,7 @@ M.getKeys = function(t)
    return filteredKeys
 end
 
--- get <table> values, return <list>
+-- get <map> values, return <array>
 M.getValues = function(t)
    local filteredValues = {}
    for _, v in pairs(t) do
@@ -91,7 +97,7 @@ M.getValues = function(t)
    return filteredValues
 end
 
--- get <table> keys filtered by predicate, return <list>
+-- get <table> keys filtered by predicate, return <array>
 M.getFilteredKeys = function(t, p)
    local filteredKeys = {}
    for k, v in pairs(t) do
@@ -102,7 +108,7 @@ M.getFilteredKeys = function(t, p)
    return filteredKeys
 end
 
--- get <table> values filtered by predicate, return <list>
+-- get <table> values filtered by predicate, return <array>
 M.getFilteredValues = function(t, p)
    local filteredValues = {}
    for k, v in pairs(t) do

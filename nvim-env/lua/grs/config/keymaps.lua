@@ -135,23 +135,9 @@ function M.prefixes(wk)
    })
 
    wk.register({
-      name = 'code',
+      name = 'code actions',
    }, {
       prefix = '<leader>c',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'format',
-   }, {
-      prefix = '<leader>f',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'diagnosics & dap',
-   }, {
-      prefix = '<bslash>',
       mode = 'n',
    })
 
@@ -163,16 +149,30 @@ function M.prefixes(wk)
    })
 
    wk.register({
-      name = 'package managers',
+      name = 'diagnosics & dap',
    }, {
-      prefix = '<leader>p',
+      prefix = '<bslash>',
       mode = 'n',
    })
 
    wk.register({
-      name = 'rename',
+      name = 'format',
    }, {
-      prefix = '<leader>r',
+      prefix = '<leader>f',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'goto',
+   }, {
+      prefix = '<leader>g',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'package managers',
+   }, {
+      prefix = '<leader>p',
       mode = 'n',
    })
 
@@ -221,31 +221,31 @@ function M.prefixes(wk)
 end
 
 --[[ LSP related keymaps ]]
-function M.lsp(bufnr)
-   local telescope_builtin = require 'telescople.builtin'
+function M.lsp(client, bufnr)
+   local telescope_builtin = require  'telescope.builtin'
 
-   km('n', 'gd', require('telescope.builtin').lsp_definitions,
+   km('n', '<leader>gd', telescope_builtin.lsp_definitions,
       { buffer = bufnr, desc = 'goto definition' })
 
-   km('n', 'gr', require('telescope.builtin').lsp_references,
+   km('n', '<leader>gr', telescope_builtin.lsp_references,
       { buffer = bufnr, desc = 'goto references' })
 
-   km('n', 'gI', require('telescope.builtin').lsp_implentations,
+   km('n', '<leader>gI', telescope_builtin.lsp_implementations,
       { buffer = bufnr, desc = 'goto implementation' })
 
-   km('n', '<leader>D', require('telescope.builtin').lsp_type_definitions,
+   km('n', '<leader>gD', telescope_builtin.lsp_type_definitions,
       { buffer = bufnr, desc = 'goto type definition' })
 
-   km('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols,
+   km('n', '<leader>ds', telescope_builtin.lsp_document_symbols,
       { buffer = bufnr, desc = 'document symbols' })
 
-   km('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+   km('n', '<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols,
       { buffer = bufnr, desc = 'document symbols' })
 
    km('n', '<bslash>gD', vim.lsp.buf.declaration,
       { buffer = bufnr, desc = 'goto declaration' })
 
-   km('n', '<leader>rn', vim.lsp.buf.rename,
+   km('n', '<leader>r', vim.lsp.buf.rename,
       { buffer = bufnr, desc = 'rename' })
 
    km('n', 'K', vim.lsp.buf.hover,
@@ -272,9 +272,22 @@ function M.lsp(bufnr)
    km({ 'n', 'v' }, '<leader>fl', vim.lsp.buf.format,
       { buffer = bufnr, desc = 'format wit lsp' })
 
-   km('n', '<leader>th', function()
-         vim.lsp.inlay.hint.enable(not vim.lsp.inlay_hint.is_enabled())
+   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
+      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      km('n', '<leader>ti', function()
+         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
+         if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
+            vim.notify('LSP: inlay hints were enabled', vim.log.levels.info)
+         else
+            vim.notify('LSP: inlay hints were disabled', vim.log.levels.info)
+         end
       end, { buffer = bufnr, desc = 'toggle inlay hints' })
+      local msg = string.format('LSP: Client = "%s" does support inlay hints', client.name)
+      vim.notify(msg, vim.log.levels.INFO)
+   else
+      local msg = string.format('LSP: Client = "%s" does not support inlay hints', client.name)
+      vim.notify(msg, vim.log.levels.WARN)
+   end
 end
 
 -- Haskell related keymaps

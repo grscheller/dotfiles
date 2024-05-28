@@ -17,8 +17,6 @@ return {
                },
             }
          }
-
-         -- Setup prefix keys
          keymaps.prefixes(wk)
       end,
    }

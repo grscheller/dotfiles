@@ -3,12 +3,14 @@
 --[[ My goal is to get:
      - mason
        - to ensure it installs what I explicitly tell it to install
-       - and not to install anything else
+       - and not to install anything else (at least initially)
      - mason-lspconfig
-       - to configure both mason $ locally installed servers & tools
+       - to configure both mason installed LSP servers
        - to trigger other plugins to install/configure LSP/DAP servers & tools
          - either by using nvim-lspconf directly themselves (rust-tools)
          - or directly with the Neovim LSP client itself (scala metals)
+     - nvim.lspconfig
+       - to configure locally installed LSP servers
 --]]
 
 local km = require 'grs.config.keymaps'
@@ -30,11 +32,12 @@ return {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'williamboman/mason-lspconfig.nvim',
-         'WhoIsSethDaniel/mason-tool-installer.nvim',
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-         { 'folke/neodev.nvim', opts = {} },
+         'folke/neodev.nvim',
       },
       config = function()
+         require('neodev').setup {}
+
          require('mason').setup {
             ui = {
                   icons = {
@@ -51,17 +54,33 @@ return {
          )
 
          require('mason-lspconfig').setup {
-            ensure_installed = {},
-            automatic_installation = false,
+            ensure_installed = {
+               'taplo',
+               'lua_ls',
+               'rust_analyzer',
+            },
+            automatic_installation = {
+               exclude = {
+                  'pylsp',
+               }
+            },
             handlers = {
                -- default handler
                function (server_name) -- default handler (optional)
                   require('lspconfig')[server_name].setup {
-                     -- capabilities = capabilities,
+                     capabilities = capabilities,
+                     on_attach = function(client, bufnr)
+                        km.lsp(client, bufnr)
+                     end,
                   }
                end,
 
                -- use rust-tools to set of rust-analyzer instead
+               --   Mason seems to only configure what it installs. Will
+               --   need to use Mason to install rust_analyzer.
+               --
+               -- TODO: replace with mrcjkb/rustaceanvim
+               -- 
                -- ['rust_analyzer'] = function ()
                --    require('rust-tools').setup {}
                -- end,
@@ -71,8 +90,8 @@ return {
                   require('lspconfig').hls.setup {
                      capabilities = capabilities,
                      filetypes = { 'haskell' },
-                     on_attach = function(_, bufnr)
-                        km.lsp(bufnr)
+                     on_attach = function(client, bufnr)
+                        km.lsp(client, bufnr)
                      end,
                      settings = {
                         hls = {
@@ -91,6 +110,9 @@ return {
                   require('lspconfig').lua_ls.setup {
                      capabilities = capabilities,
                      filetypes = { 'lua', 'luau' },
+                     on_attach = function(client, bufnr)
+                        km.lsp(client, bufnr)
+                     end,
                      settings = {
                         Lua = {
                            completion = {
@@ -100,44 +122,47 @@ return {
                               globals = { 'vim' },
                               disable = { 'missing-fields' },
                            },
-                        },
-                     },
-                  }
-               end,
-
-               -- Configure Python Lanevent = { "BufReadPre", "BufNewFile" },guage Server - not installed by mason
-               ['pylsp'] = function ()
-                  require('lspconfig').hls.setup {
-                     capabilities = capabilities,
-                     filetypes = { 'python' },
-                     on_attach = function(_, bufnr)
-                        km.lsp(bufnr)
-                     end,
-                     flags = { debounce_text_changes = 200 },
-                     settings = {
-                        pylsp = {
-                           plugins = {
-                              -- formatter options
-                              black = { enabled = false },
-                              autopep8 = { enabled = false },
-                              yapf = { enabled = false },
-                              -- linter options
-                              pylint = { enabled = false },
-                              ruff = { enabled = true },
-                              pyflakes = { enabled = false },
-                              pycodestyle = { enabled = false },
-                              -- type checker
-                              pylsp_mypy = {
-                                 enabled = true,
-                              },
-                              -- refactoring
-                              rope = { enable = true },
-                           },
+                           hint = { enable = true },
                         },
                      },
                   }
                end,
             },
+         }
+
+         local lsp = require('lspconfig')
+
+         -- Configure Python Language Server - not installed by mason
+         lsp.pylsp.setup {
+            capabilities = capabilities,
+            filetypes = { 'python' },
+            on_attach = function(client, bufnr)
+               km.lsp(client, bufnr)
+            end,
+            flags = { debounce_text_changes = 200 },
+            settings = {
+               pylsp = {
+                  plugins = {
+                     -- formatter options
+                     black = { enabled = false },
+                     autopep8 = { enabled = false },
+                     yapf = { enabled = false },
+                     -- linter options
+                     pylint = { enabled = false },
+                     ruff = { enabled = true },
+                     pyflakes = { enabled = false },
+                     pycodestyle = { enabled = false },
+                     -- type checker
+                     pylsp_mypy = {
+                        enabled = true,
+                     },
+                     -- refactoring
+                     rope = { enable = true },
+                     pylsp_inlay_hints = { enable = true },
+                  },
+               },
+            },
+
          }
       end,
    },
