@@ -28,6 +28,7 @@ return {
    {
       'neovim/nvim-lspconfig',
       event = { "BufReadPre", "BufNewFile" },
+      cmd = 'Mason',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
@@ -55,12 +56,16 @@ return {
 
          require('mason-lspconfig').setup {
             ensure_installed = {
-               'taplo',
+               'bashls',
+               'cssls',
+               'html',
                'lua_ls',
                'rust_analyzer',
+               'taplo',
             },
             automatic_installation = {
                exclude = {
+                  'hls',
                   'pylsp',
                }
             },
@@ -84,26 +89,6 @@ return {
                -- ['rust_analyzer'] = function ()
                --    require('rust-tools').setup {}
                -- end,
-
-               -- Configure Haskell Language Server
-               ['hls'] = function ()
-                  require('lspconfig').hls.setup {
-                     capabilities = capabilities,
-                     filetypes = { 'haskell' },
-                     on_attach = function(client, bufnr)
-                        km.lsp(client, bufnr)
-                     end,
-                     settings = {
-                        hls = {
-                           filetypes = { 'haskell', 'lhaskell', 'cabal' },
-                           on_attach = function(_, bufnr)
-                              km.lsp(bufnr)
-                              km.haskell(bufnr)
-                           end,
-                        },
-                     },
-                  }
-               end,
 
                -- Lua language server
                ['lua_ls'] = function ()
@@ -162,6 +147,24 @@ return {
                   },
                },
             },
+
+               -- Configure Haskell Language Server
+            lsp.hls.setup{
+                  capabilities = capabilities,
+                  filetypes = {
+                     'haskell',
+                     'lhaskell',
+                     'cabal',
+                     'java',
+                  },
+                  on_attach = function(_, bufnr)
+                     km.lsp(bufnr)
+                     km.haskell(bufnr)
+                  end,
+                  settings = {
+                     hls = {},
+                  },
+               },
 
          }
       end,
