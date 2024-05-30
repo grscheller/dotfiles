@@ -127,45 +127,12 @@ km('n', '<leader>tt', '<cmd>TSBufToggle highlight<cr>', {
 
 function M.prefixes(wk)
 
-   wk.register({
-      name = 'space key',
-   }, {
-      prefix = '<leader>',
-      mode = { 'n', 'v' },
-   })
-
-   wk.register({
-      name = 'code actions',
-   }, {
-      prefix = '<leader>c',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'document',
-   }, {
-      prefix = '<leader>d',
-      mode = 'n',
-   })
+   wk.register({ ['<space>'] = { 'leader' } }, { mode = { 'n', 'v' } })
 
    wk.register({
       name = 'diagnosics & dap',
    }, {
       prefix = '<bslash>',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'format',
-   }, {
-      prefix = '<leader>f',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'goto',
-   }, {
-      prefix = '<leader>g',
       mode = 'n',
    })
 
@@ -187,13 +154,6 @@ function M.prefixes(wk)
       name = 'toggle',
    }, {
       prefix = '<leader>t',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'workspace',
-   }, {
-      prefix = '<leader>w',
       mode = 'n',
    })
 
@@ -221,7 +181,16 @@ function M.prefixes(wk)
 end
 
 --[[ LSP related keymaps ]]
-function M.lsp(client, bufnr)
+function M.lsp(client, bufnr, wk)
+
+   -- first setup prefix keys
+   wk.register { ['<leader>c'] = { 'cool cat' } }
+   wk.register { ['<leader>c'] = { 'code action' } }
+   wk.register { ['<leader>d'] = { 'document' } }
+   wk.register { ['<leader>f'] = { 'format' } }
+   wk.register { ['<leader>g'] = { 'goto' } }
+   wk.register { ['<leader>w'] = { 'workspace' } }
+
    local telescope_builtin = require  'telescope.builtin'
 
    km('n', '<leader>gd', telescope_builtin.lsp_definitions,
@@ -233,17 +202,14 @@ function M.lsp(client, bufnr)
    km('n', '<leader>gI', telescope_builtin.lsp_implementations,
       { buffer = bufnr, desc = 'goto implementation' })
 
-   km('n', '<leader>gD', telescope_builtin.lsp_type_definitions,
-      { buffer = bufnr, desc = 'goto type definition' })
-
    km('n', '<leader>ds', telescope_builtin.lsp_document_symbols,
       { buffer = bufnr, desc = 'document symbols' })
 
    km('n', '<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols,
-      { buffer = bufnr, desc = 'document symbols' })
+      { buffer = bufnr, desc = 'workspace symbols' })
 
-   km('n', '<bslash>gD', vim.lsp.buf.declaration,
-      { buffer = bufnr, desc = 'goto declaration' })
+   km('n', '<leader>gD', vim.lsp.buf.declaration,
+      { buffer = bufnr, desc = 'goto type declaration' })
 
    km('n', '<leader>r', vim.lsp.buf.rename,
       { buffer = bufnr, desc = 'rename' })
@@ -270,40 +236,44 @@ function M.lsp(client, bufnr)
       { buffer = bufnr, desc = 'remove workspace folder' })
 
    km({ 'n', 'v' }, '<leader>fl', vim.lsp.buf.format,
-      { buffer = bufnr, desc = 'format wit lsp' })
+      { buffer = bufnr, desc = 'format with lsp' })
 
-   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-      vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-      km('n', '<leader>ti', function()
-         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
-         if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
-            vim.notify('LSP: inlay hints were enabled', vim.log.levels.info)
-         else
-            vim.notify('LSP: inlay hints were disabled', vim.log.levels.info)
-         end
-      end, { buffer = bufnr, desc = 'toggle inlay hints' })
-      local msg = string.format('LSP: Client = "%s" does support inlay hints', client.name)
-      vim.notify(msg, vim.log.levels.INFO)
-   else
-      local msg = string.format('LSP: Client = "%s" does not support inlay hints', client.name)
-      vim.notify(msg, vim.log.levels.WARN)
+   if client then
+      -- need to check if "client" is a "client id" or a "client table"
+      if type(client) == "number" then
+         client = vim.lsp.get_client_by_id(client)
+      end
+
+      if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
+         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+         km('n', '<leader>ti', function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
+            if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
+               vim.notify('LSP: inlay hints were enabled', vim.log.levels.info)
+            else
+               vim.notify('LSP: inlay hints were disabled', vim.log.levels.info)
+            end
+         end, { buffer = bufnr, desc = 'toggle inlay hints' })
+         local msg = string.format('LSP: Client = "%s" supports inlay hints', client.name)
+         vim.notify(msg, vim.log.levels.INFO)
+      else
+         local msg = string.format('LSP: Client = "%s" does not support inlay hints', client.name)
+         vim.notify(msg, vim.log.levels.INFO)
+      end
    end
+
 end
 
 -- Haskell related keymaps
 function M.haskell(bufnr, wk)
-   km({ 'n', 'v' }, '<bslash>LF', '<cmd>%!stylish-haskell<cr>', {
-      buffer = bufnr,
-      desc = 'stylish haskell format',
-   })
+   wk.register(
+   {
+      ['<leader>fh'] = { '<cmd>%!stylish-haskell<cr>', 'stylish haskell' },
+   }, { buffer = bufnr })
 
    wk.register({
-      name = 'haskell specific',
-   }, {
-      prefix = '<bslash>L',
-      mode = { 'n', 'v' },
-      buffer = bufnr,
-   })
+      ['<leader>fh'] = { "<cmd>'<,'>!stylish-haskell<cr>", 'stylish haskell' },
+   }, { buffer = bufnr, mode = 'v' })
 end
 
 -- Rust-Tools related keymaps

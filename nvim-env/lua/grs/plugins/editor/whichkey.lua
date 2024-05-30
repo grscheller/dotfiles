@@ -7,18 +7,14 @@ return {
    {
       'folke/which-key.nvim',
       event = 'VeryLazy',
-      config = function()
-         local wk = require('which-key')
-         wk.setup {
-            plugins = {
-               spelling = {
-                  enabled = true,
-                  suggestions = 36,
-               },
-            }
+      opts = {
+         plugins = {
+            spelling = {
+               enabled = true,
+               suggestions = 36,
+            },
          }
-         keymaps.prefixes(wk)
-      end,
+      }
    }
 
 }

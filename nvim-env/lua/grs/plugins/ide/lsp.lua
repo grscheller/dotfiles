@@ -7,7 +7,7 @@
      - mason-lspconfig
        - to configure both mason installed LSP servers
        - to trigger other plugins to install/configure LSP/DAP servers & tools
-         - either by using nvim-lspconf directly themselves (rust-tools)
+         - either by using nvim-lspconfig directly themselves (rust-tools)
          - or directly with the Neovim LSP client itself (scala metals)
      - nvim.lspconfig
        - to configure locally installed LSP servers
@@ -75,7 +75,8 @@ return {
                   require('lspconfig')[server_name].setup {
                      capabilities = capabilities,
                      on_attach = function(client, bufnr)
-                        km.lsp(client, bufnr)
+                        local wk = require('which-key')
+                        km.lsp(client, bufnr, wk)
                      end,
                   }
                end,
@@ -85,7 +86,7 @@ return {
                --   need to use Mason to install rust_analyzer.
                --
                -- TODO: replace with mrcjkb/rustaceanvim
-               -- 
+               --
                -- ['rust_analyzer'] = function ()
                --    require('rust-tools').setup {}
                -- end,
@@ -96,7 +97,8 @@ return {
                      capabilities = capabilities,
                      filetypes = { 'lua', 'luau' },
                      on_attach = function(client, bufnr)
-                        km.lsp(client, bufnr)
+                        local wk = require('which-key')
+                        km.lsp(client, bufnr, wk)
                      end,
                      settings = {
                         Lua = {
@@ -122,7 +124,8 @@ return {
             capabilities = capabilities,
             filetypes = { 'python' },
             on_attach = function(client, bufnr)
-               km.lsp(client, bufnr)
+               local wk = require('which-key')
+               km.lsp(client, bufnr, wk)
             end,
             flags = { debounce_text_changes = 200 },
             settings = {
@@ -149,7 +152,7 @@ return {
             },
 
                -- Configure Haskell Language Server
-            lsp.hls.setup{
+            lsp.hls.setup {
                   capabilities = capabilities,
                   filetypes = {
                      'haskell',
@@ -157,9 +160,10 @@ return {
                      'cabal',
                      'java',
                   },
-                  on_attach = function(_, bufnr)
-                     km.lsp(bufnr)
-                     km.haskell(bufnr)
+                  on_attach = function(client, bufnr)
+                     local wk = require('which-key')
+                     km.lsp(client, bufnr, wk)
+                     km.haskell(bufnr, wk)
                   end,
                   settings = {
                      hls = {},

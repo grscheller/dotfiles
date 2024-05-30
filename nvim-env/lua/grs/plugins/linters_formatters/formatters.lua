@@ -15,7 +15,10 @@ return {
          {
             '<leader>fF',
             function()
-               require('conform').format { async = true, lsp_fallback = false }
+               require('conform').format {
+                  async = true,
+                  lsp_fallback = true
+               }
             end,
             mode = '',
             desc = 'format buffer',

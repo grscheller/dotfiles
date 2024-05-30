@@ -3,7 +3,6 @@
 local iFlatten = require('grs.lib.functional').iFlatten
 
 return iFlatten {
-
    require 'grs.plugins.editor.appearance',
    require 'grs.plugins.editor.telescope',
    require 'grs.plugins.editor.textedit',
