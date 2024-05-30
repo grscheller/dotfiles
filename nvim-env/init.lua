@@ -1,17 +1,24 @@
 --[[ GRS Neovim Configuration - using lazy.nvim ]]
 
-local ok, globals, options, keymaps, autocmds, lazy
+local ok, globals, options, km_early, km_late, autocmds, lazy
 
--- Load globals & options before the lazy plugin manager starts,
--- the keymaps and autocmds can wait until the end to be loaded.
+-- Load globals, options & keymaps ot depending on external plugins
 ok, globals = pcall(require, 'grs.config.globals')
 if not ok then
-   print(string.format('\n\nGlobals failed to load with error:\n\n %s\n\n', globals))
+   local fmt = '\n\nGlobals failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, globals))
 end
 
 ok, options = pcall(require, 'grs.config.options')
 if not ok then
-   print(string.format('\n\nKeymaps failed to load with error:\n\n %s\n\n', options))
+   local fmt = '\n\nOptions failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, options))
+end
+
+ok, km_early = pcall(require, 'grs.config.km_early')
+if not ok then
+   local fmt = '\n\nKeymaps failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, km_early))
 end
 
 -- Fallback colorscheme
@@ -34,7 +41,8 @@ end
 -- Enable Neovim to find lazy.nvim
 vim.opt.rtp:prepend(lazypath)
 
--- Initial lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration
+--[[ lazy.nvim configuration, see :h lazy.nvim-lazy.nvim-configuration ]]
+
 local lazy_opts = {
    -- defaults = { lazy = true, version = nil, cond = nil },
    defaults = { lazy = true, version = nil, cond = nil },
@@ -75,24 +83,29 @@ local lazy_opts = {
    },
 }
 
--- Kickoff lazy.nvim or fail gracefully
+--[[ Kickoff lazy.nvim or fail gracefully ]]
+
 ok, lazy = pcall(require, 'lazy')
 if ok then
    -- Let lazy.nvim take control
    lazy.setup(lazy_opts)
+
+   -- Load keymaps which depend on lazy.nvim managed plugins
+   ok, km_late = pcall(require, 'grs.config.km_late')
+   if not ok then
+      local fmt = '\n\nLate keymaps failed to load with error:\n\n %s\n\n'
+      print(string.format(fmt, km_late))
+   end
 else
-   print(string.format('\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n', lazy))
+   local fmt = '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, lazy))
    vim.cmd [[colorscheme lunaperche]]
 end
 
--- Load keymaps and auto commands
-ok, keymaps = pcall(require, 'grs.config.keymaps')
-if not ok then
-   print(string.format('\n\nKeymaps failed to load with error:\n\n %s\n\n', keymaps))
-end
+--[[ Load auto-commands ]]
 
--- Load auto-commands
 ok, autocmds = pcall(require, 'grs.config.autocmds')
 if not ok then
-   print(string.format('\n\nAutocmds failed to load with error:\n\n %s\n\n', autocmds))
+   local fmt = '\n\nAutocmds failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, autocmds))
 end

@@ -2,6 +2,19 @@
 
 return {
 
+   -- Colorize color names, hexcodes, and other color formats
+   {
+      'norcalli/nvim-colorizer.lua',
+      keys = {
+         { '<leader>tC', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
+      },
+      opts = {
+         '*',
+         css = { rgb_fn = true },
+         html = { names = false },
+      },
+   },
+
    -- comment out or restore lines and blocks of code
    {
       'numToStr/Comment.nvim',

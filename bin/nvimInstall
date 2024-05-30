@@ -38,7 +38,8 @@ dot_config_files='
    after/ftplugin/tsv.lua
    lua/grs/config/autocmds.lua
    lua/grs/config/ensure_install.lua
-   lua/grs/config/keymaps.lua
+   lua/grs/config/km_early.lua
+   lua/grs/config/km_late.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -55,16 +56,15 @@ dot_config_files='
    lua/grs/plugins/editor/telescope.lua
    lua/grs/plugins/editor/textedit.lua
    lua/grs/plugins/editor/treesitter.lua
-   lua/grs/plugins/editor/whichkey.lua
-   lua/grs/plugins/linters_formatters/init.lua
-   lua/grs/plugins/linters_formatters/formatters.lua
-   lua/grs/plugins/linters_formatters/linters.lua
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
+   lua/grs/plugins/ide/formatters.lua
+   lua/grs/plugins/ide/linters.lua
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/ide/rust.lua
    lua/grs/plugins/ide/scala.lua
-   lua/grs/plugins/common.lua
+   lua/grs/plugins/infrastructure/common.lua
+   lua/grs/plugins/infrastructure/early.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -74,22 +74,10 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/formatters.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lint.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/linters_formatters/lint.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/debug.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp/
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/lsp_dap/
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/noice.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/editor/colorscheme.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/neo-tree.lua
-   $XDG_CONFIG_HOME/nvim/ftplugin
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/kickstart.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/indent_line.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/gitsigns.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/autopairs.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/treesitter.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/coding/autopairs.lua
+   $XDG_CONFIG_HOME/lua/grs/config/keymaps.lua
+   $XDG_CONFIG_HOME/lua/grs/plugins/linters_formatters/
+   $XDG_CONFIG_HOME/lua/grs/plugins/common.lua
+   $XDG_CONFIG_HOME/lua/grs/plugins/editor/whichkey.lua
 "
 
 dirs_to_create=""

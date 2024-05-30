@@ -2,55 +2,8 @@
 
 return {
 
-   -- Kanagawa colorscheme - with minor tweaks, needs to be loaded early to
-   -- provide highlight groups to other plugins.
    {
-      'rebelot/kanagawa.nvim',
-      lazy = false,
-      priority = 1000,
-      opts = {
-         compile = true,
-         undercurl = true,
-         colors = {
-            theme = {
-               dragon = {
-                  ui = {
-                     bg_dim = '#282727',     -- dragonBlack4
-                     bg_gutter = '#12120f',  -- dragonBlack1
-                     bg = '#12120f',         -- dragonBlack1
-                  },
-               },
-            },
-         },
-         overrides = function(colors)  -- add/modify highlights
-            return {
-               ColorColumn = { bg = colors.palette.dragonBlack3 },
-            }
-         end,
-      },
-      config = function(_, opts)
-         local kanagawa = require 'kanagawa'
-         kanagawa.setup(opts)
-         kanagawa.compile()
-         kanagawa.load('dragon')
-      end
-   },
-
-   -- Colorize color names, hexcodes, and other color formats
-   {
-      'norcalli/nvim-colorizer.lua',
-      keys = {
-         { '<leader>tC', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
-      },
-      opts = {
-         '*',
-         css = { rgb_fn = true },
-         html = { names = false },
-      },
-   },
-
-   -- Lualine statusline
-   { 'nvim-lualine/lualine.nvim',
+      'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
       event = 'VeryLazy',
       opts = function()
@@ -196,7 +149,7 @@ return {
          'folke/twilight.nvim',
       },
       keys = {
-         { 'tz', '<cmd>ZenMode<cr>', desc = 'toggle zen-mode' },
+         { '<leader>tz', '<cmd>ZenMode<cr>', desc = 'toggle zen-mode' },
       },
       opts = {
          window = {
@@ -214,8 +167,8 @@ return {
             twilight = { enable = true },
          },
          on_open = function(win)
-            vim.api.nvim_win_set_option(win, 'scrolloff', 10)
-            vim.api.nvim_win_set_option(win, 'sidescrolloff', 8)
+            vim.api.nvim_set_option_value('scrolloff', 10, { win = win })
+            vim.api.nvim_set_option_value('sidescrolloff', 8, { win = win })
          end,
          on_close = function() end,
       },
