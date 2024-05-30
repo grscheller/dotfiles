@@ -1,69 +1,73 @@
 ### GRScheller Sway Config
 #
-# Modified from /etc/sway/config, for reference see "man -s5 sway"
+# Modified from /etc/sway/config,
+# for reference see "man -s5 sway"
 #
 
 ### Variables
-#
+
 # Set user 
 set $user grs
+
 # Super key used as the mod key
 set $mod Mod4
+
 # Home row direction keys, like vi
 set $left h
 set $down j
 set $up k
 set $right l
+
 # Terminal emulator
 set $term alacritty
+
 # Application launcher, configured in ~/.config/wofi/config
 set $progs firefox etherApe nemo swayimg
 set $menu printf '%s\n' $progs | wofi | xargs swaymsg exec --
+
 ### Output configuration
 #
-# Systemd used for Kanshi & Mako integration
-#  - Sway operates on a per session basis
-#  - Systemd operates on a per user basis
-#  - Therefore, by leveraging Systemd, we are restricted to one Sway session
+#  Systemd used for Kanshi & Mako integration
+#  Sway operates on a per session basis.
+#  Systemd operates on a per user basis.
+#  By leveraging Systemd, we are restricted to one Sway session.
 #
 exec_always "systemctl --user start sway-session.target"
-# Symlink to a wallpaper or solid color background config file
+
 include config_bg
 
 ### Input configuration
-#
-# Make Capslock second Escape
-# Numlock initially enabled
+
 input "type:keyboard" {
-    xkb_options caps:escape_shifted_capslock
-    xkb_numlock enabled
+   xkb_options caps:escape_shifted_capslock   # Make Capslock second Escape
+   xkb_numlock enabled                        # Numlock initially enabled
 }
 
 ### Key bindings
 #
-# Note
-#  - Sway containers are organized in tree structures
-#  - Containers either contain other containers or a single application window
-#  - By "window" one usually means a container displaying a single app (leaf)
-#  - Sway "popups" are not displayed in containers, but are something else
+#  Sway containers are organized in tree structures.
+#  Containers either contain other containers or a single application window.
+#  By "window" one usually means a container displaying a single app (leaf).
+#  Sway "popups" are not displayed in containers, but are something else.
 #
-# Basics:
-#
+
 # Start a terminal
 bindsym $mod+Return exec $term
+
 # Kill focused container and everything hierarchically contained
 bindsym $mod+q kill
+
 # Start your launcher
 bindsym $mod+Tab exec $menu
+
 # Reload sway configuration file
 bindsym $mod+Shift+c reload
+
 # Exit sway
 bindsym $mod+Shift+e exit
-#
+
+
 # Moving focus
-#  - navigates splits, tabs, and stacked containers
-#  - focus can cross monitors and enter another workspace
-#
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -72,6 +76,7 @@ bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
 # Switch focus to another workspace
 bindsym $mod+0 workspace number 0
 bindsym $mod+1 workspace number 1
@@ -83,16 +88,19 @@ bindsym $mod+6 workspace number 6
 bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
+
 # Move focus to next/prev numeric workspace
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Ctrl+Right workspace next
+
 # Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
-#
+
 # Move focused containers around workspace
-#  - containers either contain a window (leaf) or other containers (branches)
-#  - moves container into and through other containers
-#  - item can cross monitors and enter another workspace
+#
+#  Containers either contain a window (leaf) or other containers (branches).
+#  Moves container into and through other containers.
+#  Item can cross monitors and enter another workspace.
 #
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+Left move left
@@ -102,6 +110,7 @@ bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+$right move right
 bindsym $mod+Shift+Right move right
+
 # Move focused container to another workspace
 bindsym $mod+Shift+0 move container to workspace number 0
 bindsym $mod+Shift+1 move container to workspace number 1
@@ -113,58 +122,69 @@ bindsym $mod+Shift+6 move container to workspace number 6
 bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
+
 # Toggle the current focused item fullscreen
 bindsym $mod+f fullscreen
+
 # Toggle the current focused item between tiling and floating mode
 bindsym $mod+Shift+space floating toggle
-#
+
 # Sway containers
-#
+
 # Move focus to the parent container
 bindsym $mod+p focus parent
 bindsym $mod+c focus child
+
 # Split current window into its own container - opposite vim conventions
 bindsym $mod+b split horizontal
 bindsym $mod+v split vertical
 bindsym $mod+t split toggle
+
 # Switch layout styles current container - focus must be on a child item
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
-#
+
 # Resizing containers
-#
 bindsym $mod+r mode "resize"
 mode "resize" {
-    # [$left|Left] shrinks container width
-    bindsym $left resize shrink width 10px
-    bindsym Left resize shrink width 10px
-    # [$right|Right] grows container width
-    bindsym $right resize grow width 10px
-    bindsym Right resize grow width 10px
-    # [$up|Up] shrinks container height
-    bindsym $up resize shrink height 10px
-    bindsym Up resize shrink height 10px
-    # [$down|Down] grows container height
-    bindsym $down resize grow height 10px
-    bindsym Down resize grow height 10px
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
+
+   # [$left|Left] shrinks container width
+   bindsym $left resize shrink width 10px
+   bindsym Left resize shrink width 10px
+
+   # [$right|Right] grows container width
+   bindsym $right resize grow width 10px
+   bindsym Right resize grow width 10px
+
+   # [$up|Up] shrinks container height
+   bindsym $up resize shrink height 10px
+   bindsym Up resize shrink height 10px
+
+   # [$down|Down] grows container height
+   bindsym $down resize grow height 10px
+   bindsym Down resize grow height 10px
+
+   # Return to default mode
+   bindsym Return mode "default"
+   bindsym Escape mode "default"
 }
-#
-# Scratchpad
-#
+
+### Scratchpad
+
 # Move focused CONTAINER to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
+
 # Show the next scratchpad window or hide the focused scratchpad window.
-#   - if there are multiple scratchpad windows, cycle through them
-#   - move displayed scratchpad window to current workspace
-#   - tiling a scratchpad container to a workspace remove it from scratchpad
+#
+#  If there are multiple scratchpad windows, cycle through them.
+#  Move displayed scratchpad window to current workspace.
+#  Tiling a scratchpad container to a workspace remove it from scratchpad.
+#
 bindsym $mod+minus scratchpad show
-#
-# Special keys
-#
+
+### Special keys
+
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -177,7 +197,7 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86Search exec $menu
 
 ### Gaps & Borders
-#
+
 gaps inner 4
 gaps outer 2
 default_border pixel 2
@@ -189,7 +209,7 @@ client.focused_inactive "#54546d" "#54546d" "#c8c083" "#54546d" "#54546d"
 client.unfocused "#223249" "#223249" "#727169" "#223249" "#223249"
 
 ### Screen locking & idle configuration
-#
+
 bindsym $mod+Escape exec swaylock -f -F -e -c 002222
 exec swayidle -w \
   timeout 1200 'swaylock -f -F -e -c 220022' \
@@ -197,27 +217,32 @@ exec swayidle -w \
   resume 'swaymsg "output * dpms on"' \
   before-sleep 'swaylock -f -F -e -c 220022'
 
-### Launch Polkit Daemon - Allows apps requiring permissions to ask "mother may I?"
-#
+### Launch Polkit Daemon - allows apps requiring permissions to ask "mother may I?"
+
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 ### Mouse settings
-#
+
 # Sloppy mouse
 focus_follows_mouse yes
+
 # Drag & resize tiling & floating windows with mouse
-#  - $mod+<left mouse> to drag
-#  - $mod+<right-mouse> to resize
+#
+#  $mod+<left mouse> to drag
+#  $mod+<right-mouse> to resize
+#
 floating_modifier $mod normal
 
 ### Status Bar (Waybar)
-#
-bar swaybar_command waybar
+
+bar {
+   swaybar_command waybar
+}
 
 ### Launch certain apps and app types in floating windows
-#
+
 for_window [class="Tk"] floating enable
 
 ### OS distribution environment tweaks
-#
+
 include /etc/sway/config.d/*
