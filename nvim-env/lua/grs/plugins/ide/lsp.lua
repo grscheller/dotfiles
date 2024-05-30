@@ -1,19 +1,6 @@
 --[[ Config Neovim LSP client leveraging the Mason toolchain ]]
 
---[[ My goal is to get:
-     - mason
-       - to ensure it installs what I explicitly tell it to install
-       - and not to install anything else (at least initially)
-     - mason-lspconfig
-       - to configure both mason installed LSP servers
-       - to trigger other plugins to install/configure LSP/DAP servers & tools
-         - either by using nvim-lspconfig directly themselves (rust-tools)
-         - or directly with the Neovim LSP client itself (scala metals)
-     - nvim.lspconfig
-       - to configure locally installed LSP servers
---]]
-
-local km = require 'grs.config.keymaps'
+local km_late = require 'grs.config.km_late'
 
 return {
 
@@ -75,8 +62,8 @@ return {
                   require('lspconfig')[server_name].setup {
                      capabilities = capabilities,
                      on_attach = function(client, bufnr)
-                        local wk = require('which-key')
-                        km.lsp(client, bufnr, wk)
+                        local wk = require 'which-key'
+                        km_late.lsp(client, bufnr, wk)
                      end,
                   }
                end,
@@ -97,8 +84,8 @@ return {
                      capabilities = capabilities,
                      filetypes = { 'lua', 'luau' },
                      on_attach = function(client, bufnr)
-                        local wk = require('which-key')
-                        km.lsp(client, bufnr, wk)
+                        local wk = require 'which-key'
+                        km_late.lsp(client, bufnr, wk)
                      end,
                      settings = {
                         Lua = {
@@ -124,8 +111,8 @@ return {
             capabilities = capabilities,
             filetypes = { 'python' },
             on_attach = function(client, bufnr)
-               local wk = require('which-key')
-               km.lsp(client, bufnr, wk)
+               local wk = require 'which-key'
+               km_late.lsp(client, bufnr, wk)
             end,
             flags = { debounce_text_changes = 200 },
             settings = {
@@ -161,9 +148,9 @@ return {
                      'java',
                   },
                   on_attach = function(client, bufnr)
-                     local wk = require('which-key')
-                     km.lsp(client, bufnr, wk)
-                     km.haskell(bufnr, wk)
+                     local wk = require 'which-key'
+                     km_late.lsp(client, bufnr, wk)
+                     km_late.haskell(bufnr, wk)
                   end,
                   settings = {
                      hls = {},

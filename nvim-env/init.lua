@@ -1,4 +1,4 @@
---[[ GRS Neovim Configuration - using lazy.nvim ]]
+--)[[ GRS Neovim Configuration - using lazy.nvim ]]
 
 local ok, globals, options, km_early, km_late, autocmds, lazy
 
@@ -91,11 +91,11 @@ if ok then
    lazy.setup(lazy_opts)
 
    -- Load keymaps which depend on lazy.nvim managed plugins
-   ok, km_late = pcall(require, 'grs.config.km_late')
-   if not ok then
-      local fmt = '\n\nLate keymaps failed to load with error:\n\n %s\n\n'
-      print(string.format(fmt, km_late))
-   end
+ --  ok, km_late = pcall(require, 'grs.config.km_late')
+ --  if not ok then
+ --     local fmt = '\n\nLate keymaps failed to load with error:\n\n %s\n\n'
+ --     print(string.format(fmt, km_late))
+ --  end
 else
    local fmt = '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
    print(string.format(fmt, lazy))

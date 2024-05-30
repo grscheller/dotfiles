@@ -1,69 +1,70 @@
---[[ Define keymappings/keybindings - loaded after lazy.nvim finishes ]]
+--[[ Plugin related keymaps ]]
 
---[[ Plugin related keymaps - TODO: move, they depend on plugins ]]
-
--- plugin/package managers keymaps
-km('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'lazy_gui' })
-km('n', '<leader>pm', '<cmd>Mason<cr>', { desc = 'mason_gui' })
-
--- toggle treesitter
-km('n', '<leader>tt', '<cmd>TSBufToggle highlight<cr>', {
-   desc = 'toggle treesitter highlighting',
-})
-
-wk.register({ ['<space>'] = { 'leader' } }, { mode = { 'n', 'v' } })
-
-wk.register({
-   name = 'diagnosics & dap',
-}, {
-   prefix = '<bslash>',
-   mode = 'n',
-})
-
-wk.register({
-   name = 'package managers',
-}, {
-   prefix = '<leader>p',
-   mode = 'n',
-})
-
-wk.register({
-   name = 'search',
-}, {
-   prefix = '<leader>s',
-   mode = 'n',
-})
-
-wk.register({
-   name = 'toggle',
-}, {
-   prefix = '<leader>t',
-   mode = 'n',
-})
-
-wk.register({
-   name = 'git Hunk'
-}, {
-   prefix = '<leader>H',
-   mode = { 'n', 'v' },
-})
-
-wk.register({
-   name = 'harpoon',
-}, {
-   prefix = '<leader>h',
-   mode = 'n',
-})
-
--- Refactoring prefix-key
-wk.register({
-   name = 'refactoring',
-}, {
-   prefix = '<leader>R',
-   mode = { 'n', 'v' },
-})
-
+local km = vim.keymap.set        -- TODO: remove this
 local M = {}
+
+function M.init(wk)
+   -- plugin/package managers keymaps
+   km('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'lazy_gui' })
+   km('n', '<leader>pm', '<cmd>Mason<cr>', { desc = 'mason_gui' })
+
+   -- toggle treesitter
+   km('n', '<leader>tt', '<cmd>TSBufToggle highlight<cr>', {
+      desc = 'toggle treesitter highlighting',
+   })
+
+   wk.register({ ['<space>'] = { 'leader' } }, { mode = { 'n', 'v' } })
+
+   wk.register({
+      name = 'diagnosics & dap',
+   }, {
+      prefix = '<bslash>',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'package managers',
+   }, {
+      prefix = '<leader>p',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'search',
+   }, {
+      prefix = '<leader>s',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'toggle',
+   }, {
+      prefix = '<leader>t',
+      mode = 'n',
+   })
+
+   wk.register({
+      name = 'git Hunk'
+   }, {
+      prefix = '<leader>H',
+      mode = { 'n', 'v' },
+   })
+
+   wk.register({
+      name = 'harpoon',
+   }, {
+      prefix = '<leader>h',
+      mode = 'n',
+   })
+
+   -- Refactoring prefix-key
+   wk.register({
+      name = 'refactoring',
+   }, {
+      prefix = '<leader>R',
+      mode = { 'n', 'v' },
+   })
+end
 
 --[[ LSP related keymaps ]]
 function M.lsp(client, bufnr, wk)

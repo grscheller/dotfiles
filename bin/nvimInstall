@@ -63,6 +63,7 @@ dot_config_files='
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/ide/rust.lua
    lua/grs/plugins/ide/scala.lua
+   lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/common.lua
    lua/grs/plugins/infrastructure/early.lua
    spell/en.utf-8.add

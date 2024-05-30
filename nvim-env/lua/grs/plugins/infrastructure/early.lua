@@ -1,4 +1,4 @@
---[[ Colorschemes, status line, and other visual configurations ]]
+--[[ Plugins needing to be loaded before other plugins ]]
 
 return {
 
@@ -35,6 +35,5 @@ return {
          kanagawa.load('dragon')
       end
    },
-
 
 }
