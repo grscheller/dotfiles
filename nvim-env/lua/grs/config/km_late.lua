@@ -13,6 +13,7 @@ function M.init(wk)
    wr {['<leader>g'] = { name = 'goto/get' }}
    wr {['<leader>h'] = { name = 'harpoon' }}
    wr {['<leader>p'] = { name = 'package managers' }}
+   wr {['<leader>s'] = { name = 'search' }}
    wr {['<bslash>'] = { name = 'diagnostics & dap' }}
    wr {['<c-b>'] = { name = 'blackhole', mode = {'n', 'x'} }}
    wr {['<c-b>s'] = { name = 'system clipboard', mode = {'n', 'x'} }}
