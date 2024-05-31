@@ -1,4 +1,4 @@
-   --[[ Plugin related keymaps ]]
+--[[ Plugin related keymaps ]]
 
 local km = vim.keymap.set        -- TODO: remove this
 local M = {}
@@ -14,96 +14,104 @@ function M.init(wk)
    wk.register {['<c-b>'] = { name = 'blackhole', mode = {'n', 'x'} }}
    wk.register {['<c-b>s'] = { name = 'system clipboard', mode = {'n', 'x'} }}
    wk.register {['<c-g>'] = { name = 'gitsigns', mode = {'n', 'x'} }}
-   wk.register {['<leader>'] = { name = 'toggle' }}
+   wk.register {['<leader>t'] = { name = 'toggle' }}
 
    -- plugin/package managers keymaps
    wk.register { ['<leader>pl'] = { '<cmd>Lazy<cr>', name = 'Lazy gui' } }
    wk.register { ['<leader>pm'] = { '<cmd>Mason<cr>', name = 'Mason gui' } }
 
    -- toggle treesitter highlighting
-   wk.register { ['<leader>t'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' } }
+   wk.register { ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' } }
 end
 
 --[[ LSP related keymaps ]]
 function M.lsp(client, bufnr, wk)
 
-   -- first setup prefix keys
-   wk.register {['<leader>c'] = { 'code action' }}
-   wk.register {['<leader>d'] = { 'document' }}
-   wk.register {['<leader>f'] = { 'format' }}
-   wk.register {['<leader>w'] = { 'workspace' }}
-
-   local telescope_builtin = require  'telescope.builtin'
-
-   km('n', '<leader>gd', telescope_builtin.lsp_definitions,
-      { buffer = bufnr, desc = 'goto definition' })
-
-   km('n', '<leader>gr', telescope_builtin.lsp_references,
-      { buffer = bufnr, desc = 'goto references' })
-
-   km('n', '<leader>gI', telescope_builtin.lsp_implementations,
-      { buffer = bufnr, desc = 'goto implementation' })
-
-   km('n', '<leader>ds', telescope_builtin.lsp_document_symbols,
-      { buffer = bufnr, desc = 'document symbols' })
-
-   km('n', '<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols,
-      { buffer = bufnr, desc = 'workspace symbols' })
-
-   km('n', '<leader>gD', vim.lsp.buf.declaration,
-      { buffer = bufnr, desc = 'goto type declaration' })
-
-   km('n', '<leader>r', vim.lsp.buf.rename,
-      { buffer = bufnr, desc = 'rename' })
-
-   km('n', 'K', vim.lsp.buf.hover,
-      { buffer = bufnr, desc = 'hover document' })
-
-   km('n', '<leader>K', vim.lsp.buf.signature_help,
-      { buffer = bufnr, desc = 'signature help' })
-
-   km('n', '<leader>ca', vim.lsp.buf.code_action,
-      { buffer = bufnr, desc = 'code action' })
-
-   km('n', '<leader>cr', vim.lsp.codelens.refresh,
-      { buffer = bufnr, desc = 'code lens refresh' })
-
-   km('n', '<leader>cl', vim.lsp.codelens.run,
-      { buffer = bufnr, desc = 'code lens run' })
-
-   km('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
-      { buffer = bufnr, desc = 'add workspace folder' })
-
-   km('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
-      { buffer = bufnr, desc = 'remove workspace folder' })
-
-   km({ 'n', 'v' }, '<leader>fl', vim.lsp.buf.format,
-      { buffer = bufnr, desc = 'format with lsp' })
-
    if client then
-      -- need to check if "client" is a "client id" or a "client table"
       if type(client) == "number" then
          client = vim.lsp.get_client_by_id(client)
       end
 
       if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-         km('n', '<leader>ti', function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }, { bufnr = bufnr })
-            if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
-               vim.notify('LSP: inlay hints were enabled', vim.log.levels.info)
-            else
-               vim.notify('LSP: inlay hints were disabled', vim.log.levels.info)
-            end
-         end, { buffer = bufnr, desc = 'toggle inlay hints' })
+         vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+
+         wk.register({
+            ['<leader>ti'] = {
+               function()
+                  vim.lsp.inlay_hint.enable(
+                     not vim.lsp.inlay_hint.is_enabled {
+                        bufnr = bufnr,
+                     }, { bufnr = bufnr })
+                  if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
+                     vim.notify('LSP: inlay hints were enabled', vim.log.levels.info)
+                  else
+                     vim.notify('LSP: inlay hints were disabled', vim.log.levels.info)
+                  end
+               end,
+               'toggle inlay hints',
+            }
+         }, { bufnr = bufnr })
+
          local msg = string.format('LSP: Client = "%s" supports inlay hints', client.name)
          vim.notify(msg, vim.log.levels.INFO)
       else
          local msg = string.format('LSP: Client = "%s" does not support inlay hints', client.name)
          vim.notify(msg, vim.log.levels.INFO)
       end
-   end
 
+      -- first setup prefix keys
+      wk.register {['<leader>c'] = { 'code action' }}
+      wk.register {['<leader>d'] = { 'document' }}
+      wk.register {['<leader>f'] = { 'format' }}
+      wk.register {['<leader>w'] = { 'workspace' }}
+
+      local telescope_builtin = require  'telescope.builtin'
+
+      km('n', '<leader>gd', telescope_builtin.lsp_definitions,
+         { buffer = bufnr, desc = 'goto definition' })
+
+      km('n', '<leader>gr', telescope_builtin.lsp_references,
+         { buffer = bufnr, desc = 'goto references' })
+
+      km('n', '<leader>gI', telescope_builtin.lsp_implementations,
+         { buffer = bufnr, desc = 'goto implementation' })
+
+      km('n', '<leader>ds', telescope_builtin.lsp_document_symbols,
+         { buffer = bufnr, desc = 'document symbols' })
+
+      km('n', '<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols,
+         { buffer = bufnr, desc = 'workspace symbols' })
+
+      km('n', '<leader>gD', vim.lsp.buf.declaration,
+         { buffer = bufnr, desc = 'goto type declaration' })
+
+      km('n', '<leader>r', vim.lsp.buf.rename,
+         { buffer = bufnr, desc = 'rename' })
+
+      km('n', 'K', vim.lsp.buf.hover,
+         { buffer = bufnr, desc = 'hover document' })
+
+      km('n', '<leader>K', vim.lsp.buf.signature_help,
+         { buffer = bufnr, desc = 'signature help' })
+
+      km('n', '<leader>ca', vim.lsp.buf.code_action,
+         { buffer = bufnr, desc = 'code action' })
+
+      km('n', '<leader>cr', vim.lsp.codelens.refresh,
+         { buffer = bufnr, desc = 'code lens refresh' })
+
+      km('n', '<leader>cl', vim.lsp.codelens.run,
+         { buffer = bufnr, desc = 'code lens run' })
+
+      km('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
+         { buffer = bufnr, desc = 'add workspace folder' })
+
+      km('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
+         { buffer = bufnr, desc = 'remove workspace folder' })
+
+      km({ 'n', 'v' }, '<leader>fl', vim.lsp.buf.format,
+         { buffer = bufnr, desc = 'format with lsp' })
+   end
 end
 
 -- Haskell related keymaps
