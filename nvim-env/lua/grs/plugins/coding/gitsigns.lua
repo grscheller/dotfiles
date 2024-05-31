@@ -40,22 +40,22 @@ return {
 
             -- Actions
             -- visual mode
-            map('x', '<leader>hs', function()
+            map('x', '<leader>Gs', function()
                gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
             end, { desc = 'stage git hunk' })
-            map('x', '<leader>hr', function()
+            map('x', '<leader>Gr', function()
                gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
             end, { desc = 'reset git hunk' })
             -- normal mode
-            map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git stage hunk' })
-            map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git reset hunk' })
-            map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
-            map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
-            map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
-            map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-            map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git blame line' })
-            map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git diff against index' })
-            map('n', '<leader>hD', function()
+            map('n', '<leader>Gs', gitsigns.stage_hunk, { desc = 'git stage hunk' })
+            map('n', '<leader>Gr', gitsigns.reset_hunk, { desc = 'git reset hunk' })
+            map('n', '<leader>GS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
+            map('n', '<leader>Gu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
+            map('n', '<leader>GR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
+            map('n', '<leader>Gp', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+            map('n', '<leader>Gb', gitsigns.blame_line, { desc = 'git blame line' })
+            map('n', '<leader>Gd', gitsigns.diffthis, { desc = 'git diff against index' })
+            map('n', '<leader>GD', function()
                gitsigns.diffthis '@'
             end, { desc = 'git diff against last commit' })
             -- Toggles
