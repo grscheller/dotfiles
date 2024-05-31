@@ -1,81 +1,37 @@
---[[ Plugin related keymaps ]]
+   --[[ Plugin related keymaps ]]
 
 local km = vim.keymap.set        -- TODO: remove this
 local M = {}
 
 function M.init(wk)
+   -- prefixes
+   wk.register {['<leader>'] = { name = 'space', mode = {'n', 'x'} }}
+   wk.register {['<leader>R'] = { name = 'refactoring', mode = {'n', 'x'} }}
+   wk.register {['<leader>g'] = { name = 'goto' }}
+   wk.register {['<leader>h'] = { name = 'harpoon' }}
+   wk.register {['<leader>p'] = { name = 'package managers' }}
+   wk.register {['<bslash>'] = { name = 'diagnostics & dap' }}
+   wk.register {['<c-b>'] = { name = 'blackhole', mode = {'n', 'x'} }}
+   wk.register {['<c-b>s'] = { name = 'system clipboard', mode = {'n', 'x'} }}
+   wk.register {['<c-g>'] = { name = 'gitsigns', mode = {'n', 'x'} }}
+   wk.register {['<leader>'] = { name = 'toggle' }}
+
    -- plugin/package managers keymaps
-   km('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'lazy_gui' })
-   km('n', '<leader>pm', '<cmd>Mason<cr>', { desc = 'mason_gui' })
+   wk.register { ['<leader>pl'] = { '<cmd>Lazy<cr>', name = 'Lazy gui' } }
+   wk.register { ['<leader>pm'] = { '<cmd>Mason<cr>', name = 'Mason gui' } }
 
-   -- toggle treesitter
-   km('n', '<leader>tt', '<cmd>TSBufToggle highlight<cr>', {
-      desc = 'toggle treesitter highlighting',
-   })
-
-   wk.register({ ['<space>'] = { 'leader' } }, { mode = { 'n', 'v' } })
-
-   wk.register({
-      name = 'diagnosics & dap',
-   }, {
-      prefix = '<bslash>',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'package managers',
-   }, {
-      prefix = '<leader>p',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'search',
-   }, {
-      prefix = '<leader>s',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'toggle',
-   }, {
-      prefix = '<leader>t',
-      mode = 'n',
-   })
-
-   wk.register({
-      name = 'git Hunk'
-   }, {
-      prefix = '<leader>H',
-      mode = { 'n', 'v' },
-   })
-
-   wk.register({
-      name = 'harpoon',
-   }, {
-      prefix = '<leader>h',
-      mode = 'n',
-   })
-
-   -- Refactoring prefix-key
-   wk.register({
-      name = 'refactoring',
-   }, {
-      prefix = '<leader>R',
-      mode = { 'n', 'v' },
-   })
+   -- toggle treesitter highlighting
+   wk.register { ['<leader>t'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' } }
 end
 
 --[[ LSP related keymaps ]]
 function M.lsp(client, bufnr, wk)
 
    -- first setup prefix keys
-   wk.register { ['<leader>c'] = { 'cool cat' } }
-   wk.register { ['<leader>c'] = { 'code action' } }
-   wk.register { ['<leader>d'] = { 'document' } }
-   wk.register { ['<leader>f'] = { 'format' } }
-   wk.register { ['<leader>g'] = { 'goto' } }
-   wk.register { ['<leader>w'] = { 'workspace' } }
+   wk.register {['<leader>c'] = { 'code action' }}
+   wk.register {['<leader>d'] = { 'document' }}
+   wk.register {['<leader>f'] = { 'format' }}
+   wk.register {['<leader>w'] = { 'workspace' }}
 
    local telescope_builtin = require  'telescope.builtin'
 
@@ -230,13 +186,9 @@ function M.dap(bufnr, dap, dap_ui_widgets, wk)
       desc = 'dap repl toggle',
    })
 
-   wk.register({
-      name = 'dap',
-   }, {
-      prefix = '<bslash>',
-      mode = 'n',
-      buffer = bufnr,
-   })
+   local opts_b = { bufnr = bufnr }
+
+   wk.register({['<bslash>'] = { name = 'diagnostics & dap' }}, opts_b)
 end
 
 return M

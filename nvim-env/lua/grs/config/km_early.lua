@@ -71,14 +71,14 @@ end
 km('n', '<leader>n', toggle_line_numbering, { desc = 'toggle line numbering' })
 
 -- Delete & change text without affecting default register
-km({ 'n', 'x' }, '<leader><leader>d', '"_d', { desc = 'delete text to blackhole register' })
-km({ 'n', 'x' }, '<leader><leader>c', '"_c', { desc = 'change text to blackhole register' })
+km({ 'n', 'x' }, '<c-b>d', '"_d', { desc = 'delete to blackhole register' })
+km({ 'n', 'x' }, '<c-b>c', '"_c', { desc = 'change to blackhole register' })
 
 -- Yank, delete, & paste with system clipboard
-km({ 'n','x' }, '<leader><leader>sy', '"+y', { desc = 'yank to system clipboard' })
-km({ 'n', 'x' }, '<leader><leader>sd', '"+d', { desc = 'delete to system clipboard' })
-km({ 'n', 'x' }, '<leader><leader>sp', '"+p', { desc = 'paste after cursor from system clipboard' })
-km({ 'n', 'x' }, '<leader><leader>sP', '"+P', { desc = 'paste before cursor from system clipboard' })
+km({ 'n', 'x' }, '<c-b>sy', '"+y', { desc = 'yank to system clipboard' })
+km({ 'n', 'x' }, '<c-b>sd', '"+d', { desc = 'delete to system clipboard' })
+km({ 'n', 'x' }, '<c-b>sp', '"+p', { desc = 'paste after cursor from system clipboard' })
+km({ 'n', 'x' }, '<c-b>sP', '"+P', { desc = 'paste before cursor from system clipboard' })
 
 -- Keep next pattern match center of screen (normal mode only)
 km('n', 'n', 'nzz', { desc = 'find next and center' })
