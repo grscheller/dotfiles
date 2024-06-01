@@ -46,16 +46,17 @@ dot_config_files='
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
    lua/grs/plugins/coding/init.lua
-   lua/grs/plugins/coding/comment.lua
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/harpoon.lua
    lua/grs/plugins/coding/indent_line.lua
    lua/grs/plugins/coding/refactoring.lua
-   lua/grs/plugins/editor/init.lua
-   lua/grs/plugins/editor/appearance.lua
-   lua/grs/plugins/editor/telescope.lua
-   lua/grs/plugins/editor/textedit.lua
-   lua/grs/plugins/editor/treesitter.lua
+   lua/grs/plugins/coding/textedit.lua
+   lua/grs/plugins/core/init.lua
+   lua/grs/plugins/core/appearance.lua
+   lua/grs/plugins/core/common.lua
+   lua/grs/plugins/core/early.lua
+   lua/grs/plugins/core/telescope.lua
+   lua/grs/plugins/core/treesitter.lua
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/formatters.lua
@@ -63,9 +64,6 @@ dot_config_files='
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/ide/rust.lua
    lua/grs/plugins/ide/scala.lua
-   lua/grs/plugins/infrastructure/init.lua
-   lua/grs/plugins/infrastructure/common.lua
-   lua/grs/plugins/infrastructure/early.lua
    spell/en.utf-8.add
    init.lua
 '
