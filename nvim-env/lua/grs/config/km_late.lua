@@ -8,6 +8,7 @@ function M.init(wk)
    wk.register {
       ['<leader>G'] = { name = 'gitsigns' },
       ['<leader>h'] = { name = 'harpoon' },
+      ['<leader>p'] = { name = 'package managers' },
       ['<leader>s'] = { name = 'search' },
       ['<leader>t'] = { name = 'toggle' },
       ['<bslash>'] = { name = 'diagnostics' },
@@ -24,13 +25,13 @@ function M.init(wk)
    -- plugin/package managers keymaps
    wk.register {
       name = 'package managers',
-      ['<leader>pl'] = { '<cmd>Lazy<cr>', name = 'Lazy gui' },
-      ['<leader>pm'] = { '<cmd>Mason<cr>', name = 'Mason gui' },
+      ['<leader>pl'] = { '<cmd>Lazy<cr>', 'Lazy gui' },
+      ['<leader>pm'] = { '<cmd>Mason<cr>', 'Mason gui' },
    }
 
    -- toggle treesitter highlighting
    wk.register {
-      ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', name = 'treesitter highlighting' }
+      ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' }
    }
 end
 
