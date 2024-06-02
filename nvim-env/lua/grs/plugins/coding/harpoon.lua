@@ -12,55 +12,43 @@
 return {
 
    {
+      -- TODO: Migrate to harpoon2
       'ThePrimeagen/harpoon',
+      branch = "harpoon2",
       keys = {
          {
             '<leader>hh',
-            function()
-               require('harpoon.ui').toggle_quick_menu()
-            end,
+            require('harpoon.ui').toggle_quick_menu,
             desc = 'show marks',
          },
          {
             '<leader>ha',
-            function()
-               require('harpoon.mark').add_file()
-            end,
+            require('harpoon.mark').add_file,
             desc = 'add mark',
          },
          {
             '<leader>hn',
-            function()
-               require('harpoon.ui').nav_next()
-            end,
+            require('harpoon.ui').nav_next,
             desc = 'nav next mark',
          },
          {
             '<leader>hp',
-            function()
-               require('harpoon.ui').nav_prev()
-            end,
+            require('harpoon.ui').nav_prev,
             desc = 'nav prev mark',
          },
          {
             '<leader>h1',
-            function()
-               require('harpoon.term').gotoTerminal(1)
-            end,
+            function() require('harpoon.term').gotoTerminal(1) end,
             desc = 'harpoon term 1',
          },
          {
             '<leader>h2',
-            function()
-               require('harpoon.term').gotoTerminal(2)
-            end,
+            function() require('harpoon.term').gotoTerminal(2) end,
             desc = 'harpoon term 2',
          },
          {
             '<leader>h3',
-            function()
-               require('harpoon.term').gotoTerminal(3)
-            end,
+            function() require('harpoon.term').gotoTerminal(3) end,
             desc = 'harpoon term 3',
          },
       },

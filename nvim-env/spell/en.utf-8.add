@@ -732,6 +732,7 @@ lsp
 lspconfig
 LSP's
 markdownlint
+mv
 neodev
 nohole
 PArray

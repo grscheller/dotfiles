@@ -17,7 +17,7 @@
 function ud {
    if (( $# > 1 ))
    then
-      printf 'Error: ud takes 0 or 1 arguements\n\n'
+      printf 'Error: ud takes 0 or 1 arguments\n\n'
       return 1
    elif (( $# == 0 )) || [[ -z $1 ]]
    then
@@ -117,12 +117,12 @@ function pa {
 function pathtrim {
    if [[ $# -ne 1 ]]
    then
-      printf 'Error: pathtrim takes exactly one arguement\n\n'
+      printf 'Error: pathtrim takes exactly one argument\n\n'
       return 1
    fi
    local PathRaw="$1"
 
-   # Sed script to tandardize the $PATH list:
+   # Sed script to standardize the $PATH list:
    # - remove redundant / and :
    # - remove trailing /'s on directory names
    # - replace /./ -> /
@@ -166,7 +166,7 @@ function pathtrim {
 
       if [[ -v addToPath ]]
       then
-         DirsCanonicalized[$nn]="$Dir"
+         DirsCanonicalized[nn]="$Dir"
       fi
    done
    unset IFS

@@ -18,35 +18,38 @@ return {
    -- comment out or restore lines and blocks of code
    {
       'numToStr/Comment.nvim',
-      lazy = false,
+      event = 'VeryLazy',
       opts = {
+         padding = true,      -- add space b/w comment string and line
+         sticky = true,       -- cursor stays at current position
+         ignore = nil,        -- lines to be ignored while (un)comment
+         toggler = {
+            line = 'gcc',     --Line-comment toggle (normal mode)
+            block = 'gbc',    --Block-comment toggle (normal mode)
+         },
          opleader = {
-            line = '<leader>tcc',
-            block = '<leader>tcb',
+            line = 'gc',      -- op-pending line-comment (normal & visual mode)
+            block = 'gb',     -- block-comment keymap (normal & visual mode)
          },
          extra = {
-            above = '<leader>tcO',
-            below = '<leader>tco',
-            eol = '<leader>tcA',
+            above = 'gcO',    -- add new comment on line above (normal mode)
+            below = 'gco',    -- add new comment on line below (normal mode)
+            eol = 'gcA',      -- add new comment at end of line (normal mode)
          },
-      },
-      keys = {
-         { '<leader>tc', mode = { 'n', 'x'}, desc = 'toggle comment' },
+         mappings = {
+            basic = true,
+            extra = true,
+         },
+         pre_hook = nil,
+         post_hook = nil,
       },
    },
 
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      keys = {
-         { 'ys', mode = { 'n', 'x' }, desc = 'surround around text' },
-         { 'ds', mode = { 'n', 'x' }, desc = 'delete surrounding pair' },
-         { 'cs', mode = { 'n', 'x' }, desc = 'change surrounding pair' },
-         { '<c-g>s', mode = 'i', desc = 'create empty surrounding pair' },
-      },
-      config = function()
-         require('nvim-surround').setup()
-      end,
+      event = 'VeryLazy',
+      config = true,
    },
 
    -- Quickly jump around window - like sneak but on steroids
@@ -55,7 +58,6 @@ return {
       keys = {
          { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
          { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
-         { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
       },
       config = function()
          local leap = require 'leap'

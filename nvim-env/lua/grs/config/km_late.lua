@@ -6,7 +6,6 @@ function M.init(wk)
 
    -- prefixes
    wk.register {
-      ['<leader>g'] = { name = 'goto' },
       ['<leader>G'] = { name = 'gitsigns' },
       ['<leader>h'] = { name = 'harpoon' },
       ['<leader>s'] = { name = 'search' },
@@ -52,6 +51,7 @@ function M.lsp(client, bufnr, wk)
          ['<leader>cr'] = { vim.lsp.codelens.run, 'code lens run' },
          ['<leader>d']  = { name = 'document' },
          ['<leader>ds'] = { tb.lsp_document_symbols, 'document symbols' },
+         ['<leader>g']  = { name = 'goto' },
          ['<leader>gd'] = { tb.lsp_definitions, 'definitions' },
          ['<leader>gi'] = { tb.lsp_implementations, 'implementations' },
          ['<leader>gr'] = { tb.lsp_references, 'references' },
