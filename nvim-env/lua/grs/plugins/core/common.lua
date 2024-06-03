@@ -28,7 +28,6 @@ return {
       event = 'VeryLazy',
       config = function ()
          local wk = require 'which-key'
-         local km_late = require'grs.config.km_late'
          wk.setup {
             plugins = {
                spelling = {
@@ -37,7 +36,7 @@ return {
                },
             },
          }
-         km_late.init(wk)
+         require('grs.config.km_late').setup(wk)
       end
    },
 

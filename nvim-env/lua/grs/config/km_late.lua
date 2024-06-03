@@ -2,7 +2,7 @@
 
 local M = {}
 
-function M.init(wk)
+function M.setup(wk)
    -- prefixes for keymaps defined early
    wk.register {
       ['<bslash>']  = { name = 'diagnostics' },
@@ -12,8 +12,9 @@ function M.init(wk)
    }
 
    wk.register({
-      ['<c-b>'] = { name = 'blackhole' },
-      ['<c-s>'] = { name = 'system clipboard' },
+      ['<leader>']  = { name = 'space' },
+      ['<c-b>']     = { name = 'blackhole' },
+      ['<c-s>']     = { name = 'system clipboard' },
    }, { mode = 'v' })
 
    -- prefixes for plugins
@@ -23,13 +24,10 @@ function M.init(wk)
       ['<leader>R'] = { name = 'refactoring' },
       ['<leader>s'] = { name = 'search' },
       ['<leader>t'] = { name = 'toggle' },
-      ['<m-g>']     = { name = 'gitsigns' },
-      ['<m-g>t']    = { name = 'gitsigns toggle' },
    }
 
    wk.register({
       ['<leader>R'] = { name = 'refactoring' },
-      ['<m-g>']     = { name = 'gitsigns' },
    }, { mode = 'v' })
 
    -- plugin/package managers keymaps
