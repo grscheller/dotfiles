@@ -1,14 +1,11 @@
 --[[ Telescope - search, filter, find & pick items ]]
 
-local km = vim.keymap.set
-
 return {
-
    {
-      -- Open window showing keymaps for current picker,
-         -- Insert mode: <c-/>
-         -- Normal mode: ?
-     'nvim-telescope/telescope.nvim',
+      -- To open window showing keymaps for current picker,
+      --   Insert mode: <c-/>
+      --   Normal mode: ?
+      'nvim-telescope/telescope.nvim',
       dependencies = {
          { 'nvim-lua/plenary.nvim' },
          { 'nvim-tree/nvim-web-devicons' },
@@ -26,6 +23,7 @@ return {
          local telescope = require 'telescope'
          local builtin = require 'telescope.builtin'
          local themes = require 'telescope.themes'
+         local wk = require 'which-key'
 
          telescope.setup {
             defaults = {
@@ -60,37 +58,36 @@ return {
          telescope.load_extension 'ui-select'
          telescope.load_extension 'fzf'
 
-         km('n', '<leader>sh', builtin.help_tags, { desc = 'search help' })
-         km('n', '<leader>sk', builtin.keymaps, { desc = 'search kymaps' })
-         km('n', '<leader>sf', builtin.find_files, { desc = 'search files' })
-         km('n', '<leader>ss', builtin.builtin, { desc = 'search select telescope' })
-         km('n', '<leader>sw', builtin.grep_string, { desc = 'search current word' })
-         km('n', '<leader>sg', builtin.live_grep, { desc = 'search by grep' })
-         km('n', '<leader>sd', builtin.diagnostics, { desc = 'search diagnostics' })
-         km('n', '<leader>sr', builtin.resume, { desc = 'search resume' })
-         km('n', '<leader>s.', builtin.oldfiles, { desc = 'search recent files ("." for repeat)' })
-         km(
-            'n',
-            '<leader>/',
-            function()
-               builtin.current_buffer_fuzzy_find(require(themes).get_dropdown {
-                  winblend = 10,
-                  previewer = false,
-               })
-            end,
-            { desc = 'fuzzily search in current buffer' }
-         )
-         km(
-            'n',
-            '<leader>so',
-            function()
-               builtin.live_grep {
-                  grep_open_files = true,
-                  prompt_title = 'Live Grep in Open Files',
-               }
-            end,
-            { desc = 'search open files' }
-         )
+         wk.register{
+            ['<leader>sh'] = { builtin.help_tags, 'search help' },
+            ['<leader>sk'] = { builtin.keymaps, 'search kymaps' },
+            ['<leader>sf'] = { builtin.find_files, 'search files' },
+            ['<leader>ss'] = { builtin.builtin, 'search select telescope' },
+            ['<leader>sw'] = { builtin.grep_string, 'search current word' },
+            ['<leader>sg'] = { builtin.live_grep, 'search by grep' },
+            ['<leader>sd'] = { builtin.diagnostics, 'search diagnostics' },
+            ['<leader>sr'] = { builtin.resume, 'search resume' },
+            ['<leader>s.'] = { builtin.oldfiles, 'search recent files' },
+            ['<leader>/']  = {
+               function()
+                  builtin.current_buffer_fuzzy_find(
+                     themes.get_dropdown {
+                        winblend = 50,
+                        previewer = false,
+                     })
+               end,
+               'fuzzily search in current buffer',
+            },
+            ['<leader>so'] = {
+               function()
+                  builtin.live_grep {
+                     grep_open_files = true,
+                     prompt_title = 'Live Grep in Open Files',
+                  }
+               end,
+               'search open files',
+            },
+         }
       end,
    },
 
@@ -131,5 +128,4 @@ return {
          },
       },
    },
-
 }
