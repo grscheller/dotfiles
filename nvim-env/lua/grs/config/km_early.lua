@@ -1,15 +1,12 @@
---[[ Define some keymappings/keybindings before invoking lazy.nvim ]]
+--[[ Keymappings defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
-local scroll = require 'grs.lib.scroll'
-
---[[ keymappings not depending on external plugins ]]
+local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on external plugins ]]
 
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
 km('n', '<m-=>', '<c-w>v', { desc = 'vsplit current window' })
-km('n', '<m-f>', '<cmd>split<bar>term fish<cr>i', { desc = 'split fish term' })
-km('n', '<m-g>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'vsplit fish term' })
+km('n', '<m-f>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term' })
 
 -- Navigating windows
 km('n', '<c-h>', '<c-w>h', { desc = 'goto window left' })
@@ -71,25 +68,25 @@ end
 km('n', '<leader>n', toggle_line_numbering, { desc = 'toggle line numbering' })
 
 -- Delete & change text without affecting default register
-km({ 'n', 'x' }, '<c-b>d', '"_d', { desc = 'delete to blackhole register' })
-km({ 'n', 'x' }, '<c-b>c', '"_c', { desc = 'change to blackhole register' })
+km({'n', 'v', 'o'}, '<c-b>d', '"_d', { desc = 'delete to blackhole register' })
+km({'n', 'v', 'o'}, '<c-b>c', '"_c', { desc = 'change to blackhole register' })
 
 -- Yank, delete, & paste with system clipboard
-km({ 'n', 'x' }, '<c-b>sy', '"+y', { desc = 'yank to system clipboard' })
-km({ 'n', 'x' }, '<c-b>sd', '"+d', { desc = 'delete to system clipboard' })
-km({ 'n', 'x' }, '<c-b>sp', '"+p', { desc = 'paste after cursor from system clipboard' })
-km({ 'n', 'x' }, '<c-b>sP', '"+P', { desc = 'paste before cursor from system clipboard' })
+km({'n', 'v', 'o'}, '<c-s>y', '"+y', { desc = 'yank to system clipboard' })
+km({'n', 'v', 'o'}, '<c-s>d', '"+d', { desc = 'delete to system clipboard' })
+km({'n', 'v', 'o'}, '<c-s>p', '"+p', { desc = 'system clipboard paste after' })
+km({'n', 'v', 'o'}, '<c-s>P', '"+P', { desc = 'system clipboard paste before' })
 
 -- Keep next pattern match center of screen (normal mode only)
 km('n', 'n', 'nzz', { desc = 'find next and center' })
 
 -- Shift line and re-select
-km('x', '<', '<gv', { desc = 'shift left & reselect' })
-km('x', '>', '>gv', { desc = 'shift right & reselect' })
+km('v', '<', '<gv', { desc = 'shift left & reselect' })
+km('v', '>', '>gv', { desc = 'shift right & reselect' })
 
 -- Move visual selection up or down a line
-km('x', 'J', ":m '>+1<cr>gv=gv", { desc = 'move selection down a line' })
-km('x', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
+km('v', 'J', ":m '>+1<cr>gv=gv", { desc = 'move selection down a line' })
+km('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
 
 -- Visually select what was just pasted
 km('n', 'gV', '`[v`]', { desc = 'select what was just pasted' })

@@ -59,8 +59,6 @@ dot_config_files='
    lua/grs/plugins/core/treesitter.lua
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
-   lua/grs/plugins/ide/formatters.lua
-   lua/grs/plugins/ide/linters.lua
    lua/grs/plugins/ide/lsp.lua
    lua/grs/plugins/ide/rust.lua
    lua/grs/plugins/ide/scala.lua
@@ -76,7 +74,9 @@ remove_items="
    $XDG_CONFIG_HOME/lua/grs/config/keymaps.lua
    $XDG_CONFIG_HOME/lua/grs/plugins/linters_formatters/
    $XDG_CONFIG_HOME/lua/grs/plugins/common.lua
-   $XDG_CONFIG_HOME/lua/grs/plugins/editor/whichkey.lua
+   $XDG_CONFIG_HOME/lua/grs/plugins/editor/
+   $XDG_CONFIG_HOME/lua/grs/plugins/ide/formatters.lua
+   $XDG_CONFIG_HOME/lua/grs/plugins/ide/linters.lua
 "
 
 dirs_to_create=""

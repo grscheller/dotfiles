@@ -1,26 +1,36 @@
---[[ Plugin related keymaps ]]
+--[[ Which-key defined keymaps (after lazy.nvim has launched) ]]
 
 local M = {}
 
 function M.init(wk)
-
-   -- prefixes
+   -- prefixes for keymaps defined early
    wk.register {
-      ['<leader>G'] = { name = 'gitsigns' },
-      ['<leader>h'] = { name = 'harpoon' },
-      ['<leader>p'] = { name = 'package managers' },
-      ['<leader>s'] = { name = 'search' },
-      ['<leader>t'] = { name = 'toggle' },
-      ['<bslash>'] = { name = 'diagnostics' },
+      ['<bslash>']  = { name = 'diagnostics' },
+      ['<leader>']  = { name = 'space' },
+      ['<c-b>'] = { name = 'blackhole' },
+      ['<c-s>'] = { name = 'system clipboard' },
    }
 
    wk.register({
-      ['<leader>'] = { name = 'space' },
-      ['<leader>R'] = { name = 'refactoring' },
       ['<c-b>'] = { name = 'blackhole' },
-      ['<c-b>s'] = { name = 'system clipboard' },
-      ['<c-g>'] = { name = 'gitsigns' },
-   }, { mode = {'n', 'x'} })
+      ['<c-s>'] = { name = 'system clipboard' },
+   }, { mode = 'v' })
+
+   -- prefixes for plugins
+   wk.register {
+      ['<leader>h'] = { name = 'harpoon' },
+      ['<leader>p'] = { name = 'plugin/package managers' },
+      ['<leader>R'] = { name = 'refactoring' },
+      ['<leader>s'] = { name = 'search' },
+      ['<leader>t'] = { name = 'toggle' },
+      ['<m-g>']     = { name = 'gitsigns' },
+      ['<m-g>t']    = { name = 'gitsigns toggle' },
+   }
+
+   wk.register({
+      ['<leader>R'] = { name = 'refactoring' },
+      ['<m-g>']     = { name = 'gitsigns' },
+   }, { mode = 'v' })
 
    -- plugin/package managers keymaps
    wk.register {
@@ -37,7 +47,6 @@ end
 
 --[[ LSP related keymaps ]]
 function M.lsp(client, bufnr, wk)
-
    local tb = require 'telescope.builtin'
 
    if client then
@@ -52,6 +61,8 @@ function M.lsp(client, bufnr, wk)
          ['<leader>cr'] = { vim.lsp.codelens.run, 'code lens run' },
          ['<leader>d']  = { name = 'document' },
          ['<leader>ds'] = { tb.lsp_document_symbols, 'document symbols' },
+         ['<leader>f']  = { name = 'format' },
+         ['<leader>fl'] = { vim.lsp.buf.format, 'format with LSP' },
          ['<leader>g']  = { name = 'goto' },
          ['<leader>gd'] = { tb.lsp_definitions, 'definitions' },
          ['<leader>gi'] = { tb.lsp_implementations, 'implementations' },
@@ -67,9 +78,9 @@ function M.lsp(client, bufnr, wk)
       }, { bufnr = bufnr })
 
       wk.register({
-         ['<leader>f'] = { name = 'format' },
+         ['<leader>f']  = { name = 'format' },
          ['<leader>fl'] = { vim.lsp.buf.format, 'format with LSP' },
-      }, { bufnr = bufnr, mode = { 'n', 'x' } })
+      }, { bufnr = bufnr, mode = 'v' })
 
       -- Configure inlay hints if LSP supports it
       if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
@@ -113,7 +124,7 @@ function M.haskell(bufnr, wk)
 
    wk.register({
       ['<leader>fh'] = { "<cmd>'<,'>!stylish-haskell<cr>", 'stylish haskell' },
-   }, { buffer = bufnr, mode = 'x' })
+   }, { buffer = bufnr, mode = 'v' })
 end
 
 -- Rust-Tools related keymaps

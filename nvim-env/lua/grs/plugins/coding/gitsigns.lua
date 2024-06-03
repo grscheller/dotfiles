@@ -8,9 +8,10 @@ return {
          signs = {
             add = { text = '+' },
             change = { text = '~' },
-            delete = { text = '_' },
-            topdelete = { text = '‾' },
-            changedelete = { text = '~' },
+            delete = { text = '∨'},
+            topdelete = { text = '∧' },
+            changedelete = { text = '⊤' },
+            untracked    = { text = '┆' },
          },
          on_attach = function(bufnr)
             local gitsigns = require 'gitsigns'
@@ -21,46 +22,50 @@ return {
                vim.keymap.set(mode, l, r, opts)
             end
 
-            -- Navigation
+            --[[ Navigation ]]
+
             map('n', ']c', function()
                if vim.wo.diff then
+                  -- fall back to nvim when in diff mode
                   vim.cmd.normal { ']c', bang = true }
                else
                   gitsigns.nav_hunk 'next'
                end
-            end, { desc = 'Jump to next git [c]hange' })
+            end, { desc = 'next change' })
 
             map('n', '[c', function()
                if vim.wo.diff then
+                  -- fall back to nvim when in diff mode
                   vim.cmd.normal { '[c', bang = true }
                else
                   gitsigns.nav_hunk 'prev'
                end
-            end, { desc = 'Jump to previous git [c]hange' })
+            end, { desc = 'previous change' })
 
-            -- Actions
+            --[[ Actions ]]
+
             -- visual mode
-            map('x', '<leader>Gs', function()
+            map('v', '<m-g>s', function()
                gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
             end, { desc = 'stage git hunk' })
-            map('x', '<leader>Gr', function()
+            map('v', '<m-g>r', function()
                gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
             end, { desc = 'reset git hunk' })
+
             -- normal mode
-            map('n', '<leader>Gs', gitsigns.stage_hunk, { desc = 'git stage hunk' })
-            map('n', '<leader>Gr', gitsigns.reset_hunk, { desc = 'git reset hunk' })
-            map('n', '<leader>GS', gitsigns.stage_buffer, { desc = 'git stage buffer' })
-            map('n', '<leader>Gu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
-            map('n', '<leader>GR', gitsigns.reset_buffer, { desc = 'git reset buffer' })
-            map('n', '<leader>Gp', gitsigns.preview_hunk, { desc = 'git preview hunk' })
-            map('n', '<leader>Gb', gitsigns.blame_line, { desc = 'git blame line' })
-            map('n', '<leader>Gd', gitsigns.diffthis, { desc = 'git diff against index' })
-            map('n', '<leader>GD', function()
-               gitsigns.diffthis '@'
-            end, { desc = 'git diff against last commit' })
+            map('n', '<m-g>s', gitsigns.stage_hunk, { desc = 'git stage hunk' })
+            map('n', '<m-g>r', gitsigns.reset_hunk, { desc = 'git reset hunk' })
+            map('n', '<m-g>S', gitsigns.stage_buffer, { desc = 'git stage buffer' })
+            map('n', '<m-g>u', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
+            map('n', '<m-g>R', gitsigns.reset_buffer, { desc = 'git reset buffer' })
+            map('n', '<m-g>p', gitsigns.preview_hunk, { desc = 'git preview hunk' })
+            map('n', '<m-g>b', gitsigns.blame_line, { desc = 'git blame line' })
+            map('n', '<m-g>d', gitsigns.diffthis, { desc = 'git diff against index' })
+            map('n', '<m-g>D', function() gitsigns.diffthis '@' end, { desc = 'git diff against last commit' })
+
             -- Toggles
-            map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = 'toggle git show blame line' })
-            map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = 'toggle git show deleted' })
+            map('n', '<m-g>tb', gitsigns.toggle_current_line_blame, { desc = 'toggle git show blame line' })
+            map('n', '<m-g>tD', gitsigns.toggle_deleted, { desc = 'toggle git show deleted' })
          end,
       },
    },
