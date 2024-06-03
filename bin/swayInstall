@@ -21,6 +21,9 @@ cd "$envPath" 2>/dev/null || {
    return 1
 }
 
+# Parse cmdline arguments and source functions, if not done already
+. ../bin/source_setup.sh
+
 ## Files to install
 
 dot_config_files='
@@ -57,10 +60,6 @@ dirs_to_create="
    $XDG_STATE_HOME/mpd/
    $XDG_CACHE_HOME/mpd/
 "
-
-## Setup - parse cmdline arguments and source functions, if not done already
-
-. ../bin/source_setup.sh
 
 ## Install or Check
 

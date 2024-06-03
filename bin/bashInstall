@@ -14,17 +14,14 @@ cd "$envPath" 2>/dev/null || {
    return 1
 }
 
+# Parse cmdline arguments and source functions, if not done already
+. ../bin/source_setup.sh
+
 bash_files='
    .bash_profile
    .bashrc
    .inputrc
 '
-
-## Setup - parse cmdline arguments and source functions, if not done already
-
-. ../bin/source_setup.sh
-
-## Preinstall checks
 
 ## Install, Check or Remove
 

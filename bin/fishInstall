@@ -16,6 +16,9 @@ cd "$envPath" 2>/dev/null || {
    return 1
 }
 
+# Parse cmdline arguments and source functions, if not done already
+. ../bin/source_setup.sh
+
 config_files='
    completions/alacritty.fish
    completions/pypath.fish
@@ -81,10 +84,6 @@ remove_items="
 "
 
 dirs_to_create=""
-
-## Setup - parse cmdline arguments and source functions, if not done already
-
-. ../bin/source_setup.sh
 
 ## Preinstall checks
 

@@ -6,7 +6,7 @@
 
 ### Variables
 
-# Set user 
+# Set user
 set $user grs
 
 # Super key used as the mod key
@@ -39,8 +39,8 @@ include config_bg
 ### Input configuration
 
 input "type:keyboard" {
-   xkb_options caps:escape_shifted_capslock   # Make Capslock second Escape
-   xkb_numlock enabled                        # Numlock initially enabled
+   xkb_options caps:escape_shifted_capslock
+   xkb_numlock enabled
 }
 
 ### Key bindings
