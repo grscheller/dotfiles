@@ -1,6 +1,6 @@
 --)[[ GRS Neovim Configuration - using lazy.nvim ]]
 
-local ok, globals, options, km_early, autocmds, lazy
+local ok, globals, options, km_early, lazy, autocmds
 
 -- Load globals, options & keymaps not depending on external plugins
 ok, globals = pcall(require, 'grs.config.globals')
