@@ -1,47 +1,8 @@
 --[[ Which-key defined keymaps (after lazy.nvim has launched) ]]
 
+-- TODO: Move these to where they will be used
+
 local M = {}
-
-function M.setup(wk)
-   -- prefixes for keymaps defined early
-   wk.register {
-      ['<bslash>']  = { name = 'diagnostics' },
-      ['<leader>']  = { name = 'space' },
-      ['<c-b>'] = { name = 'blackhole' },
-      ['<c-s>'] = { name = 'system clipboard' },
-   }
-
-   wk.register({
-      ['<leader>']  = { name = 'space' },
-      ['<c-b>']     = { name = 'blackhole' },
-      ['<c-s>']     = { name = 'system clipboard' },
-   }, { mode = 'v' })
-
-   -- prefixes for plugins
-   wk.register {
-      ['<leader>h'] = { name = 'harpoon' },
-      ['<leader>p'] = { name = 'plugin/package managers' },
-      ['<leader>R'] = { name = 'refactoring' },
-      ['<leader>s'] = { name = 'search' },
-      ['<leader>t'] = { name = 'toggle' },
-   }
-
-   wk.register({
-      ['<leader>R'] = { name = 'refactoring' },
-   }, { mode = 'v' })
-
-   -- plugin/package managers keymaps
-   wk.register {
-      name = 'package managers',
-      ['<leader>pl'] = { '<cmd>Lazy<cr>', 'Lazy gui' },
-      ['<leader>pm'] = { '<cmd>Mason<cr>', 'Mason gui' },
-   }
-
-   -- toggle treesitter highlighting
-   wk.register {
-      ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' }
-   }
-end
 
 -- Rust-Tools related keymaps
 function M.rust(bufnr, rt, wk)

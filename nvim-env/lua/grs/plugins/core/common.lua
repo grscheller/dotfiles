@@ -36,7 +36,47 @@ return {
                },
             },
          }
-         require('grs.config.km_late').setup(wk)
+
+         --[[ setup prefixes for km_early.lua keymaps ]]
+
+         wk.register {
+            ['<bslash>']  = { name = 'diagnostics' },
+            ['<leader>']  = { name = 'space' },
+            ['<c-b>'] = { name = 'blackhole' },
+            ['<c-s>'] = { name = 'system clipboard' },
+         }
+
+         wk.register({
+            ['<leader>']  = { name = 'space' },
+            ['<c-b>']     = { name = 'blackhole' },
+            ['<c-s>']     = { name = 'system clipboard' },
+         }, { mode = 'v' })
+
+         --[[ prefixes used by multiple plugins ]]
+
+         wk.register {
+            ['<leader>h'] = { name = 'harpoon' },  -- TODO: move to harpoon2 configuration
+            ['<leader>p'] = { name = 'plugin/package managers' },
+            ['<leader>R'] = { name = 'refactoring' },  -- TODO: move to refactoring configuration
+            ['<leader>s'] = { name = 'search' },
+            ['<leader>t'] = { name = 'toggle' },
+         }
+
+         wk.register({
+            ['<leader>R'] = { name = 'refactoring' },  -- TODO: move to refactoring configuration
+         }, { mode = 'v' })
+
+         -- plugin/package managers keymaps
+         wk.register {
+            name = 'package managers',
+            ['<leader>pl'] = { '<cmd>Lazy<cr>', 'Lazy gui' },
+            ['<leader>pm'] = { '<cmd>Mason<cr>', 'Mason gui' },
+         }
+
+         -- toggle treesitter highlighting
+         wk.register {  -- TODO: move to treesitter configuration
+            ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', 'treesitter highlighting' }
+         }
       end
    },
 
