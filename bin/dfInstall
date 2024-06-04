@@ -21,9 +21,8 @@ export OPTION_GIVEN=''
 # Install dotfiles
 (. bin/nvimInstall) &
 (. bin/fishInstall) &
-(. bin/bashInstall) &
 (. bin/swayInstall) &
-(. bin/miscInstall) &
+(. bin/homeInstall) &
 
 # Make sure all background jobs finish
 wait

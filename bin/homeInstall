@@ -7,7 +7,7 @@
 #
 
 scriptName=miscInstall
-envName=misc-env
+envName=home-env
 
 gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 envPath="$gitRepo/$envName"
@@ -19,6 +19,12 @@ cd "$envPath" 2>/dev/null || {
 
 # Parse cmdline arguments and source functions, if not done already
 . ../bin/source_setup.sh
+
+bash_files='
+   .bash_profile
+   .bashrc
+   .inputrc
+'
 
 bin_scripts='
    buArch
@@ -70,6 +76,9 @@ dirs_to_create="
 "
 
 ## Install, Check or Remove
+
+# Process bash config files
+process_files "$HOME" "$bash_files" . 0644 "$envPath"
 
 # Process ~/bin scripts
 process_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"

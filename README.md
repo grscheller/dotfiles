@@ -8,9 +8,8 @@ for the Linux based workstation computers I use.
 * Install various "dotfiles" to my $HOME directory
   * [nvimInstall](bin/nvimInstall) - Neovim (always a work in progress)
   * [fishInstall](bin/fishInstall) - Fish (my primary shell)
-  * [bashInstall](bin/bashInstall) - Bash (my backup shell, mostly for Pop!OS)
+  * [homeInstall](bin/homeInstall) - Bash & other miscellaneous configs
   * [swayInstall](bin/swayInstall) - Sway (my Wayland desktop on Arch)
-  * [miscInstall](bin/miscInstall) - miscellaneous config files
 * Install all of the above in parallel
   * [dfInstall](bin/dfInstall)
 * Install Arch Linux system files
@@ -23,10 +22,10 @@ for the Linux based workstation computers I use.
 * POSIX compliant installation scripts
   * actually Dash compliant (I use the "local" keyword)
   * rootInstall is a Fish script
-* Fish abbreviations to install from $DOTFILES_GIT_REPO
+* Fish abbreviations to install from anywhere
   * nvInstall -> for nvimInstall
   * fInstall  -> for fishInstall
-  * bInstall  -> for bashInstall
+  * hInstall  -> for homeInstall
   * swInstall -> for swayInstall
   * mInstall  -> for miscInstall
   * dfInstall -> for dfInstall

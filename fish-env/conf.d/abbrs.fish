@@ -3,7 +3,7 @@
 # Git related cmds - anything more complicated, I want to think about
 abbr -a ga git add .
 abbr -a gb git branch
-abbr -a gbl git 'branch --list|cat'
+abbr -a gbl 'git branch --list|cat'
 abbr -a gc git commit -S
 abbr -a gco git checkout
 abbr -a gd git diff
@@ -24,8 +24,7 @@ abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvInstall '$DOTFILES_GIT_REPO/bin/nvimInstall'
 abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/bin/swayInstall'
-abbr -a mInstall  '$DOTFILES_GIT_REPO/bin/miscInstall'
-abbr -a bInstall  '$DOTFILES_GIT_REPO/bin/bashInstall'
+abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
 
 # Python virtual environment for system python
 abbr -a pl pip list|cat
