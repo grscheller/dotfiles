@@ -38,8 +38,8 @@ dot_config_files='
    after/ftplugin/tsv.lua
    lua/grs/config/autocmds.lua
    lua/grs/config/ensure_install.lua
-   lua/grs/config/km_early.lua
-   lua/grs/config/km_callbacks.lua
+   lua/grs/config/keymaps_early.lua
+   lua/grs/config/keymaps.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -80,6 +80,8 @@ remove_items="
    $XDG_CONFIG_HOME/lua/grs/plugins/ide/formatters.lua
    $XDG_CONFIG_HOME/lua/grs/plugins/ide/linters.lua
    $XDG_CONFIG_HOME/lua/grs/config/km_late.lua
+   $XDG_CONFIG_HOME/lua/grs/config/km_early.lua
+   $XDG_CONFIG_HOME/lua/grs/config/km_callbacks.lua
 "
 
 dirs_to_create=""

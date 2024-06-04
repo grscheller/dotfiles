@@ -12,7 +12,7 @@
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
-local km = require 'grs.config.keymaps'
+local keymaps = require 'grs.config.keymaps'
 
 return {
 
@@ -47,7 +47,6 @@ return {
       end,
       config = function()
          local dap = require 'dap'
-         local dap_ui_widgets = require 'dap.ui.widgets'
          dap.configurations.rust = {
             { type = 'rust', request = 'launch', name = 'rt_lldb' },
          }
@@ -61,17 +60,15 @@ return {
                   other_hints_prefix = '',
                },
             },
-            -- The server table contains nvim-lspconfig opts
-            -- overriding the defaults set by rust-tools.nvim.
             server = {
                capabilities = vim.tbl_deep_extend('force',
                   vim.lsp.protocol.make_client_capabilities(),
                   require('cmp_nvim_lsp').default_capabilities()),
-               on_attach = function(_, bufnr)
-                  -- set up keymaps
-                  km.lsp(bufnr)
-                  km.rust(bufnr, rt)
-                  km.dap(bufnr, dap, dap_ui_widgets)
+               on_attach = function(client, bufnr)
+                  if keymaps.set_lsp_keymaps(client, bufnr) then
+                     keymaps.set_rust_keymaps(bufnr)
+                     keymaps.set_dap_keymaps(bufnr)
+                  end
 
                   -- show diagnostic popup when cursor lingers on line with errors
                   autocmd('CursorHold', {

@@ -1,6 +1,6 @@
 --)[[ GRS Neovim Configuration - using lazy.nvim ]]
 
-local ok, globals, options, km_early, lazy, autocmds
+local ok, globals, options, keymaps_early, lazy, autocmds
 
 -- Load globals, options & keymaps not depending on external plugins
 ok, globals = pcall(require, 'grs.config.globals')
@@ -15,10 +15,10 @@ if not ok then
    print(string.format(fmt, options))
 end
 
-ok, km_early = pcall(require, 'grs.config.km_early')
+ok, keymaps_early = pcall(require, 'grs.config.keymaps_early')
 if not ok then
-   local fmt = '\n\nKeymaps failed to load with error:\n\n %s\n\n'
-   print(string.format(fmt, km_early))
+   local fmt = '\n\nEarly keymaps failed to load with error:\n\n %s\n\n'
+   print(string.format(fmt, keymaps_early))
 end
 
 -- Fallback colorscheme

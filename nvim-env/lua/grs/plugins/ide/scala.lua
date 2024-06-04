@@ -43,7 +43,6 @@ return {
          metals_config.init_options.statusBarProvider = 'on'
 
          local dap = require 'dap'
-         local dap_ui_widgets = require 'dap.ui.widgets'
          dap.configurations.scala = {
             {
                type = 'scala',
@@ -66,26 +65,27 @@ return {
 
          local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
 
-         metals_config.on_attach = function(_, bufnr)
+         metals_config.on_attach = function(client, bufnr)
             metals.setup_dap()
 
-            km.lsp(bufnr)
-            km.metals(bufnr, metals)
-            km.dap(bufnr, dap, dap_ui_widgets)
+            if km.set_lsp_keymaps(client, bufnr) then
+               km.set_metals_keymaps(bufnr, metals)
+               km.set_dap_keymaps(bufnr)
 
-            -- show diagnostic popup when cursor lingers on line with errors
-            autocmd('CursorHold', {
-               buffer = bufnr,
-               callback = function()
-                  vim.diagnostic.open_float {
-                     bufnr = bufnr,
-                     scope = 'line',
-                     focusable = false,
-                  }
-               end,
-               group = grsMetalsGrp,
-               desc = 'Open floating diagnostic window for Scala-Metals',
-            })
+               -- show diagnostic popup when cursor lingers on line with errors
+               autocmd('CursorHold', {
+                  buffer = bufnr,
+                  callback = function()
+                     vim.diagnostic.open_float {
+                        bufnr = bufnr,
+                        scope = 'line',
+                        focusable = false,
+                     }
+                  end,
+                  group = grsMetalsGrp,
+                  desc = 'Open floating diagnostic window for Scala-Metals',
+               })
+            end
          end
 
          autocmd('FileType', {

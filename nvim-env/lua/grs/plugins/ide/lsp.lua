@@ -1,91 +1,6 @@
 --[[ Config Neovim LSP client leveraging the Mason toolchain ]]
 
---[[ LSP related keymaps ]]
-
-local function lsp_keymaps(client, bufnr)
-   local wk = require 'which-key'
-   local tb = require 'telescope.builtin'
-
-   if client then
-      if type(client) == "number" then
-         client = vim.lsp.get_client_by_id(client)
-      end
-
-      wk.register({
-         ['<leader>c']  = { name = 'code action' },
-         ['<leader>ca'] = { vim.lsp.buf.code_action, 'code action' },
-         ['<leader>cl'] = { vim.lsp.codelens.refresh, 'code lens refresh' },
-         ['<leader>cr'] = { vim.lsp.codelens.run, 'code lens run' },
-         ['<leader>d']  = { name = 'document' },
-         ['<leader>ds'] = { tb.lsp_document_symbols, 'document symbols' },
-         ['<leader>f']  = { name = 'format' },
-         ['<leader>fl'] = { vim.lsp.buf.format, 'format with LSP' },
-         ['<leader>g']  = { name = 'goto' },
-         ['<leader>gd'] = { tb.lsp_definitions, 'definitions' },
-         ['<leader>gi'] = { tb.lsp_implementations, 'implementations' },
-         ['<leader>gr'] = { tb.lsp_references, 'references' },
-         ['<leader>w']  = { name = 'workspace' },
-         ['<leader>ws'] = { tb.lsp_dynamic_workspace_symbols, 'workspace symbols' },
-         ['<leader>wa'] = { vim.lsp.buf.add_workspace_folder, 'add workspace folder' },
-         ['<leader>wr'] = { vim.lsp.buf.remove_workspace_folder, 'remove workspace folder' },
-         ['<leader>gD'] = { vim.lsp.buf.declaration, 'goto type declaration' },
-         ['<leader>K']  = { vim.lsp.buf.signature_help, 'signature help' },
-         ['<leader>r']  = { vim.lsp.buf.rename, 'rename' },
-         ['K']          = { vim.lsp.buf.hover, 'hover document' },
-      }, { bufnr = bufnr })
-
-      wk.register({
-         ['<leader>f']  = { name = 'format' },
-         ['<leader>fl'] = { vim.lsp.buf.format, 'format with LSP' },
-      }, { bufnr = bufnr, mode = 'v' })
-
-      -- Configure inlay hints if LSP supports it
-      if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-         vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
-
-         wk.register({
-            ['<leader>ti'] = {
-               function()
-                  vim.lsp.inlay_hint.enable(
-                     not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr },
-                     { bufnr = bufnr }
-                  )
-
-                  if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
-                     local msg = 'LSP: inlay hints were enabled'
-                     vim.notify(msg, vim.log.levels.info)
-                  else
-                     local msg = 'LSP: inlay hints were disabled'
-                     vim.notify(msg, vim.log.levels.info)
-                  end
-               end, 'toggle inlay hints' }
-         }, { bufnr = bufnr })
-
-         local msg = string.format('LSP: Client = "%s" supports inlay hints', client.name)
-         vim.notify(msg, vim.log.levels.INFO)
-      else
-         local msg = string.format('LSP: Client = "%s" does not support inlay hints', client.name)
-         vim.notify(msg, vim.log.levels.INFO)
-      end
-   else
-      local msg = 'LSP: WARNING: Possible LSP misconfiguration'
-      vim.notify(msg, vim.log.levels.WARN)
-   end
-end
-
---[[ Haskell LSP related keymaps ]]
-
-local function hls_keymaps(bufnr)
-   local wk = require 'which-key'
-
-   wk.register({
-      ['<leader>fh'] = { '<cmd>%!stylish-haskell<cr>', 'stylish haskell' },
-   }, { buffer = bufnr })
-
-   wk.register({
-      ['<leader>fh'] = { "<cmd>'<,'>!stylish-haskell<cr>", 'stylish haskell' },
-   }, { buffer = bufnr, mode = 'v' })
-end
+local km = require('grs.config.km_callbacks')
 
 return {
 
@@ -145,9 +60,7 @@ return {
                function (server_name) -- default handler (optional)
                   require('lspconfig')[server_name].setup {
                      capabilities = capabilities,
-                     on_attach = function(client, bufnr)
-                        lsp_keymaps(client, bufnr)
-                     end,
+                     on_attach = km.set_lsp_keymaps,
                   }
                end,
 
@@ -156,9 +69,7 @@ return {
                   require('lspconfig').lua_ls.setup {
                      capabilities = capabilities,
                      filetypes = { 'lua', 'luau' },
-                     on_attach = function(client, bufnr)
-                        lsp_keymaps(client, bufnr)
-                     end,
+                     on_attach = km.set_lsp_keymaps,
                      settings = {
                         Lua = {
                            completion = {
@@ -182,9 +93,7 @@ return {
          lsp.pylsp.setup {
             capabilities = capabilities,
             filetypes = { 'python' },
-            on_attach = function(client, bufnr)
-               lsp_keymaps(client, bufnr)
-            end,
+            on_attach = km.set_lsp_keymaps,
             flags = { debounce_text_changes = 200 },
             settings = {
                pylsp = {
@@ -219,8 +128,9 @@ return {
                'cabal',
             },
             on_attach = function(client, bufnr)
-               lsp_keymaps(client, bufnr)
-               hls_keymaps(bufnr)
+               if km.set_lsp_keymaps(client, bufnr) then
+                  km.set_hls_keymaps(client, bufnr)
+               end
             end,
             settings = {
                hls = {},

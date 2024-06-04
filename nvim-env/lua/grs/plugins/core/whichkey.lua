@@ -16,7 +16,7 @@ return {
             },
          }
 
-         --[[ Prefixes for km_early.lua keymaps ]]
+         --[[ Prefixes for keymaps_early.lua keymaps ]]
 
          wk.register {
             ['<bslash>']  = { name = 'diagnostics' },
