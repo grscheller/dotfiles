@@ -1,6 +1,6 @@
 --[[ Config Neovim LSP client leveraging the Mason toolchain ]]
 
-local km = require('grs.config.km_callbacks')
+local km = require('grs.config.keymaps')
 
 return {
 
@@ -129,7 +129,7 @@ return {
             },
             on_attach = function(client, bufnr)
                if km.set_lsp_keymaps(client, bufnr) then
-                  km.set_hls_keymaps(client, bufnr)
+                  km.set_hls_keymaps(bufnr)
                end
             end,
             settings = {
