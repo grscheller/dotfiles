@@ -8,4 +8,5 @@ return iFlatten {
    require 'grs.plugins.core.early',
    require 'grs.plugins.core.telescope',
    require 'grs.plugins.core.treesitter',
+   require 'grs.plugins.core.whichkey',
 }

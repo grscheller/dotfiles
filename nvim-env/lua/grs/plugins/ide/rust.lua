@@ -16,8 +16,8 @@ local km = require 'grs.config.keymaps'
 
 return {
 
-   -- Crates, a neovim plugin that helps managing crates.io dependencies.
    {
+      -- Crates, neovim plugin to help manage crates.io dependencies.
       'saecki/crates.nvim',
       dependencies = {
          'hrsh7th/nvim-cmp',
@@ -32,10 +32,9 @@ return {
       end,
    },
 
-
-   -- rust-tools.nvim sets up lsp & dap for Rust
-   -- TODO: replace with mrcjkb/rustaceanvim 
    {
+      -- rust-tools.nvim sets up lsp & dap for Rust
+      -- TODO: replace with mrcjkb/rustaceanvim 
       'simrat39/rust-tools.nvim',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
@@ -57,7 +56,7 @@ return {
             tools = {
                runnables = { use_telescope = true },
                inlay_hints = {
-                  show_parameter_hints = false,
+                  show_parameter_hints = true,
                   parameter_hints_prefix = '',
                   other_hints_prefix = '',
                },
@@ -65,7 +64,9 @@ return {
             -- The server table contains nvim-lspconfig opts
             -- overriding the defaults set by rust-tools.nvim.
             server = {
-               capabilities = require('cmp_nvim_lsp').default_capabilities(),
+               capabilities = vim.tbl_deep_extend('force',
+                  vim.lsp.protocol.make_client_capabilities(),
+                  require('cmp_nvim_lsp').default_capabilities()),
                on_attach = function(_, bufnr)
                   -- set up keymaps
                   km.lsp(bufnr)
