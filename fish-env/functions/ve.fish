@@ -277,23 +277,21 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   set -l Pip $VIRTUAL_ENV/bin/pip
-
    if set -q _flag_clear
       set -l fmt '\nRemoving all installed modules from venv: %s\n\n'
       printf $fmt $_venv_ve
       switch $_version_on_path_ve
          case '3.10.*' '3.11.*'
-            if test ($Pip list 2>/dev/null|tail +3|wc -l) -gt 2
-               $Pip uninstall -y ($Pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")
+            if test (pip list 2>/dev/null|tail +3|wc -l) -gt 2
+               pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")
             end
-            $Pip install --upgrade pip setuptools
+            pip install --upgrade pip setuptools
             return 0
          case '3.12.*'
-            if test ($Pip list 2>/dev/null|tail +3|wc -l) -gt 1
-               $Pip uninstall -y ($Pip list|tail +3|fields 1|grep -Ev "(pip)")
+            if test (pip list 2>/dev/null|tail +3|wc -l) -gt 1
+               pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")
             end
-            $Pip install --upgrade pip
+            pip install --upgrade pip
             return 0
          case '*'
             set -l fmt 'Error: Punting clearing venv: got an unexpected Python version: %s\n\n'
@@ -305,8 +303,8 @@ function ve --description 'Manage a group of Python virtual environments'
    if set -q _flag_redo
       set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
       printf $fmt $_venv_ve
-      set _modules_ve $module[(contains -i $_venv_ve $_venvs_ve)]
-      $Pip install --upgrade $_modules_ve
+      set -l modules $_modules_ve[(contains -i $_venv_ve $_venvs_ve)]
+      pip install --upgrade (string split ' ' $modules)
    end
    _cleanup
    return 0
