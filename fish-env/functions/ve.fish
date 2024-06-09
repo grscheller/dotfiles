@@ -97,9 +97,11 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    function _usage
-      printf 'Usage: ve [<venv>] [-c | --clear] [-r | --redo]\n'
-      printf '       ve [-l | --list]'\n
-      printf '       ve [-h | --help]\n\n'
+      set -l fmt1 'Usage: ve [<venv>]\n'
+      set -l fmt2 '       ve [-c | --clear] [-r | --redo]\n'
+      set -l fmt3 '       ve [-l | --list]\n'
+      set -l fmt4 '       ve [-h | --help]\n\n'
+      printf $fmt1$fmt2$fmt3$fmt4
    end
 
    function _cleanup
@@ -118,15 +120,15 @@ function ve --description 'Manage a group of Python virtual environments'
 
    set -f argc (count $argv)
 
-   if test "$argc" -gt 1
-      printf 'Error: Invalid argument/option combination\n'
+   if set -q _flag_clear || set -q _flag_redo
+      set -f ve_flags_cr
+   end
+
+   if test "$argc" -gt 0 && set -q ve_flags_cr || test "$argc" -gt 1
+      printf 'Error: Invalid argument/option combination\n\n'
       _usage
       _cleanup
       return 1
-   end
-
-   if set -q _flag_clear || set -q _flag_redo
-      set -f ve_flags_cr
    end
 
    ## Handle simple flags first
