@@ -706,6 +706,7 @@ autocommands
 autopairs
 blankline
 dn
+eval
 fdgit
 FIFOQueue
 FIFOQueues
