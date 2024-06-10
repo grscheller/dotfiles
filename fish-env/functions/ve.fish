@@ -143,11 +143,13 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    # List names of managed venv's and valid venv directories, then quit.
+   set -l info (zip_it --sep '		' _venvs _versions)
+
    if set -q _flag_list
       set_color $fish_color_host; printf '\nManaged venv location: '
       set_color $fish_color_user; printf '%s\n' $VE_VENV_DIR
       set_color $fish_color_host; printf '\nManaged venv configurations:\n'
-      set_color $fish_color_user; printf '  %s\n' $_venvs
+      set_color $fish_color_user; printf '  %s\n' $info
       set_color $fish_color_host; printf '\nVirtual environments (managed or not):\n'
       set_color $fish_color_user
       for item in (ls $VE_VENV_DIR)
