@@ -293,13 +293,11 @@ function ve --description 'Manage a group of Python virtual environments'
                pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")
             end
             pip install --upgrade pip setuptools
-            return 0
          case '3.12.*'
             if test (pip list 2>/dev/null|tail +3|wc -l) -gt 1
                pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")
             end
             pip install --upgrade pip
-            return 0
          case '*'
             set -l fmt 'Error: Punting clearing venv: got an unexpected Python version: %s\n\n'
             printf $fmt $_version_on_path
