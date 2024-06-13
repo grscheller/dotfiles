@@ -142,6 +142,7 @@ envs
 eq
 errno
 errnoflag
+esc
 essid
 etherApe
 ethernet
@@ -258,6 +259,7 @@ instantiation
 integrations
 interoperability
 IP
+ip
 ipaddr
 IPv4
 IPv6
@@ -329,6 +331,7 @@ linux
 llvm
 LLVM
 ln
+lex
 lseek
 lstat
 lookups
@@ -355,6 +358,7 @@ mbs
 md
 mdl
 merchantability
+metacharacters
 metadata
 metamethod
 metamethods
@@ -382,6 +386,7 @@ msg2
 msg3
 MSYS2
 mul
+mult
 namespace
 nano
 NDELAY
@@ -466,6 +471,7 @@ qux
 radian
 radians
 RE's
+regexp
 readlink
 realpath
 README
@@ -559,6 +565,7 @@ subclasses
 subclassing
 subdirectories
 subdirectory
+subexpression
 sublicense
 sublicensed
 sublicenses
@@ -653,6 +660,7 @@ venv
 venv's
 ver
 vers
+vi's
 vimdoc
 virtenv
 virtenvs
@@ -671,6 +679,7 @@ whitespace
 winsize
 wi-fi
 wifi
+wildmenu
 WIPO
 wofi
 wordsmithed
@@ -680,6 +689,7 @@ workspace
 workspaces
 www
 wxPython
+X11
 x86
 x86_64
 xargs
@@ -700,13 +710,16 @@ Ackermann's
 ai4py
 apue
 APUE
+BRE
 autocmd
 autocmds
 autocommand
 autocommands
 autopairs
 blankline
+ctags
 dn
+diagraphs
 eval
 fdgit
 FIFOQueue
@@ -726,10 +739,12 @@ grscheller
 grscheller's
 GRScheller
 GRScheller's
+heredocs
 IPython
 kickstart
 LIFOQueue
 LIFOQueues
+listchars
 lsp
 lspconfig
 LSP's
@@ -745,7 +760,12 @@ pylsp
 pynvim
 pypath
 pypi
+scrolloff
+SRE
 ud
+VIMRUNTIME
+vt102
+vt220
 # Python typing names
 abc
 argtype
