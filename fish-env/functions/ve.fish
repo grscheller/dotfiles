@@ -241,6 +241,21 @@ function ve --description 'Manage a group of Python virtual environments'
       end
       source $VE_VENV_DIR/$_venv/bin/activate.fish
       set -gx VE_VENV "$VE_VENV_DIR/$_venv"
+      if test ! -x $VE_VENV/bin/python
+         set -l fmt1 'Warning: No executable python found in venv!\n'
+         set -l fmt2 '         The "%s" venv may be corrupted?\n\n'
+         printf $fmt1$fmt2 $_venv
+      else
+         set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
+         if test "$venv_py_version" != "$_version_required"
+            set -l fmt1 'Warning: Incorrect Python version for the venv!\n'
+            set -l fmt2 '         Python version found in "%s" venv: %s\n'
+            set -l fmt3 '         Python version required for this venv: %s\n'
+            set -l fmt4 '         The venv may need to be redone.\n\n'
+            set -l fmt $fmt1$fmt2$fmt3$fmt4
+            printf $fmt $_venv $venv_py_version $_version_required
+         end
+      end
    end
 
    if not set -q ve_flags_cr
