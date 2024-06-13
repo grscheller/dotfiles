@@ -78,6 +78,13 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
+   function _print_python_version
+      set -l python $argv[1]
+      set -l py_version (string split -f 2 ' ' ($python --version))
+      set py_version $py_version[1]  # some builds print additional version info
+      printf '%s\n' $py_version
+   end
+
    function _is_python_correct_version
       if digpath -x -q python
          set -f python_on_path (digpath -f -x python)
@@ -85,10 +92,8 @@ function ve --description 'Manage a group of Python virtual environments'
          printf 'not on path\n'
          return
       end
-      set -l python_versions_on_path (string split -f 2 ' ' ($python_on_path --version))
-      set -l version_found $python_versions_on_path[1]
-      set _version_on_path $version_found
-      if test "$version_found" = "$_version_required"
+      set _version_on_path (_print_python_version $python_on_path)
+      if test "$_version_on_path" = "$_version_required"
          printf 'ok\n'
          return
       else
@@ -107,9 +112,9 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    function _cleanup
-      set -e _venv _version_required _version_on_path
-      set -e _venvs _versions _modules
-      functions -e _is_managed_venv _is_python_correct_version _usage _cleanup
+      set -e _venv _version_required _version_on_path _venvs _versions _modules
+      functions -e _is_managed_venv _print_python_version
+      functions -e _is_python_correct_version _usage _cleanup
    end
 
    ## Get and process cmdline options, or fail gracefully.
@@ -146,18 +151,20 @@ function ve --description 'Manage a group of Python virtual environments'
    set -l info (zip_it --sep '		' _venvs _versions)
 
    if set -q _flag_list
-      set_color $fish_color_host; printf '\nManaged venv location: '
-      set_color $fish_color_user; printf '%s\n' $VE_VENV_DIR
-      set_color $fish_color_host; printf '\nManaged venv configurations:\n'
-      set_color $fish_color_user; printf '  %s\n' $info
-      set_color $fish_color_host; printf '\nVirtual environments (managed or not):\n'
-      set_color $fish_color_user
+      printf '\n'
+      set_color $fish_color_user; printf '$VIRTUAL_ENV: '
+      set_color $fish_color_host; printf '%s\n' $VIRTUAL_ENV
+      set_color $fish_color_user; printf '    $VE_VENV: '
+      set_color $fish_color_host; printf '%s\n' $VE_VENV
+      set_color $fish_color_user; printf 'Managed venv configurations:\n'
+      set_color $fish_color_host; printf '%s\n' $info
+      set_color $fish_color_user; printf 'Virtual environments (managed or not):\n'
+      set_color $fish_color_host
       for item in (ls $VE_VENV_DIR)
          if test -x $VE_VENV_DIR/$item/bin/python && test -f $VE_VENV_DIR/$item/bin/activate.fish
-            printf '  %s\n' $item
+            printf '%s\t\t%s\n' $item (_print_python_version $VE_VENV_DIR/$item/bin/python)
          end
-      end
-      set_color $fish_color_normal; printf '\n'
+      end; set_color $fish_color_normal; printf '\n'
       _cleanup
       return 0
    end
@@ -166,7 +173,7 @@ function ve --description 'Manage a group of Python virtual environments'
    # give some useful information and then quit.
    if test "$argc" -eq 0 && not set -q ve_flags_cr
       if set -q VIRTUAL_ENV
-         printf '\nShutting down active virtual environment.\n'
+         printf '\nShutting down active venv: $VIRTUAL_ENV\n'
          deactivate
       else
          printf '\nNo Python venv in use.\n'
@@ -180,6 +187,7 @@ function ve --description 'Manage a group of Python virtual environments'
          pyenv versions
          printf '\n'
       end
+      set -gx VE_VENV
       _cleanup
       return 0
    end
@@ -232,6 +240,7 @@ function ve --description 'Manage a group of Python virtual environments'
          end
       end
       source $VE_VENV_DIR/$_venv/bin/activate.fish
+      set -gx VE_VENV "$VE_VENV_DIR/$_venv"
    end
 
    if not set -q ve_flags_cr
@@ -246,11 +255,13 @@ function ve --description 'Manage a group of Python virtual environments'
    if set -q VIRTUAL_ENV
       if test (dirname $VIRTUAL_ENV) != $VE_VENV_DIR
          printf '\nError: Not in a ve managed venv! Punting.\n\n'
+         set -gx VE_VENV
          _cleanup
          return 1
       end
    else
       printf '\nError: Not in a venv! Punting.\n\n'
+      set -gx VE_VENV
       _cleanup
       return 1
    end
@@ -265,6 +276,7 @@ function ve --description 'Manage a group of Python virtual environments'
                set -l fmt3 '       Possibly a corrupted virtual environment?\n'
                set -l fmt4 '       Possibly corrupted shell environment?\n\n'
                printf $fmt1$fmt2$fmt3$fmt4 $_venv
+               set -gx VE_VENV
                _cleanup
                return 1
             case 'wrong version'
@@ -274,6 +286,7 @@ function ve --description 'Manage a group of Python virtual environments'
                set -l fmt4 '       Python version needed for "%s" venv: %s\n'
                set -l fmt5 '       Possibly venv python was upgraded?\n\n'
                printf $fmt1$fmt2$fmt3$fmt4$fmt5 $_version_on_path $_venv $_version_required
+               set -gx VE_VENV
                _cleanup
                return 1
          end

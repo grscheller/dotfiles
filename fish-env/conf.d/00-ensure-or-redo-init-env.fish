@@ -86,4 +86,7 @@ and begin
    if string match -qr 'arch' (uname -r)
       archJDK 17
    end
+
+   # Configure initial ve venv to launch
+   set -gx VE_VENV
 end
