@@ -23,12 +23,11 @@ for the Linux based workstation computers I use.
   * actually Dash compliant (I use the "local" keyword)
   * rootInstall is a Fish script
 * Fish abbreviations to install from anywhere
-  * nvInstall -> for nvimInstall
+  * dfInstall -> for dfInstall
   * fInstall  -> for fishInstall
   * hInstall  -> for homeInstall
+  * nvInstall -> for nvimInstall
   * swInstall -> for swayInstall
-  * mInstall  -> for miscInstall
-  * dfInstall -> for dfInstall
 * Currently only tested regularly on Arch Linux
 * Tested intermittently on Pop!OS
 
