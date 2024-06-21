@@ -40,9 +40,9 @@ autocmd('TextYankPost', {
 autocmd({ 'BufWritePost', 'BufEnter' }, {
    pattern = '*',
    callback = function()
-      vim.opt.foldenable = false
-      vim.opt.foldmethod = 'manual'
-      vim.opt.foldlevelstart = 99
+      vim.o.foldenable = false
+      vim.o.foldmethod = 'manual'
+      vim.o.foldlevelstart = 99
    end,
    group = GrsTextGrp,
    desc = 'Make sure folding is off',
