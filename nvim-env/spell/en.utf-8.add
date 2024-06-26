@@ -263,6 +263,7 @@ indexable
 initializer
 init
 instantiation
+ints
 integrations
 IntelliJ
 interoperability
@@ -784,6 +785,7 @@ autocommands
 autopairs
 blankline
 bugfix
+CircularArray
 cnt
 ctags
 dn
@@ -791,6 +793,7 @@ diagraphs
 Dogbert
 eval
 fdgit
+fibonacci
 FIFOQueue
 FIFOQueues
 folke
@@ -810,6 +813,8 @@ GRScheller
 GRScheller's
 heredocs
 IPython
+isSqr
+iSqrt
 kickstart
 LIFOQueue
 LIFOQueues
@@ -829,19 +834,22 @@ pylsp
 pynvim
 pypath
 pypi
+pythag
+pythag3
 scheller
 Scheller
 scrolloff
 SRE
 ud
 VIMRUNTIME
-# Python typing names
+# Python typing/exception names
 abc
 argtype
 argtypes
 Callable's
 errorlog
 globalns
+IndexError
 io
 Iterable
 libapue
