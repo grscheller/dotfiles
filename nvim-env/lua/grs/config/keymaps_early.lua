@@ -42,7 +42,7 @@ km('n', '<m-t>', '<c-w>T', { desc = 'breakout window to new tab' })
 km('n', '<m-y>', '<cmd>tabnew<cr>', { desc = 'create new tab' })
 km('n', '<m-u>', '<cmd>tabclose<cr>', { desc = 'close current tab' })
 
--- Autoscroll window with focus
+-- Auto-scroll window with focus
 km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
 km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })
 km('n', '<home>', scroll.faster, { desc = 'autoscroll faster' })
@@ -97,6 +97,9 @@ km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on
 
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
+
+-- Editing tweaks
+km('n', 'cL', 'cl <c-o>h', { desc = 'cl with SPACE' })
 
 --[[ Diagnostic keymaps ]]
 
