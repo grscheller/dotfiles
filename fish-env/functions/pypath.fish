@@ -5,12 +5,14 @@ function pypath --description 'manage $PYTHONPATH env variable'
       switch $arg
          case 'ai'
             set --append PythonPath ~/devel/courses/udacity/ai/courses-distributions/src
+         case 'boringmath'
+            set --append PythonPath ~/devel/pypi/boring-math/src
          case 'circulararray'
             set --append PythonPath ~/devel/pypi/circular-array/src
          case 'datastructures'
             set --append PythonPath ~/devel/pypi/datastructures/src
-         case 'boringmath'
-            set --append PythonPath ~/devel/pypi/boring-math/src
+         case 'fp'
+            set --append PythonPath ~/devel/pypi/fp/src
       end
    end
    if test (count $PythonPath) -gt 0
