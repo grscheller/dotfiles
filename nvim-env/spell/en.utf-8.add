@@ -214,7 +214,6 @@ getpgrp
 getpid
 getppid
 getuid
-gh-pages
 ghc
 gitattributes
 gitcommit
@@ -277,7 +276,9 @@ isinstance
 issubclass
 iter
 iterable
+iterables
 itertools
+iterators
 iwd
 javascript
 JDK
@@ -475,6 +476,7 @@ python2
 Python2
 python3
 Python3
+pythonic
 PyTorch
 qt5ct
 qt6ct
@@ -608,6 +610,7 @@ sys
 syslog
 sysname
 TASTy
+TBD
 Tcl
 TCP
 tcsh
@@ -674,6 +677,7 @@ venv
 venv's
 ver
 vers
+versioning
 vi's
 vimdoc
 virtenv
@@ -773,6 +777,7 @@ zsh
 ackermann
 Ackermann
 Ackermann's
+ai
 ai4py
 apue
 APUE
@@ -804,6 +809,8 @@ FStacks
 FTuple
 FTuples
 gaussian
+gh-pages
+GH-Pages
 gitsigns
 gitup
 grs
@@ -823,6 +830,7 @@ lsp
 lspconfig
 LSP's
 markdownlint
+mb
 mv
 neodev
 nohole
@@ -841,6 +849,7 @@ Scheller
 scrolloff
 SRE
 ud
+wo
 VIMRUNTIME
 # Python typing/exception names
 abc
