@@ -100,6 +100,8 @@ km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
 
 -- Editing tweaks
 km('n', 'cL', 'cl <c-o>h', { desc = 'cl with SPACE' })
+km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
+km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
 --[[ Diagnostic keymaps ]]
 
