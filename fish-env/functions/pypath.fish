@@ -13,6 +13,9 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/datastructures/src
          case 'fp'
             set --append PythonPath ~/devel/pypi/fp/src
+         case '*'
+            printf 'Unkown Python package %s\n' $arg
+            return 1
       end
    end
    if test (count $PythonPath) -gt 0
