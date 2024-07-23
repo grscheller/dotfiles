@@ -6,11 +6,19 @@ function dn --description 'Jump down directory tree to find an item'
    end
 
    set -l pat $argv[1]
-   set -l found **/$pat*
+   set -l found **/$pat
    set -l cnt (count $found)
    if test "$cnt" -eq 0
-      printf 'dn: pattern "%s" not found in any subdirectory' $pat >&2
-      return 1
+      set found **/$pat*
+      set cnt (count $found)
+      if test "$cnt" -eq 0
+         set found **/*$pat*
+         set cnt (count $found)
+         if test "$cnt" -eq 0
+            printf 'dn: pattern "%s" not found in any subdirectory' $pat >&2
+            return 1
+         end
+      end
    end
 
    set target $found[1]
