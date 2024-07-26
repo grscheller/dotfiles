@@ -75,6 +75,7 @@ colorscheme
 COLORTERM
 combinatorics
 commandline
+composability
 computable
 concat
 conf
@@ -179,7 +180,7 @@ filetype
 filetypes
 finalizer
 firefox
-flapmap
+flatmap
 fmt
 foldleft
 foldright
@@ -868,6 +869,7 @@ FIFOQueue
 FIFOQueueMB
 FIFOQueues
 FIFOQueueMBs
+flatMap
 folke
 Folke
 fonttools
