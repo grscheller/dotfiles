@@ -152,6 +152,7 @@ etherApe
 ethernet
 execlp
 executables
+extensibility
 extern
 f1
 f2
@@ -262,6 +263,8 @@ implicits
 indexable
 initializer
 init
+installability
+installable
 instantiation
 ints
 integrations
@@ -572,6 +575,8 @@ stdev
 stderr
 stdin
 stdlib
+storability
+storable
 stdout
 str
 struct
@@ -590,11 +595,13 @@ sublicenses
 sublicensing
 submodule
 submodules
+subpackage
 subproject
 subprojects
 subscripted
 subscripting
 subshell
+extensibility
 subshells
 subtype
 subtyped
@@ -643,6 +650,8 @@ tsx
 tty
 ttys
 txt
+typecheck
+typechecker
 typeclass
 typeclasses
 typescripty
@@ -661,6 +670,7 @@ unlicense
 unmanaged
 unrepresentable
 untar
+untype
 upgradability
 urandom
 userspace
@@ -835,6 +845,7 @@ dΣ
 dΦ
 dΨ
 dΩ
+semigroup
 # grscheller ~/devel names
 󰒲
 ackermann
@@ -856,7 +867,6 @@ bugfix
 CircularArray
 cnt
 ctags
-dn
 diagraphs
 DL
 DL_Node
@@ -913,6 +923,7 @@ pylsp
 pynvim
 pypath
 pypi
+Pyright
 pythag
 pythag3
 QueueBase
@@ -1004,6 +1015,7 @@ consumeIcon
 demu
 dmenu
 elapsedTime
+someone else's
 mediaplayer
 Mod1
 Mod2
