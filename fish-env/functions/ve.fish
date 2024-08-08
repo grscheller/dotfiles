@@ -173,7 +173,7 @@ function ve --description 'Manage a group of Python virtual environments'
    # give some useful information and then quit.
    if test "$argc" -eq 0 && not set -q ve_flags_cr
       if set -q VIRTUAL_ENV
-         printf '\nShutting down active venv: $VIRTUAL_ENV\n'
+         printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
          deactivate
       else
          printf '\nNo Python venv in use.\n'
