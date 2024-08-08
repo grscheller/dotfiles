@@ -2,12 +2,6 @@
 .
 ..
 ...
-128-bit
-16-bit
-1-bit
-32-bit
-64-bit
-8-bit
 ABI
 ADT
 ad hoc
@@ -671,6 +665,8 @@ unmanaged
 unrepresentable
 untar
 untype
+untyped
+Untyped
 upgradability
 urandom
 userspace
@@ -736,6 +732,12 @@ yaml
 yml
 zig
 zsh
+1-bit
+8-bit
+16-bit
+32-bit
+64-bit
+128-bit
 # math related
 α
 β

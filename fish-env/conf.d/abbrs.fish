@@ -26,9 +26,10 @@ abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
 abbr -a swInstall '$DOTFILES_GIT_REPO/bin/swayInstall'
 abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
 
-# Python virtual environment for system python
+# Python virtual environment related
 abbr -a pl pip list|cat
 abbr -a -- ipy ipython --TerminalInteractiveShell.editing_mode=vi
+abbr -a vep 've; and pypath'
 
 # other aliases
 abbr -a dp digpath

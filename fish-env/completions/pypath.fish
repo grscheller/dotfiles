@@ -17,3 +17,6 @@ complete -c pypath \
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from boringmath' \
   -a 'boringmath'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from untyped' \
+  -a 'untyped'
