@@ -177,8 +177,6 @@ finalizer
 firefox
 flatmap
 fmt
-foldleft
-foldright
 foo
 foofoo
 formatter
@@ -695,8 +693,8 @@ virtenvs
 virtualenv
 vm
 vscode
-vt102
-vt220
+vt-102
+vt-220
 waitpid
 wayland
 WC3
@@ -850,6 +848,7 @@ dΩ
 semigroup
 # grscheller ~/devel names
 󰒲
+acc
 ackermann
 Ackermann
 Ackermann's
@@ -875,6 +874,7 @@ DL_Node
 Dogbert
 DoubleQueue
 eval
+facc
 fdgit
 fibonacci
 FIFOQueue
@@ -882,6 +882,12 @@ FIFOQueueMB
 FIFOQueues
 FIFOQueueMBs
 flatMap
+foldleft
+foldL
+foldLsc
+foldR
+foldright
+foldRsc
 folke
 Folke
 fonttools
@@ -941,12 +947,13 @@ SRE
 ud
 wo
 VIMRUNTIME
-# Python typing/exception names
+# Python typing/exception/builtin names
 abc
 argtype
 argtypes
 Callable's
 errorlog
+hasattr
 globalns
 IndexError
 io
@@ -1034,6 +1041,7 @@ signalStrength
 singleIcon
 songPosition
 stateIcon
+StopIteration
 swaybar
 swayimg
 swaylock
@@ -1062,4 +1070,6 @@ systemctl
 Systemd
 systemd
 temperatureC
+TypeError
+ValueError
 WantedBy
