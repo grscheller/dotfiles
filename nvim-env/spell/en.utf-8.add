@@ -949,7 +949,7 @@ SplitEnd
 SplitEnds
 SRE
 ud
-wo
+woException
 VIMRUNTIME
 # Python typing/exception/builtin names
 abc
