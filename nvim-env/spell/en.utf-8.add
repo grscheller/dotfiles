@@ -82,7 +82,7 @@ copyrightable
 coreutils
 coroutine
 covariant
-cpp
+cpp~/devel/pypi/fp/tests/woexception_test.py
 cpu
 cpus
 crap1
@@ -875,6 +875,7 @@ DL
 DL_Node
 Dogbert
 DoubleQueue
+enumerables
 eval
 facc
 fdgit
@@ -893,8 +894,7 @@ foldRsc
 folke
 Folke
 fonttools
-FStack
-FStacks
+ftuple
 FTuple
 FTuples
 gaussian
@@ -908,7 +908,8 @@ grscheller's
 GRScheller
 GRScheller's
 heredocs
-IPython
+hymie
+Hymie
 isSqr
 iSqrt
 kickstart
@@ -940,9 +941,13 @@ pythag
 pythag3
 QueueBase
 QueueBaseMB
+ratton
+Ratton
 scheller
 Scheller
 scrolloff
+siegfried
+Siegfried
 SL
 SL_NODE
 SplitEnd
@@ -951,16 +956,19 @@ SRE
 ud
 woException
 VIMRUNTIME
-# Python typing/exception/builtin names
+# python/typing/exception/builtin names
 abc
 argtype
 argtypes
 Callable's
+enum
+enums
 errorlog
-hasattr
 globalns
+hasattr
 IndexError
 io
+IPython
 Iterable
 libapue
 localns
