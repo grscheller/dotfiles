@@ -901,8 +901,6 @@ systemctl
 Systemd
 systemd
 temperatureC
-TypeError
-ValueError
 WantedBy
 # Work related
 AF
@@ -986,10 +984,10 @@ FIFOQueueMBs
 flatMap
 foldleft
 foldL
-foldLsc
+foldL_sc
 foldR
 foldright
-foldRsc
+foldR_sc
 folke
 Folke
 fonttools
@@ -1032,6 +1030,7 @@ nohole
 PArray
 PArrays
 pathtrim
+pred
 py4ai
 pylsp
 pynvim
@@ -1054,6 +1053,7 @@ SL_NODE
 SplitEnd
 SplitEnds
 SRE
+sTate
 ud
 wikipedia
 wilson
@@ -1077,10 +1077,12 @@ Iterable
 libapue
 localns
 namedtuple
+NoneType
 param
 Param
 params
 Params
+RecursionError
 resulttype
 T0
 T1
@@ -1089,3 +1091,5 @@ T3
 T4
 T5
 tvars
+TypeError
+ValueError
