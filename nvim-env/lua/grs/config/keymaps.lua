@@ -26,47 +26,42 @@ function M.set_lsp_keymaps(client, bufnr)
    local tb = require 'telescope.builtin'
 
    wk.add {
-      { '<leader>c', group = 'code action', { bufnr = bufnr } },
-      { '<leader>ca', vim.lsp.buf.code_action, desc = 'code action', { bufnr = bufnr } },
-      { '<leader>cl', vim.lsp.codelens.refresh, desc = 'code lens refresh', { bufnr = bufnr } },
-      { '<leader>cr', vim.lsp.codelens.run, desc = 'code lens run', { bufnr = bufnr } },
-      { '<leader>d', group = 'document', { bufnr = bufnr } },
-      { '<leader>ds', tb.lsp_document_symbols, desc = 'document symbols', { bufnr = bufnr } },
-      { '<leader>f', group = 'format', { bufnr = bufnr } },
-      { '<leader>fl', vim.lsp.buf.format, desc = 'format with LSP', { bufnr = bufnr } },
-      { '<leader>g', group = 'goto', { bufnr = bufnr } },
-      { '<leader>gd', tb.lsp_definitions, desc = 'definitions', { bufnr = bufnr } },
-      { '<leader>gi', tb.lsp_implementations, desc = 'implementations', { bufnr = bufnr } },
-      { '<leader>gr', tb.lsp_references, desc = 'references', { bufnr = bufnr } },
-      { '<leader>w', group = 'workspace', { bufnr = bufnr } },
-      { '<leader>ws', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols', { bufnr = bufnr } },
-      { '<leader>wa', vim.lsp.buf.add_workspace_folder, desc = 'add workspace folder', { bufnr = bufnr } },
-      { '<leader>wr', vim.lsp.buf.remove_workspace_folder, desc = 'remove workspace folder', { bufnr = bufnr } },
-      { '<leader>gD', vim.lsp.buf.declaration, desc = 'goto type declaration', { bufnr = bufnr } },
-      { '<leader>K', vim.lsp.buf.signature_help, desc = 'signature help', { bufnr = bufnr } },
-      { '<leader><leaader>r', vim.lsp.buf.rename, desc = 'rename', { bufnr = bufnr } },
-      { 'K',         vim.lsp.buf.hover, desc = 'hover document', { bufnr = bufnr } },
-   }
-
-   wk.add {
-      { '<leader>f', group = 'format' },
-      { '<leader>fl', vim.lsp.buf.format, desc = 'format with LSP', { bufnr = bufnr, mode = 'v' } },
+      { '<leader>c', group = 'code action', buffer = bufnr },
+      { '<leader>ca', vim.lsp.buf.code_action, desc = 'code action', buffer = bufnr },
+      { '<leader>cl', vim.lsp.codelens.refresh, desc = 'code lens refresh', buffer = bufnr },
+      { '<leader>cr', vim.lsp.codelens.run, desc = 'code lens run', buffer = bufnr },
+      { '<leader>d', group = 'document', buffer = bufnr },
+      { '<leader>ds', tb.lsp_document_symbols, desc = 'document symbols', buffer = bufnr },
+      { '<leader>f', group = 'format', buffer = bufnr },
+      { '<leader>fl', vim.lsp.buf.format, desc = 'format with LSP', buffer = bufnr },
+      { '<leader>g', group = 'goto', buffer = bufnr },
+      { '<leader>gd', tb.lsp_definitions, desc = 'definitions', buffer = bufnr },
+      { '<leader>gi', tb.lsp_implementations, desc = 'implementations', buffer = bufnr },
+      { '<leader>gr', tb.lsp_references, desc = 'references', buffer = bufnr },
+      { '<leader>w', group = 'workspace', buffer = bufnr },
+      { '<leader>ws', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols', buffer = bufnr },
+      { '<leader>wa', vim.lsp.buf.add_workspace_folder, desc = 'add workspace folder', buffer = bufnr },
+      { '<leader>wr', vim.lsp.buf.remove_workspace_folder, desc = 'remove workspace folder', buffer = bufnr},
+      { '<leader>gD', vim.lsp.buf.declaration, desc = 'goto type declaration', buffer = bufnr },
+      { '<leader>K', vim.lsp.buf.signature_help, desc = 'signature help', buffer = bufnr },
+      { '<leader><leader>r', vim.lsp.buf.rename, desc = 'rename', buffer = bufnr },
+      { 'K',         vim.lsp.buf.hover, desc = 'hover document', buffer = bufnr },
    }
 
    -- Configure inlay hints if LSP supports it
-   if client.supports_method('textDocument/inlayHint', { bufnr = bufnr }) then
-      vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+   if client.supports_method('textDocument/inlayHint', { buffer = bufnr }) then
+      vim.lsp.inlay_hint.enable(false, { buffer = bufnr })
 
       wk.add {
          {
             '<leader>ti',
             function()
                vim.lsp.inlay_hint.enable(
-                  not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr },
-                  { bufnr = bufnr }
+                  not vim.lsp.inlay_hint.is_enabled { buffer = bufnr },
+                  { buffer = bufnr }
                )
 
-               if vim.lsp.inlay_hint.is_enabled { bufnr = bufnr } then
+               if vim.lsp.inlay_hint.is_enabled { buffer = bufnr } then
                   local msg = 'LSP: inlay hints were enabled'
                   vim.notify(msg, vim.log.levels.info)
                else
@@ -75,7 +70,7 @@ function M.set_lsp_keymaps(client, bufnr)
                end
             end,
             desc = 'toggle inlay hints',
-            { bufnr = bufnr }
+            buffer = bufnr,
          }
       }
 
@@ -89,14 +84,11 @@ end
 function M.set_hls_keymaps(bufnr)
    local wk = require 'which-key'
    wk.add {
-       { buffer = bufnr },
-       { '<leader>fh', '<cmd>%!stylish-haskell<cr>', desc = 'stylish haskell' },
-   }
-   wk.add {
       '<leader>fh',
       "<cmd>'<,'>!stylish-haskell<cr>",
       desc = 'stylish haskell',
-      { buffer = bufnr, mode = 'v' }
+      mode = {'n', 'v'},
+      buffer = bufnr
    }
 end
 
@@ -104,9 +96,9 @@ end
 function M.set_rust_keymaps(bufnr)
    local rt = require('rust-tools')
    require('which-key').add {
-      { '<leader><leader>R', group = 'rust tools', { bufnr = bufnr } },
-      { '<leader><leader>Rh', rt.hover_actions.hover_actions, desc = 'hover actions', { bufnr = bufnr }},
-      { '<leader><leader>Ra', rt.code_action_group.code_action_group, desc = 'code action group', { bufnr = bufnr } },
+      { '<leader><leader>R', group = 'rust tools', buffer = bufnr },
+      { '<leader><leader>Rh', rt.hover_actions.hover_actions, desc = 'hover actions', buffer = bufnr },
+      { '<leader><leader>Ra', rt.code_action_group.code_action_group, desc = 'code action group', buffer = bufnr },
    }
 end
 
@@ -114,8 +106,8 @@ end
 function M.set_metals_keymaps(bufnr)
    local metals = require 'metals'
    require('which-key').add {
-      { '<leader><leader>M',  group = 'scala metals', { bufnr = bufnr } },
-      { '<leader><leader>Mh', metals.hover_worksheet, desc = 'hover worksheet', { bufnr = bufnr } },
+      { '<leader><leader>M',  group = 'scala metals', buffer = bufnr },
+      { '<leader><leader>Mh', metals.hover_worksheet, desc = 'hover worksheet', buffer = bufnr },
    }
 end
 
@@ -126,13 +118,13 @@ function M.set_dap_keymaps(bufnr)
    local dap_ui_widgets = require 'dap.ui.widgets'
 
    require('which-key').add {
-      { '<bslash>c', dap.continue, desc = 'dap continue', { bufnr = bufnr } },
-      { '<bslash>h', dap_ui_widgets.hover, desc = 'dap hover', { bufnr = bufnr } },
-      { '<bslash>l', dap.run_last, desc = 'dap run last', { bufnr = bufnr } },
-      { '<bslash>o', dap.step_over, desc = 'dap step over', { bufnr = bufnr } },
-      { '<bslash>i', dap.step_into, desc = 'dap step into', { bufnr = bufnr } },
-      { '<bslash>b', dap.toggle_breakpoint, desc = 'dap toggle breakpoint', { bufnr = bufnr } },
-      { '<bslash>r', dap.repl.toggle, desc = 'dap repl toggle', { bufnr = bufnr } },
+      { '<bslash>c', dap.continue, desc = 'dap continue', buffer = bufnr },
+      { '<bslash>h', dap_ui_widgets.hover, desc = 'dap hover', buffer = bufnr },
+      { '<bslash>l', dap.run_last, desc = 'dap run last', buffer = bufnr },
+      { '<bslash>o', dap.step_over, desc = 'dap step over', buffer = bufnr },
+      { '<bslash>i', dap.step_into, desc = 'dap step into', buffer = bufnr },
+      { '<bslash>b', dap.toggle_breakpoint, desc = 'dap toggle breakpoint', buffer = bufnr },
+      { '<bslash>r', dap.repl.toggle, desc = 'dap repl toggle', buffer = bufnr },
    }
 end
 

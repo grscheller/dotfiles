@@ -20,8 +20,8 @@ return {
 
             --[[ Navigation ]]
 
-            wk.register({
-               c = {
+            wk.add {
+               { ']c',
                   function()
                      if vim.wo.diff then
                         -- fall back to nvim when in diff mode
@@ -30,12 +30,10 @@ return {
                         gitsigns.nav_hunk 'next'
                      end
                   end,
-                  'next git/diff change',
+                  desc = 'next git/diff change',
+                  buffer = bufnr,
                },
-            }, { prefix = ']', bufnr = bufnr })
-
-            wk.register({
-               c = {
+               { '[c',
                   function()
                      if vim.wo.diff then
                         -- fall back to nvim when in diff mode
@@ -44,56 +42,65 @@ return {
                         gitsigns.nav_hunk 'prev'
                      end
                   end,
-                  'next git/diff change' },
-            }, { prefix = '[', bufnr = bufnr })
+                  desc = 'next git/diff change',
+                  buffer = bufnr
+               },
+            }
 
             --[[ Actions ]]
 
-            wk.register({
-               ['<m-g>']   = { name = 'gitsigns' },
-               ['<m-g>t']  = { name = 'gitsigns toggle' },
-               ['<m-g>tb'] = { gitsigns.toggle_current_line_blame, 'toggle git show blame line' },
-               ['<m-g>tD'] = { gitsigns.toggle_deleted, 'toggle git show deleted' },
-               ['<m-g>s']  = { gitsigns.stage_hunk, 'git stage hunk' },
-               ['<m-g>r']  = { gitsigns.reset_hunk, 'git reset hunk' },
-               ['<m-g>S']  = { gitsigns.stage_buffer, 'git stage buffer' },
-               ['<m-g>u']  = { gitsigns.undo_stage_hunk, 'git undo stage hunk' },
-               ['<m-g>R']  = { gitsigns.reset_buffer, 'git reset buffer' },
-               ['<m-g>p']  = { gitsigns.preview_hunk, 'git preview hunk' },
-               ['<m-g>b']  = { gitsigns.blame_line, 'git blame line' },
-               ['<m-g>d']  = { gitsigns.diffthis, 'git diff against index' },
-               ['<m-g>D']  = {
+            wk.add {
+               { '<m-g>', group = 'gitsigns', buffer = bufnr },
+               { '<m-g>b', gitsigns.blame_line, desc = 'git blame line', buffer = bufnr },
+               { '<m-g>d', gitsigns.diffthis, desc = 'git diff against index', buffer = bufnr },
+               { '<m-g>p', gitsigns.preview_hunk, desc = 'git preview hunk', buffer = bufnr },
+               { '<m-g>r', gitsigns.reset_hunk, desc = 'git reset hunk', buffer = bufnr },
+               { '<m-g>R', gitsigns.reset_buffer, desc = 'git reset buffer', buffer = bufnr },
+               { '<m-g>s', gitsigns.stage_hunk, desc = 'git stage hunk', buffer = bufnr },
+               { '<m-g>S', gitsigns.stage_buffer, desc = 'git stage buffer', buffer = bufnr },
+               { '<m-g>t', group= 'gitsigns toggle', buffer = bufnr },
+               { '<m-g>tb', gitsigns.toggle_current_line_blame, desc = 'toggle git show blame line', buffer = bufnr},
+               { '<m-g>tD', gitsigns.toggle_deleted, desc = 'toggle git show deleted', buffer = bufnr },
+               { '<m-g>u', gitsigns.undo_stage_hunk, desc = 'git undo stage hunk', buffer = bufnr },
+               {
+                  '<m-g>D',
                   function()
                      gitsigns.diffthis '@'
                   end,
-                  'git diff against last commit',
+                  desc = 'git diff against last commit',
+                  buffer = bufnr,
                },
-            }, { bufnr = bufnr })
-
-            wk.register({
-               ['<m-g>']  = { name = 'gitsigns' },
-               ['<m-g>s'] = {
+               {
+                  '<m-g>s',
                   function()
                      gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                  end, 'git stage hunk',
+                  end,
+                  desc = 'git stage hunk',
+                  mode = {'v'},
+                  buffer = bufnr,
                },
-               ['<m-g>r'] = {
+               {
+                  '<m-g>r',
                   function()
                      gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                  end, 'git reset hunk',
+                  end,
+                  desc = 'git reset hunk',
+                  mode = {'v'},
+                  buffer = bufnr,
                },
-            }, { bufnr = bufnr, mode = 'v' })
+            }
 
             --[[ Text object ]]
 
-            wk.register({
-               h  = { '<cmd>Gitsigns select_hunk<cr>', 'inner hunk' },
-            }, { prefix = 'i', bufnr = bufnr, mode = 'o' })
-
-            wk.register({
-               h  = { '<cmd>Gitsigns select_hunk<cr>', 'inner hunk' },
-            }, { prefix = 'i', bufnr = bufnr, mode = 'x' })
-
+            wk.add {
+               {
+                  '<m-g>h',
+                  '<cmd>Gitsigns select_hunk<cr>',
+                  desc = 'inner hunk',
+                  mode = {'n', 'o', 'x'},
+                  buffer = bufnr,
+               },
+            }
          end,
       },
    },

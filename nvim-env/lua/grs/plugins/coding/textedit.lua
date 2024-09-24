@@ -19,30 +19,7 @@ return {
    {
       'numToStr/Comment.nvim',
       event = 'VeryLazy',
-      opts = {
-         padding = true,      -- add space b/w comment string and line
-         sticky = true,       -- cursor stays at current position
-         ignore = nil,        -- lines to be ignored while (un)comment
-         toggler = {
-            line = 'gcc',     --Line-comment toggle (normal mode)
-            block = 'gbc',    --Block-comment toggle (normal mode)
-         },
-         opleader = {
-            line = 'gc',      -- op-pending line-comment (normal & visual mode)
-            block = 'gb',     -- block-comment keymap (normal & visual mode)
-         },
-         extra = {
-            above = 'gcO',    -- add new comment on line above (normal mode)
-            below = 'gco',    -- add new comment on line below (normal mode)
-            eol = 'gcA',      -- add new comment at end of line (normal mode)
-         },
-         mappings = {
-            basic = true,
-            extra = true,
-         },
-         pre_hook = nil,
-         post_hook = nil,
-      },
+      config = true,
    },
 
    -- Surround text objects with matching symbols
@@ -56,8 +33,8 @@ return {
    {
       'ggandor/leap.nvim',
       keys = {
-         { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
-         { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
+         { 's', mode = { 'n', 'x' }, desc = 'leap forward to' },
+         { 'S', mode = { 'n', 'x' }, desc = 'leap backward to' },
       },
       config = function()
          local leap = require 'leap'
