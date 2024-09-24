@@ -11,8 +11,6 @@ return {
    -- make plugins dot-repeatable, if they "opt-in"
    { 'tpope/vim-repeat', lazy = false },
 
-   -- configure patched fonts for plugins that need them
-   -- note: terminal must be configured to use a patch font
    {
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font,

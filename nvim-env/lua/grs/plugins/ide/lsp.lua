@@ -14,25 +14,40 @@ return {
    {
       -- LSP Configuration
       'neovim/nvim-lspconfig',
-      event = { "BufReadPre", "BufNewFile" },
+      event = { 'BufReadPre', 'BufNewFile' },
       cmd = 'Mason',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          'williamboman/mason-lspconfig.nvim',
-         { 'folke/neoconf.nvim', cmd = 'Neoconf', config = true },
-         'folke/neodev.nvim',
+         {
+            'folke/neoconf.nvim',
+            cmd = 'Neoconf',
+            config = true
+         },
+         {
+            'folke/lazydev.nvim',
+            ft = 'lua', -- only load on lua files
+            dependencies = {
+               { 'Bilal2453/luvit-meta', lazy = true },
+            },
+            opts = {
+               library = {
+               -- See the configuration section for more details
+               -- Load luvit types when the `vim.uv` word is found
+               { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+               },
+            },
+         },
       },
       config = function()
-         require('neodev').setup {}
-
          require('mason').setup {
             ui = {
-                  icons = {
-                     package_installed = "✓",
-                     package_pending = "➜",
-                     package_uninstalled = "✗"
-                  }
+               icons = {
+                  package_installed = "✓",
+                  package_pending = "➜",
+                  package_uninstalled = "✗"
+               }
             }
          }
 

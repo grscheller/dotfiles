@@ -58,17 +58,18 @@ return {
          telescope.load_extension 'ui-select'
          telescope.load_extension 'fzf'
 
-         wk.register{
-            ['<leader>sh'] = { builtin.help_tags, 'search help' },
-            ['<leader>sk'] = { builtin.keymaps, 'search kymaps' },
-            ['<leader>sf'] = { builtin.find_files, 'search files' },
-            ['<leader>ss'] = { builtin.builtin, 'search select telescope' },
-            ['<leader>sw'] = { builtin.grep_string, 'search current word' },
-            ['<leader>sg'] = { builtin.live_grep, 'search by grep' },
-            ['<leader>sd'] = { builtin.diagnostics, 'search diagnostics' },
-            ['<leader>sr'] = { builtin.resume, 'search resume' },
-            ['<leader>s.'] = { builtin.oldfiles, 'search recent files' },
-            ['<leader>/']  = {
+         wk.add{
+            { '<leader>sh', builtin.help_tags, desc = 'search help' },
+            { '<leader>sk', builtin.keymaps, desc = 'search kymaps' },
+            { '<leader>sf', builtin.find_files, desc = 'search files' },
+            { '<leader>ss', builtin.builtin, desc = 'search select telescope' },
+            { '<leader>sw', builtin.grep_string, desc = 'search current word' },
+            { '<leader>sg', builtin.live_grep, desc = 'search by grep' },
+            { '<leader>sd', builtin.diagnostics, desc = 'search diagnostics' },
+            { '<leader>sr', builtin.resume, desc = 'search resume' },
+            { '<leader>s.', builtin.oldfiles, desc = 'search recent files' },
+            {
+               '<leader>/',
                function()
                   builtin.current_buffer_fuzzy_find(
                      themes.get_dropdown {
@@ -76,16 +77,17 @@ return {
                         previewer = false,
                      })
                end,
-               'fuzzily search in current buffer',
+               desc = 'fuzzily search in current buffer',
             },
-            ['<leader>so'] = {
+            {
+               '<leader>so',
                function()
                   builtin.live_grep {
                      grep_open_files = true,
                      prompt_title = 'Live Grep in Open Files',
                   }
                end,
-               'search open files',
+               desc = 'search open files',
             },
          }
       end,

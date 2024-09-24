@@ -78,12 +78,13 @@ return {
                   buffer = '[buf]',
                   cmdline = '[cmd]',
                   crates = '[crates]',
+                  lazydev = '[ldev]',
+                  luasnip = '[snip]',
                   nvim_lsp = '[lsp]',
                   nvim_lsp_document_symbol = '[dsym]',
                   nvim_lua = '[lua]',
                   path = '[path]',
                   rg = '[rg]',
-                  luasnip = '[snip]',
                },
             },
          }
@@ -227,6 +228,10 @@ return {
                   label_trailing_slash = false,
                   trailing_slash = false,
                },
+            },
+            {
+               name = 'lazydev',
+               group_index = 0,
             },
          }
 

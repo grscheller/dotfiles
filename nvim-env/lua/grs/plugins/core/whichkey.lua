@@ -18,47 +18,48 @@ return {
 
          --[[ Prefixes for keymaps_early.lua keymaps ]]
 
-         wk.register {
-            ['<bslash>']  = { name = 'diagnostics' },
-            ['<leader>']  = { name = 'space' },
-            ['<c-b>'] = { name = 'blackhole' },
-            ['<c-s>'] = { name = 'system clipboard' },
+         wk.add {
+            { '<bslash>', group = 'diagnostics & dap' },
+            { '<leader>', group = 'space' },
+            { '<c-b>', group = 'blackhole' },
+            { '<c-s>', group = 'system clipboard' },
          }
 
-         wk.register({
-            ['<leader>']  = { name = 'space' },
-            ['<c-b>']     = { name = 'blackhole' },
-            ['<c-s>']     = { name = 'system clipboard' },
-         }, { mode = 'v' })
+         wk.add {
+            mode = { 'v' },
+            { '<leader>', group = 'space' },
+            { '<c-b>', group = 'blackhole' },
+            { '<c-s>', group = 'system clipboard' },
+         }
 
          --[[ Prefixes used by multiple plugins ]]
 
-         wk.register {
-            ['<leader>s'] = { name = 'search' },
-            ['<leader>t'] = { name = 'toggle' },
+         wk.add {
+            { '<leader>s', group = 'search' },
+            { '<leader>t', group = 'toggle' },
          }
 
          --[[ Logical keymap groupings spanning multiple plugins ]]
 
-         wk.register {
+         wk.add {
             -- plugin/package managers keymaps
             name = 'package managers',
-            ['<leader>p']  = { name = 'plugin/package managers' },
-            ['<leader>pl'] = { '<cmd>Lazy<cr>', 'Lazy gui' },
-            ['<leader>pm'] = { '<cmd>Mason<cr>', 'Mason gui' },
+            { '<leader>p', group = 'plugin/package managers' },
+            { '<leader>pl', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
+            { '<leader>pm', '<cmd>Mason<cr>', desc = 'Mason gui' },
          }
 
          --[[ Keymaps for plugins configured with just an opts table ]]
 
-         wk.register {
-            ['<leader>h'] = { name = 'harpoon' },
-            ['<leader>R'] = { name = 'refactoring' },
-            ['<leader>tt'] = { '<cmd>TSBufToggle highlight<cr>', 'toggle treesitter highlighting' }
+         wk.add {
+            { '<leader>R', group = 'refactoring' },
+            { '<leader>tt', '<cmd>TSBufToggle highlight<cr>', desc = 'toggle treesitter highlighting' }
          }
 
-         wk.register({
-            ['<leader>R'] = { name = 'refactoring' },
-         }, { mode = 'v' })
+         wk.add {
+            mode = { 'v' },
+            { '<leader>R', group = 'refactoring' },
+         }
       end
    },
 
