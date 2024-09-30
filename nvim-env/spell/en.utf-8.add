@@ -187,6 +187,7 @@ fp
 framebuffer
 frontend
 frontends
+fsmonitor
 ftplugin
 ftplugins
 ftruncate
@@ -200,6 +201,7 @@ gcc
 gcd
 GDM
 ge
+geoffrey
 getitem
 getgid
 getpgid
@@ -491,6 +493,7 @@ README's
 realloc
 reallocarray
 rebase
+rebased
 recurse
 reimage
 reimaged
@@ -504,6 +507,7 @@ repo's
 repos
 repr
 representable
+rerere
 ret
 req
 reqs
@@ -538,6 +542,8 @@ scala
 Scala2
 Scala3
 scalac
+scheller
+Scheller
 scp
 Scrollock
 scrollock
@@ -550,6 +556,7 @@ shellcheck
 shiftwidth
 showMessage
 signatureHelp
+signingkey
 sizep
 sliceable
 Smalltalk
@@ -662,8 +669,13 @@ unicode
 unistd
 unlicense
 unmanaged
+unmerge
+unmerged
 unrepresentable
+unstage
+unstaged
 untar
+untracked
 untype
 untyped
 Untyped
@@ -1047,8 +1059,6 @@ QueueBase
 QueueBaseMB
 ratton
 Ratton
-scheller
-Scheller
 scrolloff
 siegfried
 Siegfried
