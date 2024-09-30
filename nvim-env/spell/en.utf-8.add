@@ -363,6 +363,7 @@ md
 mdl
 merchantability
 metacharacters
+metaclass
 metadata
 metamethod
 metamethods
@@ -447,6 +448,7 @@ polkit
 popup
 popups
 POSIX
+postfix
 pre
 preinstall
 prev
@@ -985,9 +987,11 @@ flatMap
 foldleft
 foldL
 foldL_sc
+foldLsc
 foldR
 foldright
 foldR_sc
+foldRsc
 folke
 Folke
 fonttools
@@ -1054,6 +1058,7 @@ SplitEnd
 SplitEnds
 SRE
 sTate
+stopfold
 ud
 wikipedia
 wilson
