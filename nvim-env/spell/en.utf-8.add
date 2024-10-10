@@ -155,6 +155,7 @@ f4
 f5
 f6
 facebook
+falsy
 fcntl
 fd
 fg
@@ -385,8 +386,9 @@ monoids
 monospace
 monospaced
 mpd
+mut
+Mut
 mypy
-neoconf
 msg
 msg0
 msg1
@@ -400,6 +402,7 @@ nano
 natively
 NDELAY
 nemo
+neoconf
 neovim
 neovim's
 Nix
@@ -1064,10 +1067,9 @@ siegfried
 Siegfried
 SL
 SL_NODE
-SplitEnd
-SplitEnds
 SRE
 sTate
+startfold
 stopfold
 ud
 wikipedia
