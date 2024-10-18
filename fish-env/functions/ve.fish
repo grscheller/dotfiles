@@ -20,7 +20,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    # Provide an environment override mechanism to virtual environment location
    if not set -q VE_VENV_DIR
-      set -g -x VE_VENV_DIR ~/devel/python_venvs/
+      set -g -x VE_VENV_DIR ~/devel/venvs/
    end
    mkdir -p $VE_VENV_DIR
 

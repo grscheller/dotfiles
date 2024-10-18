@@ -72,7 +72,7 @@ and begin
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
-   set -gx VE_VENV_DIR ~/devel/python_venvs
+   set -gx VE_VENV_DIR ~/devel/venvs
    set -gx PYENV_ROOT ~/.local/share/pyenv
    set PATH $PATH $PYENV_ROOT/bin
 

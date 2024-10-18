@@ -11,10 +11,10 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/circular-array/src
          case 'datastructures'
             set --append PythonPath ~/devel/pypi/datastructures/src
+         case 'experimental'
+            set --append PythonPath ~/devel/pypi/experimental/src
          case 'fp'
             set --append PythonPath ~/devel/pypi/fp/src
-         case 'untyped'
-            set --append PythonPath ~/devel/pypi/untyped/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1

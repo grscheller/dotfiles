@@ -61,12 +61,13 @@ dot_config_files='
 '
 
 devel_files='
-   python_venvs/ve.conf
+   venvs/ve.conf
 '
 
 remove_items="
    "$HOME/.vimrc"
    "$XDG_CONFIG_HOME/nixpkgs"
+   "$HOME/python_venvs"
 "
 
 dirs_to_create="
