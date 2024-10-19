@@ -67,7 +67,7 @@ devel_files='
 remove_items="
    "$HOME/.vimrc"
    "$XDG_CONFIG_HOME/nixpkgs"
-   "$HOME/python_venvs"
+   "$HOME/devel/python_venvs"
 "
 
 dirs_to_create="

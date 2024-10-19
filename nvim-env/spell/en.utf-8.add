@@ -374,6 +374,7 @@ metatable
 metatables
 meth
 minimalistic
+minimax
 mixin
 mkpkg
 modprobe
@@ -1046,6 +1047,8 @@ nada
 Nada
 neodev
 nohole
+noValue
+NoValue
 PArray
 PArrays
 pathtrim
@@ -1063,6 +1066,7 @@ QueueBaseMB
 ratton
 Ratton
 scrolloff
+se
 siegfried
 Siegfried
 SL
