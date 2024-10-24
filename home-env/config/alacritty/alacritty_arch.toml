@@ -1,6 +1,7 @@
-ipc_socket = true
+[general]
 live_config_reload = true
 working_directory = "None"
+ipc_socket = true
 
 [bell]
 animation = "EaseOutSine"
@@ -626,3 +627,4 @@ y = 0
 [window.position]
 x = 0
 y = 0
+
