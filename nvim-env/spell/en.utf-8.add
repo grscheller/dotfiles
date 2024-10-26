@@ -24,10 +24,13 @@ awk
 backend
 backends
 backlight
+Baidu
 bashism
 bashisms
 baz
+BITCHUTE
 bg
+Bing
 bluetooth
 bool
 boolean
@@ -53,6 +56,7 @@ changelist
 changelists
 CHANGELOG
 cheatsheet
+cheatsheets
 chmod
 cidr
 clangd
@@ -186,6 +190,7 @@ fortran
 FOSS
 fp
 framebuffer
+freedesktop
 frontend
 frontends
 fsmonitor
@@ -225,12 +230,14 @@ globbing
 GPL
 GPLv2
 GPLv3
+GPT
 Gradle
 gt
 gtk
 GTK
 gvim
 Hackage
+Happystack
 hashable
 haskell
 healthcheck
@@ -350,6 +357,7 @@ lualine
 lua's
 luasnip
 luau
+Lutris
 LVHN
 mailx
 makefile
@@ -360,6 +368,7 @@ mako
 malloc
 manpage
 manpages
+Mapquest
 matplotlib
 mbs
 md
@@ -406,6 +415,7 @@ nemo
 neoconf
 neovim
 neovim's
+NwtFlix
 Nix
 noice
 Noice
@@ -499,6 +509,7 @@ reallocarray
 rebase
 rebased
 recurse
+reddit
 reimage
 reimaged
 reimaging
@@ -524,6 +535,7 @@ rg
 rgb
 ripgrep
 rm
+ROBLOX
 Roboto
 rsync
 runable
@@ -714,6 +726,7 @@ vscode
 vt-102
 vt-220
 waitpid
+Wayback
 wayland
 WC3
 webapp
@@ -746,6 +759,7 @@ Xsession
 XSI
 yaml
 yml
+Yandex
 zig
 zsh
 1-bit
@@ -865,6 +879,23 @@ dΨ
 dΩ
 primality
 semigroup
+# Person names
+Akrzemil
+Baeldung
+Chaplyaka
+Chuang
+Greger
+Haoyi
+Naftalin
+Olivine
+Pearce
+Poettering
+Rossum
+Saecki
+Simrat
+Volkmann
+Wampler
+Yokota
 # Very sway/wlroots/desktop specific
 acpi_video1
 alittleofmeinyou
@@ -1029,6 +1060,7 @@ hymie
 Hymie
 isSqr
 iSqrt
+itargs
 jacobi
 kickstart
 legendre
