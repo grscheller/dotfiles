@@ -579,7 +579,7 @@ Systemd
 systemd
 temperatureC
 WantedBy
-# comp sci names
+# computer science names
 .
 ..
 ...
@@ -974,6 +974,7 @@ dev
 devel
 Dogbert
 DoubleQueue
+dss
 f1
 f2
 f3
@@ -1006,6 +1007,8 @@ foofoo
 ftuple
 FTuple
 FTuples
+FT
+FQ
 fudd
 func
 gaussian
@@ -1050,6 +1053,7 @@ LIFOQueueMB
 LIFOQueues
 LIFOQueueMBs
 listchars
+LQ
 nada
 Nada
 neodev
