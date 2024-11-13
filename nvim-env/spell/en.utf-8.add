@@ -282,6 +282,7 @@ workspaces
 www
 # Proper names
 Ackermann
+Ackermann's
 Akrzemil
 Alacritty
 alacritty
@@ -663,6 +664,7 @@ CUI
 dap
 dap
 decodings
+detupleizing
 df
 dhcpcd
 diagraph
@@ -800,6 +802,8 @@ LSP's
 markdownlint
 mb
 mv
+Nullary
+nullary
 PowerShell
 pred
 printf
@@ -896,6 +900,7 @@ TSUpdate
 tsx
 tty
 ttys
+tupleizing
 txt
 typecheck
 typechecker
@@ -970,11 +975,15 @@ dec2
 dec3
 dec4
 dec5
+detup
 dev
 devel
 Dogbert
 DoubleQueue
+dropWhile
 dss
+entup
+excs
 f1
 f2
 f3
@@ -1014,6 +1023,12 @@ func
 gaussian
 gh-pages
 GH-Pages
+group1
+group2
+group3
+group4
+group5
+group6
 grs
 grscheller
 grscheller's
@@ -1046,6 +1061,10 @@ Kotlin
 ksh
 kwargs
 lazyredraw
+Lazy00
+Lazy01
+Lazy10
+Lazy11
 LazyVim
 legendre
 LIFOQueue
@@ -1092,6 +1111,7 @@ SplitEnd
 SplitEnds
 startfold
 stopfold
+takeWhile
 ud
 wilson
 woException
@@ -1107,6 +1127,7 @@ dicts
 enum
 enums
 errorlog
+ExceptionGroup
 frozenset
 gitsigns
 globalns
@@ -1129,6 +1150,8 @@ libapue
 localns
 namedtuple
 NoneType
+OSError
+OSErrors
 param
 Param
 params
@@ -1156,8 +1179,11 @@ PyTorch
 RecursionError
 repr
 resulttype
+RunTimeError
 Setuptools
 Stackage
+SyntaxError
+SystemError
 T0
 T1
 T2
