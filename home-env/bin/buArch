@@ -12,9 +12,7 @@ BackupLocation='/buslink/grs/Backup'
 ExcludeDirs=(
     build/ArchISOs
     build/AUR
-    devel/dotfiles
-    devel/neovim-notes
-    devel/scheller-linux-archive
+    devel
     Downloads
     Games
     node_modules
