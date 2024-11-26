@@ -53,9 +53,9 @@ cabal_files='
 '
 
 dot_config_files='
-   alacritty/alacritty_arch.toml
+   alacritty/alacritty_popos.toml
    alacritty/alacritty.toml
-   alacritty/alacritty_arch.yml
+   alacritty/alacritty_popos.yml
    alacritty/alacritty.yml
    git/config
 '

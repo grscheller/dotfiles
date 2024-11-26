@@ -13,4 +13,4 @@
 #       different versions of this file depending on OS would be a good hook.
 ---
 import:
-  - ~/.config/alacritty/alacritty_arch.yml
+  - ~/.config/alacritty/alacritty_popos.yml

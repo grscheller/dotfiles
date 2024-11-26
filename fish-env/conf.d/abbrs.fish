@@ -19,11 +19,9 @@ abbr -a gt 'git tag --list|cat'
 abbr -a gw git switch
 
 # appropriate for arch linux desktop environment - single quotes intentional
-abbr -a rInstall 'sudo $DOTFILES_GIT_REPO/bin/rInstall'
 abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvInstall '$DOTFILES_GIT_REPO/bin/nvimInstall'
 abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
-abbr -a swInstall '$DOTFILES_GIT_REPO/bin/swayInstall'
 abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
 
 # Python virtual environment related
@@ -45,3 +43,4 @@ abbr WgetM -- /usr/bin/wget --mirror -p --convert-links -e robots=off
 # Shell environment cmds
 abbr -a re 'cd; REDO_ENV=yes fish'
 abbr -a ue 'UPDATE_ENV=yes fish'
+
