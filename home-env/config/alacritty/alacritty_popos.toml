@@ -104,25 +104,25 @@ TERM = "alacritty"
 builtin_box_drawing = false
 size = 13.0
 
-# [font.bold]
-# family = "Fira Code Nerd Font"
-# style = "Bold"
-# 
-# [font.bold_italic]
-# family = "Roboto Mono Nerd Font"
-# style = "Bold Italic"
+[font.bold]
+family = "Fira Code Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "Roboto Mono Nerd Font"
+style = "Bold Italic"
 
 [font.glyph_offset]
 x = 0
 y = 0
 
-# [font.italic]
-# family = "Roboto Mono Nerd Font"
-# style = "Italic"
-# 
-# [font.normal]
-# family = "Fira Code Nerd Font"
-# style = "Regular"
+[font.italic]
+family = "Roboto Mono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "Fira Code Nerd Font"
+style = "Regular"
 
 [font.offset]
 x = 0

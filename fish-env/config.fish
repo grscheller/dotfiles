@@ -13,11 +13,41 @@ end
 # Enable vi keybindings
 fish_vi_key_bindings
 
-# Ensure SSH key-agent running with your private keys
+# Manage SSH key-agents
+function exit_handler --on-event fish_exit
+   if status --is-login
+       if set -q SSH_AGENT_PID
+          kill -15 $SSH_AGENT_PID
+       end
+   end
+end
+
 if ! set -q SSH_AGENT_PID
-   printf 'SSH '
-   eval (ssh-agent -c)
-   and ssh-add
+   set -l ssh_flag 1
+   set -l desktop_flag 0
+   if set -q XDG_CURRENT_DESKTOP
+      set desktop_flag 1
+      if test -f /tmp/grs_ssh_desktop_env
+         printf 'Last Desktop SSH '
+         source /tmp/grs_ssh_desktop_env
+         if ps -p $SSH_AGENT_PID > /dev/null
+            set ssh_flag 0
+         end
+      end
+   end
+   if test "$ssh_flag" -eq 1
+      set -l umask_orig $umask
+      umask 0077
+      printf 'SSH '
+      if test "$desktop_flag" -eq 1
+         eval (ssh-agent -c|tee /tmp/grs_ssh_desktop_env)
+         and ssh-add
+      else
+         eval (ssh-agent -c)
+         and ssh-add
+      end
+      umask $umask_orig
+   end
 end
 
 # If installed, use pyenv to manage Python environments
