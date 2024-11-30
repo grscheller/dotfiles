@@ -1,6 +1,7 @@
 --[[ Telescope - search, filter, find & pick items ]]
 
 return {
+
    {
       -- To open window showing keymaps for current picker,
       --   Insert mode: <c-/>
@@ -112,7 +113,6 @@ return {
       },
    },
 
-
    {
       'tsakirist/telescope-lazy.nvim',
       dependencies = {
@@ -130,4 +130,5 @@ return {
          },
       },
    },
+
 }

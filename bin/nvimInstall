@@ -48,7 +48,6 @@ dot_config_files='
    lua/grs/plugins/coding/init.lua
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/indent_line.lua
-   lua/grs/plugins/coding/refactoring.lua
    lua/grs/plugins/coding/textedit.lua
    lua/grs/plugins/core/init.lua
    lua/grs/plugins/core/appearance.lua
@@ -72,7 +71,7 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/lua/grs/plugins/coding/harpoon.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/coding/refactoring.lua
 "
 
 dirs_to_create=""
@@ -116,9 +115,6 @@ ensure_dirs "$dirs_to_create"
 
 case "$OPTION_GIVEN" in
    install)
-      # Helps when editing installed Neovim configs
-      printf '{}' > "$XDG_CONFIG_HOME"/nvim/.neoconf.json
-
       # Recompiled spell file if necessary
       if test "$compileSpellFile" = yes
       then

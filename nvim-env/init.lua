@@ -27,7 +27,7 @@ vim.cmd [[colorscheme lunaperche]]
 -- Bootstrap folke/lazy.nvim if not already installed
 local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
 local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
    vim.fn.system {
       'git',
       'clone',

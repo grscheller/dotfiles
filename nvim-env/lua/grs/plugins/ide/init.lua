@@ -30,5 +30,5 @@ return iFlatten {
    require 'grs.plugins.ide.lsp',
    require 'grs.plugins.ide.rust',
    require 'grs.plugins.ide.scala',
-   -- require 'grs.plugins.ide.dap',
+   require 'grs.plugins.ide.dap',
 }

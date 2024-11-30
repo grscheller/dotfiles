@@ -18,6 +18,78 @@ local autocmd = vim.api.nvim_create_autocmd
 local message
 local info = vim.log.levels.INFO
 
+local config_metals = function()
+   local metals = require 'metals'
+   local metals_config = metals.bare_config()
+   metals_config.settings = {
+      serverVersion = 'latest.release',
+      showImplicitArguments = true,
+      showImplicitConversionsAndClasses = true,
+      excludedPackages = {
+         'akka.actor.typed.javadsl',
+         'com.github.swagger.akka.javadsl',
+      },
+   }
+   -- TODO: find something to hook this, not necessarily the status bar
+   metals_config.init_options.statusBarProvider = 'on'
+
+   local dap = require 'dap'
+   dap.configurations.scala = {
+      {
+         type = 'scala',
+         request = 'launch',
+         name = 'RunOrTest',
+         metals = {
+            runType = 'runOrTestFile',
+            --args = { 'firstArg', 'secondArg, ...' }
+         },
+      },
+      {
+         type = 'scala',
+         request = 'launch',
+         name = 'Test Target',
+         metals = {
+            runType = 'testTarget',
+         },
+      },
+   }
+
+   local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
+
+   metals_config.on_attach = function(client, bufnr)
+      metals.setup_dap()
+
+      if km.set_lsp_keymaps(client, bufnr) then
+         km.set_metals_keymaps(bufnr)
+         km.set_dap_keymaps(bufnr)
+
+         -- show diagnostic popup when cursor lingers on line with errors
+         autocmd('CursorHold', {
+            buffer = bufnr,
+            callback = function()
+               vim.diagnostic.open_float {
+                  bufnr = bufnr,
+                  scope = 'line',
+                  focusable = false,
+               }
+            end,
+            group = grsMetalsGrp,
+            desc = 'Open floating diagnostic window for Scala-Metals',
+         })
+      end
+   end
+
+   autocmd('FileType', {
+      pattern = { 'scala', 'sbt', 'java' },
+      callback = function()
+         metals.initialize_or_attach(metals_config)
+         message = 'Scala Metals initialize or attached.'
+         vim.notify(message, info)
+      end,
+      group = grsMetalsGrp,
+   })
+end
+
 return {
 
    {
@@ -27,77 +99,7 @@ return {
          'mfussenegger/nvim-dap',
       },
       ft = { 'scala', 'sbt', 'java' },
-      config = function()
-         local metals = require 'metals'
-         local metals_config = metals.bare_config()
-         metals_config.settings = {
-            serverVersion = 'latest.release',
-            showImplicitArguments = true,
-            showImplicitConversionsAndClasses = true,
-            excludedPackages = {
-               'akka.actor.typed.javadsl',
-               'com.github.swagger.akka.javadsl',
-            },
-         }
-         -- TODO: find something to hook this, not necessarily the status bar
-         metals_config.init_options.statusBarProvider = 'on'
-
-         local dap = require 'dap'
-         dap.configurations.scala = {
-            {
-               type = 'scala',
-               request = 'launch',
-               name = 'RunOrTest',
-               metals = {
-                  runType = 'runOrTestFile',
-                  --args = { 'firstArg', 'secondArg, ...' }
-               },
-            },
-            {
-               type = 'scala',
-               request = 'launch',
-               name = 'Test Target',
-               metals = {
-                  runType = 'testTarget',
-               },
-            },
-         }
-
-         local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
-
-         metals_config.on_attach = function(client, bufnr)
-            metals.setup_dap()
-
-            if km.set_lsp_keymaps(client, bufnr) then
-               km.set_metals_keymaps(bufnr, metals)
-               km.set_dap_keymaps(bufnr)
-
-               -- show diagnostic popup when cursor lingers on line with errors
-               autocmd('CursorHold', {
-                  buffer = bufnr,
-                  callback = function()
-                     vim.diagnostic.open_float {
-                        bufnr = bufnr,
-                        scope = 'line',
-                        focusable = false,
-                     }
-                  end,
-                  group = grsMetalsGrp,
-                  desc = 'Open floating diagnostic window for Scala-Metals',
-               })
-            end
-         end
-
-         autocmd('FileType', {
-            pattern = { 'scala', 'sbt', 'java' },
-            callback = function()
-               metals.initialize_or_attach(metals_config)
-               message = 'Scala Metals initialize or attached.'
-               vim.notify(message, info)
-            end,
-            group = grsMetalsGrp,
-         })
-      end,
+      config = config_metals,
    },
 
 }

@@ -30,7 +30,7 @@ autocmd('CmdLineLeave', {
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
-      vim.highlight.on_yank { timeout = 500, higroup = 'Visual' }
+      vim.hl.on_yank { timeout = 500, higroup = 'Visual' }
    end,
    group = GrsTextGrp,
    desc = 'Give visual feedback when yanking text',

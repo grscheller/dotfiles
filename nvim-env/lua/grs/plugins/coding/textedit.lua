@@ -25,8 +25,20 @@ return {
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      event = 'VeryLazy',
-      config = true,
+         version = "*",
+         event = 'VeryLazy',
+         config = function()
+         require('nvim-surround').setup {
+            keymaps = {
+               normal = ' rr',
+               normal_line = ' rl',
+               visual = ' rr',
+               visual_line = ' rl',
+               delete = 'dr',
+               change = 'cr',
+            }
+         }
+      end,
    },
 
    -- Quickly jump around window - like sneak but on steroids
