@@ -18,7 +18,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local message
 local info = vim.log.levels.INFO
 
-local config_metals = function()
+local config_metals = function ()
    local metals = require 'metals'
    local metals_config = metals.bare_config()
    metals_config.settings = {
@@ -56,7 +56,7 @@ local config_metals = function()
 
    local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
 
-   metals_config.on_attach = function(client, bufnr)
+   metals_config.on_attach = function (client, bufnr)
       metals.setup_dap()
 
       if km.set_lsp_keymaps(client, bufnr) then
@@ -66,7 +66,7 @@ local config_metals = function()
          -- show diagnostic popup when cursor lingers on line with errors
          autocmd('CursorHold', {
             buffer = bufnr,
-            callback = function()
+            callback = function ()
                vim.diagnostic.open_float {
                   bufnr = bufnr,
                   scope = 'line',
@@ -81,7 +81,7 @@ local config_metals = function()
 
    autocmd('FileType', {
       pattern = { 'scala', 'sbt', 'java' },
-      callback = function()
+      callback = function ()
          metals.initialize_or_attach(metals_config)
          message = 'Scala Metals initialize or attached.'
          vim.notify(message, info)

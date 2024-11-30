@@ -2,7 +2,7 @@
 
 local km = require('grs.config.keymaps')
 
-local config_lspconfig = function()
+local config_lspconfig = function ()
    require('mason').setup {
       ui = {
          icons = {
@@ -104,7 +104,7 @@ local config_lspconfig = function()
          'lhaskell',
          'cabal',
       },
-      on_attach = function(client, bufnr)
+      on_attach = function (client, bufnr)
          if km.set_lsp_keymaps(client, bufnr) then
             km.set_hls_keymaps(bufnr)
          end

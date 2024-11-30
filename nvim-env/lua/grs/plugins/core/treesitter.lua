@@ -9,7 +9,7 @@ local opts = {
    highlight = { enable = true },
 }
 
-local function config()
+local config_treesitter = function ()
    require('nvim-treesitter.install').prefer_git = true
    require('nvim-treesitter.configs').setup(opts)
    -- Check out these nvim-treesitter modules:
@@ -22,7 +22,7 @@ return {
    {
       'nvim-treesitter/nvim-treesitter',
       event = { 'BufReadPre', 'BufNewFile' },
-      config = config,
+      config = config_treesitter,
       build = ':TSUpdate',
    },
 }

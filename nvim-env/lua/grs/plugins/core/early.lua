@@ -22,13 +22,13 @@ return {
                },
             },
          },
-         overrides = function(colors)  -- add/modify highlights
+         overrides = function (colors)  -- add/modify highlights
             return {
                ColorColumn = { bg = colors.palette.dragonBlack3 },
             }
          end,
       },
-      config = function(_, opts)
+      config = function (_, opts)
          local kanagawa = require 'kanagawa'
          kanagawa.setup(opts)
          kanagawa.compile()

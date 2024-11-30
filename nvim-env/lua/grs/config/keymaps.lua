@@ -2,7 +2,7 @@
 
 local M = {}
 
-local function check(client)
+local check = function (client)
    if client then
       if type(client) == 'number' then
          client = vim.lsp.get_client_by_id(client)
@@ -55,7 +55,7 @@ function M.set_lsp_keymaps(client, bufnr)
       wk.add {
          {
             '<leader>ti',
-            function()
+            function ()
                vim.lsp.inlay_hint.enable(
                   not vim.lsp.inlay_hint.is_enabled { buffer = bufnr },
                   { buffer = bufnr }

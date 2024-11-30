@@ -1,6 +1,6 @@
 --[[ Needed by multiple plugins or important to infrastructure ]]
 
-local config_whichkey = function()
+local config_whichkey = function ()
    local wk = require 'which-key'
    wk.setup {
       plugins = {

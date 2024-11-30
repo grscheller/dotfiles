@@ -1,6 +1,6 @@
 --[[ Git Signs ]]
 
-local on_attach = function(bufnr)
+local on_attach = function (bufnr)
    local gitsigns = require 'gitsigns'
    local wk = require 'which-key'
 
@@ -8,7 +8,7 @@ local on_attach = function(bufnr)
 
    wk.add {
       { ']c',
-         function()
+         function ()
             if vim.wo.diff then
                -- fall back to nvim when in diff mode
                vim.cmd.normal { ']c', bang = true }
@@ -20,7 +20,7 @@ local on_attach = function(bufnr)
          buffer = bufnr,
       },
       { '[c',
-         function()
+         function ()
             if vim.wo.diff then
                -- fall back to nvim when in diff mode
                vim.cmd.normal { '[c', bang = true }
@@ -50,7 +50,7 @@ local on_attach = function(bufnr)
       { '<m-g>u', gitsigns.undo_stage_hunk, desc = 'git undo stage hunk', buffer = bufnr },
       {
          '<m-g>D',
-         function()
+         function ()
             gitsigns.diffthis '@'
          end,
          desc = 'git diff against last commit',
@@ -58,7 +58,7 @@ local on_attach = function(bufnr)
       },
       {
          '<m-g>s',
-         function()
+         function ()
             gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
          end,
          desc = 'git stage hunk',
@@ -67,7 +67,7 @@ local on_attach = function(bufnr)
       },
       {
          '<m-g>r',
-         function()
+         function ()
             gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
          end,
          desc = 'git reset hunk',

@@ -14,7 +14,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local keymaps = require 'grs.config.keymaps'
 
-local config_crates = function()
+local config_crates = function ()
    require('crates').setup {
       null_ls = {
          enabled = false,
@@ -22,7 +22,7 @@ local config_crates = function()
    }
 end
 
-local config_rust_tools = function()
+local config_rust_tools = function ()
    local dap = require 'dap'
    dap.configurations.rust = {
       { type = 'rust', request = 'launch', name = 'rt_lldb' },
@@ -41,7 +41,7 @@ local config_rust_tools = function()
          capabilities = vim.tbl_deep_extend('force',
             vim.lsp.protocol.make_client_capabilities(),
             require('cmp_nvim_lsp').default_capabilities()),
-         on_attach = function(client, bufnr)
+         on_attach = function (client, bufnr)
             if keymaps.set_lsp_keymaps(client, bufnr) then
                keymaps.set_rust_keymaps(bufnr)
                keymaps.set_dap_keymaps(bufnr)
@@ -50,7 +50,7 @@ local config_rust_tools = function()
             -- show diagnostic popup when cursor lingers on line with errors
             autocmd('CursorHold', {
                buffer = bufnr,
-               callback = function()
+               callback = function ()
                   vim.diagnostic.open_float {
                      bufnr = bufnr,
                      scope = 'line',
@@ -87,7 +87,7 @@ return {
          'neovim/nvim-lspconfig',
       },
       ft = { 'rust' },
-      init = function()
+      init = function ()
          autogrp('GrsRustTools', { clear = true })
       end,
       config = config_rust_tools,

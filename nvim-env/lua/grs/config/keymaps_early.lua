@@ -105,7 +105,15 @@ km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
 --[[ Diagnostic keymaps ]]
 
-km('n', '<bslash>[', vim.diagnostic.goto_prev, { desc = 'prev_diagostic' })
-km('n', '<bslash>]', vim.diagnostic.goto_next, { desc = 'next_diagostic' })
+km('n', '<bslash>[',
+   function ()
+      vim.diagnostic.jump { count = -1, float = true }
+   end, { desc = 'prev_diagostic' })
+
+km('n', '<bslash>]',
+   function ()
+      vim.diagnostic.jump { count = 1, float = true }
+   end, { desc = 'prev_diagostic' })
+
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })

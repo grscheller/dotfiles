@@ -22,7 +22,7 @@ local M = {}
 ---Recursively copy a table, make no attempt replicating metatables
 ---@param original table
 ---@return table
-M.deepCopy = function(original)
+M.deepCopy = function (original)
    local copy = {}
    for k, v in pairs(original) do
       if type(v) == 'table' then
@@ -34,7 +34,7 @@ M.deepCopy = function(original)
 end
 
 -- Flatten an <array> of <arrays> (will repeat values)
-M.iFlatten = function(aoa)
+M.iFlatten = function (aoa)
    local flattened = {}
    for _, v in ipairs(aoa) do
       for _, w in ipairs(v) do
@@ -45,7 +45,7 @@ M.iFlatten = function(aoa)
 end
 
 -- Apply a function to each element of an <array>, can be Curried.
-M.iMap = function(f, a)
+M.iMap = function (f, a)
    local function map(vs)
       local ma = {}
       local j = 0
@@ -69,7 +69,7 @@ end
 ---Merge a <array> of <maps> - later tables override earlier ones
 ---@param array_of_maps table
 ---@return table
-M.mergeTables = function(array_of_maps)
+M.mergeTables = function (array_of_maps)
    local mergedTable = {}
    for _, tbl in ipairs(array_of_maps) do
       for k, v in pairs(tbl) do
@@ -80,7 +80,7 @@ M.mergeTables = function(array_of_maps)
 end
 
 -- get <map> keys, return <array>
-M.getKeys = function(t)
+M.getKeys = function (t)
    local filteredKeys = {}
    for k, _ in pairs(t) do
       table.insert(filteredKeys, k)
@@ -89,7 +89,7 @@ M.getKeys = function(t)
 end
 
 -- get <map> values, return <array>
-M.getValues = function(t)
+M.getValues = function (t)
    local filteredValues = {}
    for _, v in pairs(t) do
       table.insert(filteredValues, v)
@@ -98,7 +98,7 @@ M.getValues = function(t)
 end
 
 -- get <table> keys filtered by predicate, return <array>
-M.getFilteredKeys = function(t, p)
+M.getFilteredKeys = function (t, p)
    local filteredKeys = {}
    for k, v in pairs(t) do
       if p(k, v) then
@@ -109,7 +109,7 @@ M.getFilteredKeys = function(t, p)
 end
 
 -- get <table> values filtered by predicate, return <array>
-M.getFilteredValues = function(t, p)
+M.getFilteredValues = function (t, p)
    local filteredValues = {}
    for k, v in pairs(t) do
       if p(k, v) then

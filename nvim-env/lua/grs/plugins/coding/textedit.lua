@@ -25,9 +25,9 @@ return {
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-         version = "*",
-         event = 'VeryLazy',
-         config = function()
+      version = "*",
+      event = 'VeryLazy',
+      config = function ()
          require('nvim-surround').setup {
             keymaps = {
                normal = ' rr',
@@ -48,7 +48,7 @@ return {
          { 's', mode = { 'n', 'x' }, desc = 'leap forward to' },
          { 'S', mode = { 'n', 'x' }, desc = 'leap backward to' },
       },
-      config = function()
+      config = function ()
          local leap = require 'leap'
          leap.opts.case_sensitive = true
          leap.add_default_mappings(true)
