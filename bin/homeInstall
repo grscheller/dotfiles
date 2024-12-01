@@ -40,10 +40,6 @@ bin_scripts='
    viewJarManifest
 '
 
-ssh_files='
-   config
-'
-
 bloop_files='
    bloop.json
 '
@@ -84,10 +80,6 @@ process_files "$HOME" "$bash_files" . 0644 "$envPath"
 # Process ~/bin scripts
 process_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
 chmod 0755 "$HOME/bin"
-
-# Process ssh configs
-process_files "$HOME/.ssh" "$ssh_files" ssh 0600 "$envPath"
-chmod 0700 "$HOME/.ssh"
 
 # Process Bloop configs for Scala
 process_files "$HOME/.bloop" "$bloop_files" bloop 0644 "$envPath"
