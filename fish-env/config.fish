@@ -13,9 +13,7 @@ end
 # Enable vi keybindings
 fish_vi_key_bindings
 
-# Manage SSH key-agents
-#   working perfect on noether2
-#   having to add keys manually on hamilton4
+# Manage SSH key-agents - desktop environment shares one
 function exit_handler --on-event fish_exit
    if status --is-login
        if set -q SSH_AGENT_PID
