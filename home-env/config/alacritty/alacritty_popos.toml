@@ -603,7 +603,7 @@ save_to_clipboard = true
 semantic_escape_chars = ",│`|:\"' ()[]{}<>\t"
 
 [window]
-decorations = "full"
+decorations = "none"
 decorations_theme_variant = "None"
 dynamic_padding = false
 dynamic_title = true
