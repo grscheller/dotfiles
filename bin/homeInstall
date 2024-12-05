@@ -51,8 +51,6 @@ cabal_files='
 dot_config_files='
    alacritty/alacritty_popos.toml
    alacritty/alacritty.toml
-   alacritty/alacritty_popos.yml
-   alacritty/alacritty.yml
    git/config
 '
 
@@ -62,8 +60,8 @@ devel_files='
 
 remove_items="
    "$HOME/.vimrc"
-   "$XDG_CONFIG_HOME/nixpkgs"
-   "$HOME/devel/python_venvs"
+   "$HOME/.config/alacritty/alacritty_popos.yml"
+   "$HOME/.config/alacritty/alacritty.yml"
 "
 
 dirs_to_create="
