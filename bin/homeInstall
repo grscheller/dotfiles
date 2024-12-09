@@ -49,7 +49,6 @@ cabal_files='
 '
 
 dot_config_files='
-   alacritty/alacritty_popos.toml
    alacritty/alacritty.toml
    git/config
 '
@@ -62,6 +61,7 @@ remove_items="
    "$HOME/.vimrc"
    "$HOME/.config/alacritty/alacritty_popos.yml"
    "$HOME/.config/alacritty/alacritty.yml"
+   "$HOME/.config/alacritty/alacritty_popos.toml"
 "
 
 dirs_to_create="
