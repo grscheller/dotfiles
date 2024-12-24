@@ -12,5 +12,5 @@ complete -c ve \
   -n 'not __fish_seen_subcommand_from py4ai' \
   -a 'py4ai'
 complete -c ve \
-  -n 'not __fish_seen_subcommand_from py4ai_old' \
-  -a 'py4ai_old'
+  -n 'not __fish_seen_subcommand_from py13_dev' \
+  -a 'py13_dev'

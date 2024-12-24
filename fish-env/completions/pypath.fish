@@ -15,11 +15,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from datastructures' \
   -a 'datastructures'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from untyped' \
+  -n 'not __fish_seen_subcommand_from experimental' \
   -a 'experimental'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp' \
   -a 'fp'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from untyped' \
-  -a 'untyped'
+
