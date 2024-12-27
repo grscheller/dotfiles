@@ -1,10 +1,16 @@
-function archJDK --description 'Setup JDK on Arch Linux'
+function jdk_version --description 'Setup JDK on Pop!OS Linux'
 
     # Parse user input
     set -f jdkVersion (string trim $argv[1])
 
     # Make sure at least one Java JDK is installed in default location
-    set -f jvmDirs /usr/lib/jvm/java-*-openjdk
+    set -f jdir
+    set -f jvmDirs
+    set -f jvmDirsAndLinks /usr/lib/jvm/java-*-openjdk*
+    for jdir in $jvmDirsAndLinks 
+       test -L $jdir; and continue
+       test -d $jdir; and set -a jvmDirs $jdir
+    end
     if test -z "$jvmDirs"
         printf '\nNo JDK environments installed\n'
         return 1
@@ -27,12 +33,12 @@ function archJDK --description 'Setup JDK on Arch Linux'
         return 1
     end
 
-    set -f javaHome /usr/lib/jvm/java-$jdkVersion[1]-openjdk
+    set -f javaHome /usr/lib/jvm/java-$jdkVersion[1]-openjdk*
 
     # Bail if Java version is not installed
     if not test -d "$javaHome"
         printf '\nNo JDK found for Java version %s in the\n' $jdkVersion >&2
-        printf 'standard location on Arch Linux: /usr/lib/jvm\n' >&2
+        printf 'standard location on most Linux distros: /usr/lib/jvm\n' >&2
         return 1
     end
 
@@ -43,7 +49,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
     set -f idx 0
     set -f ii
     for ii in (seq 1 (count $PATH))
-        if string match -q '/usr/lib/jvm/java-*-openjdk/bin' $PATH[$ii]
+        if string match -q '/usr/lib/jvm/java-*-openjdk*/bin' $PATH[$ii]
             set idx $ii
             break
         end
@@ -57,7 +63,7 @@ function archJDK --description 'Setup JDK on Arch Linux'
     end
 
     for ii in (seq (count $PATH) -1 (math $idx + 1))
-        if string match -q '/usr/lib/jvm/java-*-openjdk/bin' $PATH[$ii]
+        if string match -q '/usr/lib/jvm/java-*-openjdk*/bin' $PATH[$ii]
             set -e PATH[$ii]
         end
     end

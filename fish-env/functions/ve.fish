@@ -9,7 +9,7 @@
 # The global environment variable $VE_VENV_DIR controls which group of venv's
 # I am managing together. All the venv's "should" be installed in the directory
 # it points to, Other non-managed venv can be located there. Also, a ve.conf
-# configuration file must be located there too, stored there too.
+# configuration file must be stored there too.
 #
 # I maintain one version of ve.conf in the home-env section of my dotfiles
 # GIT repo and $VE_VENV_DIR is set from my fish configs.

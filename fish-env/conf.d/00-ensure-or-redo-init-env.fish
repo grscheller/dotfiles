@@ -65,16 +65,20 @@ and begin
 
    # Rust toolchain
    digpath -x -q rustc
-   and set PATH ~/.cargo/bin $PATH
+   and set -p PATH ~/.cargo/bin
 
    # Haskell locations used by Stack and Cabal
    set PATH ~/.local/bin ~/.cabal/bin $PATH
+
+   # Configure JDK & Scala3 on Pop!OS
+   set -a PATH ~/.local/share/coursier/bin
+   jdk_version 21
 
    # Python configuration
    set -gx PIP_REQUIRE_VIRTUALENV true
    set -gx VE_VENV_DIR ~/devel/venvs
    set -gx PYENV_ROOT ~/.local/share/pyenv
-   set PATH $PATH $PYENV_ROOT/bin
+   set -a PATH $PYENV_ROOT/bin
 
    # Add ~/bin at end of PATH
    set PATH $PATH ~/bin
@@ -82,11 +86,7 @@ and begin
    # Cleanup PATH: remove duplicate & nonexistent entries, resolve symlinks
    set PATH (pathtrim)
 
-   # Configure JDK on arch
-   if string match -qr 'arch' (uname -r)
-      archJDK 17
-   end
-
    # Configure initial ve venv to launch
    set -gx VE_VENV
+   ve grs
 end

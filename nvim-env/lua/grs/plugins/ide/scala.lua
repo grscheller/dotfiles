@@ -30,8 +30,7 @@ local config_metals = function ()
          'com.github.swagger.akka.javadsl',
       },
    }
-   -- TODO: find something to hook this, not necessarily the status bar
-   metals_config.init_options.statusBarProvider = 'on'
+   metals_config.init_options.statusBarProvider = 'off'
 
    local dap = require 'dap'
    dap.configurations.scala = {

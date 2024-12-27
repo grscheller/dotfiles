@@ -27,7 +27,6 @@ config_files='
    conf.d/00-ensure-or-redo-init-env.fish
    conf.d/abbrs.fish
    conf.d/colors.fish
-   functions/archJDK.fish
    functions/ax.fish
    functions/cu.fish
    functions/digpath.fish
@@ -44,6 +43,7 @@ config_files='
    functions/fish_mode_prompt.fish
    functions/fish_prompt.fish
    functions/fish_title.fish
+   functions/jdk_version.fish
    functions/la.fish
    functions/ldir.fish
    functions/ldot.fish
@@ -82,7 +82,9 @@ config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/notilda.fish
+   $XDG_CONFIG_HOME/fish/functions/archJDK.fish
+   $XDG_CONFIG_HOME/fish/functions/jdkArch.fish
+   $XDG_CONFIG_HOME/fish/functions/jdkPopOS.fish
 "
 
 dirs_to_create=""
