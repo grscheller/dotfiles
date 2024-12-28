@@ -1,7 +1,8 @@
 function jdk_version --description 'Setup JDK on Pop!OS Linux'
 
     # Parse user input
-    set -f jdkVersion (string trim $argv[1])
+    set -f jdkVersion[1] (string split -m1 ' ' (string trim $argv[1]))
+    set jdkVersion $jdkVersion[1]
 
     # Make sure at least one Java JDK is installed in default location
     set -f jdir
@@ -44,6 +45,7 @@ function jdk_version --description 'Setup JDK on Pop!OS Linux'
 
     # Set JAVA_HOME
     set -gx JAVA_HOME $javaHome
+    set -gx JDK_VERSION $jdkVersion
 
     # Fix PATH
     set -f idx 0

@@ -1,6 +1,5 @@
 function pypath --description 'manage $PYTHONPATH env variable'
-   set -e PYTHONPATH
-   set -l PythonPath
+   set -f PythonPath
    for arg in $argv
       switch $arg
          case 'ai'
@@ -22,8 +21,9 @@ function pypath --description 'manage $PYTHONPATH env variable'
    end
    if test (count $PythonPath) -gt 0
       set -gx PYTHONPATH $PythonPath
-      printf 'Set $PYTHONPATH to %s\n' (string join : $PYTHONPATH)
+      printf '$PYTHONPATH set to %s\n' (string join : $PYTHONPATH)
    else
-      printf 'Removed $PYTHONPATH\n'
+      set -e PYTHONPATH
+      printf '$PYTHONPATH removed\n'
    end
 end

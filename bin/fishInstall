@@ -57,6 +57,7 @@ config_files='
    functions/pathtrim.fish
    functions/pypath.fish
    functions/rc.fish
+   functions/tm.fish
    functions/ve.fish
    functions/Wget.fish
    functions/WgetM.fish

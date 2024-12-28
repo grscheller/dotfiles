@@ -54,3 +54,19 @@ end
 if digpath -q -x pyenv
    pyenv init - | source
 end
+
+# Set ve managed Python virtual environment
+if set -q VE_VENV
+   ve (basename $VE_VENV)
+else
+   set -e PYTHONPATH
+   ve grs
+end
+
+# Set jdk_version managed Java environment
+if set -q JDK_VERSION
+   jdk_version $JDK_VERSION
+else
+   jdk_version 21
+end
+
