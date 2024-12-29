@@ -243,6 +243,8 @@ toolchains
 touchpad
 uncomment
 uncommented
+unconfigure
+unconfigured
 undefine
 undefines
 unflatten
@@ -280,9 +282,11 @@ Alacritty
 alacritty
 ArXiv
 Baeldung
+Bjarnason
 Bourne
 Chaplyaka
 ChatGPT
+Chiusana
 Chuang
 Cygwin
 DECwriter
@@ -348,14 +352,6 @@ wikipedia
 Wiktionary
 wxPython
 XFinity
-xxxx
-xxxxx
-xxxxxx
-xxxxxxx
-XXXX
-XXXXX
-XXXXXX
-XXXXXXX
 Yandex
 Yokota
 # Work related
@@ -942,6 +938,14 @@ XPG3
 xfce
 Xsession
 XSI
+xxxx
+xxxxx
+xxxxxx
+xxxxxxx
+XXXX
+XXXXX
+XXXXXX
+XXXXXXX
 yaml
 yml
 zig
@@ -1095,8 +1099,9 @@ host4
 host5
 hymie
 Hymie
-isSqr
 iSqrt
+isSqr
+istate
 itargs
 jacobi
 junk1
@@ -1136,6 +1141,7 @@ nohole
 noValue
 NoValue
 onepiece
+parray
 pathtrim
 py4ai
 pypath
@@ -1255,6 +1261,7 @@ resulttype
 RunTimeError
 Setuptools
 Stackage
+staticmethod
 SyntaxError
 SystemError
 tvars
