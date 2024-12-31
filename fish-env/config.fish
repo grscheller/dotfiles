@@ -28,7 +28,7 @@ if ! set -q SSH_AGENT_PID
    if set -q XDG_CURRENT_DESKTOP
       set desktop_flag 1
       if test -f /tmp/grs_ssh_desktop_env
-         printf 'Last Desktop SSH '
+         printf 'Reusing desktop SSH '
          source /tmp/grs_ssh_desktop_env
          if ps -p $SSH_AGENT_PID > /dev/null
             set ssh_flag 0
