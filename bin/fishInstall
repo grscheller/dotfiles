@@ -32,7 +32,6 @@ config_files='
    functions/digpath.fish
    functions/disable_touch_pad.fish
    functions/enable_touch_pad.fish
-   functions/ev.fish
    functions/fdgit.fish
    functions/fdot.fish
    functions/ff.fish
@@ -43,6 +42,7 @@ config_files='
    functions/fish_mode_prompt.fish
    functions/fish_prompt.fish
    functions/fish_title.fish
+   functions/iv.fish
    functions/jdk_version.fish
    functions/la.fish
    functions/ldir.fish
@@ -55,6 +55,7 @@ config_files='
    functions/notilde.fish
    functions/nsort.fish
    functions/pathtrim.fish
+   functions/pv.fish
    functions/pypath.fish
    functions/rc.fish
    functions/tm.fish
@@ -86,6 +87,7 @@ remove_items="
    $XDG_CONFIG_HOME/fish/functions/archJDK.fish
    $XDG_CONFIG_HOME/fish/functions/jdkArch.fish
    $XDG_CONFIG_HOME/fish/functions/jdkPopOS.fish
+   $XDG_CONFIG_HOME/fish/functions/ev.fish
 "
 
 dirs_to_create=""
