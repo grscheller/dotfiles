@@ -2,18 +2,22 @@ function pypath --description 'manage $PYTHONPATH env variable'
    set -f PythonPath
    for arg in $argv
       switch $arg
-         case 'ai'
-            set --append PythonPath ~/devel/courses/udacity/ai/courses-distributions/src
          case 'boringmath'
             set --append PythonPath ~/devel/pypi/boring-math/src
+         case 'integer'
+            set --append PythonPath ~/devel/pypi/bm/bm-integer/src
+         case 'probability_distributions'
+            set --append PythonPath ~/devel/pypi/bm/bm-probability-distributions/src
+         case 'pythagorean-triples'
+            set --append PythonPath ~/devel/pypi/bm/bm-pythagorean-triples/src
+         case 'recursive-functions'
+            set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
          case 'circulararray'
-            set --append PythonPath ~/devel/pypi/circular-array/src
+            set --append PythonPath ~/devel/pypi/dt/circular-array/src
          case 'datastructures'
-            set --append PythonPath ~/devel/pypi/datastructures/src
-         case 'experimental'
-            set --append PythonPath ~/devel/pypi/experimental/src
+            set --append PythonPath ~/devel/pypi/dt/datastructures/src
          case 'fp'
-            set --append PythonPath ~/devel/pypi/fp/src
+            set --append PythonPath ~/devel/pypi/dt/fp/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
