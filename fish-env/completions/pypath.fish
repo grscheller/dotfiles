@@ -6,8 +6,8 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from boringmath' \
   -a 'boringmath'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from integer' \
-  -a 'integer'
+  -n 'not __fish_seen_subcommand_from integer-math' \
+  -a 'integer-math'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from probability-distributions' \
   -a 'probability-distributions'

@@ -4,8 +4,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
       switch $arg
          case 'boringmath'
             set --append PythonPath ~/devel/pypi/boring-math/src
-         case 'integer'
-            set --append PythonPath ~/devel/pypi/bm/bm-integer/src
+         case 'integer-math'
+            set --append PythonPath ~/devel/pypi/bm/bm-integer-math/src
          case 'probability_distributions'
             set --append PythonPath ~/devel/pypi/bm/bm-probability-distributions/src
          case 'pythagorean-triples'
@@ -13,11 +13,11 @@ function pypath --description 'manage $PYTHONPATH env variable'
          case 'recursive-functions'
             set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
          case 'circulararray'
-            set --append PythonPath ~/devel/pypi/dt/circular-array/src
+            set --append PythonPath ~/devel/pypi/dtools/dtools-circular-array/src
          case 'datastructures'
-            set --append PythonPath ~/devel/pypi/dt/datastructures/src
+            set --append PythonPath ~/devel/pypi/dtools/dtools-datastructures/src
          case 'fp'
-            set --append PythonPath ~/devel/pypi/dt/fp/src
+            set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
