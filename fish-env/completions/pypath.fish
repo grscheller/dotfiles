@@ -6,24 +6,24 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from boringmath' \
   -a 'boringmath'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from integer-math' \
-  -a 'integer-math'
+  -n 'not __fish_seen_subcommand_from bn-integer-math' \
+  -a 'bm-integer-math'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from probability-distributions' \
-  -a 'probability-distributions'
+  -n 'not __fish_seen_subcommand_from bm-probability-distributions' \
+  -a 'bm-probability-distributions'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from pythagorean-triples' \
-  -a 'pythagorean-triples'
+  -n 'not __fish_seen_subcommand_from bm-pythagorean-triples' \
+  -a 'bm-pythagorean-triples'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from recursive-functions' \
-  -a 'recursive-functions'
+  -n 'not __fish_seen_subcommand_from bm-recursive-functions' \
+  -a 'bm-recursive-functions'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from circulararray' \
-  -a 'circulararray'
+  -a 'dtools-circulararray'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from datastructures' \
-  -a 'datastructures'
+  -a 'ddtools-atastructures'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp' \
-  -a 'fp'
+  -a 'dtools-fp'
 
