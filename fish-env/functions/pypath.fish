@@ -6,7 +6,7 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/boring-math/src
          case 'bm-integer-math'
             set --append PythonPath ~/devel/pypi/bm/bm-integer-math/src
-         case 'bm-probability_distributions'
+         case 'bm-probability-distributions'
             set --append PythonPath ~/devel/pypi/bm/bm-probability-distributions/src
          case 'bm-pythagorean-triples'
             set --append PythonPath ~/devel/pypi/bm/bm-pythagorean-triples/src
