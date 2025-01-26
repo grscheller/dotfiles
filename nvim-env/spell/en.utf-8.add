@@ -1016,6 +1016,7 @@ arg4
 arg5
 argn
 args
+bm
 boolean
 CHANGELOG
 CircularArray
@@ -1039,6 +1040,7 @@ Dogbert
 DoubleQueue
 dropWhile
 dss
+dtools
 euler
 entup
 excs
