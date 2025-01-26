@@ -6,7 +6,7 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from boringmath' \
   -a 'boringmath'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from bn-integer-math' \
+  -n 'not __fish_seen_subcommand_from bm-integer-math' \
   -a 'bm-integer-math'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-probability-distributions' \
@@ -18,12 +18,12 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-recursive-functions' \
   -a 'bm-recursive-functions'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from circulararray' \
+  -n 'not __fish_seen_subcommand_from dtools-circulararray' \
   -a 'dtools-circulararray'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from datastructures' \
-  -a 'ddtools-atastructures'
+  -n 'not __fish_seen_subcommand_from dtools-datastructures' \
+  -a 'dtools-datastructures'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from fp' \
+  -n 'not __fish_seen_subcommand_from dtools-fp' \
   -a 'dtools-fp'
 
