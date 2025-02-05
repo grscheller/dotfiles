@@ -59,6 +59,10 @@ and begin
        # Set up paths to dotfiles related repos
        set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
+       # zig toolchain
+       test -L ~/devel/zig_nightly/current
+       and set -p PATH ~/devel/zig_nightly/current
+
        # Rust toolchain
        digpath -x -q rustc
        and set -p PATH ~/.cargo/bin
