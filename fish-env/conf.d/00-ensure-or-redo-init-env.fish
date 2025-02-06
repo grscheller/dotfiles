@@ -59,7 +59,7 @@ and begin
        # Set up paths to dotfiles related repos
        set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
-       # zig toolchain
+       # Zig toolchain
        test -L ~/devel/zig_nightly/current
        and set -p PATH ~/devel/zig_nightly/current
 
