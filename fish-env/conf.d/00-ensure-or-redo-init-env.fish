@@ -70,6 +70,10 @@ and begin
        # Haskell locations used by Stack and Cabal
        set PATH ~/.local/bin ~/.cabal/bin $PATH
 
+       # Node.js toolchain
+       test -d ~/devel/node_lts/node-v22.14.0-linux-x64/bin
+       and set -p PATH ~/devel/node_lts/node-v22.14.0-linux-x64/bin
+
        # Configure JDK & Scala3 on Pop!OS
        set -a PATH ~/.local/share/coursier/bin
        jdk_version 21
