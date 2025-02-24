@@ -32,7 +32,6 @@ delitem
 deprecations
 devs
 discoverable
-falsy
 flatmap
 fmt
 formatter
@@ -54,7 +53,6 @@ interoperability
 jitter
 kbs
 lang
-le
 len
 libc
 libexec
@@ -64,6 +62,7 @@ licensee
 licensees
 licensor
 licensors
+lifecycle
 linter
 linters
 lingua franca
@@ -76,7 +75,6 @@ lseek
 lstat
 lookups
 ls
-lt
 LTS
 LVHN
 mailx
@@ -127,7 +125,6 @@ msg3
 MSYS2
 mul
 mult
-namespace
 nano
 natively
 NDELAY
@@ -145,6 +142,7 @@ noninfringement
 norg
 normed
 npm
+npx
 NTFS
 num
 Numlock
@@ -170,6 +168,7 @@ pid
 pipenv
 pipfile
 pipx
+pkgs
 PKGBUILD
 pmt
 png
@@ -186,6 +185,7 @@ preinstall
 prev
 proc
 prog
+programmatically
 progs
 psub
 pullable
@@ -195,6 +195,7 @@ reddit
 reimage
 reimaged
 reimaging
+reimplementation
 relicense
 relicensing
 REPL
@@ -209,11 +210,6 @@ resize
 resized
 resizes
 resizing
-sbt
-Scala2
-Scala3
-scalac
-scp
 Scrollock
 scrollock
 setitem
@@ -231,9 +227,6 @@ ssize
 stateful
 storability
 storable
-subtype
-subtyped
-subtyping
 TBD
 terminfo
 thumbdrive
@@ -261,6 +254,7 @@ untracked
 untype
 untyped
 Untyped
+unrounded
 upgradability
 versioning
 webapp
@@ -322,15 +316,15 @@ Lutris
 Naftalin
 NetFlix
 Olivine
+Pavin
 Pearce
 Poettering
 PubChem
 PyPA
 ROBLOX
 Rossum
+Runar
 Saecki
-scala
-Scala
 Scheller
 scheller
 SDKMAN!
@@ -583,6 +577,7 @@ systemctl
 Systemd
 systemd
 temperatureC
+timedatectl
 WantedBy
 # computer science names
 .
@@ -650,6 +645,8 @@ cnt
 codepoint
 colorscheme
 COLORTERM
+combinator
+combinators
 concat
 coroutine
 cpp
@@ -665,7 +662,6 @@ dap
 dap
 decodings
 detupleizing
-df
 dhcpcd
 diagraph
 diagraphs
@@ -700,6 +696,7 @@ executables
 extensibility
 extern
 facc
+falsy
 fcntl
 fd
 fg
@@ -747,6 +744,7 @@ glibc
 GLIBC
 globals
 globbing
+gpg
 GPL
 GPLv2
 GPLv3
@@ -792,22 +790,30 @@ keymapping
 keymappings
 keymaps
 kickstart
+le
 lsp
 lspconfig
 LSP's
+lt
 lua
 lualine
 lua's
 luasnip
 luau
 markdownlint
+namespace
+namespaces
 mb
 mv
+ne
 Nullary
 nullary
 os
+polymorphism
 PowerShell
 pred
+prerelease
+pgp
 printf
 px
 p
@@ -837,9 +843,18 @@ rustc
 rustup
 rw
 rwx
+sbt
+scala
+Scala
+Scala2
+Scala3
+scalac
+scalaz
+scp
 scrolloff
 se
 sed
+semver
 sha
 sig
 SMP
@@ -860,6 +875,11 @@ su
 subclassed
 subclasses
 subclassing
+subcommand
+subcommands
+subtype
+subtyped
+subtyping
 subdirectories
 subdirectory
 subexpression
@@ -889,15 +909,19 @@ sysname
 TASTy
 Tcl
 tcsh
+threadpool
+threadpools
+threadsafe
+threadsafety
 TK
 tmux
 toml
-threadsafe
-threadsafety
-timedatectl
+transpile
+transpiled
 treesitter
 TreeSitter
 truecolor
+truthy
 TSInstallFromGrammer
 TSUpdate
 tsx
@@ -910,6 +934,8 @@ typeclasses
 typescripty
 ui
 UI
+uncurry
+uncurrying
 unicode
 unistd
 unlicense
@@ -918,6 +944,7 @@ usr
 utf
 urandom
 userspace
+variadic
 vDSO
 ve
 venv
@@ -1035,6 +1062,8 @@ dec2
 dec3
 dec4
 dec5
+def
+defs
 detup
 dev
 devel
@@ -1043,8 +1072,9 @@ DoubleQueue
 dropWhile
 dss
 dtools
-euler
 entup
+errorhandling
+euler
 excs
 f1
 f2
@@ -1076,6 +1106,7 @@ foldRsc
 foo
 foobar
 foofoo
+fpinscala
 ftuple
 FTuple
 FTuples
@@ -1147,6 +1178,7 @@ noether
 nohole
 noValue
 NoValue
+nvInstall
 onepiece
 parray
 pathtrim
@@ -1155,6 +1187,7 @@ pypath
 pypi
 pythag
 pythag3
+pythagorean-triples
 QueueBase
 QueueBaseMB
 quux
@@ -1162,6 +1195,8 @@ qux
 ratton
 Ratton
 ret
+rng
+RNG
 roboto
 s1
 s2
@@ -1190,6 +1225,8 @@ T3
 T4
 T5
 ud
+unsize
+unsized
 util
 utils
 value1
@@ -1206,7 +1243,6 @@ argtype
 argtypes
 bool
 Callable's
-def
 dict
 dicts
 enum
