@@ -117,3 +117,4 @@ km('n', '<bslash>]',
 
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })
+
