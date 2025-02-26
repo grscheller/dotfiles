@@ -30,6 +30,7 @@ local config_lspconfig = function ()
          exclude = {
             'hls',
             'pylsp',
+            'ruff',
          }
       },
       handlers = {
@@ -66,9 +67,8 @@ local config_lspconfig = function ()
 
    local lsp = require('lspconfig')
 
-   -- Configure Python Language Server
-   --   - used for pylsp_mypy plugin for mypy
-   --   - installed by pip, not mason
+   -- Configure Python Language Servers - installed by pip, not mason
+
    lsp.pylsp.setup {
       capabilities = capabilities,
       filetypes = { 'python' },
@@ -82,7 +82,7 @@ local config_lspconfig = function ()
                   enabled = true,
                },
                -- linting and formatting
-               ruff = { enabled = true },
+               ruff = { enabled = false },
                -- refactoring
                rope = { enable = true },
                pylsp_inlay_hints = { enable = true },
@@ -91,7 +91,14 @@ local config_lspconfig = function ()
       },
    }
 
+   lsp.ruff.setup {
+      capabilities = capabilities,
+      filetypes = { 'python' },
+      on_attach = km.set_lsp_keymaps,
+   }
+
    -- Configure Haskell Language Server
+
    lsp.hls.setup {
       capabilities = capabilities,
       filetypes = {
