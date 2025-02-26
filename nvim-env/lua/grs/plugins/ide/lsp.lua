@@ -66,7 +66,9 @@ local config_lspconfig = function ()
 
    local lsp = require('lspconfig')
 
-   -- Configure Python Language Server - installed by pip, not mason
+   -- Configure Python Language Server
+   --   - used for pylsp_mypy plugin for mypy
+   --   - installed by pip, not mason
    lsp.pylsp.setup {
       capabilities = capabilities,
       filetypes = { 'python' },
@@ -75,19 +77,12 @@ local config_lspconfig = function ()
       settings = {
          pylsp = {
             plugins = {
-               -- formatter options
-               black = { enabled = true },
-               autopep8 = { enabled = false },
-               yapf = { enabled = false },
-               -- linter options
-               pylint = { enabled = false },
-               ruff = { enabled = true },
-               pyflakes = { enabled = false },
-               pycodestyle = { enabled = false },
                -- type checker
                pylsp_mypy = {
                   enabled = true,
                },
+               -- linting and formatting
+               ruff = { enabled = true },
                -- refactoring
                rope = { enable = true },
                pylsp_inlay_hints = { enable = true },
