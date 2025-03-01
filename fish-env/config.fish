@@ -60,7 +60,7 @@ if set -q VE_VENV
    ve (basename $VE_VENV)
 else
    set -e PYTHONPATH
-   ve grs
+   ve dt
 end
 
 # Set jdk_version managed Java environment
