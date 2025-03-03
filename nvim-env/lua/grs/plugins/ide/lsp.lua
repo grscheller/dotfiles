@@ -2,7 +2,7 @@
 
 local km = require('grs.config.keymaps')
 
-local config_lspconfig = function ()
+local config_lspconfig = function()
    require('mason').setup {
       ui = {
          icons = {
@@ -28,14 +28,14 @@ local config_lspconfig = function ()
       },
       automatic_installation = {
          exclude = {
-            'hls',
-            'pylsp',
-            'ruff',
+            'hls',     -- too closely ABI coupled to ghc
+            'pylsp',   -- done in Python venv
+            'ruff',    -- done in Python venv
          }
       },
       handlers = {
          -- default handler
-         function (server_name) -- default handler (optional)
+         function(server_name) -- default handler
             require('lspconfig')[server_name].setup {
                capabilities = capabilities,
                on_attach = km.set_lsp_keymaps,
@@ -43,7 +43,7 @@ local config_lspconfig = function ()
          end,
 
          -- Lua language server
-         ['lua_ls'] = function ()
+         ['lua_ls'] = function()
             require('lspconfig').lua_ls.setup {
                capabilities = capabilities,
                filetypes = { 'lua', 'luau' },
@@ -65,7 +65,28 @@ local config_lspconfig = function ()
       },
    }
 
+   --[nvim-lspconfig configuration of plugins not installed with mason]
+
    local lsp = require('lspconfig')
+
+   -- Haskell language server
+
+   lsp.hls.setup {
+      capabilities = capabilities,
+      filetypes = {
+         'haskell',
+         'lhaskell',
+         'cabal',
+      },
+      on_attach = function (client, bufnr)
+         if km.set_lsp_keymaps(client, bufnr) then
+            km.set_hls_keymaps(bufnr)
+         end
+      end,
+      settings = {
+         hls = {},
+      },
+   }
 
    -- Configure Python Language Servers - installed by pip, not mason
 
@@ -97,31 +118,14 @@ local config_lspconfig = function ()
       on_attach = km.set_lsp_keymaps,
    }
 
-   -- Configure Haskell Language Server
-
-   lsp.hls.setup {
-      capabilities = capabilities,
-      filetypes = {
-         'haskell',
-         'lhaskell',
-         'cabal',
-      },
-      on_attach = function (client, bufnr)
-         if km.set_lsp_keymaps(client, bufnr) then
-            km.set_hls_keymaps(bufnr)
-         end
-      end,
-      settings = {
-         hls = {},
-      },
-   }
+   -- virtual text gets in the way
 
    vim.diagnostic.config {
       virtual_text = false,
       signs = true,
       underline = true,
+      severity_sort = true,
    }
-
 end
 
 return {
@@ -134,7 +138,8 @@ return {
    },
 
    {
-      -- LSP Configuration
+      -- LSP Configuration manually and with nvim-lspconfig
+      -- Auto install selected tooling with mason.
       'neovim/nvim-lspconfig',
       event = { 'BufReadPre', 'BufNewFile' },
       cmd = 'Mason',
@@ -143,18 +148,39 @@ return {
          'williamboman/mason.nvim',
          'williamboman/mason-lspconfig.nvim',
          {
-           "folke/lazydev.nvim",
-           ft = "lua", -- only load on lua files
-           opts = {
-             library = {
-               "lazy.nvim",
-               { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-               "LazyVim",
-             },
-           },
+            "folke/lazydev.nvim",
+            ft = "lua", -- only load on lua files
+            opts = {
+               library = {
+                  "lazy.nvim",
+                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                  "LazyVim",
+               },
+            },
          },
       },
       config = config_lspconfig,
    },
+
+   {
+      -- Plugin provides an LSP wrapper layer for tsserver.
+      -- Note: tsserver is NOT typescript-language-server (ts-ls) formally also called tsserver
+      -- Note: tsserver, and typescript, must be install manually via npm
+      --       $ npm install -g typescript-language-server typescript
+      'pmizio/typescript-tools.nvim',
+      dependencies = {
+         'nvim-lua/plenary.nvim',
+         'neovim/nvim-lspconfig',
+      },
+      ft = {
+         'javascript',
+         'javascriptreact',
+         'javascript.jsx',
+         'typescript',
+         'typescriptreact',
+         'typescript.tsx',
+      },
+      opts = {},
+   }
 
 }
