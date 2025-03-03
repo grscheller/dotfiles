@@ -25,6 +25,7 @@ local config_lspconfig = function()
          'lua_ls',
          'rust_analyzer',
          'taplo',
+         'zls',
       },
       automatic_installation = {
          exclude = {
