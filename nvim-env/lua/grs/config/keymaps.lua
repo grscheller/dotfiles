@@ -49,7 +49,7 @@ function M.set_lsp_keymaps(client, bufnr)
    }
 
    -- Configure inlay hints if LSP supports it
-   if client.supports_method('textDocument/inlayHint', { buffer = bufnr }) then
+   if client:supports_method('textDocument/inlayHint', bufnr) then
       vim.lsp.inlay_hint.enable(false, { buffer = bufnr })
 
       wk.add {
@@ -63,10 +63,10 @@ function M.set_lsp_keymaps(client, bufnr)
 
                if vim.lsp.inlay_hint.is_enabled { buffer = bufnr } then
                   local msg = 'LSP: inlay hints were enabled'
-                  vim.notify(msg, vim.log.levels.info)
+                  vim.notify(msg, vim.log.levels.INFO)
                else
                   local msg = 'LSP: inlay hints were disabled'
-                  vim.notify(msg, vim.log.levels.info)
+                  vim.notify(msg, vim.log.levels.INFO)
                end
             end,
             desc = 'toggle inlay hints',
