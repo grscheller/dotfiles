@@ -28,16 +28,7 @@ return {
       version = "*",
       event = 'VeryLazy',
       config = function ()
-         require('nvim-surround').setup {
-            keymaps = {
-               normal = ' rr',
-               normal_line = ' rl',
-               visual = ' rr',
-               visual_line = ' rl',
-               delete = 'dr',
-               change = 'cr',
-            }
-         }
+         require('nvim-surround').setup {}
       end,
    },
 
