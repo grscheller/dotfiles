@@ -92,7 +92,6 @@ if ok then
 else
    local fmt = '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
    print(string.format(fmt, lazy))
-   vim.cmd [[colorscheme lunaperche]]
 end
 
 --[[ Load auto-commands ]]
