@@ -15,7 +15,7 @@ return {
       },
    },
 
-   -- comment out or restore lines and blocks of code
+   -- Comment out or restore lines and blocks of code
    {
       'numToStr/Comment.nvim',
       event = 'VeryLazy',
@@ -25,10 +25,24 @@ return {
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      version = "*",
+      version = '*',
       event = 'VeryLazy',
-      config = function ()
-         require('nvim-surround').setup {}
+      config = function()
+         require('nvim-surround').setup {
+            keymaps = {
+               normal = 'yr',
+               visual = 'R',
+               visual_line = 'gR',
+               delete = 'dr',
+               change = 'cr',
+               change_line = 'cR',
+               insert = false,
+               insert_line = false,
+               normal_cur = false,
+               normal_line = false,
+               normal_cur_line = false,
+            },
+         }
       end,
    },
 
@@ -39,7 +53,7 @@ return {
          { 's', mode = { 'n', 'x' }, desc = 'leap forward to' },
          { 'S', mode = { 'n', 'x' }, desc = 'leap backward to' },
       },
-      config = function ()
+      config = function()
          local leap = require 'leap'
          leap.opts.case_sensitive = true
          leap.add_default_mappings(true)
