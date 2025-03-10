@@ -30,8 +30,8 @@ return {
       config = function()
          require('nvim-surround').setup {
             keymaps = {
-               insert          = '<C-g>z',
-               insert_line     = '<C-g>Z',
+               insert          = '<c-g>z',
+               insert_line     = '<c-g>Z',
                normal          = 'gz',
                normal_cur      = 'gZ',
                normal_line     = 'gzz',
