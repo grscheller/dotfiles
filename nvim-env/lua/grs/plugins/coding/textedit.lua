@@ -17,7 +17,7 @@ return {
 
    -- Comment out or restore lines and blocks of code
    {
-      'numToStr/Comment.nvim',
+     'numToStr/Comment.nvim',
       event = 'VeryLazy',
       config = true,
    },
@@ -30,17 +30,17 @@ return {
       config = function()
          require('nvim-surround').setup {
             keymaps = {
-               normal = 'yr',
-               visual = 'R',
-               visual_line = 'gR',
-               delete = 'dr',
-               change = 'cr',
-               change_line = 'cR',
-               insert = false,
-               insert_line = false,
-               normal_cur = false,
-               normal_line = false,
-               normal_cur_line = false,
+               insert          = '<C-g>z',
+               insert_line     = '<C-g>Z',
+               normal          = 'gz',
+               normal_cur      = 'gZ',
+               normal_line     = 'gzz',
+               normal_cur_line = 'gZZ',
+               visual          = 'gz',
+               visual_line     = 'gZ',
+               delete          = 'gzd',
+               change          = 'gzr',
+               change_line     = 'gzR',
             },
          }
       end,
@@ -50,8 +50,10 @@ return {
    {
       'ggandor/leap.nvim',
       keys = {
-         { 's', mode = { 'n', 'x' }, desc = 'leap forward to' },
-         { 'S', mode = { 'n', 'x' }, desc = 'leap backward to' },
+         { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
+         { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
+         { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
+         { 'gS', mode = { 'n', 'x', 'o' }, desc = 'leap' },
       },
       config = function()
          local leap = require 'leap'
