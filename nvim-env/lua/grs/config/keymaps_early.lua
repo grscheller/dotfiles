@@ -37,11 +37,6 @@ km('n', '<c-right>', 'z4l', { desc = 'move view right 4 columns' })
 km('n', '<c-up>', '3<c-y>', { desc = 'move up 3 lines' })
 km('n', '<c-down>', '3<c-e>', { desc = 'move view down 3 lines' })
 
--- Managing tabpages - use gt & gT to move between tabpages
-km('n', '<m-t>', '<c-w>T', { desc = 'breakout window to new tab' })
-km('n', '<m-y>', '<cmd>tabnew<cr>', { desc = 'create new tab' })
-km('n', '<m-u>', '<cmd>tabclose<cr>', { desc = 'close current tab' })
-
 -- Auto-scroll window with focus
 km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
 km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })

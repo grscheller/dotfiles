@@ -28,6 +28,8 @@ configs
 copyrightable
 cyberseurity
 de facto
+deconflate
+deconflated
 delitem
 deprecations
 devs
@@ -718,7 +720,6 @@ fsmonitor
 ftplugin
 ftplugins
 ftruncate
-functools
 fzf
 gbs
 gcc
@@ -947,8 +948,6 @@ userspace
 variadic
 vDSO
 ve
-venv
-venv's
 ver
 vers
 VIMRUNTIME
@@ -981,6 +980,7 @@ XXXXXXX
 yaml
 yml
 zig
+zls
 zsh
 # computer hardware/networking
 1-bit
@@ -1250,6 +1250,7 @@ enums
 errorlog
 ExceptionGroup
 frozenset
+functools
 gitsigns
 globalns
 hasattr
@@ -1310,3 +1311,7 @@ SystemError
 tvars
 TypeError
 ValueError
+venv
+venvs
+# TS and JS names
+tsscript
