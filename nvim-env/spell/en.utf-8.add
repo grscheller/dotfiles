@@ -42,7 +42,6 @@ lifecycle
 lingua franca
 lookups
 Mapquest
-md
 mdl
 merchantability
 metacharacters
@@ -238,6 +237,7 @@ Chiusana
 Chuang
 Cygwin
 DECwriter
+Dogbert
 Domaintools
 Downdetector
 DuckDuckGo
@@ -267,8 +267,10 @@ LuaFun
 LuaJIT
 Lutris
 LVHN
+Meraki
 Naftalin
 NetFlix
+Nomacs
 Olivine
 Pavin
 Pearce
@@ -314,6 +316,7 @@ AFRL
 AFNet
 ATAAPS
 CAC
+CCTI
 DAU
 DISS
 DTS
@@ -480,6 +483,8 @@ semigroup
 superscript
 superscripted
 superscripting
+Quaternion
+Quaternions
 quartile
 quartiles
 # Very sway/wlroots/desktop specific
@@ -609,6 +614,7 @@ concat
 conf
 config
 configs
+coreutils
 coroutine
 cpp
 cpu
@@ -790,6 +796,8 @@ markdownlint
 namespace
 namespaces
 mb
+md
+mkdir
 mv
 ne
 Nullary
@@ -975,10 +983,16 @@ zsh
 32-bit
 64-bit
 128-bit
+blkid
 bluetooth
 EFI
+efi
 EGA
 fdisk
+fstab
+gz
+gzip
+hostname
 http
 http
 https
@@ -989,9 +1003,12 @@ IPv4
 IPv6
 iso
 jitter
+MX
 nvidia
 NVIDIA
 nvme
+Optimus
+RAIDed
 routable
 RTX
 Ryzen
@@ -1013,6 +1030,9 @@ TCP
 tty
 ttys
 UEFI
+UG
+UUID
+VPN
 vt-102
 vt-220
 wi-fi
@@ -1058,13 +1078,13 @@ defs
 detup
 dev
 devel
-Dogbert
 DoubleQueue
 dropWhile
 dss
 dtools
 entup
 errorhandling
+euler
 euler7
 excs
 f1
@@ -1106,6 +1126,7 @@ FT
 FQ
 fudd
 func
+gauss
 gauss17
 gaussian
 gh-pages
@@ -1122,6 +1143,7 @@ grscheller
 grscheller's
 GRScheller
 GRScheller's
+hamilton
 hamilton4
 host1
 host2
@@ -1162,10 +1184,13 @@ LIFOQueueMBs
 listchars
 LQ
 Luarocks
+Muc
+maxwell
 maxwell4
 nada
 Nada
 neodev
+noether
 noether2
 nohole
 noValue
@@ -1189,6 +1214,7 @@ ret
 rng
 RNG
 roboto
+robotomono
 s1
 s2
 s3
@@ -1213,6 +1239,7 @@ T2
 T3
 T4
 T5
+truetype
 ud
 unsize
 unsized
@@ -1225,6 +1252,7 @@ value4
 value5
 value6
 wilson
+Windoze
 woException
 # python/typing/exception/builtin names
 abc
