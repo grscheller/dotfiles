@@ -2,6 +2,7 @@
 
 local M = {}
 
+-- Not used yet?
 M.linters = {
    ccs = { 'stylelint' },
    gitcommit ={ 'gitlint' },
@@ -19,6 +20,7 @@ M.linters = {
    vue = { 'eslint_d' },
 }
 
+-- Not used yet?
 M.formatters = {
    css = { 'prettierd' },
    graphql = { 'prettierd' },

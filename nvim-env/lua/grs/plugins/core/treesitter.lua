@@ -9,7 +9,7 @@ local opts = {
    highlight = { enable = true },
 }
 
-local config_treesitter = function ()
+local config_treesitter = function()
    require('nvim-treesitter.install').prefer_git = true
    require('nvim-treesitter.configs').setup(opts)
    -- Check out these nvim-treesitter modules:

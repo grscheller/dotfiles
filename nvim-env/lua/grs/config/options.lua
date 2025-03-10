@@ -16,19 +16,19 @@ vim.o.autoindent = true  -- align a newline ident with previous line
 vim.o.shiftround = true  -- round ident to a multiple of shiftwidth
 
 -- Buffer/Editing preferences
-vim.o.hidden = true                      -- my expectations are that buffers don't get abandoned
-vim.o.joinspaces = false                 -- use 2 spaces when joining sentences
-vim.o.nrformats = 'bin,hex,octal,alpha'  -- for <c-a> & <c-x>
-vim.o.undofile = true                    -- save undo history in ~/.local/share/nvim/undo/
-vim.o.ignorecase = true                  -- Case insensitive search when given
-vim.o.smartcase = true                   -- ignore case for all lower case search patterns.
-vim.o.textwidth = 80                     -- keep comments & code horizontally under control
-vim.o.colorcolumn = '+1,+21,+41'         -- rule-of-thumb: comments <= 80 code <= 100, data <= 120
-vim.o.spelloptions = 'camel'             -- spellCheckCamelCaseComponents
-vim.o.formatoptions = 'tcqjr1'           -- use <C-u> to undo unwanted comment insertion
-vim.o.spell = true                       -- use 'z ' to toggle unknown word highlighting
-vim.o.matchpairs = '(:),{:},[:],<:>'     -- for '%' matching pair jumping
-vim.o.iskeyword = '@,48-57,_,192-255,-'  -- adding - to defaults
+vim.o.hidden = true                        -- my expectations are that buffers don't get abandoned
+vim.o.joinspaces = false                   -- use 2 spaces when joining sentences
+vim.o.nrformats = 'bin,hex,octal,alpha'    -- for <c-a> & <c-x>
+vim.o.undofile = true                      -- save undo history in ~/.local/share/nvim/undo/
+vim.o.ignorecase = true                    -- Case insensitive search when given
+vim.o.smartcase = true                     -- ignore case for all lower case search patterns.
+vim.o.textwidth = 80                       -- keep comments & code horizontally under control
+vim.o.colorcolumn = '+1,+21,+41'           -- rule-of-thumb: comments <= 80 code <= 100, data <= 120
+vim.o.spelloptions = 'camel'               -- spellCheckCamelCaseComponents
+vim.o.formatoptions = 'tcqjr1'             -- use <C-u> to undo unwanted comment insertion
+vim.o.spell = true                         -- use 'z ' to toggle unknown word highlighting
+vim.o.matchpairs = '(:),{:},[:],<:>'       -- for '%' matching pair jumping
+vim.o.iskeyword = '@,48-57,_,192-255,-'    -- adding - to defaults
 vim.o.list = true                          -- Edit in "list" mode to always display these
 vim.o.listchars = 'nbsp:␣,tab:» ,trail:·'  -- whitespace characters in an obtrusive way.
 

@@ -52,7 +52,8 @@ local config_nvim_dap = function ()
       },
    }
 
-   -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
+   -- Toggle to see last session result. Without this, you can't see session output
+   -- in case of an unhandled exception.
    vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
 
    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
