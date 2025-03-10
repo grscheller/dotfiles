@@ -283,6 +283,8 @@ Saecki
 Scheller
 scheller
 SDKMAN!
+siegfried
+Siegfried
 Simrat
 Smalltalk
 swisscows
@@ -531,6 +533,7 @@ ExecStart
 BindsTo
 brightnessctl
 journalctl
+networkd
 pulseaudio
 systemctl
 Systemd
@@ -989,6 +992,7 @@ jitter
 nvidia
 NVIDIA
 nvme
+routable
 RTX
 Ryzen
 sda
@@ -1061,7 +1065,7 @@ dss
 dtools
 entup
 errorhandling
-euler
+euler7
 excs
 f1
 f2
@@ -1102,11 +1106,11 @@ FT
 FQ
 fudd
 func
-gauss
+gauss17
 gaussian
 gh-pages
 GH-Pages
-godel
+godel2
 group1
 group2
 group3
@@ -1118,6 +1122,7 @@ grscheller
 grscheller's
 GRScheller
 GRScheller's
+hamilton4
 host1
 host2
 host3
@@ -1157,10 +1162,11 @@ LIFOQueueMBs
 listchars
 LQ
 Luarocks
+maxwell4
 nada
 Nada
 neodev
-noether
+noether2
 nohole
 noValue
 NoValue
@@ -1192,8 +1198,6 @@ s6
 s7
 s8
 s9
-siegfried
-Siegfried
 SL
 SL_NODE
 splitend
