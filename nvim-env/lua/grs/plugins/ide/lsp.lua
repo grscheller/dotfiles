@@ -10,7 +10,8 @@ local config_lspconfig = function()
             package_pending = "➜",
             package_uninstalled = "✗"
          }
-      }
+      },
+      PATH = 'append',
    }
 
    local capabilities = vim.tbl_deep_extend('force',
@@ -30,8 +31,8 @@ local config_lspconfig = function()
       automatic_installation = {
          exclude = {
             'hls',     -- too closely ABI coupled to ghc
-            'pylsp',   -- done in Python venv
-            'ruff',    -- done in Python venv
+            'pylsp',   -- don't want Mason messing with my Python venvs
+            'ruff',    -- don't want Mason messing with my Python venvs
          }
       },
       handlers = {

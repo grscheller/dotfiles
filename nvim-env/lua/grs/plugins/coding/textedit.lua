@@ -2,6 +2,18 @@
 
 return {
 
+   -- Show line indentations when editing code
+   {
+      'lukas-reineke/indent-blankline.nvim',
+      event = 'InsertEnter',
+      main = 'ibl',
+      ---@module 'ibl'
+      ---@type ibl.config
+      opts = {
+         indent = { char = '│' },
+      },
+   },
+
    -- Colorize color names, hexcodes, and other color formats
    {
       'norcalli/nvim-colorizer.lua',
@@ -17,7 +29,7 @@ return {
 
    -- Comment out or restore lines and blocks of code
    {
-     'numToStr/Comment.nvim',
+      'numToStr/Comment.nvim',
       event = 'VeryLazy',
       config = true,
    },
@@ -50,8 +62,8 @@ return {
    {
       'ggandor/leap.nvim',
       keys = {
-         { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
-         { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
+         { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
+         { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
          { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
          { 'gS', mode = { 'n', 'x', 'o' }, desc = 'leap' },
       },
@@ -60,12 +72,6 @@ return {
          leap.opts.case_sensitive = true
          leap.add_default_mappings(true)
       end,
-   },
-
-   -- Show line indentations when editing code
-   {
-      'lukas-reineke/indent-blankline.nvim',
-      event = 'InsertEnter',
    },
 
 }

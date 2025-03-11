@@ -47,7 +47,6 @@ dot_config_files='
    lua/grs/lib/text.lua
    lua/grs/plugins/coding/init.lua
    lua/grs/plugins/coding/gitsigns.lua
-   lua/grs/plugins/coding/indent_line.lua
    lua/grs/plugins/coding/textedit.lua
    lua/grs/plugins/core/init.lua
    lua/grs/plugins/core/appearance.lua
@@ -71,7 +70,7 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/coding/refactoring.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/coding/indent_line.lua
 "
 
 dirs_to_create=""
