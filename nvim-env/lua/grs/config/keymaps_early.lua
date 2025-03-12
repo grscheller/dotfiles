@@ -6,7 +6,7 @@ local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on extern
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
 km('n', '<m-=>', '<c-w>v', { desc = 'vsplit current window' })
-km('n', '<m-f>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term' })
+km('n', '<m-t>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term' })
 
 -- Navigating windows
 km('n', '<c-h>', '<c-w>h', { desc = 'goto window left' })
@@ -63,14 +63,14 @@ end
 km('n', '<leader>n', toggle_line_numbering, { desc = 'toggle line numbering' })
 
 -- Delete & change text without affecting default register
-km({'n', 'v', 'o'}, '<c-b>d', '"_d', { desc = 'delete to blackhole register' })
-km({'n', 'v', 'o'}, '<c-b>c', '"_c', { desc = 'change to blackhole register' })
+km({ 'n', 'v', 'o' }, '<c-b>d', '"_d', { desc = 'delete to blackhole register' })
+km({ 'n', 'v', 'o' }, '<c-b>c', '"_c', { desc = 'change to blackhole register' })
 
 -- Yank, delete, & paste with system clipboard
-km({'n', 'v', 'o'}, '<c-s>y', '"+y', { desc = 'yank to system clipboard' })
-km({'n', 'v', 'o'}, '<c-s>d', '"+d', { desc = 'delete to system clipboard' })
-km({'n', 'v', 'o'}, '<c-s>p', '"+p', { desc = 'system clipboard paste after' })
-km({'n', 'v', 'o'}, '<c-s>P', '"+P', { desc = 'system clipboard paste before' })
+km({ 'n', 'v', 'o' }, '<c-s>y', '"+y', { desc = 'yank to system clipboard' })
+km({ 'n', 'v', 'o' }, '<c-s>d', '"+d', { desc = 'delete to system clipboard' })
+km({ 'n', 'v', 'o' }, '<c-s>p', '"+p', { desc = 'system clipboard paste after' })
+km({ 'n', 'v', 'o' }, '<c-s>P', '"+P', { desc = 'system clipboard paste before' })
 
 -- Keep next pattern match center of screen (normal mode only)
 km('n', 'n', 'nzz', { desc = 'find next and center' })
@@ -101,15 +101,14 @@ km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 --[[ Diagnostic keymaps ]]
 
 km('n', '<bslash>[',
-   function ()
+   function()
       vim.diagnostic.jump { count = -1, float = true }
    end, { desc = 'prev_diagostic' })
 
 km('n', '<bslash>]',
-   function ()
+   function()
       vim.diagnostic.jump { count = 1, float = true }
    end, { desc = 'prev_diagostic' })
 
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })
-
