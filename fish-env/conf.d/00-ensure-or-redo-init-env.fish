@@ -64,7 +64,7 @@ and begin
        and set -p PATH ~/devel/zig_nightly/current
 
        # Rust toolchain
-       digpath -x -q rustc
+       test -e ~/.cargo/env.fish
        and set -p PATH ~/.cargo/bin
 
        # Haskell locations used by Stack and Cabal

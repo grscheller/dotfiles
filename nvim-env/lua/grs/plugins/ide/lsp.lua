@@ -1,5 +1,4 @@
 --[[ Config Neovim LSP client leveraging the Mason toolchain ]]
-
 local km = require('grs.config.keymaps')
 
 local config_lspconfig = function()
@@ -24,7 +23,6 @@ local config_lspconfig = function()
          'cssls',
          'html',
          'lua_ls',
-         'rust_analyzer',
          'taplo',
          'zls',
       },
@@ -33,7 +31,8 @@ local config_lspconfig = function()
             'hls',     -- too closely ABI coupled to ghc
             'pylsp',   -- don't want Mason messing with my Python venvs
             'ruff',    -- don't want Mason messing with my Python venvs
-         }
+            'rust_analyzer',  -- provide by rust toolchain
+         },
       },
       handlers = {
          -- default handler
