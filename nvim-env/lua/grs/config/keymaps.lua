@@ -2,30 +2,12 @@
 
 local M = {}
 
-local check = function(client)
-   if client then
-      if type(client) == 'number' then
-         client = vim.lsp.get_client_by_id(client)
-      end
-      if type(client) == 'table' then
-         return client
-      end
-   end
-   local msg = 'LSP: Failed to obtain handle to client'
-   vim.notify(msg, vim.log.levels.ERROR)
-   return nil
-end
-
-function M.set_lsp_keymaps(client, bn)
-   client = check(client)
-   if not client then
-      return false
-   end
-
+function M.set_lsp_keymaps(_, bn)
    local wk = require 'which-key'
    local tb = require 'telescope.builtin'
 
    wk.add {
+      { 'jk',  group = 'lsp',         buffer = bn },
       { 'jkc', group = 'code action', buffer = bn },
       { 'jkd', group = 'document',    buffer = bn },
       { 'jkf', group = 'format',      buffer = bn },
@@ -39,7 +21,7 @@ function M.set_lsp_keymaps(client, bn)
       { 'H',    vim.lsp.buf.hover,                   desc = 'hover document',    buffer = bn },
       { 'K',    vim.lsp.buf.signature_help,          desc = 'signature help',    buffer = bn },
       { 'jkff', vim.lsp.buf.format,                  desc = 'format with LSP',   buffer = bn },
-      { 'jkr',  vim.lsp.buf.rename,                  desc = 'rename',            buffer = bn },
+      { 'jkrn', vim.lsp.buf.rename,                  desc = 'rename',            buffer = bn },
       { 'jkca', vim.lsp.buf.code_action,             desc = 'code action',       buffer = bn },
       { 'jkcl', vim.lsp.codelens.refresh,            desc = 'code lens refresh', buffer = bn },
       { 'jkcr', vim.lsp.codelens.run,                desc = 'code lens run',     buffer = bn },
@@ -53,35 +35,19 @@ function M.set_lsp_keymaps(client, bn)
       { 'jkwr', vim.lsp.buf.remove_workspace_folder, desc = 'rm ws folder',      buffer = bn },
    }
 
-   -- Configure inlay hints if LSP supports it
-   if client:supports_method('textDocument/inlayHint', bn) then
-      vim.lsp.inlay_hint.enable(false, { buffer = bn })
-
-      wk.add {
-         {
-            'jki',
-            function()
-               vim.lsp.inlay_hint.enable(
-                  not vim.lsp.inlay_hint.is_enabled { buffer = bn },
-                  { buffer = bn }
-               )
-
-               if vim.lsp.inlay_hint.is_enabled { buffer = bn } then
-                  local msg = 'LSP: inlay hints were enabled'
-                  vim.notify(msg, vim.log.levels.INFO)
-               else
-                  local msg = 'LSP: inlay hints were disabled'
-                  vim.notify(msg, vim.log.levels.INFO)
-               end
-            end,
-            desc = 'toggle inlay hints',
-            buffer = bn,
-         }
+   wk.add {
+      {
+         'jki',
+         function()
+            vim.lsp.inlay_hint.enable(
+               not vim.lsp.inlay_hint.is_enabled { buffer = bn },
+               { buffer = bn }
+            )
+         end,
+         desc = 'toggle inlay hints',
+         buffer = bn,
       }
-
-      local msg = string.format('LSP: Client = "%s" supports inlay hints', client.name)
-      vim.notify(msg, vim.log.levels.INFO)
-   end
+   }
 
    return true
 end
@@ -97,13 +63,28 @@ function M.set_hls_keymaps(bn)
    }
 end
 
--- Rust-Tools related keymaps
+-- Rust-Tools related keymaps - used in after/ftplugin/rust.lua
 function M.set_rust_keymaps(bn)
-   local rt = require('rust-tools')
    require('which-key').add {
-      { 'jkR',  group = 'rust tools',                   buffer = bn },
-      { 'jkRH', rt.hover_actions.hover_actions,         desc = 'hover actions',     buffer = bn },
-      { 'jkRA', rt.code_action_group.code_action_group, desc = 'code action group', buffer = bn },
+      { 'jkR',  group = 'rustaceanvim', buffer = bn },
+      {
+         'jkRA',
+         function()
+            vim.cmd.RustLsp('codeAction')
+         end,
+         desc = 'code action group',
+         buffer = bn
+      },
+      {
+         'jkRH',
+         function()
+            vim.cmd.RustLsp {
+               'hover',
+               'actions',
+            }
+         end,
+         buffer = bn
+      },
    }
 end
 

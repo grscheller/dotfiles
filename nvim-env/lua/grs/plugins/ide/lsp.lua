@@ -79,8 +79,8 @@ local config_lspconfig = function()
          'lhaskell',
          'cabal',
       },
-      on_attach = function (client, bufnr)
-         if km.set_lsp_keymaps(client, bufnr) then
+      on_attach = function (_, bufnr)
+         if km.set_lsp_keymaps(bufnr) then
             km.set_hls_keymaps(bufnr)
          end
       end,
@@ -161,6 +161,13 @@ return {
          },
       },
       config = config_lspconfig,
+   },
+
+   {
+      -- integrates with rust-analyzer for an enhanced Rust LSP experience
+      'mrcjkb/rustaceanvim',
+      version = '^5', -- Recommended
+      lazy = false,   -- This plugin is already lazy
    },
 
    {
