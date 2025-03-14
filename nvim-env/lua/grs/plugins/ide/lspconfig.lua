@@ -1,4 +1,5 @@
---[[ Config Neovim LSP client leveraging the Mason toolchain ]]
+--[[ Configure Neovim LSP client thru nvim/nvim-lspconfig plugin ]]
+
 local km = require('grs.config.keymaps')
 
 local config_lspconfig = function()
@@ -31,7 +32,7 @@ local config_lspconfig = function()
             'hls',     -- too closely ABI coupled to ghc
             'pylsp',   -- don't want Mason messing with my Python venvs
             'ruff',    -- don't want Mason messing with my Python venvs
-            'rust_analyzer',  -- provide by rust toolchain
+            'rust_analyzer',  -- provided by rustup, configured thru another plugin
          },
       },
       handlers = {
@@ -68,11 +69,11 @@ local config_lspconfig = function()
 
    --[nvim-lspconfig configuration of plugins not installed with mason]
 
-   local lsp = require('lspconfig')
+   local lspconf = require('lspconfig')
 
    -- Haskell language server
 
-   lsp.hls.setup {
+   lspconf.hls.setup {
       capabilities = capabilities,
       filetypes = {
          'haskell',
@@ -91,7 +92,7 @@ local config_lspconfig = function()
 
    -- Configure Python Language Servers - installed by pip, not mason
 
-   lsp.pylsp.setup {
+   lspconf.pylsp.setup {
       capabilities = capabilities,
       filetypes = { 'python' },
       on_attach = km.set_lsp_keymaps,
@@ -113,16 +114,14 @@ local config_lspconfig = function()
       },
    }
 
-   lsp.ruff.setup {
+   lspconf.ruff.setup {
       capabilities = capabilities,
       filetypes = { 'python' },
       on_attach = km.set_lsp_keymaps,
    }
 
-   -- virtual text gets in the way
-
    vim.diagnostic.config {
-      virtual_text = false,
+      virtual_text = false,  -- virtual text gets in the way
       signs = true,
       underline = true,
       severity_sort = true,
@@ -139,8 +138,7 @@ return {
    },
 
    {
-      -- LSP Configuration manually and with nvim-lspconfig
-      -- Auto install selected tooling with mason.
+      -- LSP Configuration manually or thru mason-lspconfig.nvim.
       'neovim/nvim-lspconfig',
       event = { 'BufReadPre', 'BufNewFile' },
       cmd = 'Mason',
@@ -150,7 +148,7 @@ return {
          'williamboman/mason-lspconfig.nvim',
          {
             "folke/lazydev.nvim",
-            ft = "lua", -- only load on lua files
+            ft = 'lua', -- only load on lua files
             opts = {
                library = {
                   "lazy.nvim",
@@ -164,7 +162,12 @@ return {
    },
 
    {
-      -- integrates with rust-analyzer for an enhanced Rust LSP experience
+      -- Integrates with rust-analyzer for an enhanced Rust LSP experience.
+      -- Uses nvim-lspconfig directly itself to configure rest-analyzer,
+      -- so DO NOT CONFIGURE rust-analyzer either manually or indirectly
+      -- through mason-lspconfig. The required tooling needed by this plugin
+      -- can be installed with rustup.
+      --
       'mrcjkb/rustaceanvim',
       version = '^5', -- Recommended
       lazy = false,   -- This plugin is already lazy
@@ -172,9 +175,21 @@ return {
 
    {
       -- Plugin provides an LSP wrapper layer for tsserver.
-      -- Note: tsserver is NOT typescript-language-server (ts-ls) formally also called tsserver
-      -- Note: tsserver, and typescript, must be install manually via npm
-      --       $ npm install -g typescript-language-server typescript
+      --
+      -- The TypeScript standalone server (tsserver) is a node executable that
+      -- encapsulates the TypeScript compiler providing language services. It
+      -- exposes these services thru a JSON based protocol. Well suited for
+      -- editors and IDE support, it is not itself an LSP.
+      --
+      -- Note that tsserver is NOT typescript-language-server (ts-ls) formally
+      -- and confusingly also called tsserver.
+      --
+      -- Both tsserver and typescript need to be install manually via the
+      -- npm command `"$ npm install -g typescript-language-server typescript"
+      --
+      -- I believe this plugin used lspconfig directly to configure itself
+      -- as an LSP server leveraging tsserver, hence its inclusion here.
+      --
       'pmizio/typescript-tools.nvim',
       dependencies = {
          'nvim-lua/plenary.nvim',

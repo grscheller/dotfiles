@@ -919,7 +919,6 @@ typecheck
 typechecker
 typeclass
 typeclasses
-typescripty
 ui
 UI
 uncurry
@@ -1342,6 +1341,9 @@ wxPython
 javascript
 jsscript
 tsscript
+typescripty
+tsserver
+typescript
 # Neovim names
 autocmd
 autocmds
