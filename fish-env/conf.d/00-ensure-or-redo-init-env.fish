@@ -59,6 +59,13 @@ and begin
        # Set up paths to dotfiles related repos
        set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
+       # Haskell locations used by Stack and Cabal
+       set -p PATH ~/.local/bin ~/.cabal/bin $PATH
+
+       # Configure JDK & Scala on Pop!OS
+       set -p PATH ~/.local/share/coursier/bin
+       jdk_version 21
+
        # Zig toolchain
        test -L ~/devel/zig_nightly/current
        and set -p PATH ~/devel/zig_nightly/current
@@ -67,16 +74,9 @@ and begin
        test -e ~/.cargo/env.fish
        and set -p PATH ~/.cargo/bin
 
-       # Haskell locations used by Stack and Cabal
-       set PATH ~/.local/bin ~/.cabal/bin $PATH
-
        # Node.js toolchain
        test -d ~/devel/node_lts/node-v22.14.0-linux-x64/bin
        and set -p PATH ~/devel/node_lts/node-v22.14.0-linux-x64/bin
-
-       # Configure JDK & Scala3 on Pop!OS
-       set -a PATH ~/.local/share/coursier/bin
-       jdk_version 21
 
        # Python configuration
        set -gx PIP_REQUIRE_VIRTUALENV true
@@ -90,4 +90,3 @@ and begin
        # Cleanup PATH: remove duplicate & nonexistent entries, resolve symlinks
        set PATH (pathtrim)
     end
-

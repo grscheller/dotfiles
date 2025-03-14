@@ -837,13 +837,6 @@ rustc
 rustup
 rw
 rwx
-sbt
-scala
-Scala
-Scala2
-Scala3
-scalac
-scalaz
 scp
 scrolloff
 se
@@ -1255,6 +1248,17 @@ value6
 wilson
 Windoze
 woException
+# Scala related names
+cs
+Coursier
+coursier
+sbt
+scala
+Scala
+Scala2
+Scala3
+scalac
+scalaz
 # python/typing/exception/builtin names
 abc
 argtype
