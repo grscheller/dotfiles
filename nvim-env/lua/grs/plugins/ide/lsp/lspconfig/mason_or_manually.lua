@@ -1,8 +1,12 @@
---[[ Configure Neovim LSP client thru nvim/nvim-lspconfig plugin ]]
+--[[ Configure Neovim LSP client thru the nvim/nvim-lspconfig plugin
+
+     Either manually or using a "canned" mason-lspconfig configuration.
+
+--]]
 
 local km = require('grs.config.keymaps')
 
-local config_lspconfig = function()
+local lspconfig_configuration = function()
    require('mason').setup {
       ui = {
          icons = {
@@ -67,7 +71,7 @@ local config_lspconfig = function()
       },
    }
 
-   --[nvim-lspconfig configuration of plugins not installed with mason]
+   --[[ Manual configurations of LSP servers not installed with mason ]]
 
    local lspconf = require('lspconfig')
 
@@ -90,7 +94,7 @@ local config_lspconfig = function()
       },
    }
 
-   -- Configure Python Language Servers - installed by pip, not mason
+   -- Python Language Servers - installed into venv by pip
 
    lspconf.pylsp.setup {
       capabilities = capabilities,
@@ -119,24 +123,9 @@ local config_lspconfig = function()
       filetypes = { 'python' },
       on_attach = km.set_lsp_keymaps,
    }
-
-   vim.diagnostic.config {
-      virtual_text = false,  -- virtual text gets in the way
-      signs = true,
-      underline = true,
-      severity_sort = true,
-   }
 end
 
 return {
-
-   {
-      -- Give user feedback on LSP activity
-      'j-hui/fidget.nvim',
-      event = 'LspAttach',
-      opts = {},
-   },
-
    {
       -- LSP Configuration manually or thru mason-lspconfig.nvim.
       'neovim/nvim-lspconfig',
@@ -158,52 +147,6 @@ return {
             },
          },
       },
-      config = config_lspconfig,
+      config = lspconfig_configuration,
    },
-
-   {
-      -- Integrates with rust-analyzer for an enhanced Rust LSP experience.
-      -- Uses nvim-lspconfig directly itself to configure rest-analyzer,
-      -- so DO NOT CONFIGURE rust-analyzer either manually or indirectly
-      -- through mason-lspconfig. The required tooling needed by this plugin
-      -- can be installed with rustup.
-      --
-      'mrcjkb/rustaceanvim',
-      version = '^5', -- Recommended
-      lazy = false,   -- This plugin is already lazy
-   },
-
-   {
-      -- Plugin provides an LSP wrapper layer for tsserver.
-      --
-      -- The TypeScript standalone server (tsserver) is a node executable that
-      -- encapsulates the TypeScript compiler providing language services. It
-      -- exposes these services thru a JSON based protocol. Well suited for
-      -- editors and IDE support, it is not itself an LSP.
-      --
-      -- Note that tsserver is NOT typescript-language-server (ts-ls) formally
-      -- and confusingly also called tsserver.
-      --
-      -- Both tsserver and typescript need to be install manually via the
-      -- npm command `"$ npm install -g typescript-language-server typescript"
-      --
-      -- I believe this plugin used lspconfig directly to configure itself
-      -- as an LSP server leveraging tsserver, hence its inclusion here.
-      --
-      'pmizio/typescript-tools.nvim',
-      dependencies = {
-         'nvim-lua/plenary.nvim',
-         'neovim/nvim-lspconfig',
-      },
-      ft = {
-         'javascript',
-         'javascriptreact',
-         'javascript.jsx',
-         'typescript',
-         'typescriptreact',
-         'typescript.tsx',
-      },
-      opts = {},
-   }
-
 }

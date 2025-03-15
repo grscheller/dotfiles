@@ -1,15 +1,19 @@
---[[ Scala Metals Configuration ]]
---
--- The nvim-metals plugin directly configures the Neovim LSP client itself
--- and does not invoke nvim-lspconfig at all.  It also uses Coursier to
--- download & install the Scala Metals LSP server.
---
---    See: https://scalameta.org/metals/docs
---
---    Original setup based on:
---      https://github.com/scalameta/nvim-metals/discussions/39
---      https://github.com/scalameta/nvim-metals/discussions/279
---
+--[[ Scala Metals Configuration
+
+     The nvim-metals plugin directly configures the Neovim LSP client itself
+     and does not invoke nvim-lspconfig at all. It also uses Coursier to
+     download & install the Scala Metals LSP server.
+
+        See: https://scalameta.org/metals/docs
+
+        Original setup based on
+          https://github.com/scalameta/nvim-metals/discussions/39
+        and
+          https://github.com/scalameta/nvim-metals/discussions/279
+        is out-of-date and broken. It predates managing a local Scala development
+        environment with Coursier.
+--]]
+
 local km = require 'grs.config.keymaps'
 
 local autogrp = vim.api.nvim_create_augroup
@@ -18,11 +22,11 @@ local autocmd = vim.api.nvim_create_autocmd
 local message
 local info = vim.log.levels.INFO
 
-local config_metals = function ()
+local config_metals = function()
    local metals = require 'metals'
    local metals_config = metals.bare_config()
    metals_config.settings = {
-      serverVersion = 'latest.release',
+      serverVersion = 'SNAPSHOT',
       showImplicitArguments = true,
       showImplicitConversionsAndClasses = true,
       excludedPackages = {
@@ -55,7 +59,7 @@ local config_metals = function ()
 
    local grsMetalsGrp = autogrp('GrsMetals', { clear = true })
 
-   metals_config.on_attach = function (client, bufnr)
+   metals_config.on_attach = function(client, bufnr)
       metals.setup_dap()
 
       if km.set_lsp_keymaps(client, bufnr) then
@@ -65,7 +69,7 @@ local config_metals = function ()
          -- show diagnostic popup when cursor lingers on line with errors
          autocmd('CursorHold', {
             buffer = bufnr,
-            callback = function ()
+            callback = function()
                vim.diagnostic.open_float {
                   bufnr = bufnr,
                   scope = 'line',
@@ -80,7 +84,7 @@ local config_metals = function ()
 
    autocmd('FileType', {
       pattern = { 'scala', 'sbt', 'java' },
-      callback = function ()
+      callback = function()
          metals.initialize_or_attach(metals_config)
          message = 'Scala Metals initialize or attached.'
          vim.notify(message, info)
@@ -90,7 +94,6 @@ local config_metals = function ()
 end
 
 return {
-
    {
       'scalameta/nvim-metals',
       dependencies = {
@@ -100,5 +103,4 @@ return {
       ft = { 'scala', 'sbt', 'java' },
       config = config_metals,
    },
-
 }

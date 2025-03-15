@@ -1,4 +1,4 @@
---[[ Keymappings defined before invoking lazy.nvim ]]
+--[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
 local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on external plugins ]]
@@ -98,17 +98,28 @@ km('n', 'cL', 'cl <c-o>h', { desc = 'cl with SPACE' })
 km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
 km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
---[[ Diagnostic keymaps ]]
+--[[ Diagnostic keymaps & a vim.diagnostic tweak ]]
 
-km('n', '<bslash>[',
+km('n',
+   '<bslash>[',
    function()
       vim.diagnostic.jump { count = -1, float = true }
-   end, { desc = 'prev_diagostic' })
-
-km('n', '<bslash>]',
+   end,
+   { desc = 'prev_diagostic' }
+)
+km('n',
+   '<bslash>]',
    function()
       vim.diagnostic.jump { count = 1, float = true }
-   end, { desc = 'prev_diagostic' })
-
+   end,
+   { desc = 'prev_diagostic' }
+)
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })
+
+vim.diagnostic.config {
+   virtual_text = false, -- virtual text gets in the way
+   signs = true,
+   underline = true,
+   severity_sort = true,
+}

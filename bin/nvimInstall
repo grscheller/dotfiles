@@ -55,11 +55,17 @@ dot_config_files='
    lua/grs/plugins/core/telescope.lua
    lua/grs/plugins/core/treesitter.lua
    lua/grs/plugins/core/whichkey.lua
+   lua/grs/plugins/ide/lsp/lspconfig/init.lua
+   lua/grs/plugins/ide/lsp/lspconfig/indirectly_by_other_plugin.lua
+   lua/grs/plugins/ide/lsp/lspconfig/mason_or_manually.lua
+   lua/grs/plugins/ide/lsp/nvimlsp/init.lua
+   lua/grs/plugins/ide/lsp/nvimlsp/rust.lua
+   lua/grs/plugins/ide/lsp/nvimlsp/scala.lua
+   lua/grs/plugins/ide/lsp/init.lua
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/dap.lua
-   lua/grs/plugins/ide/lspconfig.lua
-   lua/grs/plugins/ide/scala.lua
+   lua/grs/plugins/ide/fidgit.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -69,9 +75,9 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/coding/indent_line.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/rust.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lspconfig.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/scala.lua
 "
 
 dirs_to_create=""
