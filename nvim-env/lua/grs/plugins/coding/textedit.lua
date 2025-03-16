@@ -30,20 +30,20 @@ return {
    -- Comment out or restore lines and blocks of code
    {
       'numToStr/Comment.nvim',
-      event = 'VeryLazy',
+      keys = {
+         { 'gc', mode = { 'n', 'x' }, desc = 'comment line' },
+         { 'gb', mode = { 'n', 'x' }, desc = 'comment block' },
+      },
       config = true,
    },
 
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      version = '*',
       event = 'VeryLazy',
       config = function()
          require('nvim-surround').setup {
             keymaps = {
-               insert          = '<c-g>z',
-               insert_line     = '<c-g>Z',
                normal          = 'gz',
                normal_cur      = 'gZ',
                normal_line     = 'gzz',
@@ -65,7 +65,6 @@ return {
          { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
          { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
          { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
-         { 'gS', mode = { 'n', 'x', 'o' }, desc = 'leap' },
       },
       config = function()
          local leap = require 'leap'
