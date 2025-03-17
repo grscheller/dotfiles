@@ -1,12 +1,11 @@
 --[[ Colorschemes, status line, and other visual configurations ]]
 
 return {
-
    {
       'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
       event = 'VeryLazy',
-      opts = function ()
+      opts = function()
          local kanagawa_colors = require('kanagawa.colors').setup()
          local palette = kanagawa_colors.palette
          return {
@@ -102,7 +101,7 @@ return {
             },
             extensions = {},
          }
-      end
+      end,
    },
 
    {
@@ -112,7 +111,7 @@ return {
          'MunifTanjim/nui.nvim',
          {
             'rcarriga/nvim-notify',
-            dependencies= {
+            dependencies = {
                'nvim-treesitter/nvim-treesitter',
             },
          },
@@ -127,11 +126,11 @@ return {
             },
          },
          presets = {
-            bottom_search = false,  -- use "classic" bottom cmdline for search
-            command_palette = true,  -- position the cmdline & popup menu together
-            long_message_to_split = true,  -- long messages sent to a split
-            inc_rename = false,  -- enable input dialog for inc-rename.nvim
-            lsp_doc_border = true,  -- add borders to hover docs & signature help
+            bottom_search = false, -- use "classic" bottom cmdline for search
+            command_palette = true, -- position the cmdline & popup menu together
+            long_message_to_split = true, -- long messages sent to a split
+            inc_rename = false, -- enable input dialog for inc-rename.nvim
+            lsp_doc_border = true, -- add borders to hover docs & signature help
          },
          routes = {
             {
@@ -149,7 +148,7 @@ return {
          'folke/twilight.nvim',
       },
       keys = {
-         { '<leader>tz', '<cmd>ZenMode<cr>', desc = 'toggle zen-mode' },
+         { '<leader>z', '<cmd>ZenMode<cr>', desc = 'toggle zen-mode' },
       },
       opts = {
          window = {
@@ -166,12 +165,11 @@ return {
             options = {},
             twilight = { enable = true },
          },
-         on_open = function (win)
+         on_open = function(win)
             vim.api.nvim_set_option_value('scrolloff', 10, { win = win })
             vim.api.nvim_set_option_value('sidescrolloff', 8, { win = win })
          end,
-         on_close = function () end,
+         on_close = function() end,
       },
    },
-
 }

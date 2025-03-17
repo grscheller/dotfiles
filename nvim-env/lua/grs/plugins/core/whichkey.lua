@@ -1,6 +1,6 @@
 --[[ Needed by multiple plugins or important to infrastructure ]]
 
-local config_whichkey = function ()
+local config_whichkey = function()
    local wk = require 'which-key'
    wk.setup {
       plugins = {
@@ -22,7 +22,7 @@ local config_whichkey = function ()
 
    wk.add {
       mode = { 'v' },
-      { '<leader>', group = 'space' },
+      { '<leader>', group = 'leader' },
       { '<c-b>', group = 'blackhole' },
       { '<c-s>', group = 'system clipboard' },
    }
@@ -32,32 +32,20 @@ local config_whichkey = function ()
    wk.add {
       -- used by multiple plugins
       { '<leader>s', group = 'search' },
-      { '<leader>t', group = 'toggle' },
       -- nvim-surround plugin
       { '<leader>r', group = 'surround' },
       -- plugin/package managers keymaps
-      { '<leader>p', group = 'plugin/package managers' },
-      { '<leader>pl', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
-      { '<leader>pm', '<cmd>Mason<cr>', desc = 'Mason gui' },
+      { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
+      { '<leader>m', '<cmd>Mason<cr>', desc = 'Mason gui' },
       -- toggle Treesitter
-      { '<leader>tt', '<cmd>TSBufToggle highlight<cr>', desc = 'toggle treesitter highlighting' }
-   }
-
-   wk.add {
-      mode = { 'v' },
-      -- nvim-surround plugin
-      { '<leader>r', group = 'surround' },
-      -- refactoring.nvim (ThePrimeagen)
-      { '<leader>R', group = 'refactoring' },
+      { '<leader>t', '<cmd>TSBufToggle highlight<cr>', desc = 'toggle treesitter highlighting' },
    }
 end
 
 return {
-
    {
       'folke/which-key.nvim',
       event = 'VeryLazy',
       config = config_whichkey,
-   }
-
+   },
 }

@@ -87,7 +87,7 @@ km('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
 km('n', 'gV', '`[v`]', { desc = 'select what was just pasted' })
 
 -- Cleanup related keymaps
-km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
+km('n', '<leader>w', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
 km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })
 
 -- Spelling related keymaps
@@ -100,20 +100,14 @@ km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
 --[[ Diagnostic keymaps & a vim.diagnostic tweak ]]
 
-km('n',
-   '<bslash>[',
-   function()
-      vim.diagnostic.jump { count = -1, float = true }
-   end,
-   { desc = 'prev_diagostic' }
-)
-km('n',
-   '<bslash>]',
-   function()
-      vim.diagnostic.jump { count = 1, float = true }
-   end,
-   { desc = 'prev_diagostic' }
-)
+km('n', '<bslash>[', function()
+   vim.diagnostic.jump { count = -1, float = true }
+end, { desc = 'prev_diagostic' })
+
+km('n', '<bslash>]', function()
+   vim.diagnostic.jump { count = 1, float = true }
+end, { desc = 'prev_diagostic' })
+
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })
 

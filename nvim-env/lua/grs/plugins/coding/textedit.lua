@@ -1,7 +1,6 @@
 --[[ Plugins for general Text editing Related taske ]]
 
 return {
-
    -- Show line indentations when editing code
    {
       'lukas-reineke/indent-blankline.nvim',
@@ -18,7 +17,7 @@ return {
    {
       'norcalli/nvim-colorizer.lua',
       keys = {
-         { '<leader>tC', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
+         { '<leader>c', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
       },
       opts = {
          '*',
@@ -44,15 +43,15 @@ return {
       config = function()
          require('nvim-surround').setup {
             keymaps = {
-               normal          = 'gz',
-               normal_cur      = 'gZ',
-               normal_line     = 'gzz',
+               normal = 'gz',
+               normal_cur = 'gZ',
+               normal_line = 'gzz',
                normal_cur_line = 'gZZ',
-               visual          = 'gz',
-               visual_line     = 'gZ',
-               delete          = 'gzd',
-               change          = 'gzr',
-               change_line     = 'gzR',
+               visual = 'gz',
+               visual_line = 'gZ',
+               delete = 'gzd',
+               change = 'gzc',
+               change_line = 'gzC',
             },
          }
       end,
@@ -62,8 +61,8 @@ return {
    {
       'ggandor/leap.nvim',
       keys = {
-         { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
-         { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
+         { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
+         { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
          { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
       },
       config = function()
@@ -72,5 +71,4 @@ return {
          leap.add_default_mappings(true)
       end,
    },
-
 }
