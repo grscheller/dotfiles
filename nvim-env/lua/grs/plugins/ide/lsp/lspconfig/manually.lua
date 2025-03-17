@@ -6,27 +6,25 @@
 
 --]]
 
-local km = require('grs.config.keymaps')
+local km = require 'grs.config.keymaps'
 
 local lspconfig_configuration = function()
    require('mason').setup {
       ui = {
          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-         }
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+         },
       },
       PATH = 'append',
    }
 
-   local capabilities = vim.tbl_deep_extend('force',
-      vim.lsp.protocol.make_client_capabilities(),
-      require('cmp_nvim_lsp').default_capabilities())
+   local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
 
    --[[ Manual configurations of LSP servers not installed with mason ]]
 
-   local lspconf = require('lspconfig')
+   local lspconf = require 'lspconfig'
 
    -- Bash & POSIX Shells - bash-language-server
    lspconf.bashls.setup {
@@ -61,10 +59,10 @@ local lspconfig_configuration = function()
    }
 
    -- HTMX - htmx-lsp
--- lspconf.htmx.setup {
---    capabilities = capabilities,
---    on_attach = km.set_lsp_keymaps,
--- }
+   -- lspconf.htmx.setup {
+   --    capabilities = capabilities,
+   --    on_attach = km.set_lsp_keymaps,
+   -- }
 
    -- Lua - lua-language-server
    lspconf.lua_ls.setup {
@@ -158,13 +156,13 @@ return {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
          {
-            "folke/lazydev.nvim",
+            'folke/lazydev.nvim',
             ft = 'lua', -- only load on lua files
             opts = {
                library = {
-                  "lazy.nvim",
-                  { path = "${3rd}/luv/library", words = { "vim%.uv" } },
-                  "LazyVim",
+                  'lazy.nvim',
+                  { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+                  'LazyVim',
                },
             },
          },

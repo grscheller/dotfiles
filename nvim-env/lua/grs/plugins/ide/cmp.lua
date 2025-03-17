@@ -80,16 +80,13 @@ local config_nvim_cmp = function()
    }
 
    local mapping = {
-      ['<c-space>'] = cmp.mapping(
-         function(fallback)
-            if cmp.visible() then
-               cmp.close()
-            else
-               fallback()
-            end
-         end,
-         { 'i', 'c' }
-      ),
+      ['<c-space>'] = cmp.mapping(function(fallback)
+         if cmp.visible() then
+            cmp.close()
+         else
+            fallback()
+         end
+      end, { 'i', 'c' }),
       ['<tab>'] = cmp.mapping {
          i = function(fallback)
             if cmp.visible() then
@@ -108,60 +105,50 @@ local config_nvim_cmp = function()
             end
          end,
       },
-      ['<s-tab>'] = cmp.mapping(
-         function(fallback)
-            if cmp.visible() then
-               cmp.select_prev_item(optSelect)
-            else
-               fallback()
-            end
-         end,
-         { 'i', 'c' }
-      ),
-      ['<m-tab>'] = cmp.mapping(
-         function(fallback)
-            if cmp.visible() then
-               return cmp.complete_common_string()
-            else
-               fallback()
-            end
-         end,
-         { 'i', 'c' }
-      ),
+      ['<s-tab>'] = cmp.mapping(function(fallback)
+         if cmp.visible() then
+            cmp.select_prev_item(optSelect)
+         else
+            fallback()
+         end
+      end, { 'i', 'c' }),
+      ['<m-tab>'] = cmp.mapping(function(fallback)
+         if cmp.visible() then
+            return cmp.complete_common_string()
+         else
+            fallback()
+         end
+      end, { 'i', 'c' }),
    }
 
    local mapping_insert_mode = mergeTables {
-      mapping, {
-      ['<c-d>'] = cmp.mapping(
-         function(fallback)
+      mapping,
+      {
+         ['<c-d>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                cmp.scroll_docs(-4)
             else
                fallback()
             end
-         end
-      ),
-      ['<c-f>'] = cmp.mapping(
-         function(fallback)
+         end),
+         ['<c-f>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                cmp.scroll_docs(4)
             else
                fallback()
             end
-         end
-      ),
-      ['<c-s>'] = cmp.mapping.complete {
-         config = {
-            sources = {
-               {
-                  name = 'luasnip',
-                  option = { show_autosnippets = true },
+         end),
+         ['<c-s>'] = cmp.mapping.complete {
+            config = {
+               sources = {
+                  {
+                     name = 'luasnip',
+                     option = { show_autosnippets = true },
+                  },
                },
             },
          },
-      },
-      ['<m-right>'] = cmp.mapping(
-         function(fallback)
+         ['<m-right>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                cmp.complete(optConfirm)
             elseif luasnip.jumpable(1) then
@@ -169,10 +156,8 @@ local config_nvim_cmp = function()
             else
                fallback()
             end
-         end
-      ),
-      ['<m-left>'] = cmp.mapping(
-         function(fallback)
+         end),
+         ['<m-left>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                cmp.complete(optConfirm)
             elseif luasnip.jumpable(-1) then
@@ -180,9 +165,8 @@ local config_nvim_cmp = function()
             else
                fallback()
             end
-         end
-      ),
-   }
+         end),
+      },
    }
 
    --[[ Set up sources ]]
@@ -220,7 +204,7 @@ local config_nvim_cmp = function()
    }
 
    local sources_cmdline_mode = {
-      { name = 'cmdline' }
+      { name = 'cmdline' },
    }
 
    local sources_search_mode = {
@@ -239,32 +223,26 @@ local config_nvim_cmp = function()
       sources = sources_insert_mode,
    }
 
-   cmp.setup.cmdline(
-      ':', {
-         sorting = sorting,
-         formatting = formatting,
-         mapping = mapping,
-         sources = sources_cmdline_mode,
-      }
-   )
+   cmp.setup.cmdline(':', {
+      sorting = sorting,
+      formatting = formatting,
+      mapping = mapping,
+      sources = sources_cmdline_mode,
+   })
 
-   cmp.setup.cmdline(
-      '/', {
-         sorting = sorting,
-         formatting = formatting,
-         mapping = mapping,
-         sources = sources_search_mode,
-      }
-   )
+   cmp.setup.cmdline('/', {
+      sorting = sorting,
+      formatting = formatting,
+      mapping = mapping,
+      sources = sources_search_mode,
+   })
 
-   cmp.setup.cmdline(
-      '?', {
-         sorting = sorting,
-         formatting = formatting,
-         mapping = mapping,
-         sources = sources_search_mode,
-      }
-   )
+   cmp.setup.cmdline('?', {
+      sorting = sorting,
+      formatting = formatting,
+      mapping = mapping,
+      sources = sources_search_mode,
+   })
 
    autopairs.setup {}
    cmp.event:on('confirm_done', autopairs_cmp.on_confirm_done())
@@ -273,10 +251,10 @@ end
 return {
    -- Snippet engine
    {
-      "L3MON4D3/LuaSnip",
+      'L3MON4D3/LuaSnip',
       dependencies = { 'rafamadriz/friendly-snippets' },
       version = 'v2.*',
-      build = 'make install_jsregexp'
+      build = 'make install_jsregexp',
    },
 
    -- insert mode completions

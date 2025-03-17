@@ -3,6 +3,6 @@
 local iFlatten = require('grs.lib.functional').iFlatten
 
 return iFlatten {
-   require 'grs.plugins.ide.lsp.lspconfig', -- using neovim/nvim-lspconfig
-   require 'grs.plugins.ide.lsp.nvimlsp',   -- directly configuring the nvim LSP client
+   require 'grs.plugins.ide.lsp.lspconfig', -- uses neovim/nvim-lspconfig manually or indirectly
+   require 'grs.plugins.ide.lsp.nvimlsp', -- directly configures the nvim LSP client
 }

@@ -1,6 +1,6 @@
 --[[ Indirect Neovim LSP client with nvim/nvim-lspconfig thru another plugin ]]
 
-local km = require('grs.config.keymaps')
+local km = require 'grs.config.keymaps'
 
 return {
    {
@@ -34,5 +34,5 @@ return {
          'typescript.tsx',
       },
       opts = {},
-   }
+   },
 }
