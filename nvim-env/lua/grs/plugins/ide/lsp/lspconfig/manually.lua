@@ -61,10 +61,10 @@ local lspconfig_configuration = function()
    }
 
    -- HTMX - htmx-lsp
-   lspconf.htmx.setup {
-      capabilities = capabilities,
-      on_attach = km.set_lsp_keymaps,
-   }
+-- lspconf.htmx.setup {
+--    capabilities = capabilities,
+--    on_attach = km.set_lsp_keymaps,
+-- }
 
    -- Lua - lua-language-server
    lspconf.lua_ls.setup {

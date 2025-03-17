@@ -16,25 +16,31 @@ return {
             desc = 'Format buffer',
          },
       },
-      config = function()
-         local conform = require('conform')
-
-         conform.setup {
-            formatters_by_ft = {
-               lua = { 'stylua' },
-               python = { 'ruff_format' },
-               fish = { 'fish_indent' },
-               markdown = { 'mdformat' },
-               css = { 'prettierd' },
-               json = { 'prettierd' },
-               yaml = { 'prettierd' },
-               javascript = { 'prettierd' },
-               typescript = { 'prettierd' },
-               javascriptreact = { 'prettierd' },
-               typescriptreact = { 'prettierd' },
-               svelte = { 'prettierd' },
-            },
-         }
-      end,
+      ---@module 'conform'
+      ---@type conform.setupOpts
+      opts = {
+         formatters_by_ft = {
+            css = { 'prettierd' },
+            graphql = { 'prettierd' },
+            haskell = { 'ormolu' },
+            html = { 'prettierd' },
+            lua = { 'stylua' },
+            luau = { 'stylua' },
+            python = { 'ruff_format' },
+            markdown = { 'mdformat' },
+            json = { 'prettierd' },
+            javascript = { 'prettierd' },
+            javascriptreact = { 'prettierd' },
+            svelte = { 'prettierd' },
+            toml = { 'taplo' },
+            typescript = { 'prettierd' },
+            typescriptreact = { 'prettierd' },
+            yaml = { 'prettierd' },
+         },
+         default_format_opts = {
+            lsp_format = 'fallback'
+         },
+         formatters ={},
+      }
    },
 }
