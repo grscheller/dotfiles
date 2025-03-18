@@ -5,8 +5,8 @@ local M = {}
 -- Not used yet?
 M.linters = {
    ccs = { 'stylelint' },
-   gitcommit ={ 'gitlint' },
-   haskell ={ 'hlint' },
+   gitcommit = { 'gitlint' },
+   haskell = { 'hlint' },
    html = { 'htmlhint' },
    javascript = { 'eslint_d' },
    javascriptreact = { 'eslint_d' },

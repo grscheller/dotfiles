@@ -38,9 +38,9 @@ return {
             yaml = { 'prettierd' },
          },
          default_format_opts = {
-            lsp_format = 'fallback'
+            lsp_format = 'fallback',
          },
-         formatters ={},
-      }
+         formatters = {},
+      },
    },
 }

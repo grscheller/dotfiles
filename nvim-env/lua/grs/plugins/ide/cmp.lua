@@ -249,16 +249,16 @@ local config_nvim_cmp = function()
 end
 
 return {
-   -- Snippet engine
    {
+      -- Snippet engine
       'L3MON4D3/LuaSnip',
       dependencies = { 'rafamadriz/friendly-snippets' },
       version = 'v2.*',
       build = 'make install_jsregexp',
    },
 
-   -- insert mode completions
    {
+      -- insert mode completions
       'hrsh7th/nvim-cmp',
       event = { 'InsertEnter', 'CmdlineEnter' },
       dependencies = {

@@ -1,6 +1,6 @@
 --[[ Telescope - search, filter, find & pick items ]]
 
-local config_telescope = function ()
+local config_telescope = function()
    local telescope = require 'telescope'
    local builtin = require 'telescope.builtin'
    local themes = require 'telescope.themes'
@@ -39,7 +39,7 @@ local config_telescope = function ()
    telescope.load_extension 'ui-select'
    telescope.load_extension 'fzf'
 
-   wk.add{
+   wk.add {
       { '<leader>sh', builtin.help_tags, desc = 'search help' },
       { '<leader>sk', builtin.keymaps, desc = 'search kymaps' },
       { '<leader>sf', builtin.find_files, desc = 'search files' },
@@ -51,18 +51,17 @@ local config_telescope = function ()
       { '<leader>s.', builtin.oldfiles, desc = 'search recent files' },
       {
          '<leader>/',
-         function ()
-            builtin.current_buffer_fuzzy_find(
-               themes.get_dropdown {
-                  winblend = 50,
-                  previewer = false,
-               })
+         function()
+            builtin.current_buffer_fuzzy_find(themes.get_dropdown {
+               winblend = 50,
+               previewer = false,
+            })
          end,
          desc = 'fuzzily search in current buffer',
       },
       {
          '<leader>so',
-         function ()
+         function()
             builtin.live_grep {
                grep_open_files = true,
                prompt_title = 'Live Grep in Open Files',
@@ -87,7 +86,7 @@ return {
          {
             'nvim-telescope/telescope-fzf-native.nvim',
             build = 'make',
-            cond = function ()
+            cond = function()
                return vim.fn.executable 'make' == 1
             end,
          },
@@ -105,8 +104,8 @@ return {
       keys = {
          {
             '<leader>sF',
-            function ()
-               local telescope = require('telescope')
+            function()
+               local telescope = require 'telescope'
                telescope.load_extension 'file_browser'
                telescope.extensions.file_browser.file_browser()
             end,
@@ -123,8 +122,8 @@ return {
       keys = {
          {
             '<leader>sl',
-            function ()
-               local telescope = require('telescope')
+            function()
+               local telescope = require 'telescope'
                telescope.load_extension 'lazy'
                telescope.extensions.lazy.lazy()
             end,
@@ -132,5 +131,4 @@ return {
          },
       },
    },
-
 }

@@ -29,7 +29,7 @@ autocmd('CmdLineLeave', {
 
 autocmd('TextYankPost', {
    pattern = '*',
-   callback = function ()
+   callback = function()
       vim.hl.on_yank { timeout = 500, higroup = 'Visual' }
    end,
    group = GrsTextGrp,
@@ -39,7 +39,7 @@ autocmd('TextYankPost', {
 -- Make sure folding remains essentially disabled.
 autocmd({ 'BufWritePost', 'BufEnter' }, {
    pattern = '*',
-   callback = function ()
+   callback = function()
       vim.o.foldenable = false
       vim.o.foldmethod = 'manual'
       vim.o.foldlevelstart = 99

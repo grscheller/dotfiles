@@ -19,26 +19,26 @@ local M = {
    timer = nil,
 }
 
-local del_timer = function ()
+local del_timer = function()
    if M.timer ~= nil then
       M.timer:close()
       M.timer = nil
    end
 end
 
-local new_timer = function ()
+local new_timer = function()
    del_timer()
    M.timer = vim.uv.new_timer()
    M.timer:start(
       600,
       M.sleep,
-      vim.schedule_wrap(function ()
+      vim.schedule_wrap(function()
          vim.cmd(vim.api.nvim_replace_termcodes(M.direction, true, true, true))
       end)
    )
 end
 
-local change = function (n, direction)
+local change = function(n, direction)
    M.sleep = M.sleep * n
    M.direction = direction
    new_timer()

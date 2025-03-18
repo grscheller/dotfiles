@@ -1,7 +1,6 @@
 --[[ Needed by multiple plugins or important to infrastructure ]]
 
 return {
-
    -- Once bootstrapped, lazy.nvim will keep itself updated
    { 'folke/lazy.nvim' },
 
@@ -20,5 +19,4 @@ return {
          strict = true,
       },
    },
-
 }
