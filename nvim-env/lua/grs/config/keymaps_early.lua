@@ -102,14 +102,18 @@ km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
 km('n', '<bslash>[', function()
    vim.diagnostic.jump { count = -1, float = true }
-end, { desc = 'prev_diagostic' })
+end, { desc = 'prev diagostic' })
 
 km('n', '<bslash>]', function()
    vim.diagnostic.jump { count = 1, float = true }
-end, { desc = 'prev_diagostic' })
+end, { desc = 'next diagostic' })
 
-km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'diag_err_messages' })
-km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'diag_qfix_list' })
+km('n', '<bslash>c', vim.cmd.lclose, { desc = 'close qf' })
+km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'error message popup' })
+km('n', '<bslash>h', vim.diagnostic.hide, { desc = 'hide diagnostics' })
+km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'open qf' })
+km('n', '<bslash>r', vim.diagnostic.reset, { desc = 'reset diagnostics' })
+km('n', '<bslash>s', vim.diagnostic.show, { desc = 'show diagnostics' })
 
 vim.diagnostic.config {
    virtual_text = false, -- virtual text gets in the way

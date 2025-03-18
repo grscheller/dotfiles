@@ -99,15 +99,17 @@ end
 function M.set_dap_keymaps(bn)
    local dap = require 'dap'
    local dap_ui_widgets = require 'dap.ui.widgets'
+   local dapui = require 'dapui'
 
    require('which-key').add {
-      { '<bslash>c', dap.continue, desc = 'dap continue', buffer = bn },
-      { '<bslash>h', dap_ui_widgets.hover, desc = 'dap hover', buffer = bn },
-      { '<bslash>l', dap.run_last, desc = 'dap run last', buffer = bn },
-      { '<bslash>o', dap.step_over, desc = 'dap step over', buffer = bn },
-      { '<bslash>i', dap.step_into, desc = 'dap step into', buffer = bn },
-      { '<bslash>b', dap.toggle_breakpoint, desc = 'dap toggle breakpoint', buffer = bn },
-      { '<bslash>r', dap.repl.toggle, desc = 'dap repl toggle', buffer = bn },
+      { '<bslash><bslash>c', dap.continue, desc = 'dap continue', buffer = bn },
+      { '<bslash><bslash>g', dapui.toggle, desc = 'toggle dapui', buffer = bn },
+      { '<bslash><bslash>h', dap_ui_widgets.hover, desc = 'dap hover', buffer = bn },
+      { '<bslash><bslash>i', dap.step_into, desc = 'dap step into', buffer = bn },
+      { '<bslash><bslash>l', dap.run_last, desc = 'dap run last', buffer = bn },
+      { '<bslash><bslash>o', dap.step_over, desc = 'dap step over', buffer = bn },
+      { '<bslash><bslash>b', dap.toggle_breakpoint, desc = 'dap toggle breakpoint', buffer = bn },
+      { '<bslash><bslash>r', dap.repl.toggle, desc = 'dap repl toggle', buffer = bn },
    }
 end
 

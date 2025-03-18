@@ -48,6 +48,7 @@ dot_config_files='
    lua/grs/plugins/coding/init.lua
    lua/grs/plugins/coding/format.lua
    lua/grs/plugins/coding/gitsigns.lua
+   lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
    lua/grs/plugins/core/init.lua
    lua/grs/plugins/core/appearance.lua

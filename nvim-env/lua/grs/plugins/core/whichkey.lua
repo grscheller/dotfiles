@@ -15,6 +15,7 @@ local config_whichkey = function()
 
    wk.add {
       { '<bslash>', group = 'diagnostics & dap' },
+      { '<bslash><bslash>', group = 'dap' },
       { '<leader>', group = 'space' },
       { '<c-b>', group = 'blackhole' },
       { '<c-s>', group = 'system clipboard' },
@@ -22,7 +23,6 @@ local config_whichkey = function()
 
    wk.add {
       mode = { 'v' },
-      { '<leader>', group = 'leader' },
       { '<c-b>', group = 'blackhole' },
       { '<c-s>', group = 'system clipboard' },
    }
@@ -32,11 +32,9 @@ local config_whichkey = function()
    wk.add {
       -- used by multiple plugins
       { '<leader>s', group = 'search' },
-      -- nvim-surround plugin
-      { '<leader>r', group = 'surround' },
       -- plugin/package managers keymaps
-      { '<leader>l', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
-      { '<leader>m', '<cmd>Mason<cr>', desc = 'Mason gui' },
+      { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
+      { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason gui' },
       -- toggle Treesitter
       { '<leader>t', '<cmd>TSBufToggle highlight<cr>', desc = 'toggle treesitter highlighting' },
    }
