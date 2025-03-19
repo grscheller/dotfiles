@@ -1,8 +1,31 @@
 --[[ Plugin to integrate commandline formatters ]]
 
+local lint_config = function()
+   local lint = require 'lint'
+
+   lint.linters_by_ft = {
+      ccs = { 'stylelint' },
+      fish = { 'fish' },
+      gitcommit = { 'gitlint' },
+      haskell = { 'hlint' },
+      html = { 'markuplint' },
+      javascript = { 'eslint_d' },
+      javascriptreact = { 'eslint_d' },
+      json = { 'jsonlint' },
+      lua = { 'selene' },
+      luau = { 'selene' },
+      typescript = { 'eslint_d' },
+      typescriptreact = { 'eslint_d' },
+      markdown = { 'markdownlint-cli2' },
+      python = { 'pylint' },
+      sh = { 'shellcheck' },
+      svelte = { 'eslint_d' },
+      vue = { 'eslint_d' },
+   }
+end
+
 return {
    {
-      -- Enables range formatting for all formatters
       'mfussenegger/nvim-lint',
       keys = {
          {
@@ -12,31 +35,9 @@ return {
                require('lint').try_lint()
             end,
             mode = 'n',
-            desc = 'Lint buffer',
+            desc = 'Lint',
          },
       },
-      config = function()
-         local lint = require 'lint'
-
-         lint.linters_by_ft = {
-            ccs = { 'stylelint' },
-            fish = { 'fish' },
-            gitcommit = { 'gitlint' },
-            haskell = { 'hlint' },
-            html = { 'markuplint' },
-            javascript = { 'eslint_d' },
-            javascriptreact = { 'eslint_d' },
-            json = { 'jsonlint' },
-            lua = { 'selene' },
-            luau = { 'selene' },
-            typescript = { 'eslint_d' },
-            typescriptreact = { 'eslint_d' },
-            markdown = { 'markdownlint-cli2' },
-            python = { 'pylint' },
-            sh = { 'shellcheck' },
-            svelte = { 'eslint_d' },
-            vue = { 'eslint_d' },
-         }
-      end,
+      config = lint_config,
    },
 }
