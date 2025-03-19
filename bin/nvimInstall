@@ -37,7 +37,6 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    lua/grs/config/autocmds.lua
-   lua/grs/config/ensure_install.lua
    lua/grs/config/keymaps_early.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/globals.lua
@@ -81,6 +80,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lspconfig.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp/lspconfig/indirectly_by_other_plugin.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp/lspconfig/mason_or_manually.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/ensure_install.lua
 "
 
 dirs_to_create=""

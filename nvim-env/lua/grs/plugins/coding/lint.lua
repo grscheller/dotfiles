@@ -16,19 +16,26 @@ return {
          },
       },
       config = function()
-         local lint = require('lint')
+         local lint = require 'lint'
 
          lint.linters_by_ft = {
-            haskell = { 'hlint'},
-            html = { 'markuplint'},
+            ccs = { 'stylelint' },
+            fish = { 'fish' },
+            gitcommit = { 'gitlint' },
+            haskell = { 'hlint' },
+            html = { 'markuplint' },
             javascript = { 'eslint_d' },
             javascriptreact = { 'eslint_d' },
-            lua = {'selene'},
+            json = { 'jsonlint' },
+            lua = { 'selene' },
+            luau = { 'selene' },
             typescript = { 'eslint_d' },
             typescriptreact = { 'eslint_d' },
             markdown = { 'markdownlint-cli2' },
-            svelte = { 'eslint_d' },
             python = { 'pylint' },
+            sh = { 'shellcheck' },
+            svelte = { 'eslint_d' },
+            vue = { 'eslint_d' },
          }
       end,
    },
