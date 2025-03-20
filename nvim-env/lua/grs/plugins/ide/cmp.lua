@@ -6,7 +6,7 @@
 local words_before = require('grs.lib.text').cursor_has_words_before_it
 local mergeTables = require('grs.lib.functional').mergeTables
 
-local config_nvim_cmp = function()
+local nvim_cmp_configuration = function()
    local cmp = require 'cmp'
    local lspkind = require 'lspkind'
    local cmp_under_comparator = require 'cmp-under-comparator'
@@ -280,6 +280,6 @@ return {
          'lukas-reineke/cmp-rg',
          'saadparwaiz1/cmp_luasnip',
       },
-      config = config_nvim_cmp,
+      config = nvim_cmp_configuration,
    },
 }

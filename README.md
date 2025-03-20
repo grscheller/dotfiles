@@ -17,7 +17,7 @@ for the Linux based workstation computers I use.
 ## Factoids
 
 - POSIX compliant installation scripts
-  - actually Dash compliant (I use the "local" keyword)
+  - actually Dash compliant (I use the non-POSIX "local" keyword)
   - on Pop!OS /usr/bin/sh -> dash
 - Fish abbreviations to install from anywhere
   - dfInstall -> for dfInstall
@@ -25,7 +25,6 @@ for the Linux based workstation computers I use.
   - hInstall -> for homeInstall
   - nvInstall -> for nvimInstall
 - Currently only tested regularly on Pop!OS
-- Old Arch Linux - sway version on branch arch-sway
 
 ## Public Domain Declaration
 
