@@ -20,7 +20,11 @@ local lspconfig_configuration = function()
       PATH = 'append',
    }
 
-   local capabilities = vim.tbl_deep_extend('force', vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
+   local capabilities = vim.tbl_deep_extend(
+      'force',
+      vim.lsp.protocol.make_client_capabilities(),
+      require('cmp_nvim_lsp').default_capabilities()
+   )
 
    --[[ Manual configurations of LSP servers not installed with mason ]]
 
@@ -43,7 +47,7 @@ local lspconfig_configuration = function()
       capabilities = capabilities,
       filetypes = { 'haskell', 'lhaskell', 'cabal' },
       on_attach = function(_, bufnr)
-         if km.set_lsp_keymaps(bufnr) then
+         if km.set_lsp_keymaps(nil, bufnr) then
             km.set_hls_keymaps(bufnr)
          end
       end,
@@ -99,6 +103,14 @@ local lspconfig_configuration = function()
             hint = { enable = true },
          },
       },
+   }
+
+   -- Markdown
+   lspconf.marksman.setup {
+      capabilities = capabilities,
+      filetypes = { 'md' },
+      on_attach = km.set_lsp_keymaps,
+      setting = {},
    }
 
    -- Python Language Servers - installed into venv by pip
