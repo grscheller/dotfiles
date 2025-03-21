@@ -15,6 +15,7 @@ cyberseurity
 de facto
 deconflate
 deconflated
+deleteable
 delitem
 deprecations
 devs
@@ -29,6 +30,7 @@ installable
 instantiation
 integrations
 interoperability
+jumpable
 lang
 libc
 libexec
@@ -843,6 +845,7 @@ se
 sed
 semver
 sha
+shada
 sig
 SMP
 sourcekit
