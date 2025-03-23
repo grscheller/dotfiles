@@ -138,6 +138,8 @@ progs
 psub
 pullable
 pushable
+rebalance
+rebalanced
 recurse
 reddit
 reimage
@@ -839,6 +841,7 @@ rustc
 rustup
 rw
 rwx
+SCCS
 scp
 scrolloff
 se
