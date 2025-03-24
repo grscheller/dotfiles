@@ -14,14 +14,12 @@ function M.set_lsp_keymaps(_, bn)
       { 'jkg', group = 'goto', buffer = bn },
       { 'jkh', group = 'haskell', buffer = bn },
       { 'jks', group = 'symbols', buffer = bn },
-      { 'jkr', group = 'rust', buffer = bn },
    }
 
    wk.add {
       { 'H', vim.lsp.buf.hover, desc = 'hover document', buffer = bn },
       { 'K', vim.lsp.buf.signature_help, desc = 'signature help', buffer = bn },
       { 'jkff', vim.lsp.buf.format, desc = 'format with LSP', buffer = bn },
-      { 'jkrn', vim.lsp.buf.rename, desc = 'rename', buffer = bn },
       { 'jkca', vim.lsp.buf.code_action, desc = 'code action', buffer = bn },
       { 'jkcl', vim.lsp.codelens.refresh, desc = 'code lens refresh', buffer = bn },
       { 'jkcr', vim.lsp.codelens.run, desc = 'code lens run', buffer = bn },
@@ -29,6 +27,7 @@ function M.set_lsp_keymaps(_, bn)
       { 'jkgD', vim.lsp.buf.declaration, desc = 'goto type decl', buffer = bn },
       { 'jkgi', tb.lsp_implementations, desc = 'implementations', buffer = bn },
       { 'jkgr', tb.lsp_references, desc = 'references', buffer = bn },
+      { 'jkna', vim.lsp.buf.rename, desc = 'rename', buffer = bn },
       { 'jksd', tb.lsp_document_symbols, desc = 'document symbols', buffer = bn },
       { 'jksw', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols', buffer = bn },
       { 'jkwa', vim.lsp.buf.add_workspace_folder, desc = 'add ws folder', buffer = bn },
@@ -63,9 +62,9 @@ end
 -- Rust-Tools related keymaps - used in after/ftplugin/rust.lua
 function M.set_rust_keymaps(bn)
    require('which-key').add {
-      { 'jkR', group = 'rustaceanvim', buffer = bn },
+      { 'jkr', group = 'rustaceanvim', buffer = bn },
       {
-         'jkRA',
+         'jkra',
          function()
             vim.cmd.RustLsp 'codeAction'
          end,
@@ -73,7 +72,7 @@ function M.set_rust_keymaps(bn)
          buffer = bn,
       },
       {
-         'jkRH',
+         'jkrh',
          function()
             vim.cmd.RustLsp {
                'hover',

@@ -6,7 +6,7 @@ local config_nvim_dap = function()
    local dap = require 'dap'
    local dapui = require 'dapui'
 
-   -- Dap UI setup - For more information, see |:help nvim-dap-ui|
+   -- Dap UI setup
    dapui.setup {
       icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
       controls = {
@@ -35,20 +35,16 @@ local config_nvim_dap = function()
          detached = not vim.fn.has 'win32',
       },
    }
-
-   -- km.set_dap_keymaps(bn)  -- FIX! how do I get the buffer number???
-   -- See: https://github.com/mfussenegger/dotfiles/blob/e7abb9a13f8fb3075704ed703dd973ecf3502cc3/vim/.config/nvim/lua/me/dap.lua#L64-L75
 end
 
 return {
    {
       'mfussenegger/nvim-dap',
       dependencies = {
-         -- Beautiful debugger UI
          'rcarriga/nvim-dap-ui',
          'nvim-neotest/nvim-nio',
 
-         -- Add debuggers here
+         -- Debuggers
          'leoluz/nvim-dap-go',
       },
       config = config_nvim_dap,
