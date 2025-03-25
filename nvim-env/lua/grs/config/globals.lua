@@ -11,9 +11,6 @@ vim.g.maplocalleader = ' '
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true
 
--- Neovim provider
-vim.g.python3_host_prog = '~/devel/venvs/nvim/bin/python'
-
 -- Perl had its day
 vim.g.loaded_perl_provider = 0
 
