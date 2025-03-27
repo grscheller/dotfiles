@@ -24,6 +24,7 @@ dot_config_files='
    after/ftplugin/cpp.lua
    after/ftplugin/csv.lua
    after/ftplugin/fish.lua
+   after/ftplugin/go.lua
    after/ftplugin/haskell.lua
    after/ftplugin/help.lua
    after/ftplugin/html.lua
@@ -36,6 +37,7 @@ dot_config_files='
    after/ftplugin/sh.lua
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
+   after/ftplugin/zig.lua
    lua/grs/config/autocmds.lua
    lua/grs/config/keymaps_early.lua
    lua/grs/config/keymaps.lua

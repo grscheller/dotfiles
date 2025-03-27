@@ -42,6 +42,21 @@ local lspconfig_configuration = function()
       on_attach = km.set_lsp_keymaps,
    }
 
+   -- Go - gopls [[See https://cs.opensource.google/go/x/tools/+/refs/tags/gopls/v0.18.1:gopls/doc/vim.md#vimlsp]]
+   lspconf.gopls.setup {
+      capabilities = capabilities,
+      on_attach = km.set_lsp_keymaps,
+      settings = {
+         gopls = {
+            analyses = {
+               unusedparams = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+         },
+      },
+   }
+
    -- Haskell - haskell-language-server
    lspconf.hls.setup {
       capabilities = capabilities,
@@ -64,7 +79,7 @@ local lspconfig_configuration = function()
 
    -- HTMX - htmx-lsp
    -- lspconf.htmx.setup {
-   --    capabilities = capabilities,
+   --    capabilities = capabilities,{
    --    on_attach = km.set_lsp_keymaps,
    -- }
 
