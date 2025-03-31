@@ -18,6 +18,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/dtools/dtools-datastructures/src
          case 'dtools-fp'
             set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
+         case 'dtools-queues'
+            set --append PythonPath ~/devel/pypi/dtools/dtools-queues/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
