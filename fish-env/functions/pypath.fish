@@ -2,8 +2,6 @@ function pypath --description 'manage $PYTHONPATH env variable'
    set -f PythonPath
    for arg in $argv
       switch $arg
-         case 'boringmath'
-            set --append PythonPath ~/devel/pypi/boring-math/src
          case 'bm-integer-math'
             set --append PythonPath ~/devel/pypi/bm/bm-integer-math/src
          case 'bm-probability-distributions'
@@ -14,10 +12,10 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
          case 'dtools-circulararray'
             set --append PythonPath ~/devel/pypi/dtools/dtools-circular-array/src
-         case 'dtools-datastructures'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-datastructures/src
          case 'dtools-fp'
             set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
+         case 'dtools-tuples'
+            set --append PythonPath ~/devel/pypi/dtools/dtools-tuples/src
          case 'dtools-queues'
             set --append PythonPath ~/devel/pypi/dtools/dtools-queues/src
          case '*'

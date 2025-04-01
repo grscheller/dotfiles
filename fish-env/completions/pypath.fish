@@ -18,11 +18,11 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-circulararray' \
   -a 'dtools-circulararray'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-datastructures' \
-  -a 'dtools-datastructures'
-complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-fp' \
   -a 'dtools-fp'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-queues' \
   -a 'dtools-queues'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from dtools-tuples' \
+  -a 'dtools-tuples'
