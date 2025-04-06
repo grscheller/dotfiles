@@ -25,7 +25,7 @@ function pypath --description 'manage $PYTHONPATH env variable'
    end
    if test (count $PythonPath) -gt 0
       set -gx PYTHONPATH $PythonPath
-      printf '$PYTHONPATH set to %s\n' (string join : $PYTHONPATH)
+      printf '$PYTHONPATH exported & set to:\n%s\n' (string join : $PYTHONPATH)
    else
       set -e PYTHONPATH
       printf '$PYTHONPATH removed\n'

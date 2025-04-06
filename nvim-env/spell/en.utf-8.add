@@ -227,8 +227,6 @@ alacritty
 ArXiv
 Baeldung
 Baidu
-bashism
-bashisms
 BITCHUTE
 Bing
 Bjarnason
@@ -573,6 +571,8 @@ awk
 backend
 backends
 backlight
+bashism
+bashisms
 bg
 BRE
 BRE's
@@ -937,6 +937,8 @@ usr
 utf
 urandom
 userspace
+vararg
+varargs
 variadic
 vDSO
 ve
@@ -1042,7 +1044,6 @@ XNVIDIA
 # grscheller ~/devel names
 󰒲
 ackermann
-ai4py
 apue
 APUE
 arg
