@@ -58,7 +58,6 @@ devel_files='
 
 remove_items="
    "$HOME/.vimrc"
-   "$HOME/.config/alacritty"
 "
 
 dirs_to_create="

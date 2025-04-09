@@ -489,6 +489,7 @@ Quaternion
 Quaternions
 quartile
 quartiles
+unordered
 # Very sway/wlroots/desktop specific
 acpi_video1
 alittleofmeinyou
