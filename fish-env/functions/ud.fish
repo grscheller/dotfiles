@@ -4,7 +4,7 @@ function ud --description 'Jump up multiple directories, default is 1'
       return 2
    end
 
-   # Pop up one directory if no arguments, or an empty string, was given
+   # Pop up one directory for no arguments or an empty string given
    if test (count $argv) -eq 0 || test -z $argv[1]
       cd ..
       return $status
@@ -30,85 +30,75 @@ function ud --description 'Jump up multiple directories, default is 1'
    set -f targetFound ""
    set -f baseName (basename (pwd))
 
-   # First look for an exact match
+   # Exact match
    while test $cnt -le $maxUp
       if test -e $upDir/$target
-         if test "$upDir" = ".."
-            if test "$target" = "$baseName"
-               # don't find current directory
-               set upDir ../$upDir
-               set cnt (math $cnt + 1)
-               continue
+         if test "$upDir" != ..
+            set targetFound $upDir/$target
+            break
+         else
+            if test "$target" != "$baseName"
+               set targetFound $upDir/$target
+               break
             end
          end
-         set targetFound $upDir/$target
-         echo got to 3: $targetFound
-         break
       end
       set upDir ../$upDir
       set cnt (math $cnt + 1)
    end
 
-   echo got to 4: $targetFound
-
-   # Next check in case a quoted glob pattern was given
+   # Leading match
    if test -z $targetFound
       set cnt 1
       set upDir ..
+
       while test $cnt -le $maxUp
-         eval set targetsFound $upDir/$target
-         if test (count $targetsFound) -gt 0
-            if test (count $targetsFound) -eq 1
-               set targetFound $targetsFound
-               break
+         set targetsFound $upDir/$target*
+
+         if test "$upDir" = ..
+            set -l targets ()
+            for trgt in $targetsFound
+               if test "$trgt" != "../$baseName"
+                  set targets $targets $trgt
+               end
             end
-            # for multiple matches, randomly select one
-            set targets (string replace -r ^(string repeat -n (math "2 + 3*($cnt - 1)") .) "" $targetsFound)
-            set target $targets[(random 1 (count $targets))]
+            set targetsFound $targets
+         end
+
+         if test (count $targetsFound) -gt 0
             break
          end
+
          set upDir ../$upDir
          set cnt (math $cnt + 1)
       end
-   end
 
-   echo got to 5: $targetFound
+      set -l numFound (count $targetsFound)
 
-   # Finally check if an initial pattern was given
-   if test -z $targetFound
-      set cnt 1
-      set upDir ..
-      while test $cnt -le $maxUp
-         eval set targetsFound $upDir/$target*
-         if test (count $targetsFound) -gt 0
-            if test (count $targetsFound) -eq 1
-               set targetFound $targetsFound
-               break
-            end
-            # for multiple matches, randomly select one
-            set targets (string replace -r ^(string repeat -n (math "2 + 3*($cnt - 1)") .) "" $targetsFound)
-            set target $targets[(random 1 (count $targets))]
-            break
+      if test $numFound -gt 1
+         # for multiple matches, randomly select one
+         set -l targets (string replace -r ^(string repeat -n (math "2 + 3*($cnt - 1)") .) "" $targetsFound)
+         set targetFound $upDir/$targets[(random 1 $numFound)]
+      else
+         if test $numFound -eq 1
+            set targetFound $targetsFound
          end
-         set upDir ../$upDir
-         set cnt (math $cnt + 1)
       end
    end
 
-   echo got to 6: $targetFound
-
+   # Set destination directory to jump up to
    set -f destination
    if test -z "$targetFound"
       printf 'ud: "%s" not found above current directory\n\n' $target
       return 1
-   else if test -d "$targetFound"
+   end
+   if test -d "$targetFound"
       set destination $targetFound
    else
       set destination (dirname $targetFound)
    end
 
-   echo got to 7: $targetFound
-
+   # Jump up or whine
    if cd $destination[1] 2>/dev/null
       return 0
    end
