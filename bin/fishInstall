@@ -52,7 +52,6 @@ config_files='
    functions/ll.fish
    functions/ls.fish
    functions/mc.fish
-   functions/notilde.fish
    functions/nsort.fish
    functions/pathtrim.fish
    functions/pv.fish
@@ -84,10 +83,7 @@ config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/archJDK.fish
-   $XDG_CONFIG_HOME/fish/functions/jdkArch.fish
-   $XDG_CONFIG_HOME/fish/functions/jdkPopOS.fish
-   $XDG_CONFIG_HOME/fish/functions/ev.fish
+   $XDG_CONFIG_HOME/fish/functions/notilde.fish
 "
 
 dirs_to_create=""

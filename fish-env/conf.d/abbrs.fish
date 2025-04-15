@@ -34,7 +34,6 @@ abbr -a dp digpath
 abbr -a -- pst ps -ejH
 abbr -a nv nvim
 abbr -a pa 'string join \n $PATH'
-abbr -a sw '$HOME/bin/startw'
 # Website scrapping - pull down a subset of a website
 abbr -a Wget -- /usr/bin/wget -p --convert-links -e robots=off
 # Pull down more -- Not good for large websites
@@ -43,4 +42,3 @@ abbr WgetM -- /usr/bin/wget --mirror -p --convert-links -e robots=off
 # Shell environment cmds
 abbr -a re 'cd; REDO_ENV=yes fish'
 abbr -a ue 'UPDATE_ENV=yes fish'
-
