@@ -60,12 +60,12 @@ if set -q VE_VENV
    ve (basename $VE_VENV)
 else
    set -e PYTHONPATH
-   ve dt
+   ve grs
 end
 
 # Set jdk_version managed Java environment
 if set -q JDK_VERSION
-   jdk_version $JDK_VERSION
+   jdk_version $JDK_VERSION > /dev/null  # so scp does not gag
 else
-   jdk_version 21
+   jdk_version 21 > /dev/null
 end
