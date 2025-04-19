@@ -28,7 +28,7 @@ function ud --description 'Jump up multiple directories, default is 1'
 
    set -f targetsFound
    set -f targetFound ""
-   set -f baseName (basename (pwd))
+   set -f currDir (path basename (pwd))
 
    # Exact match
    while test $cnt -le $maxUp
@@ -37,7 +37,7 @@ function ud --description 'Jump up multiple directories, default is 1'
             set targetFound $upDir/$target
             break
          else
-            if test "$target" != "$baseName"
+            if test "$target" != "$currDir"
                set targetFound $upDir/$target
                break
             end
@@ -58,7 +58,7 @@ function ud --description 'Jump up multiple directories, default is 1'
          if test "$upDir" = ..
             set -l targets ()
             for trgt in $targetsFound
-               if test "$trgt" != "../$baseName"
+               if test "$trgt" != "../$currDir"
                   set targets $targets $trgt
                end
             end

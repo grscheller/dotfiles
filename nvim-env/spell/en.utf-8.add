@@ -578,6 +578,7 @@ bg
 BRE
 BRE's
 autopairs
+basename
 blankline
 bootable
 bootloader
@@ -1060,6 +1061,7 @@ bm
 boolean
 CHANGELOG
 CircularArray
+currDir
 crap1
 crap2
 crap3

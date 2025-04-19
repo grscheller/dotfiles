@@ -45,6 +45,6 @@ function dn --description 'Jump down directory tree to find an item'
    if test -d "$target"
       cd $target
    else
-      cd (dirname $target)
+      cd (path dirname $target)
    end
 end
