@@ -14,6 +14,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/dtools/dtools-circular-array/src
          case 'dtools-fp'
             set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
+         case 'dtools-splitends'
+            set --append PythonPath ~/devel/pypi/dtools/dtools-splitends/src
          case 'dtools-tuples'
             set --append PythonPath ~/devel/pypi/dtools/dtools-tuples/src
          case 'dtools-queues'

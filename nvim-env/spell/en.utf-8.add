@@ -24,7 +24,6 @@ ie
 ignorable
 implicits
 indexable
-initializer
 installability
 installable
 instantiation
@@ -1097,6 +1096,9 @@ f5
 f6
 fdgit
 fibonacci
+fifo
+lifo
+FIFO
 FIFO's
 FIFOQueue
 FIFOQueueMB
@@ -1287,6 +1289,8 @@ gitsigns
 globalns
 hasattr
 IndexError
+initializer
+initializers
 io
 IPython
 ipython

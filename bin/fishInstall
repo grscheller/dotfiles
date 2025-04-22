@@ -20,7 +20,6 @@ cd "$envPath" 2>/dev/null || {
 . ../bin/source_setup.sh
 
 config_files='
-   completions/alacritty.fish
    completions/pypath.fish
    completions/ve.fish
    config.fish
@@ -83,7 +82,7 @@ config_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/functions/notilde.fish
+   $XDG_CONFIG_HOME/fish/completions/alacritty.fish
 "
 
 dirs_to_create=""

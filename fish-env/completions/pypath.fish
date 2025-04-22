@@ -21,6 +21,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-fp' \
   -a 'dtools-fp'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from dtools-splitends' \
+  -a 'dtools-splitends'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-queues' \
   -a 'dtools-queues'
 complete -c pypath \
