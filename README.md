@@ -1,7 +1,6 @@
 # grscheller/dotfiles
 
-GitHub repository to maintain and install multiple configuration files
-for the Linux based workstation computers I use.
+My GitHub repository to maintain and install my Linux based "dotfiles."
 
 ## Installation scripts
 
