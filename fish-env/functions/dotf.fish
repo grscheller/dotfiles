@@ -1,4 +1,4 @@
-function fdot --description 'Find dotfiles in non-hidden directories'
+function dotf --description 'Find dotfiles in non-hidden directories'
 
   set -f dotfiles
 

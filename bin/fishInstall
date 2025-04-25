@@ -29,10 +29,9 @@ config_files='
    functions/ax.fish
    functions/cu.fish
    functions/digpath.fish
-   functions/disable_touch_pad.fish
-   functions/enable_touch_pad.fish
-   functions/fdgit.fish
-   functions/fdot.fish
+   functions/dotf.fish
+   functions/fdgf.fish
+   functions/fdgp.fish
    functions/ff.fish
    functions/fields.fish
    functions/fishcolors.fish
@@ -83,6 +82,10 @@ config_files='
 
 remove_items="
    $XDG_CONFIG_HOME/fish/completions/alacritty.fish
+   $XDG_CONFIG_HOME/fish/functions/disable_touch_pad.fish
+   $XDG_CONFIG_HOME/fish/functions/enable_touch_pad.fish
+   $XDG_CONFIG_HOME/fish/functions/fdot.fish
+   $XDG_CONFIG_HOME/fish/functions/fdgit.fish
 "
 
 dirs_to_create=""
