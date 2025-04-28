@@ -5,7 +5,6 @@ local lint_config = function()
 
    lint.linters_by_ft = {
       ccs = { 'stylelint' },
-      fish = { 'fish' },
       gitcommit = { 'gitlint' },
       haskell = { 'hlint' },
       html = { 'markuplint' },
@@ -29,7 +28,6 @@ return {
       'mfussenegger/nvim-lint',
       keys = {
          {
-            -- Customize or remove this keymap to your liking
             '<leader>l',
             function()
                require('lint').try_lint()

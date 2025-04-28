@@ -46,13 +46,13 @@ return {
            encapsulates the TypeScript compiler to provide language services. It
            exposes these services thru a JSON based protocol. Well suited for
            editors and IDE support, it is not itself an LSP.
-          
+
            Note that tsserver is NOT typescript-language-server (ts-ls) formally
            and confusingly also called tsserver.
-          
+
            Both tsserver and typescript need to be install manually via the
            npm command `"$ npm install -g typescript-language-server typescript"
-          
+
            This plugin used lspconfig directly to configure itself as an LSP server
            leveraging tsserver. Hence it acts as a monkey-in-the-middle between the
            built in Neovim LSP client and the pre-LSP tsserver.

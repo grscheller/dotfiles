@@ -669,6 +669,7 @@ extensibility
 extern
 facc
 falsy
+falsiness
 fcntl
 fd
 fg
@@ -867,6 +868,7 @@ struct
 structs
 stty
 su
+subclassable
 subclassed
 subclasses
 subclassing
@@ -917,6 +919,7 @@ treesitter
 TreeSitter
 truecolor
 truthy
+truthiness
 TSInstallFromGrammer
 TSUpdate
 tsx
