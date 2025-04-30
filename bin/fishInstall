@@ -30,8 +30,7 @@ config_files='
    functions/cu.fish
    functions/digpath.fish
    functions/dotf.fish
-   functions/fdgf.fish
-   functions/fdgp.fish
+   functions/fdg.fish
    functions/ff.fish
    functions/fields.fish
    functions/fishcolors.fish
@@ -86,6 +85,8 @@ remove_items="
    $XDG_CONFIG_HOME/fish/functions/enable_touch_pad.fish
    $XDG_CONFIG_HOME/fish/functions/fdot.fish
    $XDG_CONFIG_HOME/fish/functions/fdgit.fish
+   $XDG_CONFIG_HOME/fish/functions/fdgf.fish
+   $XDG_CONFIG_HOME/fish/functions/fdgp.fish
 "
 
 dirs_to_create=""
