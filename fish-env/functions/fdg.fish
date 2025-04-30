@@ -23,13 +23,11 @@ function fdg --description 'Update GIT repos in subdirectories'
       for repo in $repos
          cd "$repo"
          set branch (git branch --show-current)
-         begin
-            printf '\n%s%s:%s\n' $brblue $repo $normal
-            git --no-pager $action | sed -e 's/^/   /'
-            printf '   '
-            git --no-pager status --short --branch
-            git --no-pager diff --stat --color origin/$branch | sed -e 's/^/  /'
-         end
+         printf '\n%s%s:%s\n' $brblue $repo $normal
+         git --no-pager $action &| sed -e 's/^/   /'
+         printf '   '
+         git --no-pager status --short --branch
+         git --no-pager diff --stat --color origin/$branch | sed -e 's/^/  /'
          cd -
       end
    end
