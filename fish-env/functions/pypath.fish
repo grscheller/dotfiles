@@ -12,6 +12,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
          case 'dtools-circulararray'
             set --append PythonPath ~/devel/pypi/dtools/dtools-circular-array/src
+         case 'dtools-containers'
+            set --append PythonPath ~/devel/pypi/dtools/dtools-containers/src
          case 'dtools-fp'
             set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
          case 'dtools-splitends'
