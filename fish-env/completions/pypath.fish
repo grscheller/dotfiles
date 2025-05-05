@@ -18,6 +18,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-circulararray' \
   -a 'dtools-circulararray'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from dtools-containers' \
+  -a 'dtools-containers'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-fp' \
   -a 'dtools-fp'
 complete -c pypath \
