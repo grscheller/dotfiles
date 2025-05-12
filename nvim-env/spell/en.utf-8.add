@@ -7,6 +7,7 @@ bootcamp
 bootcamps
 CDL
 CGA
+cha
 cheatsheet
 cheatsheets
 composability
@@ -16,13 +17,13 @@ de facto
 deconflate
 deconflated
 deleteable
-delitem
 deprecations
 devs
 discoverable
+hashability
+hashable
 ie
 ignorable
-implicits
 indexable
 installability
 installable
@@ -32,8 +33,6 @@ interoperability
 jumpable
 lang
 LHS
-libc
-libexec
 libre
 licensable
 licensee
@@ -60,27 +59,9 @@ minimax
 mixin
 mkpkg
 modprobe
-monad
-monads
-monadic
-monadically
-monoid
-monoids
 monospace
 monospaced
 mpd
-mut
-Mut
-mypy
-msg
-msg0
-msg1
-msg2
-msg3
-MSYS2
-mul
-mult
-nano
 natively
 NDELAY
 noncommercially
@@ -99,7 +80,6 @@ ok
 olde
 OOP
 operator
-pacman
 parameterize
 parameterized
 parsers
@@ -135,6 +115,7 @@ progs
 psub
 pullable
 pushable
+ramen
 rebalance
 rebalanced
 recurse
@@ -187,6 +168,8 @@ undefine
 undefines
 unflatten
 unfloat
+unhashability
+unhashable
 unmanaged
 unmerge
 unmerged
@@ -232,6 +215,7 @@ checksum
 checksums
 Chiusana
 Chuang
+Conoco
 Cygwin
 DECwriter
 Dogbert
@@ -267,6 +251,7 @@ LuaJIT
 Lutris
 LVHN
 Meraki
+MMT
 Naftalin
 NetFlix
 Noether
@@ -305,6 +290,7 @@ W3C
 Wampler
 Wayback
 wayland
+Weis
 wikipedia
 Wiktionary
 WIPO
@@ -476,6 +462,7 @@ covariant
 gcd
 lcm
 ln
+pde
 primality
 radian
 radians
@@ -534,12 +521,13 @@ XF86AudioRaiseVolume
 XF86MonBrightnessDown
 XF86MonBrightnessUp
 XF86Search
-# Systemd related
+# Systemd/Arch/PoPOS related
 ExecStart
 BindsTo
 brightnessctl
 journalctl
 networkd
+pacman
 pulseaudio
 systemctl
 Systemd
@@ -634,6 +622,7 @@ ctags
 ctrl
 CUDA
 CUI
+pacman
 dap
 dap
 declarator
@@ -744,7 +733,6 @@ GTK
 gvim
 Hackage
 Happystack
-hashable
 haskell
 heredoc
 heredocs
@@ -776,6 +764,8 @@ keymaps
 kickstart
 le
 lex
+libc
+libexec
 linux
 llvm
 LLVM
@@ -807,6 +797,13 @@ namespaces
 mb
 md
 mkdir
+monad
+monads
+monadic
+monadically
+monoid
+monoids
+MSYS2
 mv
 ne
 nemo
@@ -1034,6 +1031,7 @@ jitter
 KiB
 MiB
 MX
+nano
 nvidia
 NVIDIA
 nvme
@@ -1224,6 +1222,15 @@ Luarocks
 maxwell
 maxwell4
 Muc
+mut
+Mut
+msg
+msg0
+msg1
+msg2
+msg3
+mul
+mult
 nada
 Nada
 neodev
@@ -1296,6 +1303,7 @@ woException
 cs
 Coursier
 coursier
+implicits
 sbt
 scala
 Scala
@@ -1342,6 +1350,7 @@ len
 libapue
 localns
 matplotlib
+mypy
 namedtuple
 NoneType
 OSError
@@ -1382,6 +1391,7 @@ SyntaxError
 SystemError
 tvars
 TypeError
+unslotted
 ValueError
 venv
 venvs
