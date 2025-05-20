@@ -16,10 +16,10 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/dtools/dtools-containers/src
          case 'dtools-fp'
             set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
+         case 'dtools-iterables'
+            set --append PythonPath ~/devel/pypi/dtools/dtools-iterables/src
          case 'dtools-splitends'
             set --append PythonPath ~/devel/pypi/dtools/dtools-splitends/src
-         case 'dtools-tuples'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-tuples/src
          case 'dtools-queues'
             set --append PythonPath ~/devel/pypi/dtools/dtools-queues/src
          case '*'
