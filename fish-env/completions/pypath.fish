@@ -32,3 +32,9 @@ complete -c pypath \
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-queues' \
   -a 'dtools-queues'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-credits' \
+  -a 'pythonic-fp-credits'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-circulararray' \
+  -a 'pythonic-fp-circulararray'

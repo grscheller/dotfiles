@@ -1094,7 +1094,7 @@ baz
 bm
 boolean
 CHANGELOG
-CircularArray
+circulararray
 currDir
 crap1
 crap2
@@ -1102,6 +1102,7 @@ crap3
 crap4
 crap5
 datastructures
+de
 dec
 dec0
 dec1
@@ -1158,6 +1159,8 @@ foobar
 foobaz
 foofoo
 fpinscala
+fptools
+fpythonic
 ftuple
 ftuples
 FTuple
@@ -1274,6 +1277,8 @@ s6
 s7
 s8
 s9
+sc_reduce_left
+sc_reduce_right
 siegfried
 SL
 SL_NODE
