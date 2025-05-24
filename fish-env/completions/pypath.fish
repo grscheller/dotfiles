@@ -33,8 +33,23 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from dtools-queues' \
   -a 'dtools-queues'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-circulararray' \
+  -a 'pythonic-fp-circulararray'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-containers' \
+  -a 'pythonic-fp-containers'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-credits' \
   -a 'pythonic-fp-credits'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from pythonic-fp-circulararray' \
-  -a 'pythonic-fp-circulararray'
+  -n 'not __fish_seen_subcommand_from pythonic-fp-fptools' \
+  -a 'pythonic-fp-fptools'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-iterables' \
+  -a 'pythonic-fp-iterables'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-queues' \
+  -a 'pythonic-fp-queues'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-splitends' \
+  -a 'pythonic-fp-splitends'

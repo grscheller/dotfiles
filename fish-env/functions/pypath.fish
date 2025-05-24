@@ -22,10 +22,20 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/dtools/dtools-splitends/src
          case 'dtools-queues'
             set --append PythonPath ~/devel/pypi/dtools/dtools-queues/src
-         case 'pythonic-fp-credits'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp/src
          case 'pythonic-fp-circulararray'
             set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-circulararray/src
+         case 'pythonic-fp-containers'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-containers/src
+         case 'pythonic-fp-credits'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp/src
+         case 'pythonic-fp-fptools'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-fptools/src
+         case 'pythonic-fp-iterables'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-iterables/src
+         case 'pythonic-fp-queues'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-queues/src
+         case 'pythonic-fp-splitends'
+            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-splitends/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
