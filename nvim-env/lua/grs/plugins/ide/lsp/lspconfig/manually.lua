@@ -23,7 +23,11 @@ local lspconfig_configuration = function()
    local capabilities = vim.tbl_deep_extend(
       'force',
       vim.lsp.protocol.make_client_capabilities(),
-      require('cmp_nvim_lsp').default_capabilities()
+      require('cmp_nvim_lsp').default_capabilities(),
+      {
+         offsetEncoding = { 'utf-16' },
+         general = { positionEncodings = { 'utf-16' } },
+      }
    )
 
    --[[ Manual configurations of LSP servers not installed with mason ]]

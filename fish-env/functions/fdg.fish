@@ -7,6 +7,8 @@ function fdg --description 'Update GIT repos in subdirectories'
          set action pull
       case 'push'
          set action push
+      case 'add'
+         set action add .
       case '*'
          set action fetch
       end
