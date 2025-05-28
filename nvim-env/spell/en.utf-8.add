@@ -543,7 +543,7 @@ systemd
 temperatureC
 timedatectl
 WantedBy
-# computer science names
+# computer science and software development names
 .
 ..
 ...
@@ -580,7 +580,6 @@ bootable
 bootloader
 buf
 bugfix
-builtins
 C11
 C17
 C18
@@ -859,6 +858,7 @@ rgb
 ripgrep
 rm
 Roboto
+rst
 rsync
 runable
 runtime
@@ -1329,6 +1329,7 @@ abc
 argtype
 argtypes
 bool
+builtins
 Callable's
 dict
 dicts
