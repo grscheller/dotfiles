@@ -23,14 +23,79 @@ local lspconfig_configuration = function()
    local capabilities = vim.tbl_deep_extend(
       'force',
       vim.lsp.protocol.make_client_capabilities(),
-      require('cmp_nvim_lsp').default_capabilities(),
-      {
-         offsetEncoding = { 'utf-16' },
-         general = { positionEncodings = { 'utf-16' } },
-      }
+      require('cmp_nvim_lsp').default_capabilities()
    )
 
-   --[[ Manual configurations of LSP servers not installed with mason ]]
+   vim.lsp.config('*', {
+      capabilities = vim.tbl_deep_extend('force',
+         vim.lsp.protocol.make_client_capabilities(),
+         require('cmp_nvim_lsp').default_capabilities()),
+      on_attach = km.set_lsp_keymaps,
+      root_markers = { '.git' },
+   })
+
+   -- Lua - lua-language-server
+   vim.lsp.config(
+      'lua_ls', {
+         cmd = { 'lua-language-server' },
+         filetypes = { 'lua' },
+         root_markers = {
+            '.luarc.json',
+            '.luarc.jsonc',
+            '.luacheckrc',
+            '.stylua.toml',
+            'stylua.toml',
+            'selene.toml',
+            'selene.yml',
+         },
+         on_init = function(client)
+            if client.workspace_folders then
+               local path = client.workspace_folders[1].name
+               if
+                  path ~= vim.fn.stdpath('config')
+                  and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+               then
+                  return
+               end
+            end
+            client.config.settings.Lua = vim.tbl_deep_extend(
+               'force',
+               client.config.settings.Lua,
+               {
+                  runtime = {
+                     version = 'LuaJIT',
+                     -- configure lsp_ls to find Lua modules the same way as Neovim does
+                     path = {
+                        'lua/?.lua',
+                        'lua/?/init.lua',
+                     },
+                  },
+                  -- make lsp_ls server aware of Neovim runtime files
+                  workspace = {
+                     checkThirdParty = false,
+                     library = {
+                        vim.env.VIMRUNTIME
+                     }
+                  }
+               }
+            )
+         end,
+         settings = {
+            Lua = {
+               completion = {
+                  callSnippet = 'Replace',
+               },
+               diagnostics = {
+                  globals = { 'vim' },
+                  disable = { 'missing-fields' },
+               },
+               hint = { enable = true },
+            },
+         },
+      }
+   )
+   
+   --[[ Deprecated: using lspconfig directly ]]
 
    local lspconf = require 'lspconfig'
 
@@ -87,24 +152,6 @@ local lspconfig_configuration = function()
    --    on_attach = km.set_lsp_keymaps,
    -- }
 
-   -- Lua - lua-language-server
-   lspconf.lua_ls.setup {
-      capabilities = capabilities,
-      filetypes = { 'lua' },
-      on_attach = km.set_lsp_keymaps,
-      settings = {
-         Lua = {
-            completion = {
-               callSnippet = 'Replace',
-            },
-            diagnostics = {
-               globals = { 'vim' },
-               disable = { 'missing-fields' },
-            },
-            hint = { enable = true },
-         },
-      },
-   }
 
    -- Luau - luau-lsp [[ Verify! Just copied from lua_ls ]]
    lspconf.luau_lsp.setup {
@@ -135,6 +182,13 @@ local lspconfig_configuration = function()
    -- Python Language Servers - installed into venv by pip
    lspconf.pylsp.setup {
       capabilities = capabilities,
+      capabilities = vim.tbl_deep_extend('force',
+         capabilities,
+         {
+            -- to force same encoding as ruff
+            offsetEncoding = { 'utf-16' },
+            general = { positionEncodings = { 'utf-16' } },
+         }),
       filetypes = { 'python' },
       on_attach = km.set_lsp_keymaps,
       flags = { debounce_text_changes = 200 },
@@ -179,24 +233,14 @@ end
 
 return {
    {
-      -- LSP Configuration manually or thru mason-lspconfig.nvim.
+      --[[ Deprecated: Using lspconfig directly like this ]]
+      -- LSP Configuration manually.
       'neovim/nvim-lspconfig',
       event = { 'BufReadPre', 'BufNewFile' },
       cmd = 'Mason',
       dependencies = {
          'hrsh7th/cmp-nvim-lsp',
          'williamboman/mason.nvim',
-         {
-            'folke/lazydev.nvim',
-            ft = 'lua', -- only load on lua files
-            opts = {
-               library = {
-                  'lazy.nvim',
-                  { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-                  'LazyVim',
-               },
-            },
-         },
       },
       config = lspconfig_configuration,
    },

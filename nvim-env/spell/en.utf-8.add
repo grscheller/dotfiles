@@ -779,9 +779,6 @@ LLVM
 ls
 lseek
 lstat
-lsp
-lspconfig
-LSP's
 LTS
 lt
 lua
@@ -1431,9 +1428,15 @@ autocmd
 autocmds
 autocommand
 autocommands
-healthcheck
+checkhealth
+checkpath
+checktime
 linter
 linters
+lsp
+lspconf
+lspconfig
+LSP's
 neovim
 neovim's
 noice
