@@ -1,4 +1,4 @@
---[[ Autocmds & Usercmdst ]]
+--[[ Text related Autocmds & Usercmds ]]
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

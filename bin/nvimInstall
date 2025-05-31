@@ -38,9 +38,11 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    after/ftplugin/zig.lua
-   lua/grs/config/autocmds.lua
-   lua/grs/config/keymaps_early.lua
-   lua/grs/config/keymaps.lua
+   lua/grs/config/autocmds/text.lua
+   lua/grs/config/autocmds/lsp.lua
+   lua/grs/config/keymaps/early.lua
+   lua/grs/config/keymaps/late.lua
+   lua/grs/config/lsp.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -78,11 +80,11 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lspconfig.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp/lspconfig/indirectly_by_other_plugin.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/lsp/lspconfig/mason_or_manually.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/ensure_install.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds_text.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds_lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps.lua
 "
 
 dirs_to_create=""

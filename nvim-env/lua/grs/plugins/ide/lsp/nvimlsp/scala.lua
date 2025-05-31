@@ -14,7 +14,7 @@
         environment with Coursier.
 --]]
 
-local km = require 'grs.config.keymaps'
+local km = require 'grs.config.keymaps.late'
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd

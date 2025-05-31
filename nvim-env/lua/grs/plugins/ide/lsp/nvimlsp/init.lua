@@ -1,4 +1,4 @@
---[[ Directly configures Neovim's LSP client without lspconfig ]]
+--[[ Plugins which directly configure Neovim's LSP client ]]
 
 local iFlatten = require('grs.lib.functional').iFlatten
 

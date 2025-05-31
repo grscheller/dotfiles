@@ -11,7 +11,7 @@ local config_whichkey = function()
       },
    }
 
-   --[[ Prefixes for keymaps_early.lua keymaps ]]
+   --[[ Prefixes for keymaps/early.lua keymaps ]]
 
    wk.add {
       { '<bslash>', group = 'diagnostics & dap' },
