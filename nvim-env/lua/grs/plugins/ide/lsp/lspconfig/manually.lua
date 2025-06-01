@@ -10,18 +10,6 @@ local km = require 'grs.config.keymaps.late'
 
 local lspconfig_configuration = function()
 
-   -- Move to core
-   require('mason').setup {
-      ui = {
-         icons = {
-            package_installed = '✓',
-            package_pending = '➜',
-            package_uninstalled = '✗',
-         },
-      },
-      PATH = 'append',
-   }
-   
    --[[ Deprecated: using lspconfig directly ]]
 
    local lspconf = require 'lspconfig'
@@ -30,12 +18,6 @@ local lspconfig_configuration = function()
       vim.lsp.protocol.make_client_capabilities(),
       require('cmp_nvim_lsp').default_capabilities()
    )
-
-   -- Bash & POSIX Shells - bash-language-server
-   lspconf.bashls.setup {
-      capabilities = capabilities,
-      on_attach = km.set_lsp_keymaps,
-   }
 
    -- Cascading Style Sheets - css-lsp
    lspconf.cssls.setup {
@@ -158,15 +140,8 @@ end
 
 return {
    {
-      --[[ Deprecated: Using lspconfig directly like this ]]
-      -- LSP Configuration manually.
       'neovim/nvim-lspconfig',
       event = { 'BufReadPre', 'BufNewFile' },
-      cmd = 'Mason',
-      dependencies = {
-         'hrsh7th/cmp-nvim-lsp',
-         'williamboman/mason.nvim',
-      },
       config = lspconfig_configuration,
    },
 }

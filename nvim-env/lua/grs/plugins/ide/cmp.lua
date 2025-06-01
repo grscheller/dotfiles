@@ -260,7 +260,7 @@ return {
    {
       -- insert mode completions
       'hrsh7th/nvim-cmp',
-      event = { 'InsertEnter', 'CmdlineEnter' },
+      event = 'VeryLazy',
       dependencies = {
          -- snippet engine (required)
          'L3MON4D3/LuaSnip',

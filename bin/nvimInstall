@@ -38,11 +38,11 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    after/ftplugin/zig.lua
+   lsp/bashls.lua
+   lsp/lua_ls.lua
    lua/grs/config/autocmds/text.lua
-   lua/grs/config/autocmds/lsp.lua
    lua/grs/config/keymaps/early.lua
    lua/grs/config/keymaps/late.lua
-   lua/grs/config/lsp.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -85,6 +85,9 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds_lsp.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps.lua
+   $XDG_CONFIG_HOME/nvim/after/lsp/lua.lua
+   $XDG_CONFIG_HOME/nvim/after/lsp/lua_ls.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/autocmds/lsp.lua
 "
 
 dirs_to_create=""

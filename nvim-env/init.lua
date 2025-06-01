@@ -86,22 +86,7 @@ local lazy_opts = {
 
 ok, lazy = pcall(require, 'lazy')
 if ok then
-   -- Configure plugins with lazy.nvim
    lazy.setup(lazy_opts)
-
-   -- Configure LSP's not requiring plugins
-   ok, pcall_msg = pcall(require, 'grs.config.lsp')
-   if not ok then
-      local fmt = '\n\nLSP configurations failed to load with error:\n\n %s\n\n'
-      print(string.format(fmt, pcall_msg))
-   end
-
-   --  Load autocmds that depend on plugins
-   ok, pcall_msg = pcall(require, 'grs.config.autocmds.lsp')
-   if not ok then
-      local fmt = '\n\nLSP autocmds failed to load with error:\n\n %s\n\n'
-      print(string.format(fmt, pcall_msg))
-   end
 else
    local fmt = '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
    print(string.format(fmt, lazy))
