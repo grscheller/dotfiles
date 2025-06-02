@@ -38,11 +38,13 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    after/ftplugin/zig.lua
+   lua/grs/core/lazy.lua
+   lua/grs/core/lsp.lua
    lsp/bashls.lua
    lsp/lua_ls.lua
-   lua/grs/config/autocmds/text.lua
-   lua/grs/config/keymaps/early.lua
-   lua/grs/config/keymaps/late.lua
+   lua/grs/config/autocmds.lua
+   lua/grs/config/keymaps_early.lua
+   lua/grs/config/keymaps_which_key.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -53,16 +55,8 @@ dot_config_files='
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
-   lua/grs/plugins/ide/lsp/lspconfig/init.lua
-   lua/grs/plugins/ide/lsp/lspconfig/indirectly.lua
-   lua/grs/plugins/ide/lsp/lspconfig/manually.lua
-   lua/grs/plugins/ide/lsp/nvimlsp/init.lua
-   lua/grs/plugins/ide/lsp/nvimlsp/rust.lua
-   lua/grs/plugins/ide/lsp/nvimlsp/scala.lua
-   lua/grs/plugins/ide/lsp/init.lua
    lua/grs/plugins/ide/init.lua
    lua/grs/plugins/ide/cmp.lua
-   lua/grs/plugins/ide/dap.lua
    lua/grs/plugins/ide/fidgit.lua
    lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/appearance.lua
@@ -74,6 +68,14 @@ dot_config_files='
    spell/en.utf-8.add
    init.lua
 '
+#  lua/grs/plugins/ide/lsp/lspconfig/init.lua
+#  lua/grs/plugins/ide/lsp/lspconfig/indirectly.lua
+#  lua/grs/plugins/ide/lsp/lspconfig/manually.lua
+#  lua/grs/plugins/ide/lsp/nvimlsp/init.lua
+#  lua/grs/plugins/ide/lsp/nvimlsp/rust.lua
+#  lua/grs/plugins/ide/lsp/nvimlsp/scala.lua
+#  lua/grs/plugins/ide/lsp/init.lua
+#  lua/grs/plugins/ide/dap.lua
 
 toml_files='
    stylua.toml

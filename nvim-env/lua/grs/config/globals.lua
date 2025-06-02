@@ -1,6 +1,6 @@
 --[[ Globals - loaded before lazy takes control ]]
 
-local km = require 'grs.config.keymaps.late'
+local km = require 'grs.config.keymaps_which_key'
 
 -- First thing loaded in init.lua, most plugins only read these on startup.
 

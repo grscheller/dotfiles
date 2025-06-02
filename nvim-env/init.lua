@@ -14,5 +14,5 @@ require 'grs.core.lazy'
 require 'grs.core/lsp'
 
 -- Load remaining keymaps & autocmds
-require 'grs.config.keymaps.early'
-require 'grs.config.autocmds.text'
+require 'grs.config.keymaps_early'
+require 'grs.config.autocmds'

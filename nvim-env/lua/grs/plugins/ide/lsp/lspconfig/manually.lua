@@ -6,7 +6,7 @@
 
 --]]
 
-local km = require 'grs.config.keymaps.late'
+local km = require 'grs.config.keymaps_which_key'
 
 local lspconfig_configuration = function()
 
