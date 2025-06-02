@@ -41,6 +41,8 @@ dot_config_files='
    lua/grs/core/lazy.lua
    lua/grs/core/lsp.lua
    lsp/bashls.lua
+   lsp/eslint.lua
+   lsp/html.lua
    lsp/lua_ls.lua
    lua/grs/config/autocmds.lua
    lua/grs/config/keymaps_early.lua
@@ -56,7 +58,6 @@ dot_config_files='
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
    lua/grs/plugins/ide/init.lua
-   lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/fidgit.lua
    lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/appearance.lua

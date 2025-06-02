@@ -1,20 +1,9 @@
---[[ LSP Configuration - lua_ls ]]
+--[[ LSP Configuration Lua - lua-language-server ]]
 
--- local capabilities = vim.tbl_deep_extend('force',
---    vim.lsp.protocol.make_client_capabilities(),
---    require('cmp_nvim_lsp').default_capabilities()
--- )
-
--- Lua - lua-language-server
 return {
    cmd = { 'lua-language-server' },
    filetypes = { 'lua' },
-   root_markers = {
-      'stylua.toml',
-      'selene.toml',
-      '.git',
-   },
---   capabilities = capabilities,
+   root_markers = { 'stylua.toml', 'selene.toml', '.git' },
    settings = {
       Lua = {
          completion = {
