@@ -43,7 +43,6 @@ return {
       dependencies = {
          'rcarriga/nvim-dap-ui',
          'nvim-neotest/nvim-nio',
-
          -- Debuggers
          'leoluz/nvim-dap-go',
       },
