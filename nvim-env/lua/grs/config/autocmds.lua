@@ -6,7 +6,6 @@ local usercmd = vim.api.nvim_create_user_command
 
 --[[ Text editing commands/autocmds not related to specific plugins ]]
 local GrsTextGrp = autogrp('GrsText', { clear = true })
-local GrsLspGrp = autogrp('GrsLsp', { clear = true })
 
 -- Write file as root - works when sudo doesn't require a password
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
@@ -54,17 +53,5 @@ autocmd('FileType', {
    pattern = '*',
    command = 'setlocal formatoptions=tcqjr1',
    group = GrsTextGrp,
-   desc = 'Keep ftplugins from overriding my formatoptions',
-})
-
--- Enable Neovim built in completions - Why just for LSP, nvim-cmp worked all the time?
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if client:supports_method('textDocument/completion') then
-      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
-    end
-  end,
-  group = GrsLspGrp,
    desc = 'Keep ftplugins from overriding my formatoptions',
 })
