@@ -9,7 +9,6 @@ local capabilities = vim.tbl_deep_extend('force',
 
 -- Lua - lua-language-server
 return {
-   capabilities = capabilities
    cmd = { 'lua-language-server' },
    filetypes = { 'lua' },
    root_markers = {
@@ -17,7 +16,7 @@ return {
       'selene.toml',
       '.git',
    },
-   on_attach = km.set_lsp_keymaps,
+--   capabilities = capabilities,
    settings = {
       Lua = {
          completion = {
@@ -44,4 +43,6 @@ return {
          },
       }.
    },
+   single_file_support = true,
+   log_level = vim.lsp.protocol.MessageType.Warning,
 }

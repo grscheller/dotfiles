@@ -9,14 +9,4 @@ return {
 
    -- make plugins dot-repeatable, if they "opt-in"
    { 'tpope/vim-repeat', lazy = false },
-
-   {
-      'nvim-tree/nvim-web-devicons',
-      enabled = vim.g.have_nerd_font,
-      opts = {
-         color_icons = true,
-         default = true,
-         strict = true,
-      },
-   },
 }

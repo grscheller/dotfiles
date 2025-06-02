@@ -114,10 +114,3 @@ km('n', '<bslash>h', vim.diagnostic.hide, { desc = 'hide diagnostics' })
 km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'open qf' })
 km('n', '<bslash>r', vim.diagnostic.reset, { desc = 'reset diagnostics' })
 km('n', '<bslash>s', vim.diagnostic.show, { desc = 'show diagnostics' })
-
-vim.diagnostic.config {
-   virtual_text = true, -- virtual text sometimes gets in the way
-   signs = true,
-   underline = false,  -- set to true if virtual text is turned off
-   severity_sort = true,
-}

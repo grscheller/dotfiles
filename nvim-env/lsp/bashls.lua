@@ -9,13 +9,12 @@ local capabilities = vim.tbl_deep_extend('force',
 
 -- Bash and POSIX Shell
 return {
-   capabilities = capabilities
    cmd = { 'bash-language-server', 'start' },
    filetypes = { 'bash', 'sh' },
    root_markers = {
       '.git',
    },
-   on_attach = km.set_lsp_keymaps,
+--   capabilities = capabilities,
    settings = {
       bashIde = {
          globPattern = '**/*@(.sh|.inc|.bash|.command)',

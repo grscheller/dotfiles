@@ -53,14 +53,6 @@ dot_config_files='
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
-   lua/grs/plugins/core/init.lua
-   lua/grs/plugins/core/appearance.lua
-   lua/grs/plugins/core/common.lua
-   lua/grs/plugins/core/early.lua
-   lua/grs/plugins/core/mason.lua
-   lua/grs/plugins/core/telescope.lua
-   lua/grs/plugins/core/treesitter.lua
-   lua/grs/plugins/core/whichkey.lua
    lua/grs/plugins/ide/lsp/lspconfig/init.lua
    lua/grs/plugins/ide/lsp/lspconfig/indirectly.lua
    lua/grs/plugins/ide/lsp/lspconfig/manually.lua
@@ -72,6 +64,13 @@ dot_config_files='
    lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/dap.lua
    lua/grs/plugins/ide/fidgit.lua
+   lua/grs/plugins/infrastructure/init.lua
+   lua/grs/plugins/infrastructure/appearance.lua
+   lua/grs/plugins/infrastructure/common.lua
+   lua/grs/plugins/infrastructure/mason.lua
+   lua/grs/plugins/infrastructure/telescope.lua
+   lua/grs/plugins/infrastructure/treesitter.lua
+   lua/grs/plugins/infrastructure/whichkey.lua
    spell/en.utf-8.add
    init.lua
 '
@@ -81,14 +80,7 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds_text.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/lua/grs/config/autocmds_lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps.lua
-   $XDG_CONFIG_HOME/nvim/after/lsp/lua.lua
    $XDG_CONFIG_HOME/nvim/after/lsp/lua_ls.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/autocmds/lsp.lua
 "
 
 dirs_to_create=""
