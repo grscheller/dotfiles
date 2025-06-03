@@ -1,5 +1,7 @@
 --[[ LSP Configuration HTML - vscode-html-language-server ]]
 
+local km = require 'grs.config.keymaps_whichkey'
+
 return {
    cmd = { 'vscode-html-language-server', '--stdio' },
    filetypes = { 'html', 'templ' },
@@ -10,4 +12,5 @@ return {
       embeddedLanguages = { css = true, javascript = true },
       configurationSection = { 'html', 'css', 'javascript' },
    },
+   on_attach = km.set_lsp_keymaps,
 }

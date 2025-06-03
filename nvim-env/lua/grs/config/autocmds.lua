@@ -4,12 +4,29 @@ local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local usercmd = vim.api.nvim_create_user_command
 
---[[ Text editing commands/autocmds not related to specific plugins ]]
-local GrsTextGrp = autogrp('GrsText', { clear = true })
+--[[ User commands ]]
+
+-- Replacement for nvim-lspconfig version
+usercmd('LspInfo', function()
+    local clients = vim.lsp.get_clients()
+    if #clients == 0 then
+        print("No active LSP clients.")
+        return
+    end
+
+    for _, client in ipairs(clients) do
+        print("Client ID: " .. client.id .. ", Name: " .. client.name)
+        print("Capabilities: " .. vim.inspect(client.server_capabilities))
+    end
+end, {})
 
 -- Write file as root - works when sudo doesn't require a password
 usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
 usercmd('WR', 'WRF %', {})
+
+--[[ Auto commands ]]
+
+local GrsTextGrp = autogrp('GrsText', { clear = true })
 
 -- No smartcase while in cmdline mode
 autocmd('CmdLineEnter', {

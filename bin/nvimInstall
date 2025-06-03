@@ -41,7 +41,7 @@ dot_config_files='
    lua/grs/core/lazy.lua
    lua/grs/core/lsp.lua
    lsp/bashls.lua
-   lsp/eslint.lua
+   lsp/cssls.lua
    lsp/html.lua
    lsp/lua_ls.lua
    lua/grs/config/autocmds.lua
@@ -84,6 +84,7 @@ toml_files='
 
 remove_items="
    $XDG_CONFIG_HOME/nvim/after/lsp/lua_ls.lua
+   $XDG_CONFIG_HOME/nvim/lsp/eslint.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_which_key.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
 "
