@@ -9,12 +9,16 @@ local GrsLspGrp = autogrp('GrsLsp', { clear = true })
 autocmd('LspAttach', {
    callback = function(ev)
       local client = vim.lsp.get_client_by_id(ev.data.client_id)
-      if client:supports_method('textDocument/completion') then
-         vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+      if client ~= nil then
+         if client:supports_method('textDocument/completion') then
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+         end
+      else
+         vim.notify('[On LspAttach] client nil', vim.log.levels.ERROR, {})
       end
    end,
    group = GrsLspGrp,
-   desc = 'Keep ftplugins from overriding my formatoptions',
+   desc = 'Enable Neovim builtin LSP completions',
 })
 
 -- Configure diagnostics

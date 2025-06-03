@@ -46,7 +46,7 @@ return {
          'eslint.config.mts',
          'eslint.config.cts',
       }
-  
+
       local fname = vim.api.nvim_buf_get_name(bufnr)
       root_file_patterns = util.insert_package_json(root_file_patterns, 'eslintConfig', fname)
       on_dir(vim.fs.dirname(vim.fs.find(root_file_patterns, { path = fname, upward = true })[1]))
@@ -91,14 +91,14 @@ return {
       -- The "workspaceFolder" is a VSCode concept. It limits how far the server will
       -- traverse the file system when locating the ESLint config file (e.g., .eslintrc).
       local root_dir = config.root_dir
-  
+
       if root_dir then
          config.settings = config.settings or {}
          config.settings.workspaceFolder = {
             uri = root_dir,
             name = vim.fn.fnamemodify(root_dir, ':t'),
          }
-  
+
          -- Support flat config.
          local flat_config_files = {
             'eslint.config.js',
@@ -108,7 +108,7 @@ return {
             'eslint.config.mts',
             'eslint.config.cts',
          }
-  
+
          for _, file in ipairs(flat_config_files) do
             if vim.fn.filereadable(root_dir .. '/' .. file) == 1 then
                config.settings.experimental = config.settings.experimental or {}
@@ -116,7 +116,7 @@ return {
                break
             end
          end
-  
+
          -- Support Yarn2 (PnP) projects
          local pnp_cjs = root_dir .. '/.pnp.cjs'
          local pnp_js = root_dir .. '/.pnp.js'

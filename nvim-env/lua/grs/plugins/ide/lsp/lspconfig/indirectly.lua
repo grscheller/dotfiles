@@ -1,6 +1,6 @@
 --[[ Indirect Neovim LSP client with nvim/nvim-lspconfig thru another plugin ]]
 
-local km = require 'grs.config.keymaps_which_key'
+local km = require 'grs.config.keymaps_whichkey'
 
 local typescript_tools_configuration = function()
    local capabilities = vim.tbl_deep_extend('force',

@@ -45,8 +45,8 @@ dot_config_files='
    lsp/html.lua
    lsp/lua_ls.lua
    lua/grs/config/autocmds.lua
-   lua/grs/config/keymaps_early.lua
-   lua/grs/config/keymaps_which_key.lua
+   lua/grs/config/keymaps.lua
+   lua/grs/config/keymaps_whichkey.lua
    lua/grs/config/globals.lua
    lua/grs/config/options.lua
    lua/grs/lib/functional.lua
@@ -84,6 +84,8 @@ toml_files='
 
 remove_items="
    $XDG_CONFIG_HOME/nvim/after/lsp/lua_ls.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_which_key.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
 "
 
 dirs_to_create=""

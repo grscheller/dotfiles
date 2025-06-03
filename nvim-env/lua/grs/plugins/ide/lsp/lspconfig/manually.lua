@@ -6,7 +6,7 @@
 
 --]]
 
-local km = require 'grs.config.keymaps_which_key'
+local km = require 'grs.config.keymaps_whichkey'
 
 local lspconfig_configuration = function()
 
@@ -88,7 +88,6 @@ local lspconfig_configuration = function()
 
    -- Python Language Servers - installed into venv by pip
    lspconf.pylsp.setup {
-      capabilities = capabilities,
       capabilities = vim.tbl_deep_extend('force',
          capabilities,
          {
