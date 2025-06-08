@@ -5,20 +5,14 @@
 --    require('cmp_nvim_lsp').default_capabilities()
 -- )
 
-local km = require 'grs.config.keymaps_whichkey'
-
 -- Bash, POSIX, Csh Shells
 return {
    cmd = { 'bash-language-server', 'start' },
    filetypes = { 'bash', 'sh', 'ksh', 'csh' },
-   root_markers = {
-      '.git',
-   },
---   capabilities = capabilities,
+   root_markers = { '.git', '.bashrc', '.profile' },
    settings = {
       bashIde = {
          globPattern = '**/*@(.sh|.inc|.bash|.command)',
       },
    },
-   on_attach = km.set_lsp_keymaps,
 }

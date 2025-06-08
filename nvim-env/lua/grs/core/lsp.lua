@@ -6,6 +6,9 @@ local lsp_servers_to_enable = {
    'cssls',
    'html',
    'lua_ls',
+   'pylsp',
+   'ruff',
+   'zls',
 }
 
 vim.lsp.enable(lsp_servers_to_enable)

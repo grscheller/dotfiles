@@ -44,6 +44,7 @@ vim.o.splitbelow = true       -- horizontally split window below
 vim.o.splitright = true       -- vertically split window to right
 vim.o.ruler = false           -- disable ruler
 vim.o.wrap = false            -- don't wrap lines
+vim.o.winborder = 'rounded'   -- floating windows singled lined with rounded corners
 
 -- Settings affecting LSP clients & plugins
 vim.o.termguicolors = true                   -- enable 24-bit RGB color for ISO-8613-3 terminals
@@ -69,8 +70,7 @@ vim.diagnostic.config {
    update_in_insert = false,
    severity_sort = true,
    float = {
-      border = "rounded",
-      source = true,
+      source = 'if_many',
    },
    signs = true,
 }

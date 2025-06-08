@@ -17,4 +17,5 @@ require 'grs.config.keymaps'
 require 'grs.core.lazy'
 
 -- Load autocmds
-require 'grs.config.autocmds'
+require 'grs.config.autocmds_lsp'
+require 'grs.config.autocmds_text'

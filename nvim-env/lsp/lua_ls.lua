@@ -1,7 +1,5 @@
 --[[ LSP Configuration Lua - lua-language-server ]]
 
-local km = require 'grs.config.keymaps_whichkey'
-
 return {
    cmd = { 'lua-language-server' },
    filetypes = { 'lua' },
@@ -33,7 +31,6 @@ return {
          },
       },
    },
-   on_attach = km.set_lsp_keymaps,
-   single_file_support = true,
-   log_level = vim.lsp.protocol.MessageType.Warning,
+-- single_file_support = true,
+-- log_level = vim.lsp.protocol.MessageType.Warning,
 }
