@@ -25,12 +25,9 @@ return {
          workspace = {
             checkThirdParty = false,
             library = {
-               vim.env.VIMRUNTIME,
                '${3rd}/luv/library',
             },
          },
       },
    },
--- single_file_support = true,
--- log_level = vim.lsp.protocol.MessageType.Warning,
 }

@@ -6,8 +6,6 @@ return {
       'lukas-reineke/indent-blankline.nvim',
       event = 'InsertEnter',
       main = 'ibl',
-      ---@module 'ibl'
-      ---@type ibl.config
       opts = {
          indent = { char = '│' },
       },

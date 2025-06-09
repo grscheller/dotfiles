@@ -1,7 +1,5 @@
---[[ Plugin to integrate commandline formatters ]]
+--[[ Plugin to integrate cmdline formatters ]]
 
----@module 'conform'
----@type conform.setupOpts
 local conform_opts = {
    formatters_by_ft = {
       css = { 'prettierd' },

@@ -62,6 +62,8 @@ dot_config_files='
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
+   lua/grs/plugins/ide/completions.lua
+   lua/grs/plugins/ide/init.lua
    lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/appearance.lua
    lua/grs/plugins/infrastructure/common.lua
@@ -79,7 +81,6 @@ dot_config_files='
 #  lua/grs/plugins/ide/lsp/nvimlsp/init.lua
 #  lua/grs/plugins/ide/lsp/nvimlsp/rust.lua
 #  lua/grs/plugins/ide/lsp/nvimlsp/scala.lua
-#  lua/grs/plugins/ide/lsp/init.lua
 #  lua/grs/plugins/ide/dap.lua
 
 toml_files='
@@ -91,7 +92,6 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lsp/eslint.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_which_key.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide
    $XDG_CONFIG_HOME/nvim/lua/grs/config/autocmds.lua
 "
 

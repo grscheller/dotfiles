@@ -54,30 +54,6 @@ local lspconfig_configuration = function()
       },
    }
 
-   -- HTML - html-lsp
-   lspconf.html.setup {
-      capabilities = capabilities,
-      on_attach = km.set_lsp_keymaps,
-   }
-
-   -- Luau - luau-lsp [[ Verify! Just copied from lua_ls ]]
-   lspconf.luau_lsp.setup {
-      capabilities = capabilities,
-      filetypes = { 'luau' },
-      on_attach = km.set_lsp_keymaps,
-      settings = {
-         Lua = {
-            completion = {
-               callSnippet = 'Replace',
-            },
-            diagnostics = {
-               disable = { 'missing-fields' },
-            },
-            hint = { enable = true },
-         },
-      },
-   }
-
    -- Markdown
    lspconf.marksman.setup {
       capabilities = capabilities,
@@ -86,53 +62,10 @@ local lspconfig_configuration = function()
       setting = {},
    }
 
-   -- Python Language Servers - installed into venv by pip
-   lspconf.pylsp.setup {
-      capabilities = vim.tbl_deep_extend('force',
-         capabilities,
-         {
-            -- to force same encoding as ruff
-            offsetEncoding = { 'utf-16' },
-            general = { positionEncodings = { 'utf-16' } },
-         }),
-      filetypes = { 'python' },
-      on_attach = km.set_lsp_keymaps,
-      flags = { debounce_text_changes = 200 },
-      settings = {
-         pylsp = {
-            plugins = {
-               -- type checker
-               pylsp_mypy = {
-                  enabled = true,
-               },
-               -- linting and formatting
-               ruff = { enabled = false },
-               -- refactoring
-               rope = { enable = true },
-               pylsp_inlay_hints = { enable = true },
-            },
-         },
-      },
-   }
-
    -- TOML - taplo
    lspconf.taplo.setup {
       capabilities = capabilities,
       filetypes = { 'toml' },
-      on_attach = km.set_lsp_keymaps,
-   }
-
-   -- Python LSP for linting/formatting - ruff
-   lspconf.ruff.setup {
-      capabilities = capabilities,
-      filetypes = { 'python' },
-      on_attach = km.set_lsp_keymaps,
-   }
-
-   -- Zig - zls
-   lspconf.zls.setup {
-      capabilities = capabilities,
-      filetypes = { 'zig' },
       on_attach = km.set_lsp_keymaps,
    }
 end
