@@ -39,8 +39,6 @@ dot_config_files='
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    after/ftplugin/zig.lua
-   lua/grs/core/lazy.lua
-   lua/grs/core/lsp.lua
    lsp/bashls.lua
    lsp/cssls.lua
    lsp/html.lua
@@ -50,10 +48,12 @@ dot_config_files='
    lsp/zls.lua
    lua/grs/config/autocmds_lsp.lua
    lua/grs/config/autocmds_text.lua
+   lua/grs/config/globals.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/keymaps_whichkey.lua
-   lua/grs/config/globals.lua
    lua/grs/config/options.lua
+   lua/grs/core/lazy.lua
+   lua/grs/core/lsp.lua
    lua/grs/lib/functional.lua
    lua/grs/lib/scroll.lua
    lua/grs/lib/text.lua
@@ -62,12 +62,12 @@ dot_config_files='
    lua/grs/plugins/coding/gitsigns.lua
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
-   lua/grs/plugins/ide/completions.lua
    lua/grs/plugins/ide/init.lua
+   lua/grs/plugins/ide/completions.lua
+   lua/grs/plugins/ide/fidget.lua
    lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/appearance.lua
    lua/grs/plugins/infrastructure/common.lua
-   lua/grs/plugins/infrastructure/lsp.lua
    lua/grs/plugins/infrastructure/mason.lua
    lua/grs/plugins/infrastructure/telescope.lua
    lua/grs/plugins/infrastructure/treesitter.lua
@@ -75,13 +75,6 @@ dot_config_files='
    spell/en.utf-8.add
    init.lua
 '
-#  lua/grs/plugins/ide/lsp/lspconfig/init.lua
-#  lua/grs/plugins/ide/lsp/lspconfig/indirectly.lua
-#  lua/grs/plugins/ide/lsp/lspconfig/manually.lua
-#  lua/grs/plugins/ide/lsp/nvimlsp/init.lua
-#  lua/grs/plugins/ide/lsp/nvimlsp/rust.lua
-#  lua/grs/plugins/ide/lsp/nvimlsp/scala.lua
-#  lua/grs/plugins/ide/dap.lua
 
 toml_files='
    stylua.toml
@@ -93,6 +86,8 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_which_key.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/config/autocmds.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lsp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidgit.lua
 "
 
 dirs_to_create=""

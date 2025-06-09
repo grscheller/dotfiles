@@ -1,4 +1,4 @@
---[[ LSP Configuration HTML - vscode-html-language-server ]]
+--[[ LSP Configuration CSS LS - vscode-css-language-server ]]
 
 return {
    cmd = { 'vscode-css-language-server', '--stdio' },

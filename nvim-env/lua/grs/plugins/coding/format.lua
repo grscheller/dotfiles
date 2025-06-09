@@ -8,7 +8,6 @@ local conform_opts = {
       html = { 'prettierd' },
       lua = { 'stylua' },
       luau = { 'stylua' },
-      python = { 'ruff_format' },
       markdown = { 'mdformat' },
       json = { 'prettierd' },
       javascript = { 'prettierd' },
