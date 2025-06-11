@@ -33,7 +33,7 @@ return {
       'saghen/blink.cmp',
       dependencies = { 'rafamadriz/friendly-snippets' },
       version = '1.*', -- use a release tag to download pre-built binaries
-      event = 'InsertEnter',
+      event = 'VeryLazy',
       opts = blink_opts,
       opts_extend = { 'sources.default' },
    },
