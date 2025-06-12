@@ -66,6 +66,10 @@ and begin
        set -p PATH ~/.local/share/coursier/bin
        jdk_version 21
 
+       # Lua toolchain
+       test -e ~/devel/luarocks/bin
+       and set -p PATH ~/devel/luarocks/bin
+
        # Zig toolchain
        test -L ~/devel/zig_nightly/current
        and set -p PATH ~/devel/zig_nightly/current
