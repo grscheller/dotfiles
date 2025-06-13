@@ -1435,6 +1435,7 @@ noice
 Noice
 nolist
 nvim
+whichkey
 # Lua names
 hererocks
 lua

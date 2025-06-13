@@ -6,8 +6,12 @@
 -- )
 
 -- Bash, POSIX, Csh Shells
+
+local mason_bin = require('grs.config.grs').mason_bin
+bash_language_server = mason_bin .. '/bash-language-server'
+
 return {
-   cmd = { 'bash-language-server', 'start' },
+   cmd = { bash_language_server, 'start' },
    filetypes = { 'bash', 'sh', 'ksh', 'csh' },
    root_markers = { '.git', '.bashrc', '.profile' },
    settings = {

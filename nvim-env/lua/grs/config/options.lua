@@ -62,15 +62,3 @@ vim.o.completeopt = 'menu,menuone,noselect'  -- for nvim-cmp
 vim.o.foldenable = false     -- Allows me to reuse of folding keybindings. I have
 vim.o.foldmethod = 'manual'  -- an autocmd which helps folding stay disabled.
 vim.o.foldlevelstart = 99
-
--- Configure diagnostics
-vim.diagnostic.config {
-   virtual_text = true, -- virtual text sometimes gets in the way
-   underline = false,  -- set to true if virtual text is false
-   update_in_insert = false,
-   severity_sort = true,
-   float = {
-      source = 'if_many',
-   },
-   signs = true,
-}

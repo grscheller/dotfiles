@@ -49,6 +49,7 @@ dot_config_files='
    lua/grs/config/autocmds_lsp.lua
    lua/grs/config/autocmds_text.lua
    lua/grs/config/globals.lua
+   lua/grs/config/grs.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/keymaps_whichkey.lua
    lua/grs/config/options.lua
@@ -131,13 +132,19 @@ ensure_dirs "$dirs_to_create"
 
 ## Post install/check tweaks
 
-hererocks=~/.local/share/nvim/lazy-rocks/hererocks
+hererocks_dir=~/.local/share/nvim/lazy-rocks/hererocks
+luarocks_user_dir=~/.local/share/grs/nvim/.luarocks
 case "$OPTION_GIVEN" in
    install)
       # Make location lazy.nvim looks for LuaRocks & Lua 5.1
-      if test ! -d $hererocks
+      if test ! -d $hererocks_dir
       then
-         mkdir -p $hererocks
+         mkdir -p $hererocks_dir
+      fi
+      # Make location luarocks stores (nvim) user rock-trees
+      if test ! -d $luarocks_user_dir
+      then
+         mkdir -p $luarocks_user_dir
       fi
       # Recompiled spell file if necessary
       if test "$compileSpellFile" = yes
@@ -151,22 +158,29 @@ case "$OPTION_GIVEN" in
       fi
       ;;
    check)
+      # check if Lua 5.1 and LuaRocks are installed for lazy.nvim
+      if ! test -x $hererocks_dir/bin/lua
+      then
+         printf 'nvimInstall: Lua 5.1 is not installed in'
+         printf ' %s/bin\n' $hererocks_dir
+      fi
+      if ! test -x $hererocks_dir/bin/luarocks
+      then
+         printf 'nvimInstall: LuaRocks is not installed in'
+         printf ' %s/bin\n' $hererocks_dir
+      fi
+      # check if 
+      if ! test -d $luarocks_user_dir
+      then
+         printf 'nvimInstall: LuaRocks (nvim) user rock-tree location'
+         printf ' %s\n' "$luarocks_user_dir"
+         printf '             does not exist.\n'
+      fi
       # Indicate whether the spellfile will be recompiled on next install
       if test "$compileSpellFile" = yes
       then
          printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
-         printf '             recompiled on the next install.\n\n'
-      fi
-      # check if Lua 5.1 and LuaRocks are installed for lazy.nvim
-      if ! test -x $hererocks/bin/lua
-      then
-         printf 'nvimInstall: Lua 5.1 is not installed in'
-         printf ' %s/bin\n\n' $hererocks
-      fi
-      if ! test -x $hererocks/bin/luarocks
-      then
-         printf 'nvimInstall: LuaRocks is not installed in'
-         printf ' %s/bin\n\n' $hererocks
+         printf '             recompiled on the next install.\n'
       fi
       ;;
    remove)
