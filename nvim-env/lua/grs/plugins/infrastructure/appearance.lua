@@ -6,7 +6,7 @@ return {
       -- groups to other plugins.
       'rebelot/kanagawa.nvim',
       lazy = false,
-      priority = 1000,
+      priority = 1500,
       opts = {
          compile = true,
          undercurl = true,
