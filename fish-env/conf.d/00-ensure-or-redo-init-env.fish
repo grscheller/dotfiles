@@ -67,9 +67,8 @@ and begin
        jdk_version 21
 
        # Lua toolchain
-       test -e ~/devel/luarocks/bin
-       and set -p PATH ~/devel/luarocks/bin
-
+       test -e ~/.local/share/nvim/lazy-rocks/hererocks/bin
+       and set -p PATH ~/.local/share/nvim/lazy-rocks/hererocks/bin
        # Zig toolchain
        test -L ~/devel/zig_nightly/current
        and set -p PATH ~/devel/zig_nightly/current
