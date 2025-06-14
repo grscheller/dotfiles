@@ -162,25 +162,25 @@ case "$OPTION_GIVEN" in
       if ! test -x $hererocks_dir/bin/lua
       then
          printf 'nvimInstall: Lua 5.1 is not installed in'
-         printf ' %s/bin\n' $hererocks_dir
+         printf ' %s/bin\n\n' $hererocks_dir
       fi
       if ! test -x $hererocks_dir/bin/luarocks
       then
          printf 'nvimInstall: LuaRocks is not installed in'
-         printf ' %s/bin\n' $hererocks_dir
+         printf ' %s/bin\n\n' $hererocks_dir
       fi
       # check if 
       if ! test -d $luarocks_user_dir
       then
          printf 'nvimInstall: LuaRocks (nvim) user rock-tree location'
          printf ' %s\n' "$luarocks_user_dir"
-         printf '             does not exist.\n'
+         printf '             does not exist.\n\n'
       fi
       # Indicate whether the spellfile will be recompiled on next install
       if test "$compileSpellFile" = yes
       then
          printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
-         printf '             recompiled on the next install.\n'
+         printf '             recompiled on the next install.\n\n'
       fi
       ;;
    remove)
