@@ -1,4 +1,4 @@
---[[ Plugins for general Text editing Related taske ]]
+--[[ Plugins for general Text editing Related tasks ]]
 
 return {
    -- Show line indentations when editing code
@@ -10,6 +10,9 @@ return {
          indent = { char = '│' },
       },
    },
+
+   -- when re-editing a file, return to last place file changed
+   { "mrcjkb/nvim-lastplace" },
 
    -- Colorize color names, hexcodes, and other color formats
    {
@@ -37,22 +40,20 @@ return {
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      event = 'VeryLazy',
-      config = function()
-         require('nvim-surround').setup {
-            keymaps = {
-               normal = 'gz',
-               normal_cur = 'gZ',
-               normal_line = 'gzz',
-               normal_cur_line = 'gZZ',
-               visual = 'gz',
-               visual_line = 'gZ',
-               delete = 'gzd',
-               change = 'gzc',
-               change_line = 'gzC',
-            },
-         }
-      end,
+      event = 'InsertEnter',
+      opt = {
+         keymaps = {
+            normal = 'gz',
+            normal_cur = 'gZ',
+            normal_line = 'gzz',
+            normal_cur_line = 'gZZ',
+            visual = 'gz',
+            visual_line = 'gZ',
+            delete = 'gzd',
+            change = 'gzc',
+            change_line = 'gzC',
+         },
+      },
    },
 
    -- Quickly jump around window - like sneak but on steroids

@@ -14,7 +14,6 @@ vim.g.have_nerd_font = true
 -- Perl had its day
 vim.g.loaded_perl_provider = 0
 
--- rustaceanvim configuration
 vim.g.rustaceanvim = {
    tools = {},
    server = {
@@ -28,4 +27,10 @@ vim.g.rustaceanvim = {
       },
    },
    dap = {},
+}
+
+vim.g.nvim_lastplace = {
+    ignore_buftype = { 'quickfix', 'nofile', 'help' },
+    ignore_filetype = { 'gitcommit', 'gitrebase' },
+    open_folds = true,
 }

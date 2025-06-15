@@ -5,8 +5,7 @@ return {
       -- Kanagawa colorscheme - with minor tweaks, needs to be loaded early to provide highlight
       -- groups to other plugins.
       'rebelot/kanagawa.nvim',
-      lazy = false,
-      priority = 1500,
+      priority = 1000,
       opts = {
          compile = true,
          undercurl = true,

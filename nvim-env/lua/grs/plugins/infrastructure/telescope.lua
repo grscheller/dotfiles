@@ -91,7 +91,6 @@ return {
             end,
          },
       },
-      event = 'VeryLazy',
       config = config_telescope,
    },
 

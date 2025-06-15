@@ -95,7 +95,6 @@ return {
    {
       'lewis6991/gitsigns.nvim',
       dependencies = { 'nvim-lua/plenary.nvim' },
-      event = 'BufReadPre',
       opts = {
          signs = {
             add = { text = '+' },
@@ -103,7 +102,7 @@ return {
             delete = { text = '∨' },
             topdelete = { text = '∧' },
             changedelete = { text = '⊥' },
-            untracked = { text = '?' },
+            untracked = { text = '┆' },
          },
          on_attach = on_attach,
       },

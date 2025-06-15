@@ -1,6 +1,6 @@
 --[[ Configure mason.nvim ]]
 
-opts = {
+local opts = {
    ui = {
       icons = {
          package_installed = '✓',
@@ -10,11 +10,10 @@ opts = {
    },
    PATH = 'append',
 }
-   
+
 return {
    {
-      'williamboman/mason.nvim',
-      event = 'VeryLazy',
+      'mason-org/mason.nvim',
       opts = opts,
    },
 }

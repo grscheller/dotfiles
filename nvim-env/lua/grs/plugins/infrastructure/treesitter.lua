@@ -50,6 +50,7 @@ local opts = {
    },
    auto_install = true,
    ignore_install = {},
+   sync_install = false,
    highlight = { enable = true },
 }
 
@@ -65,7 +66,6 @@ end
 return {
    {
       'nvim-treesitter/nvim-treesitter',
-      event = { 'BufReadPre', 'BufNewFile' },
       config = config_treesitter,
       build = ':TSUpdate',
    },

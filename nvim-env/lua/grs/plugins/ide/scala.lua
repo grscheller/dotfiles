@@ -97,7 +97,6 @@ return {
    {
       'scalameta/nvim-metals',
       dependencies = {
-         'hrsh7th/cmp-nvim-lsp',
          'mfussenegger/nvim-dap',
       },
       ft = { 'scala', 'sbt', 'java' },
