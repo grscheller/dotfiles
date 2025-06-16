@@ -82,15 +82,6 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/after/lsp/lua_ls.lua
-   $XDG_CONFIG_HOME/nvim/lsp/eslint.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_which_key.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_early.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/autocmds.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lsp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidgit.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/luarocks.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/early.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/common.lua
 "
 
@@ -125,7 +116,7 @@ process_files "$XDG_CONFIG_HOME/nvim" "
 " . 0644 "$envPath"
 chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
-# Remove/report no longer needed files and directories thru
+# Remove/report no longer needed files and directories
 remove_items "$remove_items"
 
 # Create/report missing directories

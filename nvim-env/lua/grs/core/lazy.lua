@@ -20,7 +20,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local lazy_opts = {
-   defaults = { version = nil, cond = nil },
+   defaults = { lazy = false, version = nil, cond = nil },
    spec = { { import = 'grs.plugins' } },
    ui = {
       browser = '/usr/bin/firefox',

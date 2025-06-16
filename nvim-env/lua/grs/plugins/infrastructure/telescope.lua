@@ -29,6 +29,7 @@ local config_telescope = function()
          lazy = {
             theme = 'ivy',
          },
+         notify = {},
          ['ui-select'] = {
             themes.get_dropdown {},
          },
@@ -36,8 +37,11 @@ local config_telescope = function()
       pickers = {},
    }
 
-   telescope.load_extension 'ui-select'
+   telescope.load_extension 'file_browser'
    telescope.load_extension 'fzf'
+   telescope.load_extension 'lazy'
+   telescope.load_extension 'notify'
+   telescope.load_extension 'ui-select'
 
    wk.add {
       { '<leader>sh', builtin.help_tags, desc = 'search help' },

@@ -1,6 +1,6 @@
 --[[ Plugin to integrate commandline formatters ]]
 
-local opts = {
+local blink_opts = {
    -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
    -- 'super-tab' for mappings similar to vscode (tab to accept)
    -- 'enter' for enter to accept
@@ -31,9 +31,10 @@ local opts = {
 return {
    {
       'saghen/blink.cmp',
+      event = 'InsertEnter',
       dependencies = { 'rafamadriz/friendly-snippets' },
       version = '1.*', -- use a release tag to download pre-built binaries
-      opts = opts,
+      opts = blink_opts,
       opts_extend = { 'sources.default' },
    },
 }
