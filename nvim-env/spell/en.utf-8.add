@@ -1437,6 +1437,7 @@ nolist
 nvim
 whichkey
 # Lua names
+fzy
 hererocks
 lua
 lua's
@@ -1448,3 +1449,5 @@ luau
 luajit
 luarocks
 LuaRocks
+lux
+Lux
