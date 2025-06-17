@@ -10,14 +10,12 @@ then
    exit 1
 fi
 
-if [ -z "$gitRepo" ]
+if [ -z "$ACTION" ]
 then
-   printf '\nCheck configuration, the gitRepo is not set.\n\n'
-   exit 1
-fi
+   export ACTION=''
+   export CLEAN=''
+   export NUKE=''
 
-if [ -z "$OPTION_GIVEN" ]
-then
    umask 0022
    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
    export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
@@ -36,19 +34,29 @@ then
    then
       case "$1" in
          --install)
-            export OPTION_GIVEN=install
+            ACTION=install
+            CLEAN=''
+            NUKE=''
             ;;
          --check)
-            export OPTION_GIVEN=check
+            ACTION=check
+            CLEAN=''
+            NUKE=''
             ;;
          --remove)
-            export OPTION_GIVEN=remove
+            ACTION=remove
+            CLEAN=''
+            NUKE=''
             ;;
          --clean)
-            export OPTION_GIVEN=clean
+            ACTION=remove
+            CLEAN=clean
+            NUKE=''
             ;;
          --nuke)
-            export OPTION_GIVEN=nuke
+            ACTION=remove
+            CLEAN=clean
+            NUKE=nuke
             ;;
          *)
             printf '%s\n\n' "$usage"
@@ -56,10 +64,31 @@ then
             ;;
       esac
    else
-      export OPTION_GIVEN=install
+      ACTION=install
+      CLEAN=''
+      NUKE=''
    fi
 
    ## Functions
+
+   # Check or remove a file or a directory
+   remove_item () {
+      local item
+      item="$1"
+      if test -e "$item"
+      then
+         case "$ACTION" in
+            check)
+               printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
+               ;;
+            install|remove)
+               rm -rf "$item"
+               test -e "$item" && {
+                  printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
+               }
+         esac
+      fi
+   }
 
    # Check or ensure directory exists
    ensure_dir () {
@@ -68,7 +97,7 @@ then
       srcDir="$2"
       if [ ! -d "$targetDir" ]
       then
-         case "$OPTION_GIVEN" in
+         case "$ACTION" in
             install)
                mkdir -p "$targetDir" ||
                   printf '%s: failed to create "%s" directory\n\n' "$scriptName" "$targetDir"
@@ -77,8 +106,8 @@ then
                printf '%s: directory "%s" needs to be created\n\n' "$scriptName" "$targetDir"
                ;;
             remove)
-               :
-               ;;
+               test "$CLEAN" = clean && rmdir "$targetDir" >/dev/null 2>&1
+               test "$NUKE" = nuke && rm -rf "$targetDir"
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
@@ -87,43 +116,23 @@ then
       fi
    }
 
-   # Check or remove a file or a directory
-   remove_item () {
-      local item
-      item="$1"
-      if test -e "$item"
-      then
-         case "$OPTION_GIVEN" in
-            install | remove)
-               rm -rf "$item"
-               test -e "$item" && {
-                  printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
-               }
-               ;;
-            check)
-               printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
-               ;;
-         esac
-      fi
-   }
-
-   # Install a file
+   # Install, check, or remove file
    process_file () {
-      local install_dir file_path src_dir file_perm envPath
+      local install_dir file_path src_dir file_perm home_dir
       local src_rel src_abs trgt
       install_dir="$1"
       file_path="$2"
       src_dir="$3"
       file_perm="$4"
-      envPath=$5
+      home_dir=$5
       src_rel=$(echo "$src_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
-      src_abs=$(echo "$envPath/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
+      src_abs=$(echo "$home_dir/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
       trgt=$(echo "$install_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
 
       # Ensure target directory exists and complain if source directory doesn't
       ensure_dir "${trgt%/*}" "${src_abs%/*}"
 
-      case "$OPTION_GIVEN" in
+      case "$ACTION" in
          install)
             # Install the remove the target file
             if cp "$src_rel" "$trgt"
@@ -161,17 +170,17 @@ then
 
    # Install files - convenience function (keep loops out of config files)
    process_files () {
-      local install_dir files src_dir file_perm envPath
+      local install_dir files src_dir file_perm home_dir
       local file
       install_dir="$1"
       files="$2"
       src_dir="$3"
       file_perm="$4"
-      envPath=$5
+      home_dir=$5
       test -z "$files" && return
       for file in $files
       do
-         process_file "$install_dir" "$file" "$src_dir" "$file_perm" "$envPath"
+         process_file "$install_dir" "$file" "$src_dir" "$file_perm" "$home_dir"
       done
    }
 
@@ -194,7 +203,7 @@ then
    ensure_dirs () {
       local dirs
       local dir
-      test ${#} -gt 1 && {
+      test $# -gt 1 && {
          printf '%s: Error - ensure_dirs only takes one argument\n\n' "$scriptName" 
       }
       dirs="$1"
@@ -205,43 +214,27 @@ then
       done
    }
 
-   # cd or fail gracefully
-   cd_or_not () {
-      local dir
-      test ${#} -ne 1 && {
-         printf '%s: Error - cd_or_not only takes exactly one argument\n' "$scriptName"
-         return 1
-      }
-      dir="$1"
-      test -d "$dir" || {
-         printf '%s: Error - cannot find dirctory: "%s"\n' "$scriptName" "$dir"
-         return 1
-      }
-      cd "$dir" || {
-         printf '%s: Error - failed to cd into: "%s"\n' "$scriptName" "$dir"
-         return 1
-      }
-      return 0
-   }
-
    fatal_error () {
-      if test ${#} = 0
+      if test -z "${1}"
       then
          printf '%s: Fatal Error\n' "$scriptName"
       else
-         printf '%s: Fatal Error - %s' "$scriptName" "$1"
+         printf '%s: Fatal Error - %s\n' "$scriptName" "$1"
       fi
       exit 2
    }
 
-   ## For initial bootstrap when $XDG directories do not exist yet
+   ## For initial bootstrap when $XDG directories might not exist yet
 
-   ensure_dir "$XDG_CONFIG_HOME"
-   chmod 0755 "$XDG_CONFIG_HOME"
-   ensure_dir "$XDG_DATA_HOME"
-   chmod 0755 "$XDG_DATA_HOME"
-   ensure_dir "$XDG_STATE_HOME"
-   chmod 0755 "$XDG_STATE_HOME"
-   ensure_dir "$XDG_CACHE_HOME"
-   chmod 0755 "$XDG_CACHE_HOME"
+   if [ $ACTION = install ]
+   then
+      ensure_dir "$XDG_CONFIG_HOME"
+      chmod 0755 "$XDG_CONFIG_HOME"
+      ensure_dir "$XDG_DATA_HOME"
+      chmod 0755 "$XDG_DATA_HOME"
+      ensure_dir "$XDG_STATE_HOME"
+      chmod 0755 "$XDG_STATE_HOME"
+      ensure_dir "$XDG_CACHE_HOME"
+      chmod 0755 "$XDG_CACHE_HOME"
+   fi
 fi

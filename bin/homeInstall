@@ -7,14 +7,13 @@
 #
 
 scriptName=homeInstall
-envName=home
-startdir="$(pwd)"
-
 gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-envPath="$gitRepo/$envName"
+home="$gitRepo/home"
 
-cd "$envPath" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$gitRepo"
+ACTION=${ACTION:=''}
+
+cd "$home" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
    return 1
 }
 
@@ -45,7 +44,6 @@ bloop_files='
    bloop.json
 '
 
-
 cabal_files='
    config
 '
@@ -71,28 +69,28 @@ dirs_to_create="
 
 ## Install, Check or Remove
 
-case "$OPTION_GIVEN" in
-   install | check)
+case "$ACTION" in
+   install|check|remove)
       # Process bash config files
-      process_files "$HOME" "$bash_files" . 0644 "$envPath"
+      process_files "$HOME" "$bash_files" . 0644 "$home"
 
       # Process ~/bin scripts
-      process_files "$HOME/bin" "$bin_scripts" bin 0755 "$envPath"
+      process_files "$HOME/bin" "$bin_scripts" bin 0755 "$home"
       chmod 0755 "$HOME/bin"
 
       # Process Bloop configs for Scala
-      process_files "$HOME/.bloop" "$bloop_files" bloop 0644 "$envPath"
+      process_files "$HOME/.bloop" "$bloop_files" .bloop 0644 "$home"
       chmod 0755 "$HOME/.bloop"
 
       # Process Cabal configs for Haskell
-      process_files "$HOME/.cabal" "$cabal_files" cabal 0644 "$envPath"
+      process_files "$HOME/.cabal" "$cabal_files" .cabal 0644 "$home"
       chmod 0755 "$HOME/.cabal"
 
       # Process miscellaneous ~/.config files
-      process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644 "$envPath"
+      process_files "$XDG_CONFIG_HOME" "$dot_config_files" .config 0644 "$home"
 
-      # Process devel config files
-      process_files "$HOME/devel" "$devel_files" devel 0644 "$envPath"
+      # Process devel files
+      process_files "$HOME/devel" "$devel_files" devel 0644 "$home"
       chmod 0755 "$HOME/devel"
 
       # Remove/report no longer needed files and directories
@@ -104,82 +102,9 @@ esac
 
 ## Post install/check tweaks
 
-case "$OPTION_GIVEN" in
-   install)
-      :
-      ;;
-   check)
-      :
-      ;;
-   remove | clean | nuke)
-      if cd_or_not "$HOME"
-      then
-         remove_items "$bash_files"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home directory'
-         printf ' while removing bash configurations.\n'
-      fi
-      ;;
-esac
-
-case "$OPTION_GIVEN" in
-   remove | clean )
-      if cd_or_not "$HOME/bin"
-      then
-         remove_items "$bin_scripts"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home bin directory'
-         printf ' while removing bin scripts.\n'
-      fi
-
-      if cd_or_not "$HOME/.bloop"
-      then
-         remove_items "$bloop_files"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home .bloop directory'
-         printf ' while removing bloop config files.\n'
-      fi
-
-      if cd_or_not "$HOME/.cabal"
-      then
-         remove_items "$cabal_files"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home .cabal directory'
-         printf ' while removing cabal config files.\n'
-      fi
-      ;;
-esac
-
-case "$OPTION_GIVEN" in
-   clean | nuke)
-      if cd_or_not "$HOME"
-      then
-         remove_items "$dot_config_files"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home directory'
-         printf ' while cleaning dotconfig files.\n'
-      fi
-
-      if cd_or_not "$HOME/devel"
-      then
-         remove_items "$devel_files"
-         cd_or_not "$startdir" || fatal_error
-      else
-         printf 'homeInstall: Error - cannot cd into home devel directory'
-         printf ' while cleaning devel files.\n'
-      fi
-      ;;
-esac
-
-case "$OPTION_GIVEN" in
+case "$ACTION" in
    nuke)
       remove_item "$HOME/bin"
       remove_item "$HOME/.bloop"
       remove_item "$HOME/.cabal"
-      ;;
 esac

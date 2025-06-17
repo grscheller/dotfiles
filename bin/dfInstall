@@ -15,7 +15,7 @@ cd "$gitRepo" 2>/dev/null || {
 }
 
 # Parse cmdline arguments and source functions
-export OPTION_GIVEN=''
+export Action=''
 . bin/source_setup.sh
 
 # Install dotfiles

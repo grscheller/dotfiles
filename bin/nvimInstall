@@ -137,7 +137,7 @@ case "$OPTION_GIVEN" in
          sf_dir="${SpellFile%/*}"
          ( if cd "$sf_dir"
            then
-              nvim --headless -c ":mkspell!$sf" -c 'q'
+              nvim -u NONE --cmd "mkspell!$sf" --cmd 'qa!'
            fi )
       fi
       ;;
