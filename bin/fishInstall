@@ -95,15 +95,19 @@ dirs_to_create=""
 
 ## Install/Check
 
-# Install Fish config files
-process_files "$XDG_CONFIG_HOME/fish" "$config_files" . 0644 "$envPath"
-chmod 0755 "$XDG_CONFIG_HOME/fish"
+case "$OPTION_GIVEN" in
+   install | check)
+      # Install Fish config files
+      process_files "$XDG_CONFIG_HOME/fish" "$config_files" . 0644 "$envPath"
+      chmod 0755 "$XDG_CONFIG_HOME/fish"
 
-# Remove/report no longer needed files and directories
-remove_items "$remove_items"
+      # Remove/report no longer needed files and directories
+      remove_items "$remove_items"
 
-# Create/report missing directories
-ensure_dirs "$dirs_to_create"
+      # Create/report missing directories
+      ensure_dirs "$dirs_to_create"
+      ;;
+esac
 
 ## Post install/check tweaks
 
@@ -115,6 +119,11 @@ case "$OPTION_GIVEN" in
       :
       ;;
    remove)
-      :
+      remove_items "$XDG_CONFIG_HOME/fish"
+      ;;
+   clean | nuke)
+      remove_items "$XDG_CONFIG_HOME/fish"
+      remove_items "$XDG_DATA_HOME/fish"
+      remove_items "$XDG_CACHE_HOME/fish"
       ;;
 esac

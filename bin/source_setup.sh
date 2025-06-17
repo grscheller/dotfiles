@@ -6,13 +6,13 @@
 #
 if [ -z "$scriptName" ]
 then
-   printf '\nCheck configuration, $scriptName is not set.\n\n'
+   printf '\nCheck configuration, the scriptName is not set.\n\n'
    exit 1
 fi
 
 if [ -z "$gitRepo" ]
 then
-   printf '\nCheck configuration, $gitRepo is not set.\n\n'
+   printf '\nCheck configuration, the gitRepo is not set.\n\n'
    exit 1
 fi
 
@@ -26,7 +26,7 @@ then
 
    ## Parse cmdline arguments
 
-   usage="Usage: $scriptName [--install|--check|--remove]"
+   usage="Usage: $scriptName [--install|--check|--remove|--clean|--nuke]"
 
    if test $# -gt 1
    then
@@ -35,14 +35,20 @@ then
    elif test $# -eq 1
    then
       case "$1" in
-         --check)
-            export OPTION_GIVEN=check
-            ;;
          --install)
             export OPTION_GIVEN=install
             ;;
+         --check)
+            export OPTION_GIVEN=check
+            ;;
          --remove)
             export OPTION_GIVEN=remove
+            ;;
+         --clean)
+            export OPTION_GIVEN=clean
+            ;;
+         --nuke)
+            export OPTION_GIVEN=nuke
             ;;
          *)
             printf '%s\n\n' "$usage"
@@ -199,8 +205,43 @@ then
       done
    }
 
-   ## For initial bootstrap when $XDG_CONFIG_HOME does not exist
+   # cd or fail gracefully
+   cd_or_not () {
+      local dir
+      test ${#} -ne 1 && {
+         printf '%s: Error - cd_or_not only takes exactly one argument\n' "$scriptName"
+         return 1
+      }
+      dir="$1"
+      test -d "$dir" || {
+         printf '%s: Error - cannot find dirctory: "%s"\n' "$scriptName" "$dir"
+         return 1
+      }
+      cd "$dir" || {
+         printf '%s: Error - failed to cd into: "%s"\n' "$scriptName" "$dir"
+         return 1
+      }
+      return 0
+   }
+
+   fatal_error () {
+      if test ${#} = 0
+      then
+         printf '%s: Fatal Error\n' "$scriptName"
+      else
+         printf '%s: Fatal Error - %s' "$scriptName" "$1"
+      fi
+      exit 2
+   }
+
+   ## For initial bootstrap when $XDG directories do not exist yet
 
    ensure_dir "$XDG_CONFIG_HOME"
    chmod 0755 "$XDG_CONFIG_HOME"
+   ensure_dir "$XDG_DATA_HOME"
+   chmod 0755 "$XDG_DATA_HOME"
+   ensure_dir "$XDG_STATE_HOME"
+   chmod 0755 "$XDG_STATE_HOME"
+   ensure_dir "$XDG_CACHE_HOME"
+   chmod 0755 "$XDG_CACHE_HOME"
 fi

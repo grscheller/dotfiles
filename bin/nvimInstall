@@ -109,18 +109,22 @@ fi
 
 ## Install/Check
 
-# Install Neovim files & NVIM related TOML files
-process_files "$XDG_CONFIG_HOME/nvim" "
-   $dot_config_files
-   $toml_files
-" . 0644 "$envPath"
-chmod 0755 "$XDG_CONFIG_HOME/nvim"
+case "$OPTION_GIVEN" in
+   install | check)
+      # Install/Check Neovim files & NVIM related TOML files
+      process_files "$XDG_CONFIG_HOME/nvim" "
+         $dot_config_files
+         $toml_files
+      " . 0644 "$envPath"
+      chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
-# Remove/report no longer needed files and directories
-remove_items "$remove_items"
+      # Remove/report no longer needed files and directories
+      remove_items "$remove_items"
 
-# Create/report missing directories
-ensure_dirs "$dirs_to_create"
+      # Create/report missing directories
+      ensure_dirs "$dirs_to_create"
+      ;;
+esac
 
 ## Post install/check tweaks
 
@@ -146,7 +150,18 @@ case "$OPTION_GIVEN" in
       fi
       ;;
    remove)
-      remove_items "$XDG_CONFIG_HOME/nvim/lua/grs"
-      :
+      remove_items "$XDG_CONFIG_HOME/nvim"
+      ;;
+   clean)
+      remove_items "$XDG_CONFIG_HOME/nvim"
+      remove_items "$XDG_DATA_HOME/nvim/lazy"
+      remove_items "$XDG_STATE_HOME/nvim/lazy"
+      remove_items "$XDG_CACHE_HOME/nvim/luac"
+      ;;
+   nuke)
+      remove_items "$XDG_CONFIG_HOME/nvim"
+      remove_items "$XDG_DATA_HOME/nvim"
+      remove_items "$XDG_STATE_HOME/nvim"
+      remove_items "$XDG_CACHE_HOME/nvim"
       ;;
 esac
