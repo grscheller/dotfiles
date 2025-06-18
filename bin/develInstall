@@ -1,24 +1,21 @@
 #!/bin/sh
 #
-# homeInstall: Installs a basic Bash environment and other
-#              miscellaneous home directory configuration files,
+# develInstall: Installs software development infrastructure and a basic
+#               fallback Bash environment into my home directory.
+#
+# usage: develInstall [ --install | --check | --remove | --clean | --nuke ]
+#
+#        where --install: installs dotfiles into $HOME
+#              --check:   checks what was installed
+#              --remove:  removes files which were installed
+#              --clean:   same as above, deletes emptied directories
+#              --nuke:    same as above but cleans up other content
 #
 # shellcheck shell=dash
 #
 
-scriptName=homeInstall
-gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-home="$gitRepo/home"
-
-ACTION=${ACTION:=''}
-
-cd "$home" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-   return 1
-}
-
-# Parse cmdline arguments and source functions, if not done already
-. ../bin/source_setup.sh
+export scriptName=develInstall
+. ../bin/parse_cmdline_and_source_functions
 
 bash_files='
    .bash_profile
@@ -57,14 +54,14 @@ devel_files='
 '
 
 remove_items="
-   "$HOME/.vimrc"
+   $HOME/.vimrc
 "
 
 dirs_to_create="
-   "$HOME/catch"
-   "$HOME/.cabal/bin"
-   "$HOME/.local/bin"
-   "$HOME/devel/zig_nightly"
+   $HOME/catch
+   $HOME/.cabal/bin
+   $HOME/.local/bin
+   $HOME/devel/zig_nightly
 "
 
 ## Install, Check or Remove
@@ -96,15 +93,6 @@ case "$ACTION" in
       # Remove/report no longer needed files and directories
       remove_items "$remove_items"
 
-      # Create/report missing directories
+      # Create/report missing/delete directories
       ensure_dirs "$dirs_to_create"
-esac
-
-## Post install/check tweaks
-
-case "$ACTION" in
-   nuke)
-      remove_item "$HOME/bin"
-      remove_item "$HOME/.bloop"
-      remove_item "$HOME/.cabal"
 esac

@@ -1,27 +1,27 @@
 #!/bin/sh
 #
-# dfInstall: POSIX shell script to install an entire Linux desktop
+# dfInstall: POSIX shell scripts to install an entire Linux desktop
 #            environment into a user's $HOME directory.
+#
+# usage: dfInstall [ --install | --check | --remove | --clean | --nuke ]
+#
+#        where --install: installs dotfiles into $HOME
+#              --check:   checks what was installed
+#              --remove:  removes files which were installed
+#              --clean:   same as above, deletes emptied directories
+#              --nuke:    same as above but cleans up other content
 #
 # shellcheck shell=dash
 #
 
+export ACTION=''
 scriptName=dfInstall
-gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 
-cd "$gitRepo" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$gitRepo"
-   exit 1
-}
-
-# Parse cmdline arguments and source functions
-export Action=''
-. bin/source_setup.sh
+. ../bin/parse_cmdline_and_source_functions
 
 # Install dotfiles
-(. bin/nvimInstall) &
-(. bin/fishInstall) &
-(. bin/homeInstall) &
+(. ../bin/nvimInstall) &
+(. ../bin/fishInstall) &
+(. ../bin/homeInstall) &
 
-# Make sure all background jobs finish
 wait

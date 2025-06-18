@@ -1,20 +1,33 @@
 # grscheller/dotfiles setup script
 #
-# Parse input arguments and setup infrastructure.
+# Common infrastructure sourced into other dotfile installation scripts.
+# Parses input arguments and setup functions for the dotfile scripts`.
+# The idea is to keep the installation  scripts as simple as possible.0
 #
 # shellcheck shell=dash
 #
+
 if [ -z "$scriptName" ]
 then
    printf '\nCheck configuration, the scriptName is not set.\n\n'
    exit 1
 fi
 
+gitRepo="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+home="$gitRepo/home"
+
+export ACTION=${ACTION:=''}
+
+cd "$home" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+   return 1
+}
+
 if [ -z "$ACTION" ]
 then
-   export ACTION=''
-   export CLEAN=''
-   export NUKE=''
+   export ACTION
+   export CLEAN
+   export NUKE
 
    umask 0022
    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
@@ -35,23 +48,23 @@ then
       case "$1" in
          --install)
             ACTION=install
-            CLEAN=''
-            NUKE=''
+            CLEAN='none'
+            NUKE='none'
             ;;
          --check)
             ACTION=check
-            CLEAN=''
-            NUKE=''
+            CLEAN='none'
+            NUKE='none'
             ;;
          --remove)
             ACTION=remove
-            CLEAN=''
-            NUKE=''
+            CLEAN='none'
+            NUKE='none'
             ;;
          --clean)
             ACTION=remove
             CLEAN=clean
-            NUKE=''
+            NUKE='none'
             ;;
          --nuke)
             ACTION=remove
@@ -65,8 +78,8 @@ then
       esac
    else
       ACTION=install
-      CLEAN=''
-      NUKE=''
+      CLEAN='none'
+      NUKE='none'
    fi
 
    ## Functions
@@ -106,8 +119,14 @@ then
                printf '%s: directory "%s" needs to be created\n\n' "$scriptName" "$targetDir"
                ;;
             remove)
-               test "$CLEAN" = clean && rmdir "$targetDir" >/dev/null 2>&1
-               test "$NUKE" = nuke && rm -rf "$targetDir"
+               if [ "$CLEAN" = clean ]
+               then
+                  rmdir "$targetDir" > /dev/null 2>&1
+                  if [ "$NUKE" = nuke ]
+                  then
+                     rm -rf "$targetDir"
+                  fi
+               fi
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
@@ -145,7 +164,7 @@ then
             fi
             ;;
          check)
-            # Compare config with install target 
+            # Compare config with install target
             if [ ! -e "$src_abs" ] && [ ! -e "$trgt" ]
             then
                printf '%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n' "$scriptName" "$src_abs" "$trgt"
@@ -189,7 +208,7 @@ then
       local items
       local item
       test ${#} -gt 1 && {
-         printf '%s: Error - remove_items only takes one argument\n\n' "$scriptName" 
+         printf '%s: Error - remove_items only takes one argument\n\n' "$scriptName"
       }
       items="$1"
       test -z "$items" && return
@@ -203,8 +222,8 @@ then
    ensure_dirs () {
       local dirs
       local dir
-      test $# -gt 1 && {
-         printf '%s: Error - ensure_dirs only takes one argument\n\n' "$scriptName" 
+      test ! $# -eq 1 && {
+         printf '%s: Error - ensure_dirs only takes one argument\n\n' "$scriptName"
       }
       dirs="$1"
       test -z "$dirs" && return
@@ -212,16 +231,6 @@ then
       do
          ensure_dir "$dir"
       done
-   }
-
-   fatal_error () {
-      if test -z "${1}"
-      then
-         printf '%s: Fatal Error\n' "$scriptName"
-      else
-         printf '%s: Fatal Error - %s\n' "$scriptName" "$1"
-      fi
-      exit 2
    }
 
    ## For initial bootstrap when $XDG directories might not exist yet

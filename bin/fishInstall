@@ -2,22 +2,19 @@
 #
 # fishInstall: Installs Fish Shell configuration files.
 #
+# usage: fishInstall [ --install | --check | --remove | --clean | --nuke ]
+#
+#        where --install: installs dotfiles into $HOME
+#              --check:   checks what was installed
+#              --remove:  removes files which were installed
+#              --clean:   same as above, deletes emptied directories
+#              --nuke:    same as above but cleans up other content
+#
 # shellcheck shell=dash
 #
 
-scriptName=fishInstall
-envName=fish-env
-
-gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-envPath="$gitRepo/$envName"
-
-cd "$envPath" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$gitRepo"
-   return 1
-}
-
-# Parse cmdline arguments and source functions, if not done already
-. ../bin/source_setup.sh
+export scriptName=fishInstall
+. ../bin/parse_cmdline_and_source_functions
 
 config_files='
    completions/pypath.fish

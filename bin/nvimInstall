@@ -2,22 +2,19 @@
 #
 # nvimInstall: Installs Neovim configuration files.
 #
+# usage: nvimInstall [ --install | --check | --remove | --clean | --nuke ]
+#
+#        where --install: installs nvim config into ~/.config/nvim
+#              --check:   checks what was installed
+#              --remove:  removes all files which were installed
+#              --clean:   same as above, but also lazy.nvim installation
+#              --nuke:    removes everything nvim related
+#
 # shellcheck shell=dash
 #
 
-scriptName=nvInstall
-envName=nvim-env
-
-gitRepo="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-envPath="$gitRepo/$envName"
-
-cd "$envPath" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$gitRepo"
-   return 1
-}
-
-# Parse cmdline arguments and source functions, if not done already
-. ../bin/source_setup.sh
+export scriptName=nvimInstall
+. ../bin/parse_cmdline_and_source_functions
 
 dot_config_files='
    after/ftplugin/c.lua
