@@ -15,6 +15,13 @@
 #
 
 export scriptName=develInstall
+home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+
+cd "$home" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+   return 1
+}
+
 . ../bin/parse_cmdline_and_source_functions
 
 bash_files='
@@ -66,7 +73,7 @@ dirs_to_create="
 
 ## Install, Check or Remove
 
-case "$ACTION" in
+case "$DF_ACTION" in
    install|check|remove)
       # Process bash config files
       process_files "$HOME" "$bash_files" . 0644 "$home"

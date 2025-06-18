@@ -14,14 +14,20 @@
 # shellcheck shell=dash
 #
 
-export ACTION=''
-scriptName=dfInstall
+export scriptName=dfInstall
+home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
 
+cd "$home" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+   return 1
+}
+
+export DF_ACTION=''
 . ../bin/parse_cmdline_and_source_functions
 
 # Install dotfiles
 (. ../bin/nvimInstall) &
 (. ../bin/fishInstall) &
-(. ../bin/homeInstall) &
+(. ../bin/develInstall) &
 
 wait

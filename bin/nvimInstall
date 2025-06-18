@@ -14,6 +14,13 @@
 #
 
 export scriptName=nvimInstall
+home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+
+cd "$home" 2>/dev/null || {
+   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+   return 1
+}
+
 . ../bin/parse_cmdline_and_source_functions
 
 dot_config_files='
@@ -84,14 +91,11 @@ remove_items="
 
 dirs_to_create=""
 
-## Preinstall checks
-
-# See if nvim spellfile will need to be recompiled
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim >/dev/null 2>&1
 then
    if ! test -e "$SpellFile" || {
-      ! diff -q "$SpellFile" spell/en.utf-8.add >/dev/null 2>&1
+      ! diff -q "$SpellFile" .config/nvim/spell/en.utf-8.add 2>&1
    }
    then
       compileSpellFile=yes
@@ -104,15 +108,13 @@ else
    compileSpellFile=no
 fi
 
-## Install/Check
-
-case "$OPTION_GIVEN" in
-   install | check)
+case "$DF_ACTION" in
+   install|check)
       # Install/Check Neovim files & NVIM related TOML files
       process_files "$XDG_CONFIG_HOME/nvim" "
          $dot_config_files
          $toml_files
-      " . 0644 "$envPath"
+      " ./.config/nvim 0644 "$home"
       chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
       # Remove/report no longer needed files and directories
@@ -123,9 +125,7 @@ case "$OPTION_GIVEN" in
       ;;
 esac
 
-## Post install/check tweaks
-
-case "$OPTION_GIVEN" in
+case "$DF_ACTION" in
    install)
       # Recompiled spell file if necessary
       if test "$compileSpellFile" = yes

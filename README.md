@@ -7,22 +7,22 @@ My GitHub repository to maintain and install my Linux based "dotfiles."
 - Install various "dotfiles" to my $HOME directory
   - [nvimInstall](bin/nvimInstall) - Neovim (always a work in progress)
   - [fishInstall](bin/fishInstall) - Fish (my primary shell)
-  - [homeInstall](bin/homeInstall) - Bash & other miscellaneous configs
+  - [develInstall](bin/develInstall) - Devel environment & Bash fallback
 - Install all of the above in parallel
   - [dfInstall](bin/dfInstall)
-- Core infrastructure used by scripts
-  - [source_setup.sh](bin/source_setup.sh)
+- Sourced core infrastructure for scripts
+  - [parse_cmdline_and_source_functions](bin/parse_cmdline_and_source_functions)
 
 ## Factoids
 
 - POSIX compliant installation scripts
   - actually Dash compliant (I use the non-POSIX "local" keyword)
   - on Pop!OS /usr/bin/sh -> dash
-- Fish abbreviations to install from anywhere
-  - dfInstall -> for dfInstall
-  - fInstall -> for fishInstall
-  - hInstall -> for homeInstall
-  - nvInstall -> for nvimInstall
+- Fish abbreviations - dotfiles can be installed from anywhere
+  - nvI  -> for nvimInstall
+  - fI   -> for fishInstall
+  - devI -> for homeInstall
+  - dfI  -> for dfInstall
 - Currently only tested regularly on Pop!OS
 
 ## Public Domain Declaration

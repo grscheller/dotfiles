@@ -13,19 +13,20 @@ then
    exit 1
 fi
 
-gitRepo="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
-home="$gitRepo/home"
+home=${home:=~/devel/dotfiles/home}
 
-export ACTION=${ACTION:=''}
-
-cd "$home" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-   return 1
-}
-
-if [ -z "$ACTION" ]
+if [ ! -d "$home" ]
 then
-   export ACTION
+   printf '\nCheck installation, '
+   printf 'the git repo %s does not exist.\n\n' "${home%/*}"
+   exit 1
+fi
+
+export DF_ACTION=${DF_ACTION:=''}
+
+if [ -z "$DF_ACTION" ]
+then
+   export DF_ACTION
    export CLEAN
    export NUKE
 
@@ -47,27 +48,27 @@ then
    then
       case "$1" in
          --install)
-            ACTION=install
+            DF_ACTION=install
             CLEAN='none'
             NUKE='none'
             ;;
          --check)
-            ACTION=check
+            DF_ACTION=check
             CLEAN='none'
             NUKE='none'
             ;;
          --remove)
-            ACTION=remove
+            DF_ACTION=remove
             CLEAN='none'
             NUKE='none'
             ;;
          --clean)
-            ACTION=remove
+            DF_ACTION=remove
             CLEAN=clean
             NUKE='none'
             ;;
          --nuke)
-            ACTION=remove
+            DF_ACTION=remove
             CLEAN=clean
             NUKE=nuke
             ;;
@@ -77,7 +78,7 @@ then
             ;;
       esac
    else
-      ACTION=install
+      DF_ACTION=install
       CLEAN='none'
       NUKE='none'
    fi
@@ -90,7 +91,7 @@ then
       item="$1"
       if test -e "$item"
       then
-         case "$ACTION" in
+         case "$DF_ACTION" in
             check)
                printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
                ;;
@@ -110,7 +111,7 @@ then
       srcDir="$2"
       if [ ! -d "$targetDir" ]
       then
-         case "$ACTION" in
+         case "$DF_ACTION" in
             install)
                mkdir -p "$targetDir" ||
                   printf '%s: failed to create "%s" directory\n\n' "$scriptName" "$targetDir"
@@ -151,7 +152,7 @@ then
       # Ensure target directory exists and complain if source directory doesn't
       ensure_dir "${trgt%/*}" "${src_abs%/*}"
 
-      case "$ACTION" in
+      case "$DF_ACTION" in
          install)
             # Install the remove the target file
             if cp "$src_rel" "$trgt"
@@ -235,7 +236,7 @@ then
 
    ## For initial bootstrap when $XDG directories might not exist yet
 
-   if [ $ACTION = install ]
+   if [ $DF_ACTION = install ]
    then
       ensure_dir "$XDG_CONFIG_HOME"
       chmod 0755 "$XDG_CONFIG_HOME"

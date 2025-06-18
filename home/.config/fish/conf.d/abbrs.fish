@@ -18,11 +18,11 @@ abbr -a gsm git submodule update --remote --merge
 abbr -a gt 'git tag --list|cat'
 abbr -a gw git switch
 
-# appropriate for arch linux desktop environment - single quotes intentional
-abbr -a dfInstall '$DOTFILES_GIT_REPO/bin/dfInstall'
-abbr -a nvInstall '$DOTFILES_GIT_REPO/bin/nvimInstall'
-abbr -a fInstall  '$DOTFILES_GIT_REPO/bin/fishInstall'
-abbr -a hInstall  '$DOTFILES_GIT_REPO/bin/homeInstall'
+# dotfile installation scripts - single quotes intentional
+abbr -a dfI '$DOTFILES_GIT_REPO/bin/dfInstall'
+abbr -a nvI '$DOTFILES_GIT_REPO/bin/nvimInstall'
+abbr -a fI '$DOTFILES_GIT_REPO/bin/fishInstall'
+abbr -a devI  '$DOTFILES_GIT_REPO/bin/homeInstall'
 
 # Python virtual environment related
 abbr -a pl pip list|cat
