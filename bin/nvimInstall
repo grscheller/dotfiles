@@ -91,6 +91,8 @@ remove_items="
 
 dirs_to_create=""
 
+# Pre ACTION Checks
+
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim >/dev/null 2>&1
 then
@@ -108,6 +110,8 @@ else
    compileSpellFile=no
 fi
 
+# Perform ACTION
+
 case "$DF_ACTION" in
    install|check)
       # Install/Check Neovim files & nvim related TOML files
@@ -123,7 +127,24 @@ case "$DF_ACTION" in
       # Create/report missing directories
       ensure_dirs "$dirs_to_create"
       ;;
+   remove)
+      remove_item "$XDG_CONFIG_HOME/nvim"
+      ;;
+   clean)
+      remove_item "$XDG_CONFIG_HOME/nvim"
+      remove_item "$XDG_DATA_HOME/nvim/lazy"
+      remove_item "$XDG_STATE_HOME/nvim/lazy"
+      remove_item "$XDG_CACHE_HOME/nvim/luac"
+      ;;
+   nuke)
+      remove_item "$XDG_CONFIG_HOME/nvim"
+      remove_item "$XDG_DATA_HOME/nvim"
+      remove_item "$XDG_STATE_HOME/nvim"
+      remove_item "$XDG_CACHE_HOME/nvim"
+      ;;
 esac
+
+# Post ACTION Tasks
 
 case "$DF_ACTION" in
    install)
@@ -145,20 +166,5 @@ case "$DF_ACTION" in
          printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
          printf '             recompiled on the next install.\n\n'
       fi
-      ;;
-   remove)
-      remove_items "$XDG_CONFIG_HOME/nvim"
-      ;;
-   clean)
-      remove_items "$XDG_CONFIG_HOME/nvim"
-      remove_items "$XDG_DATA_HOME/nvim/lazy"
-      remove_items "$XDG_STATE_HOME/nvim/lazy"
-      remove_items "$XDG_CACHE_HOME/nvim/luac"
-      ;;
-   nuke)
-      remove_items "$XDG_CONFIG_HOME/nvim"
-      remove_items "$XDG_DATA_HOME/nvim"
-      remove_items "$XDG_STATE_HOME/nvim"
-      remove_items "$XDG_CACHE_HOME/nvim"
       ;;
 esac

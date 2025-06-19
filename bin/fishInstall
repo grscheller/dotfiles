@@ -89,8 +89,10 @@ remove_items="
 
 dirs_to_create=""
 
+## Perform ACTION
+
 case "$DF_ACTION" in
-   install|check)
+   install|check|remove)
       # Install Fish config files
       process_files "$XDG_CONFIG_HOME/fish" "$config_files" ./.config/fish 0644 "$home"
       chmod 0755 "$XDG_CONFIG_HOME/fish"
@@ -101,10 +103,10 @@ case "$DF_ACTION" in
       # Create/report missing directories
       ensure_dirs "$dirs_to_create"
       ;;
-   remove)
+   clean)
       remove_items "$XDG_CONFIG_HOME/fish"
       ;;
-   clean | nuke)
+   nuke)
       remove_items "$XDG_CONFIG_HOME/fish"
       remove_items "$XDG_DATA_HOME/fish"
       remove_items "$XDG_CACHE_HOME/fish"

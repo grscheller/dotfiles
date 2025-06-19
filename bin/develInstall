@@ -61,17 +61,28 @@ devel_files='
 '
 
 remove_items="
-   $HOME/.vimrc
+   ~/.vimrc
 "
 
 dirs_to_create="
-   $HOME/catch
-   $HOME/.cabal/bin
-   $HOME/.local/bin
-   $HOME/devel/zig_nightly
+   ~/catch
+   ~/.cabal/bin
+   ~/.local/bin
+   ~/devel/zig_nightly
 "
 
-## Install, Check or Remove
+dirs_to_clean="
+   ~/.cabal
+   ~/.bloop
+"
+
+dirs_to_nuke="
+   ~/catch
+   ~/devel/venvs/
+   ~/devel/zig_nightly
+"
+
+## Perform ACTION
 
 case "$DF_ACTION" in
    install|check|remove)
@@ -102,4 +113,11 @@ case "$DF_ACTION" in
 
       # Create/report missing/delete directories
       ensure_dirs "$dirs_to_create"
+      ;;
+   clean)
+      remove_items "$dirs_to_clean"
+      ;;
+   nuke)
+      remove_items "$dirs_to_clean $dirs_to_nuke"
+      ;;
 esac
