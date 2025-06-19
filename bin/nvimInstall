@@ -110,7 +110,7 @@ fi
 
 case "$DF_ACTION" in
    install|check)
-      # Install/Check Neovim files & NVIM related TOML files
+      # Install/Check Neovim files & nvim related TOML files
       process_files "$XDG_CONFIG_HOME/nvim" "
          $dot_config_files
          $toml_files

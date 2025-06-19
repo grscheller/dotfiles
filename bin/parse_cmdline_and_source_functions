@@ -138,15 +138,14 @@ then
 
    # Install, check, or remove file
    process_file () {
-      local install_dir file_path src_dir file_perm home_dir
+      local install_dir file_path src_dir file_perm
       local src_rel src_abs trgt
       install_dir="$1"
       file_path="$2"
       src_dir="$3"
       file_perm="$4"
-      home_dir=$5
       src_rel=$(echo "$src_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
-      src_abs=$(echo "$home_dir/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
+      src_abs=$(echo "$home/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
       trgt=$(echo "$install_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
 
       # Ensure target directory exists and complain if source directory doesn't
@@ -190,17 +189,16 @@ then
 
    # Install files - convenience function (keep loops out of config files)
    process_files () {
-      local install_dir files src_dir file_perm home_dir
+      local install_dir files src_dir file_perm
       local file
       install_dir="$1"
       files="$2"
       src_dir="$3"
       file_perm="$4"
-      home_dir=$5
       test -z "$files" && return
       for file in $files
       do
-         process_file "$install_dir" "$file" "$src_dir" "$file_perm" "$home_dir"
+         process_file "$install_dir" "$file" "$src_dir" "$file_perm"
       done
    }
 

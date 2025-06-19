@@ -76,25 +76,25 @@ dirs_to_create="
 case "$DF_ACTION" in
    install|check|remove)
       # Process bash config files
-      process_files "$HOME" "$bash_files" . 0644 "$home"
+      process_files "$HOME" "$bash_files" . 0644
 
       # Process ~/bin scripts
-      process_files "$HOME/bin" "$bin_scripts" bin 0755 "$home"
+      process_files "$HOME/bin" "$bin_scripts" bin 0755
       chmod 0755 "$HOME/bin"
 
       # Process Bloop configs for Scala
-      process_files "$HOME/.bloop" "$bloop_files" .bloop 0644 "$home"
+      process_files "$HOME/.bloop" "$bloop_files" .bloop 0644
       chmod 0755 "$HOME/.bloop"
 
       # Process Cabal configs for Haskell
-      process_files "$HOME/.cabal" "$cabal_files" .cabal 0644 "$home"
+      process_files "$HOME/.cabal" "$cabal_files" .cabal 0644
       chmod 0755 "$HOME/.cabal"
 
       # Process miscellaneous ~/.config files
-      process_files "$XDG_CONFIG_HOME" "$dot_config_files" .config 0644 "$home"
+      process_files "$XDG_CONFIG_HOME" "$dot_config_files" .config 0644
 
       # Process devel files
-      process_files "$HOME/devel" "$devel_files" devel 0644 "$home"
+      process_files "$HOME/devel" "$devel_files" devel 0644
       chmod 0755 "$HOME/devel"
 
       # Remove/report no longer needed files and directories
