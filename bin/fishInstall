@@ -94,7 +94,7 @@ dirs_to_create=""
 case "$DF_ACTION" in
    install|check|remove)
       # Install Fish config files
-      process_files "$XDG_CONFIG_HOME/fish" "$config_files" ./.config/fish 0644 "$home"
+      process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$home"
       chmod 0755 "$XDG_CONFIG_HOME/fish"
 
       # Remove/report no longer needed files and directories

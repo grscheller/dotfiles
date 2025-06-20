@@ -94,20 +94,17 @@ dirs_to_create=""
 # Pre ACTION Checks
 
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
-if which nvim >/dev/null 2>&1
+if which -s nvim
 then
-   if ! test -e "$SpellFile" || {
-      ! diff -q "$SpellFile" .config/nvim/spell/en.utf-8.add 2>&1
-   }
+   if test ! -e "$SpellFile"
    then
       compileSpellFile=yes
-   fi
-   if ! test -e "${SpellFile}.spl"
+   elif ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
    then
       compileSpellFile=yes
+   else
+      compileSpellFile=no
    fi
-else
-   compileSpellFile=no
 fi
 
 # Perform ACTION
@@ -118,7 +115,7 @@ case "$DF_ACTION" in
       process_files "$XDG_CONFIG_HOME/nvim" "
          $dot_config_files
          $toml_files
-      " ./.config/nvim 0644 "$home"
+      " config/nvim 0644 "$home"
       chmod 0755 "$XDG_CONFIG_HOME/nvim"
 
       # Remove/report no longer needed files and directories

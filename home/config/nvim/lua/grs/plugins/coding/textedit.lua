@@ -36,10 +36,10 @@ return {
          require('nvim-surround').setup {
             keymaps = {
                normal = 'gzz',
+               change = 'gzc',
+               delete = 'gzd',
                visual = 'gzz',
                visual_line = 'gzl',
-               delete = 'gzd',
-               change = 'gzc',
             },
          }
       end,
