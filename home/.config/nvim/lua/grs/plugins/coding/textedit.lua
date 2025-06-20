@@ -12,7 +12,7 @@ return {
    },
 
    -- when re-editing a file, return to last place file changed
-   { "mrcjkb/nvim-lastplace" },
+   { 'mrcjkb/nvim-lastplace' },
 
    -- Colorize color names, hexcodes, and other color formats
    {
@@ -27,23 +27,22 @@ return {
       },
    },
 
-   -- Surround text objects with matching symbols
+   -- Surround text "objects" with matching symbols
    {
       'kylechui/nvim-surround',
-      event = "VeryLazy",
+      version = '^3.1.2',
+      event = 'VeryLazy',
       config = function()
-         require("nvim-surround").setup {
-            opt = {
-               keymaps = {
-                  normal = 'yr',
-                  visual = 'R',
-                  visual_line = 'gR',
-                  delete = 'dr',
-                  change = 'cr',
-               },
+         require('nvim-surround').setup {
+            keymaps = {
+               normal = 'gzz',
+               visual = 'gzz',
+               visual_line = 'gzl',
+               delete = 'gzd',
+               change = 'gzc',
             },
          }
-      end
+      end,
    },
 
    -- Quickly jump around window - like sneak but on steroids
@@ -52,7 +51,7 @@ return {
       keys = {
          { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
          { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
-         { 'gs', mode = { 'n', 'x', 'o' }, desc = 'leap from window' },
+         { 'gs', mode = { 'n' }, desc = 'leap from window' },
       },
       config = function()
          local leap = require 'leap'
