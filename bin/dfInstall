@@ -7,9 +7,9 @@
 #
 #        where --install: installs dotfiles into $HOME
 #              --check:   checks what was installed
-#              --remove:  removes files which were installed
-#              --clean:   same as above, deletes emptied directories
-#              --nuke:    same as above but cleans up other content
+#              --remove:  generally removes what was installed
+#              --clean:   like above but tries to conservatively clean things up
+#              --nuke:    like above but deletes even manually installed things
 #
 # shellcheck shell=dash
 #
@@ -25,7 +25,7 @@ cd "$home" 2>/dev/null || {
 export DF_ACTION=''
 . ../bin/parse_cmdline_and_source_functions
 
-# Install dotfiles
+# Install dotfiles in parallel
 (. ../bin/nvimInstall) &
 (. ../bin/fishInstall) &
 (. ../bin/develInstall) &

@@ -27,8 +27,6 @@ export DF_ACTION=${DF_ACTION:=''}
 if [ -z "$DF_ACTION" ]
 then
    export DF_ACTION
-   export CLEAN
-   export NUKE
 
    umask 0022
    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
@@ -49,28 +47,18 @@ then
       case "$1" in
          --install)
             DF_ACTION=install
-            CLEAN='none'
-            NUKE='none'
             ;;
          --check)
             DF_ACTION=check
-            CLEAN='none'
-            NUKE='none'
             ;;
          --remove)
             DF_ACTION=remove
-            CLEAN='none'
-            NUKE='none'
             ;;
          --clean)
-            DF_ACTION=remove
-            CLEAN=clean
-            NUKE='none'
+            DF_ACTION=clean
             ;;
          --nuke)
-            DF_ACTION=remove
-            CLEAN=clean
-            NUKE=nuke
+            DF_ACTION=nuke
             ;;
          *)
             printf '%s\n\n' "$usage"
@@ -79,8 +67,6 @@ then
       esac
    else
       DF_ACTION=install
-      CLEAN='none'
-      NUKE='none'
    fi
 
    ## Functions
@@ -95,7 +81,7 @@ then
             check)
                printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
                ;;
-            install|remove)
+            install|remove|clean|nuke)
                rm -rf "$item"
                test -e "$item" && {
                   printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
@@ -120,14 +106,13 @@ then
                printf '%s: directory "%s" needs to be created\n\n' "$scriptName" "$targetDir"
                ;;
             remove)
-               if [ "$CLEAN" = clean ]
-               then
-                  rmdir "$targetDir" > /dev/null 2>&1
-                  if [ "$NUKE" = nuke ]
-                  then
-                     rm -rf "$targetDir"
-                  fi
-               fi
+               ;;
+            clean)
+               rmdir "$targetDir" > /dev/null 2>&1
+               ;;
+            nuke)
+               rm -rf "$targetDir"
+               ;;
          esac
       fi
       if [ -n "$srcDir" ] && [ ! -d "$srcDir" ]
