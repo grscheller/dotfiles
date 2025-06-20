@@ -27,33 +27,23 @@ return {
       },
    },
 
-   -- Comment out or restore lines and blocks of code
-   {
-      'numToStr/Comment.nvim',
-      keys = {
-         { 'gc', mode = { 'n', 'x' }, desc = 'comment line' },
-         { 'gb', mode = { 'n', 'x' }, desc = 'comment block' },
-      },
-      config = true,
-   },
-
    -- Surround text objects with matching symbols
    {
       'kylechui/nvim-surround',
-      event = 'InsertEnter',
-      opt = {
-         keymaps = {
-            normal = 'gz',
-            normal_cur = 'gZ',
-            normal_line = 'gzz',
-            normal_cur_line = 'gZZ',
-            visual = 'gz',
-            visual_line = 'gZ',
-            delete = 'gzd',
-            change = 'gzc',
-            change_line = 'gzC',
-         },
-      },
+      event = "VeryLazy",
+      config = function()
+         require("nvim-surround").setup {
+            opt = {
+               keymaps = {
+                  normal = 'yr',
+                  visual = 'R',
+                  visual_line = 'gR',
+                  delete = 'dr',
+                  change = 'cr',
+               },
+            },
+         }
+      end
    },
 
    -- Quickly jump around window - like sneak but on steroids
