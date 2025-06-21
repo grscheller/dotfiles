@@ -10,7 +10,7 @@
 
 return {
    {
-      -- Configured thru global table in config/globals.lua
+      -- Configured with a global table in config/globals.lua
       'mrcjkb/rustaceanvim',
       version = '^5', -- Recommended
    },

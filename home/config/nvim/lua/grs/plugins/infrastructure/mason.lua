@@ -13,6 +13,7 @@ local opts = {
 
 return {
    {
+      -- Package manager for external tooling
       'mason-org/mason.nvim',
       opts = opts,
    },

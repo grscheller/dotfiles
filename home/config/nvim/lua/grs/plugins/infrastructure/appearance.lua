@@ -46,6 +46,7 @@ local noice_opts = {
 
 return {
    {
+      -- Provides eye-candy
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font,
       opts = {
@@ -56,6 +57,7 @@ return {
    },
 
    {
+      -- Hijack vim.notify
       'rcarriga/nvim-notify',
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
       config = function()
@@ -64,12 +66,14 @@ return {
    },
 
    {
+      -- Puts the cmdline at eye level
       'folke/noice.nvim',
       event = 'VeryLazy',
       dependencies = {
          'MunifTanjim/nui.nvim',
          'rcarriga/nvim-notify',
          {
+            -- LSP renaming with immediate visual feedback
             "smjonas/inc-rename.nvim",
             opts = {},
          },

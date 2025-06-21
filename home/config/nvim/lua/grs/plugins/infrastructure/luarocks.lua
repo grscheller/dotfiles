@@ -1,8 +1,6 @@
 --[[ Plugin manager and rocks for LuaRocks to load. ]]
 
 return {
-   { 'folke/lazy.nvim' }, -- Once bootstrapped, lazy.nvim will keep itself updated
-
    {
       --[[ On initial install or update?) of luarocks.nvim, an automatic install
            "should" take place to "prepare" the plugin. If this fails,

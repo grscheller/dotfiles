@@ -79,9 +79,10 @@ end
 return {
 
    {
-      -- To open window showing keymaps for current picker,
-      --   Insert mode: <c-/>
-      --   Normal mode: ?
+      -- Highly extendable fuzzy finder over lists.
+      --   To open window showing keymaps for current picker,
+      --     Insert mode: <c-/>
+      --     Normal mode: ?
       'nvim-telescope/telescope.nvim',
       dependencies = {
          { 'nvim-lua/plenary.nvim' },
@@ -99,6 +100,8 @@ return {
    },
 
    {
+      -- File browser extension for telescope. Supports synchronized creation,
+      -- deletion, renaming, and moving of files and folders, with LSP integration.
       'nvim-telescope/telescope-file-browser.nvim',
       dependencies = {
          'nvim-telescope/telescope.nvim',
@@ -118,6 +121,7 @@ return {
    },
 
    {
+      -- Telescope extension providing info about lazy.nvim managed plugins
       'tsakirist/telescope-lazy.nvim',
       dependencies = {
          'nvim-telescope/telescope.nvim',

@@ -54,6 +54,7 @@ local keys = {
 
 return {
    {
+      -- Makes keymaps discoverable.
       'folke/which-key.nvim',
       event = 'VeryLazy',
       opts = opts,

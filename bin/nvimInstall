@@ -68,11 +68,11 @@ dot_config_files='
    lua/grs/plugins/coding/lint.lua
    lua/grs/plugins/coding/textedit.lua
    lua/grs/plugins/ide/init.lua
-   lua/grs/plugins/ide/completions.lua
+   lua/grs/plugins/ide/cmp.lua
    lua/grs/plugins/ide/fidget.lua
    lua/grs/plugins/infrastructure/init.lua
    lua/grs/plugins/infrastructure/appearance.lua
-   lua/grs/plugins/infrastructure/lazy_rock.lua
+   lua/grs/plugins/infrastructure/luarocks.lua
    lua/grs/plugins/infrastructure/mason.lua
    lua/grs/plugins/infrastructure/telescope.lua
    lua/grs/plugins/infrastructure/treesitter.lua
@@ -86,7 +86,8 @@ toml_files='
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/common.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/completions.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lazy_rock.lua
 "
 
 dirs_to_create=""

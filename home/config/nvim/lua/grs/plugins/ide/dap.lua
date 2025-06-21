@@ -39,6 +39,7 @@ end
 
 return {
    {
+      -- Debug Adapter Protocall (DAP) plugin
       'mfussenegger/nvim-dap',
       dependencies = {
          'rcarriga/nvim-dap-ui',

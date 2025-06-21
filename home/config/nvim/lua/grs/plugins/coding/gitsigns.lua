@@ -93,6 +93,7 @@ end
 
 return {
    {
+      -- Provides GIT info in left gutter
       'lewis6991/gitsigns.nvim',
       dependencies = { 'nvim-lua/plenary.nvim' },
       opts = {

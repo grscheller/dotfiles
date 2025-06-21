@@ -23,6 +23,7 @@ end
 
 return {
    {
+      -- Lints what is saved to disk
       'mfussenegger/nvim-lint',
       keys = {
          {

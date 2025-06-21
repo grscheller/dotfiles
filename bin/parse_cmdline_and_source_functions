@@ -79,12 +79,12 @@ then
       then
          case "$DF_ACTION" in
             check)
-               printf '%s: "%s" needs removing from target\n\n' "$scriptName" "$item"
+               printf '%s: "%s" needs to be removed from the target\n\n' "$scriptName" "$item"
                ;;
             install|remove|clean|nuke)
                rm -rf "$item"
                test -e "$item" && {
-                  printf '%s: Failed to remove "%s" from target\n\n' "$scriptName" "$item"
+                  printf '%s: Failed to remove "%s" from the target\n\n' "$scriptName" "$item"
                }
          esac
       fi

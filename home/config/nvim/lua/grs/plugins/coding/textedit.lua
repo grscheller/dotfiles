@@ -1,8 +1,8 @@
 --[[ Plugins for general Text editing Related tasks ]]
 
 return {
-   -- Show line indentations when editing code
    {
+      -- Show line indentations when editing code
       'lukas-reineke/indent-blankline.nvim',
       event = 'InsertEnter',
       main = 'ibl',
@@ -11,11 +11,13 @@ return {
       },
    },
 
-   -- when re-editing a file, return to last place file changed
-   { 'mrcjkb/nvim-lastplace' },
-
-   -- Colorize color names, hexcodes, and other color formats
    {
+      -- when re-editing a file, return to last place file changed
+      'mrcjkb/nvim-lastplace'
+   },
+
+   {
+      -- Colorize color names, hexcodes, and other color formats
       'norcalli/nvim-colorizer.lua',
       keys = {
          { '<leader>c', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
@@ -27,8 +29,8 @@ return {
       },
    },
 
-   -- Surround text "objects" with matching symbols
    {
+      -- Surround text objects and motions with matching symbols
       'kylechui/nvim-surround',
       version = '^3.1.2',
       event = 'VeryLazy',
@@ -45,8 +47,8 @@ return {
       end,
    },
 
-   -- Quickly jump around window - like sneak but on steroids
    {
+      -- Quickly jump around window - like sneak but on steroids
       'ggandor/leap.nvim',
       keys = {
          { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
