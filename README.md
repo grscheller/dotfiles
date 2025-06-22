@@ -19,11 +19,10 @@ My GitHub repository to maintain and install my Linux based "dotfiles."
   - actually Dash compliant (I use the non-POSIX "local" keyword)
   - on Pop!OS /usr/bin/sh -> dash
 - Fish abbreviations - dotfiles can be installed from anywhere
-  - nvI  -> for nvimInstall
-  - fI   -> for fishInstall
-  - devI -> for homeInstall
-  - dfI  -> for dfInstall
-- Currently only tested regularly on Pop!OS
+  - nvI  -> bin/nvimInstall
+  - fI   -> bin/fishInstall
+  - devI -> bin/develInstall
+  - dfI  -> bin/dfInstall (installs all of the above in parallel)
 
 ## Public Domain Declaration
 
