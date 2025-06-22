@@ -1,7 +1,7 @@
 --[[ Configure plugins making Neovim a full IDE ]]
 
-local iFlatten = require('grs.lib.functional').iFlatten
+local flatten = require('grs.lib.functional').flattenArray
 
-return iFlatten {
+return flatten {
    require 'grs.plugins.ide.ide',
 }

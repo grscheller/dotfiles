@@ -1,8 +1,8 @@
 --[[ Plugins needed early or by multiple other plugins ]]
 
-local iFlatten = require('grs.lib.functional').iFlatten
+local flatten = require('grs.lib.functional').flattenArray
 
-return iFlatten {
+return flatten {
    require 'grs.plugins.infrastructure.appearance',
    require 'grs.plugins.infrastructure.luarocks',
    require 'grs.plugins.infrastructure.mason',

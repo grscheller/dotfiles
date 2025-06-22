@@ -34,7 +34,7 @@ M.deepCopy = function(original)
 end
 
 -- Flatten an <array> of <arrays> (will repeat values)
-M.iFlatten = function(aoa)
+M.flattenArray = function(aoa)
    local flattened = {}
    for _, v in ipairs(aoa) do
       for _, w in ipairs(v) do
@@ -45,7 +45,7 @@ M.iFlatten = function(aoa)
 end
 
 -- Apply a function to each element of an <array>, can be Curried.
-M.iMap = function(f, a)
+M.mapArray = function(f, a)
    local function map(vs)
       local ma = {}
       local j = 0

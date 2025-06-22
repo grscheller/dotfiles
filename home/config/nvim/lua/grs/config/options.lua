@@ -53,10 +53,12 @@ vim.o.updatetime = 400                       -- ms of no cursor movement to trig
 vim.o.signcolumn = 'yes'                     -- fixes first column, reduces jitter
 vim.o.showmode = false                       -- redundant with Lualine
 vim.o.showcmd = false                        -- redundant with WhichKey
-vim.o.wildmenu = false                       -- using hrsh7th/cmp-cmdline for this
+vim.o.wildmenu = false                       -- using Saghen/blink.nvim for this
 vim.o.shortmess = 'asAIcCF'                  -- shorten/gag extraneous statusline messages
 vim.o.complete = '.,w,b,u,kspell'            -- no "t,i" redundant with LSP
 vim.o.completeopt = 'menu,menuone,noselect'  -- for nvim-cmp
+vim.o.inccommand='split'  -- For smjonas/inc-rename.nvim LSP renaming showing
+vim.o.cmdwinheight=15     -- changes in multiple buffers.
 
 -- Essentially disable folding
 vim.o.foldenable = false     -- Allows me to reuse of folding keybindings. I have

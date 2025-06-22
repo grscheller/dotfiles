@@ -1,8 +1,8 @@
 --[[ Configure plugins related to software development/refactoring ]]
 
-local iFlatten = require('grs.lib.functional').iFlatten
+local flatten = require('grs.lib.functional').flattenArray
 
-return iFlatten {
+return flatten {
    require 'grs.plugins.coding.format',
    require 'grs.plugins.coding.gitsigns',
    require 'grs.plugins.coding.lint',
