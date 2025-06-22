@@ -1,4 +1,4 @@
---[[ Plugin to integrate commandline formatters ]]
+--[[ LSP and completion support ]]
 
 local blink_opts = {
    -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -28,13 +28,34 @@ local blink_opts = {
    fuzzy = { implementation = 'prefer_rust_with_warning' },
 }
 
+
 return {
    {
       'saghen/blink.cmp',
-      event = 'InsertEnter',
+      event = {
+         'InsertEnter',
+         'CmdlineEnter',
+      },
       dependencies = { 'rafamadriz/friendly-snippets' },
       version = '1.*', -- use a release tag to download pre-built binaries
       opts = blink_opts,
       opts_extend = { 'sources.default' },
+   },
+
+   {
+      -- Give user feedback on LSP activity
+      'j-hui/fidget.nvim',
+      event = 'LspAttach',
+      opts = {
+         progress = {
+            ignore_empty_message = true,
+         },
+      },
+   },
+
+   {
+      -- LSP renaming with immediate visual feedback
+      "smjonas/inc-rename.nvim",
+      opts = {},
    },
 }

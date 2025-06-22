@@ -46,42 +46,6 @@ local noice_opts = {
 
 return {
    {
-      -- Provides eye-candy
-      'nvim-tree/nvim-web-devicons',
-      enabled = vim.g.have_nerd_font,
-      opts = {
-         color_icons = true,
-         default = true,
-         strict = true,
-      },
-   },
-
-   {
-      -- Hijack vim.notify
-      'rcarriga/nvim-notify',
-      dependencies = { 'nvim-treesitter/nvim-treesitter' },
-      config = function()
-         vim.notify = require("notify")
-      end,
-   },
-
-   {
-      -- Puts the cmdline at eye level
-      'folke/noice.nvim',
-      event = 'VeryLazy',
-      dependencies = {
-         'MunifTanjim/nui.nvim',
-         'rcarriga/nvim-notify',
-         {
-            -- LSP renaming with immediate visual feedback
-            "smjonas/inc-rename.nvim",
-            opts = {},
-         },
-      },
-      opts = noice_opts,
-   },
-
-   {
       -- Kanagawa colorscheme - with minor tweaks, needs to be loaded early to provide
       -- highlight groups to other plugins. First thing loaded after vhyrro/luarocks.nvim.
       'rebelot/kanagawa.nvim',
@@ -96,8 +60,42 @@ return {
    },
 
    {
+      -- Hijack vim.notify
+      'rcarriga/nvim-notify',
+      priority = 900,
+      dependencies = { 'nvim-treesitter/nvim-treesitter' },
+      config = function()
+         vim.notify = require("notify")
+      end,
+   },
+
+   {
+      -- Provides eye-candy
+      'nvim-tree/nvim-web-devicons',
+      enabled = vim.g.have_nerd_font,
+      opts = {
+         color_icons = true,
+         default = true,
+         strict = true,
+      },
+   },
+
+   {
+      -- Puts the cmdline at eye level
+      'folke/noice.nvim',
+      event = 'VeryLazy',
+      dependencies = {
+         'MunifTanjim/nui.nvim',
+         'rcarriga/nvim-notify',
+         "smjonas/inc-rename.nvim",
+      },
+      opts = noice_opts,
+   },
+
+   {
       -- replace vim status line with something with more eye candy
       'nvim-lualine/lualine.nvim',
+      event = 'VeryLazy',
       dependencies = {
          'nvim-tree/nvim-web-devicons',
          'rebelot/kanagawa.nvim',

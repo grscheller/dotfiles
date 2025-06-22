@@ -1,4 +1,0 @@
-The directories nvim-env/config/nvim/** include software derived from
-nvim-lua/kickstart.nvim. This repo is maintained primarily by tjdevries with
-the help of hundreds of contributors. It was forked under an MIT License
-with the following copyright notice, "copyright (c) 2021 Michael Lingelbach".

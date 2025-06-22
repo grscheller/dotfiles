@@ -10,6 +10,8 @@ local opts = {
 }
 
 local keys = {
+   --[[ Which Key related ]]
+
    {
       '<leader>?',
       function()
@@ -17,6 +19,17 @@ local keys = {
       end,
       desc = 'Buffer Local Keymaps (which-key)',
    },
+
+   --[[ LSP related ]]
+
+   {
+      '<leader>r',
+      ':IncRename ',
+      desc = 'Incremental Rename',
+   },
+
+   --[[ DAP & Diagnostic related ]]
+
    {
       '<bslash>',
       group = 'diagnostics & dap',
@@ -25,16 +38,17 @@ local keys = {
       '<bslash><bslash>',
       group = 'dap',
    },
+
+   --[[ Treesitter related ]]
+
    {
-      '<c-b>',
-      group = 'blackhole',
-      mode = { 'n', 'v' },
+      '<leader>t',
+      '<cmd>TSBufToggle highlight<cr>',
+      desc = 'toggle treesitter highlighting'
    },
-   {
-      '<c-s>',
-      group = 'system clipboard',
-      mode = { 'n', 'v' },
-   },
+
+   --[[ Plugin related ]]
+
    {
       '<leader>L',
       '<cmd>Lazy<cr>',
@@ -45,10 +59,18 @@ local keys = {
       '<cmd>Mason<cr>',
       desc = 'Mason gui'
    },
+
+   --[[ Not related to any plugin ]]
+
    {
-      '<leader>t',
-      '<cmd>TSBufToggle highlight<cr>',
-      desc = 'toggle treesitter highlighting'
+      '<c-b>',
+      group = 'blackhole',
+      mode = { 'n', 'v' },
+   },
+   {
+      '<c-s>',
+      group = 'system clipboard',
+      mode = { 'n', 'v' },
    },
 }
 

@@ -3,6 +3,5 @@
 local iFlatten = require('grs.lib.functional').iFlatten
 
 return iFlatten {
-   require 'grs.plugins.ide.cmp',
-   require 'grs.plugins.ide.fidget',
+   require 'grs.plugins.ide.ide',
 }

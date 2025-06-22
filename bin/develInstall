@@ -68,6 +68,7 @@ dirs_to_create="
    $HOME/catch
    $HOME/.cabal/bin
    $HOME/.local/bin
+   $HOME/devel/node_lts
    $HOME/devel/zig_nightly
 "
 
@@ -78,7 +79,8 @@ dirs_to_clean="
 
 dirs_to_nuke="
    $HOME/catch
-   $HOME/devel/venvs/
+   $HOME/devel/venvs
+   $HOME/devel/node_lts
    $HOME/devel/zig_nightly
 "
 
