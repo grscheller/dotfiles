@@ -23,7 +23,7 @@ cd "$home" 2>/dev/null || {
 }
 
 export DF_ACTION=''
-. ../bin/parse_cmdline_and_source_functions
+. ../bin/parse_cmdline_and_source_functions.sh
 
 # Install dotfiles in parallel
 (. ../bin/nvimInstall) &

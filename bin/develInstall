@@ -22,7 +22,7 @@ cd "$home" 2>/dev/null || {
    return 1
 }
 
-. ../bin/parse_cmdline_and_source_functions
+. ../bin/parse_cmdline_and_source_functions.sh
 
 bash_files='
    .bash_profile

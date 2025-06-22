@@ -2,8 +2,6 @@
 
 local M = {}
 
-local grs_home = '/home/grs'
-
 -- Configure diagnostics
 vim.diagnostic.config {
    virtual_text = true, -- virtual text sometimes gets in the way
@@ -16,6 +14,6 @@ vim.diagnostic.config {
    signs = true,
 }
 
-M.mason_bin = grs_home .. '/.local/share/nvim/mason/bin'
+M.mason_bin = vim.g.grs_home_dir .. '/.local/share/nvim/mason/bin'
 
 return M

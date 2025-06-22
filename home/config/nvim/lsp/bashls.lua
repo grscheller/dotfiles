@@ -7,8 +7,8 @@
 
 -- Bash, POSIX, Csh Shells
 
-local mason_bin = require('grs.config.grs').mason_bin
-bash_language_server = mason_bin .. '/bash-language-server'
+local mason_bin = require('grs.config.configs').mason_bin
+local bash_language_server = mason_bin .. '/bash-language-server'
 
 return {
    cmd = { bash_language_server, 'start' },
@@ -16,7 +16,7 @@ return {
    root_markers = { '.git', '.bashrc', '.profile' },
    settings = {
       bashIde = {
-         globPattern = '**/*@(.sh|.inc|.bash|.command)',
+         globPattern = '**/*@(.sh|.inc|.bash|.dash|.command)',
       },
    },
 }

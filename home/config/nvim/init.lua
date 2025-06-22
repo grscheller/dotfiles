@@ -3,9 +3,10 @@
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
 
--- Load globals & options
+-- Load globals, options & over configurations
 require 'grs.config.globals'
 require 'grs.config.options'
+require 'grs.config.configs'
 
 -- Configure LSP clients natively
 require 'grs.core/lsp'

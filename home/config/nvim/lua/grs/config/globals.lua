@@ -4,9 +4,12 @@ local km = require 'grs.config.keymaps_whichkey'
 
 -- First thing loaded in init.lua, most plugins only read these on startup.
 
--- Set leader keys once and for all
+-- Define leader keys once and for all
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- Define user home directory
+vim.g.grs_home_dir = '/home/grs'
 
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true

@@ -21,7 +21,7 @@ cd "$home" 2>/dev/null || {
    return 1
 }
 
-. ../bin/parse_cmdline_and_source_functions
+. ../bin/parse_cmdline_and_source_functions.sh
 
 dot_config_files='
    after/ftplugin/c.lua
@@ -52,8 +52,8 @@ dot_config_files='
    lsp/zls.lua
    lua/grs/config/autocmds_lsp.lua
    lua/grs/config/autocmds_text.lua
+   lua/grs/config/configs.lua
    lua/grs/config/globals.lua
-   lua/grs/config/grs.lua
    lua/grs/config/keymaps.lua
    lua/grs/config/keymaps_whichkey.lua
    lua/grs/config/options.lua
@@ -89,6 +89,7 @@ remove_items="
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lazy_rock.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidget.lua
    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/cmp.lua
+   $XDG_CONFIG_HOME/nvim/lua/grs/config/grs.lua
 "
 
 dirs_to_create=""
