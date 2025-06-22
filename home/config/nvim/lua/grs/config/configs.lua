@@ -14,6 +14,6 @@ vim.diagnostic.config {
    signs = true,
 }
 
-M.mason_bin = vim.g.grs_home_dir .. '/.local/share/nvim/mason/bin'
+M.mason_bin = vim.g.grs_xdg_data_home .. '/nvim/mason/bin'
 
 return M

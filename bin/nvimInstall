@@ -94,8 +94,9 @@ remove_items="
 
 dirs_to_create=""
 
-# Pre ACTION Checks
+# Pre ACTION Checks and Tasks
 
+# Determine if spellfile needs to be processed
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which -s nvim
 then
@@ -109,6 +110,14 @@ then
       compileSpellFile=no
    fi
 fi
+
+# Configure config/globals.lua with XDG directory locations
+sedScript="s!<xdg_config_home>!$XDG_CONFIG_HOME!
+           s!<xdg_cache_home>!$XDG_CACHE_HOME!
+           s!<xdg_data_home>!$XDG_DATA_HOME!
+           s!<xdg_state_home>!$XDG_STATE_HOME!"
+config_dir=config/nvim/lua/grs/config
+sed -E -e "$sedScript" $config_dir/globals.template.lua > $config_dir/globals.lua
 
 # Perform ACTION
 

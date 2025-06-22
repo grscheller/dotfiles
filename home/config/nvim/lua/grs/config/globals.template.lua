@@ -8,13 +8,16 @@ local km = require 'grs.config.keymaps_whichkey'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Define user home directory
-vim.g.grs_home_dir = '/home/grs'
+-- Define user's XDG directories (install scrips sed in actual locations)
+vim.g.grs_xdg_config_home = '<xdg_config_home>'
+vim.g.grs_xdg_cache_home = '<xdg_cache_home>'
+vim.g.grs_xdg_data_home = '<xdg_data_home>'
+vim.g.grs_xdg_state_home = '<xdg_data_home>'
 
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true
 
--- Perl had its day
+-- Perl had its day - it had the best man pages ever
 vim.g.loaded_perl_provider = 0
 
 --{{ Globals for plugins ]]
