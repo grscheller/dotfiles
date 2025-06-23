@@ -20,7 +20,7 @@ return {
       -- Colorize color names, hexcodes, and other color formats
       'norcalli/nvim-colorizer.lua',
       keys = {
-         { '<leader>c', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
+         { '<leader>C', '<cmd>ColorizerToggle<cr>', desc = 'toggle colorizer' },
       },
       opts = {
          '*',

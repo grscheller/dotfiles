@@ -12,8 +12,6 @@ local opts = {
 }
 
 local keys = {
-   { '<c-b>', group = 'blackhole', mode = { 'n', 'v' } },
-   { '<c-s>', group = 'system clipboard', mode = { 'n', 'v' } },
 
    --[[ Which Key related ]]
 
@@ -33,21 +31,12 @@ local keys = {
       desc = 'toggle treesitter highlighting',
    },
 
-   --[[ DAP & Diagnostic related ]]
-
-   { '<bslash>', group = 'diagnostics & dap' },
-   { '<bslash><bslash>', group = 'dap' },
-
    --[[ Plugin related ]]
 
    { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
    { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason gui' },
 
    --[[ LSP related ]]
-
-   { '<leader>c', group = 'code' },
-   { '<leader>s', group = 'symbols' },
-   { '<leader>w', group = 'workspace folder' },
 
    { 'H', vim.lsp.buf.hover, desc = 'hover document' },
    { 'K', vim.lsp.buf.signature_help, desc = 'signature help' },
@@ -60,8 +49,8 @@ local keys = {
    { 'gi', tb.lsp_implementations, desc = 'implementations' },
    { 'gr', tb.lsp_references, desc = 'references' },
    { '<leader>r', vim.lsp.buf.rename, desc = 'rename' },
-   { '<leader>sd', tb.lsp_document_symbols, desc = 'document symbols' },
-   { '<leader>sw', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols' },
+   { '<leader>ds', tb.lsp_document_symbols, desc = 'document symbols' },
+   { '<leader>ws', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols' },
    { '<leader>wa', vim.lsp.buf.add_workspace_folder, desc = 'add ws folder' },
    { '<leader>wr', vim.lsp.buf.remove_workspace_folder, desc = 'rm ws folder' },
    {
@@ -71,6 +60,9 @@ local keys = {
       end,
       desc = 'toggle inlay hints',
    },
+
+   --[[ DAP & Diagnostic related ]]
+
 }
 
 return {

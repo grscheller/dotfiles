@@ -13,7 +13,7 @@ local blink_opts = {
    -- C-k: Toggle signature help (if signature.enabled = true)
    --
    -- See :h blink-cmp-config-keymap for defining your own keymap
-   keymap = { preset = 'enter' },
+   keymap = { preset = 'super-tab' },
    -- Adjusts spacing to ensure icons are aligned - 'mono' or 'normal'
    appearance = { nerd_font_variant = 'mono' },
    completion = {
