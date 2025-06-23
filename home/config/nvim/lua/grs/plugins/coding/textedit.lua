@@ -13,7 +13,7 @@ return {
 
    {
       -- when re-editing a file, return to last place file changed
-      'mrcjkb/nvim-lastplace'
+      'mrcjkb/nvim-lastplace',
    },
 
    {
@@ -51,9 +51,9 @@ return {
       -- Quickly jump around window - like sneak but on steroids
       'ggandor/leap.nvim',
       keys = {
-         { 's', mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
-         { 'S', mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
-         { 'gs', mode = { 'n' }, desc = 'leap from window' },
+         { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
+         { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
+         { 'gs', mode = { 'n' },           desc = 'leap from window' },
       },
       config = function()
          local leap = require 'leap'

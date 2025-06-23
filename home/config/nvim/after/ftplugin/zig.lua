@@ -1,1 +1,1 @@
-vim.api.nvim_command('set makeprg=zig\\ build')
+vim.api.nvim_command 'set makeprg=zig\\ build'

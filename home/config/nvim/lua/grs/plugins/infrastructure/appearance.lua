@@ -7,9 +7,9 @@ local kanagawa_opts = {
       theme = {
          dragon = {
             ui = {
-               bg_dim = '#282727', -- dragonBlack4
+               bg_dim = '#282727',    -- dragonBlack4
                bg_gutter = '#12120f', -- dragonBlack1
-               bg = '#12120f', -- dragonBlack1
+               bg = '#12120f',        -- dragonBlack1
             },
          },
       },
@@ -23,18 +23,18 @@ local kanagawa_opts = {
 
 local noice_opts = {
    lsp = {
-     -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-     override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-     },
+      -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+      override = {
+         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+         ['vim.lsp.util.stylize_markdown'] = true,
+      },
    },
    presets = {
-      bottom_search = false, -- use "classic" bottom cmdline for search
-      command_palette = true, -- position the cmdline & popup menu together
+      bottom_search = false,        -- use "classic" bottom cmdline for search
+      command_palette = true,       -- position the cmdline & popup menu together
       long_message_to_split = true, -- long messages sent to a split
-      inc_rename = true, -- enable input dialog for inc-rename.nvim
-      lsp_doc_border = true, -- add borders to hover docs & signature help
+      inc_rename = true,            -- enable input dialog for inc-rename.nvim
+      lsp_doc_border = true,        -- add borders to hover docs & signature help
    },
    routes = {
       {
@@ -65,7 +65,7 @@ return {
       priority = 900,
       dependencies = { 'nvim-treesitter/nvim-treesitter' },
       config = function()
-         vim.notify = require("notify")
+         vim.notify = require 'notify'
       end,
    },
 

@@ -66,7 +66,7 @@ end
 return {
    {
       -- Nvim interface to the tree-sitter parser generator tool and an incremental parsing library.
-      -- Primarily used for syntax highlighting.  
+      -- Primarily used for syntax highlighting.
       'nvim-treesitter/nvim-treesitter',
       config = config_treesitter,
       build = ':TSUpdate',

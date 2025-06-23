@@ -23,9 +23,9 @@ vim.g.loaded_perl_provider = 0
 --{{ Globals for plugins ]]
 
 vim.g.nvim_lastplace = {
-    ignore_buftype = { 'quickfix', 'nofile', 'help' },
-    ignore_filetype = { 'gitcommit', 'gitrebase' },
-    open_folds = true,
+   ignore_buftype = { 'quickfix', 'nofile', 'help' },
+   ignore_filetype = { 'gitcommit', 'gitrebase' },
+   open_folds = true,
 }
 
 vim.g.rustaceanvim = {

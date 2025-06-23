@@ -13,14 +13,14 @@ function M.set_dap_keymaps(bn)
       local dapui = require 'dapui'
 
       require('which-key').add {
-         { '<bslash><bslash>c', dap.continue, desc = 'dap continue', buffer = bn },
-         { '<bslash><bslash>g', dapui.toggle, desc = 'toggle dapui', buffer = bn },
-         { '<bslash><bslash>h', dap_ui_widgets.hover, desc = 'dap hover', buffer = bn },
-         { '<bslash><bslash>i', dap.step_into, desc = 'dap step into', buffer = bn },
-         { '<bslash><bslash>l', dap.run_last, desc = 'dap run last', buffer = bn },
-         { '<bslash><bslash>o', dap.step_over, desc = 'dap step over', buffer = bn },
+         { '<bslash><bslash>c', dap.continue,          desc = 'dap continue',          buffer = bn },
+         { '<bslash><bslash>g', dapui.toggle,          desc = 'toggle dapui',          buffer = bn },
+         { '<bslash><bslash>h', dap_ui_widgets.hover,  desc = 'dap hover',             buffer = bn },
+         { '<bslash><bslash>i', dap.step_into,         desc = 'dap step into',         buffer = bn },
+         { '<bslash><bslash>l', dap.run_last,          desc = 'dap run last',          buffer = bn },
+         { '<bslash><bslash>o', dap.step_over,         desc = 'dap step over',         buffer = bn },
          { '<bslash><bslash>b', dap.toggle_breakpoint, desc = 'dap toggle breakpoint', buffer = bn },
-         { '<bslash><bslash>r', dap.repl.toggle, desc = 'dap repl toggle', buffer = bn },
+         { '<bslash><bslash>r', dap.repl.toggle,       desc = 'dap repl toggle',       buffer = bn },
       }
    end
 
@@ -70,7 +70,7 @@ end
 function M.set_metals_keymaps(bn)
    local metals = require 'metals'
    require('which-key').add {
-      { 'jkM', group = 'metals', buffer = bn },
+      { 'jkM',  group = 'metals',       buffer = bn },
       { 'jkMH', metals.hover_worksheet, desc = 'hover worksheet', buffer = bn },
    }
 end

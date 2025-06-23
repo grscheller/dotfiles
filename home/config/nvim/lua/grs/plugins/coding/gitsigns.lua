@@ -38,8 +38,8 @@ local on_attach = function(bufnr)
    --[[ Actions ]]
 
    wk.add {
-      { '<m-g>', group = 'gitsigns', buffer = bufnr },
-      { '<m-g>b', gitsigns.blame_line, desc = 'git blame line', buffer = bufnr },
+      { '<m-g>',  group = 'gitsigns',                 buffer = bufnr },
+      { '<m-g>b', gitsigns.blame_line,                desc = 'git blame line',             buffer = bufnr },
       { '<m-g>B', gitsigns.toggle_current_line_blame, desc = 'toggle git show blame line', buffer = bufnr },
       {
          '<m-g>d',
@@ -49,14 +49,14 @@ local on_attach = function(bufnr)
          desc = 'git diff against last commit',
          buffer = bufnr,
       },
-      { '<m-g>D', gitsigns.toggle_deleted, desc = 'toggle git show deleted', buffer = bufnr },
-      { '<m-g>i', gitsigns.diffthis, desc = 'git diff against index', buffer = bufnr },
-      { '<m-g>p', gitsigns.preview_hunk, desc = 'git preview hunk', buffer = bufnr },
-      { '<m-g>r', gitsigns.reset_hunk, desc = 'git reset hunk', buffer = bufnr },
-      { '<m-g>R', gitsigns.reset_buffer, desc = 'git reset buffer', buffer = bufnr },
-      { '<m-g>s', gitsigns.stage_hunk, desc = 'git stage hunk', buffer = bufnr },
-      { '<m-g>S', gitsigns.stage_buffer, desc = 'git stage buffer', buffer = bufnr },
-      { '<m-g>u', gitsigns.undo_stage_hunk, desc = 'git undo stage hunk', buffer = bufnr },
+      { '<m-g>D', gitsigns.toggle_deleted,  desc = 'toggle git show deleted', buffer = bufnr },
+      { '<m-g>i', gitsigns.diffthis,        desc = 'git diff against index',  buffer = bufnr },
+      { '<m-g>p', gitsigns.preview_hunk,    desc = 'git preview hunk',        buffer = bufnr },
+      { '<m-g>r', gitsigns.reset_hunk,      desc = 'git reset hunk',          buffer = bufnr },
+      { '<m-g>R', gitsigns.reset_buffer,    desc = 'git reset buffer',        buffer = bufnr },
+      { '<m-g>s', gitsigns.stage_hunk,      desc = 'git stage hunk',          buffer = bufnr },
+      { '<m-g>S', gitsigns.stage_buffer,    desc = 'git stage buffer',        buffer = bufnr },
+      { '<m-g>u', gitsigns.undo_stage_hunk, desc = 'git undo stage hunk',     buffer = bufnr },
 
       {
          '<m-g>s',
