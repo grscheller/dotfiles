@@ -1,59 +1,8 @@
---[[ Which-key defined keymaps needed by multiple modules ]]
+--[[ NO LONGER USED! - kept for future migration ]]
 
 local M = {}
 
-M.lsp_mappings_added = false
 M.dap_mappings_added = false
-
-function M.set_lsp_keymaps(_, bn)
-   local wk = require 'which-key'
-   local tb = require 'telescope.builtin'
-
-   if not M.lsp_mappings_added then
-      M.lsp_mappings_added = true
-
-      wk.add {
-         { 'jk', group = 'lsp', buffer = bn },
-         { 'jkc', group = 'code action', buffer = bn },
-         { 'jkd', group = 'document', buffer = bn },
-         { 'jkf', group = 'format', buffer = bn },
-         { 'jkg', group = 'goto', buffer = bn },
-         { 'jkh', group = 'haskell', buffer = bn },
-         { 'jks', group = 'symbols', buffer = bn },
-      }
-
-      wk.add {
-         { 'H', vim.lsp.buf.hover, desc = 'hover document', buffer = bn },
-         { 'K', vim.lsp.buf.signature_help, desc = 'signature help', buffer = bn },
-         { 'jkff', vim.lsp.buf.format, desc = 'format with LSP', buffer = bn },
-         { 'jkca', vim.lsp.buf.code_action, desc = 'code action', buffer = bn },
-         { 'jkcl', vim.lsp.codelens.refresh, desc = 'code lens refresh', buffer = bn },
-         { 'jkcr', vim.lsp.codelens.run, desc = 'code lens run', buffer = bn },
-         { 'jkgd', tb.lsp_definitions, desc = 'definitions', buffer = bn },
-         { 'jkgD', vim.lsp.buf.declaration, desc = 'goto type decl', buffer = bn },
-         { 'jkgi', tb.lsp_implementations, desc = 'implementations', buffer = bn },
-         { 'jkgr', tb.lsp_references, desc = 'references', buffer = bn },
-         { 'jkna', vim.lsp.buf.rename, desc = 'rename', buffer = bn },
-         { 'jksd', tb.lsp_document_symbols, desc = 'document symbols', buffer = bn },
-         { 'jksw', tb.lsp_dynamic_workspace_symbols, desc = 'workspace symbols', buffer = bn },
-         { 'jkwa', vim.lsp.buf.add_workspace_folder, desc = 'add ws folder', buffer = bn },
-         { 'jkwr', vim.lsp.buf.remove_workspace_folder, desc = 'rm ws folder', buffer = bn },
-      }
-
-      wk.add {
-         {
-            'jki',
-            function()
-               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { buffer = bn }, { buffer = bn })
-            end,
-            desc = 'toggle inlay hints',
-            buffer = bn,
-         },
-      }
-   end
-
-   return true
-end
 
 function M.set_dap_keymaps(bn)
    if not M.dap_mappings_added then
@@ -81,11 +30,14 @@ end
 function M.set_hls_keymaps(bn)
    local wk = require 'which-key'
    wk.add {
-      'jkfh',
-      "<cmd>'<,'>!stylish-haskell<cr>",
-      desc = 'stylish haskell',
-      mode = { 'n', 'v' },
-      buffer = bn,
+      { 'jkh', group = 'haskell', buffer = bn },
+      {
+         'jkfh',
+         "<cmd>'<,'>!stylish-haskell<cr>",
+         desc = 'stylish haskell',
+         mode = { 'n', 'v' },
+         buffer = bn,
+      },
    }
 end
 

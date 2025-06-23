@@ -79,8 +79,8 @@ local blink_opts = {
                      vim.fs.root(0, '.git') or vim.fn.getcwd(),
                   }
                end,
-               get_prefix = function(context)
-                  return context.line:sub(1, context.cursor[2]):match '[%w_-]+$' or ''
+               get_prefix = function(ctx)
+                  return ctx.line:sub(1, ctx.cursor[2]):match '[%w_-]+$' or ''
                end,
             },
          },
