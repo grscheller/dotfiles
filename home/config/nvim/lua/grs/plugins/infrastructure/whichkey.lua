@@ -10,6 +10,12 @@ local opts = {
 }
 
 local keys = {
+   {
+      '<c-b>',
+      group = 'blackhole',
+      mode = { 'n', 'v' },
+   },
+
    --[[ Which Key related ]]
 
    {
@@ -20,12 +26,12 @@ local keys = {
       desc = 'Buffer Local Keymaps (which-key)',
    },
 
-   --[[ LSP related ]]
+   --[[ Treesitter related ]]
 
    {
-      '<leader>r',
-      ':IncRename ',
-      desc = 'Incremental Rename',
+      '<leader>t',
+      '<cmd>TSBufToggle highlight<cr>',
+      desc = 'toggle treesitter highlighting'
    },
 
    --[[ DAP & Diagnostic related ]]
@@ -39,14 +45,6 @@ local keys = {
       group = 'dap',
    },
 
-   --[[ Treesitter related ]]
-
-   {
-      '<leader>t',
-      '<cmd>TSBufToggle highlight<cr>',
-      desc = 'toggle treesitter highlighting'
-   },
-
    --[[ Plugin related ]]
 
    {
@@ -58,14 +56,6 @@ local keys = {
       '<leader>M',
       '<cmd>Mason<cr>',
       desc = 'Mason gui'
-   },
-
-   --[[ Not related to any plugin ]]
-
-   {
-      '<c-b>',
-      group = 'blackhole',
-      mode = { 'n', 'v' },
    },
    {
       '<c-s>',

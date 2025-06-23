@@ -87,7 +87,6 @@ return {
       dependencies = {
          'MunifTanjim/nui.nvim',
          'rcarriga/nvim-notify',
-         "smjonas/inc-rename.nvim",
       },
       opts = noice_opts,
    },

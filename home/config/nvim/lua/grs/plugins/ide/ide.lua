@@ -16,27 +16,89 @@ local blink_opts = {
    keymap = { preset = 'enter' },
    -- Adjusts spacing to ensure icons are aligned - 'mono' or 'normal'
    appearance = { nerd_font_variant = 'mono' },
-   -- (Default) Only show the documentation popup when manually triggered.
    completion = {
       documentation = { auto_show = false },
+      menu = {
+         draw = {
+            components = {
+               kind_icon = {
+                  text = function(ctx)
+                     local icon = ctx.kind_icon
+                     if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                        local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                        if dev_icon then
+                           icon = dev_icon
+                        end
+                     else
+                        icon = require('lspkind').symbolic(ctx.kind, {
+                           mode = 'symbol',
+                        })
+                     end
+                     return icon .. ctx.icon_gap
+                  end,
+                  highlight = function(ctx)
+                     local hl = ctx.kind_hl
+                     if vim.tbl_contains({ 'Path' }, ctx.source_name) then
+                        local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                        if dev_icon then
+                           hl = dev_hl
+                        end
+                     end
+                     return hl
+                  end,
+               },
+            },
+         },
+      },
    },
-   -- Default list of enabled providers, use opts_extend to extend it later.
    sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'ripgrep' },
+      providers = {
+         buffer = {
+            opts = {
+               get_bufnrs = function()
+                  return vim.tbl_filter(function(bufnr)
+                     return vim.bo[bufnr].buftype == ''
+                  end, vim.api.nvim_list_bufs())
+               end,
+            },
+         },
+         ripgrep = {
+            module = 'blink-cmp-rg',
+            name = 'Ripgrep',
+            opts = {
+               prefix_min_len = 3,
+               get_command = function(_, prefix)
+                  return {
+                     'rg',
+                     '--no-config',
+                     '--json',
+                     '--word-regexp',
+                     '--',
+                     prefix .. '[\\w_-]+',
+                     vim.fs.root(0, '.git') or vim.fn.getcwd(),
+                  }
+               end,
+               get_prefix = function(context)
+                  return context.line:sub(1, context.cursor[2]):match '[%w_-]+$' or ''
+               end,
+            },
+         },
+      },
    },
-   -- See the fuzzy documentation for more information
    fuzzy = { implementation = 'prefer_rust_with_warning' },
 }
 
-
 return {
    {
+      -- completion engine
       'saghen/blink.cmp',
-      event = {
-         'InsertEnter',
-         'CmdlineEnter',
+      event = { 'InsertEnter', 'CmdlineEnter' },
+      dependencies = {
+         'rafamadriz/friendly-snippets',
+         'niuiic/blink-cmp-rg.nvim',
+         'onsails/lspkind.nvim',
       },
-      dependencies = { 'rafamadriz/friendly-snippets' },
       version = '1.*', -- use a release tag to download pre-built binaries
       opts = blink_opts,
       opts_extend = { 'sources.default' },
@@ -51,11 +113,5 @@ return {
             ignore_empty_message = true,
          },
       },
-   },
-
-   {
-      -- LSP renaming with immediate visual feedback
-      "smjonas/inc-rename.nvim",
-      opts = {},
    },
 }
