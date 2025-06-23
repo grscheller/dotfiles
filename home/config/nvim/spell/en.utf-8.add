@@ -827,6 +827,7 @@ qt5ct
 qt6ct
 RE's
 readlink
+readonly
 realpath
 regexp
 RegExp
@@ -976,6 +977,7 @@ WhichKey
 wildmenu
 winsize
 wofi
+writeonly
 xargs
 XDG
 XPG3
