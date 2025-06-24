@@ -40,15 +40,20 @@ dot_config_files='
    after/ftplugin/sbt.lua
    after/ftplugin/scala.lua
    after/ftplugin/sh.lua
+   after/ftplugin/toml.lua
    after/ftplugin/text.lua
    after/ftplugin/tsv.lua
    after/ftplugin/zig.lua
    lsp/bashls.lua
    lsp/cssls.lua
+   lsp/css_modules_ls.lua
+   lsp/css_variables.lua
    lsp/html.lua
    lsp/lua_ls.lua
+   lsp/marksman.lua
    lsp/pylsp.lua
    lsp/ruff.lua
+   lsp/tombi.lua
    lsp/zls.lua
    lua/grs/config/autocmds_lsp.lua
    lua/grs/config/autocmds_text.lua
