@@ -122,7 +122,7 @@ sed -E -e "$sedScript" $config_dir/globals.template.lua > $config_dir/globals.lu
 # Perform ACTION
 
 case "$DF_ACTION" in
-   install|check)
+   install|check|remove)
       # Install/Check Neovim files & nvim related TOML files
       process_files "$XDG_CONFIG_HOME/nvim" "
          $dot_config_files
@@ -135,9 +135,6 @@ case "$DF_ACTION" in
 
       # Create/report missing directories
       ensure_dirs "$dirs_to_create"
-      ;;
-   remove)
-      remove_item "$XDG_CONFIG_HOME/nvim"
       ;;
    clean)
       remove_item "$XDG_CONFIG_HOME/nvim"
