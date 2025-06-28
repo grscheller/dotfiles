@@ -1246,6 +1246,12 @@ nvInstall
 onepiece
 parray
 pathtrim
+popl
+popld
+poplt
+popr
+poprd
+poprt
 py4ai
 pypath
 pypi
