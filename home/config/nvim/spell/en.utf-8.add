@@ -561,6 +561,7 @@ argparse
 argv
 async
 AUR
+autopairs
 avahi
 awk
 backend
@@ -571,7 +572,6 @@ bashisms
 bg
 BRE
 BRE's
-autopairs
 basename
 blankline
 bootable
@@ -592,6 +592,7 @@ capslock
 cd
 changelist
 changelists
+changelog
 chmod
 cidr
 clangd
@@ -1326,6 +1327,7 @@ scalaz
 abc
 argtype
 argtypes
+autodoc
 bool
 builtins
 Callable's
