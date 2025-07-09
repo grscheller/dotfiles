@@ -890,6 +890,7 @@ subclassing
 subcommand
 subcommands
 subtype
+subtypeable
 subtyped
 subtyping
 subdirectories
@@ -946,6 +947,7 @@ typecheck
 typechecker
 typeclass
 typeclasses
+typeable
 ui
 UI
 uncurry
