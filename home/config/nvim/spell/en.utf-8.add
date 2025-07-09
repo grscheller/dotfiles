@@ -1323,7 +1323,7 @@ Scala2
 Scala3
 scalac
 scalaz
-# python/typing/exception/builtin names
+# python/typing/exception/builtin/sphinx names
 abc
 argtype
 argtypes
@@ -1397,6 +1397,7 @@ PyTorch
 RecursionError
 repr
 resulttype
+rtype
 RunTimeError
 Setuptools
 Stackage
