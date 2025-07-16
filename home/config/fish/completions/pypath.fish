@@ -15,24 +15,6 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-recursive-functions' \
   -a 'bm-recursive-functions'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-circulararray' \
-  -a 'dtools-circulararray'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-containers' \
-  -a 'dtools-containers'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-fp' \
-  -a 'dtools-fp'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-iterables' \
-  -a 'dtools-iterables'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-splitends' \
-  -a 'dtools-splitends'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from dtools-queues' \
-  -a 'dtools-queues'
-complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-circulararray' \
   -a 'pythonic-fp-circulararray'
 complete -c pypath \
