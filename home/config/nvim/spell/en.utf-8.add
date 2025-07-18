@@ -952,11 +952,13 @@ TSUpdate
 tsx
 tupleizing
 txt
+typeable
 typecheck
 typechecker
 typeclass
 typeclasses
-typeable
+typehint
+typehints
 ui
 UI
 uncurry
