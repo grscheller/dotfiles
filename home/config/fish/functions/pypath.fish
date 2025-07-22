@@ -10,32 +10,22 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/bm-pythagorean-triples/src
          case 'bm-recursive-functions'
             set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
-         case 'dtools-circulararray'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-circular-array/src
-         case 'dtools-containers'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-containers/src
-         case 'dtools-fp'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-fp/src
-         case 'dtools-iterables'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-iterables/src
-         case 'dtools-splitends'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-splitends/src
-         case 'dtools-queues'
-            set --append PythonPath ~/devel/pypi/dtools/dtools-queues/src
          case 'pythonic-fp-circulararray'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-circulararray/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-circulararray/src
          case 'pythonic-fp-containers'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-containers/src
-         case 'pythonic-fp-credits'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-containers/src
          case 'pythonic-fp-fptools'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-fptools/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
          case 'pythonic-fp-iterables'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-iterables/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'pythonic-fp-queues'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-queues/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
+         case 'pythonic-fp-singletons'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-singletons/src
          case 'pythonic-fp-splitends'
-            set --append PythonPath ~/devel/pypi/fptools/pythonic-fp-splitends/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
+         case 'pythonic-fp-subclassable-booleans'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-subclassable-booleans/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1

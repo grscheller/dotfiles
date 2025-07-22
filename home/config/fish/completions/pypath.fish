@@ -33,5 +33,11 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-queues' \
   -a 'pythonic-fp-queues'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-singletons' \
+  -a 'pythonic-fp-singletons'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-splitends' \
   -a 'pythonic-fp-splitends'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-subclassable-booleans' \
+  -a 'pythonic-fp-subclassable-booleans'
