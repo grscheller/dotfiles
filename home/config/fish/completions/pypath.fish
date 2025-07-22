@@ -21,9 +21,6 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-containers' \
   -a 'pythonic-fp-containers'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from pythonic-fp-credits' \
-  -a 'pythonic-fp-credits'
-complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-fptools' \
   -a 'pythonic-fp-fptools'
 complete -c pypath \
@@ -38,6 +35,3 @@ complete -c pypath \
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-splitends' \
   -a 'pythonic-fp-splitends'
-complete -c pypath \
-  -n 'not __fish_seen_subcommand_from pythonic-fp-subclassable-booleans' \
-  -a 'pythonic-fp-subclassable-booleans'

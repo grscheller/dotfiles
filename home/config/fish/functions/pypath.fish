@@ -24,8 +24,6 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-singletons/src
          case 'pythonic-fp-splitends'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
-         case 'pythonic-fp-subclassable-booleans'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-subclassable-booleans/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
