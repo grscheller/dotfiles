@@ -58,9 +58,6 @@ metatables
 meth
 minimalistic
 minimax
-mixin
-mkpkg
-modprobe
 monospace
 monospaced
 mpd
@@ -76,7 +73,6 @@ NTFS
 num
 Numlock
 numlock
-ocaml
 od
 ok
 olde
@@ -120,6 +116,7 @@ pushable
 ramen
 rebalance
 rebalanced
+rebalancing
 rebrand
 rebranded
 rebranding
@@ -803,7 +800,10 @@ namespace
 namespaces
 mb
 md
+mixin
 mkdir
+mkpkg
+modprobe
 monad
 monads
 monadic
@@ -823,6 +823,7 @@ NONBLOCK
 nslookup
 Nullary
 nullary
+ocaml
 os
 pgp
 polymorphism
@@ -899,6 +900,7 @@ subclassing
 subcommand
 subcommands
 subtype
+subtypes
 subtypeable
 subtyped
 subtyping
@@ -1347,6 +1349,8 @@ builtins
 Callable's
 dict
 dicts
+dunder
+dunders
 elif
 enum
 enums
