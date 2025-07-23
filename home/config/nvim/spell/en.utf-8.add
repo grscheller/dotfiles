@@ -1103,6 +1103,7 @@ args
 baz
 bm
 boolean
+booleans
 Booleans
 CHANGELOG
 circulararray
@@ -1294,6 +1295,7 @@ s6
 s7
 s8
 s9
+sbool
 sc_reduce_left
 sc_reduce_right
 siegfried
