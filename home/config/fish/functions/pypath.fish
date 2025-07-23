@@ -19,7 +19,7 @@ function pypath --description 'manage $PYTHONPATH env variable'
          case 'pythonic-fp-iterables'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'pythonic-fp-queues'
-            set --append PythonPath ~/devel/pypi/fp_depricated/pythonic-fp-queues/src
+            set --append PythonPath ~/devel/pypi/fp_deprecated/pythonic-fp-queues/src
          case 'pythonic-fp-singletons'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-singletons/src
          case 'pythonic-fp-splitends'
