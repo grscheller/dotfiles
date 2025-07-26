@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 # Utility to test color capability of terminal
 awk 'BEGIN{
     s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
