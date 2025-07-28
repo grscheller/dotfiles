@@ -16,6 +16,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-containers/src
          case 'pythonic-fp-fptools'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
+         case 'pythonic-fp-gadgets'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-gadgets/src
          case 'pythonic-fp-iterables'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'pythonic-fp-queues'

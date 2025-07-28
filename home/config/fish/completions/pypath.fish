@@ -24,6 +24,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-fptools' \
   -a 'pythonic-fp-fptools'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from pythonic-fp-gadgits' \
+  -a 'pythonic-fp-gadgits'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from pythonic-fp-iterables' \
   -a 'pythonic-fp-iterables'
 complete -c pypath \
