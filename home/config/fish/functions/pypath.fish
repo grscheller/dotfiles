@@ -2,6 +2,20 @@ function pypath --description 'manage $PYTHONPATH env variable'
    set -f PythonPath
    for arg in $argv
       switch $arg
+         case 'fp-circulararray'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-circulararray/src
+         case 'fp-containers'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-containers/src
+         case 'fp-fptools'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
+         case 'fp-gadgets'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
+         case 'fp-iterables'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
+         case 'fp-singletons'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-singletons/src
+         case 'fp-splitends'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
          case 'bm-integer-math'
             set --append PythonPath ~/devel/pypi/bm/bm-integer-math/src
          case 'bm-probability-distributions'
@@ -10,22 +24,6 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/bm-pythagorean-triples/src
          case 'bm-recursive-functions'
             set --append PythonPath ~/devel/pypi/bm/bm-recursive-functions/src
-         case 'pythonic-fp-circulararray'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-circulararray/src
-         case 'pythonic-fp-containers'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-containers/src
-         case 'pythonic-fp-fptools'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
-         case 'pythonic-fp-gadgets'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-gadgets/src
-         case 'pythonic-fp-iterables'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
-         case 'pythonic-fp-queues'
-            set --append PythonPath ~/devel/pypi/fp_deprecated/pythonic-fp-queues/src
-         case 'pythonic-fp-singletons'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-singletons/src
-         case 'pythonic-fp-splitends'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1
