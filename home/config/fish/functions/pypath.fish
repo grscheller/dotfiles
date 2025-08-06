@@ -2,6 +2,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
    set -f PythonPath
    for arg in $argv
       switch $arg
+         case 'fp-booleans'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-booleans/src
          case 'fp-circulararray'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-circulararray/src
          case 'fp-containers'

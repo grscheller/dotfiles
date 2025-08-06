@@ -3,7 +3,10 @@ complete -c pypath -f
 
 # show all options available
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from fp-circulararray' \
+  -n 'not __fish_seen_subcommand_from fp-booleans' \
+  -a 'fp-booleans'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from fp-booleans' \
   -a 'fp-circulararray'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-containers' \
