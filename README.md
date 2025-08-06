@@ -11,7 +11,7 @@ My GitHub repository to maintain and install my Linux based "dotfiles."
 - Install all of the above in parallel
   - [dfInstall](bin/dfInstall)
 - Sourced core infrastructure for scripts
-  - [parse_cmdline_and_source_functions](bin/parse_cmdline_and_source_functions)
+  - [parse_cmdline_and_source_functions](bin/parse_cmdline_and_source_functions,sh)
 
 ## Factoids
 
