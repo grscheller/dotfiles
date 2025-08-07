@@ -6,7 +6,7 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-booleans' \
   -a 'fp-booleans'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from fp-booleans' \
+  -n 'not __fish_seen_subcommand_from fp-circulararray' \
   -a 'fp-circulararray'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-containers' \
