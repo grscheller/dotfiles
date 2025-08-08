@@ -1427,6 +1427,7 @@ SyntaxError
 SystemError
 tvars
 TypeError
+unpythonic
 unslotted
 ValueError
 venv
