@@ -675,7 +675,6 @@ executables
 extensibility
 extern
 facc
-falsy
 falsiness
 fcntl
 fd
@@ -899,11 +898,6 @@ subclasses
 subclassing
 subcommand
 subcommands
-subtype
-subtypes
-subtypeable
-subtyped
-subtyping
 subdirectories
 subdirectory
 subexpression
@@ -920,6 +914,11 @@ subscripted
 subscripting
 subshell
 subshells
+subtypable
+subtype
+subtyped
+subtypes
+subtyping
 sudo
 SUID
 svg
@@ -947,7 +946,6 @@ transpiled
 treesitter
 TreeSitter
 truecolor
-truthy
 truthiness
 TSInstallFromGrammer
 TSUpdate
@@ -1359,6 +1357,7 @@ enum
 enums
 errorlog
 ExceptionGroup
+falsy
 frozenset
 functools
 gitsigns
@@ -1425,6 +1424,7 @@ Stackage
 staticmethod
 SyntaxError
 SystemError
+truthy
 tvars
 TypeError
 unpythonic
