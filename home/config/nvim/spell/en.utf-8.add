@@ -575,6 +575,7 @@ backends
 backlight
 bashism
 bashisms
+bitwise
 bg
 BRE
 BRE's
@@ -1172,7 +1173,6 @@ foobaz
 foofoo
 fpinscala
 fptools
-fpythonic
 ftuple
 ftuples
 FTuple
