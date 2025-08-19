@@ -1174,6 +1174,8 @@ foobaz
 foofoo
 fpinscala
 fptools
+FSBool
+fsbool
 ftuple
 ftuples
 FTuple
@@ -1296,6 +1298,7 @@ s7
 s8
 s9
 sbool
+sbools
 sc_reduce_left
 sc_reduce_right
 siegfried
@@ -1307,14 +1310,16 @@ SplitEnd
 SplitEnds
 startfold
 stopfold
-takeWhile
 T0
 T1
 T2
 T3
 T4
 T5
+takeWhile
 truetype
+TSBool
+tsbool
 ud
 unsize
 unsized
