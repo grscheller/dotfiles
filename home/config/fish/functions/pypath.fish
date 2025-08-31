@@ -11,7 +11,7 @@ function pypath --description 'manage $PYTHONPATH env variable'
          case 'fp-fptools'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
          case 'fp-gadgets'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-gadgets/src
          case 'fp-iterables'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'fp-sentinels'
