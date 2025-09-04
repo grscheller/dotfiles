@@ -1401,6 +1401,7 @@ pdoc
 pdoc3
 py
 pyenv
+pyi
 pylsp
 pynvim
 Pyright
@@ -1425,6 +1426,7 @@ RunTimeError
 Setuptools
 Stackage
 staticmethod
+stubgen
 SyntaxError
 SystemError
 truthy
