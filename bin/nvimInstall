@@ -14,7 +14,7 @@
 #
 
 export scriptName=nvimInstall
-home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+home="${DOTFILES_GIT_REPO:=${HOME}/devel/dotfiles}"/home
 
 cd "$home" 2>/dev/null || {
    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
@@ -103,7 +103,7 @@ dirs_to_create=""
 
 # Determine if spellfile needs to be processed
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
-if which -s nvim
+if which nvim > /dev/null 2>&1
 then
    if test ! -e "$SpellFile"
    then

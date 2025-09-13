@@ -25,7 +25,6 @@ local opts = {
       'jsonc',
       'julia',
       'kotlin',
-      'latex',
       'llvm',
       'lua',
       'make',

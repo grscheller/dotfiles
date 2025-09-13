@@ -15,7 +15,7 @@
 #
 
 export scriptName=develInstall
-home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+home="${DOTFILES_GIT_REPO:=${HOME}/devel/dotfiles}"/home
 
 cd "$home" 2>/dev/null || {
    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"

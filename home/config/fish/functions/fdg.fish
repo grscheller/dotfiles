@@ -18,7 +18,7 @@ function fdg --description 'Update GIT repos in subdirectories'
       set gitDirs (fd --hidden --no-ignore --type directory '^.git$')
       set repos ()
 
-      string replace -r '/\.git/$' '' $gitDirs | while read line
+      string replace -r '\.git$' '' $gitDirs | while read line
          set repos $repos $line
       end
 
