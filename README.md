@@ -17,12 +17,13 @@ My GitHub repository to maintain and install my Linux based "dotfiles."
 
 - POSIX compliant installation scripts
   - actually Dash compliant (I use the non-POSIX "local" keyword)
-  - on Pop!OS /usr/bin/sh -> dash
+  - on Pop!_OS /usr/bin/sh -> dash
 - Fish abbreviations - dotfiles can be installed from anywhere
   - nvI  -> bin/nvimInstall
   - fI   -> bin/fishInstall
   - devI -> bin/develInstall
   - dfI  -> bin/dfInstall (installs all of the above in parallel)
+- Tested these days only on Pop!_OS 24.04 LTS (Cosmic Desktop)
 
 ## Public Domain Declaration
 
