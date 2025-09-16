@@ -21,6 +21,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-iterables' \
   -a 'fp-iterables'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from fp-queues' \
+  -a 'fp-queues'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-sentinels' \
   -a 'fp-sentinels'
 complete -c pypath \
