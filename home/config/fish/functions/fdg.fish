@@ -9,6 +9,8 @@ function fdg --description 'Update GIT repos in subdirectories'
          set action push
       case 'add'
          set action add .
+      case 'commit'
+         set action commit -S -m "$argv[2..]"
       case '*'
          set action fetch
       end
