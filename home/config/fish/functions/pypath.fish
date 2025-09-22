@@ -16,8 +16,6 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'fp-queues'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
-         case 'fp-sentinels'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-sentinels/src
          case 'fp-splitends'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
          case 'bm-integer-math'
