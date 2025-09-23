@@ -18,6 +18,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-gadgets' \
   -a 'fp-gadgets'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from fp-homepage' \
+  -a 'fp-homepage'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-iterables' \
   -a 'fp-iterables'
 complete -c pypath \
