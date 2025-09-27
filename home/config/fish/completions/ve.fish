@@ -9,8 +9,11 @@ complete -c ve \
   -n 'not __fish_seen_subcommand_from fm' \
   -a 'fp'
 complete -c ve \
+  -n 'not __fish_seen_subcommand_from grs' \
+  -a 'grs'
+complete -c ve \
   -n 'not __fish_seen_subcommand_from pypi' \
   -a 'pypi'
 complete -c ve \
-  -n 'not __fish_seen_subcommand_from grs' \
-  -a 'grs'
+  -n 'not __fish_seen_subcommand_from test' \
+  -a 'testing'
