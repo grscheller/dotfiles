@@ -20,12 +20,14 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
          case 'fp-splitends'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
+         case 'bm-homepage'
+            set --append PythonPath ~/devel/pypi/bm/boring-math/src
          case 'bm-integer-math'
             set --append PythonPath ~/devel/pypi/bm/boring-math-integer-math/src
          case 'bm-probability-distributions'
             set --append PythonPath ~/devel/pypi/bm/boring-math-probability-distributions/src
          case 'bm-special-functions'
-            set --append PythonPath ~/devel/pypi/bm/boring-math/src
+            set --append PythonPath ~/devel/pypi/bm/boring-math-special-functions/src
          case 'bm-pythagorean-triples'
             set --append PythonPath ~/devel/pypi/bm/boring-math-pythagorean-triples/src
          case 'bm-recursive-functions'

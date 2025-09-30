@@ -30,6 +30,9 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-splitends' \
   -a 'fp-splitends'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from bm-homepage' \
+  -a 'bm-homepage'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-integer-math' \
   -a 'bm-integer-math'
 complete -c pypath \
