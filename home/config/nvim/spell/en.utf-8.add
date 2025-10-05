@@ -1364,6 +1364,7 @@ ExceptionGroup
 falsy
 frozenset
 functools
+furo
 gitsigns
 globalns
 hasattr
