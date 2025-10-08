@@ -30,11 +30,17 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-splitends' \
   -a 'fp-splitends'
 complete -c pypath \
+  -n 'not __fish_seen_subcommand_from bm-combinatorics' \
+  -a 'bm-combinatorics'
+complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-homepage' \
   -a 'bm-homepage'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-integer-math' \
   -a 'bm-integer-math'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from bm-number-theory' \
+  -a 'bm-number-theory'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-probability-distributions' \
   -a 'bm-probability-distributions'
