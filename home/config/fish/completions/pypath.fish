@@ -36,9 +36,6 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-homepage' \
   -a 'bm-homepage'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from bm-integer-math' \
-  -a 'bm-integer-math'
-complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-number-theory' \
   -a 'bm-number-theory'
 complete -c pypath \
