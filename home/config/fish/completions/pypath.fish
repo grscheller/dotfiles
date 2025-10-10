@@ -42,11 +42,11 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-probability-distributions' \
   -a 'bm-probability-distributions'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from bm-special-functions' \
-  -a 'bm-special-functions'
-complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-pythagorean-triples' \
   -a 'bm-pythagorean-triples'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-recursive-functions' \
   -a 'bm-recursive-functions'
+complete -c pypath \
+  -n 'not __fish_seen_subcommand_from bm-special-functions' \
+  -a 'bm-special-functions'
