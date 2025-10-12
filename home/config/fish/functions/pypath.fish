@@ -20,6 +20,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
          case 'fp-splitends'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
+         case 'fp-typing'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-typing/src
          case 'bm-combinatorics'
             set --append PythonPath ~/devel/pypi/bm/boring-math-combinatorics/src
          case 'bm-homepage'
