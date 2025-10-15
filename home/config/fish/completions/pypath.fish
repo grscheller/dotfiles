@@ -30,8 +30,8 @@ complete -c pypath \
   -n 'not __fish_seen_subcommand_from fp-splitends' \
   -a 'fp-splitends'
 complete -c pypath \
-  -n 'not __fish_seen_subcommand_from fp-typing' \
-  -a 'fp-typing'
+  -n 'not __fish_seen_subcommand_from fp-protocols' \
+  -a 'fp-protocols'
 complete -c pypath \
   -n 'not __fish_seen_subcommand_from bm-combinatorics' \
   -a 'bm-combinatorics'

@@ -22,8 +22,6 @@ deprecations
 devs
 discoverable
 grokable
-hashability
-hashable
 ie
 ignorable
 immutablely
@@ -49,13 +47,6 @@ maintainer's
 Mapquest
 mdl
 merchantability
-metacharacters
-metaclass
-metadata
-metamethod
-metamethods
-metatable
-metatables
 meth
 minimalistic
 minimax
@@ -639,6 +630,7 @@ CUI
 pacman
 dap
 dap
+datatypes
 declarator
 decodings
 delaytime
@@ -746,6 +738,8 @@ GTK
 gvim
 Hackage
 Happystack
+hashability
+hashable
 haskell
 heredoc
 heredocs
@@ -797,6 +791,13 @@ manpage
 manpages
 mbs
 markdownlint
+metacharacters
+metaclass
+metadata
+metamethod
+metamethods
+metatable
+metatables
 namespace
 namespaces
 mb
