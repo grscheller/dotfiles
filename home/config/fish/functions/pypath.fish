@@ -26,6 +26,8 @@ function pypath --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/boring-math-combinatorics/src
          case 'bm-homepage'
             set --append PythonPath ~/devel/pypi/bm/boring-math/src
+         case 'bm-abstract-algebra'
+            set --append PythonPath ~/devel/pypi/bm/boring-math-abstract-algebra/src
          case 'bm-number-theory'
             set --append PythonPath ~/devel/pypi/bm/boring-math-number-theory/src
          case 'bm-probability-distributions'
