@@ -27,7 +27,13 @@ abbr -a devI  '$DOTFILES_GIT_REPO/bin/develInstall'
 # Python virtual environment related
 abbr -a pl pip list|cat
 abbr -a -- ipy ipython --TerminalInteractiveShell.editing_mode=vi
-abbr -a vep 've; and pypath'
+
+# Jump locations
+abbr dal -a --position anywhere --set-cursor ~/devel/scheller-linux-archive/adminLogs/%
+abbr dbm -a --position anywhere --set-cursor ~/devel/pypi/bm/%
+abbr dex -a --position anywhere --set-cursor /extra/grs/%
+abbr dfp -a --position anywhere --set-cursor ~/devel/pypi/fp/%
+abbr dnt -a --position anywhere --set-cursor ~/devel/scheller-linux-archive/notes/%
 
 # other aliases
 abbr -a dp digpath
