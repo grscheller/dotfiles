@@ -54,6 +54,7 @@ config_files='
    functions/ls.fish
    functions/mc.fish
    functions/nsort.fish
+   functions/ocp.fish
    functions/pathtrim.fish
    functions/pv.fish
    functions/pypath.fish
