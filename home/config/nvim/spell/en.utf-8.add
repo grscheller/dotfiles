@@ -25,10 +25,6 @@ grokable
 ie
 ignorable
 immutablely
-indexable
-installability
-installable
-instantiation
 integrations
 interoperability
 jumpable
@@ -769,7 +765,12 @@ html
 htop
 i3
 ident
+indexable
 init
+installability
+installable
+instantiatable
+instantiation
 ints
 iwd
 JDK
