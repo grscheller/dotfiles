@@ -1,4 +1,4 @@
-function pypath --description 'manage $PYTHONPATH env variable'
+function pp --description 'manage $PYTHONPATH env variable'
    set -f PythonPath
    for arg in $argv
       switch $arg

@@ -24,7 +24,7 @@ cd "$home" 2>/dev/null || {
 . ../bin/parse_cmdline_and_source_functions.sh
 
 config_files='
-   completions/pypath.fish
+   completions/pp.fish
    completions/ve.fish
    config.fish
    conf.d/00-ensure-or-redo-init-env.fish
@@ -56,8 +56,8 @@ config_files='
    functions/nsort.fish
    functions/ocp.fish
    functions/pathtrim.fish
+   functions/pp.fish
    functions/pv.fish
-   functions/pypath.fish
    functions/rc.fish
    functions/tm.fish
    functions/ve.fish
@@ -86,6 +86,8 @@ config_files='
 
 remove_items="
    $XDG_CONFIG_HOME/fish/completions/alacritty.fish
+   $XDG_CONFIG_HOME/fish/completions/pypath.fish
+   $XDG_CONFIG_HOME/fish/functions/pypath.fish
 "
 
 dirs_to_create=""
