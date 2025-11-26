@@ -22,10 +22,7 @@ discoverable
 grokable
 ie
 ignorable
-indexable
-installability
-installable
-instantiation
+immutablely
 integrations
 interoperability
 jumpable
@@ -452,6 +449,7 @@ homeomorphisms
 homoomorphic
 homoomorphism
 homoomorphisms
+invertible
 isomorphic
 isomorphism
 isomorphisms
@@ -753,9 +751,12 @@ html
 htop
 i3
 ident
-immutablely
+indexable
 init
+installability
+installable
 instantiatable
+instantiation
 ints
 iwd
 JDK
