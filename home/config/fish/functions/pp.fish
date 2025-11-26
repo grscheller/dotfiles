@@ -16,6 +16,8 @@ function pp --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
          case 'fp-iterables'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
+         case 'fp-numpy'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-numpy/src
          case 'fp-protocols'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-protocols/src
          case 'fp-queues'

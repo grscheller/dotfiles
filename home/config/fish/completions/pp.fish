@@ -24,6 +24,9 @@ complete -c pp \
   -n 'not __fish_seen_subcommand_from fp-iterables' \
   -a 'fp-iterables'
 complete -c pp \
+  -n 'not __fish_seen_subcommand_from fp-numpy' \
+  -a 'fp-numpy'
+complete -c pp \
   -n 'not __fish_seen_subcommand_from fp-queues' \
   -a 'fp-queues'
 complete -c pp \
