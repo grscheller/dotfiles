@@ -13,18 +13,15 @@ cheatsheets
 compactable
 composability
 copyrightable
-cyberseurity
 de facto
 deconflate
 deconflated
 deleteable
 deprecations
-devs
 discoverable
 grokable
 ie
 ignorable
-immutablely
 indexable
 installability
 installable
@@ -33,7 +30,6 @@ integrations
 interoperability
 jumpable
 lang
-LHS
 libre
 licensable
 licensee
@@ -45,50 +41,33 @@ lingua franca
 lookups
 maintainer's
 Mapquest
-mdl
 merchantability
 meth
 minimalistic
-minimax
 monospace
 monospaced
-mpd
 natively
-NDELAY
 noncommercially
 noninfringement
 norg
 normed
-npm
-npx
-NTFS
-num
 Numlock
 numlock
 od
 ok
 olde
-OOP
 operator
 parameterize
 parameterized
-parsers
-pathname
-pathnames
 pdf
 performant
 perl
 PHP
-pid
-pipenv
-pipfile
-pipx
 pkgs
 PKGBUILD
 pmt
 png
 PNG
-pnpm
 Polkit
 polkit
 popup
@@ -132,7 +111,6 @@ resize
 resized
 resizes
 resizing
-RHS
 rideshare
 scrollock
 setitem
@@ -278,8 +256,6 @@ Simrat
 Smalltalk
 Stroustrup
 swisscows
-System76
-TensorFlow
 Theo
 uBlock
 UCHealth
@@ -542,14 +518,20 @@ XF86AudioRaiseVolume
 XF86MonBrightnessDown
 XF86MonBrightnessUp
 XF86Search
-# Systemd/Arch/PoPOS related
+# Unix/Linux/Systemd/Arch/PoPOS related
 ExecStart
 BindsTo
 brightnessctl
 journalctl
+mpd
 networkd
 pacman
+parsers
+pathname
+pathnames
+PoPOS
 pulseaudio
+System76
 systemctl
 Systemd
 systemd
@@ -612,6 +594,7 @@ changelog
 chmod
 cidr
 clangd
+System76
 cli
 CLI
 clojure
@@ -642,8 +625,8 @@ csh
 css
 ctags
 ctrl
-CUDA
 CUI
+cyberseurity
 pacman
 dap
 dap
@@ -652,6 +635,7 @@ declarator
 decodings
 delaytime
 detupleizing
+devs
 dhcpcd
 diagraph
 diagraphs
@@ -769,7 +753,9 @@ html
 htop
 i3
 ident
+immutablely
 init
+instantiatable
 ints
 iwd
 JDK
@@ -819,7 +805,7 @@ namespace
 namespaces
 mb
 md
-mixin
+minimax
 mkdir
 mkpkg
 modprobe
@@ -831,6 +817,7 @@ monoid
 monoids
 MSYS2
 mv
+NDELAY
 ne
 nemo
 neoconf
@@ -843,6 +830,7 @@ nslookup
 Nullary
 nullary
 ocaml
+OOP
 os
 pgp
 polymorphism
@@ -1041,6 +1029,7 @@ zsh
 128-bit
 blkid
 bluetooth
+CUDA
 EFI
 efi
 EGA
@@ -1067,6 +1056,7 @@ KiB
 MiB
 MX
 nano
+NTFS
 nvidia
 NVIDIA
 nvme
@@ -1257,6 +1247,8 @@ Lazy10
 Lazy11
 LazyVim
 legendre
+LHS
+RHS
 LIFOQueue
 LIFOQueueMB
 LIFOQueues
@@ -1282,6 +1274,7 @@ noether
 noether2
 nohole
 novalue
+num
 nvInstall
 onepiece
 parray
@@ -1356,6 +1349,7 @@ cs
 Coursier
 coursier
 implicits
+mixin
 sbt
 scala
 Scala
@@ -1420,6 +1414,10 @@ Params
 ParamSpec
 pdoc
 pdoc3
+pid
+pipenv
+pipfile
+pipx
 py
 pyenv
 pyi
@@ -1438,7 +1436,6 @@ Python2
 python3
 Python3
 pythonic
-PyTorch
 RecursionError
 repr
 resulttype
@@ -1470,6 +1467,9 @@ jsonc
 jsonls
 jsregexp
 jsscript
+npm
+npx
+pnpm
 TS
 tsscript
 tsserver
@@ -1512,3 +1512,7 @@ luarocks
 LuaRocks
 lux
 Lux
+# Machine Learning
+mdl
+PyTorch
+TensorFlow
