@@ -830,6 +830,7 @@ NONBLOCK
 nslookup
 Nullary
 nullary
+numpy
 ocaml
 OOP
 os
