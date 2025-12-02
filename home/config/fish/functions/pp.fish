@@ -12,24 +12,20 @@ function pp --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
          case 'fp-gadgets'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-gadgets/src
-         case 'fp-homepage'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
          case 'fp-iterables'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
          case 'fp-numpy'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-numpy/src
-         case 'fp-protocols'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-protocols/src
          case 'fp-queues'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
          case 'fp-splitends'
             set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
-         case 'bm-combinatorics'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-combinatorics/src
-         case 'bm-homepage'
-            set --append PythonPath ~/devel/pypi/bm/boring-math/src
+         case 'fp-homepage'
+            set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
          case 'bm-abstract-algebra'
             set --append PythonPath ~/devel/pypi/bm/boring-math-abstract-algebra/src
+         case 'bm-combinatorics'
+            set --append PythonPath ~/devel/pypi/bm/boring-math-combinatorics/src
          case 'bm-number-theory'
             set --append PythonPath ~/devel/pypi/bm/boring-math-number-theory/src
          case 'bm-probability-distributions'
@@ -40,6 +36,8 @@ function pp --description 'manage $PYTHONPATH env variable'
             set --append PythonPath ~/devel/pypi/bm/boring-math-recursive-functions/src
          case 'bm-special-functions'
             set --append PythonPath ~/devel/pypi/bm/boring-math-special-functions/src
+         case 'bm-homepage'
+            set --append PythonPath ~/devel/pypi/bm/boring-math/src
          case '*'
             printf 'Unkown Python package %s\n' $arg
             return 1

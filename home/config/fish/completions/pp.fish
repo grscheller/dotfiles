@@ -18,9 +18,6 @@ complete -c pp \
   -n 'not __fish_seen_subcommand_from fp-gadgets' \
   -a 'fp-gadgets'
 complete -c pp \
-  -n 'not __fish_seen_subcommand_from fp-homepage' \
-  -a 'fp-homepage'
-complete -c pp \
   -n 'not __fish_seen_subcommand_from fp-iterables' \
   -a 'fp-iterables'
 complete -c pp \
@@ -33,17 +30,14 @@ complete -c pp \
   -n 'not __fish_seen_subcommand_from fp-splitends' \
   -a 'fp-splitends'
 complete -c pp \
-  -n 'not __fish_seen_subcommand_from fp-protocols' \
-  -a 'fp-protocols'
-complete -c pp \
-  -n 'not __fish_seen_subcommand_from bm-combinatorics' \
-  -a 'bm-combinatorics'
-complete -c pp \
-  -n 'not __fish_seen_subcommand_from bm-homepage' \
-  -a 'bm-homepage'
+  -n 'not __fish_seen_subcommand_from fp-homepage' \
+  -a 'fp-homepage'
 complete -c pp \
   -n 'not __fish_seen_subcommand_from bm-abstract-algebra' \
   -a 'bm-abstract-algebra'
+complete -c pp \
+  -n 'not __fish_seen_subcommand_from bm-combinatorics' \
+  -a 'bm-combinatorics'
 complete -c pp \
   -n 'not __fish_seen_subcommand_from bm-number-theory' \
   -a 'bm-number-theory'
@@ -59,3 +53,6 @@ complete -c pp \
 complete -c pp \
   -n 'not __fish_seen_subcommand_from bm-special-functions' \
   -a 'bm-special-functions'
+complete -c pp \
+  -n 'not __fish_seen_subcommand_from bm-homepage' \
+  -a 'bm-homepage'
