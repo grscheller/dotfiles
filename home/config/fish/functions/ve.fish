@@ -105,7 +105,7 @@ function ve --description 'Manage a group of Python virtual environments'
    function _usage
       set -l fmt1 '\n'
       set -l fmt2 'Usage: ve [<venv>]\n'
-      set -l fmt3 '       ve [-c | --clear] [-r | --redo]\n'
+      set -l fmt3 '       ve [-r | --redo]\n'
       set -l fmt4 '       ve [-l | --list]\n'
       set -l fmt5 '       ve [-h | --help]\n\n'
       printf $fmt1$fmt2$fmt3$fmt4$fmt5
@@ -119,7 +119,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    ## Get and process cmdline options, or fail gracefully.
 
-   if not argparse -n 'Error: ' c/clear r/redo l/list h/help -- $argv
+   if not argparse -n 'Error: ' r/redo l/list h/help -- $argv
       _usage
       _cleanup
       return 1
@@ -127,11 +127,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    set -f argc (count $argv)
 
-   if set -q _flag_clear || set -q _flag_redo
-      set -f ve_flags_cr
-   end
-
-   if test "$argc" -gt 0 && set -q ve_flags_cr || test "$argc" -gt 1
+   if test "$argc" -gt 0 && set -q _flag_r || test "$argc" -gt 1
       printf '\nError: Invalid argument/option combination\n'
       _usage
       _cleanup
@@ -171,7 +167,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    # If no arguments or options given, deactivate any active venv,
    # give some useful information and then quit.
-   if test "$argc" -eq 0 && not set -q ve_flags_cr
+   if test "$argc" -eq 0 && not set -q _flag_redo
       if set -q VIRTUAL_ENV
          printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
          deactivate
@@ -258,12 +254,12 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   if not set -q ve_flags_cr
+   if not set -q _flag_redo
       _cleanup
       return
    end
 
-   ## Process --clean and --redo options
+   ## Process ---redo options
 
    # Make sure we are in a ve virtual environment
 
@@ -312,7 +308,7 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   if set -q _flag_clear
+   if set -q _flag_redo
       set -l fmt '\nRemoving all installed modules from venv: %s\n\n'
       printf $fmt $_venv
       switch $_version_on_path
@@ -331,9 +327,6 @@ function ve --description 'Manage a group of Python virtual environments'
             printf $fmt $_version_on_path
             return 1
       end
-   end
-
-   if set -q _flag_redo
       set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
       printf $fmt $_venv
       set -l modules $_modules[(contains -i $_venv $_venvs)]
