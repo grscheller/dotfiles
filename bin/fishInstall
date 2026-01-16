@@ -30,6 +30,7 @@ config_files='
    conf.d/00-ensure-or-redo-init-env.fish
    conf.d/abbrs.fish
    conf.d/colors.fish
+   conf.d/rustup.fish
    functions/ax.fish
    functions/cu.fish
    functions/digpath.fish

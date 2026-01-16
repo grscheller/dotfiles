@@ -17,27 +17,27 @@ set -l cyan 7aa89f        #7aa89f
 set -l pink d27e99        #d27e99
 
 # Syntax highlighting colors
-set -U fish_color_normal $foreground      # default color
-set -U fish_color_command $cyan           # color for commands
-set -U fish_color_keyword $pink           # fish keywords
-set -U fish_color_quote $yellow           # quoted text
-set -U fish_color_redirection $blue       # IO redirection
-set -U fish_color_end $orange             # process separators like ; or & or |
-set -U fish_color_error $red              # syntax errors
-set -U fish_color_param $purple           # ordinary command parameters
-set -U fish_color_comment $comment        # code comments
-set -U fish_color_operator $green         # parameter expansion operators like '*' and '~'
-set -U fish_color_escape $pink            # character escapes like '\n' and '\x70'
-set -U fish_color_autosuggestion $comment # proposed rest of a command
-set -U fish_color_cancel $orange          # CTRL-C indicator
-set -U fish_color_user $cyan              # username in default prompt
-set -U fish_color_valid_path --underline  # valid path names
-set -U fish_color_selection --background=$selection    # selected text in vi visual mode
-set -U fish_color_search_match --background=$selection # highlight history search matches
+set -g fish_color_normal $foreground      # default color
+set -g fish_color_command $cyan           # color for commands
+set -g fish_color_keyword $pink           # fish keywords
+set -g fish_color_quote $yellow           # quoted text
+set -g fish_color_redirection $blue       # IO redirection
+set -g fish_color_end $orange             # process separators like ; or & or |
+set -g fish_color_error $red              # syntax errors
+set -g fish_color_param $purple           # ordinary command parameters
+set -g fish_color_comment $comment        # code comments
+set -g fish_color_operator $green         # parameter expansion operators like '*' and '~'
+set -g fish_color_escape $pink            # character escapes like '\n' and '\x70'
+set -g fish_color_autosuggestion $comment # proposed rest of a command
+set -g fish_color_cancel $orange          # CTRL-C indicator
+set -g fish_color_user $cyan              # username in default prompt
+set -g fish_color_valid_path --underline  # valid path names
+set -g fish_color_selection --background=$selection    # selected text in vi visual mode
+set -g fish_color_search_match --background=$selection # highlight history search matches
 
 # Completion pager colors
-set -U fish_pager_color_progress $comment
-set -U fish_pager_color_prefix $cyan
-set -U fish_pager_color_completion $foreground
-set -U fish_pager_color_description $blue
-set -U fish_pager_color_selected_background -r
+set -g fish_pager_color_progress $comment
+set -g fish_pager_color_prefix $cyan
+set -g fish_pager_color_completion $foreground
+set -g fish_pager_color_description $blue
+set -g fish_pager_color_selected_background -r
