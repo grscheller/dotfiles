@@ -1,7 +1,7 @@
 --[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
-local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on external plugins ]]
+-- local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on external plugins ]]
 
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
@@ -37,13 +37,13 @@ km('n', '<c-right>', 'z4l', { desc = 'move view right 4 columns' })
 km('n', '<c-up>', '3<c-y>', { desc = 'move up 3 lines' })
 km('n', '<c-down>', '3<c-e>', { desc = 'move view down 3 lines' })
 
--- Auto-scroll window with focus
-km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
-km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })
-km('n', '<home>', scroll.faster, { desc = 'autoscroll faster' })
-km('n', '<end>', scroll.slower, { desc = 'autoscroll slower' })
-km('n', '<ins>', scroll.reset, { desc = 'autoscroll reset' })
-km('n', '<del>', scroll.pause, { desc = 'autoscroll pause' })
+-- Auto-scroll window with focus (Temporarily turned off due using laptop keyboards)
+-- km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
+-- km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })
+-- km('n', '<home>', scroll.faster, { desc = 'autoscroll faster' })
+-- km('n', '<end>', scroll.slower, { desc = 'autoscroll slower' })
+-- km('n', '<ins>', scroll.reset, { desc = 'autoscroll reset' })
+-- km('n', '<del>', scroll.pause, { desc = 'autoscroll pause' })
 
 --[[ Text editing keymaps not related to any specific plugins ]]
 
