@@ -49,7 +49,7 @@ return {
 
    {
       -- Quickly jump around window - like sneak but on steroids
-      'ggandor/leap.nvim',
+      url = 'https://codeberg.org/andyg/leap.nvim',
       keys = {
          { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
          { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
