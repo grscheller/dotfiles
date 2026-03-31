@@ -1,53 +1,107 @@
-function pp --description 'manage $PYTHONPATH env variable'
-   set -f PythonPath
-   for arg in $argv
-      switch $arg
-         case 'fp-booleans'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-booleans/src
-         case 'fp-circulararray'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-circulararray/src
-         case 'fp-containers'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-containers/src
-         case 'fp-fptools'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-fptools/src
-         case 'fp-gadgets'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-gadgets/src
-         case 'fp-iterables'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-iterables/src
-         case 'fp-numpy'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-numpy/src
-         case 'fp-queues'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-queues/src
-         case 'fp-splitends'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp-splitends/src
-         case 'fp-homepage'
-            set --append PythonPath ~/devel/pypi/fp/pythonic-fp/src
-         case 'bm-abstract-algebra'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-abstract-algebra/src
-         case 'bm-combinatorics'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-combinatorics/src
-         case 'bm-number-theory'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-number-theory/src
-         case 'bm-probability-distributions'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-probability-distributions/src
-         case 'bm-pythagorean-triples'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-pythagorean-triples/src
-         case 'bm-recursive-functions'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-recursive-functions/src
-         case 'bm-special-functions'
-            set --append PythonPath ~/devel/pypi/bm/boring-math-special-functions/src
-         case 'bm-homepage'
-            set --append PythonPath ~/devel/pypi/bm/boring-math/src
-         case '*'
-            printf 'Unkown Python package %s\n' $arg
-            return 1
+function pp --description "manage $PYTHONPATH env variable"
+
+   set -f bm_names \
+      'bm-abstract-algebra' \
+      'bm-combinatorics' \
+      'bm-number-theory' \
+      'bm-probability-distributions' \
+      'bm-pythagorean-triples' \
+      'bm-recursive-functions' \
+      'bm-special-functions' \
+      'bm-homepage'
+
+   set -f bm_locations \
+      '~/devel/pypi/bm/boring-math-abstract-algebra/src' \
+      '~/devel/pypi/bm/boring-math-combinatorics/src' \
+      '~/devel/pypi/bm/boring-math-number-theory/src' \
+      '~/devel/pypi/bm/boring-math-probability-distributions/src' \
+      '~/devel/pypi/bm/boring-math-pythagorean-triples/src' \
+      '~/devel/pypi/bm/boring-math-recursive-functions/src' \
+      '~/devel/pypi/bm/boring-math-special-functions/src' \
+      '~/devel/pypi/bm/boring-math/src'
+
+   set -f fp_names \
+      'fp-booleans' \
+      'fp-circulararray' \
+      'fp-containers' \
+      'fp-fptools' \
+      'fp-gadgets' \
+      'fp-iterables' \
+      'fp-numpy' \
+      'fp-queues' \
+      'fp-splitends' \
+      'fp-homepage'
+
+   set -f fp_locations \
+      '~/devel/pypi/fp/pythonic-fp-booleans/src' \
+      '~/devel/pypi/fp/pythonic-fp-circulararray/src' \
+      '~/devel/pypi/fp/pythonic-fp-containers/src' \
+      '~/devel/pypi/fp/pythonic-fp-fptools/src' \
+      '~/devel/pypi/fp/pythonic-fp-gadgets/src' \
+      '~/devel/pypi/fp/pythonic-fp-iterables/src' \
+      '~/devel/pypi/fp/pythonic-fp-numpy/src' \
+      '~/devel/pypi/fp/pythonic-fp-queues/src' \
+      '~/devel/pypi/fp/pythonic-fp-splitends/src' \
+      '~/devel/pypi/fp/pythonic-fp/src'
+
+   set -g _names_pp $bm_names $fp_names
+   set -g _locations_pp $bm_locations $fp_locations
+   set -g _PythonPath_pp
+
+   function _usage
+      set -f fmt '\nUsage: pp [-f | --fp] [-b | --bm] pp [-h | --help] [venv1 [venv2 ...]]\n\n'
+      printf $fmt
+   end
+
+   function _cleanup
+      set -e _names_pp _locations_pp _PythonPath_pp
+      functions -e _add_location _usage _cleanup 
+   end
+
+   if not argparse -n pp b/bm f/fp h/help -- $argv
+      _usage
+      _cleanup
+      return 1
+   end
+
+   if set -q _flag_help
+      _usage
+      _cleanup
+      return 0
+   end
+
+   if set -q _flag_bm
+      set --append _PythonPath_pp $bm_locations
+   end
+
+   if set -q _flag_fp
+      set --append _PythonPath_pp $fp_locations
+   end
+
+   set -f pypi_projects_names $argv
+
+   for name in $pypi_projects_names
+      if contains $name $_names_pp
+         set -l location $_locations_pp[(contains -i $name $_names_pp)]
+         if not contains $location $_PythonPath_pp
+            set --global --append _PythonPath_pp $location
+         end
+      else
+         printf 'pp: Unknown managed PyPI package %s\n' $name
+         _cleanup
+         return 1
       end
    end
-   if test (count $PythonPath) -gt 0
-      set -gx PYTHONPATH $PythonPath
-      printf '$PYTHONPATH exported & set to:\n%s\n' (string join : $PYTHONPATH)
+
+   if test (count $_PythonPath_pp) -gt 0
+      set -gx PYTHONPATH $_PythonPath_pp
+      printf '$PYTHONPATH exported & set to:\n  '
+      string join \n'  ' $PYTHONPATH
    else
       set -e PYTHONPATH
-      printf '$PYTHONPATH removed\n'
+      printf '$PYTHONPATH removed.\n'
    end
+
+   _cleanup
+   return 0
 end

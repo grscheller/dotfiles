@@ -103,12 +103,8 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    function _usage
-      set -l fmt1 '\n'
-      set -l fmt2 'Usage: ve [<venv>]\n'
-      set -l fmt3 '       ve [-r | --redo]\n'
-      set -l fmt4 '       ve [-l | --list]\n'
-      set -l fmt5 '       ve [-h | --help]\n\n'
-      printf $fmt1$fmt2$fmt3$fmt4$fmt5
+      set -l fmt '\nUsage: ve [-r | --redo] [-l | --list] [-h | --help] [venv1 [venv2 ...]]\n'
+      printf $fmt
    end
 
    function _cleanup
@@ -117,9 +113,10 @@ function ve --description 'Manage a group of Python virtual environments'
       functions -e _is_python_correct_version _usage _cleanup
    end
 
+
    ## Get and process cmdline options, or fail gracefully.
 
-   if not argparse -n 'Error: ' r/redo l/list h/help -- $argv
+   if not argparse -n ve r/redo l/list h/help -- $argv
       _usage
       _cleanup
       return 1
@@ -332,6 +329,7 @@ function ve --description 'Manage a group of Python virtual environments'
       set -l modules $_modules[(contains -i $_venv $_venvs)]
       pip install --upgrade (string split ' ' $modules)
    end
+
    _cleanup
    return 0
 end
