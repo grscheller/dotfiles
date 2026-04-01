@@ -1,48 +1,48 @@
 function pp --description "manage $PYTHONPATH env variable"
 
    set -f bm_names \
-      'bm-abstract-algebra' \
-      'bm-combinatorics' \
-      'bm-number-theory' \
-      'bm-probability-distributions' \
-      'bm-pythagorean-triples' \
-      'bm-recursive-functions' \
-      'bm-special-functions' \
-      'bm-homepage'
+      bm-abstract-algebra \
+      bm-combinatorics \
+      bm-number-theory \
+      bm-probability-distributions \
+      bm-pythagorean-triples \
+      bm-recursive-functions \
+      bm-special-functions \
+      bm-homepage
 
    set -f bm_locations \
-      '~/devel/pypi/bm/boring-math-abstract-algebra/src' \
-      '~/devel/pypi/bm/boring-math-combinatorics/src' \
-      '~/devel/pypi/bm/boring-math-number-theory/src' \
-      '~/devel/pypi/bm/boring-math-probability-distributions/src' \
-      '~/devel/pypi/bm/boring-math-pythagorean-triples/src' \
-      '~/devel/pypi/bm/boring-math-recursive-functions/src' \
-      '~/devel/pypi/bm/boring-math-special-functions/src' \
-      '~/devel/pypi/bm/boring-math/src'
+      ~/devel/pypi/bm/boring-math-abstract-algebra/src \
+      ~/devel/pypi/bm/boring-math-combinatorics/src \
+      ~/devel/pypi/bm/boring-math-number-theory/src \
+      ~/devel/pypi/bm/boring-math-probability-distributions/src \
+      ~/devel/pypi/bm/boring-math-pythagorean-triples/src \
+      ~/devel/pypi/bm/boring-math-recursive-functions/src \
+      ~/devel/pypi/bm/boring-math-special-functions/src \
+      ~/devel/pypi/bm/boring-math/src
 
    set -f fp_names \
-      'fp-booleans' \
-      'fp-circulararray' \
-      'fp-containers' \
-      'fp-fptools' \
-      'fp-gadgets' \
-      'fp-iterables' \
-      'fp-numpy' \
-      'fp-queues' \
-      'fp-splitends' \
-      'fp-homepage'
+      fp-booleans \
+      fp-circulararray \
+      fp-containers \
+      fp-fptools \
+      fp-gadgets \
+      fp-iterables \
+      fp-numpy \
+      fp-queues \
+      fp-splitends \
+      fp-homepage
 
    set -f fp_locations \
-      '~/devel/pypi/fp/pythonic-fp-booleans/src' \
-      '~/devel/pypi/fp/pythonic-fp-circulararray/src' \
-      '~/devel/pypi/fp/pythonic-fp-containers/src' \
-      '~/devel/pypi/fp/pythonic-fp-fptools/src' \
-      '~/devel/pypi/fp/pythonic-fp-gadgets/src' \
-      '~/devel/pypi/fp/pythonic-fp-iterables/src' \
-      '~/devel/pypi/fp/pythonic-fp-numpy/src' \
-      '~/devel/pypi/fp/pythonic-fp-queues/src' \
-      '~/devel/pypi/fp/pythonic-fp-splitends/src' \
-      '~/devel/pypi/fp/pythonic-fp/src'
+      ~/devel/pypi/fp/pythonic-fp-booleans/src \
+      ~/devel/pypi/fp/pythonic-fp-circulararray/src \
+      ~/devel/pypi/fp/pythonic-fp-containers/src \
+      ~/devel/pypi/fp/pythonic-fp-fptools/src \
+      ~/devel/pypi/fp/pythonic-fp-gadgets/src \
+      ~/devel/pypi/fp/pythonic-fp-iterables/src \
+      ~/devel/pypi/fp/pythonic-fp-numpy/src \
+      ~/devel/pypi/fp/pythonic-fp-queues/src \
+      ~/devel/pypi/fp/pythonic-fp-splitends/src \
+      ~/devel/pypi/fp/pythonic-fp/src
 
    set -g _names_pp $bm_names $fp_names
    set -g _locations_pp $bm_locations $fp_locations
