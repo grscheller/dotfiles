@@ -56,7 +56,6 @@ olde
 operator
 parameterize
 parameterized
-pdf
 performant
 perl
 PHP
@@ -477,6 +476,8 @@ abelian
 2-ary
 3-ary
 n-ary
+CDF
+cdf
 combinatorics
 computable
 contravariant
@@ -505,7 +506,10 @@ isomorphisms
 lcm
 ln
 magmas
+PDE
 pde
+PDF
+pdf
 primality
 radian
 radians
