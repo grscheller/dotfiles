@@ -27,10 +27,11 @@ function ve --description 'Manage a group of Python virtual environments'
    set -f ve_conf $VE_VENV_DIR/ve.conf
 
    if not test -f $ve_conf
-      set -l fmt1 '\n'
-      set -l fmt2 'Error: Virtual environment configuration file: %s,\n'
-      set -l fmt3 '       was not found.\n\n'
-      printf $fmt1$fmt2$fmt3 $ve_conf
+      set -l fmt '
+      Error: Virtual environment configuration file: %s,
+             was not found.\n
+      '
+      printf $fmt $ve_conf
       return 1
    end
 
@@ -52,12 +53,15 @@ function ve --description 'Manage a group of Python virtual environments'
    # Source in venv configurations
    source $ve_conf
    set _venvs $conf_virtual_envs
+
    for ii in (seq (count $_venvs))
       eval set _versions[$ii] {$dollar}conf_$_venvs[$ii][1]
    end
+
    for ii in (seq (count $_venvs))
       eval set _modules[$ii] \"(string join ' ' {$dollar}conf_$_venvs[$ii][2..-1])\"
    end
+
    set -e conf_virtual_envs
    for ii in (seq (count $_venvs))
       eval set -e conf_$_venvs[$ii]
@@ -103,12 +107,18 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    function _usage
-      set -l fmt '\nUsage: ve [-r | --redo] [-l | --list] [-h | --help] [venv1 [venv2 ...]]\n'
+      set -l fmt '
+      Usage: ve [-r | --redo]
+             ve [-c | --clear]
+             ve [-l | --list]
+             ve [-h | --help]
+             ve venv\n
+      '
       printf $fmt
    end
 
    function _cleanup
-      set -e _venv _version_required _version_on_path _venvs _versions _modules
+      set -e _venv _version_required _version_on_path _venvs _versions _modules _punt
       functions -e _is_managed_venv _print_python_version
       functions -e _is_python_correct_version _usage _cleanup
    end
@@ -116,7 +126,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
    ## Get and process cmdline options, or fail gracefully.
 
-   if not argparse -n ve r/redo l/list h/help -- $argv
+   if not argparse -n ve c/clear r/redo l/list h/help -- $argv
       _usage
       _cleanup
       return 1
@@ -124,14 +134,26 @@ function ve --description 'Manage a group of Python virtual environments'
 
    set -f argc (count $argv)
 
-   if test "$argc" -gt 0 && set -q _flag_r || test "$argc" -gt 1
+   set -f _punt false
+
+   if set -q _flag_c && set -q _flag_r
+      set _punt true
+   else if set -q _flag_c && test "$argc" -gt 0
+      set _punt true
+   else if set -q _flag_r && test "$argc" -gt 0
+      set _punt true
+   else if test "$argc" -gt 1
+      set $_punt true
+   end
+
+   if $_punt
       printf '\nError: Invalid argument/option combination\n'
       _usage
       _cleanup
       return 1
    end
 
-   ## Handle simple flags first
+   ## Handle simple flags first - will take precedence over other flags
 
    # Show usage then quit.
    if set -q _flag_help
@@ -164,22 +186,30 @@ function ve --description 'Manage a group of Python virtual environments'
 
    # If no arguments or options given, deactivate any active venv,
    # give some useful information and then quit.
-   if test "$argc" -eq 0 && not set -q _flag_redo
+
+   if set -q _flag_redo || set -q _flag_clear
+      set -f flag_redo_clear
+   end
+
+   if test "$argc" -eq 0 && not set -q flag_redo_clear
       if set -q VIRTUAL_ENV
          printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
          deactivate
       else
          printf '\nNo Python venv in use.\n'
       end
+
       if digpath -q python
          printf '\nNow using python version: %s\n' (python --version)
       else
          printf 'No python executable on path!\n\n'
       end
+
       if type -q pyenv
          pyenv versions
          printf '\n'
       end
+
       set -gx VE_VENV
       _cleanup
       return 0
@@ -200,75 +230,86 @@ function ve --description 'Manage a group of Python virtual environments'
 
       # Activate venv, create it if necessary, punt if python version wrong
       if not test -f "$VE_VENV_DIR/$_venv/bin/activate.fish"
-         set -l fmt1 '\n'
-         set -l fmt2 'Info: The "%s" venv does not exist.\n'
-         set -l fmt3 '      Creating new venv if using correct Python version.\n\n'
-         printf $fmt1$fmt2$fmt3 $_venv
+         set -l fmt '
+         Info: The "%s" venv does not exist.
+               Creating new venv if using correct Python version.
+         '
+         printf $fmt $_venv
+
          switch ( _is_python_correct_version )
             case 'ok'
                if python -m venv $VE_VENV_DIR/$_venv
-                  set -l fmt 'Info: Created %s virtual environment.\n\n'
+                  set -l fmt '\nInfo: Created %s virtual environment.\n\n'
                   printf $fmt $_venv
                else
-                  set -l fmt 'Error: Failed to create venv: %s\n\n'
+                  set -l fmt '\nError: Failed to create venv: %s\n\n'
                   printf $fmt $_venv
                   _cleanup
                   return 1
                end
             case 'not on path'
-               set -l fmt1 'Error: No Python executable found on $PATH to\n'
-               set -l fmt2 '       use for venv creation!\n\n'
-               printf $fmt1$fmt2
+               set -l fmt '
+               Error: No Python executable found on the PATH to
+                      use for venv creation!\n
+               '
+               printf $fmt
                _cleanup
                return 1
             case 'wrong version'
-               set -l fmt1 'Error: Incorrect Python version for the venv!\n'
-               set -l fmt2 '       Python version on $PATH: %s\n'
-               set -l fmt3 '       Python version needed for "%s" venv: %s\n'
-               set -l fmt4 '       Possibly venv python was upgraded?\n\n'
-               set -l fmt $fmt1$fmt2$fmt3$fmt4
+               set -l fmt '
+               Error: Incorrect Python version for the venv!
+                      Python version on $PATH: %s
+                      Python version needed for "%s" venv: %s
+                      Possibly venv python was upgraded?\n
+               '
                printf $fmt $_version_on_path $_venv $_version_required
                _cleanup
                return 1
          end
       end
+
       source $VE_VENV_DIR/$_venv/bin/activate.fish
       set -gx VE_VENV "$VE_VENV_DIR/$_venv"
       if test ! -x $VE_VENV/bin/python
-         set -l fmt1 'Warning: No executable python found in venv!\n'
-         set -l fmt2 '         The "%s" venv may be corrupted?\n\n'
-         printf $fmt1$fmt2 $_venv
+         set -l fmt '
+         Warning: No executable python found in venv!
+                  The "%s" venv may be corrupted?\n
+         '
+         printf $fmt $_venv
       else
          set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
          if test "$venv_py_version" != "$_version_required"
-            set -l fmt1 'Warning: Incorrect Python version for the venv!\n'
-            set -l fmt2 '         Python version found in "%s" venv: %s\n'
-            set -l fmt3 '         Python version required for this venv: %s\n'
-            set -l fmt4 '         The venv may need to be redone.\n\n'
-            set -l fmt $fmt1$fmt2$fmt3$fmt4
+            set -l fmt '
+            Warning: Incorrect Python version for the venv!
+                     Python version found in "%s" venv: %s
+                     Python version required for this venv: %s
+                     The venv may need to be redone.\n
+            '
             printf $fmt $_venv $venv_py_version $_version_required
          end
       end
    end
 
-   if not set -q _flag_redo
+   if not set -q flag_redo_clear
       _cleanup
       return
    end
 
-   ## Process ---redo options
+   ## Process the --redo or --clear options
 
-   # Make sure we are in a ve virtual environment
+   # Make sure we are in a ve managed virtual environment
 
    if set -q VIRTUAL_ENV
       if test (dirname $VIRTUAL_ENV) != $VE_VENV_DIR
-         printf '\nError: Not in a ve managed venv! Punting.\n\n'
+         set -l fmt '\nError: Not in a ve managed venv! Punting.\n\n'
+         printf $fmt
          set -gx VE_VENV
          _cleanup
          return 1
       end
    else
-      printf '\nError: Not in a venv! Punting.\n\n'
+      set -l fmt '\nError: Not in a venv! Punting.\n\n'
+      printf $fmt
       set -gx VE_VENV
       _cleanup
       return 1
@@ -279,21 +320,23 @@ function ve --description 'Manage a group of Python virtual environments'
       if _is_managed_venv $name
          switch ( _is_python_correct_version )
             case 'not on path'
-               set -l fmt1 '\n'
-               set -l fmt2 'Error: Python executable for "%s" venv not found!\n'
-               set -l fmt3 '       Possibly a corrupted virtual environment?\n'
-               set -l fmt4 '       Possibly corrupted shell environment?\n\n'
-               printf $fmt1$fmt2$fmt3$fmt4 $_venv
+               set -l fmt '
+               Error: Python executable for "%s" venv not found!
+                      Possibly a corrupted virtual environment?
+                      Possibly corrupted shell environment?
+               \n'
+               printf $fmt $_venv
                set -gx VE_VENV
                _cleanup
                return 1
             case 'wrong version'
-               set -l fmt1 '\n'
-               set -l fmt2 'Error: Incorrect Python version for venv!\n'
-               set -l fmt3 '       Python version on $PATH: %s\n'
-               set -l fmt4 '       Python version needed for "%s" venv: %s\n'
-               set -l fmt5 '       Possibly venv python was upgraded?\n\n'
-               printf $fmt1$fmt2$fmt3$fmt4$fmt5 $_version_on_path $_venv $_version_required
+               set -l fmt '
+               Error: Incorrect Python version for venv!
+                      Python version on $PATH: %s
+                      Python version needed for "%s" venv: %s
+                      Possibly venv python was upgraded?
+               \n'
+               printf $fmt $_version_on_path $_venv $_version_required
                set -gx VE_VENV
                _cleanup
                return 1
@@ -305,7 +348,7 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   if set -q _flag_redo
+   if set -q _flag_redo || set -q _flag_clear
       set -l fmt '\nRemoving all installed modules from venv: %s\n\n'
       printf $fmt $_venv
       switch $_version_on_path
@@ -324,10 +367,13 @@ function ve --description 'Manage a group of Python virtual environments'
             printf $fmt $_version_on_path
             return 1
       end
-      set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
-      printf $fmt $_venv
-      set -l modules $_modules[(contains -i $_venv $_venvs)]
-      pip install --upgrade (string split ' ' $modules)
+
+      if set -q _flag_redo
+         set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
+         printf $fmt $_venv
+         set -l modules $_modules[(contains -i $_venv $_venvs)]
+         pip install --upgrade (string split ' ' $modules)
+      end
    end
 
    _cleanup
