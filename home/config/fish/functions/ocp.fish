@@ -40,17 +40,21 @@ function ocp --description 'octopus cp - copy one item to many locations'
          if not test -d $dest
             mkdir -p $dest
          end
-         echo got to 1
       else
          mkdir -p (dirname $dest)
-         echo got to 2
       end
    end
 
    for dest in $dests
-      if not test "$item" -ef  "$dest"
-         cp $cp_flags $item $dest
+      if string match -qr '/$' -- $dest
+         if test "$item" -ef "$dest"(basename $item)
+            continue
+         end
+      else
+         if test "$item" -ef  "$dest"
+            continue
+         end
       end
+      cp $cp_flags $item $dest
    end
-
 end
