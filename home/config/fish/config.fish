@@ -23,7 +23,7 @@ function exit_handler --on-event fish_exit
 end
 
 if ! set -q SSH_AGENT_PID
-   set -l ssh_flag 1
+   set -l ssh_agent_flag 1
    set -l desktop_flag 0
    if set -q XDG_CURRENT_DESKTOP
       set desktop_flag 1
@@ -31,12 +31,12 @@ if ! set -q SSH_AGENT_PID
          printf 'Reusing desktop SSH '
          source /tmp/grs_ssh_desktop_env
          if ps -p $SSH_AGENT_PID > /dev/null
-            set ssh_flag 0
+            set ssh_agent_flag 0
          end
       end
    end
-   if test "$ssh_flag" -eq 1
-      set -l umask_orig $umask
+   if test "$ssh_agent_flag" -eq 1
+      set -l umask_orig (umask)
       umask 0077
       printf 'SSH '
       if test "$desktop_flag" -eq 1
