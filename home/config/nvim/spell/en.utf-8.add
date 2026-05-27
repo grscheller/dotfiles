@@ -1433,6 +1433,7 @@ abc
 argtype
 argtypes
 autodoc
+autofunction
 automodule
 autosummary
 bool
