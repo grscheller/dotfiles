@@ -108,12 +108,12 @@ function ve --description 'Manage a group of Python virtual environments'
 
    function _usage
       set -l fmt '
-      Usage: ve [-r | --redo]
-             ve [-c | --clear]
+      Usage: ve [-c | --clear] | [-r | --redo]
              ve [-l | --list]
+             ve [-m | --missing]
              ve [-h | --help]
-             ve venv\n
-      '
+             ve venv
+      \n'
       printf $fmt
    end
 
@@ -123,27 +123,32 @@ function ve --description 'Manage a group of Python virtual environments'
       functions -e _is_python_correct_version _usage _cleanup
    end
 
-
    ## Get and process cmdline options, or fail gracefully.
 
-   if not argparse -n ve c/clear r/redo l/list h/help -- $argv
+   if not argparse -n ve c/clear r/redo l/list m/missing h/help -- $argv
       _usage
       _cleanup
       return 1
    end
 
    set -f argc (count $argv)
+   if test "$argc" -eq 0
+      set -f no_args true
+   else
+      set -f no_args false
+   end
 
-   set -f _punt false
-
-   if set -q _flag_c && set -q _flag_r
-      set _punt true
-   else if set -q _flag_c && test "$argc" -gt 0
-      set _punt true
-   else if set -q _flag_r && test "$argc" -gt 0
-      set _punt true
+   if set -q _flag_m && set -q _flag_l
+      set -f _punt true
    else if test "$argc" -gt 1
-      set $_punt true
+      set -f _punt true
+   else if set -q _flag_m && not $no_args ||
+           set -q _flag_l && not $no_args ||
+           set -q _flag_c && not $no_args ||
+           set -q _flag_r && not $no_args
+      set -f _punt true
+   else
+      set -f _punt false
    end
 
    if $_punt
@@ -162,7 +167,7 @@ function ve --description 'Manage a group of Python virtual environments'
       return 0
    end
 
-   # List names of managed venv's and valid venv directories, then quit.
+   # List names of managed venvs and valid venv directories, then quit.
    set -l info (zip_it --sep '		' _venvs _versions)
 
    if set -q _flag_list
@@ -171,8 +176,8 @@ function ve --description 'Manage a group of Python virtual environments'
       set_color $fish_color_host; printf '%s\n' $VIRTUAL_ENV
       set_color $fish_color_user; printf '    $VE_VENV: '
       set_color $fish_color_host; printf '%s\n' $VE_VENV
-      set_color $fish_color_user; printf 'Managed venv configurations:\n'
-      set_color $fish_color_host; printf '%s\n' $info
+      set_color $fish_color_user; printf '\nManaged venv configurations:\n'
+      set_color $fish_color_host; printf '\t%s\n' $info
       set_color $fish_color_user; printf 'Virtual environments (managed or not):\n'
       set_color $fish_color_host
       for item in (ls $VE_VENV_DIR)
@@ -180,6 +185,16 @@ function ve --description 'Manage a group of Python virtual environments'
             printf '%s\t\t%s\n' $item (_print_python_version $VE_VENV_DIR/$item/bin/python)
          end
       end; set_color $fish_color_normal; printf '\n'
+      _cleanup
+      return 0
+   end
+
+   # Create and populate all missing virtual envs
+   if set -q _flag_m
+      if set -q VIRTUAL_ENV
+         printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
+         deactivate
+      end
       _cleanup
       return 0
    end
@@ -348,7 +363,7 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   if set -q _flag_redo || set -q _flag_clear
+   if set -q _flag_clear
       set -l fmt '\nRemoving all installed modules from venv: %s\n\n'
       printf $fmt $_venv
       switch $_version_on_path
@@ -357,7 +372,7 @@ function ve --description 'Manage a group of Python virtual environments'
                pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip|setuptools)")
             end
             pip install --upgrade pip setuptools
-         case '3.12.*' '3.13.*' '3.14.*'
+         case '3.12.*' '3.13.*' '3.14.*' '3.15.*'
             if test (pip list 2>/dev/null|tail +3|wc -l) -gt 1
                pip uninstall -y (pip list|tail +3|fields 1|grep -Ev "(pip)")
             end
@@ -367,13 +382,13 @@ function ve --description 'Manage a group of Python virtual environments'
             printf $fmt $_version_on_path
             return 1
       end
+   end
 
-      if set -q _flag_redo
-         set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
-         printf $fmt $_venv
-         set -l modules $_modules[(contains -i $_venv $_venvs)]
-         pip install --upgrade (string split ' ' $modules)
-      end
+   if set -q _flag_redo
+      set -l fmt '\nInstalling/upgrading all managed modules to venv: %s\n\n'
+      printf $fmt $_venv
+      set -l modules $_modules[(contains -i $_venv $_venvs)]
+      pip install --upgrade (string split ' ' $modules)
    end
 
    _cleanup
