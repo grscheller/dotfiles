@@ -11,8 +11,8 @@
 # it points to, Other non-managed venv can be located there. Also, a ve.conf
 # configuration file must be stored there too.
 #
-# I maintain one version of ve.conf in the home-env section of my dotfiles
-# GIT repo and $VE_VENV_DIR is set from my fish configs.
+# I maintain one version of ve.conf in my dotfiles GIT repo and $VE_VENV_DIR
+# is set from my fish configs.
 #
 function ve --description 'Manage a group of Python virtual environments'
 

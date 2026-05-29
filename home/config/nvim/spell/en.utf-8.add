@@ -1482,6 +1482,7 @@ matplotlib
 mypy
 namedtuple
 NoneType
+nox
 OSError
 OSErrors
 param
@@ -1524,11 +1525,13 @@ staticmethod
 stubgen
 SyntaxError
 SystemError
+tox
 truthy
 tvars
 TypeError
 unpythonic
 unslotted
+uv
 ValueError
 venv
 venvs
