@@ -118,7 +118,7 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    function _cleanup
-      set -e _venv _version_required _version_on_path _venvs _versions _modules _punt
+      set -e _venv _version_required _version_on_path _venvs _versions _modules
       functions -e _is_managed_venv _print_python_version
       functions -e _is_python_correct_version _usage _cleanup
    end
@@ -139,26 +139,22 @@ function ve --description 'Manage a group of Python virtual environments'
    end
 
    if set -q _flag_m && set -q _flag_l
-      set -f _punt true
+      set -f punt_flag yes
    else if test "$argc" -gt 1
-      set -f _punt true
-   else if set -q _flag_m && not $no_args ||
-           set -q _flag_l && not $no_args ||
-           set -q _flag_c && not $no_args ||
-           set -q _flag_r && not $no_args
-      set -f _punt true
-   else
-      set -f _punt false
+      set -f punt_flag yes
+   else if set -q _flag_missing && not $no_args ||
+           set -q _flag_list && not $no_args ||
+           set -q _flag_clean && not $no_args ||
+           set -q _flag_redo && not $no_args
+      set -f punt_flag yes
    end
 
-   if $_punt
+   if set -q punt_flag
       printf '\nError: Invalid argument/option combination\n'
       _usage
       _cleanup
       return 1
    end
-
-   ## Handle simple flags first - will take precedence over other flags
 
    # Show usage then quit.
    if set -q _flag_help
@@ -189,24 +185,9 @@ function ve --description 'Manage a group of Python virtual environments'
       return 0
    end
 
-   # Create and populate all missing virtual envs
-   if set -q _flag_m
-      if set -q VIRTUAL_ENV
-         printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
-         deactivate
-      end
-      _cleanup
-      return 0
-   end
-
-   # If no arguments or options given, deactivate any active venv,
-   # give some useful information and then quit.
-
-   if set -q _flag_redo || set -q _flag_clear
-      set -f flag_redo_clear
-   end
-
-   if test "$argc" -eq 0 && not set -q flag_redo_clear
+   # If no arguments were given, deactivate any active venv
+   # and give some useful information.
+   if test "$argc" -eq 0
       if set -q VIRTUAL_ENV
          printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
          deactivate
@@ -226,8 +207,6 @@ function ve --description 'Manage a group of Python virtual environments'
       end
 
       set -gx VE_VENV
-      _cleanup
-      return 0
    end
 
    ## Check if user supplied a venv name, if valid activate or create it.
@@ -305,15 +284,47 @@ function ve --description 'Manage a group of Python virtual environments'
       end
    end
 
-   if not set -q flag_redo_clear
+   if not begin
+         set -q _flag_redo || set -q _flag_clear || set -q _flag_missing
+      end
       _cleanup
-      return
+      return 0
+   end
+
+   ## Process the --missing option to create all missing managed venvs
+
+   if set -q _flag_missing
+      # Check if all required Python versions are available
+      set -l available_pyenv_versions (pyenv versions --bare)
+      set -l managed_python_versions (printf '%s\n' $_versions | sort -nu)
+      set -l error_fmt 'Error: Python version %s is not available from pyenv for venvs:'
+      for managed_python_version in $managed_python_versions
+         if not contains $managed_python_version $available_pyenv_versions
+            set -f punt_flag 
+            set -l cnt 0
+            printf $error_fmt $managed_python_version
+            echo
+            for managed_version in $_versions
+               set cnt (math $cnt + 1)
+               if test "$managed_version" = "$managed_python_version"
+                  printf ' %s' $_venvs[$cnt]
+               end
+            end
+            printf '\n'
+         end
+      end
+
+      if set -q punt_flag
+         _cleanup
+         return 1
+      end
+      _cleanup
+      return 0
    end
 
    ## Process the --redo or --clear options
 
    # Make sure we are in a ve managed virtual environment
-
    if set -q VIRTUAL_ENV
       if test (dirname $VIRTUAL_ENV) != $VE_VENV_DIR
          set -l fmt '\nError: Not in a ve managed venv! Punting.\n\n'
