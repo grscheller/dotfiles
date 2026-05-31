@@ -112,8 +112,14 @@ function ve --description 'Manage a group of Python virtual environments'
              ve [-l | --list]
              ve [-m | --missing]
              ve [-h | --help]
-             ve venv
-      \n'
+             ve <venv>
+
+             where missing: list missing pyenv installed Python versions
+                      list: list all ve managed virtual environments
+                     clear: remove all installed modules from venv
+                      redo: install all managed modules into current venv
+                      help: print usage information
+      \n\n'
       printf $fmt
    end
 
@@ -291,19 +297,17 @@ function ve --description 'Manage a group of Python virtual environments'
       return 0
    end
 
-   ## Process the --missing option to create all missing managed venvs
+   ## Process the --missing option to check if all the required pyenv
+   ## managed Python versions are installed.
 
    if set -q _flag_missing
-      # Check if all required Python versions are available
       set -l available_pyenv_versions (pyenv versions --bare)
-      set -l managed_python_versions (printf '%s\n' $_versions | sort -nu)
-      set -l error_fmt 'Error: Python version %s is not available from pyenv for venvs:'
+      set -l managed_python_versions (printf '%s\n' $_versions | sort -u)
       for managed_python_version in $managed_python_versions
          if not contains $managed_python_version $available_pyenv_versions
             set -f punt_flag 
             set -l cnt 0
-            printf $error_fmt $managed_python_version
-            echo
+            printf 'Error: Python version %s is not available from pyenv for venvs:' $managed_python_version
             for managed_version in $_versions
                set cnt (math $cnt + 1)
                if test "$managed_version" = "$managed_python_version"
