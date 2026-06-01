@@ -19,10 +19,10 @@ abbr -a gsw git switch
 abbr -a dfI '$DOTFILES_GIT_REPO/bin/dfInstall'
 abbr -a nvI '$DOTFILES_GIT_REPO/bin/nvimInstall'
 abbr -a fI '$DOTFILES_GIT_REPO/bin/fishInstall'
-abbr -a devI  '$DOTFILES_GIT_REPO/bin/develInstall'
+abbr -a devI '$DOTFILES_GIT_REPO/bin/develInstall'
 
 # Python virtual environment related
-abbr -a pl pip list|cat
+abbr -a pl pip list | cat
 abbr -a -- ipy ipython --TerminalInteractiveShell.editing_mode=vi
 
 # Jump locations

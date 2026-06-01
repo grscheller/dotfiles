@@ -8,9 +8,9 @@ function jdk_version --description 'Setup JDK on Pop!OS Linux'
     set -f jdir
     set -f jvmDirs
     set -f jvmDirsAndLinks /usr/lib/jvm/java-*-openjdk*
-    for jdir in $jvmDirsAndLinks 
-       test -L $jdir; and continue
-       test -d $jdir; and set -a jvmDirs $jdir
+    for jdir in $jvmDirsAndLinks
+        test -L $jdir; and continue
+        test -d $jdir; and set -a jvmDirs $jdir
     end
     if test -z "$jvmDirs"
         printf '\nNo JDK environments installed\n'
