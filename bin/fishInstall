@@ -90,6 +90,7 @@ config_files='
 remove_items="
    $XDG_CONFIG_HOME/fish/functions/align2.fish
    $XDG_CONFIG_HOME/fish/functions/zip_it.fish
+   $XDG_CONFIG_HOME/fish/functions/junk.fish
 "
 
 dirs_to_create=""
