@@ -1,21 +1,30 @@
-function zip_it --description 'Print 2 arrays zipped together with separator'
+function zip_it --description 'Print 2 shell arrays zipped together with separator'
 
     set -f dollar '$'
     set -f sep ' '
 
     if argparse s/sep= -- $argv
-        set -q sep _flag_sep
+        set -q _flag_sep
         and set sep $_flag_sep
     else
-        return
+        return 1
     end
 
-    # For this to work, both arrays need to be in global scope
-    set arr_name_1 $argv[1]
-    set arr_name_2 $argv[2]
-
-    eval set -f arr1 {$dollar}$arr_name_1
-    eval set -f arr2 {$dollar}$arr_name_2
+    if test (count $argv) -eq 2
+        if not set -q $argv[1] || not set -q $argv[2]
+            if not set -q $argv[1]
+                printf "Error zip_it: shell variable \"$argv[1]\" not defined\n" >&2
+            end
+            if not set -q $argv[2]
+                printf "Error zip_it: shell variable \"$argv[2]\" not defined\n" >&2
+            end
+            return 1
+        end
+        eval set -f arr1 $dollar$argv[1]
+        eval set -f arr2 $dollar$argv[2]
+    else
+        printf 'Error zip_it: wrong number of arguments given\n' >&2
+    end
 
     set -l len1 (count $arr1)
     set -l len2 (count $arr2)
