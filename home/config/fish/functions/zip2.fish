@@ -1,4 +1,4 @@
-function zip_it --description 'Print 2 shell arrays zipped together with separator'
+function zip2 --description 'Print 2 shell arrays zipped together with separator'
 
     set -f dollar '$'
     set -f sep ' '
@@ -13,17 +13,17 @@ function zip_it --description 'Print 2 shell arrays zipped together with separat
     if test (count $argv) -eq 2
         if not set -q $argv[1] || not set -q $argv[2]
             if not set -q $argv[1]
-                printf "Error zip_it: shell variable \"$argv[1]\" not defined\n" >&2
+                printf "Error zip2: shell variable \"$argv[1]\" not defined\n" >&2
             end
             if not set -q $argv[2]
-                printf "Error zip_it: shell variable \"$argv[2]\" not defined\n" >&2
+                printf "Error zip2: shell variable \"$argv[2]\" not defined\n" >&2
             end
             return 1
         end
         eval set -f arr1 $dollar$argv[1]
         eval set -f arr2 $dollar$argv[2]
     else
-        printf 'Error zip_it: wrong number of arguments given\n' >&2
+        printf 'Error zip2: wrong number of arguments given\n' >&2
     end
 
     set -l len1 (count $arr1)

@@ -170,7 +170,7 @@ Usage: ve [-c | --clear] | [-r | --redo]
     end
 
     # List names of managed venvs and valid venv directories, then quit.
-    set -l info (zip_it --sep '		' _venvs _versions)
+    set -l info (zip2 --sep '		' _venvs _versions)
 
     if set -q _flag_list
         printf '\n'
@@ -191,7 +191,7 @@ Usage: ve [-c | --clear] | [-r | --redo]
         set_color $fish_color_host
         for item in (ls $VE_VENV_DIR)
             if test -x $VE_VENV_DIR/$item/bin/python && test -f $VE_VENV_DIR/$item/bin/activate.fish
-                printf '%s\t\t%s\n' $item (_print_python_version $VE_VENV_DIR/$item/bin/python)
+                printf '\t%s\t\t%s\n' $item (_print_python_version $VE_VENV_DIR/$item/bin/python)
             end
         end
         set_color $fish_color_normal

@@ -45,15 +45,15 @@ function tab_align2 --description 'Align the rows of two columns'
     # Add empty strings for missing final rows.
     if test $cnt1 -gt $cnt2
         set col2[$start..$rows] (
-        #   string replace 'x' '' (
+            string replace 'x' '' (
                 string split '' (string repeat --count $diff 'x')
-        #   )
+            )
         )
     else if test $cnt2 -gt $cnt1
         set col1[$start..$rows] (
-        #   string replace 'x' ' ' (
+            string replace 'x' ' ' (
                 string split '' (string repeat --count $diff 'x')
-        #   )
+            )
         )
     end
 
