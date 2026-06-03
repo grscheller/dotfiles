@@ -33,31 +33,20 @@ function tab_align2 --description 'Align the rows of two columns'
         return 0
     end
 
-    # Determine number of rows to columnate and starting point to add missing rows.
-    set -l num_rows (math max $cnt1,$cnt2)
-    set -l diff (math abs \( $cnt1 - $cnt2 \))
-    if test $diff -ne $num_rows
-        set start (math $diff + 1)
-    else
-        set start 1
-    end
+    # Determine number of rows to columnate, add missing rows as needed.
+    set -l cnt (math max $cnt1,$cnt2)
+    set -l next (math \( min $cnt1,$cnt2 \) + 1)
 
-    # Add empty strings for missing final rows for first array.
-    if test $cnt2 -gt $cnt1
-        set col1[$start..$num_rows] (
-            string replace 'x' '' (
-                string split '' (string repeat -n $diff 'x')
-            )
-        )
+    # Add empty strings for any missing final rows
+    if test $cnt1 -lt $cnt2
+        for ii in (seq $next $cnt)
+            set -a col1 ''
+        end
     end
-
-    # Add empty strings for missing final rows for second array.
     if test $cnt1 -gt $cnt2
-        set col2[$start..$num_rows] (
-            string replace 'x' '' (
-                string split '' (string repeat -n $diff 'x')
-            )
-        )
+        for ii in (seq $next $cnt)
+            set -a col2 ''
+        end
     end
 
     set -l len
@@ -79,8 +68,9 @@ function tab_align2 --description 'Align the rows of two columns'
         set -a addstops (math $max_stops - $stops + 1)
     end
 
-    for ii in (seq $num_rows)
-        printf '%s%s%s\n' $col1[$ii] (string repeat -n $addstops[$ii] '	') $col2[$ii]
+    for ii in (seq $cnt)
+        set row (string join -- '' $col1[$ii] (string repeat -n $addstops[$ii] '	') $col2[$ii])
+        printf '%s\n' (string trim --right $row)
     end
 
     return 0

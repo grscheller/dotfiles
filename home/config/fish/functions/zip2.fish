@@ -1,6 +1,5 @@
 function zip2 --description 'Print 2 shell arrays zipped together with separator'
 
-    set -f dollar '$'
     set -f sep ' '
 
     if argparse s/sep= -- $argv
@@ -20,8 +19,8 @@ function zip2 --description 'Print 2 shell arrays zipped together with separator
             end
             return 1
         end
-        eval set -f arr1 $dollar$argv[1]
-        eval set -f arr2 $dollar$argv[2]
+        eval set -f arr1 \$$argv[1]
+        eval set -f arr2 \$$argv[2]
     else
         printf 'Error zip2: wrong number of arguments given\n' >&2
     end
