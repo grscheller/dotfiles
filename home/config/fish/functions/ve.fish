@@ -28,9 +28,9 @@ function ve --description 'Manage a group of Python virtual environments'
 
     if not test -f $ve_conf
         set -l fmt '
-      Error: Virtual environment configuration file: %s,
-             was not found.\n
-      '
+Error: Virtual environment configuration file: %s,
+        was not found.\n
+'
         printf $fmt $ve_conf
         return 1
     end
@@ -44,36 +44,28 @@ function ve --description 'Manage a group of Python virtual environments'
     set -g _versions # set up from configuration file
     set -g _modules # set up from configuration file
 
-    ## Function level variables
-
-    set -f dollar '$' # used in eval statements
-
     ## Source in configuration file and set up venv schema
 
     # Source in venv configurations
     source $ve_conf
     set _venvs $conf_virtual_envs
-
-    for ii in (seq (count $_venvs))
-        eval set _versions[$ii] {$dollar}conf_$_venvs[$ii][1]
-    end
-
-    for ii in (seq (count $_venvs))
-        eval set _modules[$ii] \"(string join ' ' {$dollar}conf_$_venvs[$ii][2..-1])\"
-    end
-
     set -e conf_virtual_envs
+
     for ii in (seq (count $_venvs))
-        eval set -e conf_$_venvs[$ii]
+        eval set _versions[$ii] \$conf_$_venvs[$ii][1]
+    end
+
+    for ii in (seq (count $_venvs))
+        eval set _modules[$ii] \"(string join ' ' \$conf_$_venvs[$ii][2..-1])\"
     end
 
     ## Utility functions
 
     # Call before _is_python_correct_version
     function _is_managed_venv
-        set -f name $argv[1]
-        if contains $name $_venvs
-            set -l index (contains -i $name $_venvs)
+        set -l venv_name $argv[1]
+        if contains $venv_name $_venvs
+            set -l index (contains -i $venv_name $_venvs)
             set _venv $_venvs[$index]
             set _version_required $_versions[$index]
             return 0
@@ -115,10 +107,10 @@ Usage: ve [-c | --clear] | [-r | --redo]
        ve <venv>
 
        where missing: list missing pyenv installed Python versions
-               list: list all ve managed virtual environments
-              clear: remove all installed modules from venv
-               redo: install all managed modules into current venv
-               help: print usage information\n
+                list: list all ve managed virtual environments
+               clear: remove all installed modules from venv
+                redo: install all managed modules into current venv
+                help: print usage information\n
 '
         printf $fmt
     end
@@ -139,20 +131,18 @@ Usage: ve [-c | --clear] | [-r | --redo]
 
     set -f argc (count $argv)
     if test "$argc" -eq 0
-        set -f no_args true
-    else
-        set -f no_args false
+        set -f no_args
     end
 
     if set -q _flag_m && set -q _flag_l
-        set -f punt_flag yes
+        set -f punt_flag
     else if test "$argc" -gt 1
-        set -f punt_flag yes
-    else if set -q _flag_missing && not $no_args ||
-            set -q _flag_list && not $no_args ||
-            set -q _flag_clean && not $no_args ||
-            set -q _flag_redo && not $no_args
-        set -f punt_flag yes
+        set -f punt_flag
+    else if set -q _flag_missing && set -q $no_args ||
+            set -q _flag_list && set -q $no_args ||
+            set -q _flag_clean && set -q $no_args ||
+            set -q _flag_redo && set -q $no_args
+        set -f punt_flag
     end
 
     if set -q punt_flag
@@ -170,32 +160,48 @@ Usage: ve [-c | --clear] | [-r | --redo]
     end
 
     # List names of managed venvs and valid venv directories, then quit.
-    set -l info (zip_it --sep '		' _venvs _versions)
-
     if set -q _flag_list
-        printf '\n'
-        set_color $fish_color_user
-        printf '$VIRTUAL_ENV: '
-        set_color $fish_color_host
-        printf '%s\n' $VIRTUAL_ENV
-        set_color $fish_color_user
-        printf '    $VE_VENV: '
-        set_color $fish_color_host
-        printf '%s\n' $VE_VENV
-        set_color $fish_color_user
-        printf '\nManaged venv configurations:\n'
-        set_color $fish_color_host
-        printf '\t%s\n' $info
-        set_color $fish_color_user
-        printf 'Virtual environments (managed or not):\n'
-        set_color $fish_color_host
-        for item in (ls $VE_VENV_DIR)
-            if test -x $VE_VENV_DIR/$item/bin/python && test -f $VE_VENV_DIR/$item/bin/activate.fish
-                printf '%s\t\t%s\n' $item (_print_python_version $VE_VENV_DIR/$item/bin/python)
+        set -l version_info (tab_align2 _venvs _versions)
+        set -g _venv_dirs
+        set -g _venv_python_versions
+
+        for venv_dir in (ls $VE_VENV_DIR)
+            if test -x $VE_VENV_DIR/$venv_dir/bin/python && test -f $VE_VENV_DIR/$venv_dir/bin/activate.fish
+                set -a _venv_dirs $venv_dir
+                set -a _venv_python_versions (_print_python_version $VE_VENV_DIR/$venv_dir/bin/python)
             end
         end
-        set_color $fish_color_normal
+
+        set -l installed_venv_info (tab_align2 _venv_dirs _venv_python_versions)
+
+        set -e _venv_dirs
+        set -e _venv_python_versions
+
+        set -l virtual_env
+        set -l ve_venv
+
+        if set -q VIRTUAL_ENV
+            set virtual_env $VIRTUAL_ENV
+        else
+            set virtual_env NONE
+        end
+
+        if set -q VE_VENV
+            set ve_venv $VE_VENV
+        else
+            set ve_venv NONE
+        end
+
         printf '\n'
+        set_color $fish_color_user; printf 'VIRTUAL_ENV: '
+        set_color $fish_color_host; printf '%s\n' $virtual_env
+        set_color $fish_color_user; printf '    VE_VENV: '
+        set_color $fish_color_host; printf '%s\n' $ve_venv
+        set_color $fish_color_user; printf '\nManaged venv configurations:\n'
+        set_color $fish_color_host; printf '%s\n' $version_info
+        set_color $fish_color_user; printf '\nVirtual environments (managed or not):\n'
+        set_color $fish_color_host; printf '%s\n' $installed_venv_info
+        set_color $fish_color_normal; printf '\n'
         _cleanup
         return 0
     end
@@ -206,6 +212,7 @@ Usage: ve [-c | --clear] | [-r | --redo]
         if set -q VIRTUAL_ENV
             printf '\nShutting down active venv: %s\n' $VIRTUAL_ENV
             deactivate
+            set -e VE_ENV
         else
             printf '\nNo Python venv in use.\n'
         end
@@ -227,12 +234,12 @@ Usage: ve [-c | --clear] | [-r | --redo]
     ## Check if user supplied a venv name, if valid activate or create it.
 
     if test "$argc" -eq 1
-        set -l name $argv[1]
+        set -l venv_name $argv[1]
 
         # First check if $venv_name_given is a ve managed environment
-        if not _is_managed_venv $name
+        if not _is_managed_venv $venv_name
             set -l fmt '\nError: "%s" is not a ve managed venv!\n\n'
-            printf $fmt $name
+            printf $fmt $venv_name
             _cleanup
             return 1
         end
@@ -342,21 +349,21 @@ Warning: Incorrect Python version for the venv!
         if test (dirname $VIRTUAL_ENV) != $VE_VENV_DIR
             set -l fmt '\nError: Not in a ve managed venv! Punting.\n\n'
             printf $fmt
-            set -gx VE_VENV
+            set -ge VE_VENV
             _cleanup
             return 1
         end
     else
         set -l fmt '\nError: Not in a venv! Punting.\n\n'
         printf $fmt
-        set -gx VE_VENV
+        set -ge VE_VENV
         _cleanup
         return 1
     end
 
     if test -z "$_venv"
-        set -l name (basename $VIRTUAL_ENV)
-        if _is_managed_venv $name
+        set -l venv_name (basename $VIRTUAL_ENV)
+        if _is_managed_venv $venv_name
             switch ( _is_python_correct_version )
                 case 'not on path'
                     set -l fmt '

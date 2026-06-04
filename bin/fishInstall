@@ -31,6 +31,7 @@ config_files='
    conf.d/abbrs.fish
    conf.d/colors.fish
    conf.d/rustup.fish
+   functions/tab_align2.fish
    functions/ax.fish
    functions/cu.fish
    functions/digpath.fish
@@ -56,6 +57,7 @@ config_files='
    functions/mc.fish
    functions/nsort.fish
    functions/ocp.fish
+   functions/tab_align2.fish
    functions/pathtrim.fish
    functions/pp.fish
    functions/pv.fish
@@ -82,13 +84,13 @@ config_files='
    functions/o2o.fish
    functions/dn.fish
    functions/ud.fish
-   functions/zip_it.fish
+   functions/zip2.fish
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/completions/alacritty.fish
-   $XDG_CONFIG_HOME/fish/completions/pypath.fish
-   $XDG_CONFIG_HOME/fish/functions/pypath.fish
+   $XDG_CONFIG_HOME/fish/functions/align2.fish
+   $XDG_CONFIG_HOME/fish/functions/zip_it.fish
+   $XDG_CONFIG_HOME/fish/functions/junk.fish
 "
 
 dirs_to_create=""

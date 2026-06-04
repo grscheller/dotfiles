@@ -39,11 +39,10 @@ and begin
     set -e Update_Fish_Environment
 
     ## First configure fish itself
-    set -U fish_features all
-    set -U fish_cursor_default block
-    set -U fish_cursor_insert line
-    set -U fish_cursor_replace_one underscore
-    set -U fish_cursor_visual underscore blink
+    set -g fish_cursor_default block
+    set -g fish_cursor_insert line
+    set -g fish_cursor_replace_one underscore
+    set -g fish_cursor_visual underscore blink
 
     # Set locale
     set -gx LANG en_US.utf8
