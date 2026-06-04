@@ -28,9 +28,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
     if not test -f $ve_conf
         set -l fmt '
-Error: Virtual environment configuration file: %s,
-        was not found.\n
-'
+        Error: Virtual environment configuration file: %s, was not found.\n\n'
         printf $fmt $ve_conf
         return 1
     end
@@ -100,18 +98,18 @@ Error: Virtual environment configuration file: %s,
 
     function _usage
         set -l fmt '
-Usage: ve [-c | --clear] | [-r | --redo]
-       ve [-l | --list]
-       ve [-m | --missing]
-       ve [-h | --help]
-       ve <venv>
+        Usage: ve <venv>
+               ve [-c | --clear] | [-r | --redo]
+               ve [-l | --list]
+               ve [-m | --missing]
+               ve [-h | --help]
 
-       where missing: list missing pyenv installed Python versions
-                list: list all ve managed virtual environments
-               clear: remove all installed modules from venv
-                redo: install all managed modules into current venv
-                help: print usage information\n
-'
+               where missing: list missing pyenv installed Python versions
+                        list: list all ve managed virtual environments
+                       clear: remove all installed modules from venv
+                        redo: install all managed modules into current venv
+                        help: print usage information\n\n'
+        set fmt (string replace -ra '(?m)^ {0,8}' '' -- $fmt)
         printf $fmt
     end
 
@@ -218,9 +216,9 @@ Usage: ve [-c | --clear] | [-r | --redo]
         end
 
         if digpath -q python
-            printf '\nNow using python version: %s\n' (python --version)
+            printf '\nNow using python version: %s\n\n' (python --version)
         else
-            printf 'No python executable on path!\n\n'
+            printf '\nNo python executable on path!\n\n'
         end
 
         if type -q pyenv
@@ -247,9 +245,9 @@ Usage: ve [-c | --clear] | [-r | --redo]
         # Activate venv, create it if necessary, punt if python version wrong
         if not test -f "$VE_VENV_DIR/$_venv/bin/activate.fish"
             set -l fmt '
-Info: The "%s" venv does not exist.
-      Creating new venv if using correct Python version.
-'
+            Info: The "%s" venv does not exist.
+                  Creating new venv if using correct Python version.\n'
+            set fmt (string replace -ra '(?m)^ {0,12}' '' -- $fmt)
             printf $fmt $_venv
 
             switch ( _is_python_correct_version )
@@ -264,20 +262,16 @@ Info: The "%s" venv does not exist.
                         return 1
                     end
                 case 'not on path'
-                    set -l fmt '
-Error: No Python executable found on the PATH to
-       use for venv creation!\n
-'
+                    set -l fmt 'Error: No Python executable found on the PATH to use for venv creation!\n\n'
                     printf $fmt
                     _cleanup
                     return 1
                 case 'wrong version'
                     set -l fmt '
-Error: Incorrect Python version for the venv!
-       Python version on $PATH: %s
-       Python version needed for "%s" venv: %s
-       Possibly venv python was upgraded?\n
-'
+                    Error: Incorrect Python version for the venv!
+                           Python version needed for "%s" venv: %s
+                           Possibly venv python was upgraded?\n\n'
+                    set fmt (string replace -ra '(?m)^ {0,20}' '' -- $fmt)
                     printf $fmt $_version_on_path $_venv $_version_required
                     _cleanup
                     return 1
@@ -288,19 +282,19 @@ Error: Incorrect Python version for the venv!
         set -gx VE_VENV "$VE_VENV_DIR/$_venv"
         if test ! -x $VE_VENV/bin/python
             set -l fmt '
-Warning: No executable python found in venv!
-         The "%s" venv may be corrupted?\n
-'
+            Warning: No executable python found in venv!
+                     The "%s" venv may be corrupted?\n\n'
+            set fmt (string replace -ra '(?m)^ {0,12}' '' -- $fmt)
             printf $fmt $_venv
         else
             set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
             if test "$venv_py_version" != "$_version_required"
                 set -l fmt '
-Warning: Incorrect Python version for the venv!
-         Python version found in "%s" venv: %s
-         Python version required for this venv: %s
-         The venv may need to be redone.\n
-'
+                Warning: Incorrect Python version for the venv!
+                         Python version found in "%s" venv: %s
+                         Python version required for this venv: %s
+                         The venv may need to be redone.\n\n'
+                set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt)
                 printf $fmt $_venv $venv_py_version $_version_required
             end
         end
@@ -367,21 +361,22 @@ Warning: Incorrect Python version for the venv!
             switch ( _is_python_correct_version )
                 case 'not on path'
                     set -l fmt '
-Error: Python executable for "%s" venv not found!
-       Possibly a corrupted virtual environment?
-       Possibly corrupted shell environment?
-\n'
+                    Error: Python executable for "%s" venv not found!
+                        Possibly a corrupted virtual environment?
+                        Possibly corrupted shell environment?\n\n'
+                    set fmt (string replace -ra '(?m)^ {0,20}' '' -- $fmt)
                     printf $fmt $_venv
                     set -gx VE_VENV
                     _cleanup
                     return 1
                 case 'wrong version'
                     set -l fmt '
-Error: Incorrect Python version for venv!
-       Python version on $PATH: %s
-       Python version needed for "%s" venv: %s
-       Possibly venv python was upgraded?
-\n'
+                    Error: Incorrect Python version for venv!
+
+                    Python version on $PATH: %s
+                    Python version needed for "%s" venv: %s
+                    Possibly venv python was upgraded?\n\n'
+                    set fmt (string replace -ra '(?m)^ {0,20}' '' -- $fmt)
                     printf $fmt $_version_on_path $_venv $_version_required
                     set -gx VE_VENV
                     _cleanup
