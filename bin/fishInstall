@@ -64,7 +64,6 @@ config_files='
    functions/rc.fish
    functions/tm.fish
    functions/ve.fish
-   functions/ve_old.fish
    functions/Wget.fish
    functions/WgetM.fish
    functions/b2b.fish
@@ -92,6 +91,7 @@ remove_items="
    $XDG_CONFIG_HOME/fish/functions/align2.fish
    $XDG_CONFIG_HOME/fish/functions/zip_it.fish
    $XDG_CONFIG_HOME/fish/functions/junk.fish
+   $XDG_CONFIG_HOME/fish/functions/ve_old.fish
 "
 
 dirs_to_create=""
