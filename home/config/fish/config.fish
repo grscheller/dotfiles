@@ -1,35 +1,17 @@
 ## Final fish configuration tweaks.
 #
-# Note that config.fish is not the entry point for fish
-# configuration.  The files in conf.d get sourced BEFORE
-# config.fish in alphabetical order.
+# Note: This file is NOT the initial starting point for
+#       fish configuration. The files in conf.d get sourced
+#       BEFORE config.fish in alphabetical order.
+#
+# Note: The file ~/.config/fish/conf.d/00-initial-environment.fish
+#       plays the role that ~/.profile does in a POSIX compliant shell.
 #
 
 # So that scp will work for receiving files
 if not status is-interactive
     return
 end
-
-# Enable vi keybindings and cursor shape
-fish_vi_key_bindings
-set -g fish_cursor_default block
-set -g fish_cursor_insert line
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_visual underscore blink
-
-# Set locale
-set -gx LANG en_US.utf8
-
-# Set up paging
-set -gx EDITOR nvim
-set -gx VISUAL nvim
-set -gx SUDO_EDITOR /usr/bin/nvim
-set -gx PAGER 'nvim -R'
-set -gx MANPAGER 'nvim +Man!'
-set -gx DIFFPROG 'nvim -d'
-
-# Path to dotfile GitHub repo
-set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
 # Manage SSH key-agents - desktop environment shares one
 function exit_handler --on-event fish_exit
@@ -87,7 +69,7 @@ else
     ve grs
 end
 
-# Set jdk_version managed Java environment
+# Set JDK_version managed Java environment
 if set -q JDK_VERSION
     jdk_version $JDK_VERSION >/dev/null # so scp does not gag
 else

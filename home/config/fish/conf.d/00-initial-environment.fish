@@ -1,37 +1,50 @@
 ## Ensure a sane initial environment is set up, if not already done so.
 #
-# Warning: non-idiomatic use of fish universals!
-#
-# All permanent configurations should flow from
-# configuration files, not done on the command line or random GUI!!!
-#
-# If Redo_Fish_Environment is set, all "manual" configurations will be blown away!
-# This way, I know configuration is sane and not affected by old cruft.
-#
-# The mechanism below was originally in config.fish.
-#
-# Unfortunately, config.fish is not the entry point
-# for fish configuration. The files in conf.d get
-# sourced BEFORE config.fish in alphabetical order.
+# Note: This file plays the same role as does the
+#       file ~/.profile in a POSIX compliant shell.
 #
 
 # Sentinel value indicating whether an initial shell environment was setup
-set -q FISHVIRGINPATH
-or begin
-    set -gx FISHVIRGINPATH $PATH
+set -q _FISH_VIRGIN_PATH
+or not begin
+    set -gx _FISH_VIRGIN_PATH $PATH
+    set -gx _FISH_INITIAL_SHELL
     set -g Update_Fish_Environment
 end
+and set -e _FISH_INITIAL_SHELL
 
-set -q Redo_Fish_Environment
+set -q _Redo_Fish_Environment
 and begin
-    set -e Redo_Fish_Environment
-    set -g Update_Fish_Environment
-    set PATH $FISHVIRGINPATH
+    cd
+    set PATH $_FISHVIRGINPATH
+    set -g _Update_Fish_Environment
+    set -e _Redo_Fish_Environment
 end
 
-set -q Update_Fish_Environment
+set -q _Update_Fish_Environment
 and begin
-    set -e Update_Fish_Environment
+    set -e _Update_Fish_Environment
+
+    # Set locale
+    set -gx LANG en_US.utf8
+
+    # Path to dotfile GitHub repo
+    set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
+
+    # Enable vi keybindings and cursor shape
+    fish_vi_key_bindings
+    set -g fish_cursor_default block
+    set -g fish_cursor_insert line
+    set -g fish_cursor_replace_one underscore
+    set -g fish_cursor_visual underscore blink
+
+    # Set up paging
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
+    set -gx SUDO_EDITOR /usr/bin/nvim
+    set -gx PAGER 'nvim -R'
+    set -gx MANPAGER 'nvim +Man!'
+    set -gx DIFFPROG 'nvim -d'
 
     # Haskell locations used by Stack and Cabal
     set -p PATH ~/.local/bin ~/.cabal/bin $PATH
