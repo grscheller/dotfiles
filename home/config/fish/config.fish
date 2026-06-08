@@ -6,17 +6,41 @@
 #
 
 # So that scp will work for receiving files
-if not status --is-interactive
+if not status is-interactive
     return
 end
 
-# Enable vi keybindings
+# Enable vi keybindings and cursor shape
 fish_vi_key_bindings
+set -g fish_cursor_default block
+set -g fish_cursor_insert line
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_visual underscore blink
+
+# Set locale
+set -gx LANG en_US.utf8
+
+# Set up paging
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+set -gx SUDO_EDITOR /usr/bin/nvim
+set -gx PAGER 'nvim -R'
+set -gx MANPAGER 'nvim +Man!'
+set -gx DIFFPROG 'nvim -d'
+
+# Path to dotfile GitHub repo
+set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
 # Manage SSH key-agents - desktop environment shares one
 function exit_handler --on-event fish_exit
-    if status --is-login
+    if status is-login
         if set -q SSH_AGENT_PID
+            set -l tmpfile /tmp/grs_ssh_desktop_env
+            if test -f $tmpfile
+                set -l script 's/^.* //;s/;$//;2p'
+                test (sed -n -e "$script" $tmpfile) -eq $SSH_AGENT_PID
+                and rm -f $tmpfile
+            end
             kill -15 $SSH_AGENT_PID
         end
     end

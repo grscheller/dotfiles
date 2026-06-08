@@ -43,5 +43,5 @@ abbr -a Wget -- /usr/bin/wget -p --convert-links -e robots=off
 abbr WgetM -- /usr/bin/wget --mirror -p --convert-links -e robots=off
 
 # Shell environment cmds
-abbr -a re 'cd; REDO_ENV=yes fish'
-abbr -a ue 'UPDATE_ENV=yes fish'
+abbr -a re 'cd; REDO_FISH_ENV=yes fish'
+abbr -a ue 'UPDATE_FISH_ENV=yes fish'

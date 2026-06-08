@@ -27,36 +27,11 @@ and begin
     set -e Redo_Fish_Environment
     set -g Update_Fish_Environment
     set PATH $FISHVIRGINPATH
-    if set -q XDG_CONFIG_HOME
-        printf >$XDG_CONFIG_HOME/fish/fish_variables
-    else
-        printf >~/.config/fish/fish_variables
-    end
 end
 
 set -q Update_Fish_Environment
 and begin
     set -e Update_Fish_Environment
-
-    ## First configure fish itself
-    set -g fish_cursor_default block
-    set -g fish_cursor_insert line
-    set -g fish_cursor_replace_one underscore
-    set -g fish_cursor_visual underscore blink
-
-    # Set locale
-    set -gx LANG en_US.utf8
-
-    # Set up paging
-    set -gx EDITOR nvim
-    set -gx VISUAL nvim
-    set -gx SUDO_EDITOR /usr/bin/nvim
-    set -gx PAGER 'nvim -R'
-    set -gx MANPAGER 'nvim +Man!'
-    set -gx DIFFPROG 'nvim -d'
-
-    # Set up paths to dotfiles related repos
-    set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
     # Haskell locations used by Stack and Cabal
     set -p PATH ~/.local/bin ~/.cabal/bin $PATH
@@ -66,7 +41,7 @@ and begin
     jdk_version 21
 
     # Lua toolchain
-    test -e ~/.local/share/nvim/lazy-rocks/hererocks/bin
+    test -d ~/.local/share/nvim/lazy-rocks/hererocks/bin
     and set -p PATH ~/.local/share/nvim/lazy-rocks/hererocks/bin
 
     # Zig toolchain
