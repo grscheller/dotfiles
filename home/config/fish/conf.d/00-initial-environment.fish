@@ -9,7 +9,7 @@ set -q _FISH_VIRGIN_PATH
 or not begin
     set -gx _FISH_VIRGIN_PATH $PATH
     set -gx _FISH_INITIAL_SHELL
-    set -g Update_Fish_Environment
+    set -g _Update_Fish_Environment
 end
 and set -e _FISH_INITIAL_SHELL
 

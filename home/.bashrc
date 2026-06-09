@@ -1,11 +1,9 @@
 # shellcheck shell=bash
 #
-# ~/.bashrc
+# Bash configuration with a strong ksh flavor
+# aimed at modern Systemd based Linux systems.
 #
-# Bash configuration aimed at modern Systemd based Linus systems.
-#
-# Primarily as a fallback when fish is unavailable
-# or for Pop OS 22.04 whose fish is way too out-of-date.
+# Primarily as a fallback when fish is unavailable.
 #
 
 ## If not interactive, don't do anything.

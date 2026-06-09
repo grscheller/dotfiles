@@ -1,27 +1,26 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+# shellcheck shell=dash
+#
+# Export a sentinel value so that shells know that an initial
+# sane development environment has yet to be configured. Takes
+# advantaged of an old CDE hack that seams to have become
+# a de facto standard.
+#
+# Also acts as a bash fallback in environments without
+# an up-to-date fish installed.
+#
+# So that bash will source this file, my dotfile installation
+# scripts remove both ~/.bash_profile or ~/.bash_login if they
+# exist.
+#
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
+if [ -n "$BASH_VERSION" ]
+then
+    # If sourced by bash.
+    if [ -f "$HOME/.bashrc" ]
+    then
+        . "$HOME/.bashrc"
     fi
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+else
+    # When greatd sources with /usr/bin/sh which is dash.
+    export GRS_COSMIC_SENTINEL=unconfigured
 fi

@@ -579,9 +579,13 @@ XF86MonBrightnessDown
 XF86MonBrightnessUp
 XF86Search
 # Unix/Linux/Systemd/Arch/PoPOS related
-ExecStart
+archlinux
+Archwiki
 BindsTo
 brightnessctl
+CDE
+ExecStart
+greatd
 journalctl
 mpd
 networkd
@@ -611,8 +615,6 @@ ai
 alloc
 apache
 ar
-archlinux
-Archwiki
 argc
 argparse
 argv
