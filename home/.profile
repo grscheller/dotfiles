@@ -15,12 +15,12 @@
 
 if [ -n "$BASH_VERSION" ]
 then
-    # If sourced by bash.
+    # if sourced by bash
     if [ -f "$HOME/.bashrc" ]
     then
         . "$HOME/.bashrc"
     fi
 else
-    # When greatd sources with /usr/bin/sh which is dash.
-    export GRS_COSMIC_SENTINEL=unconfigured
+   # when greetd sources with dash as /usr/bin/sh (old CDE hack)
+    export COSMIC_FISH_CONFIGURED=unconfigured
 fi

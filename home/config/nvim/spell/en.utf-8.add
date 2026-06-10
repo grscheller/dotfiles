@@ -585,7 +585,7 @@ BindsTo
 brightnessctl
 CDE
 ExecStart
-greatd
+greetd
 journalctl
 mpd
 networkd
