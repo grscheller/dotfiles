@@ -57,6 +57,7 @@ config_files='
    functions/mc.fish
    functions/nsort.fish
    functions/ocp.fish
+   functions/run.fish
    functions/tab_align2.fish
    functions/pathtrim.fish
    functions/pp.fish

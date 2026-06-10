@@ -1,16 +1,12 @@
-function ff --description 'Launch Firefox web browser'
+function ff --description 'Launch Firefox in new window, not new instance'
     if type -q firefox
-        firefox $argv >/dev/null 2>&1 &
-        disown
-    else
-        # Maybe we are on iMac
-        set -l ff_exe /Applications/Firefox.app/Contents/MacOS/firefox
-        if test -x "$ff_exe"
-            $ff_exe $argv >/dev/null 2>&1 &
-            disown
+        if test (count $argv) -gt 0
+            run firefox --new-window $argv
         else
-            printf \nDid not find a firefox executable.\n >&2
-            return 1
+            run firefox
         end
+    else
+        printf 'Not found on path: firefox' >&2
+        return 127
     end
 end

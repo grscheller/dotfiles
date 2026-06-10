@@ -3,29 +3,15 @@
 # Note: This file plays the same role as does the
 #       file ~/.profile in a POSIX compliant shell.
 #
-# Console and SSH connections invoke login shells. The problem is
-# the default cosmic-term keybinding <super+t> does not start my
-# my shell, fish, as a login shell. My solution was to create a
-# custom keybinding <super-enter> for 'cosmic-term -- fish --login'.
+# Important: SCP connections invoke login shells and will gag
+#            on extraneous output. Therefore for SCP to work
+#            correctly, this file should not produce anything
+#            to stdout.
 #
-# - Thus I can configure a sane initial fish environment is
-#   configured by just testing if the fish session is a login shell.
+# Factoid: COSMIC DE startup chain will invoke the user's
+#          shell as a login shell at some point. That shell
+#          lives until the user logs out.
 #
-# - My shell function tm will invoke a disown cosmic-term running
-#   fish with the same environment as the caller.
-#
-# - I get a brand new configured fish shell running in a new
-#   cosmic-term via <super-enter> which needs to manually configured.
-#
-# - I can forget <super+t> even exists.
-#
-
-# Enable vi keybindings and cursor shape
-fish_vi_key_bindings
-set -g fish_cursor_default block
-set -g fish_cursor_insert line
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_visual underscore blink
 
 status is-login
 and begin
@@ -87,5 +73,24 @@ and begin
     # Indicate a configured fish shell in the GUI environment
     set -q COSMIC_FISH_CONFIGURED
     and set COSMIC_FISH_CONFIGURED configured
+
+    ## Finally, manage a single SSH key-agent for the login session.
+
+    # Cleanup SSH key-agent at end of login session.
+    function exit_handler --on-event fish_exit
+        if status --is-login
+            set -q SSH_AGENT_PID
+            and kill -15 $SSH_AGENT_PID >/dev/null 2>&1
+            set -q SSH_AUTH_SOCK
+            and rm -rf (path dirname $SSH_AUTH_SOCK)
+        end
+    end
+
+    # Launch SSH key-agent
+    set -l umask_original $umask
+    umask 0077
+    eval (ssh-agent -c)
+    and ssh-add
+    umask $umask_original
 
 end

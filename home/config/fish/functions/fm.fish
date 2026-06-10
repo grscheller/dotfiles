@@ -1,21 +1,14 @@
-function fm --description 'Launch desktop\'s file manager app'
-    if type -q xdg-open
-        # Probably on a Unix
-        set -f open_cmd xdg-open
-    else if type -q open
-        # Maybe on a Mac
-        set -f open_cmd open
+function fm --description 'Launch DE file manager app'
+    set -l folder
+    if test (count $argv) -gt 0
+        set folder $argv[1]
     else
-        printf 'Error: Cannot identify proper program launcher for DE'
-        return 1
+        set folder (pwd)
     end
-
-    set -l DiR $argv[1]
-    test -z "$DiR"; and set DiR $PWD
-    if test -d "$DiR"
-        $open_cmd $DiR 2>/dev/null &
+    if test -d "$folder"
+        xdg-open $folder
     else
-        printf 'Error: "%s" is not a directory\n' $DiR
+        printf 'Error: "%s" is not a directory\n' $folder
         return 1
     end
 end

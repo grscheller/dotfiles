@@ -28,6 +28,7 @@ bash_files='
    .bash_profile
    .bashrc
    .inputrc
+   .profile
 '
 
 bin_scripts='
@@ -62,7 +63,6 @@ devel_files='
 
 remove_items="
    ~/.vimrc
-   ~/.profile
    ~/.bash_login
 "
 
