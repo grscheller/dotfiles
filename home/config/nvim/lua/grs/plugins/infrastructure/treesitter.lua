@@ -1,6 +1,5 @@
 --[[ Config neovim built-in treesitter & install language modules to it ]]
 
-local opts = {
    ensure_installed = {
       'awk',
       'bash',
@@ -22,7 +21,6 @@ local opts = {
       'java',
       'javascript',
       'json',
-      'jsonc',
       'julia',
       'kotlin',
       'llvm',
@@ -30,7 +28,6 @@ local opts = {
       'make',
       'markdown',
       'markdown_inline',
-      'norg',
       'ocaml',
       'python',
       'query',
@@ -46,27 +43,31 @@ local opts = {
       'vimdoc',
       'yaml',
       'zig',
-   },
-   auto_install = true,
-   ignore_install = {},
-   sync_install = false,
-   highlight = { enable = true },
-}
+   }
 
 local config_treesitter = function()
-   require('nvim-treesitter.install').prefer_git = true
-   require('nvim-treesitter.configs').setup(opts)
-   -- Check out these nvim-treesitter modules:
-   -- - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-   -- - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-   -- - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+   -- Install parsers (asynchronous, idempotent)
+   require('nvim-treesitter').install(ensure_installed)
+
+   -- Enable treesitter features per-buffer
+   vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('grs_treesitter', {}),
+      callback = function(args)
+         if pcall(vim.treesitter.start, args.buf) then
+            vim.wo[0][0].foldmethod = 'expr'
+            vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.bo[args.buf].indentexpr =
+               "v:lua.require'nvim-treesitter'.indentexpr()"
+         end
+      end,
+   })
 end
 
 return {
    {
-      -- Nvim interface to the tree-sitter parser generator tool and an incremental parsing library.
-      -- Primarily used for syntax highlighting.
       'nvim-treesitter/nvim-treesitter',
+      branch = 'main',
+      lazy = false,
       config = config_treesitter,
       build = ':TSUpdate',
    },

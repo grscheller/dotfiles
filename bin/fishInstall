@@ -17,83 +17,81 @@ export scriptName=fishInstall
 home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
 
 cd "$home" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-   return 1
+    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+    return 1
 }
 
 . ../bin/parse_cmdline_and_source_functions.sh
 
 config_files='
-   completions/pp.fish
-   completions/ve.fish
-   config.fish
-   conf.d/00-initial-environment.fish
-   conf.d/abbrs.fish
-   conf.d/colors.fish
-   conf.d/rustup.fish
-   functions/tab_align2.fish
-   functions/ax.fish
-   functions/cu.fish
-   functions/digpath.fish
-   functions/dotf.fish
-   functions/fdg.fish
-   functions/ff.fish
-   functions/fields.fish
-   functions/fishcolors.fish
-   functions/fm.fish
-   functions/fish_greeting.fish
-   functions/fish_mode_prompt.fish
-   functions/fish_prompt.fish
-   functions/fish_title.fish
-   functions/iv.fish
-   functions/jdk_version.fish
-   functions/la.fish
-   functions/ldir.fish
-   functions/ldot.fish
-   functions/lf.fish
-   functions/lh.fish
-   functions/ll.fish
-   functions/ls.fish
-   functions/mc.fish
-   functions/nsort.fish
-   functions/ocp.fish
-   functions/run.fish
-   functions/tab_align2.fish
-   functions/pathtrim.fish
-   functions/pp.fish
-   functions/pv.fish
-   functions/rc.fish
-   functions/tm.fish
-   functions/ve.fish
-   functions/Wget.fish
-   functions/WgetM.fish
-   functions/b2b.fish
-   functions/b2d.fish
-   functions/b2h.fish
-   functions/b2o.fish
-   functions/d2b.fish
-   functions/d2d.fish
-   functions/d2h.fish
-   functions/d2o.fish
-   functions/h2b.fish
-   functions/h2d.fish
-   functions/h2h.fish
-   functions/h2o.fish
-   functions/o2b.fish
-   functions/o2d.fish
-   functions/o2h.fish
-   functions/o2o.fish
-   functions/dn.fish
-   functions/ud.fish
-   functions/zip2.fish
+    completions/pp.fish
+    completions/ve.fish
+    config.fish
+    conf.d/00-initial-environment.fish
+    conf.d/10-dotfiles.fish
+    conf.d/50-abbrs.fish
+    conf.d/51-colors.fish
+    conf.d/70-rustup.fish
+    functions/tab_align2.fish
+    functions/ax.fish
+    functions/cu.fish
+    functions/dotf.fish
+    functions/fdg.fish
+    functions/ff.fish
+    functions/fishcolors.fish
+    functions/fm.fish
+    functions/fish_greeting.fish
+    functions/fish_mode_prompt.fish
+    functions/fish_prompt.fish
+    functions/fish_title.fish
+    functions/iv.fish
+    functions/jdk_version.fish
+    functions/la.fish
+    functions/ldir.fish
+    functions/ldot.fish
+    functions/lf.fish
+    functions/lh.fish
+    functions/ll.fish
+    functions/ls.fish
+    functions/mc.fish
+    functions/nsort.fish
+    functions/ocp.fish
+    functions/run.fish
+    functions/pp.fish
+    functions/pv.fish
+    functions/rc.fish
+    functions/tm.fish
+    functions/ve.fish
+    functions/Wget.fish
+    functions/WgetM.fish
+    functions/b2b.fish
+    functions/b2d.fish
+    functions/b2h.fish
+    functions/b2o.fish
+    functions/d2b.fish
+    functions/d2d.fish
+    functions/d2h.fish
+    functions/d2o.fish
+    functions/h2b.fish
+    functions/h2d.fish
+    functions/h2h.fish
+    functions/h2o.fish
+    functions/o2b.fish
+    functions/o2d.fish
+    functions/o2h.fish
+    functions/o2o.fish
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/fish/conf.d/00-ensure-or-redo-init-env.fish
-   $XDG_CONFIG_HOME/fish/functions/align2.fish
-   $XDG_CONFIG_HOME/fish/functions/zip_it.fish
-   $XDG_CONFIG_HOME/fish/functions/junk.fish
-   $XDG_CONFIG_HOME/fish/functions/ve_old.fish
+    $XDG_CONFIG_HOME/fish/conf.d/00-ensure-or-redo-init-env.fish
+    $XDG_CONFIG_HOME/conf.d/dotfiles.fish
+    $XDG_CONFIG_HOME/conf.d/abbrs.fish
+    $XDG_CONFIG_HOME/conf.d/colors.fish
+    $XDG_CONFIG_HOME/conf.d/rustup.fish
+    $XDG_CONFIG_HOME/fish/functions/align2.fish
+    $XDG_CONFIG_HOME/fish/functions/zip_it.fish
+    $XDG_CONFIG_HOME/fish/functions/junk.fish
+    $XDG_CONFIG_HOME/fish/functions/ve_old.fish
 "
 
 dirs_to_create=""
@@ -101,23 +99,35 @@ dirs_to_create=""
 ## Perform ACTION
 
 case "$DF_ACTION" in
-   install|check|remove)
-      # Install Fish config files
-      process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$home"
-      chmod 0755 "$XDG_CONFIG_HOME/fish"
+    install|check|remove)
+        # Install Fish config files
+        process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$home"
+        chmod 0755 "$XDG_CONFIG_HOME/fish"
+ 
+        # Ensure fish plugins are installed
+        if command -v fish >/dev/null 2>&1
+        then
+            if test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish || fish -c _df_install_fisher
+            then
+                errmsg='%s: Failed to install fish plugins\n'
+                { fish -c 'fisher update'; } || printf "$errmsg" "$scriptName"
+            else
+                printf '%s: Failed to install fisher\n' "$scriptName"
+            fi
+        fi
 
-      # Remove/report no longer needed files and directories
-      remove_items "$remove_items"
-
-      # Create/report missing directories
-      ensure_dirs "$dirs_to_create"
-      ;;
-   clean)
-      remove_items "$XDG_CONFIG_HOME/fish"
-      ;;
-   nuke)
-      remove_items "$XDG_CONFIG_HOME/fish"
-      remove_items "$XDG_DATA_HOME/fish"
-      remove_items "$XDG_CACHE_HOME/fish"
-      ;;
+        # Remove/report no longer needed files and directories
+        remove_items "$remove_items"
+ 
+        # Create/report missing directories
+        ensure_dirs "$dirs_to_create"
+        ;;
+    clean)
+        remove_items "$XDG_CONFIG_HOME/fish"
+        ;;
+    nuke)
+        remove_items "$XDG_CONFIG_HOME/fish"
+        remove_items "$XDG_DATA_HOME/fish"
+        remove_items "$XDG_CACHE_HOME/fish"
+        ;;
 esac
