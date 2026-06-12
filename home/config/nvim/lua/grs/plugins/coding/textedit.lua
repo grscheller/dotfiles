@@ -50,15 +50,5 @@ return {
    {
       -- Quickly jump around window - like sneak but on steroids
       url = 'https://codeberg.org/andyg/leap.nvim',
-      keys = {
-         { 's',  mode = { 'n', 'x', 'o' }, desc = 'leap forward to' },
-         { 'S',  mode = { 'n', 'x', 'o' }, desc = 'leap backward to' },
-         { 'gs', mode = { 'n' },           desc = 'leap from window' },
-      },
-      config = function()
-         local leap = require 'leap'
-         leap.opts.case_sensitive = true
-         leap.add_default_mappings(true)
-      end,
    },
 }

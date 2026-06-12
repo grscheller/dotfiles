@@ -1,4 +1,4 @@
---[[ NO LONGER USED! - kept for future migration ]]
+--[[ Define keymaps all in one place with which-key ]]
 
 local M = {}
 
@@ -63,15 +63,6 @@ function M.set_rust_keymaps(bn)
          end,
          buffer = bn,
       },
-   }
-end
-
--- Scala Metals related keymaps
-function M.set_metals_keymaps(bn)
-   local metals = require 'metals'
-   require('which-key').add {
-      { 'jkM',  group = 'metals',       buffer = bn },
-      { 'jkMH', metals.hover_worksheet, desc = 'hover worksheet', buffer = bn },
    }
 end
 

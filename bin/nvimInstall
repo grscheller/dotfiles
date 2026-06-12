@@ -17,84 +17,86 @@ export scriptName=nvimInstall
 home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
 
 cd "$home" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-   return 1
+    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
+    return 1
 }
 
 . ../bin/parse_cmdline_and_source_functions.sh
 
 dot_config_files='
-   after/ftplugin/c.lua
-   after/ftplugin/cpp.lua
-   after/ftplugin/csv.lua
-   after/ftplugin/fish.lua
-   after/ftplugin/go.lua
-   after/ftplugin/haskell.lua
-   after/ftplugin/help.lua
-   after/ftplugin/html.lua
-   after/ftplugin/lua.lua
-   after/ftplugin/markdown.lua
-   after/ftplugin/ocaml.lua
-   after/ftplugin/python.lua
-   after/ftplugin/rust.lua
-   after/ftplugin/sbt.lua
-   after/ftplugin/scala.lua
-   after/ftplugin/sh.lua
-   after/ftplugin/toml.lua
-   after/ftplugin/text.lua
-   after/ftplugin/tsv.lua
-   after/ftplugin/zig.lua
-   lsp/bashls.lua
-   lsp/cssls.lua
-   lsp/css_modules_ls.lua
-   lsp/css_variables.lua
-   lsp/html.lua
-   lsp/lua_ls.lua
-   lsp/marksman.lua
-   lsp/pylsp.lua
-   lsp/ruff.lua
-   lsp/tombi.lua
-   lsp/zls.lua
-   lua/grs/config/autocmds_lsp.lua
-   lua/grs/config/autocmds_text.lua
-   lua/grs/config/configs.lua
-   lua/grs/config/globals.lua
-   lua/grs/config/keymaps.lua
-   lua/grs/config/keymaps_whichkey.lua
-   lua/grs/config/options.lua
-   lua/grs/core/lazy.lua
-   lua/grs/core/lsp.lua
-   lua/grs/lib/functional.lua
-   lua/grs/lib/scroll.lua
-   lua/grs/lib/text.lua
-   lua/grs/plugins/coding/init.lua
-   lua/grs/plugins/coding/format.lua
-   lua/grs/plugins/coding/gitsigns.lua
-   lua/grs/plugins/coding/lint.lua
-   lua/grs/plugins/coding/textedit.lua
-   lua/grs/plugins/ide/init.lua
-   lua/grs/plugins/ide/ide.lua
-   lua/grs/plugins/infrastructure/init.lua
-   lua/grs/plugins/infrastructure/appearance.lua
-   lua/grs/plugins/infrastructure/luarocks.lua
-   lua/grs/plugins/infrastructure/mason.lua
-   lua/grs/plugins/infrastructure/telescope.lua
-   lua/grs/plugins/infrastructure/treesitter.lua
-   lua/grs/plugins/infrastructure/whichkey.lua
-   spell/en.utf-8.add
-   init.lua
+    after/ftplugin/c.lua
+    after/ftplugin/cpp.lua
+    after/ftplugin/csv.lua
+    after/ftplugin/fish.lua
+    after/ftplugin/go.lua
+    after/ftplugin/haskell.lua
+    after/ftplugin/help.lua
+    after/ftplugin/html.lua
+    after/ftplugin/lua.lua
+    after/ftplugin/markdown.lua
+    after/ftplugin/ocaml.lua
+    after/ftplugin/python.lua
+    after/ftplugin/rust.lua
+    after/ftplugin/sbt.lua
+    after/ftplugin/scala.lua
+    after/ftplugin/sh.lua
+    after/ftplugin/toml.lua
+    after/ftplugin/text.lua
+    after/ftplugin/tsv.lua
+    after/ftplugin/zig.lua
+    lsp/bashls.lua
+    lsp/cssls.lua
+    lsp/css_modules_ls.lua
+    lsp/css_variables.lua
+    lsp/html.lua
+    lsp/lua_ls.lua
+    lsp/marksman.lua
+    lsp/pylsp.lua
+    lsp/ruff.lua
+    lsp/tombi.lua
+    lsp/zls.lua
+    lua/grs/config/autocmds_lsp.lua
+    lua/grs/config/autocmds_text.lua
+    lua/grs/config/configs.lua
+    lua/grs/config/globals.lua
+    lua/grs/config/keymaps.lua
+    lua/grs/config/keymaps_whichkey.lua
+    lua/grs/config/options.lua
+    lua/grs/core/lazy.lua
+    lua/grs/core/lsp.lua
+    lua/grs/lib/functional.lua
+    lua/grs/lib/scroll.lua
+    lua/grs/lib/text.lua
+    lua/grs/plugins/coding/init.lua
+    lua/grs/plugins/coding/format.lua
+    lua/grs/plugins/coding/gitsigns.lua
+    lua/grs/plugins/coding/lint.lua
+    lua/grs/plugins/coding/textedit.lua
+    lua/grs/plugins/ide/init.lua
+    lua/grs/plugins/ide/dap.lua
+    lua/grs/plugins/ide/ide.lua
+    lua/grs/plugins/ide/rust.lua
+    lua/grs/plugins/infrastructure/init.lua
+    lua/grs/plugins/infrastructure/appearance.lua
+    lua/grs/plugins/infrastructure/mason.lua
+    lua/grs/plugins/infrastructure/telescope.lua
+    lua/grs/plugins/infrastructure/treesitter.lua
+    lua/grs/plugins/infrastructure/whichkey.lua
+    spell/en.utf-8.add
+    init.lua
 '
 
 toml_files='
-   stylua.toml
+    stylua.toml
 '
 
 remove_items="
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/completions.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lazy_rock.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidget.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/cmp.lua
-   $XDG_CONFIG_HOME/nvim/lua/grs/config/grs.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/completions.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lazy_rock.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidget.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/cmp.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/luarocks.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/config/grs.lua
 "
 
 dirs_to_create=""
@@ -105,15 +107,15 @@ dirs_to_create=""
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim > /dev/null 2>&1
 then
-   if test ! -e "$SpellFile"
-   then
-      compileSpellFile=yes
-   elif ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
-   then
-      compileSpellFile=yes
-   else
-      compileSpellFile=no
-   fi
+    if test ! -e "$SpellFile"
+    then
+        compileSpellFile=yes
+    elif ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
+    then
+        compileSpellFile=yes
+    else
+        compileSpellFile=no
+    fi
 fi
 
 # Configure config/globals.lua with XDG directory locations
@@ -127,55 +129,57 @@ sed -E -e "$sedScript" $config_dir/globals.template.lua > $config_dir/globals.lu
 # Perform ACTION
 
 case "$DF_ACTION" in
-   install|check|remove)
-      # Install/Check Neovim files & nvim related TOML files
-      process_files "$XDG_CONFIG_HOME/nvim" "
-         $dot_config_files
-         $toml_files
-      " config/nvim 0644 "$home"
-      chmod 0755 "$XDG_CONFIG_HOME/nvim"
-
-      # Remove/report no longer needed files and directories
-      remove_items "$remove_items"
-
-      # Create/report missing directories
-      ensure_dirs "$dirs_to_create"
-      ;;
-   clean)
-      remove_item "$XDG_CONFIG_HOME/nvim"
-      remove_item "$XDG_DATA_HOME/nvim/lazy"
-      remove_item "$XDG_STATE_HOME/nvim/lazy"
-      remove_item "$XDG_CACHE_HOME/nvim/luac"
-      ;;
-   nuke)
-      remove_item "$XDG_CONFIG_HOME/nvim"
-      remove_item "$XDG_DATA_HOME/nvim"
-      remove_item "$XDG_STATE_HOME/nvim"
-      remove_item "$XDG_CACHE_HOME/nvim"
-      ;;
+    install|check|remove)
+        # Install/Check Neovim files & nvim related TOML files
+        process_files "$XDG_CONFIG_HOME/nvim" "
+            $dot_config_files
+            $toml_files
+        " config/nvim 0644 "$home"
+        chmod 0755 "$XDG_CONFIG_HOME/nvim"
+ 
+        # Remove/report no longer needed files and directories
+        remove_items "$remove_items"
+ 
+        # Create/report missing directories
+        ensure_dirs "$dirs_to_create"
+        ;;
+    clean)
+        remove_item "$XDG_CONFIG_HOME/nvim"
+        remove_item "$XDG_DATA_HOME/nvim/lazy"
+        remove_item "$XDG_STATE_HOME/nvim/lazy"
+        remove_item "$XDG_CACHE_HOME/nvim/luac"
+        ;;
+    nuke)
+        remove_item "$XDG_CONFIG_HOME/nvim"
+        remove_item "$XDG_DATA_HOME/nvim"
+        remove_item "$XDG_STATE_HOME/nvim"
+        remove_item "$XDG_CACHE_HOME/nvim"
+        ;;
 esac
 
 # Post ACTION Tasks
 
 case "$DF_ACTION" in
-   install)
-      # Recompiled spell file if necessary
-      if test "$compileSpellFile" = yes
-      then
-         sf="${SpellFile##*/}"
-         sf_dir="${SpellFile%/*}"
-         ( if cd "$sf_dir"
-           then
-              nvim -u NONE --cmd "mkspell!$sf" --cmd 'qa!'
-           fi )
-      fi
-      ;;
-   check)
-      # Indicate whether the spellfile will be recompiled on next install
-      if test "$compileSpellFile" = yes
-      then
-         printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
-         printf '             recompiled on the next install.\n\n'
-      fi
-      ;;
+    install)
+        # Recompiled spell file if necessary
+        if test "$compileSpellFile" = yes
+        then
+            sf="${SpellFile##*/}"
+            sf_dir="${SpellFile%/*}"
+            (
+                if cd "$sf_dir"
+                then
+                    nvim -u NONE --cmd "mkspell!$sf" --cmd 'qa!'
+                fi
+            )
+        fi
+        ;;
+    check)
+        # Indicate whether the spellfile will be recompiled on next install
+        if test "$compileSpellFile" = yes
+        then
+            printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+            printf '             recompiled on the next install.\n\n'
+        fi
+        ;;
 esac

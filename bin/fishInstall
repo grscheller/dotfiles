@@ -26,13 +26,11 @@ cd "$home" 2>/dev/null || {
 config_files='
     completions/pp.fish
     completions/ve.fish
-    config.fish
     conf.d/00-initial-environment.fish
     conf.d/10-dotfiles.fish
     conf.d/50-abbrs.fish
     conf.d/51-colors.fish
     conf.d/70-rustup.fish
-    functions/tab_align2.fish
     functions/ax.fish
     functions/cu.fish
     functions/dotf.fish
@@ -80,6 +78,8 @@ config_files='
     functions/o2d.fish
     functions/o2h.fish
     functions/o2o.fish
+    config.fish
+    fish_plugins
 '
 
 remove_items="

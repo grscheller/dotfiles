@@ -1,6 +1,4 @@
---[[ Config Debugger Adapter Protocall (DAP) ]]
-
-local km = require 'grs.config.keymaps_whichkey'
+--[[ Config Debugger Adapter Protocol (DAP) ]]
 
 local config_nvim_dap = function()
    local dap = require 'dap'
