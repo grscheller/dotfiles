@@ -22,12 +22,12 @@ function ve --description 'Manage a group of Python virtual environments'
     if not set -q VE_VENV_DIR
         set -g -x VE_VENV_DIR ~/devel/venvs/
     end
-    mkdir -p $VE_VENV_DIR
+    mkdir -p "$VE_VENV_DIR"
 
-    set -f ve_conf $VE_VENV_DIR/ve.conf
+    set -f ve_conf "$VE_VENV_DIR/ve.conf"
 
-    if not test -f $ve_conf
-        printf '\nError: Virtual environment configuration file: %s, was not found.\n\n' $ve_conf
+    if not test -f "$ve_conf"
+        printf '\nError: Virtual environmnent configuration file: %s, was not found.\n\n' $ve_conf
         return 1
     end
 
@@ -105,10 +105,10 @@ function ve --description 'Manage a group of Python virtual environments'
                 ve [-h | --help]
 
                 where missing: list missing pyenv installed Python versions
-                            list: list all ve managed virtual environments
+                         list: list all ve managed virtual environments
                         clear: remove all installed modules from venv
-                            redo: install all managed modules into current venv
-                            help: print usage information\n\n'
+                         redo: install all managed modules into current venv
+                         help: print usage information\n\n'
         set msg (string replace -ra '(?m)^ {1,12}' '' -- $msg | string collect)
         printf $msg
     end
@@ -127,39 +127,60 @@ function ve --description 'Manage a group of Python virtual environments'
         return 1
     end
 
-    set -f argc (count $argv)
-    if test "$argc" -gt 0
-        set -f arguments
-    end
-
-    if set -q _flag_missing; and set -q _flag_list
-        set -f punt_flag
-    else if test "$argc" -gt 1
-        set -f punt_flag
-    else if begin
-            set -q _flag_missing; and set -q arguments
-            or set -q _flag_list; and set -q arguments
-            or set -q _flag_clean; and set -q arguments
-            or set -q _flag_redo; and set -q arguments
-        end
-        set -f punt_flag
-    end
-
-    if set -q punt_flag
-        printf '\nError: Invalid argument/option combination\n'
-        _usage
-        _cleanup
-        return 1
-    end
-
-    # Show usage then quit.
+    # Show usage then quit, trumps all other options.
     if set -q _flag_help
         _usage
         _cleanup
         return 0
     end
 
-    # Process -l flag. List names of managed venvs and valid venv directories, then quit.
+    # Set to 1 if no options were given
+    set -f no_flags 0
+
+    set -q _flag_missing
+    or set -q _flag_list
+    or set -q _flag_clear
+    or set -q _flag_redo
+    and set no_flags 1
+
+    # Set to 1 if inconsistent options given
+    set -f punt 0
+
+    set -f argc (count $argv)
+    if test "$argc" -gt 1
+        set punt 1
+    end
+
+    if test "$argc" -eq 1
+        set -q _flag_missing
+        or set -q _flag_clear
+        or set -q _flag_list
+        or set -q _flag_redo
+        and set punt 1
+    end
+
+    set -q _flag_missing
+    and set -q _flag_list
+    and set punt 1
+
+    begin
+        set -q _flag_clear
+        or set -q _flag_redo
+    end
+    and begin
+        set -q _flag_list
+        or set -q _flag_missing
+    end
+    and set -f punt 1
+
+    if test "$punt" -eq 1
+        printf 'Error: Invalid argument/option combination\n'
+        _usage
+        _cleanup
+        return 1
+    end
+
+    # Process --list flag. List names of managed venvs and valid venv directories, then quit.
     if set -q _flag_list
         set -l version_info (tab_align2 _venvs _versions)
         set -g _venv_dirs
@@ -167,8 +188,8 @@ function ve --description 'Manage a group of Python virtual environments'
 
         for venv_dir in (ls $VE_VENV_DIR)
             if begin
-                    test -x $VE_VENV_DIR/$venv_dir/bin/python
-                    and test -f $VE_VENV_DIR/$venv_dir/bin/activate.fish
+                    test -x "$VE_VENV_DIR/$venv_dir/bin/python"
+                    and test -f "$VE_VENV_DIR/$venv_dir/bin/activate.fish"
                 end
                 set -a _venv_dirs $venv_dir
                 set -a _venv_python_versions (_print_python_version $VE_VENV_DIR/$venv_dir/bin/python)
@@ -209,109 +230,6 @@ function ve --description 'Manage a group of Python virtual environments'
         return 0
     end
 
-    # If no arguments were given, and --missing option not given,
-    # deactivate any active venv and give some useful information.
-    if not set -q _flag_missing
-        if test "$argc" -eq 0
-            if set -q VIRTUAL_ENV
-                printf '\nShutting down active venv: %s\n\n' $VIRTUAL_ENV
-                deactivate
-                set -e VE_ENV
-            else
-                printf '\nNo Python venv in use.\n\n'
-            end
-
-            if digpath -q python
-                printf 'Now using python version: %s\n\n' (python --version)
-            else
-                printf 'No python executable on path!\n\n'
-            end
-
-            if type -q pyenv
-                pyenv versions
-                printf '\n'
-            end
-
-            set -gx VE_VENV
-        end
-    end
-
-    ## Check if user supplied a venv name, if valid activate or create it.
-
-    if test "$argc" -eq 1
-        set -l venv_name $argv[1]
-
-        # First check if $venv_name_given is a ve managed environment
-        if not _is_managed_venv $venv_name
-            printf '\nError: "%s" is not a ve managed venv!\n\n' $venv_name
-            _cleanup
-            return 1
-        end
-
-        # Activate venv, create it if necessary, punt if python version wrong
-        if not test -f "$VE_VENV_DIR/$_venv/bin/activate.fish"
-            set -l fmt '
-                Info: The "%s" venv does not exist.
-                    Creating new venv if using correct Python version.\n'
-                  set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
-                  printf $fmt $_venv
-
-            switch ( _is_python_correct_version )
-                case ok
-                    if python -m venv $VE_VENV_DIR/$_venv
-                        printf '\nInfo: Created %s virtual environment.\n\n' $_venv
-                    else
-                        printf '\nError: Failed to create venv: %s\n\n' $_venv
-                        _cleanup
-                        return 1
-                    end
-                case 'not on path'
-                    printf '\nError: No Python executable found on the PATH to use for venv creation!\n\n'
-                    _cleanup
-                    return 1
-                case 'wrong version'
-                    set -l fmt '
-                        Error: Incorrect Python version for the venv!
-                               Python version needed for "%s" venv: %s
-                               Possibly venv python was upgraded?\n\n'
-                    set fmt (string replace -ra '(?m)^ {0,24}' '' -- $fmt | string collect)
-                    printf $fmt $_version_on_path $_venv $_version_required
-                    _cleanup
-                    return 1
-            end
-        end
-
-        source $VE_VENV_DIR/$_venv/bin/activate.fish
-        set -gx VE_VENV "$VE_VENV_DIR/$_venv"
-        if test ! -x $VE_VENV/bin/python
-            set -l fmt '
-                Warning: No executable python found in venv!
-                         The "%s" venv may be corrupted?\n\n'
-            set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
-            printf $fmt $_venv
-        else
-            set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
-            if test "$venv_py_version" != "$_version_required"
-                set -l fmt '
-                    Warning: Incorrect Python version for the venv!
-                             Python version found in "%s" venv: %s
-                             Python version required for this venv: %s
-                             The venv may need to be redone.\n\n'
-                set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
-                printf $fmt $_venv $venv_py_version $_version_required
-            end
-        end
-    end
-
-    if not begin
-            set -q _flag_red
-            or set -q _flag_clear
-            or set -q _flag_missing
-        end
-        _cleanup
-        return 0
-    end
-
     ## Process the --missing option to check if all the required pyenv
     ## managed Python versions are installed.
 
@@ -343,19 +261,120 @@ function ve --description 'Manage a group of Python virtual environments'
         return 0
     end
 
+    # If no options were given, deactivate any active venv
+    # and give some useful information.
+    test "$argc" -eq 0
+    and test "$no_flags" -eq 1
+    and begin
+        if set -q VIRTUAL_ENV
+            printf '\nShutting down active venv: %s\n\n' $VIRTUAL_ENV
+            deactivate
+        else
+            printf '\nNo Python venv in use.\n\n'
+        end
+
+        if digpath -q python
+            printf 'Now using python version: %s\n\n' (python --version)
+        else
+            printf 'No python executable on path!\n\n'
+        end
+
+        if type -q pyenv
+            pyenv versions
+            printf '\n'
+        end
+
+        set -e VE_VENV
+    end
+
+    ## Check if user supplied a venv name, if valid activate or create it.
+
+    if test "$argc" -eq 1
+        set -l venv_name $argv[1]
+
+        # First check if $venv_name_given is a ve managed environment
+        if not _is_managed_venv $venv_name
+            printf '\nError: "%s" is not a ve managed venv!\n\n' $venv_name
+            _cleanup
+            return 1
+        end
+
+        # Activate venv, create it if necessary, punt if python version wrong
+        if not test -f "$VE_VENV_DIR/$_venv/bin/activate.fish"
+            set -l fmt '
+                Info: The "%s" venv does not exist.
+                      Creating new venv if using correct Python version.\n'
+                set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
+                printf $fmt $_venv
+
+            switch ( _is_python_correct_version )
+                case ok
+                    if python -m venv $VE_VENV_DIR/$_venv
+                        printf '\nInfo: Created %s virtual environment.\n\n' $_venv
+                    else
+                        printf '\nError: Failed to create venv: %s\n\n' $_venv
+                        _cleanup
+                        return 1
+                    end
+                case 'not on path'
+                    printf '\nError: No Python executable found on the PATH to use for venv creation!\n\n'
+                    _cleanup
+                    return 1
+                case 'wrong version'
+                    set -l fmt '
+                        Error: Incorrect Python version for the venv!
+                               Python version needed for "%s" venv: %s
+                               Possibly venv python was upgraded?\n\n'
+                    set fmt (string replace -ra '(?m)^ {0,24}' '' -- $fmt | string collect)
+                    printf $fmt $_version_on_path $_venv $_version_required
+                    _cleanup
+                    return 1
+            end
+        end
+
+        source $VE_VENV_DIR/$_venv/bin/activate.fish
+        set -gx VE_VENV $VIRTUAL_ENV
+        if test ! -x "$VE_VENV/bin/python"
+            set -l fmt '
+                Warning: No executable python found in venv!
+                         The "%s" venv may be corrupted?\n\n'
+            set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
+            printf $fmt $_venv
+        else
+            set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
+            if test "$venv_py_version" != "$_version_required"
+                set -l fmt '
+                    Warning: Incorrect Python version for the venv!
+                             Python version found in "%s" venv: %s
+                             Python version required for this venv: %s
+                             The venv may need to be redone.\n\n'
+                set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
+                printf $fmt $_venv $venv_py_version $_version_required
+            end
+        end
+    end
+
+    if not begin
+            set -q _flag_redo
+            or set -q _flag_clear
+        end
+        _cleanup
+        return 0
+    end
+
     ## Process the --redo or --clear options
 
     # Make sure we are in a ve managed virtual environment
     if set -q VIRTUAL_ENV
-        if test (dirname $VIRTUAL_ENV) != $VE_VENV_DIR
+        if test "$(path dirname $VIRTUAL_ENV)" != "$VE_VENV_DIR"
             printf '\nError: Not in a ve managed venv! Punting.\n\n'
-            set -ge VE_VENV
+            set -e VE_VENV
             _cleanup
             return 1
         end
     else
         printf '\nError: Not in a venv! Punting.\n\n'
-        set -ge VE_VENV
+        set -e VE_VENV
         _cleanup
         return 1
     end
