@@ -4,24 +4,30 @@
 #
 # usage: fishInstall [ --install | --check | --remove | --clean | --nuke ]
 #
-#        where --install: installs dotfiles into $HOME
+#        where --install: installs fish config into ~/.config/fish
 #              --check:   checks what was installed
-#              --remove:  removes files which were installed
+#              --remove:  removes all files which were installed
 #              --clean:   same as above, deletes emptied directories
-#              --nuke:    same as above but cleans up other content
+#              --nuke:    removes everything fish related
 #
-# shellcheck shell=dash
-#
+# shellcheck shell=sh
+# shellcheck disable=SC3043
 
-export scriptName=fishInstall
-home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+scriptName=fishInstall
+df_home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
 
-cd "$home" 2>/dev/null || {
-    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-    return 1
-}
+if test -d "$df_home"
+then
+    cd "$df_home" || {
+        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
+        exit 1
+    }
+else
+    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
+    exit 1
+fi
 
-. ../bin/parse_cmdline_and_source_functions.sh
+. ../bin/sourced/parse_cmdline_and_source_functions.sh
 
 config_files='
     completions/pp.fish
@@ -96,38 +102,55 @@ remove_items="
 
 dirs_to_create=""
 
+items_to_clean="
+    $XDG_CONFIG_HOME/fish
+"
+
+items_to_nuke="
+    $XDG_CONFIG_HOME/fish
+    $XDG_DATA_HOME/fish
+    $XDG_CACHE_HOME/fish
+"
+
 ## Perform ACTION
 
 case "$DF_ACTION" in
     install|check|remove)
         # Install Fish config files
-        process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$home"
+        process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$df_home"
         chmod 0755 "$XDG_CONFIG_HOME/fish"
- 
-        # Ensure fish plugins are installed
-        if command -v fish >/dev/null 2>&1
-        then
-            if test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish || fish -c _df_install_fisher
-            then
-                errmsg='%s: Failed to install fish plugins\n'
-                { fish -c 'fisher update'; } || printf "$errmsg" "$scriptName"
-            else
-                printf '%s: Failed to install fisher\n' "$scriptName"
-            fi
-        fi
 
         # Remove/report no longer needed files and directories
         remove_items "$remove_items"
  
         # Create/report missing directories
         ensure_dirs "$dirs_to_create"
+ 
+        # Ensure fish plugins are installed, assuming fish is.
+        if command -v fish >/dev/null 2>&1 && test "$DF_ACTION" = install
+        then
+            install_plugins=yes
+            if ! test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish
+            then
+                if ! fish -c df_install_fisher
+                then
+                    printf '%s: Failed to install fisher\n' "$scriptName" >&2
+                    install_plugins=no
+                fi
+            fi
+            if test "$install_plugins" = yes
+            then
+                if fish -c 'fisher update'
+                then
+                    printf '%s: Failed to install fish plugins\n' "$scriptName"
+                fi
+            fi
+        fi
         ;;
     clean)
-        remove_items "$XDG_CONFIG_HOME/fish"
-        ;;
+       remove_items "$items_to_clean"
+       ;;
     nuke)
-        remove_items "$XDG_CONFIG_HOME/fish"
-        remove_items "$XDG_DATA_HOME/fish"
-        remove_items "$XDG_CACHE_HOME/fish"
-        ;;
+       remove_items "$items_to_clean $items_to_nuke"
+       ;;
 esac

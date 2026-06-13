@@ -67,30 +67,4 @@ and begin
     # Cleanup PATH: remove duplicate & nonexistent entries, resolve symlinks
     set PATH (pathtrim)
 
-    # Setup an SSH Agent that non-login shells can inherit.
-    eval (ssh-agent -c) > /dev/null
-
-    # Indicate a configured fish shell in the GUI environment
-    set -q COSMIC_FISH_CONFIGURED
-    and set COSMIC_FISH_CONFIGURED configured
-
-    ## Finally, manage a single SSH key-agent for the login session.
-
-    # Cleanup SSH key-agent at end of login session.
-    function exit_handler --on-event fish_exit
-        if status --is-login
-            set -q SSH_AGENT_PID
-            and kill -15 $SSH_AGENT_PID >/dev/null 2>&1
-            set -q SSH_AUTH_SOCK
-            and rm -rf (path dirname $SSH_AUTH_SOCK)
-        end
-    end
-
-    # Launch SSH key-agent
-    set -l umask_original $umask
-    umask 0077
-    eval (ssh-agent -c)
-    and ssh-add
-    umask $umask_original
-
 end

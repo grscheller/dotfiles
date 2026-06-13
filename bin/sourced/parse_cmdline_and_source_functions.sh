@@ -5,29 +5,27 @@
 # The idea is to keep the installation  scripts as simple as possible.0
 #
 # shellcheck shell=dash
-#
+
+test -n "$df_home" || {
+   printf '\nError - df_home shell variable was not set!\n\n' >&2
+   exit 1
+}
 
 if [ -z "$scriptName" ]
 then
-   printf '\nCheck configuration, the scriptName is not set.\n\n'
+   printf '\nError - Check configuration, scriptName is not set.\n\n' >&2
    exit 1
-fi
-
-home=${home:=~/devel/dotfiles/home}
-
-if [ ! -d "$home" ]
-then
-   printf '\nCheck installation, '
-   printf 'the git repo %s does not exist.\n\n' "${home%/*}"
-   exit 1
+else
+   test -d ../bin/sourced || {
+      printf '\n%s: Error - sanity/consistency check failed' "$scriptName" >&2
+      exit 1
+   }
 fi
 
 export DF_ACTION=${DF_ACTION:=''}
 
 if [ -z "$DF_ACTION" ]
 then
-   export DF_ACTION
-
    umask 0022
    export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
    export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
@@ -73,7 +71,6 @@ then
 
    # Check or remove a file or a directory
    remove_item () {
-      local item
       item="$1"
       if test -e "$item"
       then
@@ -130,7 +127,7 @@ then
       src_dir="$3"
       file_perm="$4"
       src_rel=$(echo "$src_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
-      src_abs=$(echo "$home/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
+      src_abs=$(echo "$df_home/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
       trgt=$(echo "$install_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
 
       # Ensure target directory exists and complain if source directory doesn't

@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # dfInstall: POSIX shell scripts to install an entire Linux desktop
-#            environment into a user's $HOME directory.
+#            environment into the user's $HOME directory.
 #
 # usage: dfInstall [ --install | --check | --remove | --clean | --nuke ]
 #
@@ -12,18 +12,24 @@
 #              --nuke:    like above but deletes even manually installed things
 #
 # shellcheck shell=dash
-#
 
-export scriptName=dfInstall
-home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+scriptName=dfInstall
+df_home="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"/home
 
-cd "$home" 2>/dev/null || {
-   printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-   return 1
-}
+if test -d "$df_home"
+then
+    cd "$df_home" || {
+        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
+        exit 1
+    }
+else
+    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
+    exit 1
+fi
 
-export DF_ACTION=''
-. ../bin/parse_cmdline_and_source_functions.sh
+DF_ACTION=''
+
+. ../bin/sourced/parse_cmdline_and_source_functions.sh
 
 # Install dotfiles in parallel
 (. ../bin/nvimInstall) &

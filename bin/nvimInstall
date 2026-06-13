@@ -13,15 +13,21 @@
 # shellcheck shell=dash
 #
 
-export scriptName=nvimInstall
-home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+scriptName=nvimInstall
+df_home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
 
-cd "$home" 2>/dev/null || {
-    printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$home"
-    return 1
-}
+if test -d "$df_home"
+then
+    cd "$df_home" || {
+        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
+        exit 1
+    }
+else
+    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
+    exit 1
+fi
 
-. ../bin/parse_cmdline_and_source_functions.sh
+. ../bin/sourced/parse_cmdline_and_source_functions.sh
 
 dot_config_files='
     after/ftplugin/c.lua
@@ -134,7 +140,7 @@ case "$DF_ACTION" in
         process_files "$XDG_CONFIG_HOME/nvim" "
             $dot_config_files
             $toml_files
-        " config/nvim 0644 "$home"
+        " config/nvim 0644 "$df_home"
         chmod 0755 "$XDG_CONFIG_HOME/nvim"
  
         # Remove/report no longer needed files and directories
