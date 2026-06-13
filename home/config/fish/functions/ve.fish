@@ -135,13 +135,13 @@ function ve --description 'Manage a group of Python virtual environments'
     end
 
     # Set to 1 if no options were given
-    set -f no_flags 0
+    set -f flags 0
 
     set -q _flag_missing
     or set -q _flag_list
     or set -q _flag_clear
     or set -q _flag_redo
-    and set no_flags 1
+    and set flags 1
 
     # Set to 1 if inconsistent options given
     set -f punt 0
@@ -238,7 +238,6 @@ function ve --description 'Manage a group of Python virtual environments'
         set -l managed_python_versions (printf '%s\n' $_versions | sort -u)
         for managed_python_version in $managed_python_versions
             if not contains $managed_python_version $available_pyenv_versions
-                set -f punt_flag
                 set -l cnt 0
                 printf '\nError: Python version %s is not available from pyenv for venvs:' $managed_python_version
                 for managed_version in $_versions
@@ -251,7 +250,7 @@ function ve --description 'Manage a group of Python virtual environments'
             end
         end
 
-        if set -q punt_flag
+        if set -q punt
             _cleanup
             return 1
         end
@@ -263,8 +262,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
     # If no options were given, deactivate any active venv
     # and give some useful information.
-    test "$argc" -eq 0
-    and test "$no_flags" -eq 1
+    test "$flags" -eq 0
     and begin
         if set -q VIRTUAL_ENV
             printf '\nShutting down active venv: %s\n\n' $VIRTUAL_ENV
