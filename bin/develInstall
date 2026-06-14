@@ -15,7 +15,7 @@
 #
 
 scriptName=develInstall
-df_home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+df_home="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"/home
 
 if test -d "$df_home"
 then
@@ -56,7 +56,6 @@ cabal_files='
 
 dot_config_files='
    git/config
-   systemd/user/ssh-agent.service
 '
 
 devel_files='
@@ -64,8 +63,9 @@ devel_files='
 '
 
 remove_items="
-   ~/.vimrc\]
-   ~/.bash_login
+   $HOME/.vimrc\]
+   $HOME/.bash_login
+   $HOME/.config/systemd
 "
 
 dirs_to_create="
