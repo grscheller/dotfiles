@@ -33,7 +33,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
     ## Globals variables - fish scoping does NOT follow the call stack!!!
     #
-    #  Functions passed shell variable names need them to be global.
+    #  Functions passed shell variable names need these to be global.
     #
     set -g _venv # setup by _is_managed_venv
     set -g _version_required # setup by _is_managed_venv
@@ -234,12 +234,14 @@ function ve --description 'Manage a group of Python virtual environments'
     ## managed Python versions are installed.
 
     if set -q _flag_missing
+        set -l good yes
         set -l available_pyenv_versions (pyenv versions --bare)
         set -l managed_python_versions (printf '%s\n' $_versions | sort -u)
         for managed_python_version in $managed_python_versions
             if not contains $managed_python_version $available_pyenv_versions
+                set good no
                 set -l cnt 0
-                printf '\nError: Python version %s is not available from pyenv for venvs:' $managed_python_version
+                printf 'Error: Python version %s not available from pyenv for venvs:' $managed_python_version
                 for managed_version in $_versions
                     set cnt (math $cnt + 1)
                     if test "$managed_version" = "$managed_python_version"
@@ -250,14 +252,13 @@ function ve --description 'Manage a group of Python virtual environments'
             end
         end
 
-        if set -q punt
-            _cleanup
+        _cleanup
+        if test "$good" = yes
+            printf 'All Python versions are available for all managed virtual environments.\n'
+            return 0
+        else
             return 1
         end
-
-        printf '\nAll Python versions are available for all managed virtual environments.\n\n'
-        _cleanup
-        return 0
     end
 
     # If no options were given, deactivate any active venv
@@ -265,8 +266,9 @@ function ve --description 'Manage a group of Python virtual environments'
     test "$flags" -eq 0
     and begin
         if set -q VIRTUAL_ENV
-            printf '\nShutting down active venv: %s\n\n' $VIRTUAL_ENV
-            deactivate
+            printf '\nShutting down any active venv: %s\n\n' $VIRTUAL_ENV
+            test (type -t deactivate) = function && deactivate
+            set -e VE_VENV
         else
             printf '\nNo Python venv in use.\n\n'
         end
@@ -297,7 +299,7 @@ function ve --description 'Manage a group of Python virtual environments'
             return 1
         end
 
-        # Activate venv, create it if necessary, punt if python version wrong
+        # Create managed virtual environment if necessary, punt if python version wrong
         if not test -f "$VE_VENV_DIR/$_venv/bin/activate.fish"
             set -l fmt '
                 Info: The "%s" venv does not exist.
@@ -330,24 +332,31 @@ function ve --description 'Manage a group of Python virtual environments'
             end
         end
 
-        source $VE_VENV_DIR/$_venv/bin/activate.fish
-        set -gx VE_VENV $VIRTUAL_ENV
-        if test ! -x "$VE_VENV/bin/python"
-            set -l fmt '
-                Warning: No executable python found in venv!
-                         The "%s" venv may be corrupted?\n\n'
-            set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
-            printf $fmt $_venv
-        else
-            set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
-            if test "$venv_py_version" != "$_version_required"
-                set -l fmt '
-                    Warning: Incorrect Python version for the venv!
-                             Python version found in "%s" venv: %s
-                             Python version required for this venv: %s
-                             The venv may need to be redone.\n\n'
-                set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
-                printf $fmt $_venv $venv_py_version $_version_required
+        # Switch to managed  virtual environment and set $VE_VENV globally
+        if test -f $VE_VENV_DIR/$_venv/bin/activate.fish
+            source $VE_VENV_DIR/$_venv/bin/activate.fish
+            if set -q VIRTUAL_ENV
+                set -gx VE_VENV $VIRTUAL_ENV
+                if test ! -x "$VE_ENV/bin/python"
+                    set -l fmt '
+                        Warning: No executable python found in venv!
+                                 The "%s" venv may be corrupted?\n\n'
+                    set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
+                    printf $fmt $_venv
+                else
+                    set -l venv_py_version (_print_python_version $VE_VENV/bin/python)
+                    if test "$venv_py_version" != "$_version_required"
+                        set -l fmt '
+                            Warning: Incorrect Python version for the venv!
+                                     Python version found in "%s" venv: %s
+                                     Python version required for this venv: %s
+                                     The venv may need to be redone.\n\n'
+                        set fmt (string replace -ra '(?m)^ {0,16}' '' -- $fmt | string collect)
+                        printf $fmt $_venv $venv_py_version $_version_required
+                    end
+                end
+            else
+                printf '\nError: Failed to activate virtual environment for %s\n\n' $_venv
             end
         end
     end

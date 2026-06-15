@@ -176,7 +176,9 @@ Ackermann's
 Affero
 Akrzemil
 Alacritty
+Alacritty's
 alacritty
+alacritty's
 ArXiv
 Baeldung
 Baidu
@@ -588,6 +590,7 @@ ExecStart
 greetd
 journalctl
 mpd
+ncurses
 networkd
 pacman
 parsers
@@ -595,6 +598,7 @@ pathname
 pathnames
 PoPOS
 pulseaudio
+Smulx
 System76
 systemctl
 Systemd
@@ -1318,6 +1322,7 @@ noice
 Noice
 nolist
 nvim
+nvim's
 undercurl
 whichkey
 # Lua names

@@ -13,21 +13,13 @@
 # shellcheck shell=sh
 # shellcheck disable=SC3043
 
-scriptName=fishInstall
-df_home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+: "${df_home:=$DOTFILES_GIT_REPO/home}"
+: "${script_name:=fishInstall}"
 
-if test -d "$df_home"
-then
-    cd "$df_home" || {
-        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
-        exit 1
-    }
-else
-    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
-    exit 1
-fi
+cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
 
-. ../bin/sourced/parse_cmdline_and_source_functions.sh
+. ../bin/sourced/setup.sh
 
 config_files='
     completions/pp.fish
@@ -107,10 +99,13 @@ items_to_clean="
 "
 
 items_to_nuke="
-    $XDG_CONFIG_HOME/fish
     $XDG_DATA_HOME/fish
     $XDG_CACHE_HOME/fish
 "
+
+fish_plugins='
+    grscheller/fish-functions
+'
 
 ## Perform ACTION
 
@@ -122,35 +117,60 @@ case "$DF_ACTION" in
 
         # Remove/report no longer needed files and directories
         remove_items "$remove_items"
- 
+
         # Create/report missing directories
         ensure_dirs "$dirs_to_create"
- 
+        ;;
+    clean)
+        remove_items "$items_to_clean"
+        ;;
+    nuke)
+        remove_items "$items_to_clean $items_to_nuke"
+        ;;
+esac
+
+# Post ACTION Tasks
+
+case "$DF_ACTION" in
+    install)
         # Ensure fish plugins are installed, assuming fish is.
         if command -v fish >/dev/null 2>&1 && test "$DF_ACTION" = install
         then
             install_plugins=yes
             if ! test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish
             then
+                # Just install fisher
+                rm -f "$XDG_CONFIG_HOME" ~/.config/fish/fish_plugins
                 if ! fish -c df_install_fisher
                 then
-                    printf '%s: Failed to install fisher\n' "$scriptName" >&2
+                    printf '%s: Failed to install fisher\n' "$script_name" >&2
                     install_plugins=no
                 fi
             fi
+
             if test "$install_plugins" = yes
             then
-                if fish -c 'fisher update'
-                then
-                    printf '%s: Failed to install fish plugins\n' "$scriptName"
-                fi
+                fisher_list="$(fish -c 'fisher list')"
+                for plugin in $fish_plugins
+                do
+                    has_plugin=no
+
+                    for fisher_plugin in $fisher_list
+                    do
+                        if test "$plugin" = "$fisher_plugin"
+                        then
+                            has_plugin=yes
+                            break
+                        fi
+                    done
+
+                    if test "$has_plugin" = no
+                    then
+                        fish -c "fisher install $plugin"
+                            printf '%s: Failed to install fish plugins\n' "$script_name" >&2
+                    fi
+                done
             fi
         fi
         ;;
-    clean)
-       remove_items "$items_to_clean"
-       ;;
-    nuke)
-       remove_items "$items_to_clean $items_to_nuke"
-       ;;
 esac

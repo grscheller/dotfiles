@@ -23,10 +23,10 @@ if status is-interactive
 
         # Set ve managed Python virtual environment
         if set -q VE_VENV
-            ve (basename $VE_VENV)
+            ve (basename $VE_VENV) >/dev/null 2>&1
         else
             set -e PYTHONPATH
-            ve grs
+            ve grs >/dev/null 2>&1
         end
     end
 

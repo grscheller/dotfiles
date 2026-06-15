@@ -11,23 +11,14 @@
 #              --nuke:    removes everything nvim related
 #
 # shellcheck shell=dash
-#
 
-scriptName=nvimInstall
-df_home="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"/home
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+: "${df_home:=$DOTFILES_GIT_REPO/home}"
+: "${script_name:=nvimInstall}"
 
-if test -d "$df_home"
-then
-    cd "$df_home" || {
-        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
-        exit 1
-    }
-else
-    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
-    exit 1
-fi
+cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
 
-. ../bin/sourced/parse_cmdline_and_source_functions.sh
+. ../bin/sourced/setup.sh
 
 dot_config_files='
     after/ftplugin/c.lua

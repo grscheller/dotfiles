@@ -13,27 +13,20 @@
 #
 # shellcheck shell=dash
 
-scriptName=dfInstall
-df_home="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"/home
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+: "${df_home:=$DOTFILES_GIT_REPO/home}"
+: "${script_name:=dfInstall}"
 
-if test -d "$df_home"
-then
-    cd "$df_home" || {
-        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
-        exit 1
-    }
-else
-    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
-    exit 1
-fi
+cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
 
-DF_ACTION=''
+export DF_ACTION=''
+. ../bin/sourced/setup.sh
 
-. ../bin/sourced/parse_cmdline_and_source_functions.sh
-
-# Install dotfiles in parallel
-(. ../bin/nvimInstall) &
+# Install fish dotfiles first for fish dependencies
 (. ../bin/fishInstall) &
-(. ../bin/develInstall) &
+wait
 
+# Install the rest of the dotfiles in parallel
+(. ../bin/nvimInstall) &
+(. ../bin/develInstall) &
 wait

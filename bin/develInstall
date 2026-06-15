@@ -14,21 +14,13 @@
 # shellcheck shell=dash
 #
 
-scriptName=develInstall
-df_home="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"/home
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+: "${df_home:=$DOTFILES_GIT_REPO/home}"
+: "${script_name:=develInstall}"
 
-if test -d "$df_home"
-then
-    cd "$df_home" || {
-        printf '\n%s: Error - failed to cd into "%s"\n\n' "$scriptName" "$df_home"
-        exit 1
-    }
-else
-    printf '\n%s: Error - df_home = "%s" does not exist as a directory!\n\n' "$scriptName" "$df_home"
-    exit 1
-fi
+cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
 
-. ../bin/sourced/parse_cmdline_and_source_functions.sh
+. ../bin/sourced/setup.sh
 
 bash_files='
    .bash_profile
@@ -63,7 +55,7 @@ devel_files='
 '
 
 remove_items="
-   $HOME/.vimrc\]
+   $HOME/.vimrc
    $HOME/.bash_login
    $HOME/.config/systemd
 "
