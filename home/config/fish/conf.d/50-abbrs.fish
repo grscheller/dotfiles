@@ -17,8 +17,9 @@ abbr -a gsw git switch
 
 # dotfile installation scripts - single quotes intentional
 abbr -a dfI '$DOTFILES_GIT_REPO/bin/dfInstall'
-abbr -a nvI '$DOTFILES_GIT_REPO/bin/nvimInstall'
+abbr -a bI '$DOTFILES_GIT_REPO/bin/bashInstall'
 abbr -a fI '$DOTFILES_GIT_REPO/bin/fishInstall'
+abbr -a nvI '$DOTFILES_GIT_REPO/bin/nvimInstall'
 abbr -a devI '$DOTFILES_GIT_REPO/bin/develInstall'
 
 # Python virtual environment related

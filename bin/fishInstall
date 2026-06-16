@@ -83,13 +83,6 @@ config_files='
 remove_items="
     $XDG_CONFIG_HOME/fish/conf.d/00-ensure-or-redo-init-env.fish
     $XDG_CONFIG_HOME/conf.d/dotfiles.fish
-    $XDG_CONFIG_HOME/conf.d/abbrs.fish
-    $XDG_CONFIG_HOME/conf.d/colors.fish
-    $XDG_CONFIG_HOME/conf.d/rustup.fish
-    $XDG_CONFIG_HOME/fish/functions/align2.fish
-    $XDG_CONFIG_HOME/fish/functions/zip_it.fish
-    $XDG_CONFIG_HOME/fish/functions/junk.fish
-    $XDG_CONFIG_HOME/fish/functions/ve_old.fish
 "
 
 dirs_to_create=""

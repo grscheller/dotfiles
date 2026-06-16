@@ -21,12 +21,7 @@ cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"
 
 export DF_ACTION=''
 . ../bin/sourced/setup.sh
-
-# Install fish dotfiles first for fish dependencies
-(. ../bin/fishInstall) &
-wait
-
-# Install the rest of the dotfiles in parallel
-(. ../bin/nvimInstall) &
-(. ../bin/develInstall) &
-wait
+. ../bin/fishInstall
+. ../bin/bashInstall
+. ../bin/nvimInstall
+. ../bin/develInstall

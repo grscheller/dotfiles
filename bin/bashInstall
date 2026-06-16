@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# develInstall: Installs software development infrastructure.
-#
+# develInstall: Installs software development infrastructure and a basic
+#               fallback Bash environment into my $HOME directory.
 #
 # usage: develInstall [ --install | --check | --remove | --clean | --nuke ]
 #
@@ -16,58 +16,59 @@
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 : "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=develInstall}"
+: "${script_name:=bashInstall}"
 
 cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
 
 . ../bin/sourced/setup.sh
 
-cabal_files='
-   config
+bash_files='
+   .bash_logout
+   .bash_profile
+   .bashrc
+   .inputrc
 '
 
-dot_config_files='
-   git/config
+bin_scripts='
+   chkcolor
+   codepoint
+   etherApe
+   monitor
+   myCalc
+   pathtrim
+   rt
+   spin
+   viewJarManifest
 '
 
-devel_files='
-   venvs/ve.conf
-'
-
-remove_items=
+remove_items="
+   $HOME/.bash_login
+   $HOME/.profile
+"
 
 dirs_to_create="
-   $HOME/.cabal/bin
+   $HOME/catch
    $HOME/.local/bin
-   $HOME/devel/node_lts
-   $HOME/devel/zig_nightly
 "
 
 items_to_clean="
-   $HOME/.cabal
+   $HOME/.bash_history
 "
 
 items_to_nuke="
    $HOME/catch
-   $HOME/devel/venvs
-   $HOME/devel/node_lts
-   $HOME/devel/zig_nightly
 "
 
 ## Perform ACTION
 
 case "$DF_ACTION" in
    install|check|remove)
-      # Process Cabal configs for Haskell
-      process_files "$HOME/.cabal" "$cabal_files" cabal 0644
-      chmod 0755 "$HOME/.cabal"
+      # Process bash config files
+      process_files "$HOME" "$bash_files" . 0644
 
-      # Process miscellaneous ~/.config files
-      process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644
-
-      # Process devel files
-      process_files "$HOME/devel" "$devel_files" devel 0644
-      chmod 0755 "$HOME/devel"
+      # Process ~/bin scripts
+      process_files "$HOME/bin" "$bin_scripts" bin 0755
+      chmod 0755 "$HOME/bin"
 
       # Remove/report no longer needed files and directories
       remove_items "$remove_items"
