@@ -9,16 +9,38 @@
 #              --remove:  removes all files which were installed
 #              --clean:   same as above, but also lazy.nvim installation
 #              --nuke:    removes everything nvim related
-#
-# shellcheck shell=dash
+
+# shellcheck shell=sh
+
+export SCRIPT_NAME=nvimInstall
+export DF_ACTION=install
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-: "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=nvimInstall}"
+cd "$DOTFILES_GIT_REPO/home" || {
+    printf 'nvimInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    exit 1
+}
 
-cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
+umask 0022
 
-. ../bin/sourced/setup.sh
+. ../bin/sourced/parse_cmdline.sh
+. ../bin/sourced/functions.sh
+
+# Script exclusively use these names
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+
+# Ensure these folder exists before installation.
+ensure_dir "$XDG_CONFIG_HOME"
+chmod 0755 "$XDG_CONFIG_HOME"
+ensure_dir "$XDG_DATA_HOME"
+chmod 0755 "$XDG_DATA_HOME"
+ensure_dir "$XDG_STATE_HOME"
+chmod 0755 "$XDG_STATE_HOME"
+ensure_dir "$XDG_CACHE_HOME"
+chmod 0755 "$XDG_CACHE_HOME"
 
 dot_config_files='
     after/ftplugin/c.lua
@@ -157,27 +179,26 @@ esac
 
 # Post ACTION Tasks
 
-case "$DF_ACTION" in
-    install)
-        # Recompiled spell file if necessary
-        if test "$compileSpellFile" = yes
-        then
-            sf="${SpellFile##*/}"
-            sf_dir="${SpellFile%/*}"
-            (
-                if cd "$sf_dir"
-                then
-                    nvim -u NONE --cmd "mkspell!$sf" --cmd 'qa!'
-                fi
-            )
-        fi
-        ;;
-    check)
-        # Indicate whether the spellfile will be recompiled on next install
-        if test "$compileSpellFile" = yes
-        then
-            printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
-            printf '             recompiled on the next install.\n\n'
-        fi
-        ;;
-esac
+test "$DF_ACTION" = install && {
+    # Recompiled spell file if necessary
+    if test "$compileSpellFile" = yes
+    then
+        sf="${SpellFile##*/}"
+        sf_dir="${SpellFile%/*}"
+        (
+            if cd "$sf_dir"
+            then
+                nvim -u NONE --cmd "mkspell!$sf" --cmd 'qa!'
+            fi
+        )
+    fi
+}
+
+test "DF_ACTION" = check && {
+    # Indicate whether the spellfile will be recompiled on next install
+    if test "$compileSpellFile" = yes
+    then
+        printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile" >&2
+        printf '             recompiled on the next install.\n\n' >&2
+    fi
+}

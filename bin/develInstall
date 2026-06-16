@@ -10,75 +10,96 @@
 #              --remove:  removes files which were installed
 #              --clean:   same as above, deletes emptied directories
 #              --nuke:    same as above but cleans up other content
-#
-# shellcheck shell=dash
-#
+
+# shellcheck shell=sh
+
+export SCRIPT_NAME=develInstall
+export DF_ACTION=install
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-: "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=develInstall}"
+cd "$DOTFILES_GIT_REPO/home" || {
+    printf 'develInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    exit 1
+}
 
-cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
+umask 0022
 
-. ../bin/sourced/setup.sh
+. ../bin/sourced/parse_cmdline.sh
+. ../bin/sourced/functions.sh
+
+# Script exclusively use these names
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+
+# Ensure these folder exists before installation.
+ensure_dir "$XDG_CONFIG_HOME"
+chmod 0755 "$XDG_CONFIG_HOME"
+ensure_dir "$XDG_DATA_HOME"
+chmod 0755 "$XDG_DATA_HOME"
+ensure_dir "$XDG_STATE_HOME"
+chmod 0755 "$XDG_STATE_HOME"
+ensure_dir "$XDG_CACHE_HOME"
+chmod 0755 "$XDG_CACHE_HOME"
 
 cabal_files='
-   config
+    config
 '
 
 dot_config_files='
-   git/config
+    git/config
 '
 
 devel_files='
-   venvs/ve.conf
+    devel/venvs/ve.conf
 '
 
 remove_items=
 
 dirs_to_create="
-   $HOME/.cabal/bin
-   $HOME/.local/bin
-   $HOME/devel/node_lts
-   $HOME/devel/zig_nightly
+    $HOME/.cabal/bin
+    $HOME/.local/bin
+    $HOME/devel/node_lts
+    $HOME/devel/zig_nightly
 "
 
 items_to_clean="
-   $HOME/.cabal
+    $HOME/.cabal
 "
 
 items_to_nuke="
-   $HOME/catch
-   $HOME/devel/venvs
-   $HOME/devel/node_lts
-   $HOME/devel/zig_nightly
+    $HOME/catch
+    $HOME/devel/venvs
+    $HOME/devel/node_lts
+    $HOME/devel/zig_nightly
 "
 
 ## Perform ACTION
 
 case "$DF_ACTION" in
-   install|check|remove)
-      # Process Cabal configs for Haskell
-      process_files "$HOME/.cabal" "$cabal_files" cabal 0644
-      chmod 0755 "$HOME/.cabal"
+    install|check|remove)
+        # Process Cabal configs for Haskell
+        process_files "$HOME/.cabal" "$cabal_files" cabal 0644
+        chmod 0755 "$HOME/.cabal"
 
-      # Process miscellaneous ~/.config files
-      process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644
+        # Process miscellaneous ~/.config files
+        process_files "$XDG_CONFIG_HOME" "$dot_config_files" config 0644
 
-      # Process devel files
-      process_files "$HOME/devel" "$devel_files" devel 0644
-      chmod 0755 "$HOME/devel"
+        # Process devel files
+        process_files "$HOME/devel" "$devel_files" devel 0644
+        chmod 0755 "$HOME/devel"
 
-      # Remove/report no longer needed files and directories
-      remove_items "$remove_items"
+        # Remove/report no longer needed files and directories
+        remove_items "$remove_items"
 
-      # Create/report missing/delete directories
-      ensure_dirs "$dirs_to_create"
-      ;;
-   clean)
-      remove_items "$items_to_clean"
-      ;;
-   nuke)
-      remove_items "$items_to_clean $items_to_nuke"
-      ;;
+        # Create/report missing/delete directories
+        ensure_dirs "$dirs_to_create"
+        ;;
+    clean)
+        remove_items "$items_to_clean"
+        ;;
+    nuke)
+        remove_items "$items_to_clean $items_to_nuke"
+        ;;
 esac

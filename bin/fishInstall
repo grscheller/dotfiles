@@ -9,17 +9,38 @@
 #              --remove:  removes all files which were installed
 #              --clean:   same as above, deletes emptied directories
 #              --nuke:    removes everything fish related
-#
+
 # shellcheck shell=sh
-# shellcheck disable=SC3043
+
+export SCRIPT_NAME=fishInstall
+export DF_ACTION=install
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-: "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=fishInstall}"
+cd "$DOTFILES_GIT_REPO/home" || {
+    printf 'fishInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    exit 1
+}
 
-cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
+umask 0022
 
-. ../bin/sourced/setup.sh
+. ../bin/sourced/parse_cmdline.sh
+. ../bin/sourced/functions.sh
+
+# Script exclusively use these names
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:=$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:=$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:=$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:=$HOME/.local/state}"
+
+# Ensure these folder exists before installation.
+ensure_dir "$XDG_CONFIG_HOME"
+chmod 0755 "$XDG_CONFIG_HOME"
+ensure_dir "$XDG_DATA_HOME"
+chmod 0755 "$XDG_DATA_HOME"
+ensure_dir "$XDG_STATE_HOME"
+chmod 0755 "$XDG_STATE_HOME"
+ensure_dir "$XDG_CACHE_HOME"
+chmod 0755 "$XDG_CACHE_HOME"
 
 config_files='
     completions/pp.fish
@@ -124,46 +145,44 @@ esac
 
 # Post ACTION Tasks
 
-case "$DF_ACTION" in
-    install)
-        # Ensure fish plugins are installed, assuming fish is.
-        if command -v fish >/dev/null 2>&1 && test "$DF_ACTION" = install
+test "$DF_ACTION" = install && {
+    # Ensure fish plugins are installed, assuming fish is.
+    if command -v fish >/dev/null 2>&1 && test "$DF_ACTION" = install
+    then
+        install_plugins=yes
+        if ! test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish
         then
-            install_plugins=yes
-            if ! test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish
+            # Just install fisher
+            rm -f "$XDG_CONFIG_HOME"/fish/fish_plugins
+            if ! fish -c df_install_fisher
             then
-                # Just install fisher
-                rm -f "$XDG_CONFIG_HOME"/fish/fish_plugins
-                if ! fish -c df_install_fisher
-                then
-                    printf '%s: Failed to install fisher\n' "$script_name" >&2
-                    install_plugins=no
-                fi
-            fi
-
-            if test "$install_plugins" = yes
-            then
-                fisher_list="$(fish -c 'fisher list')"
-                for plugin in $fish_plugins
-                do
-                    has_plugin=no
-
-                    for fisher_plugin in $fisher_list
-                    do
-                        if test "$plugin" = "$fisher_plugin"
-                        then
-                            has_plugin=yes
-                            break
-                        fi
-                    done
-
-                    if test "$has_plugin" = no
-                    then
-                        fish -c "fisher install $plugin"
-                            printf '%s: Failed to install fish plugins\n' "$script_name" >&2
-                    fi
-                done
+                printf '%s: Failed to install fisher\n' "$SCRIPT_NAME" >&2
+                install_plugins=no
             fi
         fi
-        ;;
-esac
+
+        if test "$install_plugins" = yes
+        then
+            fisher_list="$(fish -c 'fisher list')"
+            for plugin in $fish_plugins
+            do
+                has_plugin=no
+
+                for fisher_plugin in $fisher_list
+                do
+                    if test "$plugin" = "$fisher_plugin"
+                    then
+                        has_plugin=yes
+                        break
+                    fi
+                done
+
+                if test "$has_plugin" = no
+                then
+                    fish -c "fisher install $plugin"
+                        printf '%s: Failed to install fish plugins\n' "$SCRIPT_NAME" >&2
+                fi
+            done
+        fi
+    fi
+}

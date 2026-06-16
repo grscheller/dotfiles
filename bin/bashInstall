@@ -10,76 +10,81 @@
 #              --remove:  removes files which were installed
 #              --clean:   same as above, deletes emptied directories
 #              --nuke:    same as above but cleans up other content
-#
-# shellcheck shell=dash
-#
+
+# shellcheck shell=sh
+
+export SCRIPT_NAME=bashInstall
+export DF_ACTION=install
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-: "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=bashInstall}"
+cd "$DOTFILES_GIT_REPO/home" || {
+    printf 'bashInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    exit 1
+}
 
-cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
+umask 0022
 
-. ../bin/sourced/setup.sh
+. ../bin/sourced/parse_cmdline.sh
+. ../bin/sourced/functions.sh
 
 bash_files='
-   .bash_logout
-   .bash_profile
-   .bashrc
-   .inputrc
+    .bash_logout
+    .bash_profile
+    .bashrc
+    .inputrc
 '
 
 bin_scripts='
-   chkcolor
-   codepoint
-   etherApe
-   monitor
-   myCalc
-   pathtrim
-   rt
-   spin
-   viewJarManifest
+    chkcolor
+    codepoint
+    etherApe
+    monitor
+    myCalc
+    pathtrim
+    rt
+    spin
+    viewJarManifest
 '
 
 remove_items="
-   $HOME/.bash_login
-   $HOME/.profile
+    $HOME/.bash_login
+    $HOME/.profile
 "
 
 dirs_to_create="
-   $HOME/catch
-   $HOME/.local/bin
+    $HOME/catch
+    $HOME/.local/bin
 "
 
 items_to_clean="
-   $HOME/.bash_history
+    $HOME/.bash_history
 "
 
 items_to_nuke="
-   $HOME/catch
+    $HOME/catch
 "
 
 ## Perform ACTION
 
 case "$DF_ACTION" in
-   install|check|remove)
-      # Process bash config files
-      process_files "$HOME" "$bash_files" . 0644
-
-      # Process ~/bin scripts
-      process_files "$HOME/bin" "$bin_scripts" bin 0755
-      chmod 0755 "$HOME/bin"
-
-      # Remove/report no longer needed files and directories
-      remove_items "$remove_items"
-
-      # Create/report missing/delete directories
-      ensure_dirs "$dirs_to_create"
-      ;;
-   clean)
-      remove_items "$items_to_clean"
-      ;;
-   nuke)
-      remove_items "$items_to_clean $items_to_nuke"
-      ;;
+    install|check|remove)
+        # Process bash config files
+        process_files "$HOME" "$bash_files" . 0644
+ 
+        # Process ~/bin scripts
+        process_files "$HOME/bin" "$bin_scripts" bin 0755
+        chmod 0755 "$HOME/bin"
+ 
+        # Remove/report no longer needed files and directories
+        remove_items "$remove_items"
+ 
+        # Create/report missing/delete directories
+        ensure_dirs "$dirs_to_create"
+        ;;
+    clean)
+        remove_items "$items_to_clean"
+        ;;
+    nuke)
+        remove_items "$items_to_clean $items_to_nuke"
+        ;;
 esac

@@ -10,18 +10,18 @@
 #              --remove:  generally removes what was installed
 #              --clean:   like above but tries to conservatively clean things up
 #              --nuke:    like above but deletes even manually installed things
-#
-# shellcheck shell=dash
+
+# shellcheck shell=sh
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
-: "${df_home:=$DOTFILES_GIT_REPO/home}"
-: "${script_name:=dfInstall}"
+cd "$DOTFILES_GIT_REPO/home" || {
+    printf 'dfInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    exit 1
+}
 
-cd "$df_home" || { printf '%s: failed to cd into %s\n' "$script_name" "$df_home"; }
+# Install in parallel - problematic when scripts converted to fish.
 
-export DF_ACTION=''
-. ../bin/sourced/setup.sh
-. ../bin/fishInstall
-. ../bin/bashInstall
-. ../bin/nvimInstall
-. ../bin/develInstall
+../bin/fishInstall  "$@"
+../bin/bashInstall  "$@"
+../bin/nvimInstall  "$@"
+../bin/develInstall "$@"
