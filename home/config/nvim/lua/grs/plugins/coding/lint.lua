@@ -4,6 +4,7 @@ local lint_config = function()
    local lint = require 'lint'
 
    lint.linters_by_ft = {
+      css = { 'stylelint' },
       gitcommit = { 'gitlint' },
       haskell = { 'hlint' },
       html = { 'markuplint' },
@@ -12,13 +13,13 @@ local lint_config = function()
       json = { 'jsonlint' },
       lua = { 'selene' },
       luau = { 'selene' },
-      typescript = { 'eslint_d' },
-      typescriptreact = { 'eslint_d' },
       markdown = { 'markdownlint-cli' },
       python = { 'sphinx-lint' },
-      rst = { 'sphinx-lint' },
+      rst = { 'rstcheck', 'sphinx-lint' },
       sh = { 'shellcheck' },
       svelte = { 'eslint_d' },
+      typescript = { 'eslint_d' },
+      typescriptreact = { 'eslint_d' },
       vue = { 'eslint_d' },
    }
 end

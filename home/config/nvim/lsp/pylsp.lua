@@ -7,15 +7,11 @@ return {
    settings = {
       pylsp = {
          plugins = {
-            -- type checker
-            pylsp_mypy = {
-               enabled = true,
-            },
-            -- linting and formatting
+            pylint = {enabled = false },
+            pyflakes = { enabled = false },
+            pycodestyle = { enabled = false },
+            mccabe = { enabled = false },
             ruff = { enabled = false },
-            -- refactoring
-            rope = { enable = true },
-            pylsp_inlay_hints = { enable = true },
          },
       },
    },

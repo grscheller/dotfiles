@@ -12,7 +12,7 @@
 #
 # shellcheck shell=dash
 
-export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=~/devel/dotfiles}"
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 : "${df_home:=$DOTFILES_GIT_REPO/home}"
 : "${script_name:=nvimInstall}"
 
