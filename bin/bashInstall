@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # develInstall: Installs software development infrastructure and a basic
-#               fallback Bash environment into my $HOME directory.
+#               fallback Bash environment into user's $HOME directory.
 #
 # usage: develInstall [ --install | --check | --remove | --clean | --nuke ]
 #
@@ -10,6 +10,8 @@
 #              --remove:  removes files which were installed
 #              --clean:   same as above, deletes emptied directories
 #              --nuke:    same as above but cleans up other content
+#
+# For more traditional Unix pre-XDG utilities.
 
 # shellcheck shell=sh
 

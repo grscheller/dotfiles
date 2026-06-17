@@ -19,7 +19,7 @@ cd "$DOTFILES_GIT_REPO/home" || {
     exit 1
 }
 
-# Install in parallel - problematic when scripts converted to fish.
+# Install sequentially
 
 ../bin/fishInstall  "$@"
 ../bin/bashInstall  "$@"
