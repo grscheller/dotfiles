@@ -126,7 +126,7 @@ fish_plugins='
 case "$DF_ACTION" in
     install|check|remove)
         # Install Fish config files
-        process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644 "$df_home"
+        process_files "$XDG_CONFIG_HOME/fish" "$config_files" config/fish 0644
         chmod 0755 "$XDG_CONFIG_HOME/fish"
 
         # Remove/report no longer needed files and directories
@@ -147,7 +147,7 @@ esac
 
 test "$DF_ACTION" = install && {
     # Ensure fish plugins are installed, assuming fish is.
-    if command -v fish >/dev/null 2>&1 && test "$DF_ACTION" = install
+    if command -v fish >/dev/null 2>&1 
     then
         install_plugins=yes
         if ! test -f "$XDG_CONFIG_HOME"/fish/functions/fisher.fish
@@ -179,8 +179,9 @@ test "$DF_ACTION" = install && {
 
                 if test "$has_plugin" = no
                 then
-                    fish -c "fisher install $plugin"
-                        printf '%s: Failed to install fish plugins\n' "$SCRIPT_NAME" >&2
+                    fish -c "fisher install $plugin" && {
+                        printf '%s: Failed to install fish plugin %s\n' "$SCRIPT_NAME" "$plugin" >&2
+                    }
                 fi
             done
         fi

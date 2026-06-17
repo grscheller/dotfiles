@@ -5,32 +5,32 @@
 #
 # shellcheck shell=sh
 
-usage="Usage: $script_name [--install | --check | --remove | --clean | --nuke]"
+usage="Usage: $SCRIPT_NAME [--install | --check | --remove | --clean | --nuke]"
 
 if test $# -gt 1
 then
-    printf '\n%s\n\n' "$usage"
+    printf '\n%s\n\n' "$usage" >&2
     exit 1
 elif test $# -eq 1
 then
     case "$1" in
         --install)
-            DF_ACTION=install
+            export DF_ACTION=install
             ;;
         --check)
-            DF_ACTION=check
+            export DF_ACTION=check
             ;;
         --remove)
-            DF_ACTION=remove
+            export DF_ACTION=remove
             ;;
         --clean)
-            DF_ACTION=clean
+            export DF_ACTION=clean
             ;;
         --nuke)
-            DF_ACTION=nuke
+            export DF_ACTION=nuke
             ;;
         *)
-            printf '\n%s\n\n' "$usage"
+            printf '\n%s\n\n' "$usage" >&2
             exit 1
             ;;
     esac

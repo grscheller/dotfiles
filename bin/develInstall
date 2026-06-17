@@ -52,7 +52,7 @@ dot_config_files='
 '
 
 devel_files='
-    devel/venvs/ve.conf
+    venvs/ve.conf
 '
 
 remove_items=

@@ -123,18 +123,18 @@ dirs_to_create=""
 
 # Pre ACTION Checks and Tasks
 
-# Determine if spellfile needs to be processed
+# Determine if spellfile will need to be recompiled after install.
 SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim > /dev/null 2>&1
 then
     if test ! -e "$SpellFile"
     then
         compileSpellFile=yes
-    elif ! diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
+    elif diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
     then
-        compileSpellFile=yes
-    else
         compileSpellFile=no
+    else
+        compileSpellFile=yes
     fi
 fi
 
@@ -154,7 +154,7 @@ case "$DF_ACTION" in
         process_files "$XDG_CONFIG_HOME/nvim" "
             $dot_config_files
             $toml_files
-        " config/nvim 0644 "$df_home"
+        " config/nvim 0644
         chmod 0755 "$XDG_CONFIG_HOME/nvim"
  
         # Remove/report no longer needed files and directories
@@ -198,7 +198,7 @@ test "DF_ACTION" = check && {
     # Indicate whether the spellfile will be recompiled on next install
     if test "$compileSpellFile" = yes
     then
-        printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile" >&2
-        printf '             recompiled on the next install.\n\n' >&2
+        printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+        printf '             recompiled on the next install.\n\n'
     fi
 }

@@ -4,6 +4,7 @@
 # scripts. Helps to de-clutters scripts.
 #
 # shellcheck shell=sh
+# shellcheck disable=SC3043
 
 # Check or remove a file or a directory
 remove_item () {
@@ -12,7 +13,7 @@ remove_item () {
     then
         case "$DF_ACTION" in
             check)
-                printf '%s: "%s" needs to be removed from the target\n\n' "$SCRIPT_NAME" "$item" >&2
+                printf '%s: "%s" needs to be removed from the target\n\n' "$SCRIPT_NAME" "$item"
                 ;;
             install|remove|clean|nuke)
                 rm -rf "$item"
@@ -36,11 +37,12 @@ ensure_dir () {
     then
         case "$DF_ACTION" in
             install)
-                mkdir -p "$target_dir" ||
-                printf '%s: failed to create "%s" directory\n\n' "$SCRIPT_NAME" "$target_dir" >&2
+                mkdir -p "$target_dir" || {
+                    printf '%s: failed to create "%s" directory\n\n' "$SCRIPT_NAME" "$target_dir"
+                }
                 ;;
             check)
-                printf '%s: directory "%s" needs to be created\n\n' "$SCRIPT_NAME" "$target_dir" >&2
+                printf '%s: directory "%s" needs to be created\n\n' "$SCRIPT_NAME" "$target_dir"
                 ;;
             remove)
                 ;;
@@ -57,24 +59,23 @@ ensure_dir () {
     fi
     if [ -n "$src_dir" ] && [ ! -d "$src_dir" ]
     then
-        printf '%s: source directory "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_dir" >&2
+        printf '%s: source directory "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_dir"
     fi
 }
 
 # Install, check, or remove file
 process_file () {
     local install_dir file_path src_dir file_perm
-    local src_rel src_abs trgt
+    local src_rel trgt
     install_dir="$1"
     file_path="$2"
     src_dir="$3"
     file_perm="$4"
-    src_rel=$(printf '%s\n' "$src_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
-    src_abs=$(printf '%s\n' "$df_home/$src_rel" | sed -E 's|(/\.)*/\./|/|g')
-    trgt=$(printf '%s\n' "$install_dir/$file_path" | sed -E 's|(/\.)*/\./|/|g')
+    src_rel="$src_dir/$file_path"
+    trgt="$install_dir/$file_path"
 
     # Ensure target directory exists and complain if source directory doesn't
-    ensure_dir "${trgt%/*}" "${src_abs%/*}"
+    ensure_dir "${trgt%/*}" "${src_rel%/*}"
 
     case "$DF_ACTION" in
         install)
@@ -82,26 +83,26 @@ process_file () {
             if cp "$src_rel" "$trgt"
             then
                 chmod --quiet "$file_perm" "$trgt" || {
-                    printf '%s: failed to set permissions on "%s" to "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$file_perm" >&2
+                    printf '%s: failed to set permissions on "%s" to "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$file_perm"
                 }
             else
-                printf '%s: failed to install "%s"\n\n' "$SCRIPT_NAME" "$trgt" >&2
+                printf '%s: failed to install "%s"\n\n' "$SCRIPT_NAME" "$trgt"
             fi
             ;;
         check)
             # Compare config with install target
-            if test ! -e "$src_abs" && test ! -e "$trgt" >&2
+            if test ! -e "$src_rel" && test ! -e "$trgt"
             then
-                printf '%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n' "$SCRIPT_NAME" "$src_abs" "$trgt" >&2
+                printf '%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n' "$SCRIPT_NAME" "$src_abs" "$trgt"
             elif test ! -e "$trgt"
             then
-                printf '%s: target "%s" does not exist\n\n' "$SCRIPT_NAME" "$trgt" >&2
+                printf '%s: target "%s" does not exist\n\n' "$SCRIPT_NAME" "$trgt"
             elif test ! -e "$src_abs"
             then
-                printf '%s: source "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_abs" >&2
+                printf '%s: source "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_abs"
             else
                 diff "$trgt" "$src_abs" > /dev/null || {
-                    printf '%s: "%s" differs from "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$src_abs" >&2
+                    printf '%s: "%s" differs from "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$src_abs"
                 }
             fi
             ;;
