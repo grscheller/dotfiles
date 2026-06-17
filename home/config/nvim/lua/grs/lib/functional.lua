@@ -2,14 +2,14 @@
 
      Functions designed to be applied against "simple" tables:
        <array> means a Lua consecutive integer indexed table with no holes
-       <maps> means a table of "key" -> value pairs
+       <map> means a table of "key" -> value pairs
 
      So that these JIT compile and run very fast, there is no type or error
      checking.  It is the programmer's responsibility to pass the correct data
      structures to these functions.
 
-     I would not use with mixed tables. Function-like objects, like tables with
-     __call metamethods, should be OK as function arguments ... I think?
+     I would not use these with mixed tables. Function-like objects, like tables
+     with __call metamethods, should be OK as function arguments ... I think?
 
      The use of the word "functional" is meant to mean that the interface is
      functional, not necessarily the implementation.
@@ -51,9 +51,9 @@ M.mapArray = function(f, a)
       local j = 0
       for _, v in ipairs(vs) do
          local value = f(v)
-         if type(value) ~= nil then
+         if value ~= nil then
             j = j + 1
-            ma[j] = f(v)
+            ma[j] = value
          end
       end
       return ma, j
@@ -69,7 +69,7 @@ end
 ---Merge a <array> of <maps> - later tables override earlier ones
 ---@param array_of_maps table
 ---@return table
-M.mergeTables = function(array_of_maps)
+M.mergeArrayOfTables = function(array_of_maps)
    local mergedTable = {}
    for _, tbl in ipairs(array_of_maps) do
       for k, v in pairs(tbl) do

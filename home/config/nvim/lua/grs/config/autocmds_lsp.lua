@@ -20,7 +20,7 @@ usercmd('LspInfo', function()
    end
 end, {})
 
---[[ Auto commands related to nvim itself - bow dne by blink.cmp ]]
+--[[ Auto commands related to nvim itself - now done by blink.cmp ]]
 
 -- local GrsLspGrp = autogrp('GrsLsp', { clear = true })
 

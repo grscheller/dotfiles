@@ -30,7 +30,7 @@ local on_attach = function(bufnr)
                gitsigns.nav_hunk 'prev'
             end
          end,
-         desc = 'next git/diff change',
+         desc = 'prev git/diff change',
          buffer = bufnr,
       },
    }
@@ -38,9 +38,25 @@ local on_attach = function(bufnr)
    --[[ Actions ]]
 
    wk.add {
-      { '<m-g>',  group = 'gitsigns',                 buffer = bufnr },
-      { '<m-g>b', gitsigns.blame_line,                desc = 'git blame line',             buffer = bufnr },
-      { '<m-g>B', gitsigns.toggle_current_line_blame, desc = 'toggle git show blame line', buffer = bufnr },
+      { '<m-g>', group = 'gitsigns', buffer = bufnr },
+      {
+         '<m-g>b',
+         gitsigns.blame_line,
+         desc = 'git blame line',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>B',
+         gitsigns.toggle_current_line_blame,
+         desc = 'toggle git show blame line',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>i',
+         gitsigns.diffthis,
+         desc = 'git diff against index',
+         buffer = bufnr,
+      },
       {
          '<m-g>d',
          function()
@@ -49,15 +65,26 @@ local on_attach = function(bufnr)
          desc = 'git diff against last commit',
          buffer = bufnr,
       },
-      { '<m-g>D', gitsigns.toggle_deleted,  desc = 'toggle git show deleted', buffer = bufnr },
-      { '<m-g>i', gitsigns.diffthis,        desc = 'git diff against index',  buffer = bufnr },
-      { '<m-g>p', gitsigns.preview_hunk,    desc = 'git preview hunk',        buffer = bufnr },
-      { '<m-g>r', gitsigns.reset_hunk,      desc = 'git reset hunk',          buffer = bufnr },
-      { '<m-g>R', gitsigns.reset_buffer,    desc = 'git reset buffer',        buffer = bufnr },
-      { '<m-g>s', gitsigns.stage_hunk,      desc = 'git stage hunk',          buffer = bufnr },
-      { '<m-g>S', gitsigns.stage_buffer,    desc = 'git stage buffer',        buffer = bufnr },
-      { '<m-g>u', gitsigns.undo_stage_hunk, desc = 'git undo stage hunk',     buffer = bufnr },
-
+      {
+         '<m-g>D',
+         function()
+            gitsigns.diffthis '~'
+         end,
+         desc = 'git diff against commit before last commit',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>s',
+         gitsigns.stage_hunk,
+         desc = 'git stage hunk',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>r',
+         gitsigns.reset_hunk,
+         desc = 'git reset hunk',
+         buffer = bufnr,
+      },
       {
          '<m-g>s',
          function()
@@ -74,6 +101,24 @@ local on_attach = function(bufnr)
          end,
          desc = 'git reset hunk',
          mode = { 'v' },
+         buffer = bufnr,
+      },
+      {
+         '<m-g>S',
+         gitsigns.stage_buffer,
+         desc = 'git stage buffer',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>R',
+         gitsigns.reset_buffer,
+         desc = 'git reset buffer',
+         buffer = bufnr,
+      },
+      {
+         '<m-g>p',
+         gitsigns.preview_hunk,
+         desc = 'git preview hunk',
          buffer = bufnr,
       },
    }
@@ -104,6 +149,13 @@ return {
             topdelete = { text = '∧' },
             changedelete = { text = '⊥' },
             untracked = { text = '┆' },
+         },
+         signs_staged = {
+            add = { text = '+' },
+            change = { text = '│' },
+            delete = { text = '∨' },
+            topdelete = { text = '∧' },
+            changedelete = { text = '⊥' },
          },
          on_attach = on_attach,
       },
