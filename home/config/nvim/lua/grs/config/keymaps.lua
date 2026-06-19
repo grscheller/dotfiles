@@ -102,11 +102,11 @@ km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
 
 km('n', '<bslash>[', function()
    vim.diagnostic.jump { count = -1, float = true }
-end, { desc = 'prev diagostic' })
+end, { desc = 'prev diagnostic' })
 
 km('n', '<bslash>]', function()
    vim.diagnostic.jump { count = 1, float = true }
-end, { desc = 'next diagostic' })
+end, { desc = 'next diagnostic' })
 
 km('n', '<bslash>c', vim.cmd.lclose, { desc = 'close qf' })
 km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'error message popup' })

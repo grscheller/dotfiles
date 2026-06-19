@@ -1,5 +1,7 @@
 --[[ Define keymaps all in one place with which-key ]]
 
+-- Defunct: kept around so I can migrate these last two configs.
+
 local M = {}
 
 M.dap_mappings_added = false
@@ -36,31 +38,6 @@ function M.set_hls_keymaps(bn)
          "<cmd>'<,'>!stylish-haskell<cr>",
          desc = 'stylish haskell',
          mode = { 'n', 'v' },
-         buffer = bn,
-      },
-   }
-end
-
--- Rust-Tools related keymaps - used in after/ftplugin/rust.lua
-function M.set_rust_keymaps(bn)
-   require('which-key').add {
-      { 'jkr', group = 'rustaceanvim', buffer = bn },
-      {
-         'jkra',
-         function()
-            vim.cmd.RustLsp 'codeAction'
-         end,
-         desc = 'code action group',
-         buffer = bn,
-      },
-      {
-         'jkrh',
-         function()
-            vim.cmd.RustLsp {
-               'hover',
-               'actions',
-            }
-         end,
          buffer = bn,
       },
    }

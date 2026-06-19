@@ -25,7 +25,7 @@ umask 0022
 
 . ../bin/sourced/parse_cmdline.sh
 . ../bin/sourced/functions.sh
-. ../bin/sourced/congfigure_xdg_dirs.sh
+. ../bin/sourced/configure_xdg_dirs.sh
 
 config_files='
     completions/pp.fish

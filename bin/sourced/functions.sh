@@ -5,24 +5,29 @@
 #
 # shellcheck shell=sh
 # shellcheck disable=SC3043
+# shellcheck disable=SC2059
 
 # Check or remove a file or a directory
 remove_item () {
     item="$1"
+    local fmt
     if test -e "$item"
     then
         case "$DF_ACTION" in
             check)
-                printf '%s: "%s" needs to be removed from the target\n\n' "$SCRIPT_NAME" "$item"
+                fmt='%s: "%s" needs to be removed from the target\n\n' "$SCRIPT_NAME" "$item"
+                printf "$fmt" "$SCRIPT_NAME" "$item"
                 ;;
             install|remove|clean|nuke)
                 rm -rf "$item"
                 test -e "$item" && {
-                    printf '%s: Failed to remove "%s" from the target\n\n' "$SCRIPT_NAME" "$item" >&2
+                    fmt='%s: Failed to remove "%s" from the target\n\n'
+                    printf "$fmt" "$SCRIPT_NAME" "$item" >&2
                 }
                 ;;
             *)
-                printf '%s: Unknown state "%s" in remove_item().\n\n' "$SCRIPT_NAME" "$DF_ACTION" >&2
+                fmt='%s: Unknown state "%s" in remove_item().\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$DF_ACTION" >&2
                 ::
         esac
     fi
@@ -38,11 +43,13 @@ ensure_dir () {
         case "$DF_ACTION" in
             install)
                 mkdir -p "$target_dir" || {
-                    printf '%s: failed to create "%s" directory\n\n' "$SCRIPT_NAME" "$target_dir"
+                    fmt='%s: failed to create "%s" directory\n\n'
+                    printf "$fmt" "$SCRIPT_NAME" "$target_dir"
                 }
                 ;;
             check)
-                printf '%s: directory "%s" needs to be created\n\n' "$SCRIPT_NAME" "$target_dir"
+                fmt='%s: directory "%s" needs to be created\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$target_dir"
                 ;;
             remove)
                 ;;
@@ -53,13 +60,15 @@ ensure_dir () {
                 rm -rf "$target_dir"
                 ;;
             *)
-                printf '%s: Unknown state "%s" in ensure_item().\n\n' "$SCRIPT_NAME" "$DF_ACTION" >&2
+                fmt='%s: Unknown state "%s" in ensure_item().\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$DF_ACTION" >&2
                 ::
         esac
     fi
     if [ -n "$src_dir" ] && [ ! -d "$src_dir" ]
     then
-        printf '%s: source directory "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_dir"
+        fmt='%s: source directory "%s" does not exist\n\n'
+        printf "$fmt" "$SCRIPT_NAME" "$src_dir"
     fi
 }
 
@@ -83,26 +92,32 @@ process_file () {
             if cp "$src_rel" "$trgt"
             then
                 chmod --quiet "$file_perm" "$trgt" || {
-                    printf '%s: failed to set permissions on "%s" to "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$file_perm"
+                    fmt='%s: failed to set permissions on "%s" to "%s"\n\n'
+                    printf "$fmt" "$SCRIPT_NAME" "$trgt" "$file_perm"
                 }
             else
-                printf '%s: failed to install "%s"\n\n' "$SCRIPT_NAME" "$trgt"
+                fmt='%s: failed to install "%s"\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$trgt"
             fi
             ;;
         check)
             # Compare config with install target
             if test ! -e "$src_rel" && test ! -e "$trgt"
             then
-                printf '%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n' "$SCRIPT_NAME" "$src_abs" "$trgt"
+                fmt='%s:\n\tboth source: "%s"\n\t and target: "%s" do not exist.\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$src_rel" "$trgt"
             elif test ! -e "$trgt"
             then
-                printf '%s: target "%s" does not exist\n\n' "$SCRIPT_NAME" "$trgt"
-            elif test ! -e "$src_abs"
+                fmt='%s: target "%s" does not exist\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$trgt"
+            elif test ! -e "$src_rel"
             then
-                printf '%s: source "%s" does not exist\n\n' "$SCRIPT_NAME" "$src_abs"
+                fmt='%s: source "%s" does not exist\n\n'
+                printf "$fmt" "$SCRIPT_NAME" "$src_rel"
             else
-                diff "$trgt" "$src_abs" > /dev/null || {
-                    printf '%s: "%s" differs from "%s"\n\n' "$SCRIPT_NAME" "$trgt" "$src_abs"
+                diff "$trgt" "$src_rel" > /dev/null || {
+                    fmt='%s: "%s" differs from "%s"\n\n'
+                    printf "$fmt" "$SCRIPT_NAME" "$trgt" "$src_rel"
                 }
             fi
             ;;
@@ -111,7 +126,8 @@ process_file () {
             remove_item "$trgt"
             ;;
         *)
-            printf '%s: Unknown state "%s" in ensure_dir().\n\n' "$SCRIPT_NAME" "$DF_ACTION" >&2
+            fmt='%s: Unknown state "%s" in ensure_dir().\n\n'
+            printf "$fmt" "$SCRIPT_NAME" "$DF_ACTION" >&2
             ::
     esac
 }
@@ -136,7 +152,8 @@ remove_items () {
     local items
     local item
     test "${#}" -gt 1 && {
-        printf '%s: Error - remove_items only takes one argument\n\n' "$SCRIPT_NAME" >&2
+        fmt='%s: Error - remove_items only takes one argument\n\n'
+        printf "$fmt" "$SCRIPT_NAME" >&2
     }
     items="$1"
     test -z "$items" && return
@@ -151,7 +168,8 @@ ensure_dirs () {
     local dirs
     local dir
     test ! "$#" -eq 1 && {
-        printf '%s: Error - ensure_dirs only takes one argument\n\n' "$SCRIPT_NAME" >&2
+        fmt='%s: Error - ensure_dirs only takes one argument\n\n'
+        printf "$fmt" "$SCRIPT_NAME" >&2
     }
     dirs="$1"
     test -z "$dirs" && return

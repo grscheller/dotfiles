@@ -52,7 +52,6 @@ return {
       priority = 1000,
       config = function()
          local kanagawa = require 'kanagawa'
-         require('kanagawa').setup(kanagawa_opts)
          kanagawa.setup(kanagawa_opts)
          kanagawa.compile()
          kanagawa.load 'dragon'

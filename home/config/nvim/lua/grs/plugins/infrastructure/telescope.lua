@@ -104,7 +104,7 @@ return {
 
          wk.add {
             { '<leader>sh', builtin.help_tags,   desc = 'search help' },
-            { '<leader>sk', builtin.keymaps,     desc = 'search kymaps' },
+            { '<leader>sk', builtin.keymaps,     desc = 'search keymaps' },
             { '<leader>sf', builtin.find_files,  desc = 'search files' },
             { '<leader>ss', builtin.builtin,     desc = 'search select telescope' },
             { '<leader>sw', builtin.grep_string, desc = 'search current word' },

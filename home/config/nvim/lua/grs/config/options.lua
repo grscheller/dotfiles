@@ -56,7 +56,7 @@ vim.o.showcmd = false                       -- redundant with WhichKey
 vim.o.wildmenu = false                      -- using Saghen/blink.nvim for this
 vim.o.shortmess = 'asAIcCF'                 -- shorten/gag extraneous statusline messages
 vim.o.complete = '.,w,b,u,kspell'           -- no "t,i" redundant with LSP
-vim.o.completeopt = 'menu,menuone,noselect' -- for nvim-cmp
+vim.o.completeopt = 'menu,menuone,noselect' -- for blink.cmp
 vim.o.inccommand = 'split'                  -- For smjonas/inc-rename.nvim LSP renaming showing
 vim.o.cmdwinheight = 15                     -- changes in multiple buffers.
 
