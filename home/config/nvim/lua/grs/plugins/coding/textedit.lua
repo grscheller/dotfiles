@@ -48,7 +48,19 @@ return {
    },
 
    {
-      -- Quickly jump around window - like sneak but on steroids
+      -- Quickly jump around window
       url = 'https://codeberg.org/andyg/leap.nvim',
+      config = function()
+         local wk = require 'which-key'
+         wk.add {
+            {
+               's',
+               '<Plug>(leap)',
+               mode = { 'n', 'x', 'o' },
+               noremap = false,
+               desc = 'leap',
+            },
+         }
+      end,
    },
 }
