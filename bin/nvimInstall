@@ -59,15 +59,15 @@ dot_config_files='
     lsp/ruff.lua
     lsp/tombi.lua
     lsp/zls.lua
-    lua/grs/config/autocmds_lsp.lua
     lua/grs/config/autocmds_text.lua
     lua/grs/config/configs.lua
     lua/grs/config/globals.lua
     lua/grs/config/keymaps.lua
     lua/grs/config/keymaps_whichkey.lua
+    lua/grs/config/lsp.lua
     lua/grs/config/options.lua
+    lua/grs/config/usercmds_lsp.lua
     lua/grs/core/lazy.lua
-    lua/grs/core/lsp.lua
     lua/grs/lib/functional.lua
     lua/grs/lib/scroll.lua
     lua/grs/lib/text.lua
@@ -96,12 +96,9 @@ toml_files='
 
 remove_items="
     $HOME/.vimrc
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/completions.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/lazy_rock.lua
+    $XDG_CONFIG_HOME/lua/grs/config/autocmds_lsp.lua
+    $XDG_CONFIG_HOME/nvim/lua/grs/core/lsp.lua
     $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidget.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/cmp.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/infrastructure/luarocks.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/config/grs.lua
 "
 
 dirs_to_create=""

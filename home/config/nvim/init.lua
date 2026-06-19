@@ -9,7 +9,7 @@ require 'grs.config.configs'
 vim.cmd [[colorscheme lunaperche]]
 
 -- Configure LSP clients natively
-require 'grs.core.lsp'
+require 'grs.config.lsp'
 
 -- Load initial keymaps
 require 'grs.config.keymaps'
@@ -18,5 +18,5 @@ require 'grs.config.keymaps'
 require 'grs.core.lazy'
 
 -- Load autocmds
-require 'grs.config.autocmds_lsp'
+require 'grs.config.usercmds_lsp'
 require 'grs.config.autocmds_text'

@@ -2,13 +2,6 @@
 
 local autogrp = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local usercmd = vim.api.nvim_create_user_command
-
---[[ User commands ]]
-
--- Write file as root - works when sudo doesn't require a password
-usercmd('WRF', 'w !sudo tee <f-args> > /dev/null', { nargs = 1 })
-usercmd('WR', 'WRF %', {})
 
 --[[ Auto commands related to nvim itself ]]
 
