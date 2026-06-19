@@ -3,7 +3,7 @@
 local ok, lazy
 
 -- Bootstrap folke/lazy.nvim if not already installed
-local lazypath = string.format('%s/lazy/lazy.nvim', vim.fn.stdpath 'data')
+local lazypath = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
 local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
 if not vim.uv.fs_stat(lazypath) then
    vim.fn.system {
@@ -20,6 +20,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local lazy_opts = {
+   lockfile = vim.fs.joinpath(vim.fn.stdpath 'state', 'lazy-lock.json'),
    defaults = { lazy = false },
    spec = { { import = 'grs.plugins' } },
    ui = {
