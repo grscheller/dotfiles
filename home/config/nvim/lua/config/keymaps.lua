@@ -1,7 +1,7 @@
 --[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
--- local scroll = require 'grs.lib.scroll' --[[ keymappings not depending on external plugins ]]
+-- local scroll = require 'lib.scroll' --[[ keymappings not depending on external plugins ]]
 
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })

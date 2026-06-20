@@ -59,31 +59,31 @@ dot_config_files='
     lsp/ruff.lua
     lsp/tombi.lua
     lsp/zls.lua
-    lua/grs/config/autocmds_text.lua
-    lua/grs/config/configs.lua
-    lua/grs/config/globals.lua
-    lua/grs/config/keymaps.lua
-    lua/grs/config/lsp.lua
-    lua/grs/config/options.lua
-    lua/grs/config/usercmds_lsp.lua
-    lua/grs/core/lazy.lua
-    lua/grs/lib/functional.lua
-    lua/grs/lib/scroll.lua
-    lua/grs/lib/text.lua
-    lua/grs/plugins/coding/init.lua
-    lua/grs/plugins/coding/format.lua
-    lua/grs/plugins/coding/gitsigns.lua
-    lua/grs/plugins/coding/lint.lua
-    lua/grs/plugins/coding/textedit.lua
-    lua/grs/plugins/ide/init.lua
-    lua/grs/plugins/ide/dap.lua
-    lua/grs/plugins/ide/ide.lua
-    lua/grs/plugins/infrastructure/init.lua
-    lua/grs/plugins/infrastructure/appearance.lua
-    lua/grs/plugins/infrastructure/mason.lua
-    lua/grs/plugins/infrastructure/telescope.lua
-    lua/grs/plugins/infrastructure/treesitter.lua
-    lua/grs/plugins/infrastructure/whichkey.lua
+    lua/config/autocmds_text.lua
+    lua/config/configs.lua
+    lua/config/globals.lua
+    lua/config/keymaps.lua
+    lua/config/lsp.lua
+    lua/config/options.lua
+    lua/config/usercmds_lsp.lua
+    lua/core/lazy.lua
+    lua/lib/functional.lua
+    lua/lib/scroll.lua
+    lua/lib/text.lua
+    lua/plugins/coding/init.lua
+    lua/plugins/coding/format.lua
+    lua/plugins/coding/gitsigns.lua
+    lua/plugins/coding/lint.lua
+    lua/plugins/coding/textedit.lua
+    lua/plugins/ide/init.lua
+    lua/plugins/ide/dap.lua
+    lua/plugins/ide/ide.lua
+    lua/plugins/infrastructure/init.lua
+    lua/plugins/infrastructure/appearance.lua
+    lua/plugins/infrastructure/mason.lua
+    lua/plugins/infrastructure/telescope.lua
+    lua/plugins/infrastructure/treesitter.lua
+    lua/plugins/infrastructure/whichkey.lua
     spell/en.utf-8.add
     init.lua
 '
@@ -94,11 +94,6 @@ toml_files='
 
 remove_items="
     $HOME/.vimrc
-    $XDG_CONFIG_HOME/lua/grs/config/autocmds_lsp.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/config/keymaps_whichkey.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/core/lsp.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/fidget.lua
-    $XDG_CONFIG_HOME/nvim/lua/grs/plugins/ide/rust.lua
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
 "
 
@@ -126,7 +121,7 @@ sedScript="s!<xdg_config_home>!$XDG_CONFIG_HOME!
            s!<xdg_cache_home>!$XDG_CACHE_HOME!
            s!<xdg_data_home>!$XDG_DATA_HOME!
            s!<xdg_state_home>!$XDG_STATE_HOME!"
-config_dir=config/nvim/lua/grs/config
+config_dir=config/nvim/lua/config
 sed -E -e "$sedScript" $config_dir/globals.template.lua > $config_dir/globals.lua
 
 # Perform ACTION

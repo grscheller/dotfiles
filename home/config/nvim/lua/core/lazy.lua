@@ -22,7 +22,7 @@ vim.opt.runtimepath:prepend(lazypath)
 local lazy_opts = {
    lockfile = vim.fs.joinpath(vim.fn.stdpath 'state', 'lazy-lock.json'),
    defaults = { lazy = false },
-   spec = { { import = 'grs.plugins' } },
+   spec = { { import = 'plugins' } },
    ui = {
       browser = '/usr/bin/firefox',
       icons = {

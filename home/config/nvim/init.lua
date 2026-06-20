@@ -1,22 +1,22 @@
 --[[ GRS Neovim Configuration - using lazy.nvim ]]
 
 -- Load globals, options & other configurations
-require 'grs.config.globals'
-require 'grs.config.options'
-require 'grs.config.configs'
+require 'config.globals'
+require 'config.options'
+require 'config.configs'
 
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
 
 -- Configure LSP clients natively
-require 'grs.config.lsp'
+require 'config.lsp'
 
 -- Load initial keymaps
-require 'grs.config.keymaps'
+require 'config.keymaps'
 
 -- Bootstrap lazy.nvim and configure plugins
-require 'grs.core.lazy'
+require 'core.lazy'
 
 -- Load autocmds
-require 'grs.config.usercmds_lsp'
-require 'grs.config.autocmds_text'
+require 'config.usercmds_lsp'
+require 'config.autocmds_text'

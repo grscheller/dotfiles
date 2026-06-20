@@ -51,7 +51,7 @@ local config_treesitter = function()
 
    -- Enable treesitter features per-buffer
    vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('grs_treesitter', {}),
+      group = vim.api.nvim_create_augroup('_treesitter', {}),
       callback = function(args)
          if pcall(vim.treesitter.start, args.buf) then
             vim.wo[0][0].foldmethod = 'expr'

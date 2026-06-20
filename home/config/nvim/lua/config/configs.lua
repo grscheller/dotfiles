@@ -1,4 +1,4 @@
---[[ Other (grs) configurations ]]
+--[[ Other configurations ]]
 
 local M = {}
 
@@ -14,6 +14,6 @@ vim.diagnostic.config {
    signs = true,
 }
 
-M.mason_bin = vim.g.grs_xdg_data_home .. '/nvim/mason/bin'
+M.mason_bin = vim.g._xdg_data_home .. '/nvim/mason/bin'
 
 return M

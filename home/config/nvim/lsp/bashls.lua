@@ -7,7 +7,7 @@
 
 -- Bash, POSIX, Csh Shells
 
-local mason_bin = require('grs.config.configs').mason_bin
+local mason_bin = require('config.configs').mason_bin
 local bash_language_server = mason_bin .. '/bash-language-server'
 
 return {
