@@ -16,7 +16,7 @@ launched from anywhere. They will honor the
   - [nvimInstall](bin/nvimInstall) for Neovim, always a work in progress.
   - [otherInstall](bin/develInstall) for Other configuration files.
   - [dotfileInstall](bin/dotfileInstall) to Install all of the above.
-- Fish abbreviations
+- Fish abbreviations/bash aliases
   - bI 🠖 bin/bashInstall
   - fI 🠖 bin/fishInstall
   - nI 🠖 bin/nvimInstall

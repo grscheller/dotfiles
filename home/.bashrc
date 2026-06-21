@@ -319,8 +319,11 @@ alias ll='ls -ltr'
 alias l.='ls -dA .*'   # for current directory only
 
 # appropriate for cosmic desktop environment - single quotes intentional
-alias bInstall='$DOTFILE_GIT_REPOS/bash-env/bashInstall'
-alias nvInstall='$DOTFILE_GIT_REPOS/nvim-env/nvimInstall'
+alias bI='$DOTFILE_GIT_REPOS/bin/bashInstall'
+alias fI='$DOTFILE_GIT_REPOS/bin/fishInstall'
+alias nI='$DOTFILE_GIT_REPOS/bin/nvimInstall'
+alias oI='$DOTFILE_GIT_REPOS/bin/otherInstall'
+alias dfI='$DOTFILE_GIT_REPOS/bin/dotfileInstall'
 
 # Website scrapping - pull down a subset of a website
 alias Wget='/usr/bin/wget -p --convert-links -e robots=off'

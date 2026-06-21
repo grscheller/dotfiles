@@ -201,8 +201,6 @@ Domaintools
 Downdetector
 DuckDuckGo
 Ducksters
-EtherApe
-etherApe
 emacs
 facebook
 firefox
@@ -225,6 +223,7 @@ IntelliJ
 julia
 jupyter
 jupyterlab
+Korn
 Lanczos
 Lutris
 LVHN
@@ -586,6 +585,7 @@ Archwiki
 BindsTo
 brightnessctl
 CDE
+etherape
 ExecStart
 greetd
 journalctl
