@@ -11,7 +11,7 @@ M.cursor_has_words_before_it = function()
    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
 end
 
---[[ Padding ]]
+--[[ Padding - 1 byte characters only (no UTF-8) ]]
 
 ---Pad string or number on left
 ---@param value string|number
@@ -19,10 +19,14 @@ end
 ---@param char string|nil
 ---@return string
 M.pad_left = function(value, width, char)
-   if type(value) == 'string' then
-      return string.format('%' .. tostring(width) .. 's', value)
+   local str = tostring(value)
+   local diff = width - #str
+   if diff > 0 then
+      return string.rep(char and tostring(char) or ' ', diff) .. str
+   elseif diff < 0 then
+      return string.rep(char and tostring(char) or ' ', -diff) .. str:sub(1,diff)
    else
-      return string.rep(char and tostring(char) or ' ', width - #tostring(value)) .. tostring(value)
+      return str
    end
 end
 
@@ -32,11 +36,14 @@ end
 ---@param char string|nil
 ---@return string
 M.pad_right = function(value, width, char)
-   if type(value) == 'string' then
-      return value .. string.rep(char and tostring(char) or ' ', width - #tostring(value))
+   local str = tostring(value)
+   local diff = width - #str
+   if diff > 0 then
+      return str .. string.rep(char and tostring(char) or ' ', diff)
+   elseif diff < 0 then
+      return str:sub(1, width)
    else
-      local value_str = tostring(value)
-      return value_str .. string.rep(char and tostring(char) or ' ', width - #value_str)
+      return str
    end
 end
 

@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# dfInstall: POSIX shell scripts to install an entire Linux desktop
-#            environment into the user's $HOME directory.
+# POSIX shell scripts to install an entire Linux cmdline
+# environment into the user's $HOME directory.
 #
-# usage: dfInstall [ --install | --check | --remove | --clean | --nuke ]
+# usage: dotfileInstall [ --install | --check | --remove | --clean | --nuke ]
 #
 #        where --install: installs dotfiles into $HOME
 #              --check:   checks what was installed
@@ -24,4 +24,4 @@ cd "$DOTFILES_GIT_REPO/home" || {
 ../bin/fishInstall  "$@"
 ../bin/bashInstall  "$@"
 ../bin/nvimInstall  "$@"
-../bin/develInstall "$@"
+../bin/otherInstall "$@"

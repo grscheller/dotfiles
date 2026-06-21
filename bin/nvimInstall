@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# nvimInstall: Installs Neovim configuration files.
+# Installs Neovim configuration files into the
+# user's $HOME directory.
 #
 # usage: nvimInstall [ --install | --check | --remove | --clean | --nuke ]
 #
@@ -76,8 +77,8 @@ dot_config_files='
     lua/plugins/coding/lint.lua
     lua/plugins/coding/textedit.lua
     lua/plugins/ide/init.lua
+    lua/plugins/ide/completions.lua
     lua/plugins/ide/dap.lua
-    lua/plugins/ide/ide.lua
     lua/plugins/infrastructure/init.lua
     lua/plugins/infrastructure/appearance.lua
     lua/plugins/infrastructure/mason.lua
@@ -95,6 +96,7 @@ toml_files='
 remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/ide/ide.lua
 "
 
 dirs_to_create=""

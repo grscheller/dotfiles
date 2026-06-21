@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# develInstall: Installs software development infrastructure and a basic
-#               fallback Bash environment into user's $HOME directory.
+# Installs a basic fallback Bash environment into the
+# user's $HOME directory.
 #
-# usage: develInstall [ --install | --check | --remove | --clean | --nuke ]
+# usage: bashInstall [ --install | --check | --remove | --clean | --nuke ]
 #
 #        where --install: installs other development related config files
 #              --check:   checks what was installed

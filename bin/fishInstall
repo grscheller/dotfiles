@@ -1,6 +1,7 @@
 #!/bin/sh
 #
-# fishInstall: Installs Fish Shell configuration files.
+# Installs Fish Shell configuration files into
+# the user's $HOME directory.
 #
 # usage: fishInstall [ --install | --check | --remove | --clean | --nuke ]
 #
