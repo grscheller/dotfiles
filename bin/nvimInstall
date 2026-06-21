@@ -18,7 +18,7 @@ export DF_ACTION=install
 
 export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 cd "$DOTFILES_GIT_REPO/home" || {
-    printf 'nvimInstall: failed to cd into %s\n' "$DOTFILES_GIT_REPO/home" >&2
+    printf '%s: failed to cd into %s\n' "$SCRIPT_NAME" "$DOTFILES_GIT_REPO/home" >&2
     exit 1
 }
 
@@ -104,27 +104,27 @@ dirs_to_create=""
 # Pre ACTION Checks and Tasks
 
 # Determine if spellfile will need to be recompiled after install.
-SpellFile="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
+spell_file="$XDG_CONFIG_HOME/nvim/spell/en.utf-8.add"
 if which nvim > /dev/null 2>&1
 then
-    if test ! -e "$SpellFile"
+    if test ! -e "$spell_file"
     then
-        compileSpellFile=yes
-    elif diff -q "$SpellFile" config/nvim/spell/en.utf-8.add 2>&1
+        compile_spell_file=yes
+    elif diff -q "$spell_file" config/nvim/spell/en.utf-8.add 2>&1
     then
-        compileSpellFile=no
+        compile_spell_file=no
     else
-        compileSpellFile=yes
+        compile_spell_file=yes
     fi
 fi
 
 # Configure config/globals.lua with XDG directory locations
-sedScript="s!<xdg_config_home>!$XDG_CONFIG_HOME!
+sed_script="s!<xdg_config_home>!$XDG_CONFIG_HOME!
            s!<xdg_cache_home>!$XDG_CACHE_HOME!
            s!<xdg_data_home>!$XDG_DATA_HOME!
            s!<xdg_state_home>!$XDG_STATE_HOME!"
 config_dir=config/nvim/lua/config
-sed -E -e "$sedScript" $config_dir/globals.template.lua > $config_dir/globals.lua
+sed -E -e "$sed_script" $config_dir/globals.template.lua > $config_dir/globals.lua
 
 # Perform ACTION
 
@@ -161,10 +161,10 @@ esac
 
 test "$DF_ACTION" = install && {
     # Recompiled spell file if necessary
-    if test "$compileSpellFile" = yes
+    if test "$compile_spell_file" = yes
     then
-        sf="${SpellFile##*/}"
-        sf_dir="${SpellFile%/*}"
+        sf="${spell_file##*/}"
+        sf_dir="${spell_file%/*}"
         (
             if cd "$sf_dir"
             then
@@ -176,9 +176,9 @@ test "$DF_ACTION" = install && {
 
 test "$DF_ACTION" = check && {
     # Indicate whether the spellfile will be recompiled on next install
-    if test "$compileSpellFile" = yes
+    if test "$compile_spell_file" = yes
     then
-        printf 'nvimInstall: Spellfile "%s" will be\n' "$SpellFile"
+        printf 'nvimInstall: Spellfile "%s" will be\n' "$spell_file"
         printf '             recompiled on the next install.\n\n'
     fi
 }
