@@ -72,9 +72,9 @@ dot_config_files='
     lua/lib/scroll.lua
     lua/lib/text.lua
     lua/plugins/coding/init.lua
-    lua/plugins/coding/format.lua
+    lua/plugins/coding/conform.lua
     lua/plugins/coding/gitsigns.lua
-    lua/plugins/coding/lint.lua
+    lua/plugins/coding/nvim_lint.lua
     lua/plugins/coding/textedit.lua
     lua/plugins/ide/init.lua
     lua/plugins/ide/completions.lua
@@ -97,6 +97,8 @@ remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/ide/ide.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/lint.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/format.lua
 "
 
 dirs_to_create=""
@@ -117,14 +119,6 @@ then
         compile_spell_file=yes
     fi
 fi
-
-# Configure config/globals.lua with XDG directory locations
-sed_script="s!<xdg_config_home>!$XDG_CONFIG_HOME!
-           s!<xdg_cache_home>!$XDG_CACHE_HOME!
-           s!<xdg_data_home>!$XDG_DATA_HOME!
-           s!<xdg_state_home>!$XDG_STATE_HOME!"
-config_dir=config/nvim/lua/config
-sed -E -e "$sed_script" $config_dir/globals.template.lua > $config_dir/globals.lua
 
 # Perform ACTION
 

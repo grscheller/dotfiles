@@ -14,6 +14,6 @@ vim.diagnostic.config {
    signs = true,
 }
 
-M.mason_bin = vim.g._xdg_data_home .. '/nvim/mason/bin'
+M.mason_bin = vim.fs.joinpath(vim.fn.stdpath 'data', 'nvim', 'mason', 'bin')
 
 return M

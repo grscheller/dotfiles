@@ -5,13 +5,13 @@ local autocmd = vim.api.nvim_create_autocmd
 
 --[[ Auto commands related to nvim itself ]]
 
-local GrsTextGrp = autogrp('GrsText', { clear = true })
+local GRS_Text_Grp = autogrp('GRS_Text', { clear = true })
 
 -- No smartcase while in cmdline mode
 autocmd('CmdLineEnter', {
    pattern = '*',
    command = 'set nosmartcase noignorecase',
-   group = GrsTextGrp,
+   group = GRS_Text_Grp,
    desc = 'Use case sensitive search in command mode',
 })
 
@@ -19,7 +19,7 @@ autocmd('CmdLineEnter', {
 autocmd('CmdLineLeave', {
    pattern = '*',
    command = 'set ignorecase smartcase',
-   group = GrsTextGrp,
+   group = GRS_Text_Grp,
    desc = 'Use smartcase when not in Command Mode',
 })
 
@@ -28,7 +28,7 @@ autocmd('TextYankPost', {
    callback = function()
       vim.hl.on_yank { timeout = 500, higroup = 'Visual' }
    end,
-   group = GrsTextGrp,
+   group = GRS_Text_Grp,
    desc = 'Give visual feedback when yanking text',
 })
 
@@ -40,7 +40,7 @@ autocmd({ 'BufWritePost', 'BufEnter' }, {
       vim.o.foldmethod = 'manual'
       vim.o.foldlevelstart = 99
    end,
-   group = GrsTextGrp,
+   group = GRS_Text_Grp,
    desc = 'Make sure folding is off',
 })
 
@@ -48,6 +48,6 @@ autocmd({ 'BufWritePost', 'BufEnter' }, {
 autocmd('FileType', {
    pattern = '*',
    command = 'setlocal formatoptions=tcqjr1',
-   group = GrsTextGrp,
+   group = GRS_Text_Grp,
    desc = 'Keep ftplugins from overriding my formatoptions',
 })

@@ -1,6 +1,6 @@
 --[[ Plugins needed early or by multiple other plugins ]]
 
-local flatten = require('lib.functional').flattenArray
+local flatten = require('lib.functional').flatten_array
 
 return flatten {
    require 'plugins.infrastructure.appearance',

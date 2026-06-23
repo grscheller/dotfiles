@@ -22,11 +22,11 @@ local M = {}
 ---Recursively copy a table, make no attempt replicating metatables
 ---@param original table
 ---@return table
-M.deepCopy = function(original)
+M.deep_copy = function(original)
    local copy = {}
    for k, v in pairs(original) do
       if type(v) == 'table' then
-         v = M.deepCopy(v)
+         v = M.deep_copy(v)
       end
       copy[k] = v
    end
@@ -34,7 +34,7 @@ M.deepCopy = function(original)
 end
 
 -- Flatten an <array> of <arrays> (will repeat values)
-M.flattenArray = function(aoa)
+M.flatten_array = function(aoa)
    local flattened = {}
    for _, v in ipairs(aoa) do
       for _, w in ipairs(v) do
@@ -45,7 +45,7 @@ M.flattenArray = function(aoa)
 end
 
 -- Apply a function to each element of an <array>, can be Curried.
-M.mapArray = function(f, a)
+M.map_array = function(f, a)
    local function map(vs)
       local ma = {}
       local j = 0
@@ -66,57 +66,57 @@ M.mapArray = function(f, a)
    end
 end
 
----Merge a <array> of <maps> - later tables override earlier ones
+---Merge an <array> of <maps> - later tables override earlier ones
 ---@param array_of_maps table
 ---@return table
-M.mergeArrayOfTables = function(array_of_maps)
-   local mergedTable = {}
+M.merge_array_of_tables = function(array_of_maps)
+   local merged_table = {}
    for _, tbl in ipairs(array_of_maps) do
       for k, v in pairs(tbl) do
-         mergedTable[k] = v
+         merged_table[k] = v
       end
    end
-   return mergedTable
+   return merged_table
 end
 
 -- get <map> keys, return <array>
-M.getKeys = function(t)
-   local filteredKeys = {}
+M.get_keys = function(t)
+   local filtered_keys = {}
    for k, _ in pairs(t) do
-      table.insert(filteredKeys, k)
+      table.insert(filtered_keys, k)
    end
-   return filteredKeys
+   return filtered_keys
 end
 
 -- get <map> values, return <array>
-M.getValues = function(t)
-   local filteredValues = {}
+M.get_values = function(t)
+   local filtered_values = {}
    for _, v in pairs(t) do
-      table.insert(filteredValues, v)
+      table.insert(filtered_values, v)
    end
-   return filteredValues
+   return filtered_values
 end
 
 -- get <table> keys filtered by predicate, return <array>
-M.getFilteredKeys = function(t, p)
-   local filteredKeys = {}
+M.get_filtered_keys = function(t, p)
+   local filtered_keys = {}
    for k, v in pairs(t) do
       if p(k, v) then
-         table.insert(filteredKeys, k)
+         table.insert(filtered_keys, k)
       end
    end
-   return filteredKeys
+   return filtered_keys
 end
 
 -- get <table> values filtered by predicate, return <array>
-M.getFilteredValues = function(t, p)
-   local filteredValues = {}
+M.get_filtered_values = function(t, p)
+   local filtered_values = {}
    for k, v in pairs(t) do
       if p(k, v) then
-         table.insert(filteredValues, v)
+         table.insert(filtered_values, v)
       end
    end
-   return filteredValues
+   return filtered_values
 end
 
 return M
