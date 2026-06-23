@@ -28,15 +28,7 @@ return {
                desc = 'Buffer Local Keymaps (which-key)',
             },
 
-            --[[ Treesitter related ]]
-
-            {
-               '<leader>t',
-               '<cmd>TSBufToggle highlight<cr>',
-               desc = 'toggle treesitter highlighting',
-            },
-
-            --[[ Plugin related ]]
+            --[[ Plugin command keymaps ]]
 
             { '<leader>L',  '<cmd>Lazy<cr>',                     desc = 'Lazy gui' },
             { '<leader>M',  '<cmd>Mason<cr>',                    desc = 'Mason gui' },

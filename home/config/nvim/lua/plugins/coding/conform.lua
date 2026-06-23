@@ -15,25 +15,23 @@ local opts = {
 }
 
 return {
-   {
-      'stevearc/conform.nvim',
-      dependencies = {
-         'folke/which-key.nvim',
-      },
-      config = function()
-         local wk = require 'which-key'
-         local conform = require 'conform'
-         conform.setup(opts)
-         wk.add {
-            '<leader>f',
-            function()
-               conform.format {
-                  async = false,
-                  timeout_ms = 2000,
-               }
-            end,
-            desc = 'conform format',
-         }
-      end,
+   'stevearc/conform.nvim',
+   dependencies = {
+      'folke/which-key.nvim',
    },
+   config = function()
+      local wk = require 'which-key'
+      local conform = require 'conform'
+      conform.setup(opts)
+      wk.add {
+         '<leader>f',
+         function()
+            conform.format {
+               async = false,
+               timeout_ms = 2000,
+            }
+         end,
+         desc = 'conform format',
+      }
+   end,
 }

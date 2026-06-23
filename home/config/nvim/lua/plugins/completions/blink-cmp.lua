@@ -1,4 +1,4 @@
---[[ LSP and completion support ]]
+--[[ Completion engine ]]
 
 local blink_opts = {
    -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -13,7 +13,7 @@ local blink_opts = {
    -- C-k: Toggle signature help (if signature.enabled = true)
    --
    -- See :h blink-cmp-config-keymap for defining your own keymap
-   keymap = { preset = 'super-tab' },
+   keymap = { preset = 'enter' },
    -- Adjusts spacing to ensure icons are aligned - 'mono' or 'normal'
    appearance = { nerd_font_variant = 'mono' },
    completion = {
@@ -24,8 +24,13 @@ local blink_opts = {
                kind_icon = {
                   text = function(ctx)
                      local icon = ctx.kind_icon
-                     if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                        local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                     if
+                        vim.tbl_contains({ 'Path' }, ctx.source_name)
+                     then
+                        local dev_icon, _ =
+                           require('nvim-web-devicons').get_icon(
+                              ctx.label
+                           )
                         if dev_icon then
                            icon = dev_icon
                         end
@@ -38,8 +43,12 @@ local blink_opts = {
                   end,
                   highlight = function(ctx)
                      local hl = ctx.kind_hl
-                     if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                        local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
+                     if
+                        vim.tbl_contains({ 'Path' }, ctx.source_name)
+                     then
+                        local dev_icon, dev_hl = require(
+                           'nvim-web-devicons'
+                        ).get_icon(ctx.label)
                         if dev_icon then
                            hl = dev_hl
                         end
@@ -79,28 +88,28 @@ local blink_opts = {
                      vim.fs.root(0, '.git') or vim.fn.getcwd(),
                   }
                end,
-               get_prefix = function(ctx)
-                  return ctx.line:sub(1, ctx.cursor[2]):match '[%w_-]+$' or ''
+               get_prefix = function(context)
+                  return context.line
+                     :sub(1, context.cursor[2])
+                     :match '[%w_-]+$' or ''
                end,
             },
          },
       },
    },
-   fuzzy = { implementation = 'prefer_rust_with_warning' },
+   fuzzy = { implementation = 'rust' },
 }
 
 return {
-   {
-      -- completion engine
-      'saghen/blink.cmp',
-      event = { 'InsertEnter', 'CmdlineEnter' },
-      dependencies = {
-         'rafamadriz/friendly-snippets',
-         'niuiic/blink-cmp-rg.nvim',
-         'onsails/lspkind.nvim',
-      },
-      version = '1.*', -- use a release tag to download pre-built binaries
-      opts = blink_opts,
-      opts_extend = { 'sources.default' },
+   'saghen/blink.cmp',
+   event = { 'InsertEnter', 'CmdlineEnter' },
+   dependencies = {
+      'saghen/blink.lib',
+      'niuiic/blink-cmp-rg.nvim',
+      'onsails/lspkind.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'rafamadriz/friendly-snippets',
    },
+   opts = blink_opts,
+   opts_extend = { 'sources.default' },
 }

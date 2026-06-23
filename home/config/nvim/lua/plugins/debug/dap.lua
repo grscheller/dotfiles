@@ -36,7 +36,6 @@ local config_nvim_dap = function()
 end
 
 return {
-   {
       -- Debug Adapter Protocall (DAP) plugin
       'mfussenegger/nvim-dap',
       dependencies = {
@@ -46,5 +45,4 @@ return {
          'leoluz/nvim-dap-go',
       },
       config = config_nvim_dap,
-   },
 }

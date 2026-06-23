@@ -137,30 +137,28 @@ local on_attach = function(bufnr)
 end
 
 return {
-   {
-      -- Provides GIT info in left gutter
-      'lewis6991/gitsigns.nvim',
-      dependencies = {
-         'nvim-lua/plenary.nvim',
-         'folke/which-key.nvim',
+   -- Provides GIT info in left gutter
+   'lewis6991/gitsigns.nvim',
+   dependencies = {
+      'nvim-lua/plenary.nvim',
+      'folke/which-key.nvim',
+   },
+   opts = {
+      signs = {
+         add = { text = '+' },
+         change = { text = '│' },
+         delete = { text = '∨' },
+         topdelete = { text = '∧' },
+         changedelete = { text = '⊥' },
+         untracked = { text = '┆' },
       },
-      opts = {
-         signs = {
-            add = { text = '+' },
-            change = { text = '│' },
-            delete = { text = '∨' },
-            topdelete = { text = '∧' },
-            changedelete = { text = '⊥' },
-            untracked = { text = '┆' },
-         },
-         signs_staged = {
-            add = { text = '+' },
-            change = { text = '│' },
-            delete = { text = '∨' },
-            topdelete = { text = '∧' },
-            changedelete = { text = '⊥' },
-         },
-         on_attach = on_attach,
+      signs_staged = {
+         add = { text = '+' },
+         change = { text = '│' },
+         delete = { text = '∨' },
+         topdelete = { text = '∧' },
+         changedelete = { text = '⊥' },
       },
+      on_attach = on_attach,
    },
 }

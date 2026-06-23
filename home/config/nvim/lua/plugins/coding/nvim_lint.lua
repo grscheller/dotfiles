@@ -25,19 +25,17 @@ local lint_config = function()
 end
 
 return {
-   {
-      -- Lints what is saved to disk
-      'mfussenegger/nvim-lint',
-      keys = {
-         {
-            '<leader>l',
-            function()
-               require('lint').try_lint()
-            end,
-            mode = 'n',
-            desc = 'Lint',
-         },
+   -- Lints what is saved to disk
+   'mfussenegger/nvim-lint',
+   keys = {
+      {
+         '<leader>l',
+         function()
+            require('lint').try_lint()
+         end,
+         mode = 'n',
+         desc = 'Lint',
       },
-      config = lint_config,
    },
+   config = lint_config,
 }
