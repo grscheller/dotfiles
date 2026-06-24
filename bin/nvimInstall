@@ -87,6 +87,7 @@ dot_config_files='
     lua/plugins/coding/nvim-lastplace.lua
     lua/plugins/coding/nvim_lint.lua
     lua/plugins/coding/nvim-surround.lua
+    lua/plugins/completions/init.lua
     lua/plugins/completions/blink-cmp.lua
     lua/plugins/infrastructure/init.lua
     lua/plugins/infrastructure/mason.lua

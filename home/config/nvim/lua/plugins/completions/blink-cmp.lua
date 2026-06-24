@@ -97,11 +97,12 @@ local blink_opts = {
          },
       },
    },
-   fuzzy = { implementation = 'rust' },
+   fuzzy = { implementation = 'prefer_rust_with_warning' },
 }
 
 return {
    'saghen/blink.cmp',
+   version = '1.*',
    event = { 'InsertEnter', 'CmdlineEnter' },
    dependencies = {
       'saghen/blink.lib',
@@ -111,5 +112,4 @@ return {
       'rafamadriz/friendly-snippets',
    },
    opts = blink_opts,
-   opts_extend = { 'sources.default' },
 }

@@ -1,5 +1,5 @@
 --[[ Completion plugin ]]
 
 return {
-   require 'plugins.completions.blink-cmp.lua',
+   require 'plugins.completions.blink-cmp',
 }
