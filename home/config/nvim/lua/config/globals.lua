@@ -14,8 +14,12 @@ vim.g.loaded_perl_provider = 0
 
 --{{ Globals for plugins ]]
 
+-- Return to last place you edited when reediting
 vim.g.nvim_lastplace = {
    ignore_buftype = { 'quickfix', 'nofile', 'help' },
    ignore_filetype = { 'gitcommit', 'gitrebase' },
    open_folds = true,
 }
+
+-- Default mapping clash with leap.nvim
+vim.g.nvim_surround_no_normal_mappings = true
