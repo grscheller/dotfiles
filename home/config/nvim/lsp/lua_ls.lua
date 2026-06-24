@@ -2,8 +2,6 @@
 
 return {
    cmd = { 'lua-language-server' },
-   filetypes = { 'lua' },
-   root_markers = { 'stylua.toml', 'selene.toml', '.git' },
    settings = {
       Lua = {
          completion = {
@@ -30,4 +28,6 @@ return {
          },
       },
    },
+   filetypes = { 'lua' },
+   root_markers = { 'stylua.toml', 'selene.toml', '.git' },
 }

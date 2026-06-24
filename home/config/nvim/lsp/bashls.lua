@@ -1,22 +1,19 @@
---[[ LSP Configuration - bashls ]]
-
--- local capabilities = vim.tbl_deep_extend('force',
---    vim.lsp.protocol.make_client_capabilities(),
---    require('cmp_nvim_lsp').default_capabilities()
--- )
-
--- Bash, POSIX, Csh Shells
-
-local mason_bin = require('config.configs').mason_bin
-local bash_language_server = mason_bin .. '/bash-language-server'
+---[[ Language server for bash, written using tree sitter in typescript. ]]
 
 return {
-   cmd = { bash_language_server, 'start' },
-   filetypes = { 'bash', 'sh', 'ksh', 'csh' },
-   root_markers = { '.git', '.bashrc', '.profile' },
-   settings = {
-      bashIde = {
-         globPattern = '**/*@(.sh|.inc|.bash|.dash|.command)',
-      },
-   },
+  cmd = { 'bash-language-server', 'start' },
+  settings = {
+    bashIde = {
+      -- Glob pattern for finding and parsing shell script files in the workspace.
+      -- Used by the background analysis features across files.
+
+      -- Prevent recursive scanning which will cause issues when opening a file
+      -- directly in the home directory (e.g. ~/foo.sh).
+      --
+      -- Default upstream pattern is "**/*@(.sh|.inc|.bash|.command)".
+      globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.dash|.command)',
+    },
+  },
+  filetypes = { 'bash', 'sh', 'dash',  },
+  root_markers = { '.git', '.bashrc', '.bash_profile', '.profile' },
 }
