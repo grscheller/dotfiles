@@ -62,7 +62,7 @@ dot_config_files='
     lsp/tombi.lua
     lsp/zls.lua
     lua/config/autocmds_text.lua
-    lua/config/configs.lua
+    lua/config/diagnostics.lua
     lua/config/globals.lua
     lua/config/keymaps.lua
     lua/config/lsp.lua
@@ -104,6 +104,7 @@ toml_files='
 remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
+    $XDG_CONFIG_HOME/nvim/lua/config/configs.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/coding/lint.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/coding/format.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/coding/textedit.lua

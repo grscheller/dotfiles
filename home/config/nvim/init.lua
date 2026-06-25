@@ -1,9 +1,9 @@
 --[[ GRS Neovim Configuration - using lazy.nvim ]]
 
--- Load globals, options & other configurations
+-- Load globals, options & diagnostics
 require 'config.globals'
 require 'config.options'
-require 'config.configs'
+require 'config.diagnostics'
 
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
