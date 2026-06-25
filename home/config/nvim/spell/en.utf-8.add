@@ -660,7 +660,6 @@ changelog
 chmod
 cidr
 clangd
-System76
 cli
 CLI
 clojure
@@ -670,6 +669,8 @@ cmdline
 cmds
 cmp
 cnt
+codeblock
+codeblocks
 codepoint
 colorscheme
 COLORTERM
@@ -694,8 +695,6 @@ ctrl
 CUI
 cyberseurity
 pacman
-dap
-dap
 datatypes
 declarator
 decodings
@@ -795,6 +794,7 @@ glibc
 GLIBC
 globals
 globbing
+goto
 gpg
 GPL
 GPLv2
@@ -1289,6 +1289,7 @@ wxPython
 DOM
 javascript
 JS
+JSX
 json
 JSON
 jsonc
@@ -1311,12 +1312,8 @@ autocommands
 checkhealth
 checkpath
 checktime
-linter
-linters
-lsp
 lspconf
 lspconfig
-LSP's
 neorocks
 neovim
 neovim's
@@ -1327,6 +1324,22 @@ nvim
 nvim's
 undercurl
 whichkey
+# LSP, DAP, linter, formatter names
+actionlint
+ast
+beautysh
+cbfmt
+checkmake
+clj-kondo
+cljfmt
+DAP
+dap
+esbonio
+gitlint
+linter
+linters
+lsp
+LSP's
 # Lua names
 fzy
 hererocks
