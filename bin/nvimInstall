@@ -151,7 +151,6 @@ case "$DF_ACTION" in
         remove_item "$XDG_CONFIG_HOME/nvim"
         remove_item "$XDG_DATA_HOME/nvim/lazy"
         remove_item "$XDG_STATE_HOME/nvim/lazy"
-        remove_item "$XDG_CACHE_HOME/nvim/luac"
         ;;
     nuke)
         remove_item "$XDG_CONFIG_HOME/nvim"

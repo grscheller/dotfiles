@@ -9,6 +9,7 @@ local opts = {
       luau = { 'stylua' },
       markdown = { 'mdformat' },
       rust = { "rustfmt" },
+      sh = { "shfmt" },
       json = { 'prettierd' },
       yaml = { 'prettierd' },
    },
