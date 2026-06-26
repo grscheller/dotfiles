@@ -123,14 +123,84 @@ Official Haskell Language Server implementation.
 - Languages: Haskell
 - Implementation: Haskell
 
+### jls - LSP, DAP
+
+Java language server using Java compiler API, optimized for Neovim.
+
+- Languages: Java
+- Implementation: Java
+
+### lua-language-server - LSP
+
+A language server that offers Lua language support - programmed in Lua.
+
+- Languages: Lua
+- Implementation: Lua
+
+### luau-lsp - LSP
+
+An implementation of a language server for the Luau programming
+language (Johnny Morganz).
+
+- Languages: Luau
+- Implementation: C++
+
+### oxlint - LSP, Linter
+
+High-performance linter for JavaScript and TypeScript written in Rust.
+
+- Languages: JS, TS
+- Implementation: Rust
+
+### rumdl - LSP, LINTER, Formatter
+
+Fast Markdown linter and formatter.
+
+- Languages: Markdown
+- Implementation: Rust
+
 ### rust-analyzer - LSP
 
 Rust analyzer is an implementation of the Language Server Protocol for
-the Rust programming language. It provides features like completion and
-goto definition for many code editors, including VS Code, Emacs and Vim.
+the Rust programming language.
 
 - Languages: Rust
 - Implementation: Rust
+
+### stylua - LSP, Formatter
+
+An opinionated Lua code formatter (Johnny Morganz).
+`
+- Languages: Lua, Luau
+- Implementation: Rust
+
+### superhtml - LSP, Formatter
+
+HTML language server & templating language library
+
+- Languages: HTML, SuperHTML
+- Implementation: Zig
+
+### systemd-lsp - LSP
+
+Language server implementation for systemd unit files.
+
+- Languages: systemd files
+- Implementation: Rust
+
+### tombi - LSP, Linter, Formatter
+
+Feature-Rich TOML Toolkit.
+
+- Languages: TOML
+- Implementation: Rust
+
+### zls - LSP
+
+Zig LSP implementation + Zig Language Server.
+
+- Languages  Zig
+- Implementation: Zig
 
 ## Python Environment Installation
 
@@ -166,7 +236,7 @@ since a given commit.
 A Language Server that aims to make it easier to work with
 reStructuredText tools such as Sphinx
 
-- Languages: Sphinx
+- Languages: reStructuredText, Sphinx
 - Implementation: Python
 
 ### gitlint - Linter
@@ -175,3 +245,40 @@ Git commit message linter. It checks your commit messages for style.
 
 - Languages: Git commit messages
 - Implementation: Python
+
+### mypy - Linter
+
+Mypy is a static type checker for Python.
+
+- Languages: Python
+- Implementation: Python
+
+### python-lsp-server - LSP
+
+Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
+
+- Languages  Python
+- Implementation: Python
+
+### ruff - LSP, Linter, Formatter
+
+An extremely fast Python linter and code formatter, written in Rust.
+
+- Languages: Python
+- Implementation: Python, Rust
+
+### tclint - LSP, Linter, Formatter
+
+Modern dev tools for Tcl, includes a linter, formatter, and editor
+integration.
+
+- Languages: Tcl
+- Implementation: Python
+
+### zuban - LSP, Linter
+
+Zuban is a high-performant Mypy-compatible LSP and type checker
+built in Rust.
+
+- Languages: Python
+- Implementation: Rust

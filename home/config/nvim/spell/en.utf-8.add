@@ -126,6 +126,7 @@ stateful
 storability
 storable
 TBD
+templating
 terminfo
 thumbdrive
 timestamp
@@ -232,6 +233,7 @@ McDonalds
 Meraki
 Microsystems
 MMT
+Morganz
 Naftalin
 NetFlix
 Noether
@@ -1335,11 +1337,19 @@ cljfmt
 DAP
 dap
 esbonio
+fourmolu
 gitlint
+jls
 linter
 linters
 lsp
 LSP's
+oxlint
+rumdl
+stylua
+superhtml
+tclint
+tombi
 # Lua names
 fzy
 hererocks
