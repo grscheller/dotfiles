@@ -6,7 +6,8 @@ local km = vim.keymap.set
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
 km('n', '<m-=>', '<c-w>v', { desc = 'vsplit current window' })
-km('n', '<m-t>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term' })
+km('n', '<m-t>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term right' })
+km('n', '<m-T>', '<cmd>split<bar>term fish<cr>i', { desc = 'fish term below' })
 
 -- Navigating windows
 km('n', '<c-h>', '<c-w>h', { desc = 'goto window left' })
@@ -59,7 +60,6 @@ local function toggle_line_numbering()
       vim.wo.relativenumber = false
    end
 end
-
 km('n', '<leader>n', toggle_line_numbering, { desc = 'toggle line numbering' })
 
 -- Delete & change text without affecting default register
@@ -86,31 +86,18 @@ km('v', 'K', ":m '<-2<cr>gv=gv", { desc = 'move selection up a line' })
 -- Visually select what was just pasted
 km('n', 'gV', '`[v`]', { desc = 'select what was just pasted' })
 
--- Cleanup related keymaps
-km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
-km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })
-
 -- Spelling related keymaps
 km('n', 'z ', '<cmd>set invspell<cr>', { desc = 'toggle spelling' })
 
--- Editing tweaks
+-- Change character with added space at end
 km('n', 'cL', 'cl <c-o>h', { desc = 'cl with SPACE' })
-km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
+
+-- Move cursor in insert mode
 km('i', '<c-h>', '<c-o>h', { desc = 'move cursor one space left' })
+km('i', '<c-j>', '<c-o>j', { desc = 'move cursor one line down' })
+km('i', '<c-k>', '<c-o>k', { desc = 'move cursor one line up' })
+km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
 
---[[ Diagnostic keymaps & a vim.diagnostic tweak ]]
-
-km('n', '<bslash>[', function()
-   vim.diagnostic.jump { count = -1, float = true }
-end, { desc = 'prev diagnostic' })
-
-km('n', '<bslash>]', function()
-   vim.diagnostic.jump { count = 1, float = true }
-end, { desc = 'next diagnostic' })
-
-km('n', '<bslash>c', vim.cmd.lclose, { desc = 'close qf' })
-km('n', '<bslash>e', vim.diagnostic.open_float, { desc = 'error message popup' })
-km('n', '<bslash>h', vim.diagnostic.hide, { desc = 'hide diagnostics' })
-km('n', '<bslash>q', vim.diagnostic.setloclist, { desc = 'open qf' })
-km('n', '<bslash>r', vim.diagnostic.reset, { desc = 'reset diagnostics' })
-km('n', '<bslash>s', vim.diagnostic.show, { desc = 'show diagnostics' })
+-- Cleanup related keymaps
+km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
+km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })

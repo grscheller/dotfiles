@@ -9,21 +9,14 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Python provider for pynvim
-vim.g.python3_host_prog = vim.fs.joinpath(
-   vim.fs.abspath '~',
-   'devel',
-   'venvs',
-   'python_venv',
-   'bin',
-   'python'
-)
-
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true
 
--- Perl had its day - it had the best man pages ever
+-- Turn off providers - modern plugins don't use these anymore
+vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
 
 --{{ Globals for plugins ]]
 

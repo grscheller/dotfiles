@@ -44,7 +44,6 @@ vim.o.splitbelow = true      -- horizontally split window below
 vim.o.splitright = true      -- vertically split window to right
 vim.o.ruler = false          -- disable ruler
 vim.o.wrap = false           -- don't wrap lines
-vim.o.winborder = 'rounded'  -- floating windows singled lined with rounded corners
 
 -- Settings affecting LSP clients & plugins
 vim.o.termguicolors = true                  -- enable 24-bit RGB color for ISO-8613-3 terminals
@@ -57,8 +56,6 @@ vim.o.wildmenu = false                      -- using Saghen/blink.nvim for this
 vim.o.shortmess = 'asAIcCF'                 -- shorten/gag extraneous statusline messages
 vim.o.complete = '.,w,b,u,kspell'           -- no "t,i" redundant with LSP
 vim.o.completeopt = 'menu,menuone,noselect' -- for blink.cmp
-vim.o.inccommand = 'split'                  -- For smjonas/inc-rename.nvim LSP renaming showing
-vim.o.cmdwinheight = 15                     -- changes in multiple buffers.
 
 -- Essentially disable folding
 vim.o.foldenable = false    -- Allows me to reuse of folding keybindings. I have
