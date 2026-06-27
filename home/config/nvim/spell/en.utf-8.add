@@ -1329,6 +1329,7 @@ whichkey
 # LSP, DAP, linter, formatter names
 actionlint
 ast
+bashls
 beautysh
 cbfmt
 checkmake

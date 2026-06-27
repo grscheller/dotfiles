@@ -20,7 +20,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local lazy_opts = {
-   lockfile = vim.fs.joinpath(vim.fn.stdpath 'state', 'lazy-lock.json'),
+   lockfile = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy-lock.json'),
    defaults = { lazy = false },
    spec = { { import = 'plugins' } },
    ui = {

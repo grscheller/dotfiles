@@ -8,7 +8,7 @@ local opts = {
          package_uninstalled = '✗',
       },
    },
-   PATH = 'append',
+   PATH = 'prepend',
 }
 
 return {

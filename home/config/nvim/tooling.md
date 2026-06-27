@@ -11,12 +11,29 @@ Static checker for GitHub Actions workflow files.
 
 ### ast-grep - LSP, Linter, Formatter
 
-A CLI tool for code structural search, lint and rewriting.
-Written in Rust.
+A CLI tool for code structural search, linting and rewriting.
+
+Note that `ast-grep lsp` only works in projects that have an
+sgconfig.y[a]ml in their root directory.
 
 - Languages: C, C++, Rust, Go, Java, Python, C#, JavaScript
 - Languages: JSX, TypeScript, HTML, CSS, Kotlin, Dart, Lua
 - Implementation: Rust
+
+**Important**: The `ast-grep lsp` command does not add general
+language intelligence (no completions, no go-to-definition, no symbol
+resolution). It is exclusively rule-driven. Every diagnostic, code
+action, and hover note it produces is a direct consequence of rules you
+define in YAML. This makes it much closer to a configurable linter/fixer
+that happens to speak LSP.
+
+**Tip**: To bootstrap a new project, from the root directory
+
+```console
+    $ ast-grep new
+    $ ast-grep new rule
+```
+The first command creates
 
 ### bacon - Linter
 
@@ -170,7 +187,8 @@ the Rust programming language.
 ### stylua - LSP, Formatter
 
 An opinionated Lua code formatter (Johnny Morganz).
-`
+\`
+
 - Languages: Lua, Luau
 - Implementation: Rust
 
@@ -199,7 +217,7 @@ Feature-Rich TOML Toolkit.
 
 Zig LSP implementation + Zig Language Server.
 
-- Languages  Zig
+- Languages Zig
 - Implementation: Zig
 
 ## Python Environment Installation
@@ -257,7 +275,7 @@ Mypy is a static type checker for Python.
 
 Fork of the python-language-server project, maintained by the Spyder IDE team and the community.
 
-- Languages  Python
+- Languages Python
 - Implementation: Python
 
 ### ruff - LSP, Linter, Formatter

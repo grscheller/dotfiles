@@ -1,10 +1,23 @@
---[[ Globals - loaded before lazy takes control ]]
+--[[ Globals - loaded before lazy takes control
 
--- First thing loaded in init.lua, most plugins only read these on startup.
+     - First thing loaded in init.lua
+     - most plugins only read these globals on startup
+
+--]]
 
 -- Define leader keys once and for all
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- Python provider for pynvim
+vim.g.python3_host_prog = vim.fs.joinpath(
+   vim.fs.abspath '~',
+   'devel',
+   'venvs',
+   'python_venv',
+   'bin',
+   'python'
+)
 
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true
@@ -21,5 +34,5 @@ vim.g.nvim_lastplace = {
    open_folds = true,
 }
 
--- Default mapping clash with leap.nvim
-vim.g.nvim_surround_no_normal_mappings = true
+-- Default nvim-surround mappings clash with leap.nvim mappings
+vim.g.nvim_surround_no_mappings = true
