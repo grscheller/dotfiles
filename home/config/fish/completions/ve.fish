@@ -3,17 +3,32 @@ complete -c ve -f
 
 # show all options available
 complete -c ve \
+    -n 'not __fish_seen_subcommand_from empty' \
+    -a empty
+complete -c ve \
     -n 'not __fish_seen_subcommand_from grs' \
     -a grs
 complete -c ve \
-    -n 'not __fish_seen_subcommand_from dev3_13' \
-    -a dev3_13
+    -n 'not __fish_seen_subcommand_from dev12' \
+    -a dev12
 complete -c ve \
     -n 'not __fish_seen_subcommand_from dev13' \
     -a dev13
 complete -c ve \
     -n 'not __fish_seen_subcommand_from dev14' \
     -a dev14
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from fp' \
+    -a fp
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from fp_test' \
+    -a fp_test
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from coord_fp' \
+    -a coord_fp
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from coord_fp_test' \
+    -a coord_fp_test
 complete -c ve \
     -n 'not __fish_seen_subcommand_from fp_booleans' \
     -a fp_booleans
@@ -69,6 +84,18 @@ complete -c ve \
     -n 'not __fish_seen_subcommand_from fp_splitends_test' \
     -a fp_splitends_test
 complete -c ve \
+    -n 'not __fish_seen_subcommand_from bm' \
+    -a bm
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from bm_test' \
+    -a bm_test
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from coord_bm' \
+    -a coord_bm
+complete -c ve \
+    -n 'not __fish_seen_subcommand_from coord_bm_test' \
+    -a coord_bm_test
+complete -c ve \
     -n 'not __fish_seen_subcommand_from bm_abstract_algebra' \
     -a bm_abstract_algebra
 complete -c ve \
@@ -110,15 +137,3 @@ complete -c ve \
 complete -c ve \
     -n 'not __fish_seen_subcommand_from bm_special_functions_test' \
     -a bm_special_functions_test
-complete -c ve \
-    -n 'not __fish_seen_subcommand_from fp' \
-    -a fp
-complete -c ve \
-    -n 'not __fish_seen_subcommand_from fp_test' \
-    -a fp_test
-complete -c ve \
-    -n 'not __fish_seen_subcommand_from bm' \
-    -a bm
-complete -c ve \
-    -n 'not __fish_seen_subcommand_from bm_test' \
-    -a bm_test

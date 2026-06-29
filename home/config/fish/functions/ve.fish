@@ -134,7 +134,7 @@ function ve --description 'Manage a group of Python virtual environments'
         return 0
     end
 
-    # Set to 1 if no options were given
+    # Set to yes if no options were given
     set -f flags no
 
     set -q _flag_missing
@@ -143,7 +143,7 @@ function ve --description 'Manage a group of Python virtual environments'
     or set -q _flag_redo
     and set flags yes
 
-    # Set to 1 if inconsistent options given
+    # Set to yes if inconsistent options given
     set -f punt no
 
     set -f argc (count $argv)
@@ -265,7 +265,7 @@ function ve --description 'Manage a group of Python virtual environments'
 
     # If no options were given, deactivate any active venv
     # and give some useful information.
-    if test "$flags" = n
+    if test "$flags" = no
         if set -q VIRTUAL_ENV; or type -q deactivate
             printf '\nShutting down active venv: %s\n\n' \"$VIRTUAL_ENV\"
             deactivate
