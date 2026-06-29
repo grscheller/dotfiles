@@ -94,7 +94,13 @@ local opts_for_kanagawa_colorscheme = function()
          section_separators = { left = '', right = '' },
          disabled_filetypes = {
             statusline = { 'help' },
-            winbar = {},
+            winbar = {
+               'dap-view',
+               'dap-view-term',
+               'dap-view-hover',
+               'dap-view-help',
+               'dap-repl',
+            },
          },
          ignore_focus = {},
          always_divide_middle = true,

@@ -1,5 +1,8 @@
 --[[ Plugins relating to debugging ]]
 
-return {
+local flatten = require('lib.functional').flatten_array
+
+return flatten {
    require 'plugins.debug.dap',
+   require 'plugins.debug.adapters',
 }

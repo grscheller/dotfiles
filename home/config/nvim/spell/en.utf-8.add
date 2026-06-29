@@ -582,6 +582,7 @@ XF86MonBrightnessDown
 XF86MonBrightnessUp
 XF86Search
 # Unix/Linux/Systemd/Arch/PoPOS related
+appimage
 archlinux
 Archwiki
 BindsTo
@@ -589,6 +590,7 @@ brightnessctl
 CDE
 etherape
 ExecStart
+FlatPak
 greetd
 journalctl
 mpd
@@ -601,6 +603,7 @@ pathnames
 PoPOS
 pulseaudio
 Smulx
+squashfs
 System76
 systemctl
 Systemd
