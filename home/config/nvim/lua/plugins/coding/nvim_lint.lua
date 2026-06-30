@@ -1,29 +1,5 @@
 --[[ Plugin to integrate commandline formatters ]]
 
-local lint_config = function()
-   local lint = require 'lint'
-
-   lint.linters_by_ft = {
-      css = { 'stylelint' },
-      gitcommit = { 'gitlint' },
-      haskell = { 'hlint' },
-      html = { 'markuplint' },
-      javascript = { 'eslint_d' },
-      javascriptreact = { 'eslint_d' },
-      json = { 'jsonlint' },
-      lua = { 'selene' },
-      luau = { 'selene' },
-      markdown = { 'markdownlint-cli' },
-      python = { 'sphinx-lint' },
-      rst = { 'rstcheck', 'sphinx-lint' },
-      sh = { 'shellcheck' },
-      svelte = { 'eslint_d' },
-      typescript = { 'eslint_d' },
-      typescriptreact = { 'eslint_d' },
-      vue = { 'eslint_d' },
-   }
-end
-
 return {
    -- Lints what is saved to disk
    'mfussenegger/nvim-lint',
@@ -34,8 +10,13 @@ return {
             require('lint').try_lint()
          end,
          mode = 'n',
-         desc = 'Lint',
+         desc = 'lint (nvim-lint)',
       },
    },
-   config = lint_config,
+   config = function()
+      local lint = require 'lint'
+      local tools = require 'config.tools'
+
+      lint.linters_by_ft = tools.linters
+   end
 }

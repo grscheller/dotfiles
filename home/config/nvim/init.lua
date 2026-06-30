@@ -9,7 +9,7 @@ require 'config.diagnostics'
 vim.cmd [[colorscheme lunaperche]]
 
 -- Configure LSP clients natively
-require 'config.lsp'
+require 'config.tools'
 
 -- Load initial keymaps
 require 'config.keymaps'

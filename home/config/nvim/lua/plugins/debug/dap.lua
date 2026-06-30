@@ -26,6 +26,7 @@ return {
          km('n', ',sa', function() dap.step_over() end, { desc = 'DAP step around (over)' })
          km('n', ',so', function() dap.step_out() end, { desc = 'DAP step out' })
          km('n', ',sc', function() dap.run_to_cursor() end, { desc = 'DAP step to cursor' })
+
       end,
-   }
+   },
 }
