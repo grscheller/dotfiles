@@ -119,4 +119,43 @@ M.get_filtered_values = function(t, p)
    return filtered_values
 end
 
+--- Returns a new sorted <array>
+--- @param vs table  table of homogeneous sort-able values
+--- @return table   new <array>, consecutive duplicates removed
+M.sort_array = function(vs)
+   local copy = {}
+   for v = 1, #vs do
+      copy[v] = vs[v]
+   end
+   table.sort(copy)
+   return copy
+end
+
+--- Removes duplicates from a table assumed already sorted (or at least one
+--- where equal values are contiguous). O(n).
+--- @param vs table  array-like table of homogeneous sortable values
+--- @return table   new array-like table, consecutive duplicates removed
+M.uniq_sorted = function(vs)
+   local n = #vs
+   local sorted = {}
+   if n == 0 then
+      return sorted
+   end
+   sorted[1] = vs[1]
+   local curr = 1
+   for i = 2, n do
+      if vs[i] ~= sorted[curr] then
+         curr = curr + 1
+         sorted[curr] = vs[i]
+      end
+   end
+   return sorted
+end
+
+--- @param vs table  array-like table of homogeneous sortable values
+--- @return table   new array-like table, consecutive duplicates removed
+M.sort_uniq = function(vs)
+   return M.uniq_sorted(M.sort_array(vs))
+end
+
 return M
