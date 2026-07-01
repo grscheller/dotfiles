@@ -9,7 +9,7 @@ return {
          'mfussenegger/nvim-dap',
       },
       opts = {
-         ensure_installed = { 'python', 'codelldb' },
+         ensure_installed = require('config.tools').debug_adapters,
          handlers = {},
       },
    },

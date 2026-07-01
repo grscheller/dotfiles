@@ -1,5 +1,12 @@
 --[[ Enable LSP configs and supporting infrastructure ]]
 
+local functional = require 'lib.functional'
+
+local flatten = functional.flatten_array
+local values = functional.get_table_values
+local sort = functional.sort_array_uniq
+local concat = functional.concat_arrays
+
 local M = {}
 
 M.lsp_servers = {
@@ -28,7 +35,7 @@ M.linters = {
    json = { 'jsonlint' },
    lua = { 'selene' },
    luau = { 'selene' },
-   markdown = { 'markdownlint-cli' },
+   markdown = { 'markdownlint-cli2' },
    python = { 'sphinx-lint' },
    rst = { 'rstcheck', 'sphinx-lint' },
    sh = { 'shellcheck' },
@@ -39,28 +46,22 @@ M.linters = {
 }
 
 M.formatters = {
+   c = { 'clang-format' },
+   clojure = { 'cljfmt' },
+   cpp = { 'clang-format' },
    css = { 'prettierd' },
    haskell = { 'fourmolu' },
    html = { 'prettierd' },
+   java = { 'clang-format' },
+   js = { 'clang-format' },
    lua = { 'stylua' },
    luau = { 'stylua' },
    markdown = { 'mdformat', 'markdown-toc' },
-   rust = { 'rustfmt' },
    sh = { 'shfmt' },
-   json = { 'prettierd' },
+   json = { 'clang-format' },
    yaml = { 'prettierd' },
 }
 
-M.tools_to_install = {
-   'clang-format',  -- C, C#, C++, JSON, Java, JavaScript - not yet configured
-   'cljfmt',  -- Clojure, ClojureScript - not yet configured
-   'fourmolu',  -- Haskell (less opinionated than ormolu)
-   'markdown-toc',
-   'mdformat',
-   'prettierd',
-   'rstcheck',
-   'stylua',  -- lua, luau
-   -- Linter-Formatters
-}
+M.linters_and_formatters = sort(concat(flatten(values(M.linters)), flatten(values(M.formatters))))
 
 return M

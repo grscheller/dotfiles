@@ -1,15 +1,18 @@
 --[[ Functional Programming for Lua
 
      Functions designed to be applied against "simple" tables:
-       <array> means a Lua consecutive integer indexed table with no holes
-       <map> means a table of "key" -> value pairs
+       - array means a Lua consecutive integer indexed table with no holes
+       - map means a table of key -> value pairs
+       - all tables are assumed to be "well founded" with
+         - no references to itself
+         - no circular references
 
      So that these JIT compile and run very fast, there is no type or error
      checking.  It is the programmer's responsibility to pass the correct data
      structures to these functions.
 
-     I would not use these with mixed tables. Function-like objects, like tables
-     with __call metamethods, should be OK as function arguments ... I think?
+     I would not use these with mixed tables. Function-like objects, tables
+     with __call metamethods, these functions should be OK as function arguments.
 
      The use of the word "functional" is meant to mean that the interface is
      functional, not necessarily the implementation.
@@ -33,7 +36,27 @@ M.deep_copy = function(original)
    return copy
 end
 
--- Flatten an <array> of <arrays> (will repeat values)
+---Concatenate two arrays, return new array. O(n + m).
+---@generic V
+---@param a1 V[]
+---@param a2 V[]
+---@return V[]
+M.concat_arrays = function(a1, a2)
+   local n = #a1
+   local result = {}
+   for i = 1, n do
+      result[i] = a1[i]
+   end
+   for i = 1, #a2 do
+      result[n + i] = a2[i]
+   end
+   return result
+end
+
+---Flatten an <array> of <arrays> (will repeat values)
+---@generic A
+---@param aoa A[][]
+---@return A[]
 M.flatten_array = function(aoa)
    local flattened = {}
    for _, v in ipairs(aoa) do
@@ -44,8 +67,14 @@ M.flatten_array = function(aoa)
    return flattened
 end
 
--- Apply a function to each element of an <array>, can be Curried.
-M.map_array = function(f, a)
+---Apply a function to each element of an array,
+---can be Curried, skip nil returned values.
+---@generic A
+---@generic B
+---@param f fun(a: A): B?
+---@param as A[]
+---@return B[]|fun(as: A[]): B[]
+M.map_array = function(f, as)
    local function map(vs)
       local ma = {}
       local j = 0
@@ -56,22 +85,24 @@ M.map_array = function(f, a)
             ma[j] = value
          end
       end
-      return ma, j
+      return ma
    end
 
-   if a then
-      return map(a)
+   if as ~= nil then
+      return map(as)
    else
       return map
    end
 end
 
----Merge an <array> of <maps> - later tables override earlier ones
----@param array_of_maps table
----@return table
-M.merge_array_of_tables = function(array_of_maps)
+---Merge an array of maps - later tables override earlier ones
+---@generic K
+---@generic V
+---@param t table<K, V>[]
+---@return table<K, V>
+M.merge_array_of_tables = function(t)
    local merged_table = {}
-   for _, tbl in ipairs(array_of_maps) do
+   for _, tbl in ipairs(t) do
       for k, v in pairs(tbl) do
          merged_table[k] = v
       end
@@ -79,63 +110,91 @@ M.merge_array_of_tables = function(array_of_maps)
    return merged_table
 end
 
--- get <map> keys, return <array>
-M.get_keys = function(t)
+---get the keys to a table
+---@generic K
+---@generic V
+---@param t table<K, V>
+---@return K[]
+M.get_table_keys = function(t)
    local filtered_keys = {}
-   for k, _ in pairs(t) do
-      table.insert(filtered_keys, k)
+   local ii = 1
+   for key, _ in pairs(t) do
+      filtered_keys[ii] = key
+      ii = ii + 1
    end
    return filtered_keys
 end
 
--- get <map> values, return <array>
-M.get_values = function(t)
+---get the values in a table
+---@generic K
+---@generic V
+---@param t table<K, V>
+---@return V[]
+M.get_table_values = function(t)
    local filtered_values = {}
-   for _, v in pairs(t) do
-      table.insert(filtered_values, v)
+   local ii = 1
+   for _, value in pairs(t) do
+      filtered_values[ii] = value
+      ii = ii + 1
    end
    return filtered_values
 end
 
--- get <table> keys filtered by predicate, return <array>
+---get table keys filtered by predicate
+---@generic K
+---@generic V
+---@param t table<K, V>
+---@param p fun(k: K, v: V): boolean
+---@return K[]
 M.get_filtered_keys = function(t, p)
    local filtered_keys = {}
-   for k, v in pairs(t) do
-      if p(k, v) then
-         table.insert(filtered_keys, k)
+   local ii = 1
+   for key, value in pairs(t) do
+      if p(key, value) then
+         filtered_keys[ii] = key
+         ii = ii + 1
       end
    end
    return filtered_keys
 end
 
--- get <table> values filtered by predicate, return <array>
+---get table values filtered by predicate
+---@generic K
+---@generic V
+---@param t table<K, V>
+---@param p fun(k: K, v: V): boolean
+---@return V[]
 M.get_filtered_values = function(t, p)
    local filtered_values = {}
-   for k, v in pairs(t) do
-      if p(k, v) then
-         table.insert(filtered_values, v)
+   local ii = 1
+   for key, value in pairs(t) do
+      if p(key, value) then
+         filtered_values[ii] = value
+         ii = ii + 1
       end
    end
    return filtered_values
 end
 
---- Returns a new sorted <array>
---- @param vs table  table of homogeneous sort-able values
---- @return table   new <array>, consecutive duplicates removed
+---Returns a new sorted array, O(n⋅log(n)) on average, O(n²) worst case.
+---@generic V
+---@param vs V[] contract: array contains homogeneous sortable values
+---@return V[]
 M.sort_array = function(vs)
    local copy = {}
-   for v = 1, #vs do
-      copy[v] = vs[v]
+   for ii = 1, #vs do
+      copy[ii] = vs[ii]
    end
    table.sort(copy)
    return copy
 end
 
---- Removes duplicates from a table assumed already sorted (or at least one
---- where equal values are contiguous). O(n).
---- @param vs table  array-like table of homogeneous sortable values
---- @return table   new array-like table, consecutive duplicates removed
-M.uniq_sorted = function(vs)
+---Consolidate consecutive duplicates values from an array,
+---return new array, O(n).
+---@generic V
+---@param vs V[] contract: array contains homogeneous sortable values
+---@return V[]
+M.uniq = function(vs)
    local n = #vs
    local sorted = {}
    if n == 0 then
@@ -143,19 +202,22 @@ M.uniq_sorted = function(vs)
    end
    sorted[1] = vs[1]
    local curr = 1
-   for i = 2, n do
-      if vs[i] ~= sorted[curr] then
+   for ii = 2, n do
+      if vs[ii] ~= sorted[curr] then
          curr = curr + 1
-         sorted[curr] = vs[i]
+         sorted[curr] = vs[ii]
       end
    end
    return sorted
 end
 
---- @param vs table  array-like table of homogeneous sortable values
---- @return table   new array-like table, consecutive duplicates removed
-M.sort_uniq = function(vs)
-   return M.uniq_sorted(M.sort_array(vs))
+---Return a new sorted array with uniq values,
+---O(n⋅log(n)) on average, O(n²) worst case.
+---@generic V
+---@param vs V[] contract: array contains homogeneous sortable values
+---@return V[]
+M.sort_array_uniq = function(vs)
+   return M.uniq(M.sort_array(vs))
 end
 
 return M

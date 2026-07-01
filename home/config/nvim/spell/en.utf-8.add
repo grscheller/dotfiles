@@ -115,11 +115,11 @@ setitem
 SGID
 shellcheck
 shiftwidth
-showMessage
 signatureHelp
 signingkey
 sizep
 sliceable
+sortable
 soyboy
 spellfile
 stateful
@@ -1376,6 +1376,7 @@ TensorFlow
 # grscheller ~/devel names
 󰒲
 ackermann
+aoa
 apue
 APUE
 arg
@@ -1590,6 +1591,7 @@ s8
 s9
 sc_reduce_left
 sc_reduce_right
+showMessage
 siegfried
 SL
 SL_NODE
