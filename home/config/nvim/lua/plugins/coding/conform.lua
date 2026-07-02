@@ -6,7 +6,7 @@ return {
       {
          '<leader>f',
          function()
-            conform.format {
+            require('conform').format {
                async = false,
                timeout_ms = 2000,
             }
