@@ -6,7 +6,7 @@ return {
       { 'mason-org/mason.nvim', opts = {} },
    },
    opts = {
-      ensure_installed = require('config.tools').lsp_servers,
+      ensure_installed = require('config.tools').mason_lsp_servers,
       automatic_enable = false,
    },
 }

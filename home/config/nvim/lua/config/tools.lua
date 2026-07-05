@@ -9,15 +9,22 @@ local concat = functional.concat_arrays
 
 local M = {}
 
-M.lsp_servers = {
+local mason_lsp_servers = {
    'bashls',
    'lua_ls',
    'marksman',
-   'pylsp',
    'ruff',
    'tombi',
    'zls',
 }
+
+local venv_lsp_servers = {
+   'zuban',
+}
+
+M.mason_lsp_servers = mason_lsp_servers
+M.lsp_servers = concat(mason_lsp_servers, venv_lsp_servers)
+
 vim.lsp.enable(M.lsp_servers)
 
 M.debug_adapters = {
