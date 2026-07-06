@@ -1,9 +1,9 @@
 --[[ Hijack vim.notify - used by Noice ]]
 
 return {
-   'rcarriga/nvim-notify',
-   priority = 900,
+   [1] = 'rcarriga/nvim-notify',
    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+   event = 'VeryLazy',
    config = function()
       vim.notify = require 'notify'
    end,

@@ -2,7 +2,7 @@
 
 return {
    -- Lints what is saved to disk
-   'mfussenegger/nvim-lint',
+   [1] = 'mfussenegger/nvim-lint',
    keys = {
       {
          '<leader>l',
@@ -14,9 +14,6 @@ return {
       },
    },
    config = function()
-      local lint = require 'lint'
-      local tooling = require 'config.tooling'
-
-      lint.linters_by_ft = tooling.linters
+      require('lint').linters_by_ft = require('config.tooling').linters
    end
 }

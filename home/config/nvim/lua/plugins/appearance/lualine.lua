@@ -159,7 +159,7 @@ local opts_for_kanagawa_colorscheme = function()
 end
 
 return {
-   'nvim-lualine/lualine.nvim',
+   [1] = 'nvim-lualine/lualine.nvim',
    event = 'VeryLazy',
    dependencies = {
       'nvim-tree/nvim-web-devicons',

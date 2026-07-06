@@ -1,7 +1,7 @@
 return {
    -- Colorize color names, hexcodes,
    -- and other color formats.
-   'norcalli/nvim-colorizer.lua',
+   [1] = 'norcalli/nvim-colorizer.lua',
    keys = {
       {
          '<leader>C',

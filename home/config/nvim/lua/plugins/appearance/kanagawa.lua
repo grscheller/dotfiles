@@ -22,7 +22,7 @@ local kanagawa_opts = {
 }
 
 return {
-   'rebelot/kanagawa.nvim',
+   [1] = 'rebelot/kanagawa.nvim',
    priority = 1000,
    config = function()
       local kanagawa = require 'kanagawa'

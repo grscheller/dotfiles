@@ -3,7 +3,8 @@
 return {
    {
       -- Package manager for external tooling
-      'mason-org/mason.nvim',
+      [1] = 'mason-org/mason.nvim',
+      event = 'VeryLazy',
       opts = {
          ui = {
             icons = {

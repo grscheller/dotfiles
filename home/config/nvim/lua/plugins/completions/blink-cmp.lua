@@ -101,7 +101,7 @@ local blink_opts = {
 }
 
 return {
-   'saghen/blink.cmp',
+   [1] = 'saghen/blink.cmp',
    version = '1.*',
    event = { 'InsertEnter', 'CmdlineEnter' },
    dependencies = {

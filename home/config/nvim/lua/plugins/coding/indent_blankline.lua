@@ -1,6 +1,6 @@
 return {
    -- Show line indentations when editing code.
-   'lukas-reineke/indent-blankline.nvim',
+   [1] = 'lukas-reineke/indent-blankline.nvim',
    event = 'InsertEnter',
    main = 'ibl',
    opts = {

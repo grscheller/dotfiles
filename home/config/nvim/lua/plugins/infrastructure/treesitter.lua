@@ -65,9 +65,9 @@ end
 
 return {
    {
-      'nvim-treesitter/nvim-treesitter',
+      [1] = 'nvim-treesitter/nvim-treesitter',
       branch = 'main',
-      lazy = false,
+      event = 'VeryLazy',
       config = config_treesitter,
       build = ':TSUpdate',
    },

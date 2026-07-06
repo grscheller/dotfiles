@@ -1,7 +1,7 @@
 --[[ Plugin to enables range formatting for all formatters ]]
 
 return {
-   'stevearc/conform.nvim',
+   [1] = 'stevearc/conform.nvim',
    keys = {
       {
          '<leader>f',
@@ -15,10 +15,5 @@ return {
          desc = 'format (conform)',
       },
    },
-   config = function()
-      local tooling = require 'config.tooling'
-      local conform = require 'conform'
-
-      conform.setup { formatters_by_ft = tooling.formatters }
-   end,
+   opts = { formatters_by_ft = require('config.tooling').formatters },
 }

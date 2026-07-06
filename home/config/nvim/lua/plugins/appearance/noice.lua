@@ -25,7 +25,7 @@ local noice_opts = {
 
 return {
    -- Puts the cmdline at eye level
-   'folke/noice.nvim',
+   [1] = 'folke/noice.nvim',
    event = 'VeryLazy',
    dependencies = {
       'MunifTanjim/nui.nvim',

@@ -3,7 +3,7 @@
 return {
    -- Python DAP adapter
    {
-      'mfussenegger/nvim-dap-python',
+      [1] = 'mfussenegger/nvim-dap-python',
       dependencies = {
          'mfussenegger/nvim-dap',
          'jay-babu/mason-nvim-dap.nvim',

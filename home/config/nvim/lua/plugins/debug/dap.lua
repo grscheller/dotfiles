@@ -2,7 +2,7 @@
 
 return {
    {
-      'mfussenegger/nvim-dap',
+      [1] = 'mfussenegger/nvim-dap',
       dependencies = {
          'igorlfs/nvim-dap-view',
          'theHamsta/nvim-dap-virtual-text',

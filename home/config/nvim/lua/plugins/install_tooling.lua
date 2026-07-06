@@ -1,12 +1,16 @@
 --[[ External tooling for LSP, DAP, formatting, and linting ]]
 
 return {
+   -- Mason tool installer
+   {
+      [1] = 'mason-org/mason.nvim',
+      lazy = true,
+   },
+
    -- Ensure LSP servers are installed
    {
-      'mason-org/mason-lspconfig.nvim',
-      dependencies = {
-         { 'mason-org/mason.nvim', opts = {} },
-      },
+      [1] = 'mason-org/mason-lspconfig.nvim',
+      dependencies = { 'mason-org/mason.nvim' },
       event = 'VeryLazy',
       opts = {
          ensure_installed = require('config.tooling').lsp_servers,
@@ -16,7 +20,7 @@ return {
 
    -- Ensure DAP adapters are installed
    {
-      'jay-babu/mason-nvim-dap.nvim',
+      [1] = 'jay-babu/mason-nvim-dap.nvim',
       dependencies = {
          'mason-org/mason.nvim',
          'mfussenegger/nvim-dap',
@@ -30,7 +34,7 @@ return {
 
    -- Ensure linters and formatters are installed
    {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      [1] = 'WhoIsSethDaniel/mason-tool-installer.nvim',
       dependencies = { 'mason-org/mason.nvim' },
       event = 'VeryLazy',
       opts = {

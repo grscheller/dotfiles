@@ -138,11 +138,12 @@ end
 
 return {
    -- Provides GIT info in left gutter
-   'lewis6991/gitsigns.nvim',
+   [1] = 'lewis6991/gitsigns.nvim',
    dependencies = {
       'nvim-lua/plenary.nvim',
       'folke/which-key.nvim',
    },
+   event = 'VeryLazy',
    opts = {
       signs = {
          add = { text = '+' },

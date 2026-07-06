@@ -3,7 +3,7 @@
 return {
    {
       -- Makes keymaps discoverable.
-      'folke/which-key.nvim',
+      [1] = 'folke/which-key.nvim',
       event = 'VeryLazy',
       opts = {
          plugins = {
@@ -14,8 +14,6 @@ return {
          },
       },
       keys = function()
-         local tb = require 'telescope.builtin'
-
          return {
 
             --[[ Which Key related ]]
@@ -62,7 +60,9 @@ return {
             },
             {
                'gd',
-               tb.lsp_definitions,
+               function()
+                  require('telescope.builtin').lsp_definitions()
+               end,
                desc = 'definitions',
             },
             {
@@ -72,12 +72,16 @@ return {
             },
             {
                'gi',
-               tb.lsp_implementations,
+               function()
+                  require('telescope.builtin').lsp_implementations()
+               end,
                desc = 'implementations',
             },
             {
                'gr',
-               tb.lsp_references,
+               function()
+                  require('telescope.builtin').lsp_references()
+               end,
                desc = 'references',
             },
             {
@@ -87,12 +91,16 @@ return {
             },
             {
                '<leader>ds',
-               tb.lsp_document_symbols,
+               function()
+                  require('telescope.builtin').lsp_document_symbols()
+               end,
                desc = 'document symbols',
             },
             {
                '<leader>ws',
-               tb.lsp_dynamic_workspace_symbols,
+               function()
+                  require('telescope.builtin').lsp_dynamic_workspace_symbols()
+               end,
                desc = 'workspace symbols',
             },
             {

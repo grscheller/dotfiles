@@ -4,11 +4,8 @@ return {
    {
       -- File browser extension for telescope. Supports synchronized creation,
       -- deletion, renaming, and moving of files and folders, with LSP integration.
-      'nvim-telescope/telescope-file-browser.nvim',
-      dependencies = {
-         'nvim-telescope/telescope.nvim',
-         'nvim-lua/plenary.nvim',
-      },
+      [1] = 'nvim-telescope/telescope-file-browser.nvim',
+      dependencies = { 'nvim-telescope/telescope.nvim' },
       keys = {
          {
             '<leader>sF',
@@ -24,10 +21,8 @@ return {
 
    {
       -- Telescope extension providing info about lazy.nvim managed plugins
-      'tsakirist/telescope-lazy.nvim',
-      dependencies = {
-         'nvim-telescope/telescope.nvim',
-      },
+      [1] = 'tsakirist/telescope-lazy.nvim',
+      dependencies = { 'nvim-telescope/telescope.nvim' },
       keys = {
          {
             '<leader>sl',
@@ -46,24 +41,55 @@ return {
       --   To open window showing keymaps for current picker,
       --     Insert mode: <c-/>
       --     Normal mode: ?
-      'nvim-telescope/telescope.nvim',
+      [1] = 'nvim-telescope/telescope.nvim',
       dependencies = {
          { 'nvim-lua/plenary.nvim' },
          { 'nvim-tree/nvim-web-devicons' },
          { 'nvim-telescope/telescope-ui-select.nvim' },
          {
-            'nvim-telescope/telescope-fzf-native.nvim',
+            [1] = 'nvim-telescope/telescope-fzf-native.nvim',
             build = 'make',
             cond = function()
                return vim.fn.executable 'make' == 1
             end,
          },
       },
+      keys = {
+         { '<leader>gl', function() require('telescope.builtin').live_grep() end,  desc = 'search by grep' },
+         {
+            '<leader>go',
+            function()
+               require('telescope.builtin').live_grep {
+                  grep_open_files = true,
+                  prompt_title = 'Live Grep in Open Files',
+               }
+            end,
+            desc = 'grep open files',
+         },
+         {
+            '<leader>s/',
+            function()
+               require('telescope.builtin').current_buffer_fuzzy_find(
+                  require('telescope.themes').get_dropdown {
+                     winblend = 50,
+                     previewer = false,
+                  }
+               )
+            end,
+            desc = 'fuzzily search in current buffer',
+         },
+         { '<leader>s.', function() require('telescope.builtin').oldfiles() end, desc = 'search recent files' },
+         { '<leader>sb', function() require('telescope.builtin').builtin() end, desc = 'search builtins' },
+         { '<leader>sd', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
+         { '<leader>sf', function() require('telescope.builtin').find_files() end, desc = 'search files' },
+         { '<leader>sh', function() require('telescope.builtin').help_tags() end, desc = 'search help' },
+         { '<leader>sk', function() require('telescope.builtin').keymaps() end, desc = 'search keymaps' },
+         { '<leader>sr', function() require('telescope.builtin').resume() end, desc = 'search resume' },
+         { '<leader>sw', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
+      },
       config = function()
          local telescope = require 'telescope'
-         local builtin = require 'telescope.builtin'
          local themes = require 'telescope.themes'
-         local wk = require 'which-key'
 
          telescope.setup {
             defaults = {
@@ -102,37 +128,6 @@ return {
          telescope.load_extension 'notify'
          telescope.load_extension 'ui-select'
 
-         wk.add {
-            { '<leader>sh', builtin.help_tags,   desc = 'search help' },
-            { '<leader>sk', builtin.keymaps,     desc = 'search keymaps' },
-            { '<leader>sf', builtin.find_files,  desc = 'search files' },
-            { '<leader>ss', builtin.builtin,     desc = 'search select telescope' },
-            { '<leader>sw', builtin.grep_string, desc = 'search current word' },
-            { '<leader>sg', builtin.live_grep,   desc = 'search by grep' },
-            { '<leader>sd', builtin.diagnostics, desc = 'search diagnostics' },
-            { '<leader>sr', builtin.resume,      desc = 'search resume' },
-            { '<leader>s.', builtin.oldfiles,    desc = 'search recent files' },
-            {
-               '<leader>/',
-               function()
-                  builtin.current_buffer_fuzzy_find(themes.get_dropdown {
-                     winblend = 50,
-                     previewer = false,
-                  })
-               end,
-               desc = 'fuzzily search in current buffer',
-            },
-            {
-               '<leader>so',
-               function()
-                  builtin.live_grep {
-                     grep_open_files = true,
-                     prompt_title = 'Live Grep in Open Files',
-                  }
-               end,
-               desc = 'search open files',
-            },
-         }
       end,
    },
 }
