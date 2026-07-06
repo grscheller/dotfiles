@@ -67,6 +67,7 @@ dot_config_files='
     lua/config/keymaps.lua
     lua/config/options.lua
     lua/config/tooling.lua
+    lua/config/treesitter.lua
     lua/config/usercmds_lsp.lua
     lua/core/lazy.lua
     lua/lib/functional.lua
