@@ -296,7 +296,7 @@ integration.
 ### zuban - LSP, Linter
 
 Zuban is a high-performant Mypy-compatible LSP and type checker
-built in Rust.
+built in Rust. PyPI is just a delivery mechanism for the rust binary.
 
 - Languages: Python
 - Implementation: Rust

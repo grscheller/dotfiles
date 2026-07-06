@@ -1250,11 +1250,11 @@ pipfile
 pipx
 py
 pyenv
+PyGObjects
 pyi
 pylsp
 pynvim
 Pyright
-PyGObjects
 PyPI
 pyplot
 pyproject
@@ -1266,6 +1266,7 @@ Python2
 python3
 Python3
 pythonic
+PYTHONPATH
 RecursionError
 repr
 resulttype
@@ -1290,6 +1291,8 @@ venvs
 venv's
 weakref
 wxPython
+zuban
+Zuban
 # TS and JS names
 DOM
 javascript

@@ -15,8 +15,8 @@ return {
    },
    config = function()
       local lint = require 'lint'
-      local tools = require 'config.tools'
+      local tooling = require 'config.tooling'
 
-      lint.linters_by_ft = tools.linters
+      lint.linters_by_ft = tooling.linters
    end
 }

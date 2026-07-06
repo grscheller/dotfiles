@@ -1,19 +1,6 @@
 --[[ Config Debugger Adapter Protocol (DAP) ]]
 
 return {
-   -- Auto install DAP Adapters
-   {
-      'jay-babu/mason-nvim-dap.nvim',
-      dependencies = {
-         'mason-org/mason.nvim',
-         'mfussenegger/nvim-dap',
-      },
-      opts = {
-         ensure_installed = require('config.tools').debug_adapters,
-         handlers = {},
-      },
-   },
-
    -- Python DAP adapter
    {
       'mfussenegger/nvim-dap-python',
@@ -39,6 +26,7 @@ return {
          'mfussenegger/nvim-dap',
          'jay-babu/mason-nvim-dap.nvim',
       },
+      ft = { 'c', 'cpp', 'rust', 'zig' },
       config = function()
          local dap = require('dap')
 

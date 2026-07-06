@@ -16,9 +16,9 @@ return {
       },
    },
    config = function()
-      local tools = require 'config.tools'
+      local tooling = require 'config.tooling'
       local conform = require 'conform'
 
-      conform.setup { formatters_by_ft = tools.formatters }
+      conform.setup { formatters_by_ft = tooling.formatters }
    end,
 }

@@ -66,7 +66,7 @@ dot_config_files='
     lua/config/globals.lua
     lua/config/keymaps.lua
     lua/config/options.lua
-    lua/config/tools.lua
+    lua/config/tooling.lua
     lua/config/usercmds_lsp.lua
     lua/core/lazy.lua
     lua/lib/functional.lua
@@ -97,9 +97,7 @@ dot_config_files='
     lua/plugins/infrastructure/telescope.lua
     lua/plugins/infrastructure/treesitter.lua
     lua/plugins/infrastructure/whichkey.lua
-    lua/plugins/tool_install/init.lua
-    lua/plugins/tool_install/mason_lspconfig.lua
-    lua/plugins/tool_install/mason_tool_installer.lua
+    lua/plugins/install_tooling.lua
     spell/en.utf-8.add
 '
 
@@ -110,14 +108,9 @@ toml_files='
 remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
-    $XDG_CONFIG_HOME/nvim/lua/config/configs.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/lint.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/format.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/textedit.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/ide/
-    $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/appearance.lua
-    $XDG_CONFIG_HOME/nvim/lua/config/lsp.lua
     $XDG_CONFIG_HOME/nvim/lsp/pylsp.lua
+    $XDG_CONFIG_HOME/nvim/lua/config/tools.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/tool_install/
 "
 
 dirs_to_create=""

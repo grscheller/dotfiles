@@ -8,14 +8,14 @@ require 'config.diagnostics'
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
 
--- Configure LSP clients natively
-require 'config.tools'
-
 -- Load initial keymaps
 require 'config.keymaps'
 
 -- Bootstrap lazy.nvim and configure plugins
 require 'core.lazy'
+
+-- Configure LSP clients natively
+require 'config.tooling'
 
 -- Load autocmds
 require 'config.usercmds_lsp'
