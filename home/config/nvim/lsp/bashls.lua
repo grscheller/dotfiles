@@ -25,6 +25,6 @@ return {
          globPattern = vim.env.GLOB_PATTERN or '*@(.sh|.inc|.bash|.dash|.command)',
       },
    },
-   filetypes = { 'bash', 'sh', 'dash', 'ksh', 'csh' },
+   filetypes = { 'bash', 'sh', 'csh' },
    root_markers = { '.git', '.bashrc', '.bash_profile', '.profile' },
 }

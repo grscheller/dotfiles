@@ -30,7 +30,7 @@ return {
                package_uninstalled = '✗',
             },
          },
-         PATH = 'prepend',
+         PATH = 'skip',
       },
    },
 

@@ -9,6 +9,12 @@ local concat = functional.concat_arrays
 
 local M = {}
 
+-- Make sure mason's bin directory is available and trumps
+-- any system installed version of the tools.
+vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
+   .. ':'
+   .. vim.env.PATH
+
 M.lsp_servers = {
    'bashls',
    'lua_ls',
@@ -19,6 +25,7 @@ M.lsp_servers = {
    'zuban',
 }
 
+-- Enable Neovim's native LSP mechanism.
 vim.lsp.enable(M.lsp_servers)
 
 M.debug_adapters = {
@@ -63,6 +70,8 @@ M.formatters = {
    yaml = { 'prettierd' },
 }
 
-M.linters_and_formatters = sort(concat(flatten(values(M.linters)), flatten(values(M.formatters))))
+M.linters_and_formatters = sort(
+   concat(flatten(values(M.linters)), flatten(values(M.formatters)))
+)
 
 return M
