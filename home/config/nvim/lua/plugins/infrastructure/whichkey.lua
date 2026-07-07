@@ -15,9 +15,7 @@ return {
       },
       keys = function()
          return {
-
-            --[[ Which Key related ]]
-
+            -- which-key keymaps
             {
                '<leader>?',
                function()
@@ -26,8 +24,10 @@ return {
                desc = 'Buffer Local Keymaps (which-key)',
             },
 
-            --[[ LSP keymaps ]]
+            -- lazy.nvim keymaps
+            { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
 
+            -- LSP keymaps
             {
                'H',
                vim.lsp.buf.hover,
@@ -122,63 +122,6 @@ return {
                end,
                desc = 'toggle inlay hints',
             },
-
-            --[[ Plugin keymaps ]]
-
-            {
-               'yp',
-               '<Plug>(nvim-surround-normal)',
-               desc = 'Add surrounding pair around a motion',
-            },
-            {
-               'ypp',
-               '<Plug>(nvim-surround-normal-cur)',
-               desc = 'Add surrounding pair around current line',
-            },
-            {
-               'yP',
-               '<Plug>(nvim-surround-normal-line)',
-               desc = 'Add surrounding pair around a motion, on new lines',
-            },
-            {
-               'yPP',
-               '<Plug>(nvim-surround-normal-cur-line)',
-               desc = 'Add surrounding pair around the current line, on new lines',
-            },
-            {
-               'dp',
-               '<Plug>(nvim-surround-delete)',
-               desc = 'Delete surrounding pair',
-            },
-            {
-               'cp',
-               '<Plug>(nvim-surround-change)',
-               desc = 'Change surrounding pair',
-            },
-            {
-               'cP',
-               '<Plug>(nvim-surround-change-line)',
-               desc = 'Change surrounding pair, putting replacements on new lines',
-            },
-            {
-               'P',
-               '<Plug>(nvim-surround-visual)',
-               mode = 'x',
-               desc = 'Add surrounding pair around a visual selection',
-            },
-            {
-               'gP',
-               '<Plug>(nvim-surround-visual-line)',
-               mode = 'x',
-               desc = 'Add surrounding pair around a visual selection, on new lines',
-            },
-
-            --[[ Plugin command keymaps ]]
-
-            { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
-            { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason gui' },
-
-            --[[ DAP & Diagnostic related ]]
          }
       end,
    },

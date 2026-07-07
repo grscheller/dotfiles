@@ -1,7 +1,9 @@
 --[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
--- local scroll = require 'lib.scroll' --[[ keymappings not depending on external plugins ]]
+-- local scroll = require 'lib.scroll'
+
+--[[ keymappings not depending on external plugins ]]
 
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
@@ -101,3 +103,37 @@ km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
 -- Cleanup related keymaps
 km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
 km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })
+
+--[[ external plugin keymappings ]]
+
+-- nvim-surround
+km('n', 'yp', '<Plug>(nvim-surround-normal)', { desc = 'Add surrounding pair around a motion' })
+km('n', 'ypp', '<Plug>(nvim-surround-normal-cur)', { desc = 'Add surrounding pair around current line' })
+km('n', 'yP', '<Plug>(nvim-surround-normal-line)', { desc = 'Add surrounding pair around a motion, on new lines' })
+km('n', 'yPP', '<Plug>(nvim-surround-normal-cur-line)', { desc = 'Add surrounding pair around the current line, on new lines' })
+km('n', 'dp', '<Plug>(nvim-surround-delete)', { desc = 'Delete surrounding pair' })
+km('n', 'cp', '<Plug>(nvim-surround-change)', { desc = 'Change surrounding pair' })
+km('n', 'cP', '<Plug>(nvim-surround-change-line)', { desc = 'Change surrounding pair, putting replacements on new lines' })
+km('x', 'P', '<Plug>(nvim-surround-visual)', { desc = 'Add surrounding pair around a visual selection' })
+km('x', 'gP', '<Plug>(nvim-surround-visual-line)', { desc = 'Add surrounding pair around a visual selection, on new lines' })
+
+-- leap.nvim
+km({ 'n', 'x', 'o' }, 's', '<Plug>(leap)', { desc = 'leap' })
+km({ 'x', 'o' }, 'x', '<Plug>(leap-next-to)', { desc = 'leap till' })
+km('n', 'S', '<Plug>(leap-from-window)', { desc = 'leap from window' })
+km({ 'n', 'x', 'o' }, 'gx', '<Plug>(leap-anywhere)', { desc = 'leap anywhere' })
+km({ 'n', 'x', 'o' }, '<cr>', function()
+      require('leap').leap {
+         ['repeat'] = true,
+         opts = require('leap.user').with_traversal_keys('<cr>', '<bs>'),
+      }
+   end
+)
+km({ 'n', 'x', 'o' }, '<bs>', function()
+      require('leap').leap {
+         ['repeat'] = true,
+         opts = require('leap.user').with_traversal_keys('<bs>', '<cr>'),
+         backward = true,
+      }
+   end
+)

@@ -90,15 +90,12 @@ dot_config_files='
     lua/plugins/coding/nvim-surround.lua
     lua/plugins/completions/init.lua
     lua/plugins/completions/blink-cmp.lua
-    lua/plugins/debug/init.lua
-    lua/plugins/debug/adapters.lua
-    lua/plugins/debug/dap.lua
+    lua/plugins/debug.lua
     lua/plugins/infrastructure/init.lua
-    lua/plugins/infrastructure/mason.lua
     lua/plugins/infrastructure/telescope.lua
     lua/plugins/infrastructure/treesitter.lua
     lua/plugins/infrastructure/whichkey.lua
-    lua/plugins/install_tooling.lua
+    lua/plugins/tooling.lua
     spell/en.utf-8.add
 '
 
@@ -112,6 +109,9 @@ remove_items="
     $XDG_CONFIG_HOME/nvim/lsp/pylsp.lua
     $XDG_CONFIG_HOME/nvim/lua/config/tools.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/tool_install/
+    $XDG_CONFIG_HOME/nvim/lua/plugins/install_tooling.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/mason.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
 "
 
 dirs_to_create=""
