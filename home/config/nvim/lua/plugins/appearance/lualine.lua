@@ -1,6 +1,6 @@
 --[[ Status line - configured with Kanagawa colorscheme ]]
 
-local opts_for_kanagawa_colorscheme = function()
+local kanagawa_opts = function()
    local kanagawa_colors = require('kanagawa.colors').setup()
    local palette = kanagawa_colors.palette
    return {
@@ -165,5 +165,5 @@ return {
       'nvim-tree/nvim-web-devicons',
       'rebelot/kanagawa.nvim',
    },
-   opts = opts_for_kanagawa_colorscheme,
+   opts = kanagawa_opts,
 }

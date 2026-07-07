@@ -28,9 +28,8 @@ return {
       },
       ft = { 'c', 'cpp', 'rust', 'zig' },
       config = function()
-         local dap = require('dap')
 
-         dap.adapters.codelldb = {
+         require('dap').adapters.codelldb = {
             type = 'server',
             port = '${port}',
             executable = {
@@ -52,10 +51,10 @@ return {
             },
          }
 
-         dap.configurations.c    = lldb_config
-         dap.configurations.cpp  = lldb_config
-         dap.configurations.rust = lldb_config
-         dap.configurations.zig  = lldb_config
+         require('dap').configurations.c    = lldb_config
+         require('dap').configurations.cpp  = lldb_config
+         require('dap').configurations.rust = lldb_config
+         require('dap').configurations.zig  = lldb_config
 
       end,
    },
