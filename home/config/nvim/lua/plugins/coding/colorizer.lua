@@ -4,13 +4,13 @@ return {
    [1] = 'norcalli/nvim-colorizer.lua',
    keys = {
       {
-         '<leader>C',
-         '<cmd>ColorizerToggle<cr>',
+         [1] = '<leader>C',
+         [2] = '<cmd>ColorizerToggle<cr>',
          desc = 'toggle colorizer',
       },
    },
    opts = {
-      '*',
+      [1] = '*',
       RRGGBBAA = true,
       rgb_fn = true,
       hsb_fn = true,

@@ -5,8 +5,8 @@ return {
    [1] = 'mfussenegger/nvim-lint',
    keys = {
       {
-         '<leader>l',
-         function()
+         [1] = '<leader>l',
+         [2] = function()
             require('lint').try_lint()
          end,
          mode = 'n',

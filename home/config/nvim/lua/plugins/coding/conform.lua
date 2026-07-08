@@ -4,8 +4,8 @@ return {
    [1] = 'stevearc/conform.nvim',
    keys = {
       {
-         '<leader>f',
-         function()
+         [1] = '<leader>f',
+         [2] = function()
             require('conform').format {
                async = false,
                timeout_ms = 2000,
