@@ -1,10 +1,13 @@
 --[[ Manage external tooling for LSP, DAP, formatting, and linting.
 
-     Nothing installs automatically. Tooling is installed on demand via:
-       :MasonToolsInstall  - linters & formatters from config.tooling
-       :LspInstall         - LSP servers (no args: ensure_installed pass runs on load)
-       :DapInstall         - DAP adapters (likewise)
-       :Mason              - interactive UI                                        ]]
+     Nothing installs automatically.
+
+        <leader>M   - Launch Mason UI
+        <leader>ml  - Install LSP servers
+        <leader>ml  - Install DAP adapters
+        <leader>mt  - Install linters and formatters
+        <leader>mc  - Remove linters and formatters not in ensure_installed
+]]
 
 return {
    -- Mason package manager for external tooling.
@@ -19,7 +22,7 @@ return {
          'MasonLog',
       },
       keys = {
-         { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason UI' },
+         { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason UI' },
       },
       build = ':MasonUpdate', -- refresh registry when lazy.nvim installs/updates the plugin
       opts = {
@@ -40,7 +43,11 @@ return {
       dependencies = { 'mason-org/mason.nvim' },
       cmd = { 'LspInstall', 'LspUninstall' },
       keys = {
-         { '<leader>cl', '<cmd>LspInstall<cr>', desc = 'Install LSP servers (ensure_installed)' },
+         {
+            '<leader>ml',
+            '<cmd>LspInstall<cr>',
+            desc = 'Install LSP servers (ensure_installed)',
+         },
       },
       opts = {
          ensure_installed = require('config.tooling').lsp_servers,
@@ -57,7 +64,11 @@ return {
       },
       cmd = { 'DapInstall', 'DapUninstall' },
       keys = {
-         { '<leader>cd', '<cmd>DapInstall<cr>', desc = 'Install DAP adapters (ensure_installed)' },
+         {
+            '<leader>md',
+            '<cmd>DapInstall<cr>',
+            desc = 'Install DAP adapters (ensure_installed)',
+         },
       },
       opts = {
          ensure_installed = require('config.tooling').debug_adapters,
@@ -77,8 +88,16 @@ return {
          'MasonToolsClean',
       },
       keys = {
-         { '<leader>cT', '<cmd>MasonToolsInstall<cr>', desc = 'Install linters & formatters' },
-         { '<leader>ct', '<cmd>MasonToolsUpdate<cr>',  desc = 'Install & update tools' },
+         {
+            '<leader>mt',
+            '<cmd>MasonToolsUpdate<cr>',
+            desc = 'Install & update tools',
+         },
+         {
+            '<leader>mc',
+            '<cmd>MasonToolsClean<cr>',
+            desc = 'Remove linters & formatters not in ensure_installed',
+         },
       },
       opts = {
          ensure_installed = require('config.tooling').linters_and_formatters,
