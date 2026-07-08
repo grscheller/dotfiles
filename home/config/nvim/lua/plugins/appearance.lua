@@ -5,9 +5,9 @@ local kanagawa_opts = {
       theme = {
          dragon = {
             ui = {
-               bg_dim = '#282727', -- dragonBlack4
+               bg_dim = '#282727',    -- dragonBlack4
                bg_gutter = '#12120f', -- dragonBlack1
-               bg = '#12120f', -- dragonBlack1
+               bg = '#12120f',        -- dragonBlack1
             },
          },
       },
@@ -185,18 +185,13 @@ local noice_opts = {
          ['vim.lsp.util.stylize_markdown'] = true,
       },
    },
+   messages = { enabled = true },
    presets = {
-      bottom_search = false, -- use "classic" bottom cmdline for search
-      command_palette = true, -- position the cmdline & popup menu together
+      bottom_search = false,        -- use "classic" bottom cmdline for search
+      command_palette = true,       -- position the cmdline & popup menu together
       long_message_to_split = true, -- long messages sent to a split
-      inc_rename = false, -- enable input dialog for inc-rename.nvim
-      lsp_doc_border = true, -- add borders to hover docs & signature help
-   },
-   routes = {
-      {
-         view = 'split',
-         filter = { event = 'msg_show', min_height = 20 },
-      },
+      inc_rename = false,           -- enable input dialog for inc-rename.nvim
+      lsp_doc_border = true,        -- add borders to hover docs & signature help
    },
 }
 
@@ -221,7 +216,7 @@ return {
       opts = lualine_opts,
    },
    {
-      -- put cmdline at eye level
+      -- put cmdline at eye level, hijack vim.notify
       [1] = 'folke/noice.nvim',
       event = 'VeryLazy',
       dependencies = {
@@ -229,14 +224,5 @@ return {
          'rcarriga/nvim-notify',
       },
       opts = noice_opts,
-   },
-   {
-      -- hijack vim.notify (used by noice)
-      [1] = 'rcarriga/nvim-notify',
-      dependencies = { 'nvim-treesitter/nvim-treesitter' },
-      event = 'VeryLazy',
-      config = function()
-         vim.notify = require 'notify'
-      end,
    },
 }
