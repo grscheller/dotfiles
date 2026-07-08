@@ -25,12 +25,12 @@ local blink_opts = {
                   text = function(ctx)
                      local icon = ctx.kind_icon
                      if
-                        vim.tbl_contains({ 'Path' }, ctx.source_name)
+                         vim.tbl_contains({ 'Path' }, ctx.source_name)
                      then
                         local dev_icon, _ =
-                           require('nvim-web-devicons').get_icon(
-                              ctx.label
-                           )
+                            require('nvim-web-devicons').get_icon(
+                               ctx.label
+                            )
                         if dev_icon then
                            icon = dev_icon
                         end
@@ -44,7 +44,7 @@ local blink_opts = {
                   highlight = function(ctx)
                      local hl = ctx.kind_hl
                      if
-                        vim.tbl_contains({ 'Path' }, ctx.source_name)
+                         vim.tbl_contains({ 'Path' }, ctx.source_name)
                      then
                         local dev_icon, dev_hl = require(
                            'nvim-web-devicons'
@@ -90,8 +90,8 @@ local blink_opts = {
                end,
                get_prefix = function(context)
                   return context.line
-                     :sub(1, context.cursor[2])
-                     :match '[%w_-]+$' or ''
+                      :sub(1, context.cursor[2])
+                      :match '[%w_-]+$' or ''
                end,
             },
          },

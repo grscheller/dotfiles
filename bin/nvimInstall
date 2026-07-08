@@ -78,7 +78,6 @@ dot_config_files='
     lua/plugins/appearance/lualine.lua
     lua/plugins/appearance/noice.lua
     lua/plugins/appearance/notify.lua
-    lua/plugins/appearance/nvim-web-devicons.lua
     lua/plugins/coding/init.lua
     lua/plugins/coding/colorizer.lua
     lua/plugins/coding/conform.lua
@@ -88,10 +87,9 @@ dot_config_files='
     lua/plugins/coding/nvim-lastplace.lua
     lua/plugins/coding/nvim_lint.lua
     lua/plugins/coding/nvim-surround.lua
-    lua/plugins/completions/init.lua
-    lua/plugins/completions/blink-cmp.lua
     lua/plugins/debug.lua
     lua/plugins/infrastructure/init.lua
+    lua/plugins/infrastructure/nvim-web-devicons.lua
     lua/plugins/infrastructure/telescope.lua
     lua/plugins/infrastructure/treesitter.lua
     lua/plugins/infrastructure/whichkey.lua
@@ -111,6 +109,7 @@ remove_items="
     $XDG_CONFIG_HOME/nvim/lua/plugins/tool_install/
     $XDG_CONFIG_HOME/nvim/lua/plugins/install_tooling.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/mason.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/nvim-web-devicons.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
 "
 

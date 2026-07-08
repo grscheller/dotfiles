@@ -1,4 +1,4 @@
---[[ Config Debugger Adapter Protocol (DAP) ]]
+--[[ Config Debugger Adapter Protocol (DAP) setup ]]
 
 return {
    {
@@ -6,17 +6,17 @@ return {
       dependencies = { 'igorlfs/nvim-dap-view' },
       keys = {
          -- Session control
-         { ',ds', function() require('dap').continue() end, desc = 'DAP start/continue session' },
-         { ',de', function() require('dap').terminate() end, desc = 'DAP end session' },
+         { ',ds', function() require('dap').continue() end,                                  desc = 'DAP start/continue session' },
+         { ',de', function() require('dap').terminate() end,                                 desc = 'DAP end session' },
          { ',bs', function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end, desc = 'DAP breakpoint set' },
-         { ',bt', function() require('dap').toggle_breakpoint() end, desc = 'DAP breakpoint toggle' },
-         { ',ui', function() require('dap')_view.toggle() end, desc = 'DAP toggle ui' },
+         { ',bt', function() require('dap').toggle_breakpoint() end,                         desc = 'DAP breakpoint toggle' },
+         { ',ui', function() require('dap').view_toggle() end,                               desc = 'DAP toggle ui' },
 
          -- Stepping
-         { ',si', function() require('dap').step_into() end, desc = 'DAP step into' },
-         { ',sa', function() require('dap').step_over() end, desc = 'DAP step around (over)' },
-         { ',so', function() require('dap').step_out() end, desc = 'DAP step out' },
-         { ',sc', function() require('dap').run_to_cursor() end, desc = 'DAP step to cursor' },
+         { ',si', function() require('dap').step_into() end,                                 desc = 'DAP step into' },
+         { ',sa', function() require('dap').step_over() end,                                 desc = 'DAP step around (over)' },
+         { ',so', function() require('dap').step_out() end,                                  desc = 'DAP step out' },
+         { ',sc', function() require('dap').run_to_cursor() end,                             desc = 'DAP step to cursor' },
       },
    },
 
@@ -38,7 +38,7 @@ return {
       config = function()
          -- Python debugger
          local debugpy_path = vim.fn.stdpath('data')
-            .. '/mason/packages/debugpy/venv/bin/python'
+             .. '/mason/packages/debugpy/venv/bin/python'
          require('dap-python').setup(debugpy_path)
       end,
    },
@@ -47,15 +47,14 @@ return {
    {
       -- virtual plugin spec
       dir = vim.fn.stdpath('config'), -- any real directory, this one is guaranteed to exist
-      name = 'dap-codelldb-config', -- arbitrary unique name
+      name = 'dap-codelldb-config',   -- arbitrary unique name
       dependencies = {
          'mfussenegger/nvim-dap',
          'jay-babu/mason-nvim-dap.nvim',
       },
       ft = { 'c', 'cpp', 'rust', 'zig' },
       config = function()
-
-         require('dap').adapters.codelldb = {
+         require('dap').adapters.codelldb   = {
             type = 'server',
             port = '${port}',
             executable = {
@@ -64,7 +63,7 @@ return {
             },
          }
 
-         local lldb_config = {
+         local lldb_config                  = {
             {
                name = 'Launch',
                type = 'codelldb',
@@ -81,7 +80,6 @@ return {
          require('dap').configurations.cpp  = lldb_config
          require('dap').configurations.rust = lldb_config
          require('dap').configurations.zig  = lldb_config
-
       end,
    },
 }
