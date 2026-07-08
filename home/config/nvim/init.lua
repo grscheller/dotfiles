@@ -5,11 +5,11 @@ require 'config.globals'
 require 'config.options'
 require 'config.diagnostics'
 
+-- Configure LSP clients natively
+require 'config.lsp'
+
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
-
--- Configure LSP clients natively
-require 'config.tooling'
 
 -- Load initial keymaps
 require 'config.keymaps'

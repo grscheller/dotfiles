@@ -1,4 +1,4 @@
---[[ Enable LSP configs and supporting infrastructure ]]
+--[[ Configure LSP servers, DAP adapters, Linters and Formatters ]]
 
 local functional = require 'lib.functional'
 
@@ -24,9 +24,6 @@ M.lsp_servers = {
    'zls',
    'zuban',
 }
-
--- Enable Neovim's native LSP mechanism.
-vim.lsp.enable(M.lsp_servers)
 
 M.debug_adapters = {
    'python',
