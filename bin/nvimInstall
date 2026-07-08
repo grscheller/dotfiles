@@ -73,11 +73,7 @@ dot_config_files='
     lua/lib/functional.lua
     lua/lib/scroll.lua
     lua/lib/text.lua
-    lua/plugins/appearance/init.lua
-    lua/plugins/appearance/kanagawa.lua
-    lua/plugins/appearance/lualine.lua
-    lua/plugins/appearance/noice.lua
-    lua/plugins/appearance/notify.lua
+    lua/plugins/appearance.lua
     lua/plugins/coding/init.lua
     lua/plugins/coding/colorizer.lua
     lua/plugins/coding/conform.lua
@@ -111,6 +107,7 @@ remove_items="
     $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/mason.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/nvim-web-devicons.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
+    $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/
 "
 
 dirs_to_create=""

@@ -1,6 +1,25 @@
---[[ Status line - configured with Kanagawa colorscheme ]]
+local kanagawa_opts = {
+   compile = true,
+   undercurl = true,
+   colors = {
+      theme = {
+         dragon = {
+            ui = {
+               bg_dim = '#282727', -- dragonBlack4
+               bg_gutter = '#12120f', -- dragonBlack1
+               bg = '#12120f', -- dragonBlack1
+            },
+         },
+      },
+   },
+   overrides = function(colors) -- add/modify highlights
+      return {
+         ColorColumn = { bg = colors.palette.dragonBlack3 },
+      }
+   end,
+}
 
-local kanagawa_opts = function()
+local lualine_opts = function()
    local kanagawa_colors = require('kanagawa.colors').setup()
    local palette = kanagawa_colors.palette
    return {
@@ -158,12 +177,66 @@ local kanagawa_opts = function()
    }
 end
 
-return {
-   [1] = 'nvim-lualine/lualine.nvim',
-   event = 'VeryLazy',
-   dependencies = {
-      'nvim-tree/nvim-web-devicons',
-      'rebelot/kanagawa.nvim',
+local noice_opts = {
+   lsp = {
+      -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+      override = {
+         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+         ['vim.lsp.util.stylize_markdown'] = true,
+      },
    },
-   opts = kanagawa_opts,
+   presets = {
+      bottom_search = false, -- use "classic" bottom cmdline for search
+      command_palette = true, -- position the cmdline & popup menu together
+      long_message_to_split = true, -- long messages sent to a split
+      inc_rename = false, -- enable input dialog for inc-rename.nvim
+      lsp_doc_border = true, -- add borders to hover docs & signature help
+   },
+   routes = {
+      {
+         view = 'split',
+         filter = { event = 'msg_show', min_height = 20 },
+      },
+   },
+}
+
+return {
+   {
+      [1] = 'rebelot/kanagawa.nvim',
+      priority = 1000,
+      config = function()
+         local kanagawa = require 'kanagawa'
+         kanagawa.setup(kanagawa_opts)
+         kanagawa.compile()
+         kanagawa.load 'dragon'
+      end,
+   },
+   {
+      [1] = 'nvim-lualine/lualine.nvim',
+      event = 'VeryLazy',
+      dependencies = {
+         'nvim-tree/nvim-web-devicons',
+         'rebelot/kanagawa.nvim',
+      },
+      opts = lualine_opts,
+   },
+   {
+      -- put cmdline at eye level
+      [1] = 'folke/noice.nvim',
+      event = 'VeryLazy',
+      dependencies = {
+         'MunifTanjim/nui.nvim',
+         'rcarriga/nvim-notify',
+      },
+      opts = noice_opts,
+   },
+   {
+      -- hijack vim.notify (used by noice)
+      [1] = 'rcarriga/nvim-notify',
+      dependencies = { 'nvim-treesitter/nvim-treesitter' },
+      event = 'VeryLazy',
+      config = function()
+         vim.notify = require 'notify'
+      end,
+   },
 }
