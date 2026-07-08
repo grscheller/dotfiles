@@ -137,29 +137,118 @@ local gitsigns_on_attach = function(bufnr)
 end
 
 return {
-   -- Provides GIT info in left gutter
-   [1] = 'lewis6991/gitsigns.nvim',
-   dependencies = {
-      'nvim-lua/plenary.nvim',
-      'folke/which-key.nvim',
+   -- Enables range formatting for all formatters.
+   {
+      [1] = 'stevearc/conform.nvim',
+      keys = {
+         {
+            [1] = '<leader>f',
+            [2] = function()
+               require('conform').format {
+                  async = false,
+                  timeout_ms = 2000,
+               }
+            end,
+            mode = 'n',
+            desc = 'format (conform)',
+         },
+      },
+      opts = {
+         formatters_by_ft = require('config.tooling').formatters
+      },
    },
-   event = 'VeryLazy',
-   opts = {
-      signs = {
-         add = { text = '+' },
-         change = { text = '│' },
-         delete = { text = '∨' },
-         topdelete = { text = '∧' },
-         changedelete = { text = '⊥' },
-         untracked = { text = '┆' },
+
+   -- Provides GIT info in left gutter, git actions on portions of code.
+   {
+      [1] = 'lewis6991/gitsigns.nvim',
+      dependencies = {
+         'nvim-lua/plenary.nvim',
+         'folke/which-key.nvim',
       },
-      signs_staged = {
-         add = { text = '+' },
-         change = { text = '│' },
-         delete = { text = '∨' },
-         topdelete = { text = '∧' },
-         changedelete = { text = '⊥' },
+      event = 'VeryLazy',
+      opts = {
+         signs = {
+            add = { text = '+' },
+            change = { text = '│' },
+            delete = { text = '∨' },
+            topdelete = { text = '∧' },
+            changedelete = { text = '⊥' },
+            untracked = { text = '┆' },
+         },
+         signs_staged = {
+            add = { text = '+' },
+            change = { text = '│' },
+            delete = { text = '∨' },
+            topdelete = { text = '∧' },
+            changedelete = { text = '⊥' },
+         },
+         on_attach = gitsigns_on_attach,
       },
-      on_attach = gitsigns_on_attach,
+   },
+
+   -- Show line indentations when editing code.
+   {
+      [1] = 'lukas-reineke/indent-blankline.nvim',
+      event = 'InsertEnter',
+      main = 'ibl',
+      opts = {
+         indent = { char = '│' },
+      },
+   },
+
+   -- Quickly jump around window.
+   {
+      url = 'https://codeberg.org/andyg/leap.nvim',
+      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' }
+   },
+   {
+      -- Colorize color names, hexcodes, and other color formats.
+      [1] = 'norcalli/nvim-colorizer.lua',
+      keys = {
+         {
+            [1] = '<leader>C',
+            [2] = '<cmd>ColorizerToggle<cr>',
+            desc = 'toggle colorizer',
+         },
+      },
+      opts = {
+         [1] = '*',
+         RRGGBBAA = true,
+         rgb_fn = true,
+         hsb_fn = true,
+         css = { names = false },
+         html = { names = false },
+         mode = 'background',
+      },
+   },
+
+   -- On reedit return to last location (configured via config.globals).
+   {
+      [1] = 'mrcjkb/nvim-lastplace',
+      event = 'BufReadPre',
+   },
+
+   -- Manipulate matching pairs of symbols.
+   {
+      [1] = 'kylechui/nvim-surround',
+      event = { 'BufReadPre', 'BufNewFile' }
+   },
+
+   -- Lints based on what is saved to disk.
+   {
+      [1] = 'mfussenegger/nvim-lint',
+      keys = {
+         {
+            [1] = '<leader>l',
+            [2] = function()
+               require('lint').try_lint()
+            end,
+            mode = 'n',
+            desc = 'lint (nvim-lint)',
+         },
+      },
+      config = function()
+         require('lint').linters_by_ft = require('config.tooling').linters
+      end
    },
 }

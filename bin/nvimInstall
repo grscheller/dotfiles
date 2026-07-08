@@ -74,15 +74,7 @@ dot_config_files='
     lua/lib/scroll.lua
     lua/lib/text.lua
     lua/plugins/appearance.lua
-    lua/plugins/coding/init.lua
-    lua/plugins/coding/colorizer.lua
-    lua/plugins/coding/conform.lua
-    lua/plugins/coding/gitsigns.lua
-    lua/plugins/coding/indent_blankline.lua
-    lua/plugins/coding/leap.lua
-    lua/plugins/coding/nvim-lastplace.lua
-    lua/plugins/coding/nvim_lint.lua
-    lua/plugins/coding/nvim-surround.lua
+    lua/plugins/coding.lua
     lua/plugins/debug.lua
     lua/plugins/infrastructure/init.lua
     lua/plugins/infrastructure/nvim-web-devicons.lua
@@ -108,6 +100,7 @@ remove_items="
     $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/nvim-web-devicons.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
     $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/
+    $XDG_CONFIG_HOME/nvim/lua/plugins/coding/
 "
 
 dirs_to_create=""

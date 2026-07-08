@@ -1,9 +1,16 @@
 --[[ Config Debugger Adapter Protocol (DAP) setup ]]
 
 return {
+   -- DAP debugging module
    {
       [1] = 'mfussenegger/nvim-dap',
-      dependencies = { 'igorlfs/nvim-dap-view' },
+      dependencies = {
+         {
+            [1] = 'igorlfs/nvim-dap-view',
+            dependencies = { 'theHamsta/nvim-dap-virtual-text' },
+            opts = { auto_toggle = true },
+         },
+      },
       keys = {
          -- Session control
          { ',ds', function() require('dap').continue() end,                                  desc = 'DAP start/continue session' },
@@ -20,14 +27,7 @@ return {
       },
    },
 
-   {
-      [1] = 'igorlfs/nvim-dap-view',
-      dependencies = { 'theHamsta/nvim-dap-virtual-text' },
-      lazy = true,
-      opts = { auto_toggle = true },
-   },
-
-   -- Python DAP adapter
+   -- Python adapter
    {
       [1] = 'mfussenegger/nvim-dap-python',
       dependencies = {

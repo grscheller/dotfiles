@@ -196,6 +196,7 @@ local noice_opts = {
 }
 
 return {
+   -- Colorscheme based on Kanagawa postcard art.
    {
       [1] = 'rebelot/kanagawa.nvim',
       priority = 1000,
@@ -206,6 +207,8 @@ return {
          kanagawa.load 'dragon'
       end,
    },
+
+   -- Neovim statusline manager.
    {
       [1] = 'nvim-lualine/lualine.nvim',
       event = 'VeryLazy',
@@ -215,8 +218,9 @@ return {
       },
       opts = lualine_opts,
    },
+
+   -- Puts cmdline at eye level, hijacks vim.notify for messages.
    {
-      -- put cmdline at eye level, hijack vim.notify
       [1] = 'folke/noice.nvim',
       event = 'VeryLazy',
       dependencies = {
