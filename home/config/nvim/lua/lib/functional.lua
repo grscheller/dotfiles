@@ -36,35 +36,28 @@ M.deep_copy = function(original)
    return copy
 end
 
+---Flatten an <array> of <arrays> (will repeat values)
+---@generic A
+---@param aoa A[][]
+---@return A[]
+M.flatten_array = function(aoa)
+   local flattened, n = {}, 0
+   for i, v in ipairs(aoa) do
+      for j, w in ipairs(v) do
+         flattened[n + j] = w
+      end
+      n = n + #v
+   end
+   return flattened
+end
+
 ---Concatenate two arrays, return new array. O(n + m).
 ---@generic V
 ---@param a1 V[]
 ---@param a2 V[]
 ---@return V[]
 M.concat_arrays = function(a1, a2)
-   local n = #a1
-   local result = {}
-   for i = 1, n do
-      result[i] = a1[i]
-   end
-   for i = 1, #a2 do
-      result[n + i] = a2[i]
-   end
-   return result
-end
-
----Flatten an <array> of <arrays> (will repeat values)
----@generic A
----@param aoa A[][]
----@return A[]
-M.flatten_array = function(aoa)
-   local flattened = {}
-   for _, v in ipairs(aoa) do
-      for _, w in ipairs(v) do
-         table.insert(flattened, w)
-      end
-   end
-   return flattened
+   return M.flatten_array { a1, a2 }
 end
 
 ---Apply a function to each element of an array,

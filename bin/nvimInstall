@@ -72,6 +72,7 @@ dot_config_files='
     lua/config/usercmds_lsp.lua
     lua/core/lazy.lua
     lua/lib/functional.lua
+    lua/lib/mason.lua
     lua/lib/scroll.lua
     lua/lib/text.lua
     lua/plugins/appearance.lua

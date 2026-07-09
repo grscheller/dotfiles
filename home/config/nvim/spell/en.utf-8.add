@@ -180,6 +180,8 @@ Alacritty
 Alacritty's
 alacritty
 alacritty's
+Anthropic
+Anthropic's
 ArXiv
 Baeldung
 Baidu
@@ -1046,6 +1048,7 @@ unicode
 unistd
 unlicense
 untar
+usercmds
 usr
 utf
 urandom
@@ -1320,8 +1323,10 @@ autocommands
 checkhealth
 checkpath
 checktime
+devicons
 lspconf
 lspconfig
+mkspell
 neorocks
 neovim
 neovim's
@@ -1341,6 +1346,8 @@ cbfmt
 checkmake
 clj-kondo
 cljfmt
+cssls
+csv
 DAP
 dap
 esbonio
@@ -1355,8 +1362,10 @@ oxlint
 rumdl
 stylua
 superhtml
+taplo
 tclint
 tombi
+tsv
 # Lua names
 fzy
 hererocks
