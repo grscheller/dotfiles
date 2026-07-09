@@ -44,39 +44,28 @@ return {
       },
    },
 
-   -- Kept ONLY for lspconfig<->Mason name translation and `:LspInstall`.
-   -- Installation/updating/cleaning of LSP servers is delegated to
-   -- mason-tool-installer below. No `ensure_installed` lives here.
-   {
-      [1] = 'mason-org/mason-lspconfig.nvim',
-      dependencies = { 'mason-org/mason.nvim' },
-      cmd = { 'LspInstall', 'LspUninstall' },
-      opts = {
-         automatic_enable = false, -- LSP is configured natively
-      },
-   },
-
-   -- Kept for nvim-dap<->Mason name translation, adapter/handler wiring, and
-   -- `:DapInstall`. Installation is delegated to mason-tool-installer below.
-   {
-      [1] = 'jay-babu/mason-nvim-dap.nvim',
-      dependencies = {
-         'mason-org/mason.nvim',
-         'mfussenegger/nvim-dap',
-      },
-      cmd = { 'DapInstall', 'DapUninstall' },
-      opts = {
-         handlers = {}, -- default handlers: wire installed debuggers into nvim-dap
-      },
-   },
-
-   -- Single source of truth for install / update / clean across every category.
-   -- With the integrations enabled (default) and the two plugins above present,
-   -- ensure_installed accepts lspconfig names (e.g. lua_ls), nvim-dap names,
-   -- and plain Mason names alike.
+   -- Single source of truth for install/update/clean across every mason
+   -- category. With the integrations enabled (default) the two dependencies
+   -- after mason.nvim itself, ensure_installed opts key accepts lspconfig
+   -- names (e.g. lua_ls), nvim-dap names, and plain Mason names alike.
    {
       [1] = 'WhoIsSethDaniel/mason-tool-installer.nvim',
-      dependencies = { 'mason-org/mason.nvim' },
+      dependencies = {
+         {
+            [1] = 'mason-org/mason-lspconfig.nvim',
+            dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
+            opts = {
+               automatic_enable = false, -- LSP is configured natively
+            },
+         },
+         {
+            [1] = 'jay-babu/mason-nvim-dap.nvim',
+            dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
+            opts = {
+               handlers = {}, -- default handlers: wire installed debuggers into nvim-dap
+            },
+         },
+      },
       cmd = {
          'MasonToolsInstall',
          'MasonToolsInstallSync',
@@ -104,23 +93,30 @@ return {
          {
             '<leader>mrl',
             function()
-               require('lib.mason').clean_lsp()
+               require('lib.mason').remove_lsp()
             end,
             desc = 'Remove ALL LSP servers',
          },
          {
             '<leader>mrd',
             function()
-               require('lib.mason').clean_dap()
+               require('lib.mason').remove_dap()
             end,
             desc = 'Remove ALL DAP adapters',
          },
          {
             '<leader>mrf',
             function()
-               require('lib.mason').clean_linters_and_formatters()
+               require('lib.mason').remove_linters_and_formatters()
             end,
             desc = 'Remove ALL linters & formatters',
+         },
+         {
+            '<leader>mre',
+            function()
+               require('lib.mason').remove_everything()
+            end,
+            desc = 'Remove everythinh',
          },
       },
       opts = function()

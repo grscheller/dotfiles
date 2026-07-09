@@ -32,7 +32,6 @@ return {
       [1] = 'mfussenegger/nvim-dap-python',
       dependencies = {
          'mfussenegger/nvim-dap',
-         'jay-babu/mason-nvim-dap.nvim',
       },
       ft = 'python',
       config = function()
@@ -43,14 +42,13 @@ return {
       end,
    },
 
-   -- C, C++, Rust, Zig adapters
+   -- C, C++, Rust, Zig adapter
    {
       -- virtual plugin spec
       dir = vim.fn.stdpath('config'), -- any real directory, this one is guaranteed to exist
       name = 'dap-codelldb-config',   -- arbitrary unique name
       dependencies = {
          'mfussenegger/nvim-dap',
-         'jay-babu/mason-nvim-dap.nvim',
       },
       ft = { 'c', 'cpp', 'rust', 'zig' },
       config = function()

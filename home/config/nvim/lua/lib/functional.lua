@@ -22,6 +22,17 @@
 
 local M = {}
 
+---Make a "shallow copy" of a table. Just key-value pairs
+---@param original table
+---@return table
+M.copy = function(original)
+   local copy = {}
+   for k, v in pairs(original) do
+      copy[k] = v
+   end
+   return copy
+end
+
 ---Recursively copy a table, make no attempt replicating metatables
 ---@param original table
 ---@return table
