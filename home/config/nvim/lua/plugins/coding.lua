@@ -196,18 +196,6 @@ return {
       },
    },
 
-   -- On reedit return to last location (configured via config.globals).
-   {
-      [1] = 'mrcjkb/nvim-lastplace',
-      event = 'BufReadPre',
-   },
-
-   -- Manipulate matching pairs of symbols.
-   {
-      [1] = 'kylechui/nvim-surround',
-      event = { 'BufReadPre', 'BufNewFile' },
-   },
-
    -- Lints based on what is saved to disk.
    {
       [1] = 'mfussenegger/nvim-lint',
