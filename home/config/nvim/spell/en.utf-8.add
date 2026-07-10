@@ -1324,6 +1324,7 @@ checkhealth
 checkpath
 checktime
 devicons
+formatoptions
 lspconf
 lspconfig
 mkspell

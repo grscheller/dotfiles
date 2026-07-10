@@ -12,26 +12,19 @@ local M = {}
 
 local copy = require('lib.functional').copy
 
--- Category strings exactly as Mason records them in `pkg.spec.categories`.
--- Source of truth: mason-core/package/init.lua -> Package.Cat
--- (Compiler | Runtime | DAP | LSP | Linter | Formatter)
-M.LSP = 'LSP'
-M.DAP = 'DAP'
-M.LINTER = 'Linter'
-M.FORMATTER = 'Formatter'
-M.COMPLIER = 'Compiler'
-M.RUNTIME = 'Runtime'
+---Category strings exactly as Mason records them in `pkg.spec.categories`.
+---Source of truth: mason-core/package/init.lua -> Package.Cat
+---@enum mason.Category
+local Category = {
+   LSP = 'LSP',
+   DAP = 'DAP',
+   Linter = 'Linter',
+   Formatter = 'Formatter',
+}
 
----Uninstall every installed package belonging to of the above `categories`.
----Mirrors the invocation pattern of `:MasonUninstallAll`: `pkg:uninstall()`
----is asynchronous and fire-and-forget, so the notification reports which
----removals were *initiated*, not awaited.
-
-
----Uninstall any mason packages belonging to one or more Mason categories.
----@param remove_categories string[]  Categories to flag package removal.
----@param exclude_categories string[]  But not if package also belongs to one of these categories.
-function M.clean_categories(remove_categories, exclude_categories)
+---@param remove_categories   mason.Category[]  Categories to flag for removal.
+---@param excluded_categories mason.Category[]  Skip a package if it also belongs to one of these.
+local function rm_pkgs(remove_categories, excluded_categories)
    local ok, registry = pcall(require, 'mason-registry')
    if not ok then
       vim.notify('mason-registry is not available', vim.log.levels.ERROR)
@@ -43,37 +36,40 @@ function M.clean_categories(remove_categories, exclude_categories)
       DAP = false,
       Linter = false,
       Formatter = false,
-      Compiler = false,
-      Runtime = false,
    }
-   local exclude = copy(remove)
+   local excluded = copy(remove)
 
    for _, c in ipairs(remove_categories) do
       remove[c] = true
    end
 
-   for _, c in ipairs(exclude_categories) do
-      exclude[c] = true
+   for _, c in ipairs(excluded_categories) do
+      excluded[c] = true
    end
 
-   local removed = {}
+   local removed, next_row = {}, 1
    for _, pkg in ipairs(registry.get_installed_packages()) do
       local categories = pkg.spec.categories or {}
-      for _, e in ipairs(categories) do
-         if not exclude[e] then
-            for _, c in ipairs(categories) do
-               if remove[c] then
-                  if pcall(function() pkg:uninstall() end) then
-                     table.insert(removed, pkg.name)
-                  end
+      local remove_pkg = false
+      for _, c in ipairs(categories) do
+         if remove[c] then
+            remove_pkg = true
+            for _, e in ipairs(categories) do
+               if excluded[e] then
+                  remove_pkg = false
                   break
+               end
+            end
+            if remove_pkg then
+               if pcall(function() pkg:uninstall() end) then
+                  removed[next_row], next_row = pkg.name, next_row + 1
                end
             end
          end
       end
    end
 
-   if #removed > 0 then
+   if next_row > 1 then
       table.sort(removed)
       vim.notify(
          ('Mason: removing %d package(s) [%s]: %s'):format(
@@ -95,21 +91,22 @@ end
 
 ---Remove all LSP servers.
 function M.remove_lsp()
-   M.clean_categories({ M.LSP }, {})
+   rm_pkgs({ Category.LSP }, {})
 end
 
 ---Remove all DAP adapters.
 function M.remove_dap()
-   M.clean_categories({ M.DAP }, {})
+   rm_pkgs({ Category.DAP }, {})
 end
 
 ---Remove Linters and Formatters which are not also LSP servers.
 function M.remove_linters_and_formatters()
-   M.clean_categories({ M.LINTER, M.FORMATTER }, { M.LSP })
+   rm_pkgs({ Category.Linter, Category.Formatter }, { Category.LSP })
 end
 
 ---Remove everything
-function M.remove_everthing()
-   M.clean_categories({ M.LSP, M.DAP, M.LINTER, M.FORMATTER }, {})
+function M.remove_everything()
+   rm_pkgs({ Category.LSP, Category.DAP, Category.Linter, Category.Formatter }, {})
 end
+
 return M

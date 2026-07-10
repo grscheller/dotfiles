@@ -116,7 +116,7 @@ return {
             function()
                require('lib.mason').remove_everything()
             end,
-            desc = 'Remove everythinh',
+            desc = 'Remove everything',
          },
       },
       opts = function()
