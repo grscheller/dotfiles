@@ -32,16 +32,7 @@ return {
          { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason UI' },
       },
       build = ':MasonUpdate', -- refresh the registry index when lazy.nvim installs/updates the plugin
-      opts = {
-         ui = {
-            icons = {
-               package_installed = '✓',
-               package_pending = '➜',
-               package_uninstalled = '✗',
-            },
-         },
-         PATH = 'skip',
-      },
+      opts = { PATH = 'skip' }, -- prepended in config.lsp, mason is lazy-loaded
    },
 
    -- Single source of truth for install/update/clean across every mason
@@ -61,9 +52,7 @@ return {
          {
             [1] = 'jay-babu/mason-nvim-dap.nvim',
             dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
-            opts = {
-               handlers = {}, -- default handlers: wire installed debuggers into nvim-dap
-            },
+            opts = {},
          },
       },
       cmd = {

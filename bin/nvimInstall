@@ -61,7 +61,7 @@ dot_config_files='
     lsp/tombi.lua
     lsp/zls.lua
     lsp/zuban.lua
-    lua/config/autocmds_text.lua
+    lua/config/autocmds.lua
     lua/config/diagnostics.lua
     lua/config/globals.lua
     lua/config/keymaps.lua
@@ -69,7 +69,6 @@ dot_config_files='
     lua/config/options.lua
     lua/config/tooling.lua
     lua/config/treesitter.lua
-    lua/config/usercmds_lsp.lua
     lua/core/lazy.lua
     lua/lib/functional.lua
     lua/lib/mason.lua
@@ -92,6 +91,8 @@ remove_items="
     $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
     $XDG_CONFIG_HOME/nvim/lsp/pylsp.lua
     $XDG_CONFIG_HOME/nvim/lua/config/tools.lua
+    $XDG_CONFIG_HOME/nvim/lua/config/autocmds_text.lua
+    $XDG_CONFIG_HOME/nvim/lua/config/usercmds_lsp.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/tool_install/
     $XDG_CONFIG_HOME/nvim/lua/plugins/install_tooling.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/mason.lua

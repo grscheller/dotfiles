@@ -9,9 +9,9 @@ local concat = functional.concat_arrays
 
 local M = {}
 
--- Make sure mason's bin directory is available and trumps
--- any system installed version of the tools.
-vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
+-- Make sure mason's bin directory is available and trumps any system
+-- installed version of the tools. Mason may not yet be lazy loaded.
+   vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
    .. ':'
    .. vim.env.PATH
 

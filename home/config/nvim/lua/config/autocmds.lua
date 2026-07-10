@@ -7,7 +7,7 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local GRS_Text_Grp = autogrp('GRS_Text', { clear = true })
 
--- No smartcase while in cmdline mode
+-- No smartcase while in cmdline mode.
 autocmd('CmdLineEnter', {
    pattern = '*',
    command = 'set nosmartcase noignorecase',
@@ -15,7 +15,7 @@ autocmd('CmdLineEnter', {
    desc = 'Use case sensitive search in command mode',
 })
 
--- Use smartcase outside cmdline mode
+-- Use smartcase outside cmdline mode.
 autocmd('CmdLineLeave', {
    pattern = '*',
    command = 'set ignorecase smartcase',
@@ -23,6 +23,7 @@ autocmd('CmdLineLeave', {
    desc = 'Use smartcase when not in Command Mode',
 })
 
+-- Give visual feedback when yanking text
 autocmd('TextYankPost', {
    pattern = '*',
    callback = function()
@@ -41,7 +42,7 @@ autocmd({ 'BufWritePost', 'BufEnter' }, {
       vim.o.foldlevelstart = 99
    end,
    group = GRS_Text_Grp,
-   desc = 'Make sure folding is off',
+   desc = 'Make sure folding does not get in the way',
 })
 
 -- Keep ftplugins from overriding my formatoptions

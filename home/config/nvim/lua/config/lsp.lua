@@ -41,3 +41,38 @@ end, { desc = 'workspace symbols' })
 km('n', '<leader>i', function()
    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, { desc = 'toggle inlay hints' })
+
+-- LSP related user commands
+local usercmd = vim.api.nvim_create_user_command
+
+usercmd('LspInfo', function()
+   local clients = vim.lsp.get_clients()
+   if #clients == 0 then
+      vim.notify('No active LSP clients.')
+      return
+   end
+   for _, client in ipairs(clients) do
+      vim.notify('Client ID: ' .. client.id .. ', Name: ' .. client.name)
+   end
+end, {})
+
+-- LSP related auto commands
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('User', {
+   pattern = 'MasonToolsStartingInstall',
+   callback = function()
+      vim.schedule(function()
+         vim.notify('mason-tool-installer (starting)')
+      end)
+   end,
+})
+
+autocmd('User', {
+   pattern = 'MasonToolsUpdateCompleted',
+   callback = function(e)
+      vim.schedule(function()
+         vim.notify('mason-tool-installer (finished): '.. vim.inspect(e.data))
+      end)
+   end,
+})

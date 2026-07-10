@@ -70,9 +70,9 @@ Polkit
 polkit
 popup
 popups
-POSIX
 postfix
 pre
+prepended
 preinstall
 prev
 proc
@@ -603,6 +603,7 @@ parsers
 pathname
 pathnames
 PoPOS
+POSIX
 pulseaudio
 Smulx
 squashfs
@@ -1336,6 +1337,7 @@ Noice
 nolist
 nvim
 nvim's
+smartcase
 undercurl
 whichkey
 # LSP, DAP, linter, formatter names
