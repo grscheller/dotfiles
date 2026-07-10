@@ -176,19 +176,24 @@ return {
                suggestions = 36,
             },
          },
+         spec = {
+            { '<m-g>', group = 'gitsigns' },
+            { '<leader>m', group = 'mason' },
+            { '<leader>mr', group = 'mason remove' },
+         },
       },
       keys = function()
          return {
-            -- which-key keymaps
+            -- which-key keymap
             {
                '<leader>?',
                function()
                   require('which-key').show { global = false }
                end,
-               desc = 'Buffer Local Keymaps (which-key)',
+               desc = 'Buffer Local Keymaps',
             },
 
-            -- lazy.nvim keymaps
+            -- lazy.nvim keymap
             { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
          }
       end,

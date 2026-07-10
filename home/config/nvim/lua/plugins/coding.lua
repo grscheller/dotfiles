@@ -1,139 +1,116 @@
 --[[ Git Signs ]]
 
 local gitsigns_on_attach = function(bufnr)
-   local gitsigns = require 'gitsigns'
-   local wk = require 'which-key'
+   local km = vim.keymap.set
 
    --[[ Navigation ]]
 
-   wk.add {
-      {
-         [1] = ']c',
-         [2] = function()
-            if vim.wo.diff then
-               -- fall back to nvim when in diff mode
-               vim.cmd.normal { ']c', bang = true }
-            else
-               gitsigns.nav_hunk 'next'
-            end
-         end,
-         desc = 'next git/diff change',
-         buffer = bufnr,
-      },
-      {
-         [1] = '[c',
-         [2] = function()
-            if vim.wo.diff then
-               -- fall back to nvim when in diff mode
-               vim.cmd.normal { '[c', bang = true }
-            else
-               gitsigns.nav_hunk 'prev'
-            end
-         end,
-         desc = 'prev git/diff change',
-         buffer = bufnr,
-      },
-   }
+   km('n', ']h', function()
+      require('gitsigns').nav_hunk 'next'
+   end, {
+      desc = 'git next hunk',
+      buffer = bufnr,
+   })
+
+   km('n', '[h', function()
+      require('gitsigns').nav_hunk 'prev'
+   end, {
+      desc = 'git prev hunk',
+      buffer = bufnr,
+   })
 
    --[[ Actions ]]
 
-   wk.add {
-      { '<m-g>', group = 'gitsigns', buffer = bufnr },
-      {
-         [1] = '<m-g>b',
-         [2] = gitsigns.blame_line,
-         desc = 'git blame line',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>B',
-         [2] = gitsigns.toggle_current_line_blame,
-         desc = 'toggle git show blame line',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>i',
-         [2] = gitsigns.diffthis,
-         desc = 'git diff against index',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>d',
-         [2] = function()
-            gitsigns.diffthis '@'
-         end,
-         desc = 'git diff against last commit',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>D',
-         [2] = function()
-            gitsigns.diffthis '~'
-         end,
-         desc = 'git diff against commit before last commit',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>s',
-         [2] = gitsigns.stage_hunk,
-         desc = 'git stage hunk',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>r',
-         [2] = gitsigns.reset_hunk,
-         desc = 'git reset hunk',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>s',
-         [2] = function()
-            gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-         end,
-         desc = 'git stage hunk',
-         mode = { 'v' },
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>r',
-         [2] = function()
-            gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-         end,
-         desc = 'git reset hunk',
-         mode = { 'v' },
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>S',
-         [2] = gitsigns.stage_buffer,
-         desc = 'git stage buffer',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>R',
-         [2] = gitsigns.reset_buffer,
-         desc = 'git reset buffer',
-         buffer = bufnr,
-      },
-      {
-         [1] = '<m-g>p',
-         [2] = gitsigns.preview_hunk,
-         desc = 'git preview hunk',
-         buffer = bufnr,
-      },
-   }
+   km('n', '<m-g>b', function()
+      require('gitsigns').blame_line()
+   end, {
+      desc = 'git blame line',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>B', function()
+      require('gitsigns').toggle_current_line_blame()
+   end, {
+      desc = 'git toggle show blame',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>i', function()
+      require('gitsigns').diffthis()
+   end, {
+      desc = 'git diff against index',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>d', function()
+      require('gitsigns').diffthis '@'
+   end, {
+      desc = 'git diff against last commit',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>D', function()
+      require('gitsigns').diffthis '~'
+   end, {
+      desc = 'git diff against commit before last commit',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>s', function()
+      require('gitsigns').stage_hunk()
+   end, {
+      desc = 'git stage hunk',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>r', function()
+      require('gitsigns').reset_hunk()
+   end, {
+      desc = 'git reset hunk',
+      buffer = bufnr,
+   })
+
+   km('v', '<m-g>s', function()
+      require('gitsigns').stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+   end, {
+      desc = 'git stage hunk',
+      buffer = bufnr,
+   })
+
+   km('v', '<m-g>r', function()
+      require('gitsigns').reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+   end, {
+      desc = 'git reset hunk',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>S', function()
+      require('gitsigns').stage_buffer()
+   end, {
+      desc = 'git stage buffer',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>R', function()
+      require('gitsigns').reset_buffer()
+   end, {
+      desc = 'git reset buffer',
+      buffer = bufnr,
+   })
+
+   km('n', '<m-g>p', function()
+      require('gitsigns').preview_hunk()
+   end, {
+      desc = 'git preview hunk',
+      buffer = bufnr,
+   })
 
    --[[ Text object ]]
 
-   wk.add {
-      {
-         [1] = '<m-g>h',
-         [2] = '<cmd>Gitsigns select_hunk<cr>',
-         desc = 'inner hunk',
-         mode = { 'n', 'o', 'x' },
-         buffer = bufnr,
-      },
-   }
+   km({ 'n', 'o', 'x' }, '<m-g>h', '<cmd>Gitsigns select_hunk<cr>', {
+      desc = 'git inner hunk',
+      buffer = bufnr,
+   })
 end
 
 return {
@@ -154,17 +131,14 @@ return {
          },
       },
       opts = {
-         formatters_by_ft = require('config.tooling').formatters
+         formatters_by_ft = require('config.tooling').formatters,
       },
    },
 
    -- Provides GIT info in left gutter, git actions on portions of code.
    {
       [1] = 'lewis6991/gitsigns.nvim',
-      dependencies = {
-         'nvim-lua/plenary.nvim',
-         'folke/which-key.nvim',
-      },
+      dependencies = { 'nvim-lua/plenary.nvim' },
       event = 'VeryLazy',
       opts = {
          signs = {
@@ -199,7 +173,7 @@ return {
    -- Quickly jump around window.
    {
       url = 'https://codeberg.org/andyg/leap.nvim',
-      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' }
+      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
    },
    {
       -- Colorize color names, hexcodes, and other color formats.
@@ -231,7 +205,7 @@ return {
    -- Manipulate matching pairs of symbols.
    {
       [1] = 'kylechui/nvim-surround',
-      event = { 'BufReadPre', 'BufNewFile' }
+      event = { 'BufReadPre', 'BufNewFile' },
    },
 
    -- Lints based on what is saved to disk.
@@ -248,7 +222,8 @@ return {
          },
       },
       config = function()
-         require('lint').linters_by_ft = require('config.tooling').linters
-      end
+         require('lint').linters_by_ft =
+            require('config.tooling').linters
+      end,
    },
 }

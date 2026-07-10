@@ -71,20 +71,13 @@ return {
          {
             '<leader>mu',
             '<cmd>MasonToolsUpdate<cr>',
-            desc = 'Install + update all tools',
-         },
-         {
-            '<leader>mc',
-            '<cmd>MasonToolsClean<cr>',
-            desc = 'Clean tools not in ensure_installed',
+            desc = 'Update/Install all tools',
          },
          -- Category removal (destructive) lives behind the `mr` prefix.
          {
-            '<leader>mrl',
-            function()
-               require('lib.mason').remove_lsp()
-            end,
-            desc = 'Remove ALL LSP servers',
+            '<leader>mrc',
+            '<cmd>MasonToolsClean<cr>',
+            desc = 'Cleanout all tools not in ensure_installed',
          },
          {
             '<leader>mrd',
@@ -94,18 +87,25 @@ return {
             desc = 'Remove ALL DAP adapters',
          },
          {
-            '<leader>mrf',
-            function()
-               require('lib.mason').remove_linters_and_formatters()
-            end,
-            desc = 'Remove ALL linters & formatters',
-         },
-         {
             '<leader>mre',
             function()
                require('lib.mason').remove_everything()
             end,
             desc = 'Remove everything',
+         },
+         {
+            '<leader>mrf',
+            function()
+               require('lib.mason').remove_linters_and_formatters()
+            end,
+            desc = 'Remove (non-LSP) formatters & linters',
+         },
+         {
+            '<leader>mrl',
+            function()
+               require('lib.mason').remove_lsp()
+            end,
+            desc = 'Remove ALL LSP servers',
          },
       },
       opts = function()
