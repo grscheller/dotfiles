@@ -177,6 +177,8 @@ return {
             },
          },
          spec = {
+            { '<leader>b', group = 'blackhole' },
+            { '<leader>c', group = 'system clipboard' },
             { '<m-g>', group = 'gitsigns' },
             { '<leader>m', group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
