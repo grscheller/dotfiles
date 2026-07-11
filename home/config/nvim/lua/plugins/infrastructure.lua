@@ -1,4 +1,8 @@
---[[ Telescope - search, filter, find & pick items ]]
+--[[ Infrastructure
+
+     - Telescope (search, filter, find & pick items)
+     - Whichkey (make keymaps discoverable)
+     - Nvim lastplace (return to last place file was edited) ]]
 
 return {
    -- Provides nerd-font eye-candy
@@ -141,7 +145,7 @@ return {
       },
    },
 
-   -- Plugin to configure builtin treesitter
+   -- Configure builtin treesitter
    {
       [1] = 'nvim-treesitter/nvim-treesitter',
       branch = 'main',
@@ -188,7 +192,7 @@ return {
          return {
             -- which-key keymap
             {
-               '<leader>?',
+               '<leader><tab>',
                function()
                   require('which-key').show { global = false }
                end,
@@ -199,5 +203,11 @@ return {
             { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
          }
       end,
+   },
+
+   -- When re-editing a file, return to last cursor location line.
+   {
+      -- Configured via `config/globals.lua`.
+      'mrcjkb/nvim-lastplace',
    },
 }

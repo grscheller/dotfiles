@@ -1326,6 +1326,7 @@ checkpath
 checktime
 devicons
 formatoptions
+lastplace
 lspconf
 lspconfig
 mkspell

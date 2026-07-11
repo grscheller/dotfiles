@@ -1,9 +1,11 @@
---[[ Git Signs ]]
+--[[ Development tools
+-
+     - Git Signs
+     - Linters
+     - Formatters      ]]
 
 local gitsigns_on_attach = function(bufnr)
    local km = vim.keymap.set
-
-   --[[ Navigation ]]
 
    km('n', ']h', function()
       require('gitsigns').nav_hunk 'next'
@@ -19,8 +21,7 @@ local gitsigns_on_attach = function(bufnr)
       buffer = bufnr,
    })
 
-   --[[ Actions ]]
-
+   -- Actions
    km('n', '<m-g>b', function()
       require('gitsigns').blame_line()
    end, {
@@ -105,95 +106,39 @@ local gitsigns_on_attach = function(bufnr)
       buffer = bufnr,
    })
 
-   --[[ Text object ]]
-
+   -- Text object
    km({ 'n', 'o', 'x' }, '<m-g>h', '<cmd>Gitsigns select_hunk<cr>', {
       desc = 'git inner hunk',
       buffer = bufnr,
    })
 end
 
-return {
-   -- Enables range formatting for all formatters.
-   {
-      [1] = 'stevearc/conform.nvim',
-      keys = {
-         {
-            [1] = '<leader>f',
-            [2] = function()
-               require('conform').format {
-                  async = false,
-                  timeout_ms = 2000,
-               }
-            end,
-            mode = 'n',
-            desc = 'format (conform)',
-         },
-      },
-      opts = {
-         formatters_by_ft = require('config.tooling').formatters,
-      },
+local gitsigns_opts = {
+   signs = {
+      add = { text = '+' },
+      change = { text = '│' },
+      delete = { text = '∨' },
+      topdelete = { text = '∧' },
+      changedelete = { text = '⊥' },
+      untracked = { text = '┆' },
    },
+   signs_staged = {
+      add = { text = '+' },
+      change = { text = '│' },
+      delete = { text = '∨' },
+      topdelete = { text = '∧' },
+      changedelete = { text = '⊥' },
+   },
+   on_attach = gitsigns_on_attach,
+}
 
+return {
    -- Provides GIT info in left gutter, git actions on portions of code.
    {
       [1] = 'lewis6991/gitsigns.nvim',
       dependencies = { 'nvim-lua/plenary.nvim' },
       event = 'VeryLazy',
-      opts = {
-         signs = {
-            add = { text = '+' },
-            change = { text = '│' },
-            delete = { text = '∨' },
-            topdelete = { text = '∧' },
-            changedelete = { text = '⊥' },
-            untracked = { text = '┆' },
-         },
-         signs_staged = {
-            add = { text = '+' },
-            change = { text = '│' },
-            delete = { text = '∨' },
-            topdelete = { text = '∧' },
-            changedelete = { text = '⊥' },
-         },
-         on_attach = gitsigns_on_attach,
-      },
-   },
-
-   -- Show line indentations when editing code.
-   {
-      [1] = 'lukas-reineke/indent-blankline.nvim',
-      event = 'InsertEnter',
-      main = 'ibl',
-      opts = {
-         indent = { char = '│' },
-      },
-   },
-
-   -- Quickly jump around window.
-   {
-      url = 'https://codeberg.org/andyg/leap.nvim',
-      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
-   },
-   {
-      -- Colorize color names, hexcodes, and other color formats.
-      [1] = 'norcalli/nvim-colorizer.lua',
-      keys = {
-         {
-            [1] = '<leader>C',
-            [2] = '<cmd>ColorizerToggle<cr>',
-            desc = 'toggle colorizer',
-         },
-      },
-      opts = {
-         [1] = '*',
-         RRGGBBAA = true,
-         rgb_fn = true,
-         hsb_fn = true,
-         css = { names = false },
-         html = { names = false },
-         mode = 'background',
-      },
+      opts = gitsigns_opts,
    },
 
    -- Lints based on what is saved to disk.
@@ -213,5 +158,26 @@ return {
          require('lint').linters_by_ft =
             require('config.tooling').linters
       end,
+   },
+
+   -- Enables range formatting for all formatters.
+   {
+      [1] = 'stevearc/conform.nvim',
+      keys = {
+         {
+            [1] = '<leader>f',
+            [2] = function()
+               require('conform').format {
+                  async = false,
+                  timeout_ms = 2000,
+               }
+            end,
+            mode = 'n',
+            desc = 'format (conform)',
+         },
+      },
+      opts = {
+         formatters_by_ft = require('config.tooling').formatters,
+      },
    },
 }

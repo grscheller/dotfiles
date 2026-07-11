@@ -1,4 +1,10 @@
---[[ Completion engine ]]
+--[[ Visual editing:
+
+     - completion engine
+     - Matching pairs
+     - Indentation indication
+     - Navigation
+     - Colorize names.           ]]
 
 local blink_opts = {
    -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -101,15 +107,70 @@ local blink_opts = {
 }
 
 return {
-   [1] = 'saghen/blink.cmp',
-   version = '1.*',
-   event = { 'InsertEnter', 'CmdlineEnter' },
-   dependencies = {
-      'saghen/blink.lib',
-      'niuiic/blink-cmp-rg.nvim',
-      'onsails/lspkind.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'rafamadriz/friendly-snippets',
+   -- Completion engine.
+   {
+      [1] = 'saghen/blink.cmp',
+      version = '1.*',
+      event = { 'InsertEnter', 'CmdlineEnter' },
+      dependencies = {
+         'saghen/blink.lib',
+         'niuiic/blink-cmp-rg.nvim',
+         'onsails/lspkind.nvim',
+         'nvim-tree/nvim-web-devicons',
+         'rafamadriz/friendly-snippets',
+      },
+      opts = blink_opts,
    },
-   opts = blink_opts,
+
+   -- Matching pairs manipulation.
+   {
+      'saghen/blink.pairs',
+      dependencies = 'saghen/blink.lib',
+      version = '*', -- download pre-built binaries from GitHub releases
+      build = function() require('blink.pairs').download():pwait(60000) end,
+      opts = {
+         mappings = {
+            enabled = true,
+            cmdline = false, -- for now let noice fully own the cmdline
+         },
+      },
+
+   },
+
+   -- Show line indentations when editing.
+   {
+      [1] = 'lukas-reineke/indent-blankline.nvim',
+      event = 'InsertEnter',
+      main = 'ibl',
+      opts = {
+         indent = { char = '│' },
+      },
+   },
+
+   -- Quickly jump around window.
+   {
+      url = 'https://codeberg.org/andyg/leap.nvim',
+      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
+   },
+
+   -- Colorize color names, hexcodes, and other color formats.
+   {
+      [1] = 'norcalli/nvim-colorizer.lua',
+      keys = {
+         {
+            [1] = '<leader>C',
+            [2] = '<cmd>ColorizerToggle<cr>',
+            desc = 'toggle colorizer',
+         },
+      },
+      opts = {
+         [1] = '*',
+         RRGGBBAA = true,
+         rgb_fn = true,
+         hsb_fn = true,
+         css = { names = false },
+         html = { names = false },
+         mode = 'background',
+      },
+   },
 }

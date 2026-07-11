@@ -74,11 +74,12 @@ dot_config_files='
     lua/lib/mason.lua
     lua/lib/scroll.lua
     lua/lib/text.lua
-    lua/plugins/appearance.lua
-    lua/plugins/coding.lua
     lua/plugins/debug.lua
+    lua/plugins/development.lua
     lua/plugins/infrastructure.lua
     lua/plugins/tooling.lua
+    lua/plugins/visual_appearance.lua
+    lua/plugins/visual_editing.lua
     spell/en.utf-8.add
 '
 
@@ -88,19 +89,17 @@ toml_files='
 
 remove_items="
     $HOME/.vimrc
-    $XDG_CONFIG_HOME/nvim/lsp/taplo.lua
-    $XDG_CONFIG_HOME/nvim/lsp/pylsp.lua
     $XDG_CONFIG_HOME/nvim/lua/config/tools.lua
     $XDG_CONFIG_HOME/nvim/lua/config/autocmds_text.lua
     $XDG_CONFIG_HOME/nvim/lua/config/usercmds_lsp.lua
     $XDG_CONFIG_HOME/nvim/lua/plugins/tool_install/
-    $XDG_CONFIG_HOME/nvim/lua/plugins/install_tooling.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/mason.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/nvim-web-devicons.lua
-    $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
     $XDG_CONFIG_HOME/nvim/lua/plugins/appearance/
+    $XDG_CONFIG_HOME/nvim/lua/plugins/debug/
     $XDG_CONFIG_HOME/nvim/lua/plugins/coding/
     $XDG_CONFIG_HOME/nvim/lua/plugins/infrastructure/
+    $XDG_CONFIG_HOME/nvim/lua/plugins/appearance.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/completions.lua
+    $XDG_CONFIG_HOME/nvim/lua/plugins/coding.lua
 "
 
 dirs_to_create=""
