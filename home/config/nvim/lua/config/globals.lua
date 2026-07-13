@@ -3,7 +3,7 @@
      - First thing loaded in init.lua
      - most plugins only read these globals on startup
 
---]]
+]]
 
 -- Define leader keys once and for all
 vim.g.mapleader = ' '
@@ -26,6 +26,3 @@ vim.g.nvim_lastplace = {
    ignore_filetype = { 'gitcommit', 'gitrebase' },
    open_folds = true,
 }
-
--- Default nvim-surround mappings clash with leap.nvim mappings
-vim.g.nvim_surround_no_mappings = true

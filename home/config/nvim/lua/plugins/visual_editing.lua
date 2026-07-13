@@ -4,10 +4,13 @@
      - Matching pairs
      - Indentation indication
      - Navigation
-     - Colorize names.           ]]
+     - Colorize names.
+]]
 
+---@type LazySpec
 return {
    -- Completion engine.
+   ---@type LazyPluginSpec
    {
       [1] = 'saghen/blink.cmp',
       dependencies = {
@@ -73,8 +76,13 @@ return {
             },
          },
          sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer', 'ripgrep' },
+            default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'ripgrep' },
             providers = {
+               lazydev = {
+                  name = 'LazyDev',
+                  module = 'lazydev.integrations.blink',
+                  score_offset = 100, -- rank above the LSP source
+               },
                buffer = {
                   opts = {
                      get_bufnrs = function()
@@ -113,16 +121,14 @@ return {
    },
 
    -- Matching pairs manipulation.
+   ---@type LazyPluginSpec
    {
       'saghen/blink.pairs',
-      dependencies = {
-         'saghen/blink.lib',
-         'rafamadriz/friendly-snippets',
-      },
+      dependencies = { 'saghen/blink.lib' },
       version = '*',
       event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
       build = function()
-         require('blink.pairs').build():pwait()
+         require('blink.pairs').download():pwait(60000)
       end,
       opts = {
          mappings = {
@@ -133,6 +139,7 @@ return {
    },
 
    -- Show line indentations when editing.
+   ---@type LazyPluginSpec
    {
       [1] = 'lukas-reineke/indent-blankline.nvim',
       event = 'InsertEnter',
@@ -143,12 +150,37 @@ return {
    },
 
    -- Quickly jump around window.
+   ---@type LazyPluginSpec
    {
       url = 'https://codeberg.org/andyg/leap.nvim',
       event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
+      config = function()
+         local km = vim.keymap.set
+
+         km({ 'n', 'x', 'o' }, 's', '<Plug>(leap)', { desc = 'leap' })
+         km({ 'x', 'o' }, 'x', '<Plug>(leap-next-to)', { desc = 'leap till' })
+         km('n', 'S', '<Plug>(leap-from-window)', { desc = 'leap from window' })
+         km({ 'n', 'x', 'o' }, 'gx', '<Plug>(leap-anywhere)', { desc = 'leap anywhere' })
+         km({ 'n', 'x', 'o' }, '<cr>', function()
+               require('leap').leap {
+                  ['repeat'] = true,
+                  opts = require('leap.user').with_traversal_keys('<cr>', '<bs>'),
+               }
+            end
+         )
+         km({ 'n', 'x', 'o' }, '<bs>', function()
+               require('leap').leap {
+                  ['repeat'] = true,
+                  opts = require('leap.user').with_traversal_keys('<bs>', '<cr>'),
+                  backward = true,
+               }
+            end
+         )
+      end,
    },
 
    -- Colorize color names, hexcodes, and other color formats.
+   ---@type LazyPluginSpec
    {
       [1] = 'norcalli/nvim-colorizer.lua',
       keys = {

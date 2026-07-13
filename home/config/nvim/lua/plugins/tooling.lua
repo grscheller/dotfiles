@@ -16,8 +16,10 @@
         <leader>mrf  - Remove ALL linters & formatters  (by category)
 ]]
 
+---@type LazySpec
 return {
    -- Mason package manager for external tooling.
+   ---@type LazyPluginSpec
    {
       [1] = 'mason-org/mason.nvim',
       cmd = {
@@ -39,9 +41,11 @@ return {
    -- category. With the integrations enabled (default) the two dependencies
    -- after mason.nvim itself, ensure_installed opts key accepts lspconfig
    -- names (e.g. lua_ls), nvim-dap names, and plain Mason names alike.
+   ---@type LazyPluginSpec
    {
       [1] = 'WhoIsSethDaniel/mason-tool-installer.nvim',
       dependencies = {
+         ---@type LazyPluginSpec
          {
             [1] = 'mason-org/mason-lspconfig.nvim',
             dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
@@ -49,6 +53,7 @@ return {
                automatic_enable = false, -- LSP is configured natively
             },
          },
+         ---@type LazyPluginSpec
          {
             [1] = 'jay-babu/mason-nvim-dap.nvim',
             dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
@@ -108,7 +113,9 @@ return {
             desc = 'Remove ALL LSP servers',
          },
       },
-      opts = function()
+      ---@param self LazyPlugin
+      ---@return table opts mason-tool-installer settings
+      opts = function(self)
          local tools = require('config.tooling')
          local flatten = require('lib.functional').flatten_array
 

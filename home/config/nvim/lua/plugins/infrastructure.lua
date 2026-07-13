@@ -1,11 +1,57 @@
 --[[ Infrastructure
 
+     - LazyDev ()
      - Telescope (search, filter, find & pick items)
      - Whichkey (make keymaps discoverable)
      - Nvim lastplace (return to last place file was edited) ]]
 
+---@type LazySpec
 return {
+   -- LazyDev — on-demand lua-language-server enhancement for Neovim dev.
+   ---@type LazyPluginSpec
+   {
+      [1] = 'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+         library = {
+            -- libuv bindings, only when the buffer actually references them.
+            {
+               path = '${3rd}/luv/library',
+               words = { 'vim%.uv', 'vim%.loop', 'uv%.' },
+            },
+            -- lazy.nvim meta types: LazySpec, LazyPluginSpec, LazyKeysSpec, ...
+            -- `%u` (uppercase) after `Lazy` avoids matching the lowercase
+            -- 'lazydev'/'lazy.nvim' substrings in plugin URLs.
+            {
+               path = 'lazy.nvim',
+               words = { 'Lazy%u%w+' },
+            },
+         },
+      },
+   },
+
+   -- optional blink completion source for require statements and module annotations
+   ---@type LazyPluginSpec
+   {
+      [1] = "saghen/blink.cmp",
+      opts = {
+         sources = {
+            -- add lazydev to your completion providers
+            default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+            providers = {
+               lazydev = {
+                  name = "LazyDev",
+                  module = "lazydev.integrations.blink",
+                  -- make lazydev completions top priority (see `:h blink.cmp`)
+                  score_offset = 100,
+               },
+            },
+         },
+      },
+   },
+
    -- Provides nerd-font eye-candy
+   ---@type LazyPluginSpec
    {
       [1] = 'nvim-tree/nvim-web-devicons',
       lazy = true,
@@ -16,10 +62,12 @@ return {
       },
    },
 
+
    -- Highly extendable fuzzy finder over lists.
    --   To open window showing keymaps for current picker,
    --     Insert mode: <c-/>
    --     Normal mode: ?
+   ---@type LazyPluginSpec
    {
       [1] = 'nvim-telescope/telescope.nvim',
       dependencies = {
@@ -112,6 +160,7 @@ return {
 
    -- File browser extension for telescope. Supports synchronized creation,
    -- deletion, renaming, and moving of files and folders, with LSP integration.
+   ---@type LazyPluginSpec
    {
       [1] = 'nvim-telescope/telescope-file-browser.nvim',
       dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -129,6 +178,7 @@ return {
    },
 
    -- Telescope extension providing info about lazy.nvim managed plugins.
+   ---@type LazyPluginSpec
    {
       [1] = 'tsakirist/telescope-lazy.nvim',
       dependencies = { 'nvim-telescope/telescope.nvim' },
@@ -146,6 +196,7 @@ return {
    },
 
    -- Configure builtin treesitter
+   ---@type LazyPluginSpec
    {
       [1] = 'nvim-treesitter/nvim-treesitter',
       branch = 'main',
@@ -170,6 +221,7 @@ return {
    },
 
    -- Make keymaps discoverable
+   ---@type LazyPluginSpec
    {
       [1] = 'folke/which-key.nvim',
       event = 'VeryLazy',
@@ -181,10 +233,10 @@ return {
             },
          },
          spec = {
-            { '<leader>b', group = 'blackhole' },
-            { '<leader>c', group = 'system clipboard' },
-            { '<m-g>', group = 'gitsigns' },
-            { '<leader>m', group = 'mason' },
+            { '<leader>b',  group = 'blackhole' },
+            { '<leader>c',  group = 'system clipboard' },
+            { '<m-g>',      group = 'gitsigns' },
+            { '<leader>m',  group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
          },
       },
@@ -206,6 +258,7 @@ return {
    },
 
    -- When re-editing a file, return to last cursor location line.
+   ---@type LazyPluginSpec
    {
       -- Configured via `config/globals.lua`.
       'mrcjkb/nvim-lastplace',
