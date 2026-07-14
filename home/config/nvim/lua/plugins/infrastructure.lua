@@ -31,6 +31,13 @@ return {
       },
    },
 
+   -- When re-editing a file, return to last cursor location line.
+   ---@type LazyPluginSpec
+   {
+      -- Configured via `config/globals.lua`.
+      'mrcjkb/nvim-lastplace',
+   },
+
    -- optional blink completion source for require statements and module annotations
    ---@type LazyPluginSpec
    {
@@ -239,6 +246,8 @@ return {
             { '<m-g>',      group = 'gitsigns' },
             { '<leader>m',  group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
+            { '<leader>s',  group = 'search' },
+            { '<leader>w',  group = 'workspace' },
          },
       },
       keys = function()
@@ -256,12 +265,5 @@ return {
             { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
          }
       end,
-   },
-
-   -- When re-editing a file, return to last cursor location line.
-   ---@type LazyPluginSpec
-   {
-      -- Configured via `config/globals.lua`.
-      'mrcjkb/nvim-lastplace',
    },
 }
