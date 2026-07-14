@@ -2,7 +2,8 @@
 -
      - Git Signs
      - Linters
-     - Formatters      ]]
+     - Formatters
+]]
 
 local gitsigns_on_attach = function(bufnr)
    local km = vim.keymap.set
@@ -132,8 +133,10 @@ local gitsigns_opts = {
    on_attach = gitsigns_on_attach,
 }
 
+---@type LazySpec
 return {
    -- Provides GIT info in left gutter, git actions on portions of code.
+   ---@type LazyPluginSpec
    {
       [1] = 'lewis6991/gitsigns.nvim',
       dependencies = { 'nvim-lua/plenary.nvim' },
@@ -142,6 +145,7 @@ return {
    },
 
    -- Lints based on what is saved to disk.
+   ---@type LazyPluginSpec
    {
       [1] = 'mfussenegger/nvim-lint',
       keys = {
@@ -161,6 +165,7 @@ return {
    },
 
    -- Enables range formatting for all formatters.
+   ---@type LazyPluginSpec
    {
       [1] = 'stevearc/conform.nvim',
       keys = {

@@ -1,3 +1,10 @@
+--[[ Visual editing: plugins
+
+     - Colorscheme
+     - Statusline
+     - Cmdline and vim.notify replacements
+]]
+
 local kanagawa_opts = {
    compile = true,
    undercurl = true,
@@ -16,6 +23,7 @@ local kanagawa_opts = {
       return {
          ColorColumn = { bg = colors.palette.dragonBlack3 },
       }
+   ---@type LazyPluginSpec
    end,
 }
 
@@ -195,8 +203,10 @@ local noice_opts = {
    },
 }
 
+---@type LazySpec
 return {
    -- Colorscheme based on Kanagawa postcard art.
+   ---@type LazyPluginSpec
    {
       [1] = 'rebelot/kanagawa.nvim',
       priority = 1000,
@@ -209,6 +219,7 @@ return {
    },
 
    -- Neovim statusline manager.
+   ---@type LazyPluginSpec
    {
       [1] = 'nvim-lualine/lualine.nvim',
       event = 'VeryLazy',
@@ -220,6 +231,7 @@ return {
    },
 
    -- Puts cmdline at eye level, hijacks vim.notify for messages.
+   ---@type LazyPluginSpec
    {
       [1] = 'folke/noice.nvim',
       event = 'VeryLazy',

@@ -1,7 +1,13 @@
---[[ Config Debugger Adapter Protocol (DAP) setup ]]
+--[[ Debugger Adapter Protocol (DAP) setup
 
+     - DAP debugger plugin
+     - Language adapters
+]]
+
+---@type LazySpec
 return {
    -- DAP debugging module
+   ---@type LazyPluginSpec
    {
       [1] = 'mfussenegger/nvim-dap',
       dependencies = {
@@ -28,6 +34,7 @@ return {
    },
 
    -- Python adapter
+   ---@type LazyPluginSpec
    {
       [1] = 'mfussenegger/nvim-dap-python',
       dependencies = {
@@ -43,6 +50,7 @@ return {
    },
 
    -- C, C++, Rust, Zig adapter
+   ---@type LazyPluginSpec
    {
       -- virtual plugin spec
       dir = vim.fn.stdpath('config'), -- any real directory, this one is guaranteed to exist

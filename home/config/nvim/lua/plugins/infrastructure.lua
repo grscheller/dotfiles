@@ -3,7 +3,8 @@
      - LazyDev ()
      - Telescope (search, filter, find & pick items)
      - Whichkey (make keymaps discoverable)
-     - Nvim lastplace (return to last place file was edited) ]]
+     - Nvim lastplace (return to last place file was edited)
+]]
 
 ---@type LazySpec
 return {

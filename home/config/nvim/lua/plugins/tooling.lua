@@ -113,6 +113,7 @@ return {
             desc = 'Remove ALL LSP servers',
          },
       },
+
       ---@param self LazyPlugin
       ---@return table opts mason-tool-installer settings
       opts = function(self)
