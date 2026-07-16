@@ -15,7 +15,8 @@ local M = {}
    .. ':'
    .. vim.env.PATH
 
-M.lsp_servers = {
+-- LSP servers managed via ~/.config/nvim/lsp/
+M.lsp_servers_nvim = {
    'bashls',
    'lua_ls',
    'marksman',
@@ -24,6 +25,13 @@ M.lsp_servers = {
    'zls',
    'zuban',
 }
+
+-- LSP servers managed by plugins
+M.lsp_servers_plugins = {
+   'luau_lsp',  -- plugin: lopi-py/luau-lsp.nvim
+}
+
+M.lsp_servers = concat(M.lsp_servers_nvim, M.lsp_servers_plugins)
 
 M.debug_adapters = {
    'python',

@@ -2,10 +2,7 @@
 ---
 --- https://zubanls.com/
 ---
---- A high-performance Python Language Server and type checker.
---- Implemented in Rust, by the author of Jedi.
----
---- Needs to be installed into the venv in which the code runs.
+--- A high-performance Python Language Server and type checker implemented in Rust, by the author of Jedi.
 
 ---@type vim.lsp.Config
 return {
