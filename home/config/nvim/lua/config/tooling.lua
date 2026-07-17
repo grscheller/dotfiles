@@ -15,9 +15,14 @@ local M = {}
    .. ':'
    .. vim.env.PATH
 
--- LSP servers managed via ~/.config/nvim/lsp/
+-- LSP servers managed by Neovim via ~/.config/nvim/lsp/
 M.lsp_servers_nvim = {
+   'ast_grep',
    'bashls',
+   'cssls',
+   'cssmodules_ls',
+   'css_variables',
+   'html',
    'lua_ls',
    'marksman',
    'ruff',
@@ -28,7 +33,8 @@ M.lsp_servers_nvim = {
 
 -- LSP servers managed by plugins
 M.lsp_servers_plugins = {
-   'luau_lsp',  -- plugin: lopi-py/luau-lsp.nvim
+   'luau_lsp',       -- plugin: lopi-py/luau-lsp.nvim
+   'rust_analyzer',  -- plugin: mrcjkb/rustaceanvim
 }
 
 M.lsp_servers = concat(M.lsp_servers_nvim, M.lsp_servers_plugins)
