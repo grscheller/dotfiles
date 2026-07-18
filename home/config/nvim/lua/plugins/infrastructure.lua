@@ -252,7 +252,6 @@ return {
       },
       keys = function()
          return {
-            -- which-key keymap
             {
                '<leader><tab>',
                function()
@@ -260,9 +259,7 @@ return {
                end,
                desc = 'Buffer Local Keymaps',
             },
-
-            -- lazy.nvim keymap
-            { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
+            { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy ui' },
          }
       end,
    },

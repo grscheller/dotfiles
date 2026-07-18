@@ -2,47 +2,55 @@
 
 local functional = require 'lib.functional'
 
-local flatten = functional.flatten_array
-local values = functional.get_table_values
-local sort = functional.sort_array_uniq
 local concat = functional.concat_arrays
+local flatten = functional.flatten_array
+local keys = functional.get_table_keys
+local sort = functional.sort_array_uniq
+local sort_uniq = functional.sort_array_uniq
+local values = functional.get_table_values
 
 local M = {}
 
 -- Make sure mason's bin directory is available and trumps any system
 -- installed version of the tools. Mason may not yet be lazy loaded.
-   vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
+vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
    .. ':'
    .. vim.env.PATH
 
 -- LSP servers managed by Neovim via ~/.config/nvim/lsp/
-M.lsp_servers_nvim = {
-   'ast_grep',
-   'bashls',
-   'cssls',
-   'cssmodules_ls',
-   'css_variables',
-   'html',
-   'lua_ls',
-   'marksman',
-   'ruff',
-   'tombi',
-   'zls',
-   'zuban',
+local lsp_servers_nvim = {
+   ast_grep = 'ast-grep',
+   bashls = 'bash-language-server',
+   cssls = 'css-lsp',
+   cssmodules_ls = 'cssmodules-language-server',
+   css_variables = 'css-variables-language-server',
+   html = 'html-lsp',
+   lua_ls = 'lua-language-server',
+   marksman = 'marksman',
+   ruff = 'ruff',
+   tombi = 'tombi',
+   zls = 'zls',
+   zuban = 'zuban',
 }
 
 -- LSP servers managed by plugins
-M.lsp_servers_plugins = {
-   'luau_lsp',       -- plugin: lopi-py/luau-lsp.nvim
-   'rust_analyzer',  -- plugin: mrcjkb/rustaceanvim
+local lsp_servers_plugins = {
+   luau_lsp = 'luau-lsp', -- plugin: lopi-py/luau-lsp.nvim
+   rust_analyzer = 'rust-analyzer', -- plugin: mrcjkb/rustaceanvim
+   -- plugin: nvim-metals installs Metals via Coursier
 }
 
-M.lsp_servers = concat(M.lsp_servers_nvim, M.lsp_servers_plugins)
+M.lsp_servers_nvim = keys(lsp_servers_nvim)
+M.lsp_servers_mason =
+   concat(values(lsp_servers_nvim), values(lsp_servers_plugins))
 
-M.debug_adapters = {
-   'python',
-   'codelldb',
+local debug_adapters = {
+   python = 'debugpy',
+   codelldb = 'codelldb',
 }
+
+M.debug_adapters_dap = keys(debug_adapters)
+M.debug_adapters_mason = values(debug_adapters)
 
 M.linters = {
    css = { 'stylelint' },
@@ -81,7 +89,7 @@ M.formatters = {
    yaml = { 'prettierd' },
 }
 
-M.linters_and_formatters = sort(
+M.linters_and_formatters_mason = sort_uniq(
    concat(flatten(values(M.linters)), flatten(values(M.formatters)))
 )
 

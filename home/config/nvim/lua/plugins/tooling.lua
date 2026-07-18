@@ -32,6 +32,7 @@ return {
       },
       keys = {
          { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason UI' },
+         { '<leader>mU', '<cmd>Mason<cr>', desc = 'Mason update registry' },
       },
       build = ':MasonUpdate', -- refresh the registry index when lazy.nvim installs/updates the plugin
       opts = { PATH = 'skip' }, -- prepended in config.lsp, mason is lazy-loaded
@@ -44,22 +45,7 @@ return {
    ---@type LazyPluginSpec
    {
       [1] = 'WhoIsSethDaniel/mason-tool-installer.nvim',
-      dependencies = {
-         ---@type LazyPluginSpec
-         {
-            [1] = 'mason-org/mason-lspconfig.nvim',
-            dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
-            opts = {
-               automatic_enable = false, -- LSP is configured natively
-            },
-         },
-         ---@type LazyPluginSpec
-         {
-            [1] = 'jay-babu/mason-nvim-dap.nvim',
-            dependencies = { 'mason-org/mason.nvim' },  -- needs to be installed first
-            opts = {},
-         },
-      },
+      dependencies = { 'mason-org/mason.nvim' },
       cmd = {
          'MasonToolsInstall',
          'MasonToolsInstallSync',
@@ -103,7 +89,7 @@ return {
             function()
                require('lib.mason').remove_linters_and_formatters()
             end,
-            desc = 'Remove (non-LSP) formatters & linters',
+            desc = 'Remove (non-LSP) linters & formatters',
          },
          {
             '<leader>mrl',
@@ -119,12 +105,11 @@ return {
       opts = function(self)
          local tools = require('config.tooling')
          local flatten = require('lib.functional').flatten_array
-
          return {
             ensure_installed = flatten {
-               tools.lsp_servers,
-               tools.debug_adapters,
-               tools.linters_and_formatters,
+               tools.lsp_servers_mason,
+               tools.debug_adapters_mason,
+               tools.linters_and_formatters_mason,
             },
             run_on_start = false, -- Nothing installs automatically.
          }
