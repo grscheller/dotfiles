@@ -5,7 +5,6 @@ local functional = require 'lib.functional'
 local concat = functional.concat_arrays
 local flatten = functional.flatten_array
 local keys = functional.get_table_keys
-local sort = functional.sort_array_uniq
 local sort_uniq = functional.sort_array_uniq
 local values = functional.get_table_values
 
@@ -13,8 +12,9 @@ local M = {}
 
 -- Make sure mason's bin directory is available and trumps any system
 -- installed version of the tools. Mason may not yet be lazy loaded.
-vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
-   .. ':'
+local path_sep = vim.fn.has('win32') == 1 and ';' or ':'
+vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'bin')
+   .. path_sep
    .. vim.env.PATH
 
 -- LSP servers managed by Neovim via ~/.config/nvim/lsp/

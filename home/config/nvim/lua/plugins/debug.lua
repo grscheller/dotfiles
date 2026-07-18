@@ -23,7 +23,7 @@ return {
          { ',de', function() require('dap').terminate() end,                                 desc = 'DAP end session' },
          { ',bs', function() require('dap').set_breakpoint(vim.fn.input('Condition: ')) end, desc = 'DAP breakpoint set' },
          { ',bt', function() require('dap').toggle_breakpoint() end,                         desc = 'DAP breakpoint toggle' },
-         { ',ui', function() require('dap').view_toggle() end,                               desc = 'DAP toggle ui' },
+         { ',ui', function() require('dap-view').toggle() end,                               desc = 'DAP toggle ui' },
 
          -- Stepping
          { ',si', function() require('dap').step_into() end,                                 desc = 'DAP step into' },
@@ -42,9 +42,14 @@ return {
       },
       ft = 'python',
       config = function()
-         -- Python debugger
-         local debugpy_path = vim.fn.stdpath('data')
-             .. '/mason/packages/debugpy/venv/bin/python'
+         -- Mason installs debugpy into its own venv,
+         -- venv/bin/python on Unix and venv/Scripts/python.exe on Windows.
+         local venv = vim.fs.joinpath(
+            vim.fn.stdpath('data'), 'mason', 'packages', 'debugpy', 'venv'
+         )
+         local debugpy_path = vim.fn.has('win32') == 1
+            and vim.fs.joinpath(venv, 'Scripts', 'python.exe')
+            or vim.fs.joinpath(venv, 'bin', 'python')
          require('dap-python').setup(debugpy_path)
       end,
    },

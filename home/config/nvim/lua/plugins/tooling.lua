@@ -1,12 +1,11 @@
---[[ Manage external tooling for LSP, DAP, formatting, and linting.
+--[[ Manage installation of external tooling for LSP, DAP, formatting, and linting.
 
      Nothing installs automatically. mason-tool-installer is the single engine
-     for install / update / clean across ALL categories; mason-lspconfig and
-     mason-nvim-dap are kept only for (a) translating lspconfig / nvim-dap names
-     into Mason package names and (b) their runtime wiring. Only ONE plugin owns
-     `ensure_installed`, which keeps `:MasonToolsClean` from removing tooling it
-     doesn't know about.
-
+     for install/update/clean across ALL categories; mason-lspconfig and
+     mason-nvim-dap are not used anymore. The single source of truth for LSP
+     configuration comes from files in the `~/.config/nvim/lsp/` directory.
+     Native Neovim LSP configuration is managed via module `config.lsp`.
+ 
         <leader>M    - Launch Mason UI
         <leader>mi   - Install missing tools           (:MasonToolsInstall)
         <leader>mu   - Install + update all tools       (:MasonToolsUpdate)
@@ -32,10 +31,10 @@ return {
       },
       keys = {
          { '<leader>M', '<cmd>Mason<cr>', desc = 'Mason UI' },
-         { '<leader>mU', '<cmd>Mason<cr>', desc = 'Mason update registry' },
+         { '<leader>mU', '<cmd>MasonUpdate<cr>', desc = 'Mason update registry' },
       },
       build = ':MasonUpdate', -- refresh the registry index when lazy.nvim installs/updates the plugin
-      opts = { PATH = 'skip' }, -- prepended in config.lsp, mason is lazy-loaded
+      opts = { PATH = 'skip' }, -- prepended in config.tooling, mason is lazy-loaded
    },
 
    -- Single source of truth for install/update/clean across every mason
@@ -100,9 +99,8 @@ return {
          },
       },
 
-      ---@param self LazyPlugin
       ---@return table opts mason-tool-installer settings
-      opts = function(self)
+      opts = function()
          local tools = require('config.tooling')
          local flatten = require('lib.functional').flatten_array
          return {

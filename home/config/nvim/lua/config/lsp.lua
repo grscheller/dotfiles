@@ -2,7 +2,6 @@
 
 -- Add configurations to all clients
 vim.lsp.config('*', {
-   root_markers = { '.git', 'README.md' },
    capabilities = {
       workspace = {
          didChangeWatchedFiles = {
