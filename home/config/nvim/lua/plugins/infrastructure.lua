@@ -1,9 +1,9 @@
 --[[ Infrastructure
 
      - LazyDev ()
+     - Nvim lastplace (return to last place file was edited)
      - Telescope (search, filter, find & pick items)
      - Whichkey (make keymaps discoverable)
-     - Nvim lastplace (return to last place file was edited)
 ]]
 
 ---@type LazySpec
@@ -37,39 +37,6 @@ return {
       -- Configured via `config/globals.lua`.
       'mrcjkb/nvim-lastplace',
    },
-
-   -- optional blink completion source for require statements and module annotations
-   ---@type LazyPluginSpec
-   {
-      [1] = "saghen/blink.cmp",
-      opts = {
-         sources = {
-            -- add lazydev to your completion providers
-            default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-            providers = {
-               lazydev = {
-                  name = "LazyDev",
-                  module = "lazydev.integrations.blink",
-                  -- make lazydev completions top priority (see `:h blink.cmp`)
-                  score_offset = 100,
-               },
-            },
-         },
-      },
-   },
-
-   -- Provides nerd-font eye-candy
-   ---@type LazyPluginSpec
-   {
-      [1] = 'nvim-tree/nvim-web-devicons',
-      lazy = true,
-      opts = {
-         color_icons = true,
-         default = true,
-         strict = true,
-      },
-   },
-
 
    -- Highly extendable fuzzy finder over lists.
    --   To open window showing keymaps for current picker,
@@ -114,14 +81,14 @@ return {
             end,
             desc = 'fuzzily search in current buffer',
          },
-         { '<leader>s.', function() require('telescope.builtin').oldfiles() end,    desc = 'search recent files' },
-         { '<leader>sb', function() require('telescope.builtin').builtin() end,     desc = 'search builtins' },
-         { '<leader>sd', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
-         { '<leader>sf', function() require('telescope.builtin').find_files() end,  desc = 'search files' },
-         { '<leader>sh', function() require('telescope.builtin').help_tags() end,   desc = 'search help' },
-         { '<leader>sk', function() require('telescope.builtin').keymaps() end,     desc = 'search keymaps' },
-         { '<leader>sr', function() require('telescope.builtin').resume() end,      desc = 'search resume' },
-         { '<leader>sw', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
+         { '<leader>po', function() require('telescope.builtin').oldfiles() end,    desc = 'search recent files' },
+         { '<leader>pb', function() require('telescope.builtin').builtin() end,     desc = 'search builtins' },
+         { '<leader>pd', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
+         { '<leader>pf', function() require('telescope.builtin').find_files() end,  desc = 'search files' },
+         { '<leader>ph', function() require('telescope.builtin').help_tags() end,   desc = 'search help' },
+         { '<leader>pk', function() require('telescope.builtin').keymaps() end,     desc = 'search keymaps' },
+         { '<leader>pr', function() require('telescope.builtin').resume() end,      desc = 'search resume' },
+         { '<leader>pw', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
       },
       config = function()
          local telescope = require 'telescope'
@@ -208,11 +175,8 @@ return {
    {
       [1] = 'nvim-treesitter/nvim-treesitter',
       branch = 'main',
-      event = 'VeryLazy',
+      lazy = true,  -- triggered by which-key
       config = function()
-         -- Install parsers (asynchronous, idempotent)
-         require('nvim-treesitter').install(require('config.treesitter').ensure_installed)
-
          -- Enable treesitter features per-buffer
          vim.api.nvim_create_autocmd('FileType', {
             group = vim.api.nvim_create_augroup('_treesitter', {}),
@@ -220,8 +184,7 @@ return {
                if pcall(vim.treesitter.start, args.buf) then
                   vim.wo[0][0].foldmethod = 'expr'
                   vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                  vim.bo[args.buf].indentexpr =
-                  "v:lua.require'nvim-treesitter'.indentexpr()"
+                  vim.bo[args.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
                end
             end,
          })
@@ -232,6 +195,7 @@ return {
    ---@type LazyPluginSpec
    {
       [1] = 'folke/which-key.nvim',
+      dependencies = { 'nvim-treesitter/nvim-treesitter' },
       event = 'VeryLazy',
       opts = {
          plugins = {
@@ -242,16 +206,18 @@ return {
          },
          spec = {
             { '<leader>b',  group = 'blackhole' },
-            { '<leader>c',  group = 'system clipboard' },
-            { '<m-g>',      group = 'gitsigns' },
+            { '<leader>l',  group = 'lazy' },
             { '<leader>m',  group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
-            { '<leader>s',  group = 'search' },
-            { '<leader>w',  group = 'workspace' },
+            { '<leader>p',  group = 'telescope picker' },
+            { '<leader>t',  group = 'treesitter' },
+            { '<m-g>',      group = 'gitsigns' },
          },
       },
+      ---@return table keys keys handled directly by which-key
       keys = function()
          return {
+            -- which-key.nvim related
             {
                '<leader><tab>',
                function()
@@ -259,8 +225,33 @@ return {
                end,
                desc = 'Buffer Local Keymaps',
             },
-            { '<leader>L', '<cmd>Lazy<cr>', desc = 'Lazy ui' },
+
+            -- lazy.nvim related
+            { '<leader>lg', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
+
+            -- nvim-treesitter related
+            {
+               '<leader>ti',
+               function ()
+                  require('nvim-treesitter').install(
+                     require('config.treesitter').ensure_installed
+                  )
+               end,
+               desc = 'Install parsers (asynchronous, idempotent)',
+            },
          }
       end,
+   },
+
+   -- Provides nerd-font eye-candy
+   ---@type LazyPluginSpec
+   {
+      [1] = 'nvim-tree/nvim-web-devicons',
+      lazy = true,
+      opts = {
+         color_icons = true,
+         default = true,
+         strict = true,
+      },
    },
 }

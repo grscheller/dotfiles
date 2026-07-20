@@ -52,3 +52,26 @@ autocmd('FileType', {
    group = GRS_Text_Grp,
    desc = 'Keep ftplugins from overriding my formatoptions',
 })
+
+-- MasonToolsInstaller related auto commands
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('User', {
+   pattern = 'MasonToolsStartingInstall',
+   callback = function()
+      vim.schedule(function()
+         vim.notify 'mason-tool-installer (starting)'
+      end)
+   end,
+})
+
+autocmd('User', {
+   pattern = 'MasonToolsUpdateCompleted',
+   callback = function(e)
+      vim.schedule(function()
+         vim.notify(
+            'mason-tool-installer (finished): ' .. vim.inspect(e.data)
+         )
+      end)
+   end,
+})

@@ -1,7 +1,7 @@
 --[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
 
 local km = vim.keymap.set
--- local scroll = require 'lib.scroll'
+local scroll = require 'lib.scroll'
 
 --[[ keymappings not depending on external plugins ]]
 
@@ -40,13 +40,13 @@ km('n', '<c-right>', 'z4l', { desc = 'move view right 4 columns' })
 km('n', '<c-up>', '3<c-y>', { desc = 'move up 3 lines' })
 km('n', '<c-down>', '3<c-e>', { desc = 'move view down 3 lines' })
 
--- Auto-scroll window with focus (Temporarily turned off due using laptop keyboards)
--- km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
--- km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })
--- km('n', '<home>', scroll.faster, { desc = 'autoscroll faster' })
--- km('n', '<end>', scroll.slower, { desc = 'autoscroll slower' })
--- km('n', '<ins>', scroll.reset, { desc = 'autoscroll reset' })
--- km('n', '<del>', scroll.pause, { desc = 'autoscroll pause' })
+-- Auto-scroll window with focus
+km('n', '<pageup>', scroll.up, { desc = 'autoscroll up' })
+km('n', '<pagedown>', scroll.down, { desc = 'autoscroll down' })
+km('n', '<home>', scroll.faster, { desc = 'autoscroll faster' })
+km('n', '<end>', scroll.slower, { desc = 'autoscroll slower' })
+km('n', '<ins>', scroll.reset, { desc = 'autoscroll reset' })
+km('n', '<del>', scroll.pause, { desc = 'autoscroll pause' })
 
 --[[ Text editing keymaps not related to any specific plugins ]]
 
@@ -65,14 +65,12 @@ end
 km('n', '<leader>n', toggle_line_numbering, { desc = 'toggle line numbering' })
 
 -- Delete & change text without affecting default register
-km({ 'n', 'v', 'o' }, '<leader>bd', '"_d', { desc = 'delete to blackhole register' })
-km({ 'n', 'v', 'o' }, '<leader>bc', '"_c', { desc = 'change to blackhole register' })
-
--- Yank, delete, & paste with system clipboard
-km({ 'n', 'v', 'o' }, '<leader>cy', '"+y', { desc = 'yank to system clipboard' })
-km({ 'n', 'v', 'o' }, '<leader>cd', '"+d', { desc = 'delete to system clipboard' })
-km({ 'n', 'v', 'o' }, '<leader>cp', '"+p', { desc = 'system clipboard paste after' })
-km({ 'n', 'v', 'o' }, '<leader>cP', '"+P', { desc = 'system clipboard paste before' })
+km({ 'n', 'v' }, '<leader>bd', '"_d', { desc = 'delete to blackhole register' })
+km({ 'n', 'v' }, '<leader>bc', '"_c', { desc = 'change to blackhole register' })
+km({ 'n', 'v' }, '<leader>y', '"+y', { desc = 'yank to system clipboard' })
+km({ 'n', 'v' }, '<leader>d', '"+d', { desc = 'delete to system clipboard' })
+km({ 'n', 'v' }, '<leader>p', '"+p', { desc = 'paste system clipboard after cursor' })
+km({ 'n', 'v' }, '<leader>P', '"+P', { desc = 'Paste system clipboard before cursor' })
 
 -- Keep next pattern match center of screen (normal mode only)
 km('n', 'n', 'nzz', { desc = 'find next and center' })
@@ -101,5 +99,5 @@ km('i', '<c-k>', '<c-o>k', { desc = 'move cursor one line up' })
 km('i', '<c-l>', '<c-o>l', { desc = 'move cursor one space right' })
 
 -- Cleanup related keymaps
-km('n', '<leader>W', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
+km('n', '<leader>w', '<cmd>%s/<bslash>s<bslash>+$//<cr><c-o>', { desc = 'trim trailing whitespace' })
 km('n', '<esc>', '<cmd>noh<bar>mode<cr><esc>', { desc = 'rm hlsearch & redraw on ESC' })

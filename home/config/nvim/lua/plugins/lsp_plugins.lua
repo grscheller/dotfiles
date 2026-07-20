@@ -10,7 +10,6 @@ return {
    {
       [1] = 'lopi-py/luau-lsp.nvim',
       ft = { 'luau' },
-      dependencies = { 'nvim-lua/plenary.nvim' },
       opts = {
          platform = {
             type = 'roblox',

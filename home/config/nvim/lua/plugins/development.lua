@@ -139,7 +139,6 @@ return {
    ---@type LazyPluginSpec
    {
       [1] = 'lewis6991/gitsigns.nvim',
-      dependencies = { 'nvim-lua/plenary.nvim' },
       event = 'VeryLazy',
       opts = gitsigns_opts,
    },
@@ -150,7 +149,7 @@ return {
       [1] = 'mfussenegger/nvim-lint',
       keys = {
          {
-            [1] = '<leader>l',
+            [1] = '<leader>L',
             [2] = function()
                require('lint').try_lint()
             end,
@@ -170,7 +169,7 @@ return {
       [1] = 'stevearc/conform.nvim',
       keys = {
          {
-            [1] = '<leader>f',
+            [1] = '<leader>F',
             [2] = function()
                require('conform').format {
                   async = false,

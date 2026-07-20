@@ -3,6 +3,7 @@
 a posteriori
 a priori
 ad hoc
+blackhole
 bootcamp
 bootcamps
 CDL
@@ -59,8 +60,6 @@ operator
 parameterize
 parameterized
 performant
-perl
-PHP
 pkgs
 PKGBUILD
 pmt
@@ -626,6 +625,8 @@ AI
 ai
 alloc
 apache
+api
+API
 ar
 argc
 argparse
@@ -905,7 +906,10 @@ numpy
 ocaml
 OOP
 os
+perl
+Perl
 pgp
+PHP
 polymorphism
 PowerShell
 pred
@@ -950,7 +954,6 @@ rw
 rwx
 SCCS
 scp
-scrolloff
 se
 sed
 semver
@@ -1321,9 +1324,12 @@ autocmd
 autocmds
 autocommand
 autocommands
+bslash
 checkhealth
 checkpath
 checktime
+del
+desc
 devicons
 formatoptions
 lastplace
@@ -1338,6 +1344,9 @@ Noice
 nolist
 nvim
 nvim's
+pagedown
+pageup
+scrolloff
 smartcase
 undercurl
 whichkey
@@ -1350,6 +1359,7 @@ cbfmt
 checkmake
 clj-kondo
 cljfmt
+codelens
 cssls
 csv
 DAP
@@ -1403,6 +1413,7 @@ arg4
 arg5
 argn
 args
+autoscroll
 baz
 bm
 bools
