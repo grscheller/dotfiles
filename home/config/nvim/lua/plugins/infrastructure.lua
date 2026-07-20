@@ -212,6 +212,11 @@ return {
             { '<leader>p',  group = 'telescope picker' },
             { '<leader>t',  group = 'treesitter' },
             { '<m-g>',      group = 'gitsigns' },
+            { ';c',         group = 'code actions & lenses' },
+            { ';g',         group = 'goto' },
+            { ';i',         group = 'inlay hints' },
+            { ';s',         group = 'symbols' },
+            { ';w',         group = 'workspaces' },
          },
       },
       ---@return table keys keys handled directly by which-key
