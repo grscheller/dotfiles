@@ -50,6 +50,7 @@ dot_config_files='
     after/ftplugin/tsv.lua
     after/ftplugin/zig.lua
     init.lua
+    lsp/ast_grep.lua
     lsp/bashls.lua
     lsp/cssls.lua
     lsp/cssmodules_ls.lua

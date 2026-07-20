@@ -156,7 +156,6 @@ return {
       event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
       config = function()
          local km = vim.keymap.set
-
          km({ 'n', 'x', 'o' }, 's', '<Plug>(leap)', { desc = 'leap' })
          km({ 'x', 'o' }, 'x', '<Plug>(leap-next-to)', { desc = 'leap till' })
          km('n', 'S', '<Plug>(leap-from-window)', { desc = 'leap from window' })
