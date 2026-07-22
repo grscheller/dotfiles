@@ -1,0 +1,7 @@
+id: keymap-api-update
+message: Rewrite call from nvim_set_keymap call to keymap.set
+severity: warning
+language: Lua
+rule:
+  pattern: vim.api.nvim_set_keymap($$$ARG)
+fix: vim.keymap.set($$$ARG)

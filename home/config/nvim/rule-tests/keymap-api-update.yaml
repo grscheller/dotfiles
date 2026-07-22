@@ -1,0 +1,5 @@
+id: keymap-api-update
+valid:
+  - vim.keymap.set('n', 'x', 'y', {})
+invalid:
+  - vim.api.nvim_set_keymap('n', 'x', 'y', {})
