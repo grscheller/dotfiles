@@ -1,0 +1,9 @@
+id: deprecate-vim-lsp-buf-formatting
+snapshots:
+  vim.lsp.buf.formatting:
+    fixed: vim.lsp.buf.format
+    labels:
+    - source: vim.lsp.buf.formatting
+      style: primary
+      start: 0
+      end: 22

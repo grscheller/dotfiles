@@ -1,0 +1,17 @@
+id: deprecate-vim-lsp-buf-formatting
+valid:
+  - vim.lsp.buf.format
+invalid:
+  - vim.lsp.buf.formatting
+---
+id: deprecate-vim-lsp-codelens-refresh
+valid:
+  - vim.lsp.codelens.enable()
+  - vim.lsp.codelens.enable(true)
+  - vim.lsp.codelens.enable(true, { bufnr = 0 })
+  - vim.lsp.codelens.enable(false, { bufnr = 0 })
+  - vim.lsp-codelens.enable(true, { client_id = 42 })
+  - vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
+invalid:
+  - vim.lsp.codelens.refresh { bufnr = 0 }
+  - vim.lsp.codelens.refresh({ bufnr = 0 })

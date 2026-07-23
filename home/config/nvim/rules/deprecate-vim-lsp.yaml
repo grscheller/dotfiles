@@ -1,0 +1,16 @@
+id: deprecate-vim-lsp-buf-formatting
+message: Rewrite deprecated function reference to vim.lsp.buf.format
+severity: warning
+language: Lua
+rule:
+  pattern: vim.lsp.buf.formatting
+fix: vim.lsp.buf.format
+---
+id: deprecate-vim-lsp-codelens-refresh
+message: Catch deprecated function call vim.lsp.codelens.refresh
+severity: warning
+language: Lua
+rule:
+  any:
+    - pattern: vim.lsp.codelens.refresh($$$_ARGS)
+    - pattern: vim.lsp.codelens.refresh { $$$_FIELDS }
