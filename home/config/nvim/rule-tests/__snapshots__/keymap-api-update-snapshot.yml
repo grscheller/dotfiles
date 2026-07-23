@@ -1,0 +1,9 @@
+id: keymap-api-update
+snapshots:
+  vim.api.nvim_set_keymap('n', 'x', 'y', {}):
+    fixed: vim.keymap.set('n', 'x', 'y', {})
+    labels:
+    - source: vim.api.nvim_set_keymap('n', 'x', 'y', {})
+      style: primary
+      start: 0
+      end: 42

@@ -3,3 +3,9 @@ valid:
   - vim.keymap.set('n', 'x', 'y', {})
 invalid:
   - vim.api.nvim_set_keymap('n', 'x', 'y', {})
+---
+id: keymap-api-update-assigned
+valid:
+  - local km = vim.keymap.set
+invalid:
+  - local km = vim.api.nvim_set_keymap

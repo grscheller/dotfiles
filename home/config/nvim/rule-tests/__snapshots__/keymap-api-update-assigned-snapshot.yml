@@ -1,0 +1,9 @@
+id: keymap-api-update-assigned
+snapshots:
+  local km = vim.api.nvim_set_keymap:
+    fixed: local km = vim.keymap.set
+    labels:
+    - source: km = vim.api.nvim_set_keymap
+      style: primary
+      start: 6
+      end: 34
