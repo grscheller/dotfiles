@@ -1,0 +1,40 @@
+id: fixme-comments
+snapshots:
+  ? |
+    -- FIXME: Find the one-off error somewhere in this scope
+  : labels:
+    - source: '-- FIXME: Find the one-off error somewhere in this scope'
+      style: primary
+      start: 0
+      end: 56
+  ? |
+    -- FIXME: Give variables more descriptive names
+    foo = 40
+    bar = 2
+    foobar = foo + bar
+  : labels:
+    - source: '-- FIXME: Give variables more descriptive names'
+      style: primary
+      start: 0
+      end: 47
+  ? |
+    -- FIXME: remove the idiotic comment below
+    i = i + 1  -- increment i by one
+  : labels:
+    - source: '-- FIXME: remove the idiotic comment below'
+      style: primary
+      start: 0
+      end: 42
+  ? "--[[\n  FIXME: This module has problems. \n  FIXME: Very big, BIG problems.\n]]\n"
+  : labels:
+    - source: "--[[\n  FIXME: This module has problems. \n  FIXME: Very big, BIG problems.\n]]"
+      style: primary
+      start: 0
+      end: 76
+  ? |
+    padding = 20  -- FIXME: padding is wrong
+  : labels:
+    - source: '-- FIXME: padding is wrong'
+      style: primary
+      start: 14
+      end: 40

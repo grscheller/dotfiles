@@ -1,0 +1,49 @@
+id: todo-comments
+valid:
+  - |
+    -- this is a normal comment
+  - |
+    i = i + 1  -- this comment is fine too
+  - |
+    -- FIXME: will not trigger a TODO comment
+  - |
+    -- See the TODO list at the top of the file for specifics.
+  - |
+    --[[
+         This module has problems. 
+         See the FIXME section at the end for more details.
+    ]]
+invalid:
+  - |
+    -- TODO: Come up with better variable names
+  - |
+    --[[
+      TODO: This module has problems. 
+         See the FIXME section at the end for more details.
+    ]]
+---
+id: fixme-comments
+valid:
+  - |
+    -- this is a normal comment
+  - |
+    -- TODO: will not trigger a FIXME comment
+  - |
+invalid:
+  - |
+    -- FIXME: Give variables more descriptive names
+    foo = 40
+    bar = 2
+    foobar = foo + bar
+  - |
+    -- FIXME: Find the one-off error somewhere in this scope
+  - |
+    padding = 20  -- FIXME: padding is wrong
+  - |
+    -- FIXME: remove the idiotic comment below
+    i = i + 1  -- increment i by one
+  - |
+    --[[
+      FIXME: This module has problems. 
+      FIXME: Very big, BIG problems.
+    ]]

@@ -1,0 +1,15 @@
+id: todo-comments
+message: TODO comment found
+severity: hint
+language: Lua
+rule:
+  kind : comment
+  regex: '(?m)^\s*(--|--\[\[)?\s*TODO:'
+---
+id: fixme-comments
+message: FIXME comment found
+severity: warning
+language: Lua
+rule:
+  kind: comment
+  regex: '(?m)^\s*(--|--\[\[)?\s*FIXME:'

@@ -209,7 +209,8 @@ return {
             { '<leader>l',  group = 'lazy' },
             { '<leader>m',  group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
-            { '<leader>p',  group = 'telescope picker' },
+            -- TODO: change below to <c-p>
+            { '<leader>p',  group = 'telescope picker' },  -- FIXME: collides with <leader>p
             { '<leader>t',  group = 'treesitter' },
             { '<m-g>',      group = 'gitsigns' },
             { ';c',         group = 'code actions & lenses' },

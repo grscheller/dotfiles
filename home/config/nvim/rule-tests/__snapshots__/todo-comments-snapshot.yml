@@ -1,0 +1,15 @@
+id: todo-comments
+snapshots:
+  ? |
+    -- TODO: Come up with better variable names
+  : labels:
+    - source: '-- TODO: Come up with better variable names'
+      style: primary
+      start: 0
+      end: 43
+  ? "--[[\n  TODO: This module has problems. \n     See the FIXME section at the end for more details.\n]]\n"
+  : labels:
+    - source: "--[[\n  TODO: This module has problems. \n     See the FIXME section at the end for more details.\n]]"
+      style: primary
+      start: 0
+      end: 98
