@@ -81,14 +81,14 @@ return {
             end,
             desc = 'fuzzily search in current buffer',
          },
-         { '<leader>po', function() require('telescope.builtin').oldfiles() end,    desc = 'search recent files' },
-         { '<leader>pb', function() require('telescope.builtin').builtin() end,     desc = 'search builtins' },
-         { '<leader>pd', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
-         { '<leader>pf', function() require('telescope.builtin').find_files() end,  desc = 'search files' },
-         { '<leader>ph', function() require('telescope.builtin').help_tags() end,   desc = 'search help' },
-         { '<leader>pk', function() require('telescope.builtin').keymaps() end,     desc = 'search keymaps' },
-         { '<leader>pr', function() require('telescope.builtin').resume() end,      desc = 'search resume' },
-         { '<leader>pw', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
+         { '<c-p>o', function() require('telescope.builtin').oldfiles() end,    desc = 'search recent files' },
+         { '<c-p>b', function() require('telescope.builtin').builtin() end,     desc = 'search builtins' },
+         { '<c-p>d', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
+         { '<c-p>f', function() require('telescope.builtin').find_files() end,  desc = 'search files' },
+         { '<c-p>h', function() require('telescope.builtin').help_tags() end,   desc = 'search help' },
+         { '<c-p>k', function() require('telescope.builtin').keymaps() end,     desc = 'search keymaps' },
+         { '<c-p>r', function() require('telescope.builtin').resume() end,      desc = 'search resume' },
+         { '<c-p>w', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
       },
       config = function()
          local telescope = require 'telescope'
@@ -141,7 +141,7 @@ return {
       dependencies = { 'nvim-telescope/telescope.nvim' },
       keys = {
          {
-            '<leader>sF',
+            '<leader>f',
             function()
                local telescope = require 'telescope'
                telescope.load_extension 'file_browser'
@@ -209,15 +209,19 @@ return {
             { '<leader>l',  group = 'lazy' },
             { '<leader>m',  group = 'mason' },
             { '<leader>mr', group = 'mason remove' },
-            -- TODO: change below to <c-p>
-            { '<leader>p',  group = 'telescope picker' },  -- FIXME: collides with <leader>p
             { '<leader>t',  group = 'treesitter' },
+            { '<c-p>',      group = 'telescope picker' },
             { '<m-g>',      group = 'gitsigns' },
+            { ';',          group = 'lsp' },
             { ';c',         group = 'code actions & lenses' },
             { ';g',         group = 'goto' },
             { ';i',         group = 'inlay hints' },
             { ';s',         group = 'symbols' },
             { ';w',         group = 'workspaces' },
+            { ',',          group = 'dap' },
+            { ',b',         group = 'breakpoint' },
+            { ',d',         group = 'dap session' },
+            { ',s',         group = 'step' },
          },
       },
       ---@return table keys keys handled directly by which-key
