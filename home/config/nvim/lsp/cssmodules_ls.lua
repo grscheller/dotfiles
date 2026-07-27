@@ -2,7 +2,7 @@
 ---
 --- https://github.com/antonk52/cssmodules-language-server
 ---
---- Language server for autocompletion and go-to-definition functionality for CSS modules.
+--- Language server for auto completion and go-to-definition functionality for CSS modules.
 ---
 --- You can install cssmodules-language-server via npm:
 --- ```sh

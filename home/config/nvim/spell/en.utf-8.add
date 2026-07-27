@@ -1095,7 +1095,6 @@ XXXXXX
 XXXXXXX
 yaml
 yml
-zig
 zls
 zsh
 # computer hardware/networking
@@ -1298,8 +1297,9 @@ venvs
 venv's
 weakref
 wxPython
-zuban
 Zuban
+zuban
+zubanls
 # TS and JS names
 DOM
 javascript
@@ -1325,14 +1325,20 @@ autocmds
 autocommand
 autocommands
 bslash
+bufnr
 checkhealth
 checkpath
 checktime
+cssmodules
 del
 desc
 devicons
 formatoptions
+islist
+langservers
+languageserver
 lastplace
+langservers
 lspconf
 lspconfig
 mkspell
@@ -1346,10 +1352,19 @@ nvim
 nvim's
 pagedown
 pageup
+runtimepath
 scrolloff
+sg
+sgconfig
 smartcase
+tbl
+trimempty
 undercurl
 whichkey
+# Neovim plugin repo names
+antonk52
+artempyanykh
+hrsh7th
 # LSP, DAP, linter, formatter names
 actionlint
 ast
@@ -1365,6 +1380,8 @@ csv
 DAP
 dap
 esbonio
+fn
+fs
 fourmolu
 gitlint
 jls
@@ -1388,13 +1405,20 @@ lua's
 LuaFun
 LuaJIT
 lualine
+luals
 luasnip
 luau
 luajit
+luarc
+luals
 luarocks
 LuaRocks
 lux
 Lux
+# Zig names
+Zig 
+zig 
+zigtools
 # Machine Learning
 mdl
 PyTorch
@@ -1637,8 +1661,10 @@ T5
 takeWhile
 TF
 TF_Bool
+tm
 truetype
 ud
+un
 unsize
 unsized
 util
@@ -1649,21 +1675,19 @@ value3
 value4
 value5
 value6
+vn
 wilson
 Windoze
 woException
-tm
-un
-vn
 wm
 wn
 xn
 xm
 xs
-yn
+xyz
 ym
+yn
 yy
 zm
 zn
 zs
-
