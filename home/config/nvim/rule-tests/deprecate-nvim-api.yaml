@@ -1,0 +1,98 @@
+id: deprecated-nvim-api-warning
+valid:
+  - |  # vim.diagnostic.disable
+    vim.diagnostic.enable()
+    vim.diagnostic.enable(true)
+    vim.diagnostic.enable(false)
+  - |  # vim.diagnostic.is_disabled
+    local ok = not vim.diagnostic.is_enabled() 
+  - |  # vim.loop
+    local uv = vim.uv
+  - |  # vim.lsp.client_is_stopped
+    local id = 42
+    local stopped = vim.lsp.get_client_by_id(id) == nil
+  - |  # vim.lsp.codelens-refresh
+    vim.lsp.codelens.enable()
+    vim.lsp.codelens.enable(true)
+    vim.lsp.codelens.enable(true, { bufnr = 0 })
+    vim.lsp.codelens.enable(false, { bufnr = 0 })
+    vim.lsp-codelens.enable(true, { client_id = 42 })
+    vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled())
+  - |  # vim.lsp.get_active_clients
+    local clients = vim.lsp.get_clients { bufnr = 0 }
+  # no valid testing for vim.lsp.for_each_buffer_client
+  - |  # vim.lsp.get_buffers_by_client_id
+    local id = 42
+    local buffers = vim.lsp.get_client_by_id(id).attached_buffers
+  - |  # vim.lsp.get_log_path
+    local log_file = vim.lsp.log.get_filename()
+  - |  # vim.lsp.semantic_tokens.start
+    vim.lsp.semantic_tokens.enable(true)
+  - |  # vim.lsp.semantic_tokens.stop
+    vim.lsp.semantic_tokens.enable(false)
+  - |  # vim.lsp.set_log_level
+    vim.lsp.log.set_level(vim.log.levels.WARN)
+  - |  # vim.lsp.util.get_progress_messages
+    local messages = vim.lsp.status()
+  # no valid testing for vim.lsp.util.stylize_markdown
+  - |  # vim.lsp.util.trim_empty_lines
+    local xyz = split("|x|y|z|", "|", {trimempty=true})
+  # no valid testing for vim.tbl_add_reverse_lookup
+  - |  # vim.tbl_islist
+    local ok = vim.islist({ 1, 2, 3 })
+invalid:
+  - |  # vim.diagnostic.disable
+    vim.diagnostic.disable()
+  - |  # vim.diagnostic.is_disabled
+    if vim.diagnostic.is_disabled() then
+      vim.notify('use vim.diagnostic.is_enabled() instead')
+    end
+  - |  # vim.loop
+    local uv = vim.loop
+  - |  # vim.lsp.client_is_stopped
+    local stopped = vim.lsp.client_is_stopped(client_id)
+  - |  # vim.lsp.codelens-refresh
+    vim.lsp.codelens.refresh { bufnr = 0 }
+    vim.lsp.codelens.refresh({ bufnr = 0 })
+  - |  # vim.lsp.get_active_clients
+    local clients = vim.lsp.get_active_clients()
+  - |  # vim.lsp.for_each_buffer_clients
+    vim.lsp.for_each_buffer_client()
+    vim.lsp.for_each_buffer_client(0, function(client, client_id, bufnr)
+      print(vim.inspect(client))
+    end)
+  - |  # vim.lsp.get_buffers_by_client_id
+    local buffers = vim.lsp.get_buffers_by_client_id(client_id)
+  - |  # vim.lsp.get_log_path
+    local log_file = vim.lsp.get_log_path()
+  - |  # vim.lsp.semantic_tokens.start
+    vim.lsp.semantic_tokens.start()
+  - |  # vim.lsp.semantic_tokens.stop
+    vim.lsp.semantic_tokens.stop(bufnr, client_id)
+  - |  # vim.lsp.set_log_level
+    vim.lsp.set_log_level(vim.log.levels.WARN)
+  - |  # vim.lsp.util.get_progress_messages
+    local messages = vim.lsp.util.get_progress_messages()
+  - |  # vim.lsp.util.stylize_markdown
+    lines = {
+      '# Title',
+      '',
+      '- first item',
+      '- second item',
+    }
+    vim.lsp.util.stylize_markdown(0, lines)
+  - |  # vim.lsp.util.trim_empty_lines
+    local xyz = vim.lsp.util.trim_empty_lines(
+      split("|x|y|z|", "|")
+    )
+  - |  # vim.tbl_add_reverse_lookup
+    opts = { A = 1, B = 2 }
+    vim.tbl_add_reverse_lookup(opts)
+  - |  # vim.tbl_islist
+    local ok = vim.tbl_islist({ 1, 2, 3 })
+---
+id: deprecated-nvim-api-with-fixes
+valid:
+  - vim.lsp.buf.format()
+invalid:
+  - vim.lsp.buf.formatting()

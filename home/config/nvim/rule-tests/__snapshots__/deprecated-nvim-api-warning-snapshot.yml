@@ -1,0 +1,136 @@
+id: deprecated-nvim-api-warning
+snapshots:
+  ? |
+    if vim.diagnostic.is_disabled() then
+      vim.notify('use vim.diagnostic.is_enabled() instead')
+    end
+  : labels:
+    - source: vim.diagnostic.is_disabled
+      style: primary
+      start: 3
+      end: 29
+  ? |
+    lines = {
+      '# Title',
+      '',
+      '- first item',
+      '- second item',
+    }
+    vim.lsp.util.stylize_markdown(0, lines)
+  : labels:
+    - source: vim.lsp.util.stylize_markdown
+      style: primary
+      start: 68
+      end: 97
+  ? |
+    local buffers = vim.lsp.get_buffers_by_client_id(client_id)
+  : labels:
+    - source: vim.lsp.get_buffers_by_client_id
+      style: primary
+      start: 16
+      end: 48
+  ? |
+    local clients = vim.lsp.get_active_clients()
+  : labels:
+    - source: vim.lsp.get_active_clients
+      style: primary
+      start: 16
+      end: 42
+  ? |
+    local log_file = vim.lsp.get_log_path()
+  : labels:
+    - source: vim.lsp.get_log_path
+      style: primary
+      start: 17
+      end: 37
+  ? |
+    local messages = vim.lsp.util.get_progress_messages()
+  : labels:
+    - source: vim.lsp.util.get_progress_messages
+      style: primary
+      start: 17
+      end: 51
+  ? |
+    local ok = vim.tbl_islist({ 1, 2, 3 })
+  : labels:
+    - source: vim.tbl_islist
+      style: primary
+      start: 11
+      end: 25
+  ? |
+    local stopped = vim.lsp.client_is_stopped(client_id)
+  : labels:
+    - source: vim.lsp.client_is_stopped
+      style: primary
+      start: 16
+      end: 41
+  ? |
+    local uv = vim.loop
+  : labels:
+    - source: vim.loop
+      style: primary
+      start: 11
+      end: 19
+  ? |
+    local xyz = vim.lsp.util.trim_empty_lines(
+      split("|x|y|z|", "|")
+    )
+  : labels:
+    - source: vim.lsp.util.trim_empty_lines
+      style: primary
+      start: 12
+      end: 41
+  ? |
+    opts = { A = 1, B = 2 }
+    vim.tbl_add_reverse_lookup(opts)
+  : labels:
+    - source: vim.tbl_add_reverse_lookup
+      style: primary
+      start: 24
+      end: 50
+  ? |
+    vim.diagnostic.disable()
+  : labels:
+    - source: vim.diagnostic.disable
+      style: primary
+      start: 0
+      end: 22
+  ? |
+    vim.lsp.codelens.refresh { bufnr = 0 }
+    vim.lsp.codelens.refresh({ bufnr = 0 })
+  : labels:
+    - source: vim.lsp.codelens.refresh { bufnr = 0 }
+      style: primary
+      start: 0
+      end: 38
+  ? |
+    vim.lsp.for_each_buffer_client()
+    vim.lsp.for_each_buffer_client(0, function(client, client_id, bufnr)
+      print(vim.inspect(client))
+    end)
+  : labels:
+    - source: vim.lsp.for_each_buffer_client
+      style: primary
+      start: 0
+      end: 30
+  ? |
+    vim.lsp.semantic_tokens.start()
+  : labels:
+    - source: vim.lsp.semantic_tokens.start
+      style: primary
+      start: 0
+      end: 29
+  ? |
+    vim.lsp.semantic_tokens.stop(bufnr, client_id)
+  : labels:
+    - source: vim.lsp.semantic_tokens.stop
+      style: primary
+      start: 0
+      end: 28
+  ? |
+    vim.lsp.set_log_level(vim.log.levels.WARN)
+  : labels:
+    - source: vim.lsp.set_log_level
+      style: primary
+      start: 0
+      end: 21

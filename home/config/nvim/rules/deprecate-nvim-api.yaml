@@ -1,0 +1,32 @@
+id: deprecated-nvim-api-warning
+message: Reference to a deprecated Neovim API function; see `:help deprecated` for the current replacement
+severity: warning
+language: Lua
+rule:
+  any:
+    - pattern: vim.diagnostic.disable
+    - pattern: vim.diagnostic.is_disabled
+    - pattern: vim.loop
+    - pattern: vim.lsp.codelens.refresh($$$_ARGS)
+    - pattern: vim.lsp.codelens.refresh { $$$_FIELDS }
+    - pattern: vim.lsp.get_active_clients
+    - pattern: vim.lsp.for_each_buffer_client
+    - pattern: vim.lsp.client_is_stopped
+    - pattern: vim.lsp.get_buffers_by_client_id
+    - pattern: vim.lsp.get_log_path
+    - pattern: vim.lsp.semantic_tokens.start
+    - pattern: vim.lsp.semantic_tokens.stop
+    - pattern: vim.lsp.set_log_level
+    - pattern: vim.lsp.util.get_progress_messages
+    - pattern: vim.lsp.util.stylize_markdown
+    - pattern: vim.lsp.util.trim_empty_lines
+    - pattern: vim.tbl_add_reverse_lookup
+    - pattern: vim.tbl_islist
+---
+id: deprecated-nvim-api-with-fixes
+message: Rewrite deprecated function reference to vim.lsp.buf.format
+severity: warning
+language: Lua
+rule:
+  pattern: vim.lsp.buf.formatting
+fix: vim.lsp.buf.format

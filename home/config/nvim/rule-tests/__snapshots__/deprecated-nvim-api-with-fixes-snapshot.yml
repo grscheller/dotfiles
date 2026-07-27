@@ -1,7 +1,7 @@
-id: deprecate-vim-lsp-buf-formatting
+id: deprecated-nvim-api-with-fixes
 snapshots:
-  vim.lsp.buf.formatting:
-    fixed: vim.lsp.buf.format
+  vim.lsp.buf.formatting():
+    fixed: vim.lsp.buf.format()
     labels:
     - source: vim.lsp.buf.formatting
       style: primary

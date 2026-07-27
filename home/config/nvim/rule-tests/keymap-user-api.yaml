@@ -1,4 +1,4 @@
-id: keymap-api-update
+id: keymap-user-api
 valid:
   - vim.keymap.set('n', 'x', 'y', {})
 invalid:

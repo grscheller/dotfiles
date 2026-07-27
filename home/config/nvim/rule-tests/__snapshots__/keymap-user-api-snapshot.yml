@@ -1,4 +1,4 @@
-id: keymap-api-update
+id: keymap-user-api
 snapshots:
   vim.api.nvim_set_keymap('n', 'x', 'y', {}):
     fixed: vim.keymap.set('n', 'x', 'y', {})

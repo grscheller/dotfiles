@@ -1,4 +1,4 @@
-id: keymap-api-update
+id: keymap-user-api
 message: Rewrite call from nvim_set_keymap to keymap.set
 severity: warning
 language: Lua
