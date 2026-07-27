@@ -22,12 +22,7 @@ vim.opt.runtimepath:prepend(lazypath)
 local lazy_opts = {
    lockfile = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy-lock.json'),
    spec = { { import = 'plugins' } },
-   ui = {
-      browser = '/usr/bin/firefox',
-      icons = {
-         plugin = '🔌',
-      },
-   },
+   checker = { enabled = true },
    rocks = { enabled = false },
    performance = {
       rtp = {

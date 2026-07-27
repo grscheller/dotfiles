@@ -1,4 +1,12 @@
---[[ GRS Neovim Configuration - using lazy.nvim ]]
+--[[ GRS Neovim Configuration - using lazy.nvim
+
+     Note: libuv-watchdirs has known performance issues.
+     Consider installing inotify-tools. To install on
+     PopOS and other Ubuntu derivatives use
+
+       $ sudo apt install inotify-tools
+
+]]
 
 -- Load globals, options & diagnostics
 require 'config.globals'
@@ -17,5 +25,5 @@ require 'core.lazy'
 -- Configure LSP clients natively
 require 'config.lsp'
 
--- Load text editing autocmds
+-- Load autocmds
 require 'config.autocmds'

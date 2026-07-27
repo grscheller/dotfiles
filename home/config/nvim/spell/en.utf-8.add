@@ -1334,11 +1334,14 @@ del
 desc
 devicons
 formatoptions
+inotify-tools
 islist
 langservers
 languageserver
 lastplace
 langservers
+libuv
+libuv-watchdirs
 lspconf
 lspconfig
 mkspell
