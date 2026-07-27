@@ -39,10 +39,6 @@ and begin
     set -p PATH ~/.local/share/coursier/bin
     jdk_version 21
 
-    # Lua toolchain
-    test -d ~/.local/share/nvim/lazy-rocks/hererocks/bin
-    and set -p PATH ~/.local/share/nvim/lazy-rocks/hererocks/bin
-
     # Zig toolchain
     test -L ~/devel/zig_nightly/current
     and set -p PATH ~/devel/zig_nightly/current
@@ -54,6 +50,10 @@ and begin
     # Node.js toolchain
     test -d ~/devel/node_lts/node-v22.14.0-linux-x64/bin
     and set -p PATH ~/devel/node_lts/node-v22.14.0-linux-x64/bin
+
+    # Mason's bin directory
+    test -d ~/.local/share/nvim/mason/bin
+    and set -p PATH ~/.local/share/nvim/mason/bin
 
     # Python configuration
     set -gx PIP_REQUIRE_VIRTUALENV true
