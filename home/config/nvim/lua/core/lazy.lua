@@ -3,7 +3,8 @@
 local ok, lazy
 
 -- Bootstrap folke/lazy.nvim if not already installed
-local lazypath = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
+local lazypath =
+   vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy', 'lazy.nvim')
 local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
 if not vim.uv.fs_stat(lazypath) then
    vim.fn.system {
@@ -20,7 +21,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 local lazy_opts = {
-   lockfile = vim.fs.joinpath(vim.fn.stdpath('state'), 'lazy-lock.json'),
+   lockfile = vim.fs.joinpath(vim.fn.stdpath 'state', 'lazy-lock.json'),
    spec = { { import = 'plugins' } },
    checker = { enabled = true },
    rocks = { enabled = false },
@@ -47,6 +48,7 @@ ok, lazy = pcall(require, 'lazy')
 if ok then
    lazy.setup(lazy_opts)
 else
-   local fmt = '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
+   local fmt =
+      '\n\nERROR: lazy.nvim failed to load with error:\n\n %s\n\n'
    print(string.format(fmt, lazy))
 end

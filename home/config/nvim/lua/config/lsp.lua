@@ -29,7 +29,10 @@ km('n', ';f', vim.lsp.buf.format, { desc = 'format with LSP' })
 km('n', ';r', vim.lsp.buf.rename, { desc = 'rename' })
 km('n', ';ca', vim.lsp.buf.code_action, { desc = 'code action' })
 km('n', ';cl', function()
-   vim.lsp.codelens.enable(not vim.lsp.codelens.is_enabled(), { bufnr = 0 })
+   vim.lsp.codelens.enable(
+      not vim.lsp.codelens.is_enabled(),
+      { bufnr = 0 }
+   )
 end, { desc = 'toggle code lens' })
 km('n', ';cr', vim.lsp.codelens.run, { desc = 'code lens run' })
 km('n', ';gD', vim.lsp.buf.declaration, { desc = 'declaration' })
@@ -78,7 +81,10 @@ end, {})
 
 -- Auto-refresh code lens when a capable server attaches
 vim.api.nvim_create_autocmd('LspAttach', {
-   group = vim.api.nvim_create_augroup('lsp-codelens', { clear = true }),
+   group = vim.api.nvim_create_augroup(
+      'lsp-codelens',
+      { clear = true }
+   ),
    callback = function(args)
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       if client and client:supports_method 'textDocument/codeLens' then

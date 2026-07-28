@@ -12,8 +12,8 @@ local M = {}
 
 -- Make sure mason's bin directory is available and trumps any system
 -- installed version of the tools. Mason may not yet be lazy loaded.
-local path_sep = vim.fn.has('win32') == 1 and ';' or ':'
-vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'bin')
+local path_sep = vim.fn.has 'win32' == 1 and ';' or ':'
+vim.env.PATH = vim.fs.joinpath(vim.fn.stdpath 'data', 'mason', 'bin')
    .. path_sep
    .. vim.env.PATH
 

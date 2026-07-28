@@ -32,7 +32,7 @@ km('n', '<bslash>v', function()
       }
    else
       vim.diagnostic.config {
-         virtual_lines = { current_line = true }
+         virtual_lines = { current_line = true },
       }
    end
-end, { desc ='toggle diagnostics virtual_lines' })
+end, { desc = 'toggle diagnostics virtual_lines' })
