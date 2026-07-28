@@ -53,7 +53,7 @@ end
 ---@return A[]
 M.flatten_array = function(aoa)
    local flattened, n = {}, 0
-   for i, v in ipairs(aoa) do
+   for _, v in ipairs(aoa) do
       for j, w in ipairs(v) do
          flattened[n + j] = w
       end

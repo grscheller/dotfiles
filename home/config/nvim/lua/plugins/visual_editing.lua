@@ -128,7 +128,10 @@ return {
       version = '*',
       event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
       build = function()
-         require('blink.pairs').download():pwait(60000)
+         -- blink.lib.Task's generic isn't resolving when download() returns an
+         -- unparameterized `blink.lib.Task`, so lua_ls can't see wait/pwait — false positive.
+         ---@diagnostic disable-next-line: undefined-field
+         require('blink.pairs').download():wait(60000)  -- changed pwait to wait to give better failure info
       end,
       opts = {
          mappings = {

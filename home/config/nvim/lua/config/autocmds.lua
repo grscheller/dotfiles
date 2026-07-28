@@ -7,22 +7,6 @@ local autocmd = vim.api.nvim_create_autocmd
 
 local GRS_Text_Grp = autogrp('GRS_Text', { clear = true })
 
--- No smartcase while in cmdline mode.
-autocmd('CmdLineEnter', {
-   pattern = '*',
-   command = 'set nosmartcase noignorecase',
-   group = GRS_Text_Grp,
-   desc = 'Use case sensitive search in command mode',
-})
-
--- Use smartcase outside cmdline mode.
-autocmd('CmdLineLeave', {
-   pattern = '*',
-   command = 'set ignorecase smartcase',
-   group = GRS_Text_Grp,
-   desc = 'Use smartcase when not in Command Mode',
-})
-
 -- Give visual feedback when yanking text
 autocmd('TextYankPost', {
    pattern = '*',
@@ -54,7 +38,6 @@ autocmd('FileType', {
 })
 
 -- MasonToolsInstaller related auto commands
-local autocmd = vim.api.nvim_create_autocmd
 
 autocmd('User', {
    pattern = 'MasonToolsStartingInstall',

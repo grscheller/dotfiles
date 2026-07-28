@@ -149,6 +149,7 @@ unhashable
 unmanaged
 unmerge
 unmerged
+unparameterized
 unrepresentable
 unstage
 unstaged
@@ -1355,6 +1356,7 @@ nvim
 nvim's
 pagedown
 pageup
+pwait
 runtimepath
 scrolloff
 sg
@@ -1364,10 +1366,6 @@ tbl
 trimempty
 undercurl
 whichkey
-# Neovim plugin repo names
-antonk52
-artempyanykh
-hrsh7th
 # LSP, DAP, linter, formatter names
 actionlint
 ast
@@ -1403,6 +1401,8 @@ tsv
 # Lua names
 fzy
 hererocks
+ipair
+ipairs
 lua
 lua's
 LuaFun
