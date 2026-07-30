@@ -175,8 +175,14 @@ return {
    {
       [1] = 'nvim-treesitter/nvim-treesitter',
       branch = 'main',
-      lazy = true,  -- triggered by which-key
+      lazy = false,
+      build = ':TSUpdate',
       config = function()
+         -- Make sure parsers are up-to-date
+         require('nvim-treesitter').install(
+            require('config.treesitter').ensure_installed
+         )
+
          -- Enable treesitter features per-buffer
          vim.api.nvim_create_autocmd('FileType', {
             group = vim.api.nvim_create_augroup('_treesitter', {}),
@@ -224,7 +230,7 @@ return {
             { ',s',         group = 'step' },
          },
       },
-      ---@return table keys keys handled directly by which-key
+      ---@return table keys
       keys = function()
          return {
             -- which-key.nvim related
@@ -238,17 +244,6 @@ return {
 
             -- lazy.nvim related
             { '<leader>lg', '<cmd>Lazy<cr>', desc = 'Lazy gui' },
-
-            -- nvim-treesitter related
-            {
-               '<leader>ti',
-               function ()
-                  require('nvim-treesitter').install(
-                     require('config.treesitter').ensure_installed
-                  )
-               end,
-               desc = 'Install parsers (asynchronous, idempotent)',
-            },
          }
       end,
    },

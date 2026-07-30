@@ -21,7 +21,7 @@ return {
          'rafamadriz/friendly-snippets',
       },
       version = '1.*',
-      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
+      event = { 'InsertEnter', 'CmdlineEnter' },
       opts = {
          keymap = { preset = 'enter' },
          appearance = { nerd_font_variant = 'mono' },
@@ -126,7 +126,7 @@ return {
       'saghen/blink.pairs',
       dependencies = { 'saghen/blink.lib' },
       version = '*',
-      event = { 'BufReadPre', 'BufNewFile', 'BufWritePre' },
+      event = { 'InsertEnter', 'CmdlineEnter' },
       build = function()
          -- blink.lib.Task's generic isn't resolving when download() returns an
          -- unparameterized `blink.lib.Task`, so lua_ls can't see wait/pwait — false positive.
@@ -182,24 +182,18 @@ return {
    },
 
    -- Colorize color names, hexcodes, and other color formats.
+   --   When keymap is triggered, LSP colorization will be suppressed,
+   --   even if toggled off (a feature, not a bug).
    ---@type LazyPluginSpec
    {
-      [1] = 'norcalli/nvim-colorizer.lua',
+      [1] = 'catgoose/nvim-colorizer.lua',
       keys = {
          {
-            [1] = '<leader>C',
+            [1] = '<leader>c',
             [2] = '<cmd>ColorizerToggle<cr>',
             desc = 'toggle colorizer',
          },
       },
-      opts = {
-         [1] = '*',
-         RRGGBBAA = true,
-         rgb_fn = true,
-         hsb_fn = true,
-         css = { names = false },
-         html = { names = false },
-         mode = 'background',
-      },
+      opts = {},
    },
 }
