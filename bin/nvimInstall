@@ -79,6 +79,7 @@ dot_config_files='
     lua/plugins/development.lua
     lua/plugins/infrastructure.lua
     lua/plugins/lsp_plugins.lua
+    lua/plugins/neorg.lua
     lua/plugins/tooling.lua
     lua/plugins/visual_appearance.lua
     lua/plugins/visual_editing.lua

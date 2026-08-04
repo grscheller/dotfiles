@@ -24,7 +24,10 @@ local lazy_opts = {
    lockfile = vim.fs.joinpath(vim.fn.stdpath 'state', 'lazy-lock.json'),
    spec = { { import = 'plugins' } },
    checker = { enabled = true },
-   rocks = { enabled = false },
+   rocks = {
+      enabled = true,
+      root = vim.fs.joinpath(vim.fn.stdpath 'data', 'lazy-rocks'),
+   },
    performance = {
       rtp = {
          disabled_plugins = {
