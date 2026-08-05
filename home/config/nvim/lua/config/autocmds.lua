@@ -17,16 +17,16 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
--- Make sure folding remains essentially disabled.
-autocmd({ 'BufWritePost', 'BufEnter' }, {
-   pattern = '*',
+-- Make sure folding remains essentially disabled outside diff mode.
+autocmd('OptionSet', {
+   pattern = 'diff',
    callback = function()
-      vim.o.foldenable = false
-      vim.o.foldmethod = 'manual'
-      vim.o.foldlevelstart = 99
+      if not vim.v.option_new then
+         vim.opt_local.foldenable = false
+      end
    end,
    group = GRS_Text_Grp,
-   desc = 'Make sure folding does not get in the way',
+   desc = 'Keep folding off when leaving diff mode',
 })
 
 -- Keep ftplugins from overriding my formatoptions
@@ -37,7 +37,7 @@ autocmd('FileType', {
    desc = 'Keep ftplugins from overriding my formatoptions',
 })
 
--- MasonToolsInstaller related auto commands
+-- MasonToolsInstaller related auto commands:
 
 autocmd('User', {
    pattern = 'MasonToolsStartingInstall',

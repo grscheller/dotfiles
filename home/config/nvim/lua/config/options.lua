@@ -59,5 +59,5 @@ vim.o.completeopt = 'menu,menuone,noselect' -- for blink.cmp
 
 -- Essentially disable folding
 vim.o.foldenable = false    -- Allows me to reuse of folding keybindings. I have
-vim.o.foldmethod = 'manual' -- an autocmd which helps folding stay disabled.
-vim.o.foldlevelstart = 99
+vim.o.foldmethod = 'manual' -- an autocmd which helps folding stay disabled when 
+vim.o.foldlevelstart = 99   -- coming out of diff mode.
