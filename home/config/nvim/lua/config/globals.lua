@@ -7,7 +7,7 @@
 
 -- Define leader keys once and for all
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = '\\'
 
 -- Nerd fonts need to be installed and configured in terminal emulator
 vim.g.have_nerd_font = true

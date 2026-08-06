@@ -1,15 +1,12 @@
 --[[ Neorg note taking
 
      - TODO: description
-     - TODO: make lazy
 ]]
 
 ---@type LazyPluginSpec
 return {
    [1] = 'nvim-neorg/neorg',
-   -- No `build = ':Neorg sync-parsers'` — tree-sitter-norg/tree-sitter-norg-meta
-   -- are already installed as rocks via the rockspec path, so this build step
-   -- is both unnecessary and the thing implicated in a treesitter-rewrite bug.
+   event = 'VeryLazy',
    opts = {
       load = {
          ['core.defaults'] = {},
@@ -21,9 +18,13 @@ return {
                default_workspace = 'notes',
             },
          },
-         ['core.integrations.treesitter'] = { -- TEMP_FIX: See GitHub issue #1814
+         ['core.integrations.treesitter'] = {
             config = {
-               configure_parsers = false,
+               configure_parsers = true,
+               -- Cosmetic false-positive only: this checks package.cpath in a way
+               -- that can lag lazy.nvim's rocks-path setup at eager-load time.
+               -- Registration itself (confirmed) works correctly with event='VeryLazy'.
+               -- See nvim-neorg/neorg#1814.
                warn_missing_parsers = false,
             },
          },
