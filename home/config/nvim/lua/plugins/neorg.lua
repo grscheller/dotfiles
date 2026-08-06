@@ -21,6 +21,12 @@ return {
                default_workspace = 'notes',
             },
          },
+         ['core.integrations.treesitter'] = { -- TEMP_FIX: See GitHub issue #1814
+            config = {
+               configure_parsers = false,
+               warn_missing_parsers = false,
+            },
+         },
       },
    },
 }
