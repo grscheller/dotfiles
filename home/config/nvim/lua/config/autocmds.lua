@@ -17,18 +17,6 @@ autocmd('TextYankPost', {
    desc = 'Give visual feedback when yanking text',
 })
 
--- Make sure folding remains essentially disabled outside diff mode.
-autocmd('OptionSet', {
-   pattern = 'diff',
-   callback = function()
-      if not vim.v.option_new then
-         vim.opt_local.foldenable = false
-      end
-   end,
-   group = GRS_Text_Grp,
-   desc = 'Keep folding off when leaving diff mode',
-})
-
 -- Keep ftplugins from overriding my formatoptions
 autocmd('FileType', {
    pattern = '*',
