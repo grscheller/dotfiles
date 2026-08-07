@@ -8,8 +8,8 @@ local scroll = require 'lib.scroll'
 -- Creating new windows
 km('n', '<m-->', '<c-w>s', { desc = 'split current window' })
 km('n', '<m-=>', '<c-w>v', { desc = 'vsplit current window' })
-km('n', '<m-t>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term right' })
-km('n', '<m-T>', '<cmd>split<bar>term fish<cr>i', { desc = 'fish term below' })
+km('n', '<m-f>', '<cmd>vsplit<bar>term fish<cr>i', { desc = 'fish term right' })
+km('n', '<m-F>', '<cmd>split<bar>term fish<cr>i', { desc = 'fish term below' })
 
 -- Navigating windows
 km('n', '<c-h>', '<c-w>h', { desc = 'goto window left' })
