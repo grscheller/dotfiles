@@ -1603,9 +1603,11 @@ langservers
 LazyVim
 libuv
 libuv-watchdirs
+localleader
 lspconf
 lspconfig
 mkspell
+neorg
 neorocks
 neovim
 neovim's
