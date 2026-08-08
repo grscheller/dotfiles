@@ -9,6 +9,7 @@ return {
    event = 'VeryLazy',
    opts = {
       load = {
+         ['core.concealer'] = {},
          ['core.defaults'] = {},
          ['core.dirman'] = {
             config = {

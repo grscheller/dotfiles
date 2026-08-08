@@ -1,12 +1,11 @@
-vim.api.nvim_create_autocmd('FileType', {
-   pattern = 'norg',
-   group = vim.api.nvim_create_augroup('_neorg', {}),
-   callback = function(args)
-      vim.keymap.set('n', '<leader><leader><cr>', '<Plug>(???)',
-         { buffer = args.buf, desc = 'neorg: follow link' })
-      vim.keymap.set('n', '<leader><leader><', '<Plug>(neorg.promo.demote.range)',
-         { buffer = args.buf, desc = 'neorg: demote range' })
-      vim.keymap.set('n', '<leader><leader>>', '<Plug>(neorg.promo.promote.range)',
-         { buffer = args.buf, desc = 'neorg: promote range' })
-   end,
-})
+-- after/ftplugin/norg.lua
+
+vim.opt_local.concealcursor = 'nc'
+vim.opt_local.conceallevel = 2
+
+vim.keymap.set('n', '<M-,>', '<Plug>(neorg.promo.demote.range)',
+   { buffer = true, remap = true, desc = 'neorg: demote range' })
+vim.keymap.set('n', '<M-.>', '<Plug>(neorg.promo.promote.range)',
+   { buffer = true, remap = true, desc = 'neorg: promote range' })
+vim.keymap.set('n', '<CR>', '<Plug>(neorg.esupports.hop.hop-link)',
+   { buffer = true, remap = true, desc = 'neorg: follow link' })

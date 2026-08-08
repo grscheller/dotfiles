@@ -39,6 +39,7 @@ dot_config_files='
     after/ftplugin/html.lua
     after/ftplugin/lua.lua
     after/ftplugin/markdown.lua
+    after/ftplugin/norg.lua
     after/ftplugin/ocaml.lua
     after/ftplugin/python.lua
     after/ftplugin/rust.lua
