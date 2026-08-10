@@ -58,7 +58,13 @@ return {
          },
       },
       keys = {
-         { '<leader>gl', function() require('telescope.builtin').live_grep() end,   desc = 'search by grep' },
+         {
+            '<leader>gl',
+            function()
+               require('telescope.builtin').live_grep()
+            end,
+            desc = 'search by grep',
+         },
          {
             '<leader>go',
             function()
@@ -81,14 +87,62 @@ return {
             end,
             desc = 'fuzzily search in current buffer',
          },
-         { '<c-p>o', function() require('telescope.builtin').oldfiles() end,    desc = 'search recent files' },
-         { '<c-p>b', function() require('telescope.builtin').builtin() end,     desc = 'search builtins' },
-         { '<c-p>d', function() require('telescope.builtin').diagnostics() end, desc = 'search diagnostics' },
-         { '<c-p>f', function() require('telescope.builtin').find_files() end,  desc = 'search files' },
-         { '<c-p>h', function() require('telescope.builtin').help_tags() end,   desc = 'search help' },
-         { '<c-p>k', function() require('telescope.builtin').keymaps() end,     desc = 'search keymaps' },
-         { '<c-p>r', function() require('telescope.builtin').resume() end,      desc = 'search resume' },
-         { '<c-p>w', function() require('telescope.builtin').grep_string() end, desc = 'search current word' },
+         {
+            '<c-p>o',
+            function()
+               require('telescope.builtin').oldfiles()
+            end,
+            desc = 'search recent files',
+         },
+         {
+            '<c-p>b',
+            function()
+               require('telescope.builtin').builtin()
+            end,
+            desc = 'search builtins',
+         },
+         {
+            '<c-p>d',
+            function()
+               require('telescope.builtin').diagnostics()
+            end,
+            desc = 'search diagnostics',
+         },
+         {
+            '<c-p>f',
+            function()
+               require('telescope.builtin').find_files()
+            end,
+            desc = 'search files',
+         },
+         {
+            '<c-p>h',
+            function()
+               require('telescope.builtin').help_tags()
+            end,
+            desc = 'search help',
+         },
+         {
+            '<c-p>k',
+            function()
+               require('telescope.builtin').keymaps()
+            end,
+            desc = 'search keymaps',
+         },
+         {
+            '<c-p>r',
+            function()
+               require('telescope.builtin').resume()
+            end,
+            desc = 'search resume',
+         },
+         {
+            '<c-p>w',
+            function()
+               require('telescope.builtin').grep_string()
+            end,
+            desc = 'search current word',
+         },
       },
       config = function()
          local telescope = require 'telescope'
@@ -189,8 +243,10 @@ return {
             callback = function(args)
                if pcall(vim.treesitter.start, args.buf) then
                   vim.wo[0][0].foldmethod = 'expr'
-                  vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                  vim.bo[args.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+                  vim.wo[0][0].foldexpr =
+                  'v:lua.vim.treesitter.foldexpr()'
+                  vim.bo[args.buf].indentexpr =
+                  "v:lua.require('nvim-treesitter').indentexpr()"
                end
             end,
          })
@@ -211,24 +267,24 @@ return {
             },
          },
          spec = {
-            { ';', group = 'lsp' },
-            { ',', group = 'dap' },
-            { ';c', group = 'code actions & lenses' },
-            { ';g', group = 'goto' },
-            { ';i', group = 'inlay hints' },
-            { ';s', group = 'symbols' },
-            { ';w', group = 'workspaces' },
-            { ',b', group = 'breakpoint' },
-            { ',d', group = 'dap session' },
-            { ',s', group = 'step' },
-            { '<c-p>', group = 'telescope picker' },
-            { '<m-g>', group = 'gitsigns' },
-            { '<leader>b',  group = 'blackhole' },
-            { '<leader>l',  group = 'lazy' },
-            { '<leader>m',  group = 'mason' },
-            { '<leader>mr', group = 'mason remove' },
-            { '<leader>t',  group = 'treesitter' },
-            { '<localleader>n',  group = 'neorg' },
+            { ';',              group = 'lsp' },
+            { ',',              group = 'dap' },
+            { ';c',             group = 'code actions & lenses' },
+            { ';g',             group = 'goto' },
+            { ';i',             group = 'inlay hints' },
+            { ';s',             group = 'symbols' },
+            { ';w',             group = 'workspaces' },
+            { ',b',             group = 'breakpoint' },
+            { ',d',             group = 'dap session' },
+            { ',s',             group = 'step' },
+            { '<c-p>',          group = 'telescope picker' },
+            { '<m-g>',          group = 'gitsigns' },
+            { '<leader>b',      group = 'blackhole' },
+            { '<leader>l',      group = 'lazy' },
+            { '<leader>m',      group = 'mason' },
+            { '<leader>mr',     group = 'mason remove' },
+            { '<leader>t',      group = 'treesitter' },
+            { '<localleader>n', group = 'neorg' },
          },
       },
       ---@return table keys

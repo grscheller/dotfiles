@@ -94,6 +94,7 @@ toml_files='
 remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/sgconfig.yaml
+    $XDG_CONFIG_HOME/nvim/lua/lib/format.lua
 "
 
 dirs_to_create=""
