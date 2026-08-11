@@ -21,17 +21,17 @@ require 'config.diagnostics'
 -- Fallback colorscheme
 vim.cmd [[colorscheme lunaperche]]
 
--- Load initial keymaps
+-- Load initial keymaps with no plugin dependencies
 require 'config.keymaps'
 
--- Configure LSP clients natively -- before lazy.nvim, see core/lsp.lua
+-- Configure LSP clients natively, before lazy.nvim (see core/lsp.lua)
 require 'core.lsp'
 
 -- Bootstrap lazy.nvim and configure plugins
 require 'core.lazy'
 
--- LSP keymaps, commands & autocmds -- after lazy.nvim
+-- LSP keymaps, commands & autocmds
 require 'config.lsp'
 
--- Load autocmds
+-- Other miscellaneous autocmds
 require 'config.autocmds'

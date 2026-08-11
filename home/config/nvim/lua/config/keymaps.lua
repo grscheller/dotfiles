@@ -1,4 +1,8 @@
---[[ Keymaps & related tweaks defined before invoking lazy.nvim ]]
+--[[ Keymaps for functionality built into Neovim
+
+     With no plugin dependencies.
+
+]]
 
 local km = vim.keymap.set
 local scroll = require 'lib.scroll'
