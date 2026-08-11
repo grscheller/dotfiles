@@ -23,7 +23,7 @@ require 'config.keymaps'
 require 'core.lazy'
 
 -- Configure LSP clients natively
-require 'config.lsp'
+require 'core.lsp'
 
 -- Load autocmds
 require 'config.autocmds'

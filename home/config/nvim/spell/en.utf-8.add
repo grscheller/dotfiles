@@ -1,5 +1,5 @@
 # grscheller word list
-## english
+## English
 þe
 a posteriori
 a priori
@@ -126,6 +126,8 @@ spellfile
 stateful
 storability
 storable
+substring
+substrings
 TBD
 templating
 terminfo
@@ -319,7 +321,6 @@ key6
 kotlin
 Kotlin
 kwargs
-lazyredraw
 Lazy00
 Lazy01
 Lazy10
@@ -1600,6 +1601,8 @@ langservers
 languageserver
 lastplace
 langservers
+lazydev
+lazyredraw
 LazyVim
 libuv
 libuv-watchdirs
