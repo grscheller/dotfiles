@@ -6,6 +6,11 @@
 
        $ sudo apt install inotify-tools
 
+     Load order is deliberate. In particular `core.lsp` must precede
+     `core.lazy` so that `vim.lsp.config['*']` exists before any
+     plugin sources a `plugin/` file that reads it, and `config.lsp`
+     must follow `core.lazy` because it references telescope.
+
 ]]
 
 -- Load globals, options & diagnostics
@@ -19,11 +24,14 @@ vim.cmd [[colorscheme lunaperche]]
 -- Load initial keymaps
 require 'config.keymaps'
 
+-- Configure LSP clients natively -- before lazy.nvim, see core/lsp.lua
+require 'core.lsp'
+
 -- Bootstrap lazy.nvim and configure plugins
 require 'core.lazy'
 
--- Configure LSP clients natively
-require 'core.lsp'
+-- LSP keymaps, commands & autocmds -- after lazy.nvim
+require 'config.lsp'
 
 -- Load autocmds
 require 'config.autocmds'

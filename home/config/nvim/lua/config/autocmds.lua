@@ -25,7 +25,7 @@ autocmd('FileType', {
    desc = 'Keep ftplugins from overriding my formatoptions',
 })
 
--- MasonToolsInstaller related auto commands:
+--[[ MasonToolsInstaller related auto commands ]]
 
 autocmd('User', {
    pattern = 'MasonToolsStartingInstall',

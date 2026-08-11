@@ -67,6 +67,7 @@ dot_config_files='
     lua/config/diagnostics.lua
     lua/config/globals.lua
     lua/config/keymaps.lua
+    lua/config/lsp.lua
     lua/config/options.lua
     lua/config/tooling.lua
     lua/config/treesitter.lua
@@ -95,7 +96,6 @@ remove_items="
     $HOME/.vimrc
     $XDG_CONFIG_HOME/nvim/sgconfig.yaml
     $XDG_CONFIG_HOME/nvim/lua/lib/format.lua
-    $XDG_CONFIG_HOME/nvim/lua/config/lsp.lua
 "
 
 dirs_to_create=""

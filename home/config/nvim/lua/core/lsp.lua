@@ -1,9 +1,34 @@
---[[ Enable LSP configs and supporting infrastructure ]]
+--[[ LSP client configuration -- MUST be required before `core.lazy`
 
--- Add configurations to all clients
+     Ordering constraint: plugins may read `vim.lsp.config['*']` when
+     their `plugin/` files are sourced. blink.cmp, for example, reads
+     `vim.lsp.config['*'].capabilities`, folds it into its own via
+     `get_lsp_capabilities()`, and writes the result back. That read
+     is unguarded, so `'*'` must already be a table by then.
+
+     blink.cmp is currently lazy loaded on InsertEnter/CmdlineEnter,
+     so it is sourced long after `init.lua` finishes. Establishing
+     `'*'` before lazy.nvim removes the dependency on that timing.
+
+     Post-lazy LSP concerns -- keymaps, user commands, autocmds --
+     live in `config.lsp`.
+]]
+
+--[[ Capabilities added to all clients.
+
+      Merged on top of the defaults from `vim.lsp.protocol.make_client_capabilities()`, so only the
+      deltas need to be listed here.
+
+      Note: The call form `vim.lsp.config('*', cfg)` merges, while
+            the assignment form `vim.lsp.config['*'] = cfg` replaces.
+
+            Keeping the call form.
+]]
 vim.lsp.config('*', {
    capabilities = {
       workspace = {
+         -- Neovim leaves this off by default for performance. See
+         -- the inotify-tools note in `init.lua`.
          didChangeWatchedFiles = {
             dynamicRegistration = true,
          },
@@ -16,70 +41,18 @@ vim.lsp.config('*', {
    },
 })
 
--- Enable Neovim's native LSP mechanism.
+--[[ Enable Neovim's native LSP mechanism.
+
+     This only records the names and installs a FileType autocmd.
+     Each `lsp/<name>.lua` is resolved off the runtimepath when a
+     client actually attaches, which is well after lazy.nvim has
+     extended the runtimepath, hence safe to call before `core.lazy`.
+]]
 vim.lsp.enable(require('config.tooling').lsp_servers_nvim)
 
--- Setup LSP related keymaps
-local km = vim.keymap.set
+--[[ LSP related autocmds ]]
 
--- LSP keymaps
-km('n', ';h', vim.lsp.buf.hover, { desc = 'hover document' })
-km('n', ';k', vim.lsp.buf.signature_help, { desc = 'signature help' })
-km('n', ';f', vim.lsp.buf.format, { desc = 'format with LSP' })
-km('n', ';r', vim.lsp.buf.rename, { desc = 'rename' })
-km('n', ';ca', vim.lsp.buf.code_action, { desc = 'code action' })
-km('n', ';cl', function()
-   vim.lsp.codelens.enable(
-      not vim.lsp.codelens.is_enabled(),
-      { bufnr = 0 }
-   )
-end, { desc = 'toggle code lens' })
-km('n', ';cr', vim.lsp.codelens.run, { desc = 'code lens run' })
-km('n', ';gD', vim.lsp.buf.declaration, { desc = 'declaration' })
-km('n', ';gT', vim.lsp.buf.type_definition, { desc = 'type definition' })
-km('n', ';wa', vim.lsp.buf.add_workspace_folder, { desc = 'add ws folder' })
-km('n', ';wr', vim.lsp.buf.remove_workspace_folder, { desc = 'rm ws folder' })
-
--- LSP Keymaps with telescope integration
-km('n', ';gd', function()
-   require('telescope.builtin').lsp_definitions()
-end, { desc = 'definitions' })
-
-km('n', ';gi', function()
-   require('telescope.builtin').lsp_implementations()
-end, { desc = 'implementations' })
-
-km('n', ';gr', function()
-   require('telescope.builtin').lsp_references()
-end, { desc = 'references' })
-
-km('n', ';sd', function()
-   require('telescope.builtin').lsp_document_symbols()
-end, { desc = 'document symbols' })
-
-km('n', ';sw', function()
-   require('telescope.builtin').lsp_dynamic_workspace_symbols()
-end, { desc = 'workspace symbols' })
-
-km('n', ';ih', function()
-   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = 'toggle inlay hints' })
-
--- LSP user command to replace one lost from nvim-lspconfig
-vim.api.nvim_create_user_command('LspInfo', function()
-   local clients = vim.lsp.get_clients()
-   if #clients == 0 then
-      vim.notify 'No active LSP clients.'
-      return
-   end
-   for _, client in ipairs(clients) do
-      vim.notify(
-         'Client ID: ' .. client.id .. ', Name: ' .. client.name
-      )
-   end
-end, {})
-
--- Auto-refresh code lens when a capable server attaches
+-- Auto-refresh code lens when a capable server attaches.
 vim.api.nvim_create_autocmd('LspAttach', {
    group = vim.api.nvim_create_augroup(
       'lsp-codelens',
