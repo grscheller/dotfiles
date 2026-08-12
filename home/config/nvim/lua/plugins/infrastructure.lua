@@ -59,14 +59,14 @@ return {
       },
       keys = {
          {
-            '<leader>gl',
+            'tgl',
             function()
                require('telescope.builtin').live_grep()
             end,
             desc = 'search by grep',
          },
          {
-            '<leader>go',
+            'tgo',
             function()
                require('telescope.builtin').live_grep {
                   grep_open_files = true,
@@ -76,7 +76,7 @@ return {
             desc = 'grep open files',
          },
          {
-            '<leader>s/',
+            'tgf',
             function()
                require('telescope.builtin').current_buffer_fuzzy_find(
                   require('telescope.themes').get_dropdown {
@@ -88,56 +88,56 @@ return {
             desc = 'fuzzily search in current buffer',
          },
          {
-            '<c-p>o',
+            'to',
             function()
                require('telescope.builtin').oldfiles()
             end,
             desc = 'search recent files',
          },
          {
-            '<c-p>b',
+            'tb',
             function()
                require('telescope.builtin').builtin()
             end,
             desc = 'search builtins',
          },
          {
-            '<c-p>d',
+            'td',
             function()
                require('telescope.builtin').diagnostics()
             end,
             desc = 'search diagnostics',
          },
          {
-            '<c-p>f',
+            'tf',
             function()
                require('telescope.builtin').find_files()
             end,
             desc = 'search files',
          },
          {
-            '<c-p>h',
+            'th',
             function()
                require('telescope.builtin').help_tags()
             end,
             desc = 'search help',
          },
          {
-            '<c-p>k',
+            'tk',
             function()
                require('telescope.builtin').keymaps()
             end,
             desc = 'search keymaps',
          },
          {
-            '<c-p>r',
+            'tr',
             function()
                require('telescope.builtin').resume()
             end,
             desc = 'search resume',
          },
          {
-            '<c-p>w',
+            'tw',
             function()
                require('telescope.builtin').grep_string()
             end,
@@ -266,6 +266,14 @@ return {
                suggestions = 36,
             },
          },
+         -- Auto-triggers are never created for single lowercase keys
+         -- other than `g` and `z`, since they shadow builtins. `t` is
+         -- repurposed as the telescope prefix, so register it by hand.
+         -- Normal mode only -- `dt,` and `vt,` keep the builtin motion.
+         triggers = {
+            { '<auto>', mode = 'nxso' },
+            { 't', mode = 'n' },
+         },
          spec = {
             { ';',              group = 'lsp' },
             { ',',              group = 'dap' },
@@ -277,7 +285,8 @@ return {
             { ',b',             group = 'breakpoint' },
             { ',d',             group = 'dap session' },
             { ',s',             group = 'step' },
-            { '<c-p>',          group = 'telescope picker' },
+            { 't',              group = 'telescope picker' },
+            { 'tg',             group = 'telescope grep search' },
             { '<m-g>',          group = 'gitsigns' },
             { '<leader>b',      group = 'blackhole' },
             { '<leader>l',      group = 'lazy' },
