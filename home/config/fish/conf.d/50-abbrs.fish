@@ -16,11 +16,11 @@ abbr -a gtl 'git tag --list|cat'
 abbr -a gsw git switch
 
 # dotfile installation scripts - single quotes intentional
-abbr -a bI '$DOTFILES_GIT_REPOS/bin/bashInstall'
-abbr -a fI '$DOTFILES_GIT_REPOS/bin/fishInstall'
-abbr -a nI '$DOTFILES_GIT_REPOS/bin/nvimInstall'
-abbr -a dI '$DOTFILES_GIT_REPOS/bin/develInstall'
-abbr -a aI '$DOTFILES_GIT_REPOS/bin/allInstall'
+abbr -a aI '$DEVEL_DOTFILES_GIT_REPO/bin/allInstall'
+abbr -a dI '$DEVEL_DOTFILES_GIT_REPO/bin/develInstall'
+abbr -a bI '$BASH_DOTFILES_GIT_REPO/bin/bashInstall'
+abbr -a fI '$FISH_DOTFILES_GIT_REPO/bin/fishInstall'
+abbr -a nI '$NVIM_DOTFILES_GIT_REPO/bin/nvimInstall'
 
 # Python virtual environment related
 abbr -a pl pip list | cat
