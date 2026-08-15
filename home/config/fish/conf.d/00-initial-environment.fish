@@ -21,16 +21,8 @@ and begin
     # Set locale
     set -gx LANG en_US.utf8
 
-    # Path to dotfile GitHub repo
-    set -gx DOTFILE_GIT_REPOS ~/devel/dotfiles
-    # set -gx BASH_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS/bash_dotfiles
-    # set -gx FISH_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS/fish_dotfiles
-    # set -gx NVIM_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS/nvim_dotfiles
-    # set -gx DEVEL_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS/devel_dotfiles
-    set -gx BASH_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS
-    set -gx FISH_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS
-    set -gx NVIM_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS
-    set -gx DEVEL_DOTFILES_GIT_REPO $DOTFILE_GIT_REPOS
+    # Path to dotfile GitHub repo - set to default location
+    set -gx DOTFILES_GIT_REPO ~/devel/dotfiles
 
     # Set up paging
     set -gx EDITOR nvim

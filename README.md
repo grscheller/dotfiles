@@ -1,5 +1,12 @@
 # grscheller/dotfiles
 
+**DEPRECATED** This project was broken up into separate projects.
+
+- grscheller/bash_dotfiles
+- grscheller/fish_dotfiles
+- grscheller/nvim_dotfiles
+- grscheller/misc_dotfiles
+
 My GitHub repository to maintain and install all my Linux based
 "dotfiles." This is my actual working setup, take what may be
 useful to you, or use as a starting point for your own version.

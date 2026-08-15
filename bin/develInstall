@@ -14,12 +14,10 @@
 # shellcheck shell=sh
 
 export SCRIPT_NAME=develInstall
-export DOTFILE_GIT_REPOS="${DOTFILE_GIT_REPOS:=$HOME/devel/dotfiles}"
+export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
 
 export DF_ACTION=install
 
-# export DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/bash_dotfiles}"
-export DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
 cd "$DOTFILES_GIT_REPO/home" || {
     printf '%s: failed to cd into %s\n' "$SCRIPT_NAME" "$DOTFILES_GIT_REPO/home" >&2
     exit 1

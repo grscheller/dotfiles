@@ -14,22 +14,11 @@
 # shellcheck shell=sh
 
 export SCRIPT_NAME=allInstall
-export DOTFILE_GIT_REPOS="${DOTFILE_GIT_REPOS:=$HOME/devel/dotfiles}"
-
-## Before the actual split
-export DEVEL_DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
-export BASH_DOTFILES_GIT_REPO="${BASH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
-export FISH_DOTFILES_GIT_REPO="${FISH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
-export NVIM_DOTFILES_GIT_REPO="${NVIM_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
-## After the split, replace the above 4 commands with
-# export DEVEL_DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/devel_dotfiles}"
-# export BASH_DOTFILES_GIT_REPO="${BASH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/bash_dotfiles}"
-# export FISH_DOTFILES_GIT_REPO="${FISH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/fish_dotfiles}"
-# export NVIM_DOTFILES_GIT_REPO="${NVIM_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/nvim_dotfiles}"
+export DOTFILES_GIT_REPO="${DOTFILE_GIT_REPOS:=$HOME/devel/dotfiles}"
 
 # Install sequentially
 
-"$DEVEL_DOTFILES_GIT_REPO/bin/develInstall" "$@"
-"$BASH_DOTFILES_GIT_REPO/bin/bashInstall" "$@"
-"$FISH_DOTFILES_GIT_REPO/bin/fishInstall" "$@"
-"$NVIM_DOTFILES_GIT_REPO/bin/nvimInstall" "$@"
+"$DOTFILES_GIT_REPO/bin/develInstall" "$@"
+"$DOTFILES_GIT_REPO/bin/bashInstall" "$@"
+"$DOTFILES_GIT_REPO/bin/fishInstall" "$@"
+"$DOTFILES_GIT_REPO/bin/nvimInstall" "$@"
