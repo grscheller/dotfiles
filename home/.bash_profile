@@ -14,9 +14,21 @@
 # This is due to certain display managers invoking entire desktop
 # environments without ever going through a login shell.
 #
-# Fortunately, the Cosmic DE uses a mechanism to exec through
-# a user's login shell before before forking off the COSMIC DE.
+# Fortunately, the Cosmic DE on Linux uses a mechanism to exec through
+# a user's login shell before forking off the COSMIC DE. In the
+# MSYS2 environment on Windows 11 mintty invokes bash as a login shell.
 #
+
+## configuration file (dotfile) infrastructure
+export DOTFILE_GIT_REPOS=${DOTFILE_GIT_REPOS:$HOME/devel/dotfiles}
+# export BASH_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS/bash_dotfiles}
+# export FISH_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS/fish_dotfiles}
+# export NVIM_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS/nvim_dotfiles}
+# export DEVEL_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS/devel_dotfiles}
+export BASH_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS
+export FISH_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS
+export NVIM_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS
+export DEVEL_DOTFILE_GIT_REPO=$DOTFILE_GIT_REPOS
 
 ## Get functions and aliases
 

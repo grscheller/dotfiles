@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 #
 # Installs other software development infrastructure
 # into the user's $HOME directory.
@@ -13,10 +13,13 @@
 
 # shellcheck shell=sh
 
-export SCRIPT_NAME=otherInstall
+export SCRIPT_NAME=develInstall
+export DOTFILE_GIT_REPOS="${DOTFILE_GIT_REPOS:=$HOME/devel/dotfiles}"
+
 export DF_ACTION=install
 
-export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
+# export DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/bash_dotfiles}"
+export DOTFILES_GIT_REPO="${DEVEL_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
 cd "$DOTFILES_GIT_REPO/home" || {
     printf '%s: failed to cd into %s\n' "$SCRIPT_NAME" "$DOTFILES_GIT_REPO/home" >&2
     exit 1
@@ -27,6 +30,10 @@ umask 0022
 . ../bin/sourced/parse_cmdline.sh
 . ../bin/sourced/functions.sh
 . ../bin/sourced/configure_xdg_dirs.sh
+
+bin_scripts='
+    myCalc
+'
 
 cabal_files='
     config
@@ -54,7 +61,6 @@ items_to_clean="
 "
 
 items_to_nuke="
-    $HOME/catch
     $HOME/devel/venvs
     $HOME/devel/node_lts
     $HOME/devel/zig_nightly
@@ -64,6 +70,10 @@ items_to_nuke="
 
 case "$DF_ACTION" in
     install|check|remove)
+        # Process ~/bin scripts
+        process_files "$HOME/bin" "$bin_scripts" bin 0755
+        chmod 0755 "$HOME/bin"
+ 
         # Process Cabal configs for Haskell
         process_files "$HOME/.cabal" "$cabal_files" cabal 0644
         chmod 0755 "$HOME/.cabal"

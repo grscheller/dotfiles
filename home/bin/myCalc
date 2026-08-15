@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!env python
 
 # Using the old style tkinter libraries, not the newer tkinter.ttk version.
 #
@@ -34,7 +34,7 @@ class myCalc(tk.Frame):
         return frame
     
     def _mk_display(self, side, display):
-        entry = tk.Entry(
+        tk.Entry(
             self, 
             relief = tk.RIDGE,
             textvariable = display,
@@ -50,7 +50,6 @@ class myCalc(tk.Frame):
             expand = tk.YES,
             fill = tk.BOTH
         )
-        return entry
 
     def _mk_button(self, parent, side, text, command):
         button = tk.Button(

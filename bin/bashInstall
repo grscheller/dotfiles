@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/dash
 #
 # Installs a basic fallback Bash environment into the
 # user's $HOME directory.
@@ -16,9 +16,12 @@
 # shellcheck shell=sh
 
 export SCRIPT_NAME=bashInstall
+export DOTFILE_GIT_REPOS="${DOTFILE_GIT_REPOS:=$HOME/devel/dotfiles}"
+
 export DF_ACTION=install
 
-export DOTFILES_GIT_REPO="${DOTFILES_GIT_REPO:=$HOME/devel/dotfiles}"
+# export DOTFILES_GIT_REPO="${BASH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS/bash_dotfiles}"
+export DOTFILES_GIT_REPO="${BASH_DOTFILES_GIT_REPO:=$DOTFILE_GIT_REPOS}"
 cd "$DOTFILES_GIT_REPO/home" || {
     printf '%s: failed to cd into %s\n' "$SCRIPT_NAME" "$DOTFILES_GIT_REPO/home" >&2
     exit 1
@@ -38,48 +41,44 @@ bash_files='
 
 bin_scripts='
     chkcolor
-    codepoint
-    etherApe
     monitor
-    myCalc
-    pathtrim
-    rt
     spin
-    viewJarManifest
 '
 
 remove_items="
     $HOME/.bash_login
     $HOME/.profile
+    $HOME/bin/codepoint
+    $HOME/bin/etherApe
+    $HOME/bin/pathtrim
+    $HOME/bin/rt
+    $HOME/bin/viewJarManifest
 "
 
 dirs_to_create="
     $HOME/catch
-    $HOME/.local/bin
+    $HOME/scratch
 "
 
 items_to_clean="
     $HOME/.bash_history
 "
 
-items_to_nuke="
-    $HOME/catch
-"
+items_to_nuke=''
 
 ## Perform ACTION
-
 case "$DF_ACTION" in
     install|check|remove)
         # Process bash config files
         process_files "$HOME" "$bash_files" . 0644
- 
+
         # Process ~/bin scripts
         process_files "$HOME/bin" "$bin_scripts" bin 0755
         chmod 0755 "$HOME/bin"
- 
+
         # Remove/report no longer needed files and directories
         remove_items "$remove_items"
- 
+
         # Create/report missing/delete directories
         ensure_dirs "$dirs_to_create"
         ;;

@@ -1,3 +1,0 @@
-#!/usr/bin/sh
-user=$(id -un)
-sudo /usr/bin/etherape -Z "$user" >/dev/null 2>&1 &
